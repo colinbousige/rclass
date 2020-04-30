@@ -1,0 +1,66 @@
+# A quick and dirty glance
+
+Here, let's just see at a glance what we can do with R very quickly, just to keep focused on the end game in case the first chapters feel a bit long... but hey, you gotta learn how to walk before running!
+
+If you have only one thing to remember, loading data from a 2-columns text file and plotting it is as simple as:
+```r
+df <- read.table("path/to/data.txt", header=TRUE)
+plot(df)
+```
+_Voilà_, end of the class.
+
+Of course, you can do so much more...
+
+You can define a vector like so:
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+A <- seq(from=-pi, to=pi, by=.1) # use the sequence function
+B <- sin(A) # apply a function to a vector
+C <- c(1, 3, 5, 2) # or specify each values
+```
+
+And then store these variables into a table (a `data.frame`) with two columns named `x` and `y`:
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+df1 <- data.frame(x=A, y=B)
+head(df1)    # glance at the data
+names(df1)   # table's column names
+str(df1)     # table's summary
+summary(df1) # table's stats
+```
+
+Or load data directly from a text file:
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+# If no header (first line is already data)
+df2 <- read.table("Data/rubis_01.txt", header=FALSE)
+head(df2) # glance at the data
+names(df2) <- c("w", "Intensity") # change column names
+# If there is a header (first line is column name)
+df3 <- read.table("Data/test.dat", header=TRUE)
+head(df3, 2) # glance at the data
+```
+
+Plot these:
+
+```{r include=FALSE, warning = FALSE, message=FALSE, cache=FALSE}
+par(mar=c(4,4,.5,.5))
+```
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=.8}
+# specify x and y
+plot(A,B)
+# or supply a 2-column data.frame
+plot(df2, type="l") # type="l" to plot as lines
+# add another plot layer
+# as lines
+lines(df2$w, df2$Intensity/2, col="red")
+# as points
+points(df2$w, df2$Intensity/3, col="blue")
+# histogram plot
+hist(df2$Intensity)
+```
+
+And _voilà_! With this, you can already do a lot of tweaking with your data. 
+
+Of course, these plots are ugly and you can do _a lot_ more interesting stuff with R, so let's get to it!
+
+
+

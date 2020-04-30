@@ -1,0 +1,271 @@
+# Data frames
+
+## Defining a data.frame
+
+
+In R, the principal object is *the data*. Hence the `data.frame` object, which is basically a table of vectors. A `data.frame` is a list presented under the form of a table – *i.e.* a spreadsheet. On a day-to-day basis, you will either define `data.frame` from existing vectors or other `data.frame`, or define a `data.frame` from a file (text, Excel...). In this example, we use <a href="Data/test.dat" download target="_blank">test.dat</a> and <a href="Data/test.xlsx" download target="_blank">test.xlsx</a>.
+
+```{r, warnings=FALSE, message=FALSE}
+# x = 10 random numbers between -10 and 10
+x  <- runif(10, min=-10, max=10) 
+y  <- sin(x)
+df <- data.frame(x,y) # df is a data.frame (a table)
+df
+# dimension of df
+dim(df);nrow(df);ncol(df)
+# first and last 3 values
+head(df, 3); tail(df, 3)
+# information on df
+str(df)
+# statistics on df
+summary(df)
+# changing column name
+df <- data.frame(xxx=x,yyy=y)
+head(df,2)
+names(df) <- c("thisISx","THISisY")
+head(df,2)
+# from a matrix
+A <- matrix(1:9,ncol=3)
+as.data.frame(A)
+# from a file
+read.table("Data/test.dat")            # default column name is V1, V2, V3, etc
+read.table("Data/test.dat",header=TRUE)# use first line as column names
+read.table("Data/test.dat",skip=1)     # skip first line. 
+# ?read.table for more options
+library(readxl) # load readxl from tidyverse to read Excel files
+read_excel("Data/test.xlsx", sheet=1)
+read_excel("Data/test.xlsx", sheet=2)
+```
+
+## Accessing values 
+
+```{r, warnings=FALSE}
+# column number
+df[,1] # this is a vector
+df[[1]]# this is a vector too
+# column name
+df$thisISx; df[,"THISisY"] # a vector too
+# first row; row 1 to 3
+df[1,]; df[1:3,]
+# through conditions
+df[x<0 & y>0, ]  # Here x and y are vectors, not the column names
+df[ df[,"thisISx"]<0 & df[,2]>0, ]  # conditions on columns
+# subsetting using column names
+subset(df, thisISx>2 & THISisY>0)
+subset(df, thisISx>2 & THISisY>0, select = c(thisISx))
+```
+
+## Adding columns or rows
+
+```{r, warnings=FALSE}
+# Adding columns
+df   <- data.frame(x,y)
+df$z <- (df$x)^2; df
+data.frame(df,w=1:length(x), xx=NA, yy=1, zz=1:2)
+cbind(df, data.frame(a=1:length(x), b=1:length(x)) )
+# Adding rows
+rbind(df, df)     # with a data.frame
+rbind(df, 1:2)    # with a vector
+# deleting rows/columns
+df[-1,]
+df[,-1]
+```
+
+## Tidy up!
+
+
+### What is tidy data?
+
+**A good practice in R is to *tidy* your data.** R follows a set of conventions that makes one layout of tabular data much easier to work with than others. Your data will be easier to work with in R if it follows three rules:
+
+- Each variable in the data set is placed in its own column
+- Each observation is placed in its own row
+- Each value is placed in its own cell
+
+Data that satisfies these rules is known as tidy data. Example:
+
+```r
+df <- read.csv("Data/population.csv")
+df # is not tidy
+```
+<details>
+    <summary>Show output</summary>
+
+```{r echo=FALSE}
+df <- read.csv("Data/population.csv")
+df # is not tidy
+```
+
+</details>
+
+```r
+library(tidyr)
+df <- pivot_longer(df, cols=-Année, names_to="city", values_to="pop")
+df #is tidy
+```
+
+<details>
+    <summary>Show output</summary>
+
+```{r echo=FALSE, message=FALSE}
+library(tidyr)
+df <- pivot_longer(df, cols=-Année, names_to="city", values_to="pop")
+df #is tidy
+```
+
+</details>
+
+```r
+# is not tidy
+pivot_wider(df, names_from="city", values_from="pop")
+```
+<details>
+    <summary>Show output</summary>
+
+```{r echo=FALSE}
+# is not tidy
+pivot_wider(df, names_from="city", values_from="pop")
+```
+
+</details>
+
+</details>
+
+
+You can find more information on data import and [tidyness](https://garrettgman.github.io/tidying/) on the [data-import cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf) and on the [tidyr](http://www.sthda.com/english/wiki/tidyr-crucial-step-reshaping-data-with-r-for-easier-analyses) package.
+
+
+### Tibbles
+
+A `tibble` is an enhanced version of the `data.frame` provided by the `tidyverse` package. The main advantage of `tibble` is that it has easier initialization and nicer printing than `data.frame`, and the performance are also enhanced – especially for the reading from files with `read_delim()`, `read_tsv()` and `read_csv()`. Otherwise, the handling is basically the same.
+
+More on tibbles [here](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
+
+```{r, include=FALSE}
+rm(x)
+```
+
+```{r, error=TRUE, warnings=FALSE, message=FALSE}
+library(tidyverse)
+( tib <- tibble(x=runif(1e3), y=cumsum(x)) )
+data.frame(x=runif(1e3), y=cumsum(x))
+# ATTENTION subsetting
+# Tibbles are quite strict about subsetting. [ always returns another tibble. 
+# Contrast this with a data frame: sometimes [ returns a data frame and sometimes it just returns a vector:
+head(tib[[1]]) # is a vector
+head(tib[,1])  # is a tibble
+```
+
+### Data tables
+
+A `data.table`, much like a tibble, is an enhanced version of the `data.frame` provided by the [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) package. In case you have very large files to read and do statistics upon, consider using it in conjunction with `fread()` in preference to `data.frames` and `read.table()`.
+
+
+## Exercises
+
+<details>
+<summary>**Exercise 1**</summary>
+
+- Create a 3 column `data.frame` containing 100 random values, their sinus, and the sum of the two first columns.
+- Do the same with a `tibble`
+- Look into the function `write.table` to write a text file containing this `data.frame`
+
+</details>
+
+
+<details>
+    <summary>**Exercise 2**: `data.frame` from a "complicated" data file</summary>
+
+- Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
+- Load it into a `data.frame`. Look into the options of `read.table` to get the proper data fields.
+
+<details>
+    <summary>Solution</summary>
+
+```{r}
+d <- read.table("Data/ATG.txt", 
+                skip=12,
+                header=FALSE, 
+                nrows=4088)
+names(d) <- c("Index", "t", "Ts", "Tr", "Value")
+head(d)
+d <- read.table("Data/ATG.txt", 
+                skip=10,
+                comment.char="[",
+                header=TRUE, 
+                nrows=4088)
+head(d)
+```
+
+</details>
+</details>
+
+
+<details>
+    <summary>**Exercise 3**</summary>
+
+- Create a `data.frame` called `people` from <a href="Data/people.txt" download target="_blank">people.txt</a>
+- What are the column names of `people`?
+- Add a column `age` and fill it with the appropriate values
+    + *Bonus Tip:* to interactively enter the data, look into the function `readline()` and try making a `for` loop
+- What is the average age of the class?
+- How many students are in the class?
+- What is the percentage of female/male students in the class?
+- Get the columns 1 and 3
+- Print `people` where you removed the rows 1, 5 and 6
+- Get the columns of `age` and `origin` in another `data.frame`
+- Subset `people` to get the list of people from China and Ukraine in one `data.frame`
+- How many students come from the USA? from France?
+- Order the `data.frame` `people` by student name
+- Order the `data.frame` `people` by country of origin and then by age
+- Select 5 random students from `people`
+- Using the `tidyverse`, get the average age of females and males in the class in a `tibble`
+
+</details>
+
+
+
+<details>
+<summary>**Exercise 4**</summary>
+
+Download <a href="Data/population.txt" download target="_blank">population.txt</a> and load it into a `data.frame`.
+
+- Are the data tidy?
+- What are the names of the columns?
+- Create a subset containing the data for Montpellier
+    + What is the max and min of population in this city?
+    + The average population over time?
+- What is the total population in 2012?
+
+<details>
+<summary>Solution</summary>
+
+```{r}
+# Download population.txt and load it into a `data.frame`.
+popul <- read.table("Data/population.txt", header=TRUE)
+# Are the data tidy?
+head(popul) # yes
+# What are the names of the columns and the dimension of the table?
+names(popul); dim(popul)
+# Create a subset containing the data for Montpellier
+mtp <- subset(popul, city == "Montpellier")
+mtp <- popul %>% filter(city == "Montpellier")
+# What is the max and min of population in this city?
+range(mtp[,"pop"])
+# The average population over time?
+mean(mtp[,"pop"])
+# What is the total population in 2012?
+sum(popul[popul[,"year"] == 2012, "pop"])
+```
+
+</details>
+</details>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+

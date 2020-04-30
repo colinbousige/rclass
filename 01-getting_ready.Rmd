@@ -1,0 +1,89 @@
+# Getting ready
+
+## The easy way
+
+
+- [Download](https://cran.r-project.org/) and install R
+- [Download](https://www.rstudio.com/products/rstudio/download/#download) and install Rstudio
+- You're good to go.
+
+Launch Rstudio, click `File > New File > R script`. 
+
+Write whatever you want in the "Source code" panel, and __run__ it by selecting it and hitting ⌘+⏎ (Ctrl+⏎ on Windows). If no text is selected, hitting ⌘+⏎ will launch the current line. 
+
+The code output will be seen in the "R Console" panel if it's a text, or in the "Graph" panel if it's a graph. A list of all defined variables and functions is available in the "Environment" panel.
+
+[![](Plots/rstudio.png)](Plots/rstudio.png)
+
+More on the [Rstudio cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf).
+
+## The more advanced way
+
+
+If you don't want to use Rstudio but rather want to keep with your favorite text editor, like I do[^2]  ([Sublime Text](https://www.sublimetext.com/3), [Atom](https://atom.io/), [Visual Studio Code](https://code.visualstudio.com/)...)
+
+- I still recommend [downloading](https://cran.r-project.org/) and installing R via CRAN (I had some packages problems due to a homebrew installation).
+- To be fully operational with Rmarkdown files without using Rstudio, you need to install `pandoc`:
+```bash
+brew install openssl
+brew install pandoc
+brew install pandoc-citeproc
+pip install pandoc-eqnos
+pip install pandoc-fignos
+pip install pandoc-tablenos
+```
+
+
+[^2]: I personally use [Sublime Text 3](https://www.sublimetext.com/3). First, install [Package control](https://packagecontrol.io/installation). Then set up command line launch: `ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime`. Install the packages `R-box`, `SublimeREPL`, `SendCode`, `LatexTools`, `BracketHighlighter`, `CiteBibtex`, `Path Tools`, `SidebarEnhancements`. To be able to send code from a code chunk in Rmarkdown to the REPL window, click `Preferences > Browse Packages`, and then open `Packages/SublimeREPL/config/R/Main.sublime-menu`. Find the option `"additional_scopes"` and change it into: `"additional_scopes": ["HTML.markdown.rmarkdown","tex.latex.knitr"],`. Save the file, close the REPL tab, restart ST3, and open a new REPL instance.
+
+
+## In any case: install LaTeX
+
+
+A **full** $\LaTeX$ distribution (emphasis on **full**) will be needed to knit markdown files to PDFs (you don't need it to output html files though):
+
+- Windows: go [here](https://miktex.org/download) and download the Net Installer to install the **complete distribution**
+- Mac: go [here](https://tug.org/mactex/mactex-download.html) or type `brew cask install mactex` in the terminal if you have [Homebrew](https://treehouse.github.io/installation-guides/mac/homebrew) installed
+- Linux: [here](https://dzone.com/articles/installing-latex-ubuntu) fore example
+
+
+## Setting up the environment
+
+Make sure you have the following packages installed by launching the following commands: copy-paste them in the "Source code" panel (upper left after having crated a new R script), select all the lines and hit Ctrl+⏎ (Windows, Linux) or ⌘+⏎ (Mac).
+
+```r
+install.packages("devtools")
+install.packages("tidyverse")
+install.packages("rmarkdown")
+install.packages("knitr")
+install.packages("shiny")
+```
+
+Later on, a package can be loaded by calling:
+```r
+library(package_name)
+```
+or by checking it in the "Graph" panel under the "Packages" tab.
+If you want to access a function from a given package without loading it (or because several packages define the same function and you want to specify which to use), type:
+```r
+package_name::function_name(parameters)
+```
+If you want to access the documentation on a given package, click the link on this package in the "Packages" tab.
+In a more general way, help on a function is accessed by typing in `?function_name`, the help appearing in the "Graph" panel.
+
+
+To get the path of your working environment, type in:
+```{r}
+getwd()
+```
+
+To set it to the directory you want:
+```r
+setwd("your/path/")
+```
+
+Or, to set it to the directory the current file is in, just click `Session > Set Working Directory > To Source File Location`.
+
+
+
+

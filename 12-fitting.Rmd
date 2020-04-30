@@ -1,0 +1,321 @@
+# Fitting
+
+## Linear fitting
+
+
+Let's learn how to do simple fits with R and plot the results.
+```{r, warnings=FALSE}
+# Create some fake data
+d <- read.table(header=TRUE,text="
+   x           y
+   39.11       6.67
+   46.1        10.8
+   52.02       16.36
+   56.07       23.16
+   61.00       26.5
+   65.26       31.3
+   69.16       33.5
+   74.00       41.0
+   81.70       50.3
+   ")
+# Fit with a linear model
+fit <- lm(y~x, data=d)
+# Summary of the fit
+summary(fit)
+attributes(fit)
+# Retrieve the coefficients and errors
+coef(fit); coef(fit)[1]; coef(fit)['(Intercept)']
+summary(fit)$coefficients; summary(fit)$coefficients["x","Std. Error"]
+# Plotting the points and the fit
+par(cex.lab=1.5, cex.axis=1.4, mgp = c(2.4, .5, 0),
+    tck=0.02, mar=c(4, 4, .5, .5), lwd=2, las=1)
+plot(d, pch=16)
+abline(coef(fit), col="red")
+to_print <- paste("y = ", round(coef(fit)[1],2)," + x*",
+                    round(coef(fit)[2],2), sep="")
+text(50, 50, to_print)
+ggplot(data=d, aes(x,y)) + 
+    geom_point(cex=3) +
+    geom_smooth(method="lm") +
+    annotate("text", x = 50, y = 50, label = to_print)
+```
+
+The function `geom_smooth()` will fit the data and display the fitted line, but to retrieve the actual coefficients you still need to run `lm()`.
+
+
+## Non linear fitting
+
+
+You can fit data with your own functions and constraints using `nls`. Example:
+
+
+```{r, warnings=FALSE}
+# Create fake data
+x  <- seq(-7,7,.1)
+y  <- dnorm(x, sd = .5) + dnorm(x, mean=2, sd = 1) + runif(length(x))/10
+df <- data.frame(x=x,y=y)
+# Create a function to fit the data
+myfunc <- function(x, y0, x0, A, B) {
+    y0 + dnorm(x, sd=A) + dnorm(x, mean=x0, sd=B)
+}
+# Fit the data using a user function
+fit <- nls(y ~ myfunc(x, y0, x0, A, B),
+           data=df,
+           start=list(y0=0, x0=1.5, A=.2, B=.2) # provide starting point
+           )
+summary(fit)
+coef(fit)
+# Plotting the resulting function in red
+par(cex.lab=1.5, cex.axis=1.4, mgp = c(2.4, .5, 0),
+    tck=0.02, mar=c(4, 4, .5, .5), lwd=2, las=1)
+plot(x, y, pch=16, ylim=c(0,1.1))
+lines(x, predict(fit, x), col="red", lwd=2)
+```
+
+Or with `ggplot2`:
+
+```{r}
+ggplot(data=df, aes(x,y))+
+    geom_point() +
+    geom_smooth(method = "nls", 
+                method.args = list(formula = y ~ myfunc(x, y0, x0, A, B),
+                                   start=list(y0=0, x0=1.5, A=.2, B=.2)
+                                   ), 
+                data = df,
+                se = FALSE,
+                color="red")
+```
+
+In `nls` it is even possible to constraint the fitting by adding lower and upper boundaries. You have to be careful with these and not provide stupid ones, *e.g.*:
+
+```{r, warnings=FALSE}
+# Constraining the upper and lower values of the fitting parameters
+fit2 <- nls(y~ myfunc(x, y0, x0, A, B),
+           start=list(y0=0, x0=5, A=.2, B=.2),
+           upper=list(y0=Inf, x0=Inf, A=.4, B=1),
+           lower=list(y0=-Inf, x0=4, A=-Inf, B=-Inf),
+           algorithm = "port"
+           )
+# Plotting the resulting function in blue
+par(cex.lab=1.5, cex.axis=1.4, mgp = c(2.4, .5, 0),
+    tck=0.02, mar=c(4, 4, 2, .5), lwd=2, las=1)
+plot(x, y, pch=16, ylim=c(0,1.1), main="Beware of constraints")
+lines(x, predict(fit2, x), col="royalblue", lwd=2)
+```
+
+## The broom library
+
+Thanks to the [`broom`](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) library, it is easy to retrieve all the fit parameters in a `tibble`:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+x  <- seq(-7,7,.1)
+y  <- dnorm(x, sd = .5) + dnorm(x, mean=2, sd = 1) + runif(length(x))/10
+df <- data.frame(x=x,y=y)
+# Create a function to fit the data
+myfunc <- function(x, y0, x0, A, B) {
+    y0 + dnorm(x, sd=A) + dnorm(x, mean=x0, sd=B)
+}
+# Fit the data using a user function
+fit <- nls(y ~ myfunc(x, y0, x0, A, B),
+           data=df,
+           start=list(y0=0, x0=1.5, A=.2, B=.2) # provide starting point
+           )
+library(broom)
+# Get all parameters and their error
+tidy(fit)
+# Get the fitted curve and residuals
+augment(fit)
+```
+
+It is then easy to make a recursive fit on your data without using a `for loop`:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+library(broom)
+library(tidyverse)
+library(ggplot2)
+# Create fake data
+a <- seq(-10,10,1)
+d <- tibble(x=rep(a,3),
+            y=c(a*runif(1)+runif(length(a)),
+                a*runif(1)+1+runif(length(a)),
+                a*runif(1)+2+runif(length(a))),
+            T=factor(rep(1:3, each=length(a)))
+            )
+# Fit the data using nls() in a do() loop
+d_fit <- d %>% group_by(T) %>% 
+            do(fit=nls(data=.,
+                       y~x*A+B, 
+                       start=list(A=1, B=1)))
+d_fit
+d_fit %>% augment(fit)
+d_fit %>% tidy(fit)
+d_fit %>% tidy(fit) %>% 
+  select(T, term, estimate, std.error) %>% 
+  pivot_wider(names_from = term, 
+              values_from = c(estimate,std.error))
+d_fit %>% augment(fit) %>% 
+    ggplot(aes(x=x, color=T))+
+        geom_point(aes(y=y), alpha=0.5) + 
+        geom_line(aes(y=.fitted))
+```
+
+In case you want to provide fit parameters that vary depending on the group you are looking at, use the notation `.$column_name`, like so:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+library(broom)
+library(tidyverse)
+library(ggplot2)
+# Let's create some fake data:
+Nspec <- 10                           # Amount of spectra
+T     <- floor(seq(273, 500, length=Nspec))  # Fake Temperatures
+N     <- 100                          # Size of the x vector
+fake_data <- tibble()                 # Empty tibble
+for (i in 1:Nspec) {
+    x  <- seq(0, 100, length = N)
+    y  <- runif(x)*.2+
+            50*dnorm(x, mean= (T[i]/T[1])*20 + 25, sd = 10+runif(1,max=5) )
+    fake_data <- bind_rows(fake_data, 
+                           tibble(w=x, Intensity=y, T=T[i]) 
+                           )
+}
+# Let's fit it:
+# A=max(.$Intensity)*10 means that the amplitude is 10 times the 
+# maximum intensity of the current group
+# B=.$w[which.max(.$Intensity)] means that we supply as first guess 
+# the position of the maximum in the current group
+fit_fake_data <- fake_data %>% group_by(T) %>% 
+    do(fit=nls(data=.,
+               Intensity~A*dnorm(w, mean=B, sd=C), 
+               start=list(A=max(.$Intensity)*10, 
+                          B=.$w[which.max(.$Intensity)],
+                          C=10
+                          )
+                )
+    )
+# Get all fitting parameters as a tidy tibble
+fit_pars <- fit_fake_data %>% tidy(fit) %>% 
+                select(T, term, estimate, std.error) %>% 
+                pivot_wider(names_from = term, 
+                            values_from = c(estimate,std.error)
+                            )
+fit_pars
+# Plot the parameters, here the peak position:
+fit_pars %>% ggplot(aes(x=T, y=estimate_B))+
+    geom_point()+
+    geom_errorbar(aes(ymin=estimate_B-std.error_B,
+                      ymax=estimate_B+std.error_B))
+# Plot the data and the fits:
+colors <- colorRampPalette(c("royalblue","seagreen","orange",
+                             "red","brown"))(length(T))
+fit_fake_data %>% augment(fit) %>%
+    ggplot(aes(x=w, color = factor(T))) + 
+        geom_point(aes(y=Intensity+as.numeric(factor(T))-1), alpha=.3) + 
+        geom_line(aes(y=.fitted+as.numeric(factor(T))-1)) + 
+        labs(x="Fake Raman Shift [1/cm]", y="Fake Intensity [arb. units]") +
+        scale_color_manual(values=colors,name="Fake\nTemperature [K]") +
+        theme_bw()
+```
+
+
+## Exercises
+
+<details>
+    <summary>**Exercise 1**</summary>
+
+- Load <a href="Data/exo_fit.txt" download target="_blank">exo_fit.txt</a> in a `data.frame`.
+- Using `lm` or `nls` fit each column as a function of `x` and display the "experimental" data and the fit on the same graph.
+    + Tip: Take a look at the function `dnorm` to define a Gaussian
+
+<!-- ```{r}
+x <- seq(-10,10,.1)
+y <- 4*x+6+runif(length(x))*5
+z <- 100*dnorm(x, mean=2.1,sd=2)+runif(length(x)) -.5
+w <- sin(x/1.5)+runif(length(x))/2 -.5/2
+u <- sin(x/1.5)+x*.2+runif(length(x))/5 -.5/5
+df <- data.frame(x=x, y=y, z=z, w=w, u=u)
+write.table(df, "Data/exo_fit.txt", quote=FALSE, row.names=FALSE)
+``` -->
+
+
+</details>
+
+
+<details>
+    <summary>**Exercise 2: application to real data**</summary>
+
+- Load the Raman spectrum <a href="Data/rubis_01.txt" download target="_blank">rubis_01.txt</a>, normalize it to [0,1] and plot it
+- Define the Lorentzian function
+- Create a function that is the sum of 2 Lorentzians
+- Guess grossly the initial parameters and plot the resulting curve as a blue dashed line
+- Fit the data by a sum of 2 Lorentzians using `nls`
+- Add the result on the plot as a red line
+- Add the 2 Lorentzian components as area-filled curves with `alpha=0.2` and two different colors (see the function `polygon()`)
+- Do the same plot with `ggplot2`
+
+
+<details>
+    <summary>Solution</summary>
+
+```{r, warnings=FALSE, error=TRUE}
+# Load rubis_1.txt, normalize it to [0,1] and plot it
+d <- read.table("Data/rubis_01.txt", header=FALSE, col.names=c("w", "Int"))
+norm01 <- function(x) {(x-min(x))/(max(x)-min(x))}
+d$Int_n <- norm01(d$Int)
+par(cex.lab=1.5, cex.axis=1.4, mgp = c(2.4, .5, 0),
+    tck=0.02, mar=c(4, 4, 2, .5), lwd=2, las=1)
+plot(d$w, d$Int_n)
+# Define the Lorentzian function
+Lorentzian <- function(x,x0=0,FWHM=1,A=1,y0=0){
+    y0 + 2*A/(pi*FWHM)/( 1 + ((x-x0)/(FWHM/2))^2 )
+}
+# Create a function that is the sum of 2 Lorentzians
+Lor2 <- function(x,y0,x1,FWHM1,A1,x2,FWHM2,A2){
+    y0 + Lorentzian(x,x0=x1,FWHM=FWHM1,A=A1,y0=0) + 
+         Lorentzian(x,x0=x2,FWHM=FWHM2,A=A2,y0=0) 
+}
+# Guess grossly the initial parameters and plot the resulting curve as a blue dashed line
+plot(d$w, d$Int_n)
+lines(d$w,Lor2(d$w,y0=0.03, x1=3160, FWHM1=10, A1=3, 
+                   x2=3210, FWHM2=10, A2=7), col="blue", lty=2)
+# Fit the data by a sum of 2 Lorentzians using `nls`
+fit <- nls(data=d, Int_n ~ Lor2(w,y0,x1,FWHM1,A1,x2,FWHM2,A2), 
+           start=list(x1=3160, FWHM1=10, A1=3, y0=0.03,
+                      x2=3200, FWHM2=10, A2=7)
+           )
+summary(fit)
+# Add the result on the plot as a red line
+lines(d$w, predict(fit, d$w), col="red")
+# Add the 2 Lorentzian components as area-filled curves with `alpha=0.2` and two different colors
+y0   <- coef(fit)['y0']
+lor1 <- Lorentzian(d$w,x0=coef(fit)['x1'],FWHM=coef(fit)['FWHM1'],A=coef(fit)['A1'],y0=0)
+lor2 <- Lorentzian(d$w,x0=coef(fit)['x2'],FWHM=coef(fit)['FWHM2'],A=coef(fit)['A2'],y0=0)
+polygon(d$w, lor1+y0,col=adjustcolor("royalblue", alpha=.2), border=NA)
+polygon(d$w, lor2+y0,col=adjustcolor("orange", alpha=.2), border=NA)
+# Do the same plot with `ggplot2`
+library(ggplot2)
+dd <- data.frame(d, ytot=lor1+lor2+y0,lor1=lor1+y0, lor2=lor2+y0)
+ggplot(data=dd, aes(x=w))+
+    labs(x="Raman Shift [1/cm]", y="Intensity [arb. units]")+
+    geom_point(aes(y=Int_n), alpha=.5)+
+    geom_line(aes(y=ytot), col="red")+
+    geom_area(aes(y=lor1), fill="royalblue", alpha=.2)+
+    geom_area(aes(y=lor2), fill="orange", alpha=.2)+
+    theme_bw()
+```
+
+</details>
+</details>
+
+
+
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+

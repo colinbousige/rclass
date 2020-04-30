@@ -1,0 +1,196 @@
+# Functions
+
+## Definition
+
+To get the manual on a base function, type `?function_name`.
+
+A function returns the last thing that is called in it:
+```{r, warnings=FALSE}
+geom_mean <- function(x, y){
+    a <- sqrt(x*y)
+}
+geom_mean(1,2) #returns nothing
+geom_mean <- function(x, y){
+    a <- sqrt(x*y)
+    a
+}
+geom_mean(1,2) #returns a
+```
+
+The result of a function can be a list, a data.frame, a vector... or nothing. And you can attribute the result of a function to a variable:
+
+```{r, warnings=FALSE}
+person <- function(name, age){
+    list(name=name, age=age)
+}
+joe <- person(name="Joe", age=33)
+joe
+```
+
+One can add default values to variables:
+```{r, warnings=FALSE}
+testfunc <- function(x,y=1){
+    x*y
+}
+testfunc(1)
+testfunc(1,y=2)
+testfunc(1:3,y=.1)
+```
+
+And pass arguments to other functions:
+```{r, warnings=FALSE}
+testfunc2 <- function(x,...){
+    head(x,...)
+}
+testfunc2(1:100)
+testfunc2(1:100,2)
+```
+
+Or even pass a function as argument:
+```{r, warnings=FALSE}
+testfunc3 <- function(FUN,...){
+    FUN(...)
+}
+testfunc3(sum,1:10)
+testfunc3(plot, 1:10, sin(1:10), type="l")
+```
+
+
+## Interpolation of data
+
+It is possible to interpolate data through the `approxfun()` and `splinefun()` functions: while the former uses linear interpolation, the latter uses cubic splines (polynomials).
+
+```{r}
+xmin <- -2*pi; xmax <- 2*pi
+x  <- runif(30, min=xmin, max=xmax)
+xx <- seq(xmin, xmax, .1)
+y  <- sin(x)
+# Linear interpolation
+lin_interp <- approxfun(x,y)        #is a function
+lin_interp(0); lin_interp(pi)
+yy_lin     <- approx(x, y, xout=xx) #is a list containing x and y
+
+# Cubic spline interpolation
+spl_interp <- splinefun(x,y)        #is a function
+yy_spl     <- spline(x, y, xout=xx) #is a list containing x and y
+
+par(family = "Helvetica", cex.lab=1.5, cex.axis=1.4, 
+    mgp = c(2.4, .5, 0), tck=0.02, mar=c(4, 4, 2, .5), lwd=2, las=1)
+plot(x, y, pch=16, cex=2, ylim=c(-1,1.5))
+lines(xx, lin_interp(xx), col="royalblue") # equivalent to: lines(yy_lin, col="royalblue")
+lines(xx, spl_interp(xx), col="red", lty=2)# equivalent to: lines(yy_spl, col="red")
+legend("topright",
+    cex=1.2,
+    lty=c(NA, 1, 2),
+    lwd=c(NA, 2, 2),
+    pch=c(16, NA, NA),
+    col=c("black", "royalblue", "red"),
+    bty = "n",
+    legend=c("'Experimental' points", "Linear interpolation", "Spline interpolation")
+    )
+```
+
+
+## Exercises
+
+<details>
+    <summary>**Exercise 1**</summary>
+
+- Write a function returning a normalized Gaussian function
+    + Test that it is indeed normalized by numerically computing its integral
+- Write a new function returning the sum of an arbitrary number of Gaussian functions
+
+<details>
+    <summary>Solution</summary>
+
+```r
+# Write a function returning a normalized Gaussian function
+# look also at the dnorm() base function
+Gaussian <- function(x,x0,FWHM,A=1,y0=0){
+    y0 + 2.*A*sqrt(2*log(2))/sqrt(2*pi)/FWHM*exp(-(x-x0)^2*4*log(2)/FWHM^2)
+}
+# Test that it is indeed normalized by numerically computing its integral
+dx <- .01
+x  <- seq(-10,10,dx)
+y  <- Gaussian(x,0,1)
+sum(y)*dx
+# Write a new function returning the sum of an arbitrary number of Gaussian functions
+sumGaussian1 <- function(x,x0,FWHM,A=1,y0=0){
+    y <- y0
+    for (i in 1:length(x0)) {
+      y <- y + Gaussian(x,x0[i],FWHM[i],A=A[i],y0=0)
+    }
+    y
+}
+# handling bad entries and being more efficient
+sumGaussian2 <- function(x,x0,FWHM,A=1,y0=0){
+    if(length(x0)!=length(FWHM)) FWHM <- rep(FWHM, length.out=length(x0))
+    if(length(x0)!=length(A))    A    <- rep(A,    length.out=length(x0))
+    rowSums(sapply(1:length(x0), function(i) {
+          Gaussian(x,x0[i],FWHM[i],A=A[i],y0=y0[1])
+        }))
+}
+```
+
+</details>
+</details>
+
+<details>
+<summary>**Exercise 2**</summary>
+
+Create the sinus cardinal function, $f(x)=\sin(x)/x$ for $x\neq0$ and $f(0)=1$.
+
+<details>
+<summary>Solution</summary>
+
+```{r, warnings=FALSE, fig.asp=.85}
+sinc <- function(x, tol = sqrt(.Machine$double.eps) ){
+    # sinus cardinal
+    y <- rep(1,length(x))
+    b <- which(abs(x)>tol)
+    y[b] <- sin(x[b])/x[b]
+    y
+}
+sinc(seq(-pi,pi,pi/4))
+x <- seq(-8*pi,8*pi,.1)
+plot(x, sinc(x), type="l", lwd=3);abline(h=0,v=0)
+```
+
+</details>
+</details>
+
+
+<details>
+<summary>**Exercise 3**</summary>
+
+Write a function returning a `tibble` (created if not supplied, incremented if supplied) containing the name, age, gender and country of origin of the people in the class. Print it. Play around with the obtained tibble to make some statistics about the class population.
+
+<details>
+<summary>Solution</summary>
+
+```{r, warnings=FALSE}
+people <- function(ppl=tibble::tibble(), name=NA, age=NA, gender=NA, origin=NA){
+    library(tibble)
+    rbind(ppl, tibble(name=name, age=age, gender=gender, origin=origin))
+}
+ppl <- people(name="Colin", age=33, gender="Male", origin="France")
+ppl <- people(ppl=ppl, name="Vincent", age=39, gender="Male", origin="France")
+ppl
+```
+
+</details>
+</details>
+
+<br>
+<br>
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+

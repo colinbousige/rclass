@@ -1,0 +1,232 @@
+---
+title : "Reproducible data treatment with R<br>Exam"
+author: "MOURA Saulo"
+date  : "2019/12/03"
+output: 
+    html_document:
+        toc: yes
+        toc_float: TRUE
+---
+
+```{r}
+# DO NOT TOUCH THIS CODE CHUNK
+library(ggplot2)
+library(tidyverse)
+theme_set(theme_bw())
+```
+
+-------
+
+# Exercise 1 (4 points)
+
+> Print the 6 first lines of the R-built-in data.frame `trees`
+
+```{r}
+trees[1:6,]
+```
+
+> Print only the column names
+
+```{r}
+names(trees)
+```
+
+> What is the dimension of `trees`?
+
+```{r}
+dim(trees)
+```
+
+> Plot the trees height and volume as a function of their girth in two different graphs. Make sure the axis labels are clear
+
+```{r}
+plot_ex1_A<-ggplot(data=trees, aes(x=Girth,y=Height))+
+         geom_point()
+plot_ex1_A
+
+plot_ex1_B<-ggplot(data=trees, aes(x=Girth,y=Volume))+
+         geom_point()
+plot_ex1_B
+```
+
+> In each graph, add a red dashed line corresponding to the relevant correlation that you observe (average value, linear correlation...)
+
+```{r}
+plot_ex1_A+geom_smooth(lty=2, col="red")
+plot_ex1_A
+
+  
+fit1<-lm(Volume~Girth, data=trees)
+plot_ex1_B+geom_line(aes(x=Girth,y=predict(fit1)),col="red",size=1,lty=2)
+summary(fit1)
+
+fit_text <- function(fit1){
+    paste(capture.output(fit1)[1:7], collapse="\n")
+}
+
+
+
+```
+
+> Explain your choice and write the corresponding values (average value and standard deviation, or slope, intercept and corresponding errors). Round the values to 2 decimals.
+
+The first graphic seems to see a disordered increasing line, so I believe it was not good to approximate it to a straight line. Instead,  geom_smooth seemed to me as the best approach.
+
+The second graphic is clearly a linear approximation, so "lm" was the proper choice.
+
+
+
+-------
+
+# Exercise 2 (6 points)
+
+> Print the 3 first lines of the R-built-in data.frame `USArrests`. This data set contains statistics about violent crime rates by US state. The numbers are given per 100 000 inhabitants, except for `UrbanPop` which is a percentage.
+
+```{r}
+USArrests[1:3,]
+
+```
+
+> What is the average murder rate in the whole country?
+
+```{r}
+mean(USArrests[,1])
+
+```
+
+> What is the state with the highest assault rate?
+
+```{r}
+ColA<-USArrests$Assault
+IndexA<-which.max(ColA)
+
+
+```
+
+> Create a subset of `USArrests` gathering the data for states with an urban population above (including) 80%.
+
+```{r}
+Sub1<-subset(USArrests, UrbanPop>=80)
+
+```
+
+> How many states does that correspond to?
+
+```{r}
+length(Sub1[,1])
+
+```
+
+> Within these states, what is the state with the smallest rape rate?
+
+```{r}
+min(Sub1[,4])
+
+```
+
+> Print this subset ordered by decreasing urban population.
+
+```{r}
+
+```
+
+> Print this subset ordered by decreasing urban population and increasing murder rate.
+
+```{r}
+
+```
+
+> Plot an histogram of the percentage of urban population with a binning of 5%. Add a vertical red line marking the average value. Make sure the x axis shows the [0,100] range.
+
+```{r}
+
+```
+
+> Is there a correlation between the percentage of urban population and the various violent crime rates? argument your answer with plots.
+
+```{r}
+
+```
+
+
+-------
+
+# Exercise 3 (10 points)
+
+> In high-pressure experiments, the pressure in the Diamond Anvil Cell (DAC) is calibrated through the measure of the Raman shift of a tiny ruby crystal placed in the pressure transmitting medium next to the measured sample.
+
+> Write a function returning the pressure $P$ as a function of the ruby Raman shift position $\omega$ and the excitation laser wavelength $\lambda_l$:
+$$P(\omega, \lambda_l) = \frac{A}{B}\left[\left(\frac{\lambda}{\lambda_0}\right)^B-1\right] (GPa)$$
+where $A=1876$ and $B=10.71$, $\lambda$ is the the measured wavelength of the ruby $R_1$ line (the most energetic one) and $\lambda_0=694.24$ nm is the zero-pressure value at 298 K[^1]. The relationship between the wavenumber $\nu$ in cm$^{-1}$ and the wavelength $\lambda$ in nm is given by $\nu(\text{cm}^{-1})=\frac{10^7}{\lambda(\text{nm})}$, and the Raman shift $\omega=\Delta\nu=\nu_l-\nu=\frac{10^7}{\lambda_l}-\frac{10^7}{\lambda}$ (cm$^{-1}$).
+
+```{r}
+Pressure_1<-function(omega,lambda_laser){
+  lambda_sample=((10^7)*lambda_laser)/((10^7)-omega)
+  (1876/10.71)*(((lambda_sample/694.24)^10.71)-1)
+  
+}
+Pressure_1(4400,532)
+
+
+
+```
+
+> Write a function returning a normalized Lorentzian as a function of its center $x_0$ and its full width at half maximum $\Gamma$:
+> $$L(x,x_0,\Gamma)=\frac{\Gamma}{2\pi}\frac{1}{\frac{\Gamma^2}{4}+\left(x-x_0\right)^2}$$
+
+```{r}
+Lor_exam<-function(width_max){
+    
+}
+
+
+Lor <- function(x, x0=0, FWHM=1){
+    2/(pi*FWHM)/(1+((x-x0)/(FWHM/2))^2)
+}
+```
+
+> Store the list of files containing `ruby` in their name in the `Data/` folder into a variable `flist`. Print its length.
+
+```{r}
+flist <- list.files(path = "Data", pattern = "ruby")
+length(flist)
+```
+
+> Plot with points the first file in `flist`. Find the position of its maximum and store it in `xmax`. Guess roughly the parameters needed to fit the experimental data by `y0+A1*L(x,x1,FW1)+A2*L(x,x2,FW2)`, and add a blue line on the plot to represent this function.
+
+```{r}
+```
+
+> Using `nls()`, fit the first spectrum in `flist` by `y0+A1*L(x,x1,FW1)+A2*L(x,x2,FW2)` and using the starting parameters you defined before. Plot the experimental data again and add the fitted spectrum as a red line.
+
+```{r}
+
+```
+
+> Based on the above procedure, for each file in `flist` (so, use a `for` loop), fit the Raman spectrum by the sum of two Lorentzian functions, and store the fitting parameters into a data.frame called `ruby_fit` also containing the names of the corresponding files. Attention: the initial guesses for amplitudes and widths can be constant, but the peaks positions should evolve for each spectrum. The difference between the two peaks is always roughly 30 cm$^{-1}$, and the largest peak is always the most energetic one. Check that your fits are correct by printing the experimental data and the fitted result at each iteration (add the name of the file as the plot title).
+
+```{r}
+
+```
+
+> Add a column in `ruby_fit` corresponding to the estimated pressure rounded to 1 decimal. The excitation wavelength in this experiment was 532 nm. Print the resulting `ruby_fit` table using `knitr::kable(ruby_fit)`
+
+```{r}
+
+```
+
+> Store all file names containing "RBM" into a variable `fRBM`. Load all the corresponding spectra into a single `data.frame` called `spec` with 3 columns: Raman shift $\omega$, Intensity, Pressure. Of course, the indexes in the file names between the ruby and RBM files match. In the Intensity column, store the intensity normalized to [0,1].
+
+```{r}
+fRBM <- list.files(path = "Data", pattern = "RBM")
+
+
+```
+
+> Using `ggplot2`, plot with points the stacked normalized RBM band spectra vertically shifted by P, with a color for each spectrum corresponding to the pressure. Make the plot interactive.
+
+```{r}
+
+```
+
+[^1]: [Chijioke _et al._, ‘The ruby pressure standard to 150 GPa’. _J Appl Phys_ __98__, 114905 (2005).](http://doi.org/10.1063/1.2135877)

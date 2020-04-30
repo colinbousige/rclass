@@ -1,0 +1,326 @@
+# Writing documents with Rmarkdown
+
+## What is markdown?
+
+Markdown is a simplified language that can be used to produce a variety of rich documents: a single .md file can be compiled and outputted to .docx, .odt, .html, .rtf, .pdf or .tex. This output format as well as various options (font size, template, table of contents, numbered sections...) are specified in a YAML header, *i.e.* text between two lines like that `---` (we'll see an example later).
+
+In markdown can be embedded $\LaTeX$ code for displaying math expressions, html tags for more complicated html stuff, and the rest of the formatting is given by a few easy commands:
+
+```
+# Title
+## sub-title
+### sub-sub-title
+...
+###### sub_6-title
+**bold**
+*italic*
+[link](http://google.com/)
+![image caption](image.png)
+Table:
+|   |   |
+|---|---|
+|   |   |
+Unordered list:
+- bla
+- bla bla
+Ordered list:
+1. bla
+1. bla bla
+```
+
+You can also add in-line code by writing text between back-ticks:
+```markdown
+Text with `in-line code`
+```
+will render as: Text with `in-line code`
+
+For more commands, you can for example get a digested cheat-sheet [here](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) and a tutorial [here](http://www.markdowntutorial.com/).
+
+## ... and Rmarkdown?
+
+Rmarkdown is basically the same thing as markdown (extension: .Rmd instead of .md), with the difference that code chunks in which you specify the language between accolades *will be computed and the result will be displayed*.
+
+````
+```r
+# Not computed
+1+1
+```
+````
+
+````r
+`r ''````{r}
+# Computed
+1+1
+```
+````
+```{r, echo=FALSE}
+1+1
+```
+
+And in-line code can be computed and rendered:
+```markdown
+In-line code ``r ''`r 1+2`
+```
+will render as: In-line code `r 1+2`.
+
+This very webpage is fully written in Rmarkdown (you can download the Rmd file if you click the link in the top banner).
+
+Rmarkdown supports a number of languages:
+```{r}
+names(knitr::knit_engines$get())
+```
+
+And `python` and `R` code chunks can communicate thanks to the `reticulate` package.
+
+So... are you starting to see the power of this tool...?
+
+Basically, you can use the best language for each task and combine it in a single Rmd file that will display text and images that are computed at each compilation of the Rmd file: you can fully automatize your data treatment and reporting. 
+
+Example:
+
+- chunk 1: bash, call a program that creates some files
+- chunk 2: python, call a program that do some big computation on these files
+- chunk 3: r, plot the data
+
+
+## Further reading
+
+To see all about Rmarkdown and combining languages in a single document:
+
+- [code chunks](https://bookdown.org/yihui/rmarkdown/r-code.html)
+- [languages](https://bookdown.org/yihui/rmarkdown/language-engines.html)
+- [Rmarkdown cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+- [Rmarkdown cookbook](https://dr-harper.github.io/rmarkdown-cookbook/index.html)
+
+## Example
+
+Create an _example.Rmd_ file with the following YAML header (**the indentation is important**):
+
+```yaml
+---
+title  : Your Title
+author : John Doe
+date   : ``r ''`r format(Sys.time(), '%d/%m/%Y')`
+output :
+    html_document:
+        toc            : true
+        toc_float      : true
+        highlight      : tango
+        number_sections: false
+        code_folding   : hide    
+bibliography: "path/to/biblio.bib"
+csl         : "path/to/nature.csl"
+---
+```
+How to understand this header:
+
+- `---`: surrounds the YAML header. The body comes after that.
+- `title`, `author` and `date`: easy. The date can automatically be set to the current one by setting it to:
+```
+``r ''`r format(Sys.time(), '%d/%m/%Y')`
+```
+- `output`: this tells pandoc the output format you want. When compiling, in case there are multiple entries, the compiler will only look to the _**first**_ one. Click the links below to see more options.
+    + In this case, the output will be an [html document](https://bookdown.org/yihui/rmarkdown/html-document.html) with a floating table of contents, unnumbered sections and all code chunks will be hidden with a button to allow showing them.
+    + [Other output formats allowed](https://rmarkdown.rstudio.com/lesson-9.html):
+        * [`word_document`](https://bookdown.org/yihui/rmarkdown/word-document.html)
+        * [`pdf_document`](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
+        * [`rtf_document`](https://bookdown.org/yihui/rmarkdown/rich-text-format-document.html)
+        * [`beamer_presentation`](https://bookdown.org/yihui/rmarkdown/beamer-presentation.html)
+        * ...
+    + Useful options: 
+        + Word document: you can supply a reference style (template) to use. Just write a dummy .docx file in which you [edit the style](http://www.dummies.com/software/microsoft-office/word/how-to-change-an-existing-style-in-word-2016/), save it as `word-template.docx` (for example), and set the option `reference_docx: word-template.docx`.
+        + LaTeX: `keep_tex`: when pandoc compiles your markdown file to a PDF, it goes through the intermediate step of creating a .tex file. You can decide to keep it for tweaking the style of the PDF output, like you would normally do with a .tex file.
+        + `fig_caption`: allows for figure caption.
+        + `toc`: creates a table of contents.
+        + `number_sections`: allows for section numbering.
+        + `highlight`: syntax highlighting theme for the code chunks.
+- `bibliography`: path to your .bib file. To create a bibliography, add a ```# References``` header at the end of your document.
+- `csl`: path to the bibliography style for the output -- in this example, _nature.csl_. [Find your style](https://www.zotero.org/styles) or edit your own. 
+- There are many [other options](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf), but with this you'll fulfill most of your needs.
+
+
+Now you can start adding some content, like:
+````markdown
+---
+title: "The title"
+output: html_document
+---
+
+# First section
+## First subsection
+I am writing _italic_ and __bold__ stuff.
+
+- This is an item
+- This is another item with a citation [@Bibkey]
+
+# Second section
+## First subsection
+
+This is a text with a footnote[^1].
+
+This is an image with a caption:
+
+![Image with a caption](https://cdn.foliovision.com/images/2017/03/i-love-markdown.png)
+
+While this image has no caption 
+![Image with no caption because I didn't skip a line](http://markdown-here.com/img/icon256.png)
+
+Here's a code chunk in R:
+`r ''````{r}
+x <- seq(0,10,.1)
+plot(x, sin(x), main="R plot")
+```
+
+And one in python:
+`r ''````{python}
+# Load some libraries
+import numpy as np
+# Matplotlib non interactive plots
+import matplotlib.pyplot as plt
+N = 100
+x = np.linspace(0,10,N)
+plt.plot(x, np.sin(x))
+plt.title("Matplotlib Plot")
+plt.ylabel("Y values")
+plt.xlabel("X values")
+plt.show()
+```
+
+# References
+
+[^1]: This is a footnote.
+```` 
+
+Note that when you choose to output to an html format, you can't use PDF images: use .svg ([pdf2svg](http://www.cityinthesky.co.uk/opensource/pdf2svg/)) or other non vectorial images. 
+
+What's nice with html output, it's that you can include _interactive_ figures with `plotly` like we saw in the previous sections. Of course, this won't work with static documents like PDF or Word...
+
+For cross referencing to figures and tables, use `output: bookdown::html_document2` instead of `output: html_document` (requires the package `bookdown`), and see [here](https://dr-harper.github.io/rmarkdown-cookbook/crossRef.html) for details.
+
+
+## Code chunks options
+
+You can add options to a code chunk, like:
+
+- `echo=FALSE`: hide the code, show the output
+- `include=FALSE`: hide the code and the output
+- `warnings=FALSE`: hide the warning messages
+- `error=TRUE`: will compute the code chunk despite errors
+- `cache=TRUE`: cache the result of the chunk for faster re-compilation
+- `fig.asp`: figure aspect ratio
+- `fig.caption`: figure caption
+- ...[and more](https://yihui.name/knitr/options/)
+
+## Compilation
+
+To knit your Rmd file to the desired output, in Rstudio, click the little triangle next to the "Knit" button, like this:
+
+[![](Plots/compile_rmd.png)](Plots/compile_rmd.png)
+
+The corresponding output file will be created in the same folder.
+
+## Going further: parameters
+
+You can even provide a list of parameters to your Rmarkdown file that you can retrieve in code chunks with `params$param_name`. More information [here](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html), but here is a short example: try compiling it directly using the "Knit" button, and then try compiling it using "Knit with parameters". Alternatively, you can have the popup interactive window by rendering with the command `rmarkdown::render("MyDocument.Rmd", params = "ask")`.
+
+
+````markdown
+---
+title: "Test"
+output: html_document
+params:
+  city:
+    label: "City:"
+    value: Angers
+    input: select
+    multiple: TRUE
+    choices: [Angers, Paris, Montpellier, Nantes, Marseille]
+  printcode:
+    label: "Display Code"
+    value: TRUE
+  data:
+    label: "Input dataset:"
+    value: "Data/population.txt"
+    input: file
+---
+
+`r ''````{r, setup, include=FALSE}
+# set this option in the first code chunk in the document
+knitr::opts_chunk$set(echo = params$printcode)
+```
+
+Plotting ``r ''`r paste(params$data)`:
+
+`r ''````{r, message=FALSE}
+library(ggplot2)
+library(plotly)
+df <- read.table(params$data, header=TRUE)
+p <- ggplot(data=subset(df, city %in% params$city), 
+            aes(x=year, y=pop, size=pop, color=city)) +
+        geom_point() + 
+        geom_smooth(method="lm", aes(fill=city), alpha=0.1, show.legend = FALSE) + 
+        ggtitle(paste("Population in ",paste(params$city, collapse=", "),sep=""))+
+        labs(x="Year", y="Population")+
+        theme_light()
+ggplotly(p)
+```
+````
+
+
+The "Knit with parameters" launches a `Shiny` user interface allowing interactively choosing the parameters. All options are listed [here](https://bookdown.org/yihui/rmarkdown/params-knit.html#the-interactive-user-interface).
+
+
+
+## And what about JuPyteR notebooks?
+
+[JuPyteR notebooks](https://jupyter.org/) are basically a web-based interactive version or Rmarkdown documents working with **Ju**lia, **Pyt**hon and **R**. 
+
+But the installation is a tad complicated for the non initiate, and, well, it is just like Rmarkdown but less easy to use and share, in my opinion. But if you mostly work with python, then you have to get used to it since Rmarkdown is better suited for R.
+
+
+## Exercise
+
+<details>
+    <summary>**Exercise 1**</summary>
+
+- Create a new R Markdown file (.Rmd) in RStudio.
+- Insert a YAML Header with title, author and date of your choice at the top of your .Rmd script. Make it so that the output is an html document.
+- Display the summary of “cars” dataset in your report.
+- Make a plot of the “cars” dataset under the summary you just created.
+- Create a small experimental dataframe and display it in your report.
+- Hide the code from your the last code chunk (HINT: Use echo.)
+- Hide the code from all code chunks with the possibility to show it (HINT: use code_folding).
+- Load the package “knitr” in your .Rmd file. and hide the code chunk. HINT: Use include.
+- Hide the warning message that appeared in your report. HINT: Use warning.
+- Set fig.width and fig.height of your plot to 5.
+- Output the same report as pdf.
+
+</details>
+
+
+<details>
+    <summary>**Exercise 2**</summary>
+
+Create an html experimental logbook doing all the data treatment in the example in the previous section.
+
+</details>
+
+
+<details>
+    <summary>**Exercise 3**</summary>
+
+Create an html experimental logbook doing all the data treatment in the example in the previous section **for a single experimental file** that you will provide as a parameter in the YAML header. The file path must be given as an interactive file input selection.
+
+</details>
+
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+
+
+

@@ -1,0 +1,148 @@
+# Operations in the tidyverse
+
+## Various operations
+
+In the end, base R and the `tidyverse` package provide many efficient functions to perform most of the tasks you would want to perform recursively, thus allowing avoiding explicit for loops.
+
+Here are some examples, and you will find much more [here](https://dplyr.tidyverse.org/). Note the use of the pipe operator, `%>%`, that allows a clear syntax for successive operations:
+
+```{r, message=FALSE}
+# create a random tibble
+library(tidyverse)
+N <- 500
+dt <- tibble(x     = rep(runif(N,-1,1),3), 
+             y     = runif(N*3,-1,1), 
+             signx = ifelse(x>0,"positive","negative"),
+             signy = ifelse(y>0,"positive","negative")
+)
+dt
+# means/sd by groups of another variable
+dt %>% 
+    group_by(signx) %>% 
+    summarise(mean_x = mean(x), 
+              sd_x   = sd(x)
+             )
+dt %>% 
+    group_by(signx, signy) %>% 
+    summarise(mean_x=mean(x), mean_y=mean(y))
+# sorting
+dt %>% arrange(x)
+dt %>% arrange(x, desc(y))
+# merge table information
+dt2 <- tibble(signx=c("positive","positive","negative","negative"), 
+              signy=c("positive","negative","positive","negative"), 
+              value=c(TRUE, FALSE, FALSE, TRUE))
+dt2
+inner_join(dt,dt2)
+# add/modify a column
+dt %>% mutate(w=seq_along(x), z=sin(x))
+dt %>% mutate(x=seq_along(x))
+# selecting columns
+dt %>% select(starts_with("sign"))
+dt %>% select(contains("x"))
+dt %>% select(x)  # only x
+dt %>% select(-x) # all but x
+# filtering columns
+dt %>% filter(signx=="positive")
+dt %>% filter(x<0, y>.1)
+# providing data to ggplot
+library(ggplot2)
+dt %>% filter(abs(y)> 0.1) %>% 
+    ggplot(aes(x=x, y=y, color=signy))+
+        geom_point()
+```
+
+
+
+## Exercises
+
+
+<details>
+    <summary>**Exercise 1:** tidy data wrangling</summary>
+
+- First, load the `tidyverse` and `lubridate` package
+- Load <a href="Data/people1.csv" download target="_blank">people1.csv</a> and <a href="Data/people2.csv" download target="_blank">people2.csv</a> into `pp1` and `pp2`
+- Create a new tibble `pp` by using the pipe operator (`%>%`) and successively:
+    - joining the two tibbles into one using `inner_join()`
+    - adding a column `age` containing the age in years (use lubridate's `time_length(x, 'years')` with x a time difference in days) by using using `mutate()`
+- Display a summary of the table using `str()`
+- Using `groupe_by()` and `summarize()`:
+    - Show the number of males and females in the table (use the counter `n()`)
+    - Show the average age per gender
+    - Show the average size per gender and institution
+    - Show the number of people from each country, sorted by descending population (`arrange()`)
+- Using `select()`, display:
+    - only the name and age columns
+    - all but the name column
+- Using `filter()`, show data only for
+    - Chinese people
+    - From institution ECL and UCBL
+    - People older than 22 
+    - People with a `e` in their name
+
+<details>
+    <summary>Solution</summary>
+
+```{r, warnings=FALSE, message=FALSE}
+# First, load the `tidyverse` and `lubridate` package
+library(tidyverse)
+library(lubridate)
+# Load people1.csv and people2.csv
+pp1  <- read_csv("Data/people1.csv")
+pp2  <- read_csv("Data/people2.csv")
+# Create a new tibble `pp` by using the pipe operator (`%>%`)
+# and successively:
+# - joining the two tibbles into one using `inner_join()`
+# - adding a column `age` containing the age in years 
+#   (use lubridate's `time_length(x, 'years')` with x a time
+#   difference in days) by using using `mutate()`
+pp <- pp1 %>% 
+        inner_join(pp2) %>% 
+        mutate(age=time_length(today()-dateofbirth,'years'))
+# Display a summary of the table using `str()`
+str(pp)
+# Using `groupe_by()` and `summarize()`:
+# - Show the number of males and females in the table 
+#   (use the counter `n()`)
+pp %>% group_by(gender) %>% summarize(count=n())
+# - Show the average age per gender
+pp %>% group_by(gender) %>% summarize(age=mean(age))
+# - Show the average size per gender and institution
+pp %>% group_by(gender, institution) %>% summarize(size=mean(size))
+# - Show the number of people from each country, 
+#   sorted by descending population
+pp %>% group_by(origin) %>% 
+        summarize(count=n()) %>% 
+        arrange(desc(count))
+# Using `select()`, display:
+# - only the name and age columns
+pp %>% select(c(name, age))
+# - all but the name column
+pp %>% select(-name)
+# Using `filter()`, show data only for
+# - Chinese people
+pp %>% filter(origin=='China')
+# - From institution ECL and UCBL
+pp %>% filter(institution %in% c('ECL', 'UCBL'))
+# - People older than 22 
+pp %>% filter(age>22)
+# - People with a `e` in their name
+pp %>% filter(grepl('e',name))
+```
+
+
+</details>
+</details>
+
+For more interesting exercises, look at:
+
+- [Plotting 2 – Religion and babies: data handling, ggplot2 and plotly](Data/Exo/Rexercises-plot2.nb.html)
+- [Plotting 3 – COVID-19: data wrangling, ggplot2](Data/Exo/Rexercises-plot3.nb.html)
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+

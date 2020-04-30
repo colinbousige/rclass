@@ -1,0 +1,54 @@
+# Lists
+
+## Definition
+
+Lists allow you to store all types of objects and types of values: booleans, doubles, characters, vectors, other lists, data.frame, etc
+```{r, warnings=FALSE}
+# initialization
+L <- list(name = "John",
+          age  = 43,
+          kids = list(name=c("Kevin", "Pamela"), # nested list
+                      age =c(4,5)
+                     )
+         )
+L
+# names of entries (can be changed)
+names(L)
+# statistics
+summary(L)
+str(L)
+```
+
+## Accessing values and other operations
+
+```{r, warnings=FALSE}
+L$name # is a vector
+L["age"];typeof(L["age"])     # is a list
+L[["age"]];typeof(L[["age"]]) # is a vector
+L[[3]]      # is a list (because 'kids' is a list)
+L[[3]]['name']   # is a list
+L[[3]][['name']] # is a vector
+# empty initialization
+LL <- list(); LL # no specific size
+LL <- vector("list", length=3); LL # specific size
+# Concatenation
+L1 <- list(wife="Kim", wife.age=38)
+L2 <- c(L, L1)
+typeof(L2); L2
+```
+
+## Exercises
+
+- Create a list containing 2 strings, 2 numbers, 2 vectors, 1 list and 2 logical values.
+- Give names to the elements in the list.
+- Access the first and second elements of the list.
+- Add an element at the end of the list.
+- Select the second element of a the nested list.
+- Remove the second element of the list.
+- Create a second list with whatever you want
+- Merge the two lists into one list.
+- Convert `list(1,2,3,4)` to a vector
+- Print the number of objects in the merged list.
+- Add a new item `g4 = "Hello"` to the merged list.
+
+
