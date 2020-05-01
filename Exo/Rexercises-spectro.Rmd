@@ -7,135 +7,18 @@ output:
         toc_float      : true
         toc_depth      : 4
         highlight      : tango
-        number_sections: true
+        number_sections: false
         code_download  : TRUE
 params: 
     solution:
         value: false
 ---
 
-# Reminder
-
-## First things first
-The first thing to do is setting up your working environment path, and load various libraries:
-
-```{r, message=FALSE, warning=FALSE}
-# set working directory 
-# (replace path by your own, where you put the "Data" folder)
-setwd("/Users/colin/Travail/Enseignements/R/Exo/") 
-# load useful libraries
-library(tidyverse)
-library(readxl)
-```
-
-## Loading data
-To load a column file into a `data.frame`:
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-# The file is text
-df1 <- read.table("Data/test.dat")
-df1
-# read first line as column names
-df1 <- read.table("Data/test.dat", header=TRUE)
-df1
-# The file is an Excel file
-df2 <- read_excel("Data/test.xlsx")
-df2
-```
-
-To access/change the names of the columns:
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-names(df1)
-# change the names
-names(df1) <- c("w","Int")
-df1
-```
-
-To get a column or a row:
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-# equivalent call to columns by name or index:
-df1$w
-df1[["w"]]
-df1[[1]]
-# call to rows by index
-df2[1:3,]
-df2[1:3,"y"] #careful, subsetting a tibble returns a tibble
-df2$y[1:3]
-```
-
-## Plotting
-To plot, simply use `plot()`, and type `?plot` to see the options. Add lines with `lines()` and points with `points()`, add straight lines with `abline()`:
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-plot(df2$x, df2$y, 
-    type="l",
-    xlab="X label",
-    ylab="Y label"
-    )
-lines(df1$w, df1$Int, col="red")
-points(df2$y, df2$x, col="blue", pch=16)
-abline(h=6)
-abline(v=3)
-```
-
-Do an equivalent (but nicer) plot with `ggplot2`:
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-library(ggplot2)
-ggplot(data=df2)+
-    geom_line(aes(x=x,y=y))+
-    geom_point(aes(x=y,y=x), col="blue")+
-    geom_line(data=df1, aes(x=w,y=Int), col="red")+
-    geom_hline(yintercept = 6)+
-    geom_vline(xintercept = 3)+
-    xlab("X label")+
-    ylab("Y label")+
-    theme_bw()
-```
-
-## Functions
-
-A function returns the last thing that is called
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-# This function returns a vector normalized to 1
-norm1 <- function(x){
-    x/max(x)
-}
-x <- seq(1,5,1)
-x
-norm1(x)
-```
 
 
-## For loops
-`For` loops can increment along a numerical vector, or any vector:
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-brands <- c("Ford","Renault","Citroen","Toyota")
-for(i in 1:length(brands)){
-    print(brands[i])
-}
-for(brand in brands){
-    print(brand)
-}
-```
+# Exercise 1
 
-This can be useful for a recursive plot, for example. First, you initialize an empty plot, and use a `for` loop to incrementally add elements:
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.height=4.3}
-xs <- seq(0,10,.1)
-colors <- colorRampPalette(c("black","royalblue","orange","red"))(length(xs))
-plot(NA,NA, #initialize an empty plot
-    xlab="x",ylab="sin(x)",
-    xlim=c(0,10),
-    ylim=c(-1,1),
-    las=1)
-for (i in 1:length(xs)) {
-    points(xs[i],sin(xs[i]),col=colors[i], pch=16, cex=2)
-}
-```
-
-
-
-# Exercises
-
-## Exercise 1
-
+- Load the `readxl` and `tidyverse` libraries.
 - Load `FTIR_rocks.xlsx` into a `data.frame` (in fact, `tibble`).
 - Rename the columns with simpler names, such as "w", "r1", "r2" and "r3"
 - Find the wavenumber value of the maximum of each spectrum
@@ -169,7 +52,7 @@ ggplot(df, aes(x=w))+
 
 
 
-## Exercise 2
+# Exercise 2
 
 - Find in the folder "Data" the list of files with the pattern "rubis\_" in their name (check out the `list.files()` function) and store it in `flist`
 - What is the length of `flist`?
@@ -230,12 +113,15 @@ __Solutions__
 
 __Exercise 1__
 
-__Base R solution__
+
 <details>
+    <summary>__Base R solution__</summary>
 
 ```{r warning = FALSE, message=FALSE, cache=FALSE, fig.height=3.3}
-# Load `FTIR_rocks.xlsx` into a `data.frame` (in fact, `tibble`).
+# Load the `readxl` and `tidyverse` libraries.
 library(readxl)
+library(tidyverse)
+# Load `FTIR_rocks.xlsx` into a `data.frame` (in fact, `tibble`).
 df <- read_excel("Data/FTIR_rocks.xlsx")
 # Rename the columns with simpler names, such as "w", "r1", "r2" and "r3"
 names(df) <- c("w", "r1", "r2", "r3")
@@ -285,8 +171,9 @@ lines(df$w, df$r3_norm + 2, col="red", lwd=2)
 ```
 </details>
 
-__Tidyverse+ggplot solution__
+
 <details>
+    <summary>__Tidyverse+ggplot solution__</summary>
 
 ```{r warning = FALSE, message=FALSE, cache=FALSE}
 library(readxl)
@@ -385,12 +272,14 @@ ggplot(df_tidy, aes(x=w,
 ```
 </details>
 
+<br>
+<br>
+<br>
 
 __Exercise 2__
 
-__Base R solution__
-
 <details>
+    <summary>__Base R solution__</summary>
 
 ```{r warning = FALSE, message=FALSE, cache=FALSE, fig.height=4.3}
 # Find in the folder "Data" the list of files with the pattern "rubis_" in their name 
@@ -436,8 +325,8 @@ box()
 </details>
 
 
-__Tidyverse+ggplot solution__
 <details>
+    <summary>__Tidyverse+ggplot solution__</summary>
 
 In this case, we will not store the data into a `list` but into a tidy `data.frame`. Thanks to that, we can attribute a color to a given file name, for example.
 

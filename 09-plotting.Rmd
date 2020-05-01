@@ -456,202 +456,52 @@ p1 + p2 / p3 + p4 + plot_annotation(tag_levels = 'a', tag_suffix=")")
 
 ## Exercises
 
-
 <details>
     <summary>**Exercise 1**</summary>
 
-**Using base graphics**
+**Using base graphics:**
 
-- Load <a href="Data/FTIR_rocks.xlsx" download target="_blank">FTIR_rocks.xlsx</a> into a data.frame
-- Plot the three FTIR spectra with three different colors
-- Add a legend
-- Add a text annotation marking the frequency of the most intense peak for each spectrum
-    + First, find the position of the most intense peak in each spectrum, and store it
-    + Then, find the intensity value of the most intense peak in each spectrum, and store it
-- Add a dashed vertical line at 3420cm<sup>-1</sup>
-- Do the same plot with `ggplot2`. Don't forget to tidy the data up.
-- Make the plot interactive
-
-
-<details>
-    <summary>Solution</summary>
-
-```{r, warnings=FALSE}
-# Load <a href="Data/FTIR_rocks.xlsx" download target="_blank">FTIR_rocks.xlsx</a> into a data.frame
-library(readxl)
-df <- read_excel("Data/FTIR_rocks.xlsx")
-head(df)
-names(df)[1] <- "w"
-# Find the position of the largest peak in each spectrum
-xmax1 <- round(df$w[which.max(df$'rock 1')], 2)
-xmax2 <- round(df$w[which.max(df$'rock 2')], 2)
-xmax3 <- round(df$w[which.max(df$'rock 3')], 2)
-# Find the intensity value of the largest peak in each spectrum
-ymax1 <- max(df[['rock 1']])
-ymax2 <- max(df[['rock 2']])
-ymax3 <- max(df[['rock 3']])
-# Define the colors
-colors <- c("black", "royalblue","red")
-
-# BASE GRAPHICS Solution
-par(cex.lab=1.4, cex.axis=1.4, mgp = c(3, 0.9, 0), 
-    tck=0.02, mar=c(4.5, 4.5, 1, 1),lwd=2, las=1)
-plot(df[['w']], df[['rock 1']], 
-    type = "l", 
-    col  = colors[1],
-    lwd  = 3,
-    ylim = c(0,1),
-    xlab = "Wavenumber [1/cm]",
-    ylab = "Intensity [arb. units]")
-lines(df[['w']], df[['rock 2']], lwd=3, col=colors[2])
-lines(df[['w']], df[['rock 3']], lwd=3, col=colors[3])
-# Add a legend
-legend("topleft",
-    cex    = 1.2, lwd=3,
-    col    = colors,
-    bty    = "n",
-    legend = names(df)[2:4])
-# Add a dashed vertical line at 3420cm-1
-abline(v= 3420, lty=2)
-# Add a text annotation marking the frequency 
-# of the most intense peak for each spectrum
-text(x     = c(xmax1,xmax2,xmax3), 
-     y     = c(ymax1,ymax2,ymax3)+.03,
-     label = c(xmax1,xmax2,xmax3),
-     col   = colors)
-
-
-
-# GGPLOT2 Solution
-library(tidyr)
-df_tidy <- pivot_longer(df, cols=-w, 
-                        names_to="Rock", 
-                        values_to="Intensity")
-theme_set(theme_bw())
-
-p <- ggplot(df_tidy, aes(x=w, y=Intensity, color=Rock))+
-        geom_line(size=1)+
-        labs(x="Wavenumber [1/cm]", 
-             y="Intensity [arb. units]")+
-        scale_color_manual(values=colors, name="Rock: ")+
-        ylim(c(0,1))+
-        geom_vline(xintercept=3420, linetype=2)+
-        annotate("text", 
-                   x= c(xmax1,xmax2,xmax3), 
-                   y= c(ymax1,ymax2,ymax3)+.03,
-                   label= c(xmax1,xmax2,xmax3),
-                   color=colors
-                )+
-        theme(legend.position='top')
-p
-plotly::ggplotly(p, dynamicTicks = TRUE)
-```
-
-</details>
-</details>
-
-<details>
-    <summary>**Exercise 2**</summary>
-
-- Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
-- Load it into a `data.frame`.
-- Plot the mass as a function of the temperature `Ts` with lines, using base graphics and then `ggplot2`
-    + Remove data from the temperature decrease
-    + Define nice axis labels with the units
-    + Add `mass` vs. `Tr` as a blue dashed line
-    + Convert degrees Celsius to Kelvins
-- Write a function returning the derivative of a `data.frame` 
-    + Add the derivative in a red dashed line in a panel below the previous graph
-    + Zoom on the data to see the variations
-    + Remove the x label of the top panel and have the same x axis for both panels
+- Load the `trees` dataset (it's included in base R) and create a scatter plot of the height as a function of girth.
+- Add the volume vs girth as a red line
+- Adjust the axis labels so that they are nicer
+- Adjust the scale so that all data are visible
+- Make it so that the left axis is the height and the right axis is the volume (in red)
+- Suppose you want to add two new observations to the previous plot, but you want to identify them on the graph. Using the points function add the new observations to the last plot using blue to identify them, and make them bigger too. The values of the new observation are Girth = [18, 20] and height = [72, 81].
+- Do the same plot with `ggplot2`
 
 <details>
     <summary>Solution</summary>
 
 ```{r}
-# Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
-# Load it into a `data.frame`.
-d <- read.table("Data/ATG.txt", 
-                skip=12,
-                header=FALSE, 
-                nrows=4088)
-names(d) <- c("Index", "t", "Ts", "Tr", "Value")
-head(d)
-# Plot the mass as a function of the temperature `Ts` with lines, using base graphics and then `ggplot2`
-# Remove data from the temperature decrease
-d <- subset(d, t < d$t[which.max(d$Ts)])
-# Define nice axis labels with the units
-# Add `mass` vs. `Tr` as a blue dashed line
-# Convert degrees Celsius to Kelvins
-plot(d$Ts+273.15, d$Value, 
-    type="l", 
-    xlab="T [K]", 
-    ylab="Mass [mg]")
-lines(d$Tr+273.15, d$Value, col="blue", lty=2)
+par(cex.lab=1.5, cex.axis=1.5, mgp = c(3, 0.9, 0), 
+    tck=0.02, mar=c(4.5, 4.5, 1, 4.5), las=1)
+plot(trees$Girth,trees$Height,type="p",
+    xlab="Girth", ylab="Height",
+    ylim=c(0,100),
+    axes=FALSE,
+    pch=16)
+lines(trees$Girth,trees$Volume, col="red", lwd=2)
+points(c(18, 20), c(72, 81), col="blue", pch=16, cex=3)
+mtext(side=4, line=3, "Volume", las=0, cex=1.7, col="red")
+box()
+axis(1,labels=TRUE)
+axis(3,labels=FALSE)
+axis(2,labels=TRUE)
+axis(4,labels=TRUE, col="red", col.ticks="red", col.axis="red")
+
 library(ggplot2)
-ggplot(data=d, aes(x=Ts+273.15, y=Value)) +
-     geom_line() +
-     geom_line(aes(x=Tr+273.15, y=Value), col="blue", lty=2) +
-     labs(x="T [K]", y="Mass [mg]") +
-     theme_bw()
-# Write a function returning the derivative of a `data.frame` 
-derivative <- function(x, y, n=1) {
-  # returns d^ny/dx^n
-  d <- data.frame(x=x,y=y)
-  for (i in 1:n) {
-    x  <- d$x
-    y  <- d$y
-    dy <- diff(y)/diff(x)# the actual derivative
-    dx <- x[-length(x)]+diff(x)/2# centers the X values
-    d  <- data.frame(x=dx,y=dy)
-  }
-  d
-}
-dd <- derivative(d$Ts,d$Value)
-# Add the derivative in a red dashed line in a panel below the previous graph
-# Zoom on the data to see the variations
-# Remove the x label of the top panel and have the same x axis for both panels
-# ---- base graphics
-M  <- matrix(c(1,2), byrow=TRUE, nrow=2)
-nf <- layout(M, heights=c(1,.5), widths=c(1))
-par(cex.lab=1.5, cex.axis=1.5, mgp = c(3, 0.5, 0), 
-    tck=0.02, mar=c(.5, 4.5, 1, 1), las=1, lwd=2)
-plot(d$Ts+273.15, d$Value, 
-    xlim=c(300, 1200),
-    type="l", 
-    axes=FALSE,
-    xlab="T [K]", 
-    ylab="Mass [mg]")
-axis(2);axis(4, labels=FALSE);
-axis(1, labels=FALSE);axis(3, labels=FALSE);
-box()
-par(mar=c(4.5, 4.5, 0, 1))
-plot(dd$x+273.15, dd$y, 
-    ylim=c(-.15,.05),
-    xlim=c(300, 1200),
-    col="red", 
-    type="l",
-    axes=FALSE,
-    lty=2, 
-    xlab="T [K]", ylab="Derivative")
-axis(1, labels=TRUE, tck=0.06)
-axis(2, labels=TRUE, tck=0.06)
-axis(3, labels=FALSE, tck=0.06)
-axis(4, labels=FALSE, tck=0.06)
-box()
-# ---- ggplot2
-p1 <- ggplot(data=d, aes(x=Ts+273, y=Value)) +
-         geom_line() +
-         labs(x="", y="Mass [mg]") +
-         theme_bw() +
-         theme(axis.text.x=element_blank())
-p2 <- ggplot(data=dd, aes(x=x+273, y=y), color="red") +
-         geom_line(col="red", lty=2) +
-         ylim(c(-.15,.05))+
-         labs(x="T [K]", y="Derivative") +
-         theme_bw()
-library(cowplot)
-plot_grid(p1,p2, ncol=1, align = 'v', axis = 'l', rel_heights = c(1,.4))
+ggplot(data=trees, aes(x=Girth))+
+    geom_point(aes(y=Height), size=3)+
+    annotate("point", x=c(18, 20), y=c(72, 81), size=6, color="blue") +
+    geom_line(aes(y=Volume), color="red", size=1)+
+    scale_y_continuous(sec.axis = sec_axis(~., name = "Volume"), limits = c(0, 100))+
+    theme_bw()+
+    theme(axis.text          = element_text(size = 14),
+          text               = element_text(size = 14),
+          axis.line.y.right  = element_line(color = "red"), 
+          axis.ticks.y.right = element_line(color = "red"),
+          axis.text.y.right  = element_text(color = "red"),
+          axis.title.y.right = element_text(color = "red"))
 ```
 
 </details>
@@ -660,7 +510,7 @@ plot_grid(p1,p2, ncol=1, align = 'v', axis = 'l', rel_heights = c(1,.4))
 
 
 <details>
-    <summary>**Exercise 3**</summary>
+    <summary>**Exercise 2**</summary>
 
 **Using base graphics:**
 
@@ -761,64 +611,14 @@ ggplot(df, aes(x=w, y=norm)) +
 
 
 </details>
-
 </details>
 
 
-<details>
-    <summary>**Exercise 4**</summary>
 
-**Using base graphics:**
-
-- Load the `trees` dataset and create a scatter plot of the height as a function of girth.
-- Add the volume vs girth as a red line
-- Adjust the axis labels so that they are nicer
-- Adjust the scale so that all data are visible
-- Make it so that the left axis is the height and the right axis is the volume (in red)
-- Suppose you want to add two new observations to the previous plot, but you want to identify them on the graph. Using the points function add the new observations to the last plot using blue to identify them, and make them bigger too. The values of the new observation are Girth = [18, 20] and height = [72, 81].
-- Do the same plot with `ggplot2`
-
-<details>
-    <summary>Solution</summary>
-
-```{r}
-par(cex.lab=1.5, cex.axis=1.5, mgp = c(3, 0.9, 0), 
-    tck=0.02, mar=c(4.5, 4.5, 1, 4.5), las=1)
-plot(trees$Girth,trees$Height,type="p",
-    xlab="Girth", ylab="Height",
-    ylim=c(0,100),
-    axes=FALSE,
-    pch=16)
-lines(trees$Girth,trees$Volume, col="red", lwd=2)
-points(c(18, 20), c(72, 81), col="blue", pch=16, cex=3)
-mtext(side=4, line=3, "Volume", las=0, cex=1.7, col="red")
-box()
-axis(1,labels=TRUE)
-axis(3,labels=FALSE)
-axis(2,labels=TRUE)
-axis(4,labels=TRUE, col="red", col.ticks="red", col.axis="red")
-
-library(ggplot2)
-ggplot(data=trees, aes(x=Girth))+
-    geom_point(aes(y=Height), size=3)+
-    annotate("point", x=c(18, 20), y=c(72, 81), size=6, color="blue") +
-    geom_line(aes(y=Volume), color="red", size=1)+
-    scale_y_continuous(sec.axis = sec_axis(~., name = "Volume"), limits = c(0, 100))+
-    theme_bw()+
-    theme(axis.text          = element_text(size = 14),
-          text               = element_text(size = 14),
-          axis.line.y.right  = element_line(color = "red"), 
-          axis.ticks.y.right = element_line(color = "red"),
-          axis.text.y.right  = element_text(color = "red"),
-          axis.title.y.right = element_text(color = "red"))
-```
-
-</details>
-</details>
 
 
 <details>
-    <summary>**Exercise 5**</summary>
+    <summary>**Exercise 3**</summary>
 
 **Using base graphics:**
 
@@ -888,7 +688,7 @@ ggplot(data=df, aes(x=w, y=Int+as.numeric(factor(name))-1, color=name))+
 
 
 <details>
-    <summary>**Exercise 6**</summary>
+    <summary>**Exercise 4**</summary>
 
 
 - Download <a href="Data/population.csv" download target="_blank">population.csv</a> and load it into a `data.frame`
@@ -1042,7 +842,7 @@ p3
 
 
 <details>
-    <summary>**Exercise 7**</summary>
+    <summary>**Exercise 5**</summary>
 
 - Download <a href="https://github.com/colinbousige/Rclass/raw/master/Data/dataG.zip" download target="_blank">dataG.zip</a>
 - Using base graphics or ggplot2, make a plot similar to this one (don't bother with the fit yet):
@@ -1056,112 +856,6 @@ p3
     + an interactive one
 - Looking at data for increasing pressures, plot the data using an interactive slider (see about the `frame` option [here](https://plotly-r.com/animating-views.html))
 
-</details>
-
-
-
-<details>
-    <summary>**Exercise 8**</summary>
-
-I recently saw this graph I thought it would be a good exercise to try and reproduce a similar graph from online-available data (graph source: [J.-M. Jancovici](https://www.facebook.com/jeanmarc.jancovici/photos/a.153593767280/10158534453647281/?type=3)):
-
-[![](Plots/co2_energy.jpg)](Plots/co2_energy.jpg)
-
-Of course, it would be too easy if we could find the actual data in the correct format...
-
-Try reproducing the following graphs from <a href="Data/CO2_emission.csv" download target="_blank">CO2_emission.csv</a>, <a href="Data/energy-use-per-capita.csv" download target="_blank">energy-use-per-capita.csv</a>, <a href="Data/country-and-continent.csv" download target="_blank">country-and-continent.csv</a> and <a href="Data/tot_population.csv" download target="_blank">tot_population.csv</a> (sources: [CO2](https://databank.worldbank.org/reports.aspx?source=2&series=EN.ATM.CO2E.PC&country=#), [Energy](https://ourworldindata.org/energy-production-and-changing-energy-sources#per-capita-electricity-consumption), [Population](https://github.com/datasets/population/blob/master/data/population.csv), [countries and continents](https://datahub.io/JohnSnowLabs/country-and-continent-codes-list)).
-
-The following graph is for countries within the EU (as of 2019). Make it for the continent of your origin.
-
-You can get help on dataset merging [here](https://rpubs.com/bradleyboehmke/data_wrangling).
-
-[![](Plots/Energy.png)](Plots/Energy.png)
-
-
-<details>
-    <summary>Solution</summary>
-
-```r
-library(tidyverse)
-# CO2 data
-CO2 <- read_csv("Data/CO2_emission.csv", na="..")[,-c(1,2)]
-names(CO2) <- c("Country","Code",1960:2018)
-CO2 <- CO2 %>% pivot_longer(cols="1960":"2018", 
-                            names_to="Year", 
-                            values_to="CO2",
-                            names_ptypes = list(Year = double()),
-                            values_drop_na=TRUE)
-# Attribute the correct continent
-continent <- read_csv("Data/country-and-continent.csv")[,c(1,5)]
-names(continent) <- c("Continent","Code")
-CO2 <- inner_join(CO2, continent)
-# Population
-pop <- read_csv("Data/tot_population.csv", na="..")
-names(pop) <- c("Country","Code","Year","Population")
-# Energy data
-energy <- read_csv("Data/energy-use-per-capita.csv")
-names(energy) <- c("Country", "Code", "Year", "Energy")
-# Merge data
-DF <- CO2
-DF <- inner_join(DF, energy, by=c("Code","Year"))
-DF <- inner_join(DF, pop, by=c("Code","Year"))
-DF <- DF %>% select(-Country.x, -Country.y)
-# EU countries
-EU <- c("Austria","Italy","Belgium","Latvia","Bulgaria","Lithuania","Croatia",
-        "Luxembourg","Cyprus","Malta","Czechia","Netherlands","Denmark","Poland",
-        "Estonia","Portugal","Finland","Romania","France","Slovakia","Germany",
-        "Slovenia","Greece","Spain","Hungary","Sweden","Ireland","United Kingdom")
-# Averaged values for the past 20 years
-this_year <- as.numeric(format(Sys.time(), '%Y'))
-ave <- subset(DF, Country %in% EU & Year>=this_year-20) %>%
-         group_by(Country) %>%
-         summarise(CO2        = mean(CO2,na.rm =TRUE),
-                   Energy     = mean(Energy,na.rm =TRUE),
-                   Population = mean(Population,na.rm =TRUE),
-                   Year       = NA)
-# Plotting
-library(ggplot2)
-library(ggrepel)
-p1 <- ggplot(data=subset(DF, Country%in%EU), 
-             aes(x=Energy, y=CO2, col=Country)
-            )+
-    lims(y=c(0,15), x=c(0,80e3))+
-    geom_point(alpha=0.1, aes(size=Population/1e6))+
-    scale_size(name="Population (millions)")+
-    geom_label_repel(data=ave, show.legend=FALSE, segment.size  = 0.5,
-              force=30,
-              aes(x=Energy, y=CO2, col=Country, label = Country))+
-    geom_point(data=ave, alpha=0.9, 
-               aes(x=Energy, y=CO2, col=Country, size=Population/1e6))+
-    labs(x="Energy consumption [kWh/capita]", 
-         y="CO2 emission [ton/capita]")+
-    theme_bw()
-p2 <- ggplot(data=subset(DF, Country%in%EU), 
-             aes(x=Energy*Population/1e9, y=CO2*Population/1e9, col=Country)
-            )+
-    lims(y=c(0,1))+
-    geom_point(alpha=0.1, aes(size=Population/1e6))+
-    scale_size(name="Population (millions)")+
-    geom_label_repel(data=ave, show.legend=FALSE, segment.size  = 0.5,
-              aes(x=Energy*Population/1e9, y=CO2*Population/1e9, 
-                  col=Country, label=Country))+
-    geom_point(data=ave,alpha=0.9, 
-               aes(x=Energy*Population/1e9, y=CO2*Population/1e9, 
-                   col=Country, size=Population/1e6))+
-    labs(x="Total energy consumption [TWh]",
-         y="Total CO2 emission [Gton]")+
-    theme_bw()
-
-library(cowplot)
-legend <- get_legend( p1 + theme(legend.box.margin = margin(0, 0, 0, 0)) )
-plot_grid(p1 + theme(legend.position="none"), 
-          legend,
-          p2 + theme(legend.position="none"), 
-          align = 'v', axis = 'l', ncol=2, rel_widths = c(1,.4)
-          )
-```
-
-</details>
 </details>
 
 

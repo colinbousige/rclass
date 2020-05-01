@@ -1,0 +1,133 @@
+---
+title : "R Exercises"
+date  : "`r Sys.Date()`"
+output: 
+    html_document:
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: true
+        code_download  : TRUE
+params: 
+    solution:
+        value: FALSE
+---
+
+\newif\ifsol
+\sol`r ifelse(params$solution, 'true', 'false')`
+
+
+- Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
+- Load it into a `data.frame`.
+- Plot the mass as a function of the temperature `Ts` with lines, using base graphics and then `ggplot2`
+    + Remove data from the temperature decrease
+    + Define nice axis labels with the units
+    + Add `mass` vs. `Tr` as a blue dashed line
+    + Convert degrees Celsius to Kelvins
+- Write a function returning the derivative of a `data.frame` 
+    + Add the derivative in a red dashed line in a panel below the previous graph
+    + Zoom on the data to see the variations
+    + Remove the x label of the top panel and have the same x axis for both panels
+    + Try to reproduce the following graph:
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+# Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
+# Load it into a `data.frame`.
+d <- read.table("Data/ATG.txt", 
+                skip=12,
+                header=FALSE, 
+                nrows=4088)
+names(d) <- c("Index", "t", "Ts", "Tr", "Value")
+head(d)
+# Plot the mass as a function of the temperature `Ts` with lines, using base graphics and then `ggplot2`
+# Remove data from the temperature decrease
+d <- subset(d, t < d$t[which.max(d$Ts)])
+# Define nice axis labels with the units
+# Add `mass` vs. `Tr` as a blue dashed line
+# Convert degrees Celsius to Kelvins
+plot(d$Ts+273.15, d$Value, 
+    type="l", 
+    xlab="T [K]", 
+    ylab="Mass [mg]")
+lines(d$Tr+273.15, d$Value, col="blue", lty=2)
+library(ggplot2)
+ggplot(data=d, aes(x=Ts+273.15, y=Value)) +
+     geom_line() +
+     geom_line(aes(x=Tr+273.15, y=Value), col="blue", lty=2) +
+     labs(x="T [K]", y="Mass [mg]") +
+     theme_bw()
+# Write a function returning the derivative of a `data.frame` 
+derivative <- function(x, y, n=1) {
+  # returns d^ny/dx^n
+  d <- data.frame(x=x,y=y)
+  for (i in 1:n) {
+    x  <- d$x
+    y  <- d$y
+    dy <- diff(y)/diff(x)# the actual derivative
+    dx <- x[-length(x)]+diff(x)/2# centers the X values
+    d  <- data.frame(x=dx,y=dy)
+  }
+  d
+}
+dd <- derivative(d$Ts,d$Value)
+# Add the derivative in a red dashed line in a panel below the previous graph
+# Zoom on the data to see the variations
+# Remove the x label of the top panel and have the same x axis for both panels
+# ---- base graphics
+M  <- matrix(c(1,2), byrow=TRUE, nrow=2)
+nf <- layout(M, heights=c(1,.5), widths=c(1))
+par(cex.lab=1.5, cex.axis=1.5, mgp = c(3, 0.5, 0), 
+    tck=0.02, mar=c(.5, 4.5, 1, 1), las=1, lwd=2)
+plot(d$Ts+273.15, d$Value, 
+    xlim=c(300, 1200),
+    type="l", 
+    axes=FALSE,
+    xlab="T [K]", 
+    ylab="Mass [mg]")
+axis(2);axis(4, labels=FALSE);
+axis(1, labels=FALSE);axis(3, labels=FALSE);
+box()
+par(mar=c(4.5, 4.5, 0, 1))
+plot(dd$x+273.15, dd$y, 
+    ylim=c(-.15,.05),
+    xlim=c(300, 1200),
+    col="red", 
+    type="l",
+    axes=FALSE,
+    lty=2, 
+    xlab="T [K]", ylab="Derivative")
+axis(1, labels=TRUE, tck=0.06)
+axis(2, labels=TRUE, tck=0.06)
+axis(3, labels=FALSE, tck=0.06)
+axis(4, labels=FALSE, tck=0.06)
+box()
+# ---- ggplot2
+xmax <- dd[dd$x>400-273,]
+xmax <- xmax$x[which.max(abs(xmax$y))]+273+3
+p1 <- ggplot(data=d, aes(x=Ts+273, y=Value)) +
+         geom_line() +
+         labs(x="", y="Mass [mg]") +
+         ylim(c(24,31))+
+         geom_vline(xintercept = xmax, lty=2, alpha=.5)+
+         scale_x_continuous(limits=c(310,1100),
+                            breaks = seq(0,1100,100), 
+                            labels=seq(0,1100,100))+
+         theme_bw() +
+         theme(axis.text.x=element_blank(),
+               plot.margin=unit(c(0.5,0.5,0,0.5), "pt"))
+p2 <- ggplot(data=dd, aes(x=x+273, y=y), color="red") +
+         geom_line(col="red", lty=2) +
+         ylim(c(-.15,.05))+
+         labs(x="T [K]", y="Derivative") +
+         geom_vline(xintercept = xmax, lty=2, alpha=.5)+
+         scale_x_continuous(limits=c(310,1100),
+                            breaks = seq(0,1100,100), 
+                            labels=seq(0,1100,100))+
+         theme_bw()+
+         theme(plot.margin=unit(c(-10,0.5,0.5,0.5), "pt"))
+```
+
+
+```{r echo=FALSE, warning = FALSE, message=FALSE, cache=FALSE}
+library(patchwork)
+p1/p2+ plot_layout(heights = c(4, 1))
+```
