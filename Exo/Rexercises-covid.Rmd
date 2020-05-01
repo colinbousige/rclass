@@ -11,7 +11,7 @@ output:
         code_download  : TRUE
 params: 
     solution:
-        value: false
+        value: FALSE
 ---
 
 The COVID-19 pandemics is a lot of bad things, but it's also a source of data to play with...
@@ -49,8 +49,10 @@ The point here is to learn how to read a given dataset, clean it and use it, so 
 library(tidyverse)
 library(lubridate)
 # Load the raw csv files from the links above and store them in `confirmed_raw` and `deaths_raw`.
-urlConfirmed <- "Data/time_series_covid19_confirmed_global.csv"
-urlDeaths <- "Data/time_series_covid19_deaths_global.csv"
+# urlConfirmed <- "Data/time_series_covid19_confirmed_global.csv"
+# urlDeaths <- "Data/time_series_covid19_deaths_global.csv"
+urlConfirmed <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
+urlDeaths <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
 confirmed_raw  <- read_csv(urlConfirmed)
 deaths_raw     <- read_csv(urlDeaths)
 # Using successive operations with the pipe operator `%>%`
@@ -270,7 +272,6 @@ Here, by using `do()`, we can apply the fit to each group. The result is a tibbl
 
 - Now then, using the same procedure as in the example above, fit the 20 first days of the pandemic by an exponential (confirmed cases), and plot the data for the countries in the first plot (all days), plus the result of the fit. Here is the expected plot: 
 
-
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 library(broom)
 fits <- alldata %>% group_by(country) %>% 
@@ -302,3 +303,6 @@ ggplot(data=alldata %>% filter(country %in% countries),
     xlab("Date")+
     ylab("Confirmed cases")
 ```
+
+In fact, this exponential model is rather wrong... A better model of epidemics dynamics is done by the SIR model, for Susceptible, Infectious, Recovered. A description of the SIR modeling through R can be found [here](https://staff.math.su.se/hoehle/blog/2020/03/16/flatteningthecurve.html).
+
