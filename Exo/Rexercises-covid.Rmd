@@ -118,7 +118,7 @@ alldata <- confirmed %>%
     + is there anything wrong?
 - To better see the effect of confinement regulation, it's probably more interesting to plot the number of new confirmed cases. Plot as a barplot the number of new confirmed cases per day for 2 countries of your choice, and add a vertical line corresponding to the date of application of confinement rules.
 
-```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=.8}
 # Plot side by side the number of confirmed cases and deaths 
 # vs time in China, Italy, France, Spain and the US.
 # Using `ggrepel`, add the country names as annotation
@@ -131,22 +131,22 @@ colors <- c("black","red","seagreen","orange","royalblue")
 labs <- alldata %>% 
             filter(country %in% countries) %>%
             group_by(country) %>% 
-            filter(date==max(date)) %>% 
+            filter(date==last(date)) %>% 
             ungroup()
 
 P1a <- alldata %>% 
     filter(country %in% countries) %>%
     ggplot(aes(x=date, y=confirmed, color=country))+
         geom_line(size=1)+
-        scale_color_manual(values=colors, name="")+
+        scale_color_manual(values=colors)+
         xlab("Days")+
         ylab("Number of Confirmed cases ")+
         theme_bw()+
         theme(legend.position = 'none')+
         ggtitle("Confirmed cases")+
         scale_y_log10(
-            breaks = 10^(-seq(-5, 5, by = 1)), 
-            minor_breaks = rep(1:9, 2*5+1)*(10^rep(-5:5, each=9)), 
+            breaks = 10^(seq(0, 10, by = 1)), 
+            minor_breaks = rep(1:9, 2*5+1)*(10^rep(0:10, each=9)), 
             labels = scales::trans_format("log10", 
                 scales::math_format(10^.x)))+
         annotation_logticks(sides ='lr')+
@@ -161,15 +161,15 @@ P1b <- alldata %>%
     filter(country %in% countries) %>%
     ggplot(aes(x=date, y=deaths, color=country))+
         geom_line(size=1)+
-        scale_color_manual(values=colors, name="")+
+        scale_color_manual(values=colors)+
         xlab("Days")+
-        ylab("Number of Sick people ")+
+        ylab("Number of Deaths")+
         theme_bw()+
         theme(legend.position = 'none')+
         ggtitle("Deaths")+
         scale_y_log10(
-            breaks = 10^(-seq(-5, 5, by = 1)), 
-            minor_breaks = rep(1:9, 2*5+1)*(10^rep(-5:5, each=9)), 
+            breaks = 10^(seq(0, 10, by = 1)), 
+            minor_breaks = rep(1:9, 2*5+1)*(10^rep(0:10, each=9)), 
             labels = scales::trans_format("log10", 
                 scales::math_format(10^.x)))+
         geom_label_repel(data=labs, 
@@ -178,21 +178,28 @@ P1b <- alldata %>%
             aes(x=date, y=deaths, 
                 col=country, 
                 label = country))
+library(patchwork)
+P1a + P1b
+```
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.7}
 # Plot (P2) the death ratio per country (averaged over time)
 # + is there anything wrong?
 P2 <- alldata %>% group_by(country) %>% 
     summarize(ratio=mean(deaths/confirmed*100)) %>% 
-    ggplot(aes(x=reorder(country,-ratio), y=ratio, fill=country))+
+    ggplot(aes(x=reorder(country,ratio), y=ratio, fill=country))+
         geom_bar(stat="identity", position="dodge") +
-        xlab("Country")+
         ylab("Death ratio [%]")+
         theme_bw()+
-        theme(legend.position = 'none',
-              axis.text.x = element_text(angle = 45, hjust=1))+
+        coord_flip()+
+        theme(axis.title.y=element_blank(),
+              axis.ticks.y=element_blank(),
+              legend.position = 'none'
+            )+
         ggtitle("Death ratio")
-library(patchwork)
-(P1a + P1b) / P2
+P2
 ```
+
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
 # To better see the effect of confinement regulation, it's probably more interesting to plot the number of new confirmed cases. Plot as a barplot the number of new confirmed cases per day for 2 countries of your choice, and add a vertical line corresponding to the date of application of confinement rules.
@@ -231,6 +238,49 @@ deaths %>%
         ylab("New deaths")+
         ggtitle("New deaths") -> P2
 P1/P2
+```
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+# Plot new cases in all previous countries
+countries <- c("China","Italy","France","Spain","US")
+colors <- c("black","red","seagreen","orange","royalblue")
+
+labs <- alldata %>% 
+            filter(country %in% countries) %>%
+            group_by(country) %>% 
+            mutate(n = 1:n()) %>% 
+            mutate(newcases=confirmed-lag(confirmed),
+                   newdeaths=deaths-lag(deaths)
+                    ) %>% 
+            filter(n==n()-1) %>% 
+            select(-n) %>% 
+            ungroup()
+
+P1c <- alldata %>% 
+    filter(country %in% countries) %>%
+    mutate(newcases=confirmed-lag(confirmed)) %>% 
+    filter(newcases>0) %>% 
+    ggplot(aes(x=date, y=newcases, color=country))+
+        geom_line(size=1, alpha=.7)+
+        scale_color_manual(values=colors, name="")+
+        xlab("Days")+
+        ylab("Number of Confirmed cases ")+
+        theme_bw()+
+        theme(legend.position = 'none')+
+        ggtitle("New confirmed cases")
+
+P1d <- alldata %>% 
+    filter(country %in% countries) %>%
+    mutate(newdeaths=deaths-lag(deaths)) %>% 
+    filter(newdeaths>0) %>% 
+    ggplot(aes(x=date, y=newdeaths, color=country))+
+        geom_line(size=1, alpha=.7)+
+        scale_color_manual(values=colors, name="")+
+        xlab("Days")+
+        ylab("Number of Deaths")+
+        theme_bw()+
+        ggtitle("New deaths")
+P1c + P1d
 ```
 
 # Fitting
