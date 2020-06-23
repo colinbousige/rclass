@@ -11,12 +11,16 @@ output:
         code_download  : TRUE
 params: 
     solution:
-        value: false
+        value: FALSE
 ---
 
-\newif\ifsol
-\sol`r ifelse(params$solution, 'true', 'false')`
 
+```{r setup, include=FALSE}
+library(knitr)
+knit_engines$set(asis = function(options) {
+  if (options$echo && options$eval) knit_child(text = options$code)
+})
+```
 
 Set up the environment:
 
@@ -68,13 +72,11 @@ ggplot(data=trees, aes(Girth, Volume))+
 
 - Explain your choice and write the corresponding values (average value and standard deviation, or slope, intercept and corresponding errors). Round the values to 2 decimals.
 
-\ifsol
-
+```{asis include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 The average height is `r mean(trees$Height)` with standard deviation `r round(sd(trees$Height),2)`.
 
 The volume evolves with a slope `r round(coef(fit)[2],2)` ± `r round(summary(fit)$coef[2,'Std. Error'],2)` and intercept `r round(coef(fit)[1],2)` ± `r round(summary(fit)$coef[1,'Std. Error'],2)`.
-
-\fi
+```
 
 -------
 
@@ -158,8 +160,6 @@ library(patchwork)
 p1+p2+p3
 ```
 
-\ifsol
-
+```{asis include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 No clear correlation appears.
-
-\fi
+```
