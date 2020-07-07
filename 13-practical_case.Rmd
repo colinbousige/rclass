@@ -44,7 +44,7 @@ fitpar <- tibble()
 
 Now let's read the data, store them in the tibble `spec` together with other informations, such as the name of the file, the fitted curves of the peaks, or the obtained pressure (the function `Pruby()` is defined in `myfunc.R`).
 
-```{r, out.width='100%', fig.asp=.85, cache=FALSE, warning=FALSE}
+```{r, out.width='100%', fig.asp=.85, cache=FALSE, warning=FALSE, message=FALSE}
 # Reading and storing all treated data 
 for(i in seq_along(frubis)){
     # Reading raw data to a tibble
@@ -106,7 +106,7 @@ for(i in seq_along(frubis)){
 
 Now let's take a global look at our data. For this I like the slider functionality of `plotly`. Make your `ggplot` as usual, and just add the keyword `frame` that is read by `ggplotly()`:
 
-```{r, out.width='100%', fig.asp=.85, cache=FALSE, warning=FALSE}
+```{r, out.width='100%', fig.asp=.85, cache=FALSE, warning=FALSE, message=FALSE}
 gg <- ggplot(data=spec,aes(x=w)) +
           labs(x="Raman Shift [1/cm]", y="Intensity [arb. units]")+
           geom_point(aes(x=w, y=Int_n, frame=P))+
@@ -146,7 +146,7 @@ where the line `print(p)` is necessary, since `ggplot` does not output plots whe
 
 Now we can also plot the evolution of the fit parameters. Let's only look at the position of the peaks:
 
-```{r, out.width='100%', fig.asp=.85,cache=FALSE, warning=FALSE}
+```{r, out.width='100%', fig.asp=.85,cache=FALSE, warning=FALSE, message=FALSE}
 p <- fitpar %>% filter(grepl('x', param)) %>% 
         ggplot(aes(x=name, y=fit, color=param)) +
             scale_color_manual(values = c('black','red'))+

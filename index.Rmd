@@ -73,7 +73,6 @@ load("plot_data.Rdata")
 **You want to be able to produce interactive plots like these in an automatic experimental report?**
 
 ```{r, echo=FALSE, warning = FALSE}
-ggplotly(p, dynamicTicks = TRUE)
 ggplotly(gg, dynamicTicks = TRUE) %>%
   animation_opts(5)%>%
   layout(xaxis = list(autorange=FALSE, range = c(3050, 3550)))%>%

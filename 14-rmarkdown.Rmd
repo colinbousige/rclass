@@ -143,7 +143,9 @@ Now you can start adding some content, like:
 ````markdown
 ---
 title: "The title"
-output: html_document
+output: 
+    bookdown::html_document2 #instead of html_document, for referencing images
+    bookdown::pdf_document2  #instead of pdf_document, for referencing images
 ---
 
 # First section
@@ -154,16 +156,23 @@ I am writing _italic_ and __bold__ stuff.
 - This is another item with a citation [@Bibkey]
 
 # Second section
-## First subsection
+## First subsection that I want to refer to {#subsectionID}
 
 This is a text with a footnote[^1].
 
+Now I can refer to my subsection using `\@ref(subsectionID)` like so:
+section \@ref(subsectionID).
+
 This is an image with a caption:
 
-![Image with a caption](https://cdn.foliovision.com/images/2017/03/i-love-markdown.png)
+`r ''````{r CHUNKname, echo=FALSE, 
+    fig.cap="This is a very nice caption", 
+    out.width="50%", fig.align='center'}
+knitr::include_graphics("https://cdn.foliovision.com/images/2017/03/i-love-markdown.png")
+```
 
-While this image has no caption 
-![Image with no caption because I didn't skip a line](http://markdown-here.com/img/icon256.png)
+And I can refer to this figure using `\@ref(fig:CHUNKname)`. 
+Example : Figure \@ref(fig:CHUNKname).
 
 Here's a code chunk in R:
 `r ''````{r}
@@ -195,7 +204,7 @@ Note that when you choose to output to an html format, you can't use PDF images:
 
 What's nice with html output, it's that you can include _interactive_ figures with `plotly` like we saw in the previous sections. Of course, this won't work with static documents like PDF or Word...
 
-For cross referencing to figures and tables, use `output: bookdown::html_document2` instead of `output: html_document` (requires the package `bookdown`), and see [here](https://dr-harper.github.io/rmarkdown-cookbook/crossRef.html) for details.
+For cross referencing to figures and tables, use `output: bookdown::html_document2` instead of `output: html_document` (requires the package `bookdown`), and see [here](https://bookdown.org/yihui/rmarkdown-cookbook/cross-ref.html) for details.
 
 
 ## Code chunks options
@@ -320,7 +329,6 @@ Create an html experimental logbook doing all the data treatment in the example 
 <br>
 <br>
 <br>
-
 
 
 
