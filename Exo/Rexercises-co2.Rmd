@@ -8,10 +8,10 @@ output:
         toc_depth      : 4
         highlight      : tango
         number_sections: false
-        code_download  : TRUE
+        code_download  : FALSE
 params: 
     solution:
-        value: false
+        value: FALSE
 ---
 
 
@@ -44,7 +44,7 @@ names(CO2) <- c("Country","Code",1960:2018)
 CO2 <- CO2 %>% pivot_longer(cols="1960":"2018", 
                             names_to="Year", 
                             values_to="CO2",
-                            names_ptypes = list(Year = double()),
+                            names_transform = list(Year = as.numeric),
                             values_drop_na=TRUE)
 # Attribute the correct continent
 continent <- read_csv("Data/country-and-continent.csv")[,c(1,5)]

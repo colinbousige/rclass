@@ -9,7 +9,7 @@ output:
         toc_depth      : 4
         highlight      : tango
         number_sections: true
-        code_download  : TRUE
+        code_download  : FALSE
 params: 
     solution:
         value: FALSE
@@ -102,10 +102,10 @@ We will now plot this as a colored heatmap using `geom_raster` from `ggplot2`:
 + Do you see anything on the plot?
 + In fact, we need to saturate values above a certain limit in order to see the fine evolution of the $G(r,t)$ auto-correlator. Add a mutation of the tibble attributing the limit value to all points above this limit, and play with the limit value in order to have a nicer plot.
 - Add a vertical dashed line in x=8.18Å marking the mean pore size for this structure.
-+ Use a nicer color scheme with more colors in order to better see the variations. An example of plot is given below:
+- Use a nicer color scheme with more colors in order to better see the variations.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-lim <- 0.1
+lim    <- 0.1
 nbreak <- 6
 colors <- colorRampPalette(c("white","royalblue","seagreen","orange","red","brown"))(50)
 Grt %>% 
@@ -122,18 +122,15 @@ Grt %>%
         ) +
         labs(x = "r [Å]", y="Time [ps]") +
         scale_x_continuous(expand = c(0,0)) + 
-        scale_y_continuous(expand = c(0,0)) -> pGrt
+        scale_y_continuous(expand = c(0,0))
 ```
 
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-pGrt
-```
 
 Now we want to see the evolution of $G(r,t)$ as a function of $\varepsilon/k_BT$. Using the procedure above, plot $G(r,t)$ for all 
-$\varepsilon/k_BT$ on a grid like so:
+$\varepsilon/k_BT$ on a grid.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-lim <- 0.1
+lim    <- 0.1
 nbreak <- 6
 colors <- colorRampPalette(c("white","royalblue","seagreen","orange","red","brown"))(50)
 Grt %>% 
@@ -151,9 +148,6 @@ Grt %>%
         labs(x = "r [Å]", y="Time [ps]") +
         scale_x_continuous(expand = c(0,0)) + 
         scale_y_continuous(expand = c(0,0)) +
-        facet_wrap(~epskt)-> pGrt2
+        facet_wrap(~epskt)
 ```
 
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-pGrt2
-```

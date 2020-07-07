@@ -9,7 +9,7 @@ output:
         toc_depth      : 4
         highlight      : tango
         number_sections: true
-        code_download  : TRUE
+        code_download  : FALSE
 params: 
     solution:
         value: false
@@ -85,7 +85,7 @@ DF %>%
     pivot_longer(col=-name,
                  names_to="Year", 
                  values_to="Score",
-                 names_ptypes = list(Year = double()))
+                 names_transform=list(Year = as.numeric))
 ```
 The line `names_ptypes = list(Year = double())` is here to convert the character year values to numerical values.
 
@@ -94,19 +94,19 @@ children <- children %>%
                 pivot_longer(col=-Country, 
                              names_to="Year", 
                              values_to="Fertility",
-                             names_ptypes = list(Year = double()))
+                             names_transform=list(Year = as.numeric))
 income   <- income %>% 
                 select(Country, '1800':'2018') %>% 
                 pivot_longer(col=-Country, 
                              names_to="Year", 
                              values_to="Income",
-                             names_ptypes = list(Year = double()))
+                             names_transform=list(Year = as.numeric))
 pop      <- pop %>% 
                 select(Country, '1800':'2018') %>% 
                 pivot_longer(col=-Country, 
                              names_to="Year", 
                              values_to="Population",
-                             names_ptypes = list(Year = double()))
+                             names_transform=list(Year = as.numeric))
 ```
 
 5. Now we want to combine all these datasets into a single one called `dat`, containing the columns `Country`, `Year`, `Population`, `Religion`, `Fertility` and `Income`. Look into the `inner_join()` function of the `dplyr` library (which is part of the `tidyverse` library). For the `religion` dataset, we will consider that the proportions of 2010 are representative of all times.
