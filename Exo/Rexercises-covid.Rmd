@@ -300,49 +300,55 @@ d <- tibble(x=rep(a,3),
                 a*runif(1)+2+runif(length(a))),
             T=factor(rep(1:3,each=length(a)))
             )
-# Fit the data using nls() in a do() loop
-d_fit <- d %>% group_by(T) %>% 
-    do(fit=nls(data=.,
-               y~x*A+B, 
-               start=list(A=1, B=1)))
+# Fit the data using nls() by nesting
+d_fit <- d %>% 
+    nest(data=-T) %>% 
+    mutate(fit=map(data, ~ nls(data = .,
+                   y~x*A+B, 
+                   start=list(A=1, B=1))),
+           tidied = map(fit, tidy),
+           augmented = map(fit, augment))
 d_fit
-d_fit %>% augment(fit)
-d_fit %>% tidy(fit)
-d_fit %>% tidy(fit) %>% 
+d_fit %>% unnest(augmented)
+d_fit %>% unnest(tidied)
+d_fit %>% unnest(tidied) %>% 
   select(T, term, estimate, std.error) %>% 
   pivot_wider(names_from = term, 
               values_from = c(estimate,std.error))
 ggplot(data=d, aes(x=x, y=y, col=T))+
     geom_point(alpha=0.5) + 
-    geom_line(data=d_fit %>% augment(fit), 
+    geom_line(data=d_fit %>% unnest(augmented), 
         aes(x=x,y=.fitted, col=T))
 ```
 
-Here, by using `do()`, we can apply the fit to each group. The result is a tibble containing the fit result for each group. Then, using `broom`'s function `augment()` and `tidy()`, we respectively get the fitted values and residues, and the fitting parameters.
+Here, by combining `nest()` and `purrr::map()`, we can apply the fit to each group. The result is a tibble containing the fit result for each group. Then, using `broom`'s function `augment()` and `tidy()`, we respectively get the fitted values and residues, and the fitting parameters.
 
-- Now then, using the same procedure as in the example above, fit the total Confirmed cases for France, China, Italy and Spain using a [logistic function](https://en.wikipedia.org/wiki/Logistic_function), and plot the data and their fit, and show the results of the fits. Here is the expected plot: 
+- Now then, using the same procedure as in the example above, fit the total Confirmed cases for France, China, Italy and Spain for the 100 first days using a [logistic function](https://en.wikipedia.org/wiki/Logistic_function), and plot the data and their fit, and show the results of the fits. Here is the expected plot: 
 
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 library(broom)
 countries <- c("China","Italy","France","Spain")
 fits <- alldata %>% 
     filter(country %in% countries) %>% 
-    group_by(country) %>% 
-    do(fit=nls(confirmed ~ a/(1+exp(-b*(date-c))), 
-               data = .,
-               start=list(a=max(.$confirmed), b=.1, c=15)))
+    filter(date <= 100) %>% 
+    nest(data=-country) %>% 
+    mutate(fit=map(data, ~ nls(data = .,
+               confirmed ~ a/(1+exp(-b*(date-c))), 
+               start=list(a=max(.$confirmed), b=.1, c=15))),
+           tidied = map(fit, tidy),
+           augmented = map(fit, augment))
 # Now then, using the same procedure as in the example above, fit the 20 first days of the pandemic by an exponential (confirmed cases), and plot the data for the countries in the first plot (all days), plus the result of the fit.
 colors <- c("black","red","seagreen","orange")
-fits %>% augment(fit) %>% 
+fits %>% unnest(augmented) %>% 
     ggplot(aes(x=date, color=country))+
-        geom_point(aes(y=confirmed), alpha=.5)+
+        geom_point(aes(y=confirmed), alpha=.2, size=3)+
         geom_line(aes(y=.fitted))+
         scale_color_manual(values=colors, name="")+
         theme(legend.position='top')+
         xlab("Date")+
         ylab("Confirmed cases")
 
-fits %>% tidy(fit) %>% 
+fits %>% unnest(tidied) %>% 
   select(country, term, estimate) %>% 
   pivot_wider(names_from = term, 
               values_from = estimate)

@@ -236,6 +236,8 @@ Download <a href="Data/population.txt" download target="_blank">population.txt</
     + What is the max and min of population in this city?
     + The average population over time?
 - What is the total population in 2012?
+- What is the total population per year?
+- What is the average population per city over the years?
 
 <details>
 <summary>Solution</summary>
@@ -251,11 +253,18 @@ names(popul); dim(popul)
 mtp <- subset(popul, city == "Montpellier")
 mtp <- popul %>% filter(city == "Montpellier")
 # What is the max and min of population in this city?
+max(mtp[,"pop"])
+min(mtp[,"pop"])
 range(mtp[,"pop"])
 # The average population over time?
 mean(mtp[,"pop"])
 # What is the total population in 2012?
 sum(popul[popul[,"year"] == 2012, "pop"])
+popul %>% filter(year==2012) %>% select(pop) %>% sum()
+# What is the total population per year?
+popul %>% group_by(year) %>% summarise(pop_tot=sum(pop))
+# What is the average population per city over the years?
+popul %>% group_by(city) %>% summarise(pop_ave=mean(pop))
 ```
 
 </details>

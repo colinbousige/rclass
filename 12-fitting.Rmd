@@ -2,6 +2,9 @@
 
 ## Linear fitting
 
+```{r include=FALSE, warning = FALSE, message=FALSE, cache=FALSE}
+rm(list = ls())
+```
 
 Let's learn how to do simple fits with R and plot the results.
 ```{r, warnings=FALSE}
@@ -34,6 +37,7 @@ abline(coef(fit), col="red")
 to_print <- paste("y = ", round(coef(fit)[1],2)," + x*",
                     round(coef(fit)[2],2), sep="")
 text(50, 50, to_print)
+library(ggplot2)
 ggplot(data=d, aes(x,y)) + 
     geom_point(cex=3) +
     geom_smooth(method="lm") +
@@ -105,6 +109,7 @@ lines(x, predict(fit2, x), col="royalblue", lwd=2)
 
 ## The broom library
 
+
 Thanks to the [`broom`](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) library, it is easy to retrieve all the fit parameters in a `tibble`:
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
@@ -129,92 +134,61 @@ augment(fit)
 
 It is then easy to make a recursive fit on your data without using a `for loop`:
 
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
 library(broom)
 library(tidyverse)
 library(ggplot2)
 # Create fake data
-a <- seq(-10,10,1)
+a <- seq(-10,10,.2)
+centers <- runif(3, min=-8, max=8)
+widths  <- runif(3, min=0.5, max=1)
+amp     <- runif(3, min=2, max=10)
+noise   <- .3*runif(length(a))-.15
 d <- tibble(x=rep(a,3),
-            y=c(a*runif(1)+runif(length(a)),
-                a*runif(1)+1+runif(length(a)),
-                a*runif(1)+2+runif(length(a))),
+            y=c(amp[1]*dnorm(a,mean=centers[1],sd=widths[1]) + noise,
+                amp[2]*dnorm(a,mean=centers[2],sd=widths[2]) + noise,
+                amp[3]*dnorm(a,mean=centers[3],sd=widths[3]) + noise),
             T=factor(rep(1:3, each=length(a)))
             )
-# Fit the data using nls() in a do() loop
-d_fit <- d %>% group_by(T) %>% 
-            do(fit=nls(data=.,
-                       y~x*A+B, 
-                       start=list(A=1, B=1)))
-d_fit
-d_fit %>% augment(fit)
-d_fit %>% tidy(fit)
-d_fit %>% tidy(fit) %>% 
+# Plot the data
+d %>% ggplot(aes(x=x, y=y, color=T))+
+        geom_point()
+# Fit all data
+d_fitted <- d %>% 
+    nest(data=-T) %>%
+    mutate(fit = purrr::map(data, ~ nls(data = .,
+                                 y ~ y0 + A*dnorm(x, mean=x0, sd=FW), 
+                                 start=list(A  = max(.$y),
+                                            y0 = .01, 
+                                            x0 = .$x[which.max(.$y)], 
+                                            FW = .7)
+                                 )),
+           tidied = purrr::map(fit, tidy),
+           augmented = purrr::map(fit, augment)
+          )
+# data and fit resulting curve
+d_fitted %>% 
+  unnest(augmented)
+# fit parameters
+d_fitted %>% 
+  unnest(tidied)
+# fit parameters as a tidy table
+d_fitted %>% 
+  unnest(tidied) %>% 
   select(T, term, estimate, std.error) %>% 
   pivot_wider(names_from = term, 
               values_from = c(estimate,std.error))
-d_fit %>% augment(fit) %>% 
+# plot fit result
+d_fitted %>% 
+    unnest(augmented) %>% 
     ggplot(aes(x=x, color=T))+
-        geom_point(aes(y=y), alpha=0.5) + 
+        geom_point(aes(y=y), alpha=0.5, size=3) + 
         geom_line(aes(y=.fitted))
 ```
 
-In case you want to provide fit parameters that vary depending on the group you are looking at, use the notation `.$column_name`, like so:
+In case you want to provide fit parameters that vary depending on the group you are looking at, use the notation `.$column_name`, like is done above.
 
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-library(broom)
-library(tidyverse)
-library(ggplot2)
-# Let's create some fake data:
-Nspec <- 10                           # Amount of spectra
-T     <- floor(seq(273, 500, length=Nspec))  # Fake Temperatures
-N     <- 100                          # Size of the x vector
-fake_data <- tibble()                 # Empty tibble
-for (i in 1:Nspec) {
-    x  <- seq(0, 100, length = N)
-    y  <- runif(x)*.2+
-            50*dnorm(x, mean= (T[i]/T[1])*20 + 25, sd = 10+runif(1,max=5) )
-    fake_data <- bind_rows(fake_data, 
-                           tibble(w=x, Intensity=y, T=T[i]) 
-                           )
-}
-# Let's fit it:
-# A=max(.$Intensity)*10 means that the amplitude is 10 times the 
-# maximum intensity of the current group
-# B=.$w[which.max(.$Intensity)] means that we supply as first guess 
-# the position of the maximum in the current group
-fit_fake_data <- fake_data %>% group_by(T) %>% 
-    do(fit=nls(data=.,
-               Intensity~A*dnorm(w, mean=B, sd=C), 
-               start=list(A=max(.$Intensity)*10, 
-                          B=.$w[which.max(.$Intensity)],
-                          C=10
-                          )
-                )
-    )
-# Get all fitting parameters as a tidy tibble
-fit_pars <- fit_fake_data %>% tidy(fit) %>% 
-                select(T, term, estimate, std.error) %>% 
-                pivot_wider(names_from = term, 
-                            values_from = c(estimate,std.error)
-                            )
-fit_pars
-# Plot the parameters, here the peak position:
-fit_pars %>% ggplot(aes(x=T, y=estimate_B))+
-    geom_point()+
-    geom_errorbar(aes(ymin=estimate_B-std.error_B,
-                      ymax=estimate_B+std.error_B))
-# Plot the data and the fits:
-colors <- colorRampPalette(c("royalblue","seagreen","orange",
-                             "red","brown"))(length(T))
-fit_fake_data %>% augment(fit) %>%
-    ggplot(aes(x=w, color = factor(T))) + 
-        geom_point(aes(y=Intensity+as.numeric(factor(T))-1), alpha=.3) + 
-        geom_line(aes(y=.fitted+as.numeric(factor(T))-1)) + 
-        labs(x="Fake Raman Shift [1/cm]", y="Fake Intensity [arb. units]") +
-        scale_color_manual(values=colors,name="Fake\nTemperature [K]") +
-        theme_bw()
-```
+
 
 
 ## Exercises

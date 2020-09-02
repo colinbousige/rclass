@@ -1,0 +1,68 @@
+---
+title : "R Exercises - G(r)"
+# title : "R Exercises - Solution"
+date  : "2020-07-09"
+output: 
+    html_document:
+        toc            : true
+        toc_float      : true
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: true
+        code_download  : true
+params: 
+    solution:
+        value: true
+---
+
+```{r setup, include=FALSE, warning = FALSE, cache=FALSE}
+library(ggplot2)
+library(tidyverse)
+library(plotly)
+my_theme <- theme_bw()+
+            theme(axis.text = element_text(size = 14,colour="black"),
+                  text = element_text(size = 14),
+                  axis.ticks = element_blank(),
+                  plot.title = element_text(size=14),
+                  legend.text = element_text(size = 14,colour="black"),
+                  legend.title = element_text(size = 14,colour="black"),
+                  panel.border = element_rect(colour = "black", fill=NA, size=1),
+                  panel.grid.major = element_blank(),
+                  panel.grid.minor = element_blank(),
+                  legend.key.height=unit(1,"cm"),
+                  legend.justification = "center",
+                  strip.background = element_blank(),
+                  strip.text=element_text(size = 14),
+                  strip.text.y = element_text(angle=0),
+                  panel.spacing = unit(1, "lines")
+                  )
+theme_set(my_theme)
+```
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+box <- rep(100, 3)
+PBC <- function(x, a){
+    ifelse(abs(x)>.5*a, x - a*sign(x), x)
+}
+Dist <- function(p1, p2, box){
+    sqrt(sum(PBC(p1-p2, box)^2))
+}
+x <- c(0,0,0)
+y <- data.frame(x=c(0,0,0),y=c(1,1,1),z=c(2,2,2))
+Dist()
+d <- read_table2("Data/CS0.5.xyz", skip=2, col_names=c("atom","x","y","z"))
+
+unlist(lapply(seq_len(nrow(d)), function(i) min(sqrt(sum((d$y[i] - d$y)^2)))))
+
+
+```
+
+
+
+
+
+
+
+
+
+

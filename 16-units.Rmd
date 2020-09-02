@@ -1,0 +1,44 @@
+# Working with units
+
+It is easy to work with units in *R* thanks to the package `units` (see [vignette](https://r-quantities.github.io/units/articles/measurement_units_in_R.html#handling-data-with-units-in-r-the-units-package-1)).
+
+Working with the `units` package can prove a *very* good idea to avoid conversion errors in your data treatment...
+
+Here is the gist of it:
+
+```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
+# Load the 'units' library
+library(units)
+t <- seq(.1,1,.1)
+# t here has no unit
+t; units(t)
+# attribute a unit, here 'seconds':
+t <- set_units(t,"s") 
+units(t)
+t
+# automatic units conversion
+d <- set_units(1:10,"m")
+d/t
+# You can convert between units systems
+set_units(d/t,"km/h")
+T <- set_units(1,"fs")
+set_units(1/T,"THz")
+# You can give units to table columns
+library(tidyverse)
+starwars
+starwars %>% 
+    mutate(height = set_units(height,"cm"),
+           mass   = set_units(mass,"kg")
+           )
+# You can plot using units and easily convert between units while plotting
+library(ggforce) # to have ggplot work with units
+p <- starwars %>% 
+    mutate(height = set_units(height,"cm"),
+           mass   = set_units(mass,"kg")) %>% 
+    ggplot(aes(x=height, y=mass, color=sex))+
+        geom_point(size=2)+
+        labs(x="Height", y="Mass")
+p
+p + scale_x_unit(unit = 'inches') +
+    scale_y_unit(unit = 'pounds')
+```
