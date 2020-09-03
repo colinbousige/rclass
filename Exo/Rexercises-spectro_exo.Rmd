@@ -1,0 +1,111 @@
+---
+title : "R Exercises - Spectroscopic data"
+date  : "`r Sys.Date()`"
+output: 
+    html_document:
+        toc            : true
+        toc_float      : true
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: false
+        code_download  : TRUE
+---
+
+
+
+# Exercise 1 - FTIR
+
+- Load the `readxl` and `tidyverse` libraries.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Load `FTIR_rocks.xlsx` into a `data.frame` (in fact, `tibble`).
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Rename the columns with simpler names, such as "w", "r1", "r2" and "r3"
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Find the wavenumber value of the maximum of each spectrum and store them
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Create a function `norm01()` that, given a vector, returns the vector normalized to [0,1]
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Normalize all columns of FTIR intensity to [0,1]
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Using base graphics or `ggplot2`, as you wish, try to reproduce the following graphs:
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+
+
+
+# Exercise 2 - Raman
+
+- Find in the folder "Data" the list of files with the pattern "rubis\_" in their name (check out the `list.files()` function) and store it in `flist`
+ 
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- What is the length of `flist`?
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Initialize an empty list called `spec` and an empty `data.frame` called `maxpos`
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Using a `for` loop, load each file in `flist` into separate elements of `spec`, and store the position of the maximum of each spectrum in `maxpos`
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Plot the first element of `spec` to see the x range
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Using a `for` loop and base graphics, plot the spectra normalized to [0,1] and stacked on top of each other with a vertical shift of 1
+    - Try doing the same with `ggplot2` (expected graph below)
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Plot the evolution of the position of the maximum (expected graph below)
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+

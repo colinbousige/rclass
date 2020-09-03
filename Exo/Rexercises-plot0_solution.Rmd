@@ -1,0 +1,154 @@
+---
+title : "R Exercises - Basic stuff"
+date  : "`r Sys.Date()`"
+output: 
+    html_document:
+        toc            : true
+        toc_float      : true
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: true
+        code_download  : TRUE
+params: 
+    solution:
+        value: true
+---
+
+
+```{r setup, include=FALSE}
+library(ggplot2)
+library(tidyverse)
+theme_set(theme_bw())
+```
+
+-------
+
+# Exercise 1
+
+- Print the 6 first lines of the R-built-in data.frame `trees`
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+head(trees,6)
+```
+
+- Print only the column names
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+names(trees)
+```
+
+- What is the dimension of `trees`?
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+dim(trees)
+```
+
+- Plot the trees height and volume as a function of their girth in two different graphs. Make sure the axis labels are clear
+
+- In each graph, add a red dashed line corresponding to the relevant correlation that you observe (average value, linear correlation...)
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+# base R solution
+plot(trees$Girth, trees$Height, xlab='Girth', ylab='Height')
+abline(col='red',lty=2,h=mean(trees$Height))
+plot(trees$Girth, trees$Volume, xlab='Girth', ylab='Volume')
+fit <- lm(trees$Volume~trees$Girth)
+abline(col='red',lty=2, coef(fit))
+# ggplot solution
+ggplot(data=trees, aes(Girth, Height))+
+    geom_point()+geom_hline(col='red',yintercept=mean(trees$Height),lty=2)
+ggplot(data=trees, aes(Girth, Volume))+
+    geom_point()+geom_smooth(col='red',method="lm",lty=2)
+```
+
+- Explain your choice and write the corresponding values (average value and standard deviation, or slope, intercept and corresponding errors). Round the values to 2 decimals.
+
+
+The average height is `r mean(trees$Height)` with standard deviation `r round(sd(trees$Height),2)`.
+
+The volume evolves with a slope `r round(coef(fit)[2],2)` ± `r round(summary(fit)$coef[2,'Std. Error'],2)` and intercept `r round(coef(fit)[1],2)` ± `r round(summary(fit)$coef[1,'Std. Error'],2)`.
+
+
+-------
+
+# Exercise 2 
+
+- Print the 3 first lines of the R-built-in data.frame `USArrests`. This data set contains statistics about violent crime rates by US state. The numbers are given per 100 000 inhabitants, except for `UrbanPop` which is a percentage.
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+head(USArrests,3)
+```
+
+- What is the average murder rate in the whole country?
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+mean(USArrests$Murder)
+```
+
+- What is the state with the highest assault rate?
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+row.names(USArrests)[which.max(USArrests$Assault)]
+```
+
+- Create a subset of `USArrests` gathering the data for states with an urban population above (including) 80%.
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+USArrests80 <- subset(USArrests, UrbanPop>=80)
+# or
+USArrests80 <- USArrests %>% filter(UrbanPop>=80)
+```
+
+- How many states does that correspond to?
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+nrow(USArrests80)
+```
+
+- Within these states, what is the state with the smallest rape rate?
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+row.names(USArrests80)[which.min(USArrests80$Rape)]
+```
+
+- Print this subset ordered by decreasing urban population.
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+USArrests80[order(-USArrests80$UrbanPop),]
+```
+
+- Print this subset ordered by decreasing urban population and increasing murder rate.
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+USArrests80[order(-USArrests80$UrbanPop, USArrests80$Murder),]
+```
+
+- Plot an histogram of the percentage of urban population with a binning of 5%. Add a vertical red line marking the average value. Make sure the x axis shows the [0,100] range.
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+hist(USArrests$UrbanPop, breaks=seq(0,100,5))
+abline(v=mean(USArrests$UrbanPop), col='red', lwd=3)
+# ggplot solution
+ggplot(data=USArrests, aes(x=UrbanPop))+
+    geom_histogram(breaks=seq(0,100,5),color="black", alpha=.2)+
+    geom_vline(xintercept = mean(USArrests$UrbanPop), col='red')
+```
+
+- Is there a correlation between the percentage of urban population and the various violent crime rates? argument your answer with plots.
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+par(mfrow=c(2,2),mar=c(4,4,1,1))
+plot(USArrests$UrbanPop,USArrests$Murder, pch=16)
+plot(USArrests$UrbanPop,USArrests$Assault, pch=16)
+plot(USArrests$UrbanPop,USArrests$Rape, pch=16)
+```
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+p1 <- ggplot(data=USArrests, aes(x=UrbanPop, y=Murder))+geom_point()
+p2 <- ggplot(data=USArrests, aes(x=UrbanPop, y=Assault))+geom_point()
+p3 <- ggplot(data=USArrests, aes(x=UrbanPop, y=Rape))+geom_point()
+library(patchwork)
+p1+p2+p3
+```
+
+No clear correlation appears.

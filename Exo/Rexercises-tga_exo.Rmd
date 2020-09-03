@@ -1,0 +1,42 @@
+---
+title : "R Exercises - TGA data"
+date  : "`r Sys.Date()`"
+output: 
+    html_document:
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: true
+        code_download  : FALSE
+---
+
+
+- Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
+- Load it into a `data.frame`.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+- Plot the mass as a function of the temperature `Ts` with lines, using base graphics and then `ggplot2`
+    + Remove data from the temperature decrease
+    + Define nice axis labels with the units
+    + Add `mass` vs. `Tr` as a blue dashed line
+    + Convert degrees Celsius to Kelvins
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+- Write a function returning the derivative of a `data.frame` 
+    + Add the derivative in a red dashed line in a panel below the previous graph
+    + Zoom on the data to see the variations
+    + Remove the x label of the top panel and have the same x axis for both panels
+    + Try to reproduce the following graph:
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
