@@ -77,9 +77,31 @@ In the above example, we define `output$distPlot` as a `renderPlot()` function w
 
 ### Various useful functions
 
+<!-- MarkdownTOC -->
+
+- [Input](#input)
+    - [Buttons](#buttons)
+    - [Text/numeric](#textnumeric)
+    - [Slider](#slider)
+    - [File](#file)
+    - [Dropdown menu](#dropdown-menu)
+- [Output](#output)
+    - [Display a plot](#display-a-plot)
+    - [Display text](#display-text)
+    - [Display a table](#display-a-table)
+    - [Reactive events](#reactive-events)
+    - [Writing a file](#writing-a-file)
+
+<!-- /MarkdownTOC -->
+
+
+<a id="input"></a>
+
 #### Input
 
-- **Buttons**: 
+<a id="buttons"></a>
+
+##### Buttons
 
 ```r
 # # # # # # # # # 
@@ -96,7 +118,9 @@ some_function <- eventReactive(input$button_name, {
                                })
 ```
 
-- **Text/numeric**: 
+<a id="textnumeric"></a>
+
+##### Text/numeric
 
 ```r
 # # # # # # # # # 
@@ -119,7 +143,9 @@ input$text_name
 input$value_name
 ```
 
-- **Slider**
+<a id="slider"></a>
+
+##### Slider
 
 ```r
 # # # # # # # # # 
@@ -134,7 +160,9 @@ sliderInput("slider_name", "Text to display",
 input$slider_name
 ```
 
-- **File**
+<a id="file"></a>
+
+##### File
 
 ```r
 # # # # # # # # # 
@@ -156,7 +184,9 @@ myData <- reactive({
     })
 ```
 
-- **Dropdown menu**
+<a id="dropdown-menu"></a>
+
+##### Dropdown menu
 
 ```r
 # # # # # # # # # 
@@ -170,9 +200,13 @@ selectInput("menu_name", "Text to display",
 input$menu_name
 ```
 
+<a id="output"></a>
+
 #### Output
 
-- **Display a plot**
+<a id="display-a-plot"></a>
+
+##### Display a plot
 
 ```r
 # # # # # # # # # 
@@ -190,7 +224,9 @@ output$plot_name <- renderPlot({
 
 If you want an interactive plot, use `plotlyOutput` and `renderPlotly` instead.
 
-- **Display text**
+<a id="display-text"></a>
+
+##### Display text
 
 ```r
 # # # # # # # # # 
@@ -204,7 +240,9 @@ output$text_to_display <- renderText({ "some text" })
 output$text_to_display <- renderPrint({ "some text" })
 ```
 
-- **Display a table**
+<a id="display-a-table"></a>
+
+##### Display a table
 
 ```r
 # # # # # # # # # 
@@ -226,7 +264,9 @@ dataTableOutput("table_to_display")
 output$table_to_display <- renderDataTable({ df })
 ```
 
-- **Reactive events**
+<a id="reactive-events"></a>
+
+##### Reactive events
 
 In case you want the plots or text display to react to a change in input value, you can wrap the corresponding code in the `reactive()` function on the server side:
 
@@ -267,7 +307,9 @@ updateNumericInput(session, "value_name", value = new_value)
 ```
 
 
-- **Writing a file**
+<a id="writing-a-file"></a>
+
+##### Writing a file
 
 This is not a function of shiny, but you may want to write a text file. If this comes from a `data.frame`, you can use the function `write.table()`:
 
@@ -292,6 +334,8 @@ rmarkdown::render("file_name.Rmd")
 ```
 
 
+
+<a id="example"></a>
 
 ### Example
 
@@ -371,13 +415,10 @@ server <- function(input, output, session) {
 shinyApp(ui = ui, server = server)
 ```
 
-This will render as:
+This will render [like this](https://cbousige.shinyapps.io/shiny_example/).
 
-```{r, echo=FALSE}
-knitr::include_app("https://cbousige.shinyapps.io/shiny_example/", 
-                    height = "800px")
-```
 
+<a id="rmarkdown-embedded-shiny-application"></a>
 
 ## Rmarkdown-embedded shiny application
 
@@ -423,7 +464,7 @@ shinyApp(
 The only "problem" with this solution is that the html file that is produced will not run the shiny app by itself, you have to open the Rmd file in Rstudio and hit "Run Document".
 
 
-Another solution consists in deploying your app on [shinyapps.io](https://www.shinyapps.io/) and embedding the page in your document like I did above with:
+Another solution consists in deploying your app on [shinyapps.io](https://www.shinyapps.io/) and embedding the page in your document with:
 
 ````
 `r ''````{r, echo=FALSE}
@@ -432,9 +473,13 @@ knitr::include_app("https://cbousige.shinyapps.io/shiny_example/",
 ```
 ````
 
+<a id="deploying-your-shiny-app"></a>
+
 ## Deploying your shiny app
 
 There are 4 ways to deploy your app: passing the `app.R` file to your users, deploying to [shinyapps.io](https://www.shinyapps.io/), deploying on your own server, or building an executable with Electron.
+
+<a id="passing-the-appr-file-to-your-users"></a>
 
 ### Passing the app.R file to your users
 
@@ -456,6 +501,8 @@ check.packages("ggplot2")
 ```
 
 
+<a id="deploying-to-shinyappsio"></a>
+
 ### Deploying to shinyapps.io
 
 Applications deployed on shinyapps.io will be accessible from anywhere through a weblink. See for example [my application](https://cbousige.shinyapps.io/rubypressure/) to determine the pressure from a ruby Raman spectrum or the expected Raman shift for a given pressure and laser wavelength. Your application will however be public and you will have some limitations in the number of online applications and time of use (if you don't pay a fee, see [here](https://www.shinyapps.io/) for the various plans).
@@ -468,12 +515,16 @@ Applications deployed on shinyapps.io will be accessible from anywhere through a
 Note that in that case, you should not have any `install.package()` command in your code. Most packages are supported by shinyapps.io.
 
 
+<a id="deploying-on-your-own-linux-server"></a>
+
 ### Deploying on your own Linux server
 
 This option is more advanced and I'm not going into details for that, but you have a number of tutorials online. See *e.g.* [here](https://shiny.rstudio.com/articles/shiny-server.html), [here](https://docs.rstudio.com/shiny-server/) or [here](https://www.digitalocean.com/community/tutorials/how-to-set-up-shiny-server-on-ubuntu-16-04).
 
 You might consider this option if you work in a company that want to handle privately its data (which sounds plausible) and not pay the shinyapps.io fee to password protect the app. In that case, just work with the IT department to get it running.
 
+
+<a id="building-an-executable"></a>
 
 ### Building an executable
 
@@ -484,6 +535,8 @@ On **any platform**: there is the possibility described [here](https://www.youtu
 
 
 
+<a id="further-reading"></a>
+
 ## Further reading
 
 - The Shiny [cheatsheet](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)
@@ -492,6 +545,8 @@ On **any platform**: there is the possibility described [here](https://www.youtu
 - The official [Shiny video tutorial](https://shiny.rstudio.com/tutorial/)
 
 
+
+<a id="exercises"></a>
 
 ## Exercises
 

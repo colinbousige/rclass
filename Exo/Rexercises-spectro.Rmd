@@ -27,6 +27,7 @@ params:
 ```{r echo=FALSE, warning = FALSE, message=FALSE, cache=FALSE, fig.height=3.6}
 library(readxl)
 library(tidyverse)
+library(ggplot2)
 df <- read_excel("Data/FTIR_rocks.xlsx")
 names(df) <- c("w", "r1", "r2", "r3")
 norm01 <- function(x) {(x-min(x))/(max(x)-min(x))}
@@ -54,46 +55,37 @@ ggplot(df, aes(x=w))+
 
 - Find in the folder "Data" the list of files with the pattern "rubis\_" in their name (check out the `list.files()` function) and store it in `flist`
 - What is the length of `flist`?
-- Initialize an empty list called `spec` and an empty `data.frame` called `maxpos`
-- Using a `for` loop, load each file in `flist` into separate elements of `spec`, and store the position of the maximum of each spectrum in `maxpos`
-- Plot the first element of `spec` to see the x range
-- Using a `for` loop and base graphics, plot the spectra normalized to [0,1] and stacked on top of each other with a vertical shift of 1
-    - Try doing the same with `ggplot2` (expected graph below)
+- Initialize two empty tibbles called `spec` (storing all spectra) and `maxpos` (storing the position of the maximum for each spectrum)
+- Using a `for` loop, load each file in `flist` and store them into `spec` by *making it tidy*, and store the position of the maximum of each spectrum in `maxpos`
+- Plot the first spectrum in `spec` to see the x range
+- Using `ggplot2`, plot the spectra normalized to [0,1] and stacked on top of each other with a vertical shift of 1
 - Plot the evolution of the position of the maximum (expected graph below)
 
 ```{r echo=FALSE, warning = FALSE, message=FALSE, cache=FALSE, fig.height=6.5}
+library(tidyverse)
+library(ggplot2)
 flist <- list.files(path = "Data", pattern = "rubis")
-spec <- list()
-specdf <- tibble()
-maxpos <- data.frame()
+spec  <- maxpos <- tibble()
 for (file in flist){
-    df <- as_tibble(read.table(paste0("Data/",file), col.names=c("x","y")))
-    spec[[file]] <- df
-    specdf <- rbind(specdf, tibble(x=df$x,y=norm01(df$y),name=file))
-    x <- spec[[file]][[1]]
-    y <- spec[[file]][[2]]
-    m <- x[which.max(y)]
-    maxpos <- rbind(maxpos, data.frame(file=file, maxpos=m))
+    df   <- read_table2(paste0("Data/",file), col_names=c("x","y"))
+    spec <- bind_rows(spec, tibble(x    = df$x,
+                                   y    = norm01(df$y),
+                                   name = file)
+                      )
+    m      <- df$x[which.max(df$y)]
+    maxpos <- bind_rows(maxpos, tibble(file   = file, 
+                                       maxpos = m)
+                        )
 }
-# plot(NA,NA,
-#     xlim=c(3100,3500),
-#     ylim=c(0,length(flist)),
-#     xlab="Raman Shift [1/cm]",
-#     ylab="Intensity [arb. units]"
-#     )
-# i <- 0
-# for (file in flist){
-#     x <- spec[[file]][,1]
-#     y <- spec[[file]][,2]
-#     lines(x, norm01(y)+i)
-#     i <- i+1
-# }
-library(cowplot)
-p1 <- ggplot(data=specdf, aes(x=x,y=y+as.numeric(factor(name))-1,group=name))+
-    geom_line()+theme_bw()+labs(x="Raman Shift [1/cm]", y="Intensity [arb. units]")
+library(patchwork)
+p1 <- ggplot(data=spec, aes(x=x,y=y+as.numeric(factor(name))-1,group=name))+
+    geom_line()+
+    theme_bw()+
+    labs(x="Raman Shift [1/cm]", 
+         y="Intensity [arb. units]")
 p2 <- ggplot(data=maxpos, aes(x=file, y=maxpos)) +
             geom_point(size=2)+
             theme_bw() +
             theme(axis.text.x = element_text(angle = 45, hjust=1))
-plot_grid(p1,p2,align = 'v', axis = 'l', nrow=2)
+p1/p2
 ```

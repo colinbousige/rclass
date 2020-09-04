@@ -253,16 +253,16 @@ In this case, we will not store the data into a `list` but into a tidy `data.fra
 
 ```{r warning = FALSE, message=FALSE, cache=FALSE, fig.height=3.8}
 flist  <- list.files(path = "Data", pattern = "rubis")
-spec   <- data.frame()
-maxpos <- data.frame(file=flist, max=NA)
+spec   <- tibble()
+maxpos <- tibble(file=flist, max=NA)
 for (file in flist){
-    df <- read.table(paste0("Data/",file), col.names=c("w","Int"))
-    spec <- rbind(spec, 
-                  data.frame(w     = df$w,
+    df <- read_table2(paste0("Data/",file), col_names=c("w","Int"))
+    spec <- bind_rows(spec, 
+                      tibble(w     = df$w,
                              Int   = df$Int,
                              Int_n = norm01(df$Int),
                              name  = file)
-                  )
+                      )
     maxpos$max[file==flist] <- df$w[which.max(df$Int)]
 }
 head(spec)
@@ -274,9 +274,11 @@ ggplot(data=spec, aes(x=w,
         geom_line()+
         scale_color_manual(values = colors)+#I want my own colors
         labs(x="Raman Shift [1/cm]", y="Intensity [arb. units]")+
+        theme_bw()+
         theme(legend.position="none")
 ggplot(data=maxpos, aes(x=file, y=max)) +
     geom_point(size=2)+
+    theme_bw()+
     theme(axis.text.x = element_text(angle = 45, hjust=1))
 ```
 

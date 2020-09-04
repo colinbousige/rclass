@@ -8,12 +8,13 @@ output:
         toc_depth      : 4
         highlight      : tango
         number_sections: false
-        code_download  : TRUE
+        code_download  : false
+params: 
+    solution:
+        value: false
 ---
 
-
-
-# Exercise 1 - FTIR
+# Exercise 1
 
 - Load the `readxl` and `tidyverse` libraries.
 
@@ -33,7 +34,7 @@ output:
 
 ```
 
-- Find the wavenumber value of the maximum of each spectrum and store them
+- Find the wavenumber value of the maximum of each spectrum
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
@@ -53,7 +54,6 @@ output:
 
 - Using base graphics or `ggplot2`, as you wish, try to reproduce the following graphs:
 
-
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
 ```
@@ -63,10 +63,10 @@ output:
 
 
 
-# Exercise 2 - Raman
+# Exercise 2
 
 - Find in the folder "Data" the list of files with the pattern "rubis\_" in their name (check out the `list.files()` function) and store it in `flist`
- 
+
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
 ```
@@ -77,33 +77,31 @@ output:
 
 ```
 
-- Initialize an empty list called `spec` and an empty `data.frame` called `maxpos`
+- Initialize two empty tibbles called `spec` (storing all spectra) and `maxpos` (storing the position of the maximum for each spectrum)
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
 ```
 
-- Using a `for` loop, load each file in `flist` into separate elements of `spec`, and store the position of the maximum of each spectrum in `maxpos`
+- Using a `for` loop, load each file in `flist` and store them into `spec` by *making it tidy*, and store the position of the maximum of each spectrum in `maxpos`
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
 ```
 
-- Plot the first element of `spec` to see the x range
+- Plot the first spectrum in `spec` to see the x range
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
 ```
 
-- Using a `for` loop and base graphics, plot the spectra normalized to [0,1] and stacked on top of each other with a vertical shift of 1
-    - Try doing the same with `ggplot2` (expected graph below)
+- Using `ggplot2`, plot the spectra normalized to [0,1] and stacked on top of each other with a vertical shift of 1
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
 ```
 
 - Plot the evolution of the position of the maximum (expected graph below)
-
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
