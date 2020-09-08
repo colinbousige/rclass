@@ -15,14 +15,6 @@ params:
 ---
 
 
-```{r setup, include=FALSE}
-library(ggplot2)
-library(tidyverse)
-theme_set(theme_bw())
-```
-
--------
-
 # Exercise 1
 
 - Print the 6 first lines of the R-built-in data.frame `trees`
@@ -55,6 +47,9 @@ plot(trees$Girth, trees$Volume, xlab='Girth', ylab='Volume')
 fit <- lm(trees$Volume~trees$Girth)
 abline(col='red',lty=2, coef(fit))
 # ggplot solution
+library(ggplot2)
+library(tidyverse)
+theme_set(theme_bw())
 ggplot(data=trees, aes(Girth, Height))+
     geom_point()+geom_hline(col='red',yintercept=mean(trees$Height),lty=2)
 ggplot(data=trees, aes(Girth, Volume))+
@@ -96,6 +91,7 @@ row.names(USArrests)[which.max(USArrests$Assault)]
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 USArrests80 <- subset(USArrests, UrbanPop>=80)
 # or
+library(tidyverse)
 USArrests80 <- USArrests %>% filter(UrbanPop>=80)
 ```
 
@@ -129,6 +125,9 @@ USArrests80[order(-USArrests80$UrbanPop, USArrests80$Murder),]
 hist(USArrests$UrbanPop, breaks=seq(0,100,5))
 abline(v=mean(USArrests$UrbanPop), col='red', lwd=3)
 # ggplot solution
+library(ggplot2)
+library(tidyverse)
+theme_set(theme_bw())
 ggplot(data=USArrests, aes(x=UrbanPop))+
     geom_histogram(breaks=seq(0,100,5),color="black", alpha=.2)+
     geom_vline(xintercept = mean(USArrests$UrbanPop), col='red')
@@ -144,6 +143,8 @@ plot(USArrests$UrbanPop,USArrests$Rape, pch=16)
 ```
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+library(ggplot2)
+theme_set(theme_bw())
 p1 <- ggplot(data=USArrests, aes(x=UrbanPop, y=Murder))+geom_point()
 p2 <- ggplot(data=USArrests, aes(x=UrbanPop, y=Assault))+geom_point()
 p3 <- ggplot(data=USArrests, aes(x=UrbanPop, y=Rape))+geom_point()
