@@ -144,8 +144,16 @@ Now you can start adding some content, like:
 ---
 title: "The title"
 output: 
-    bookdown::html_document2 #instead of html_document, for referencing images
-    bookdown::pdf_document2  #instead of pdf_document, for referencing images
+    bookdown::html_document2: #instead of html_document, for referencing images
+        toc            : true
+        toc_float      : true
+        highlight      : tango
+        number_sections: true
+        code_folding   : show
+        code_download  : true
+    # bookdown::pdf_document2 #instead of pdf_document, for referencing images
+bibliography: "path/to/biblio.bib"
+csl         : "path/to/nature.csl"
 ---
 
 # First section
@@ -165,23 +173,21 @@ section \@ref(subsectionID).
 
 This is an image with a caption:
 
-`r ''````{r CHUNKname, echo=FALSE, 
-    fig.cap="This is a very nice caption", 
-    out.width="50%", fig.align='center'}
+`r ''````{r CHUNKname, echo=FALSE, fig.cap="This is a very nice caption", out.width="50%", fig.align='center'}
 knitr::include_graphics("https://cdn.foliovision.com/images/2017/03/i-love-markdown.png")
 ```
 
 And I can refer to this figure using `\@ref(fig:CHUNKname)`. 
 Example : Figure \@ref(fig:CHUNKname).
 
-Here's a code chunk in R:
-`r ''````{r}
+Here is a code chunk in R in Fig. \@ref(fig:Rfigure):
+`r ''````{r Rfigure, fig.cap="Test figure in R", fig.align='center'}
 x <- seq(0,10,.1)
 plot(x, sin(x), main="R plot")
 ```
 
-And one in python:
-`r ''````{python}
+And one in python in Fig. \@ref(fig:Pythonfigure):
+`r ''````{python Pythonfigure, fig.cap="Test figure in python", fig.align='center'}
 # Load some libraries
 import numpy as np
 # Matplotlib non interactive plots

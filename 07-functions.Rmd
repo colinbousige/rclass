@@ -93,50 +93,9 @@ legend("topright",
 
 ## Exercises
 
-<details>
-    <summary>**Exercise 1**</summary>
-
-- Write a function returning a normalized Gaussian function
-    + Test that it is indeed normalized by numerically computing its integral
-- Write a new function returning the sum of an arbitrary number of Gaussian functions
 
 <details>
-    <summary>Solution</summary>
-
-```r
-# Write a function returning a normalized Gaussian function
-# look also at the dnorm() base function
-Gaussian <- function(x,x0,FWHM,A=1,y0=0){
-    y0 + 2.*A*sqrt(2*log(2))/sqrt(2*pi)/FWHM*exp(-(x-x0)^2*4*log(2)/FWHM^2)
-}
-# Test that it is indeed normalized by numerically computing its integral
-dx <- .01
-x  <- seq(-10,10,dx)
-y  <- Gaussian(x,0,1)
-sum(y)*dx
-# Write a new function returning the sum of an arbitrary number of Gaussian functions
-sumGaussian1 <- function(x,x0,FWHM,A=1,y0=0){
-    y <- y0
-    for (i in 1:length(x0)) {
-      y <- y + Gaussian(x,x0[i],FWHM[i],A=A[i],y0=0)
-    }
-    y
-}
-# handling bad entries and being more efficient
-sumGaussian2 <- function(x,x0,FWHM,A=1,y0=0){
-    if(length(x0)!=length(FWHM)) FWHM <- rep(FWHM, length.out=length(x0))
-    if(length(x0)!=length(A))    A    <- rep(A,    length.out=length(x0))
-    rowSums(sapply(1:length(x0), function(i) {
-          Gaussian(x,x0[i],FWHM[i],A=A[i],y0=y0[1])
-        }))
-}
-```
-
-</details>
-</details>
-
-<details>
-<summary>**Exercise 2**</summary>
+<summary>**Exercise 1**</summary>
 
 Create the sinus cardinal function, $f(x)=\sin(x)/x$ for $x\neq0$ and $f(0)=1$.
 
@@ -161,6 +120,51 @@ plot(x, sinc(x), type="l", lwd=3);abline(h=0,v=0)
 
 
 <details>
+    <summary>**Exercise 2**</summary>
+
+- Write a function returning a normalized Gaussian function
+    + Test that it is indeed normalized by numerically computing its integral
+- Write a new function returning the sum of an arbitrary number of Gaussian functions
+
+<details>
+    <summary>Solution</summary>
+
+```r
+# Write a function returning a normalized Gaussian function
+# look also at the dnorm() base function
+Gaussian <- function(x,x0,FWHM,A=1){
+    2.*A*sqrt(2*log(2))/sqrt(2*pi)/FWHM*exp(-(x-x0)^2*4*log(2)/FWHM^2)
+}
+# Test that it is indeed normalized by numerically computing its integral
+dx <- .01
+x  <- seq(-10,10,dx)
+y  <- Gaussian(x,0,1)
+sum(y*dx)
+sum(dnorm(x,mean=0,sd=1)*dx)
+# Write a new function returning the sum of an arbitrary number of Gaussian functions
+sumGaussian1 <- function(x,x0,FWHM,A=1){
+    y <- y0
+    for (i in 1:length(x0)) {
+      y <- y + Gaussian(x,x0[i],FWHM[i],A=A[i])
+    }
+    y
+}
+# handling bad entries and being more efficient
+sumGaussian2 <- function(x,x0,FWHM,A=1){
+    if(length(x0)!=length(FWHM)) FWHM <- rep(FWHM, length.out=length(x0))
+    if(length(x0)!=length(A))    A    <- rep(A,    length.out=length(x0))
+    rowSums(sapply(1:length(x0), function(i) {
+          Gaussian(x,x0[i],FWHM[i],A=A[i])
+        }))
+}
+```
+
+</details>
+</details>
+
+
+
+<details>
 <summary>**Exercise 3**</summary>
 
 Write a function returning a `tibble` (created if not supplied, incremented if supplied) containing the name, age, gender and country of origin of the people in the class. Print it. Play around with the obtained tibble to make some statistics about the class population.
@@ -171,7 +175,8 @@ Write a function returning a `tibble` (created if not supplied, incremented if s
 ```{r, warnings=FALSE}
 people <- function(ppl=tibble::tibble(), name=NA, age=NA, gender=NA, origin=NA){
     library(tibble)
-    rbind(ppl, tibble(name=name, age=age, gender=gender, origin=origin))
+    library(dplyr)
+    bind_rows(ppl, tibble(name=name, age=age, gender=gender, origin=origin))
 }
 ppl <- people(name="Colin", age=33, gender="Male", origin="France")
 ppl <- people(ppl=ppl, name="Vincent", age=39, gender="Male", origin="France")
