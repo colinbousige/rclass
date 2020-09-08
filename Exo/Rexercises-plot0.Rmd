@@ -20,17 +20,12 @@ library(knitr)
 knit_engines$set(asis = function(options) {
   if (options$echo && options$eval) knit_child(text = options$code)
 })
-```
-
-Set up the environment:
-
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 library(ggplot2)
 library(tidyverse)
 theme_set(theme_bw())
 ```
 
--------
+
 
 # Exercise 1
 
