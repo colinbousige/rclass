@@ -100,7 +100,7 @@ df # is not tidy
 
 ```r
 library(tidyr)
-df <- pivot_longer(df, cols=-Année, names_to="city", values_to="pop")
+df <- pivot_longer(df, cols=-Year, names_to="city", values_to="pop")
 df #is tidy
 ```
 
@@ -109,7 +109,7 @@ df #is tidy
 
 ```{r echo=FALSE, message=FALSE}
 library(tidyr)
-df <- pivot_longer(df, cols=-Année, names_to="city", values_to="pop")
+df <- pivot_longer(df, cols=-Year, names_to="city", values_to="pop")
 df #is tidy
 ```
 

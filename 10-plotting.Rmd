@@ -460,50 +460,99 @@ p1 + p2 / p3 + p4 + plot_annotation(tag_levels = 'a', tag_suffix=")")
 <details>
     <summary>**Exercise 1**</summary>
 
-**Using base graphics:**
+- Download the two sample Raman spectra: <a href="Data/PPC60_G_01.txt" download target="_blank">PPC60_G_01.txt</a> and <a href="Data/PPC60_G_30.txt" download target="_blank">PPC60_G_30.txt</a>
+- Load them in two separate `tibble`
+- Gather the two `data.frame` in another single tidy one: it should have three columns, `w`, `Intensity` and `file_name`
+- Create a function `norm01` that, given a vector, returns the same vector normalized to [0,1]
+- Using `group_by` and `mutate`, add a column `norm_int` of normalized intensity for each file
+- Plot the two normalized spectra on the same graph using lines of different colors
+- Play with the theme and parameters to reproduce the following plot:
 
-- Load the `trees` dataset (it's included in base R) and create a scatter plot of the height as a function of girth.
-- Add the volume vs girth as a red line
-- Adjust the axis labels so that they are nicer
-- Adjust the scale so that all data are visible
-- Make it so that the left axis is the height and the right axis is the volume (in red)
-- Suppose you want to add two new observations to the previous plot, but you want to identify them on the graph. Using the points function add the new observations to the last plot using blue to identify them, and make them bigger too. The values of the new observation are Girth = [18, 20] and height = [72, 81].
-- Do the same plot with `ggplot2`
+```{r, echo=FALSE}
+# Load them in two separate `tibbles`
+library(tidyverse)
+# Using read.table (who returns a data.frame)
+df1 <- read.table("Data/PPC60_G_01.txt", col.names=c("w","Intensity"))
+df2 <- read.table("Data/PPC60_G_30.txt", col.names=c("w","Intensity"))
+df1 <- tibble(df1) # make a tibble from a data.frame
+df2 <- tibble(df2)
+# Direct version using tidyverse (read_table2 returns a tibble)
+df1 <- read_table2("Data/PPC60_G_01.txt", col_names=c("w","Intensity"))
+df2 <- read_table2("Data/PPC60_G_30.txt", col_names=c("w","Intensity"))
+# Gather the two `tibbles` in another single tidy one: 
+# it should have three columns, `w`, `Intensity` and `file_name`
+df1$file_name <- "PPC60_G_01" # add the "file_name" column
+df2$file_name <- "PPC60_G_30"
+df_tidy <- bind_rows(df1,df2) # stack the two tibbles
+# Create a function `norm01` that, given a vector, returns the same vector normalized to [0,1]
+norm01 <- function(x) {
+    (x-min(x))/(max(x)-min(x))
+}
+# Using `group_by` and `mutate`, add a column `norm_int` in df_tidy of normalized intensity for each file
+df_tidy <- df_tidy %>% 
+    group_by(file_name) %>% 
+    mutate(norm_int=norm01(Intensity))
+# Plot the two normalized spectra on the same graph using lines of different colors
+# Play with the theme and parameters to reproduce the following plot:
+df_tidy %>% 
+    ggplot(aes(x=w, y=norm_int, color=file_name)) +
+        geom_line()+
+        scale_color_manual(values=c("red","royalblue"), name="") +
+        labs(x="Raman Shift [1/cm]", y="Intensity [arb. unit]") +
+        theme_bw() +
+        theme(legend.position = "top",
+              text = element_text(size = 14,family = "Times"),
+              panel.grid.major = element_blank(), 
+              panel.grid.minor = element_blank())
+```
+
 
 <details>
     <summary>Solution</summary>
 
 ```{r}
-par(cex.lab=1.5, cex.axis=1.5, mgp = c(3, 0.9, 0), 
-    tck=0.02, mar=c(4.5, 4.5, 1, 4.5), las=1)
-plot(trees$Girth,trees$Height,type="p",
-    xlab="Girth", ylab="Height",
-    ylim=c(0,100),
-    axes=FALSE,
-    pch=16)
-lines(trees$Girth,trees$Volume, col="red", lwd=2)
-points(c(18, 20), c(72, 81), col="blue", pch=16, cex=3)
-mtext(side=4, line=3, "Volume", las=0, cex=1.7, col="red")
-box()
-axis(1,labels=TRUE)
-axis(3,labels=FALSE)
-axis(2,labels=TRUE)
-axis(4,labels=TRUE, col="red", col.ticks="red", col.axis="red")
-
+# Load them in two separate `tibbles`
+library(tidyverse)
+# Using read.table (who returns a data.frame)
+df1 <- read.table("Data/PPC60_G_01.txt", col.names=c("w","Intensity"))
+df2 <- read.table("Data/PPC60_G_30.txt", col.names=c("w","Intensity"))
+df1 <- tibble(df1) # make a tibble from a data.frame
+df2 <- tibble(df2)
+# Direct version using tidyverse (read_table2 returns a tibble)
+df1 <- read_table2("Data/PPC60_G_01.txt", col_names=c("w","Intensity"))
+df2 <- read_table2("Data/PPC60_G_30.txt", col_names=c("w","Intensity"))
+# Gather the two `tibbles` in another single tidy one: 
+# it should have three columns, `w`, `Intensity` and `file_name`
+df1$file_name <- "PPC60_G_01" # add the "file_name" column
+df2$file_name <- "PPC60_G_30"
+df_tidy <- bind_rows(df1,df2) # stack the two tibbles
+# Create a function `norm01` that, given a vector, returns the same vector normalized to [0,1]
+norm01 <- function(x) {
+    (x-min(x))/(max(x)-min(x))
+}
+# Using `group_by` and `mutate`, add a column `norm_int` in df_tidy of normalized intensity for each file
+df_tidy <- df_tidy %>% 
+    group_by(file_name) %>% 
+    mutate(norm_int=norm01(Intensity))
+# Plot the two normalized spectra on the same graph using lines of different colors
 library(ggplot2)
-ggplot(data=trees, aes(x=Girth))+
-    geom_point(aes(y=Height), size=3)+
-    annotate("point", x=c(18, 20), y=c(72, 81), size=6, color="blue") +
-    geom_line(aes(y=Volume), color="red", size=1)+
-    scale_y_continuous(sec.axis = sec_axis(~., name = "Volume"), limits = c(0, 100))+
-    theme_bw()+
-    theme(axis.text          = element_text(size = 14),
-          text               = element_text(size = 14),
-          axis.line.y.right  = element_line(color = "red"), 
-          axis.ticks.y.right = element_line(color = "red"),
-          axis.text.y.right  = element_text(color = "red"),
-          axis.title.y.right = element_text(color = "red"))
+df_tidy %>% 
+    ggplot(aes(x=w, y=norm_int, color=file_name))+
+        geom_line()+
+        theme_bw()
+# Play with the theme and parameters to reproduce the following plot:
+df_tidy %>% 
+    ggplot(aes(x=w, y=norm_int, color=file_name)) +
+        geom_line()+
+        scale_color_manual(values=c("red","royalblue"), name="") +
+        labs(x="Raman Shift [1/cm]", y="Intensity [arb. unit]") +
+        theme_bw() +
+        theme(legend.position = "top",
+              text = element_text(size = 14,family = "Times"),
+              panel.grid.major = element_blank(), 
+              panel.grid.minor = element_blank())
 ```
+
 
 </details>
 </details>
@@ -513,165 +562,58 @@ ggplot(data=trees, aes(x=Girth))+
 <details>
     <summary>**Exercise 2**</summary>
 
-**Using base graphics:**
-
-- Download the two sample Raman spectra: <a href="Data/PPC60_G_01.txt" download target="_blank">PPC60_G_01.txt</a> and <a href="Data/PPC60_G_30.txt" download target="_blank">PPC60_G_30.txt</a>
-- Load them in two separate `data.frame`
-- Plot them together using base graphics, one in red lines, one in blue points
-    + Is the y axis alright? correct it if needed
-- Add the corresponding legend where you see fit (*e.g.* top left corner)
-- Create a function `norm01` to normalize data to [0,1]
-- Do the same plot with data normalized to [0,1]
-- Play with the theme to reproduce the following plot:
-
-```{r, echo=FALSE}
-# Load them in two separate `data.frame`
-df1 <- read.table("Data/PPC60_G_01.txt", col.names=c("w","Int"))
-df2 <- read.table("Data/PPC60_G_30.txt", col.names=c("w","Int"))
-# Plot them together using base graphics, one in red lines, one in blue points
-norm01 <- function(x) {(x-min(x))/(max(x)-min(x))}
-par(family = "Times", cex.lab=1.5, cex.axis=1.4, 
-    mgp = c(2.4, .5, 0), tck=0.02, mar=c(4, 4, .5, .5), lwd=2, las=1)
-plot(df1$w, norm01(df1$Int),
-    xlab="Raman Shift [1/cm]",
-    ylab="Intensity [arb. unit]",
-    type="l", 
-    col="red", 
-    ylim=c(0,1), 
-    lwd=3)
-points(df2$w, norm01(df2$Int), col="royalblue", pch=16, cex=1)
-axis(3, labels=FALSE)
-axis(4, labels=FALSE)
-legend("topleft",
-    cex=1.4,
-    lty=c(1, NA),
-    lwd=c(3, NA),
-    pch=c(NA, 16),
-    col=c("red", "royalblue"),
-    bty = "n",
-    legend=c("PPC60_G_01", "PPC60_G_30")
-    )
-```
-
-**Using ggplot2:**
-
-- Gather the two `data.frame` in a single tidy one, and do an equivalent plot in `ggplot2`
-- What are the difficulties you encountered in each case (base graphics and ggplot)? You now see that each graphics has its perks and downsides.
-
-
-<details>
-    <summary>Solution</summary>
-
-```{r}
-# Load them in two separate `data.frame`
-df1 <- read.table("Data/PPC60_G_01.txt", col.names=c("w","Int"))
-df2 <- read.table("Data/PPC60_G_30.txt", col.names=c("w","Int"))
-norm01 <- function(x) {(x-min(x))/(max(x)-min(x))}
-# Plot them together using base graphics, one in red lines, one in blue points
-par(family = "Times", cex.lab=1.5, cex.axis=1.4, 
-    mgp = c(2.4, .5, 0), tck=0.02, mar=c(4, 4, .5, .5), lwd=2, las=1)
-plot(df1$w, norm01(df1$Int),
-    xlab="Raman Shift [1/cm]",
-    ylab="Intensity [arb. unit]",
-    type="l", 
-    col="red", 
-    ylim=c(0,1), 
-    lwd=3)
-points(df2$w, norm01(df2$Int), col="royalblue", pch=16, cex=1)
-axis(3, labels=FALSE)
-axis(4, labels=FALSE)
-legend("topleft",
-    cex=1.4,
-    lty=c(1, NA),
-    lwd=c(3, NA),
-    pch=c(NA, 16),
-    col=c("red", "royalblue"),
-    bty = "n",
-    legend=c("PPC60_G_01", "PPC60_G_30")
-    )
-# Gather them in a single tidy `data.frame`, and do the same in `ggplot2`
-df1$name <- "PPC60_G_01"
-df1$norm <- norm01(df1$Int)
-df2$name <- "PPC60_G_30"
-df2$norm <- norm01(df2$Int)
-df <- rbind(df1, df2)
-library(ggplot2)
-ggplot(df, aes(x=w, y=norm)) +
-    geom_line(data=subset(df, name=="PPC60_G_01"), size=1, aes(color=name))+
-    geom_point(data=subset(df, name=="PPC60_G_30"), size=2, aes(color=name))+
-    scale_color_manual(values=c("red","royalblue"), name="") +
-    labs(x="Raman Shift [1/cm]", y="Intensity [arb. unit]") +
-    theme_bw() +
-    theme(legend.position = c(0.15,.87),
-          text = element_text(size = 16,family = "Times"),
-          axis.text = element_text(size = 16),
-          legend.text = element_text(size = 14),
-          panel.grid.major = element_blank(), 
-          panel.grid.minor = element_blank())
-```
-
-
-</details>
-</details>
-
-
-
-
-
-<details>
-    <summary>**Exercise 3**</summary>
-
-**Using base graphics:**
-
-- Download <a href="Data/rubis_01.txt" download target="_blank">rubis_01.txt</a>, <a href="Data/rubis_02.txt" download target="_blank">rubis_02.txt</a>, <a href="Data/rubis_03.txt" download target="_blank">rubis_03.txt</a> and <a href="Data/rubis_04.txt" download target="_blank">rubis_04.txt</a> and load them into a list (each element of the list corresponding to a spectrum).
-- Normalize all data to [0,1]
+- Download <a href="Data/rubis_01.txt" download target="_blank">rubis_01.txt</a>, <a href="Data/rubis_02.txt" download target="_blank">rubis_02.txt</a>, <a href="Data/rubis_03.txt" download target="_blank">rubis_03.txt</a> and <a href="Data/rubis_04.txt" download target="_blank">rubis_04.txt</a> and load them into a tidy `tibble`.
+- Normalize all data to [0,1] in a 4th column
 - Plot the 4 spectra on top of each other with a vertical shift of 1, with a different color for each spectrum
-- Annotate on the base line with the name of the file
-- Do the same with `ggplot2` after having loaded the data into a tidy `tibble`
+    + For this use at the `factor()` function:
 
-<details>
-    <summary>Solution</summary>
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+x <- c("a","a","b","c")
+factor(x)
+as.numeric(factor(x))
+```
 
-```{r, warnings=FALSE}
-spec <- list()
-for (i in 1:4) {
-    d  <- read.table(paste("Data/rubis_0",i,".txt", sep=""), 
-                        header=FALSE, col.names=c("w", "Int"))
-    d$Int  <- norm01(d$Int)
-    spec[[paste("rubis_0",i, sep="")]] <- d
-}
-par(cex.lab=1.5, cex.axis=1.5, mgp = c(3, 0.9, 0), tck=0.02, 
-    mar=c(4.5, 4.5, 1, 1), las=1)
-plot(NA, NA,
-    ylim=c(0,4),
-    xlim=c(3050,3350),
-    lwd=2,axes=FALSE,
-    xlab="Raman Shift [1/cm]",
-    ylab="Intensity [arb. units]",)
-axis(1,labels=TRUE)
-axis(3,labels=FALSE)
-axis(2,labels=FALSE); axis(4,labels=FALSE)
-box()
-i <- 1
-for (name in names(spec)) {
-    lines(spec[[name]]$w, spec[[name]]$Int + i - 1, col=i, lwd=2)
-    text(3080, i - 1 + .15, name, cex=1.5)
-    i <- i+1
-}
+- Annotate on the base line with the name of the file. For this, use at `annotate("text", x, y, label)`
+- It should look like this:
 
-
-# # # # # # # # # # # # # # # 
+```{r, echo=FALSE, warnings=FALSE}
 library(tidyverse)
 library(ggplot2)
 df <- tibble()
 for (i in 1:4) {
     d  <- read_table2(paste("Data/rubis_0",i,".txt", sep=""), col_names=c("w", "Int"))
-    d$Int  <- norm01(d$Int)
-    d$name <- paste("rubis_0",i, sep="")
+    d$Int_n <- norm01(d$Int)
+    d$name  <- paste0("rubis_0",i)
     df <- bind_rows(df, d)
 }
 fnames <- unique(df$name)
-ggplot(data=df, aes(x=w, y=Int+as.numeric(factor(name))-1, color=name))+
+ggplot(data=df, aes(x=w, y=Int_n+as.numeric(factor(name))-1, color=name))+
+    geom_line(size=1)+
+    theme_bw()+
+    annotate("text", x=3080, y=1:length(fnames)-.85, label=fnames, size=5)+
+    labs(x="Raman Shift [1/cm]", y="Intensity [arb. units]")+
+    theme(legend.position = "none",
+          text            = element_text(size = 14),
+          axis.text.y     = element_blank(),
+          axis.text       = element_text(size = 14))
+
+```
+
+<details>
+    <summary>Solution</summary>
+
+```{r, warnings=FALSE}
+library(tidyverse)
+library(ggplot2)
+df <- tibble()
+for (i in 1:4) {
+    d  <- read_table2(paste("Data/rubis_0",i,".txt", sep=""), col_names=c("w", "Int"))
+    d$Int_n <- norm01(d$Int)
+    d$name  <- paste0("rubis_0",i)
+    df <- bind_rows(df, d)
+}
+fnames <- unique(df$name)
+ggplot(data=df, aes(x=w, y=Int_n+as.numeric(factor(name))-1, color=name))+
     geom_line(size=1)+
     theme_bw()+
     annotate("text", x=3080, y=1:length(fnames)-.85, label=fnames, size=5)+
@@ -689,7 +631,7 @@ ggplot(data=df, aes(x=w, y=Int+as.numeric(factor(name))-1, color=name))+
 
 
 <details>
-    <summary>**Exercise 4**</summary>
+    <summary>**Exercise 3**</summary>
 
 
 - Download <a href="Data/population.csv" download target="_blank">population.csv</a> and load it into a `data.frame`
@@ -701,18 +643,16 @@ ggplot(data=df, aes(x=w, y=Int+as.numeric(factor(name))-1, color=name))+
     + With points
     + With lines
     + With a black and white theme
-    + Change the axis labels to "Year" and "Population"
     + Make it interactive
 - Try reproducing the following plots (Google is your friend) (look into the function `reorder()` and [this help](https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets) to use it with facets):
 
 ```{r echo=FALSE}
 df <- read.csv("Data/population.csv")
 library(tidyr)
-df <- pivot_longer(df, cols=-Année, 
+df <- pivot_longer(df, cols=-Year, 
                    names_to="City", 
                    values_to="Population")
 df$City <- gsub("\\.", " ", df$City)
-names(df)[1] <- "Year"
 my_theme <- theme_bw()+
             theme(axis.text = element_text(size = 14,family = "Helvetica",colour="black"),
                   text = element_text(size = 14,family = "Helvetica"),
@@ -721,7 +661,8 @@ my_theme <- theme_bw()+
                   panel.border = element_rect(colour = "black", fill=NA, size=1)
                   )
 colors <- c("royalblue","red")
-p1 <- ggplot(data=subset(df,City%in%c("Montpellier","Nantes")), aes(x=Year, y=Population, size=Population, color=City)) +
+p1 <- df %>% filter(City%in%c("Montpellier","Nantes")) %>% 
+    ggplot(aes(x=Year, y=Population, size=Population, color=City)) +
         geom_point() + 
         geom_smooth(method="lm", aes(fill=City), alpha=0.1, show.legend = FALSE) + 
         scale_color_manual(values=colors)+
@@ -739,27 +680,6 @@ p2 <- ggplot(data=subset(df,Year==2012),
         my_theme + 
         theme(axis.text.x = element_text(angle = 45, hjust=1))
 p2
-
-df_ordered <- subset(df,Year<2000) %>%
-                  group_by(Year) %>%
-                  arrange(Year, -Population) %>%
-                  mutate(order = row_number())
-p3 <- ggplot(data=df_ordered, 
-            aes(x=order, y=Population/1e6, fill=City)) + 
-        geom_bar(stat="identity") + 
-        facet_wrap(~Year, scales = "free") +
-        ylim(0,3)+
-        my_theme + 
-        labs(x = "", y="Population (in millions)") +
-        geom_text(aes(label = paste(order,"-",City), x = order, y = Population/1e6), 
-                    hjust=-0.1, angle=90, size=2) +
-        theme(axis.text.x = element_blank(),
-              axis.ticks.x = element_blank(),
-              strip.background = element_blank(),
-              legend.key.height = unit(1,"line"),
-              legend.key.size = unit(1,"line")
-              )
-p3
 ```
 
 
@@ -770,11 +690,14 @@ p3
 
 ```r
 # Load and tidy population data.frame
+library(tidyverse)
 df <- read.csv("Data/population.csv")
-library(tidyr)
-df <- pivot_longer(df, cols=-Année, names_to="City", values_to="Population")
+df <- pivot_longer(df, 
+                   cols=-Year, #year should stay a column
+                   names_to="City", #column names should go to the column `city`
+                   values_to="Population" #values should go to the column `population`
+                   )
 df$City <- gsub("\\.", " ", df$City) # replace dots by spaces in city names
-names(df)[1] <- "Year"
 # Plot the population vs. year with a different color for each city
 p <- ggplot(data=df, aes(x=Year, y=Population, color=City))
 # With points
@@ -783,7 +706,7 @@ p + geom_point()
 p + geom_line()
 # With a black and white theme
 # Change the axis labels to "Year" and "Population"
-p <- p + geom_line() + theme_bw() + xlab("Year") + ylab("Population"); p
+p <- p + geom_line() + theme_bw(); p
 # Make it interactive
 library(plotly)
 ggplotly(p, dynamicTicks = TRUE)
@@ -819,27 +742,6 @@ p2 <- df %>% filter(Year==2012) %>%
             my_theme + 
             theme(axis.text.x = element_text(angle = 45, hjust=1))
 p2
-df_ordered <- df %>% filter(Year<2000) %>%
-                  group_by(Year) %>%
-                  arrange(Year, -Population) %>%
-                  mutate(order = row_number())
-p3 <- ggplot(data=df_ordered, 
-            aes(x=order, y=Population/1e6, fill=City)) + 
-        geom_bar(stat="identity") + 
-        facet_wrap(~Year, scales = "free") +
-        ylim(0,3)+
-        xlim(0,24)+
-        my_theme + 
-        labs(x = "", y="Population (in millions)") +
-        geom_text(aes(label = paste(order,"-",City), x = order, y = Population/1e6), 
-                    hjust=0, vjust=0, angle=45, size=2.5) +
-        theme(axis.text.x = element_blank(),
-              axis.ticks.x = element_blank(),
-              strip.background = element_blank(),
-              legend.key.height = unit(1,"line"),
-              legend.key.size = unit(1,"line")
-              )
-p3
 ```
 
 </details>
@@ -847,10 +749,10 @@ p3
 
 
 <details>
-    <summary>**Exercise 5**</summary>
+    <summary>**Exercise 4**</summary>
 
 - Download <a href="https://github.com/colinbousige/Rclass/raw/master/Data/dataG.zip" download target="_blank">dataG.zip</a>
-- Using base graphics or ggplot2, make a plot similar to this one (don't bother with the fit yet):
+- Make a plot similar to this one (don't bother with the fit):
 
 ![](Plots/data_RBM.png){ width=50% }
 

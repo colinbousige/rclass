@@ -9,6 +9,7 @@ for file in rmdremove; do
     rm -f _book/Exo/${file//.html/}.Rmd
 done
 rm -f _book/Exo/*_solution.Rmd
+cp -r Exo/Rexercises-plot0_solution.Rmd _book/Exo/
 
 rm -rf ~/Travail/SiteLMI/SiteLMI/static/r/*
 cp -r _book/* ~/Travail/SiteLMI/SiteLMI/static/r/

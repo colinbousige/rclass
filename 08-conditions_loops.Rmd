@@ -164,18 +164,18 @@ unlist(lapply(LL, sum)); sapply(LL, sum)
 # Download population.csv and load it into a `data.frame`
 df <- read.csv("Data/population.csv")
 # What is the total population over the years?
-data.frame(year=df[,"Année"],
+data.frame(year=df[,"Year"],
            pop =rowSums(df[,-1]),     # a first way
            pop2=apply(df[,-1], 1, sum)# another way
           )
 # A tidy-compatible version 
 library(tidyverse)
-popul <- pivot_longer(df, cols=-Année, names_to="city", values_to="pop")
+popul <- pivot_longer(df, cols=-Year, names_to="city", values_to="pop")
 popul %>%
-  group_by(Année) %>%
+  group_by(Year) %>%
   summarise(totpop = sum(pop))
 # or equivalently
-summarise(group_by(popul, Année), totpop = sum(pop))
+summarise(group_by(popul, Year), totpop = sum(pop))
 # What is the mean population for each city?
 apply(df[,-1], 2, mean)
 popul %>%
