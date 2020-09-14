@@ -304,6 +304,8 @@ head(popul) # yes
 names(popul); dim(popul)
 # Create a subset containing the data for Montpellier
 mtp <- subset(popul, city == "Montpellier")
+# I prefer the tidyverse version
+library(tidyverse)
 mtp <- popul %>% filter(city == "Montpellier")
 # What is the max and min of population in this city?
 max(mtp$pop)
@@ -339,7 +341,7 @@ popul %>%
 - Load <a href="Data/people1.csv" download target="_blank">people1.csv</a> and <a href="Data/people2.csv" download target="_blank">people2.csv</a> into `pp1` and `pp2`
 - Create a new tibble `pp` by using the pipe operator (`%>%`) and successively:
     - joining the two tibbles into one using `inner_join()`
-    - adding a column `age` containing the age in years (use lubridate's `time_length(x, 'years')` with x a time difference in days) by using using `mutate()`
+    - adding a column `age` containing the age in years (use lubridate's `time_length(x, 'years')` with x a time difference in days) by using `mutate()`
 - Display a summary of the table using `str()`
 - Using `groupe_by()` and `summarize()`:
     - Show the number of males and females in the table (use the counter `n()`)
@@ -370,7 +372,7 @@ pp2  <- read_csv("Data/people2.csv")
 # - joining the two tibbles into one using `inner_join()`
 # - adding a column `age` containing the age in years 
 #   (use lubridate's `time_length(x, 'years')` with x a time
-#   difference in days) by using using `mutate()`
+#   difference in days) by using `mutate()`
 pp <- pp1 %>% 
         inner_join(pp2) %>% 
         mutate(age=time_length(today()-dateofbirth,'years'))
