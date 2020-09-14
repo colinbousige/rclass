@@ -85,7 +85,7 @@ DF %>%
                  values_to="Score",
                  names_transform=list(Year = as.numeric))
 ```
-The line `names_ptypes = list(Year = double())` is here to convert the character year values to numerical values.
+The line `names_transform=list(Year = as.numeric)` is here to convert the character year values to numerical values.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 children <- children %>% 
