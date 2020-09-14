@@ -468,7 +468,7 @@ p1 + p2 / p3 + p4 + plot_annotation(tag_levels = 'a', tag_suffix=")")
 - Plot the two normalized spectra on the same graph using lines of different colors
 - Play with the theme and parameters to reproduce the following plot:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE}
 # Load them in two separate `tibbles`
 library(tidyverse)
 # Using read.table (who returns a data.frame)
@@ -510,7 +510,7 @@ df_tidy %>%
 <details>
     <summary>Solution</summary>
 
-```{r}
+```{r, message=FALSE}
 # Load them in two separate `tibbles`
 library(tidyverse)
 # Using read.table (who returns a data.frame)
@@ -565,18 +565,18 @@ df_tidy %>%
 - Download <a href="Data/rubis_01.txt" download target="_blank">rubis_01.txt</a>, <a href="Data/rubis_02.txt" download target="_blank">rubis_02.txt</a>, <a href="Data/rubis_03.txt" download target="_blank">rubis_03.txt</a> and <a href="Data/rubis_04.txt" download target="_blank">rubis_04.txt</a> and load them into a tidy `tibble`.
 - Normalize all data to [0,1] in a 4th column
 - Plot the 4 spectra on top of each other with a vertical shift of 1, with a different color for each spectrum
-    + For this use at the `factor()` function:
+    + For this, check out the `factor()` function:
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-x <- c("a","a","b","c")
+x <- c("a","a","b","c","a")
 factor(x)
 as.numeric(factor(x))
 ```
 
-- Annotate on the base line with the name of the file. For this, use at `annotate("text", x, y, label)`
+- Annotate on the base line with the name of the file. For this, use `annotate("text", x, y, label)`
 - It should look like this:
 
-```{r, echo=FALSE, warnings=FALSE}
+```{r, echo=FALSE, warnings=FALSE, message=FALSE}
 library(tidyverse)
 library(ggplot2)
 df <- tibble()
@@ -602,7 +602,7 @@ ggplot(data=df, aes(x=w, y=Int_n+as.numeric(factor(name))-1, color=name))+
 <details>
     <summary>Solution</summary>
 
-```{r, warnings=FALSE}
+```{r, warnings=FALSE, message=FALSE}
 library(tidyverse)
 library(ggplot2)
 df <- tibble()
@@ -646,7 +646,7 @@ ggplot(data=df, aes(x=w, y=Int_n+as.numeric(factor(name))-1, color=name))+
     + Make it interactive
 - Try reproducing the following plots (Google is your friend) (look into the function `reorder()` and [this help](https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets) to use it with facets):
 
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE}
 df <- read.csv("Data/population.csv")
 library(tidyr)
 df <- pivot_longer(df, cols=-Year, 
