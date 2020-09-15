@@ -1,4 +1,4 @@
-# 3D color plots
+# 3D color plots {#colorplots}
 
 You may want to plot your data as a color map, like the evolution of a Raman spectrum as a function of temperature, pressure or position. In some cases you'll have a 3-columns `data.frame` with x, y, and z values (_e.g._ intensity of a peak as a function of the position on the sample), in some cases you can have a list of spectra evolving with a given parameter. 
 
@@ -36,7 +36,8 @@ P1 <- ggplot(data=fake_data, aes(x=w, y=T, fill=Intensity)) +
           geom_raster() + #geom_tile would work
           ggtitle("Some fake data") + 
           scale_fill_gradientn(colors=colors,name="Intensity\n[arb. units]") +
-          labs(x = "Fake Raman Shift [1/cm]",y="Fake Temperature [K]") +
+          labs(x = "Fake Raman Shift [1/cm]",
+               y = "Fake Temperature [K]") +
           theme_bw()
 ggplotly(P1, dynamicTicks = TRUE)
 # Some other way : a stacking of plots 
@@ -53,7 +54,8 @@ P2 <- ggplot(data=fake_data,
                     )
                 ) + 
           geom_line() + 
-          labs(x="Fake Raman Shift [1/cm]", y="Fake Intensity [arb. units]") +
+          labs(x = "Fake Raman Shift [1/cm]", 
+               y = "Fake Intensity [arb. units]") +
           coord_cartesian(xlim = c(25,75)) +
           scale_color_manual(values=colors,name="Fake\nTemperature [K]") +
           theme_bw()
@@ -116,6 +118,56 @@ Or, very cool, an interactive surface plot:
 plot_ly(x=x,y=y,z=z,type = "surface",colors=colors) %>%
    layout(scene = list(xaxis = aX, yaxis = aY, dragmode="turntable"))
 ```
+
+
+## The case of non-regular data
+
+In case you have a set of non-regular data, plotting it as a color map can get tricky: how do we tell the plotting device what color should be in a place where there is no data point?
+
+The solution is to use a spline (or linear, but spline looks usually nicer) interpolation of your 2D data. For this, we can use the `akima` package and its `interp()` function, like so:
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+# let's make our data irregular and see the plot is now not working:
+fake_data_irreg <- fake_data[sample(nrow(fake_data), nrow(fake_data)/3),]
+# let's plot these irregular data
+colors <- colorRampPalette(c("white","royalblue","seagreen",
+                             "orange","red","brown"))(500)
+ggplot(data=fake_data_irreg, aes(x=w, y=T, fill=Intensity)) + 
+      geom_raster() + #geom_tile would work
+      ggtitle("Some irregular and ugly fake data") + 
+      scale_fill_gradientn(colors=colors,name="Intensity\n[arb. units]") +
+      labs(x = "Fake Raman Shift [1/cm]",
+           y = "Fake Temperature [K]") +
+      theme_bw()
+# now let's interpolate the data on a regular grid
+library(akima)
+fake_data_irreg.interp <- with(fake_data_irreg, 
+    interp(x = w, y = T, z = Intensity, 
+           duplicate="median",
+           xo=seq(min(fake_data_irreg$w), max(fake_data_irreg$w), length = 100),
+           yo=seq(min(fake_data_irreg$T), max(fake_data_irreg$T), length = 100),
+           extrap=FALSE, linear=FALSE)
+    )
+# fake_data_irreg.interp is a list of 2 vectors and a matrix
+str(fake_data_irreg.interp)
+# Regrouping this list to a 3-columns data.frame
+melt_x <- rep(fake_data_irreg.interp$x, times=length(fake_data_irreg.interp$y))
+melt_y <- rep(fake_data_irreg.interp$y, each=length(fake_data_irreg.interp$x))
+melt_z <- as.vector(fake_data_irreg.interp$z)
+fake_data_irreg.smooth <- na.omit(data.frame(w=melt_x, T=melt_y, Intensity=melt_z))
+# Plotting
+fake_data_irreg.smooth %>% 
+    ggplot(aes(x=w, y=T, fill=Intensity)) + 
+        geom_raster() + 
+        ggtitle("Some irregular fake data that have been spline-interpolated") + 
+        scale_fill_gradientn(colors=colors, name="Intensity\n[arb. units]") +
+        labs(x = "Fake Raman Shift [1/cm]", 
+             y = "Fake Temperature [K]") +
+        theme_bw()
+```
+
+
 
 
 ## 2D density of points

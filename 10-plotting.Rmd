@@ -654,7 +654,7 @@ ggplot(data=df, aes(x=w,
 
 - Looking at data for increasing pressures
     - Plot the data using an interactive slider (see about the `frame` option [here](https://plotly-r.com/animating-views.html))
-    - Plot the data using a 3D color map. Since the data are not on a regular grid, you will need to interpolate the data on a regular grid with the `akima` package and its `interp()` function
+    - Plot the data using a 3D color map. Since the data are not on a regular grid, you will need to interpolate the data on a regular grid with the `akima` package and its `interp()` function. See chapter \@ref(colorplots) on 3D plotting for help.
 
 <details>
     <summary>Solution</summary>
@@ -752,7 +752,7 @@ toplot.smooth <- na.omit(data.frame(w=melt_x, Pressure=melt_y, Intensity=melt_z)
 # Plotting
 colors <- colorRampPalette(c("white","royalblue","seagreen","orange","red","brown"))(500)
 P <- ggplot(data=toplot.smooth, aes(x=w, y=Pressure, fill=Intensity)) + 
-      geom_tile() + 
+      geom_raster() + 
       scale_fill_gradientn(colors=colors, name="Normalized\nIntensity\n[arb. units]") +
       labs(x = "Raman Shift [1/cm]",y="Pressure [GPa]") +
       theme_bw()+
