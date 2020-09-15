@@ -17,6 +17,13 @@ There are two main ways to plot data in R:
 
 ### Basic plotting
 ```{r, warnings=FALSE}
+sinc <- function(x, tol = sqrt(.Machine$double.eps) ){
+    # sinus cardinal
+    y <- rep(1,length(x))
+    b <- which(abs(x)>tol)
+    y[b] <- sin(x[b])/x[b]
+    y
+}
 x  <- seq(-3*pi,3*pi,length=50)
 y  <- sinc(x)
 z  <- sinc(x)^2
@@ -606,18 +613,23 @@ ggplot(data=df, aes(x=w, y=Int_n+as.numeric(factor(name))-1, color=name))+
 library(tidyverse)
 library(ggplot2)
 df <- tibble()
+norm01 <- function(x) {
+    (x-min(x))/(max(x)-min(x))
+}
 for (i in 1:4) {
-    d  <- read_table2(paste("Data/rubis_0",i,".txt", sep=""), col_names=c("w", "Int"))
+    d  <- read_table2(paste0("Data/rubis_0",i,".txt"), col_names=c("w", "Int"))
     d$Int_n <- norm01(d$Int)
     d$name  <- paste0("rubis_0",i)
-    df <- bind_rows(df, d)
+    df      <- bind_rows(df, d)
 }
 fnames <- unique(df$name)
-ggplot(data=df, aes(x=w, y=Int_n+as.numeric(factor(name))-1, color=name))+
+ggplot(data=df, aes(x=w, 
+                    y=Int_n+as.numeric(factor(name))-1, 
+                    color=name))+
     geom_line(size=1)+
-    theme_bw()+
     annotate("text", x=3080, y=1:length(fnames)-.85, label=fnames, size=5)+
     labs(x="Raman Shift [1/cm]", y="Intensity [arb. units]")+
+    theme_bw()+
     theme(legend.position = "none",
           text            = element_text(size = 14),
           axis.text.y     = element_blank(),
@@ -632,6 +644,132 @@ ggplot(data=df, aes(x=w, y=Int_n+as.numeric(factor(name))-1, color=name))+
 
 <details>
     <summary>**Exercise 3**</summary>
+
+- Download <a href="https://github.com/colinbousige/Rclass/raw/master/Data/dataG.zip" download target="_blank">dataG.zip</a>
+- Make a plot similar to this one (don't bother with the fit), plotting the evolution of a Raman spectrum as a function of pressure:
+
+![](Plots/data_RBM.png){ width=50% }
+
+**Bonus:**
+
+- Looking at data for increasing pressures
+    - Plot the data using an interactive slider (see about the `frame` option [here](https://plotly-r.com/animating-views.html))
+    - Plot the data using a 3D color map. Since the data are not on a regular grid, you will need to interpolate the data on a regular grid with the `akima` package and its `interp()` function
+
+<details>
+    <summary>Solution</summary>
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.2}
+# get the list of files for the ramps up and down and out of cell
+files_up   <- list.files("Data/dataG/", pattern="up")
+files_down <- list.files("Data/dataG/", pattern="down")
+out_cell   <- list.files("Data/dataG/", pattern="out")
+# store all file names in the correct order
+allfiles <- c(out_cell, files_up, files_down)
+# load the wanted package
+library(tidyverse)
+library(ggplot2)
+# create the norm01 function
+norm01 <- function(x) { (x-min(x))/(max(x)-min(x)) }
+# initialize an empty tibble to store all data
+alldata <- tibble()
+for (file in allfiles) {#file <- allfiles[1]
+    # read the data and stor it in d
+    d <- read_table2(paste0("Data/dataG/",file), col_names=TRUE)
+    # normalize data
+    d$Int_n <- norm01(d$Int)
+    # store file name
+    d$name <- file
+    # store run number for the stacking
+    d$run_number <- which(file==allfiles)
+    # store all data in a single tidy tibble
+    alldata <- bind_rows(alldata, d)
+}
+# plot all data
+alldata %>% 
+    filter(w<=1750, w>=1500) %>% # zoom on the interesting part
+    ggplot(aes(x=w, 
+               y=Int_n + run_number - 1))+ # to stack the plots
+        geom_point(color="gray", alpha=.5, size=.2)+ #plot data with points
+        xlim(c(1500,1800))+ #add some white space on the right to write the pressure
+        geom_vline(xintercept=1592, lty=2, size=1)+#show a vertical line
+        annotate("text", size=5, x=1780, y=seq_along(allfiles)-1, 
+                label=paste(unique(alldata$P),"GPa"))+#show the pressure values
+        labs(x="Raman Shift [1/cm]", #have the good axis labels
+             y="Intensity [arb. units]")+
+        theme_bw()+#black and white theme
+        theme(legend.position = "none",#no legend
+              text            = element_text(size = 14, family = "Times"),#text in font Times
+              axis.text.y     = element_blank(),# no y axis values
+              axis.text       = element_text(size = 14),
+              panel.grid.major = element_blank(), # no grid
+              panel.grid.minor = element_blank())
+```
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+# Looking at data for increasing pressures, plot the data using an interactive slider
+library(plotly)
+P <- alldata %>% 
+    filter(grepl("up",name)) %>% # only increasing pressures
+    filter(w<=1850, w>=1500) %>% # zoom on the interesting part
+    ggplot(aes(x=w, 
+               y=Int_n,
+               frame=P))+ # each pressure in a new frame
+        geom_point(color="gray", alpha=.5, size=1)+ #plot data with points
+        labs(x="Raman Shift [1/cm]", #have the good axis labels
+             y="Intensity [arb. units]")+
+        theme_bw()+#black and white theme
+        theme(legend.position = "none",#no legend
+              text            = element_text(size = 14, family = "Times"),
+              axis.text       = element_text(size = 14),
+              panel.grid.major = element_blank(), # no grid
+              panel.grid.minor = element_blank())
+ggplotly(P, dynamicTicks = TRUE)
+```
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+# Plot the data using a 3D color map. Since the data are not on a regular grid, 
+# you will need to interpolate the data on a regular grid 
+# with the `akima` package and its `interp()` function
+library(akima)
+toplot <- alldata %>% 
+            filter(grepl("up",name)) %>%
+            filter(w<=1850, w>=1500)
+toplot.interp <- with(toplot, 
+                    interp(x = w, y = P, z = Int_n, 
+                           duplicate="median",
+                           xo=seq(min(toplot$w), max(toplot$w), length = 100),
+                           yo=seq(min(toplot$P), max(toplot$P), length = 100),
+                           extrap=FALSE, linear=FALSE)
+                   )
+# toplot.interp is a list of 2 vectors and a matrix
+str(toplot.interp)
+# Regrouping this list to a 3-columns data.frame
+melt_x <- rep(toplot.interp$x, times=length(toplot.interp$y))
+melt_y <- rep(toplot.interp$y, each=length(toplot.interp$x))
+melt_z <- as.vector(toplot.interp$z)
+toplot.smooth <- na.omit(data.frame(w=melt_x, Pressure=melt_y, Intensity=melt_z))
+# Plotting
+colors <- colorRampPalette(c("white","royalblue","seagreen","orange","red","brown"))(500)
+P <- ggplot(data=toplot.smooth, aes(x=w, y=Pressure, fill=Intensity)) + 
+      geom_tile() + 
+      scale_fill_gradientn(colors=colors, name="Normalized\nIntensity\n[arb. units]") +
+      labs(x = "Raman Shift [1/cm]",y="Pressure [GPa]") +
+      theme_bw()+
+      theme(text            = element_text(size = 14, family = "Times"),
+            axis.text       = element_text(size = 14),
+            panel.grid.major = element_blank(), # no grid
+            panel.grid.minor = element_blank())
+ggplotly(P, dynamicTicks = TRUE)
+```
+
+
+</details>
+</details>
+
+
+<details>
+    <summary>**Exercise 4**</summary>
 
 
 - Download <a href="Data/population.csv" download target="_blank">population.csv</a> and load it into a `data.frame`
@@ -746,27 +884,6 @@ p2
 
 </details>
 </details>
-
-
-<details>
-    <summary>**Exercise 4**</summary>
-
-- Download <a href="https://github.com/colinbousige/Rclass/raw/master/Data/dataG.zip" download target="_blank">dataG.zip</a>
-- Make a plot similar to this one (don't bother with the fit):
-
-![](Plots/data_RBM.png){ width=50% }
-
-**Bonus:**
-
-- Looking at data for increasing pressures, plot the data on a 3D color map
-    + a static one
-    + an interactive one
-- Looking at data for increasing pressures, plot the data using an interactive slider (see about the `frame` option [here](https://plotly-r.com/animating-views.html))
-
-</details>
-
-
-
 
 <br>
 <br>
