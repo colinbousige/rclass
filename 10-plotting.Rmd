@@ -693,8 +693,8 @@ alldata %>%
         geom_point(color="gray", alpha=.5, size=.2)+ #plot data with points
         xlim(c(1500,1800))+ #add some white space on the right to write the pressure
         geom_vline(xintercept=1592, lty=2, size=1)+#show a vertical line
-        annotate(geom  = "text", size=4, #show the pressure values
-                 x = 1780, y=seq_along(allfiles)-1, hjust = 0,
+        annotate(geom  = "text", size=5, #show the pressure values
+                 x = 1760, y=seq_along(allfiles)-1, hjust = 0,
                  label  = paste(unique(alldata$P),"GPa"),
                  family = "Times")+
         labs(x="Raman Shift [1/cm]", #have the good axis labels
