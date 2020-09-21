@@ -1,6 +1,6 @@
 # Practical case: recursive data treatment
 
-
+## Example
 
 
 Here I will provide an example workflow for treating large amounts of experimental measurements. There are many ways of doing this, this is just a working example. 
@@ -196,11 +196,11 @@ Lor <- function(x,x0=0,FWHM=1){
 frubis <- list.files(path="Data", pattern = "rubis")
 # Load all data and do the fits in a single pipe flow
 data <- tibble(name = frubis) %>%
-    mutate(data = map(name,
+    mutate(data = purrr::map(name,
            ~ read_table2(file      = file.path("Data", .),
                          col_names = c("w", "Int")))
         ) %>% 
-    mutate(fit = map(data, 
+    mutate(fit = purrr::map(data, 
         ~ nls(data = .,
               Int ~ y0 + A1*Lor(w,x1,FWHM1) + A2*Lor(w,x2,FWHM2), 
               start=list(y0 = 0.01,
@@ -215,10 +215,10 @@ data <- tibble(name = frubis) %>%
                            FWHM1 = 0, FWHM2 = 0,
                            A1 = 0, A2 = 0),
               algorithm = "port")),
-          tidied = map(fit, tidy),
-          augmented = map(fit, augment)
+          tidied = purrr::map(fit, tidy),
+          augmented = purrr::map(fit, augment)
           ) %>% 
-    mutate(P=map(tidied, 
+    mutate(P=purrr::map(tidied, 
             ~round(Pruby(.$estimate[.$term=='x1']),2))) %>% 
     unnest(P)
 # make the plot of the fits

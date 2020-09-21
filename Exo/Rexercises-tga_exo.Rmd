@@ -9,19 +9,17 @@ output:
         code_download  : FALSE
 ---
 
-
+- Load the `tidyverse` package
 - Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
-- Load it into a `data.frame`.
+- Load it into a `tibble`.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
 ```
 
-
-- Plot the mass as a function of the temperature `Ts` with lines, using base graphics and then `ggplot2`
+- Plot the mass (column `Value`) as a function of the temperature `Tr` (Temperature Read) with lines, using `ggplot2`
     + Remove data from the temperature decrease
     + Define nice axis labels with the units
-    + Add `mass` vs. `Tr` as a blue dashed line
     + Convert degrees Celsius to Kelvins
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
@@ -29,14 +27,18 @@ output:
 ```
 
 
-- Write a function returning the derivative of a `data.frame` 
-    + Add the derivative in a red dashed line in a panel below the previous graph
-    + Zoom on the data to see the variations
-    + Remove the x label of the top panel and have the same x axis for both panels
-    + Try to reproduce the following graph:
-
+- Write a function returning the derivative $\partial y/\partial x$ given two vectors x and y
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
 ```
 
+
+- Add the temperature derivative of the mass reading in a red dashed line in a panel below the previous graph
+    + Zoom on the data to see the variations
+    + Remove the x label of the top panel and have the same x axis for both panels
+    + Try to reproduce the following graph:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
