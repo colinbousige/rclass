@@ -1,0 +1,18 @@
+#Load the tidyverse package
+library(tidyverse)
+#Download the TGA data file ATG.txt
+#Load it into a tibble.
+tib<- tibble(read.table("ATG3.txt",header= TRUE))
+names(tib)
+
+#Plot the mass (column Value) as a function of the temperature Tr (Temperature Read) with lines
+library(ggplot2) 
+head(tib,which.max(tib$Tr..C.))%>%
+  ggplot(aes(x=Tr..C.+273,y=Value.mg.))+ 
+  geom_line() +
+  labs(x='T[k]',y='mass[mg]')
+
+f<- diff(tib$Value.mg.)
+g<- diff(tib$Tr..C.)
+getderiv<- f/g
+getderiv

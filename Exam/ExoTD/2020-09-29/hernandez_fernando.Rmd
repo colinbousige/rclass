@@ -1,0 +1,88 @@
+---
+title : "R Exercises - TGA data"
+date  : "`r Sys.Date()`"
+output: 
+    html_document:
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: true
+        code_download  : FALSE
+---
+
+- Load the `tidyverse` package
+- Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
+- Load it into a `tibble`.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+library(tidyverse)
+t <- tibble(read.table("C:/Users/carlo/Documents/R/ATG exercise/ATG.txt", 
+                skip=12,
+                header=FALSE, 
+                nrows=4088))
+names(t) <- c("Index", "t", "Ts", "Tr", "value")
+head(t)
+
+```
+
+- Plot the mass (column `Value`) as a function of the temperature `Tr` (Temperature Read) with lines, using `ggplot2`
+    + Remove data from the temperature decrease
+    + Define nice axis labels with the units
+    + Convert degrees Celsius to Kelvins
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+t <- t[-(3702:4100),]
+t$TK <- t$Tr[]+273.15
+library(ggplot2)
+f <- t %>% 
+    ggplot(aes(x=TK,y=value))+
+    labs(x="T[K]",y="Mass [mg]")
+f + geom_line()
+
+```
+
+
+- Write a function returning the derivative $\partial y/\partial x$ given two vectors x and y
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+derivative <- function(x,y){
+    a <- diff(x)/diff(y)
+    a
+}
+
+derivative(runif(10,1,10),runif(10,1,10))
+```
+
+
+- Add the temperature derivative of the mass reading in a red dashed line in a panel below the previous graph
+    + Zoom on the data to see the variations
+    + Remove the x label of the top panel and have the same x axis for both panels
+    + Try to reproduce the following graph:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+t1 <- t[-(1:601),]
+library(ggplot2)
+f1 <- t1 %>% 
+    ggplot(aes(x=TK,y=value))+
+    labs(x="",y="Mass [mg]")+
+    theme(axis.text.x=element_blank())+
+    geom_vline(xintercept = 630.40, linetype="dashed")
+  
+
+
+
+der1 <- (derivative(t$value,t$TK))
+df <- tibble(a = der1)
+df <- df[-(1:600),]
+final <- df %>%
+    ggplot(aes(x=t1$TK,y=df$a, color="red"))+
+    labs(x="T[K]",y="Derivative")+
+    theme(legend.position = "none")+
+    geom_vline(xintercept = 630.40, linetype="dashed")+
+    ylim(-0.15,0.05)
+   
+
+
+library(patchwork)
+(f1+ geom_line())/(final + geom_line())
+```

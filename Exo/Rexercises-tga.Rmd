@@ -48,30 +48,32 @@ P
 # Write a function returning the derivative $\partial y/\partial x$ given two vectors x and y
 derivative <- function(x, y, n=1) {
     # returns d^ny/dx^n
-    d <- data.frame(x=x, y=y)
+    d <- tibble(x=x, y=y)
     for (i in 1:n) {
         x  <- d$x
         y  <- d$y
         dy <- diff(y)/diff(x)# the actual derivative
         dx <- x[-length(x)]+diff(x)/2# centers the X values
-        d  <- data.frame(x=dx,y=dy)
+        d  <- tibble(x=dx,y=dy)
     }
     d
 }
-dd <- derivative(d$Tr,d$Value)
-head(dd)
-dd <- dd[is.finite(dd$y),]
-head(dd)
+dd   <- derivative(d$Tr,d$Value)
+dd$x <- dd$x + 273 # convert to Kelvins
+dd
+# find the maximun of the derivative to find the inflexion point
+# the first values are infinite, we want the maximum around 630
+xmax <- dd %>% filter(x>400) 
+xmax <- xmax$x[which.min(xmax$y)]
+xmax
 # Add the derivative in a red dashed line in a panel below the previous graph
 # Zoom on the data to see the variations
 # Remove the x label of the top panel and have the same x axis for both panels
-# find the maximun of the derivative to find the inflexion point
-xmax <- dd$x[which.min(dd$y)] + 273
 p1 <- P + geom_vline(xintercept = xmax, lty=2, alpha=.5)+
          theme_bw() +
          theme(axis.title.x=element_blank(),
                axis.text.x=element_blank())
-p2 <- ggplot(data=dd, aes(x=x+273, y=y), color="red") +
+p2 <- ggplot(data=dd, aes(x=x, y=y), color="red") +
          geom_line(col="red", lty=2) +
          ylim(c(-.15,.05))+
          labs(x="T [K]", y="Derivative") +

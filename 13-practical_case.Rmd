@@ -176,7 +176,14 @@ You are now ready to get to work!
 
 ## Exercise
 
-Try to do something similar but in a full `tidyverse` way, *i.e.* without doing any `for loop`. 
+Try to do something similar but in a full `tidyverse` way, *i.e.* without doing any `for loop`. For this, look into `purrr::map(data, function)` and do something similar to this:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+library(tidyverse)
+tibble(world = c("Hello","world")) %>% 
+    mutate(to_print=map(world, ~ gsub("o", "a", .))) %>% 
+    unnest(to_print)
+```
 
 <details>
     <summary>Solution</summary>

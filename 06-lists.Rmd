@@ -42,13 +42,54 @@ typeof(L2); L2
 - Create a list containing 2 strings, 2 numbers, 2 vectors, 1 list and 2 logical values.
 - Give names to the elements in the list.
 - Access the first and second elements of the list.
-- Add an element at the end of the list.
-- Select the second element of a the nested list.
+- Add a new item `g4 = "Hello"` to the list.
+- Select the second element of the nested list.
 - Remove the second element of the list.
 - Create a second list with whatever you want
 - Merge the two lists into one list.
-- Convert `list(1,2,3,4)` to a vector
 - Print the number of objects in the merged list.
-- Add a new item `g4 = "Hello"` to the merged list.
+- Convert `list(1,2,3,4)` to a vector
 
 
+
+<details>
+    <summary>Solution</summary>
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+# Create a list containing 2 strings, 2 numbers, 2 vectors, 1 list and 2 logical values.
+# Give names to the elements in the list.
+first_list <- list(string1 = "foo",
+                   string2 = "bar",
+                   number1 = 42,
+                   number2 = pi,
+                   vec1    = seq(-10,10,1),
+                   vec2    = c("Hello", "world"),
+                   list1   = list(a = 1:10, 
+                                  b = 10:1),
+                   bool1   = TRUE,
+                   bool2   = FALSE
+                  )
+first_list
+# Access the first and second elements of the list.
+first_list[[1]]
+first_list[["string2"]]
+# Add a new item `g4 = "Hello"` to the list.
+first_list$g4 <- "Hello"
+first_list
+# Select the second element of the nested list.
+first_list[["list1"]][[2]]
+# Remove the second element of the list.
+first_list[-2]
+# Create a second list with whatever you want
+second_list <- list(a=1:10, b=1:10, c="hello")
+# Merge the two lists into one list.
+one_list <- c(first_list, second_list)
+# Print the number of objects in the merged list.
+length(one_list)
+# Convert `list(1,2,3,4)` to a vector
+as.numeric(list(1,2,3,4))
+```
+
+
+
+</details>
