@@ -1,0 +1,27 @@
+install.packages("tidyverse")
+
+Load the tidyverse
+library(tidyverse)
+
+
+Convert the .txt file to .csv file
+gapminder <- read_csv("./data/gapminder-ATG.csv")
+# A tibble: 4088 x 5
+ 
+ Index              t             Ts             Tr          Value
+                           [s]           [�C]           [�C]           [mg]
+              0              0        32.3769             25         32.968
+              3              3        32.4051             25        32.9655
+              6              6        32.4332             25        32.9619
+              9              9        32.4726             25        32.9582
+             12             12        32.5066             25        32.9544
+             15             15        32.5221             25        32.9504
+             18             18        32.5581             25        32.9463
+             21             21        32.5921             25        32.9426
+             24             24        32.6264             25        32.9387
+             27             27        32.6502             25        32.9343
+             30             30        32.6818             25        32.9301
+#with 4078 more rows
+library(ggplot2)
+data("ATG", package="ggplot2")
+ggplot(ATG, aes(x=Tr,y=Value))

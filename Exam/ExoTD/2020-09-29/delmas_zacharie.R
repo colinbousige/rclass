@@ -1,5 +1,5 @@
 library(tidyverse)
-df <- read.table("/Users/delma/Documents/ATG.txt",
+df <- read.table("Data/ATG.txt",
                  skip = 12,
                  header = FALSE,
                  nrows = 4088 )

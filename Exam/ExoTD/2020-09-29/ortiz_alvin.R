@@ -3,7 +3,7 @@ title : "TGA Data: loading a complicated text file, derivative and plotting"
 library(tidyverse)
 
 ##loading data from file ATG.txt
-ATGdata <- read.table("C:/Users/AJ Ortiz/Documents/ATG.txt", skip=12, header=FALSE, nrows=4088)
+ATGdata <- read.table("Data/ATG.txt", skip=12, header=FALSE, nrows=4088)
 ATGdata
 
 names(ATGdata) <- c("Index","t","Ts","Tr","Value")

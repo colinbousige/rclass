@@ -1,7 +1,7 @@
 #loading Tidyverse Library 
 library(tidyverse)
 #Download the TGA data file ATG.txt
-df<- read.table("/Users/toshiba/Desktop/joseph university-france/R in class/ATG.txt",
+df<- read.table("Data/ATG.txt",
                 skip=12,
                 header=FALSE,
                 nrows=4088 )

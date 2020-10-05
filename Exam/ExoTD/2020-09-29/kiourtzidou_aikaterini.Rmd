@@ -14,7 +14,7 @@ output:
 - Load it into a `tibble`.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-z <- tibble(read.table("ATG.txt", skip=10, comment.char ="[",header=TRUE, nrow=4088 ) )
+z <- tibble(read.table("Data/ATG.txt", skip=10, comment.char ="[",header=TRUE, nrow=4088 ) )
 ```
 
 - Plot the mass (column `Value`) as a function of the temperature `Tr` (Temperature Read) with lines, using `ggplot2`

@@ -2,7 +2,7 @@
 library(tidyverse)
 
 #2) Download the ATG.txt file
-df <- read.table("/Users/ILYES_BETKA/Desktop/Rsource/ATG.txt", 
+df <- read.table("Data/ATG.txt", 
                  skip = 12,
                  header = FALSE,
                  nrows = 4088

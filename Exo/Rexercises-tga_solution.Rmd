@@ -31,32 +31,39 @@ d <- read_table2("Data/ATG.txt",
     + Convert degrees Celsius to Kelvins
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-# Remove data from the temperature decrease
-d <- d %>% filter(t < t[which.max(Tr)])
-# remove repeated data at the beginning
-d <- d %>% slice(sum(Tr==25):n())
+d_filtered <- d %>% 
+        filter(t < t[which.max(Tr)], # Remove data from the temperature decrease
+               Tr > 25) %>%          # Remove repeated data at the beginning
+        mutate(T_K = Tr + 273.15)    # Convert degrees Celsius to Kelvins
 # Define nice axis labels with the units
-# Convert degrees Celsius to Kelvins
-P <- d %>% 
-    ggplot(aes(x = Tr+273.15, y = Value)) +
+p0 <- d_filtered %>% 
+    ggplot(aes(x = T_K, y = Value)) +
         geom_line() +
         labs(x="T [K]", y="Mass [mg]") +
         theme_bw()
-P
+p0
 ```
 
 - Write a function returning the derivative $\partial y/\partial x$ given two vectors x and y
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+# first derivative
+derivative <- function(x, y) {
+    # returns dy/dx
+    dy <- diff(y)/diff(x)           # the actual derivative
+    dx <- x[-length(x)] + diff(x)/2 # centers the X values
+    d  <- tibble(x = dx, y = dy)
+}
+# alternatively, derivative at any order:
 derivative <- function(x, y, n=1) {
     # returns d^ny/dx^n
     d <- tibble(x = x, y = y)
-    for (i in 1:n) {
-        x  <- d$x
-        y  <- d$y
-        dy <- diff(y)/diff(x) # the actual derivative
-        dx <- x[-length(x)]+diff(x)/2 # centers the X values
-        d  <- tibble(x = dx, y = dy)
+    if(n>0){
+        for (i in seq_along(n)) {
+            dy <- diff(d$y)/diff(d$x)             # the actual derivative
+            dx <- d$x[-length(d$x)] + diff(d$x)/2 # centers the X values
+            d  <- tibble(x = dx, y = dy)
+        }
     }
     d
 }
@@ -68,9 +75,8 @@ derivative <- function(x, y, n=1) {
     + Try to reproduce the following graph:
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-# find the maximun of the derivative to find the inflexion point
-dd   <- derivative(d$Tr,d$Value)
-dd$x <- dd$x + 273.15 # convert to Kelvins
+# find the minimun of the derivative to find the inflexion point
+dd   <- derivative(d_filtered$T_K, d_filtered$Value)
 xmin <- dd$x[which.min(dd$y)]
 xmin
 # Add the derivative in a red dashed line in a panel below the previous graph
@@ -82,7 +88,7 @@ p2 <- ggplot(data=dd, aes(x=x, y=y), color="red") +
          geom_vline(xintercept = xmin, lty=2, alpha=.5)+
          theme_bw()
 # Remove the x label of the top panel and have the same x axis for both panels
-p1 <- P + geom_vline(xintercept = xmin, lty=2, alpha=.5)+
+p1 <- p0 + geom_vline(xintercept = xmin, lty=2, alpha=.5)+
          theme_bw() +
          theme(axis.title.x=element_blank(),
                axis.text.x=element_blank())
