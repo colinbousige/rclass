@@ -38,7 +38,7 @@ For this, we will need to gather the data:
 
 The first thing to do is to load and regroup all these datasets into a single one.
 
-1. Load the `tidyverse` library and, using `read_csv()`, load the 4 datasets in 4 separate data.frames called `children`, `income`, `pop` and `religion`.
+1. Load the `tidyverse` library and, using `read_csv()`, load the 4 datasets in 4 separate tibbles called `children`, `income`, `pop` and `religion`.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 library(tidyverse)
@@ -49,18 +49,18 @@ pop      <- read_csv("Data_Religion/population_total.csv")
 religion <- read_csv("Data_Religion/religion.csv")
 ```
 
-2. To reproduce the chart on the video, we need to determine the dominant religion in each country. In the `religion` dataset, add a column `Religion` that will give the name of the dominant religion for each country. For this, you might want to use this method that returns the name of the column containing the maximum of each row of a `data.frame`:
+2. To reproduce the chart on the video, we need to determine the dominant religion in each country. In the `religion` dataset, add a column `Religion` that will give the name of the dominant religion for each country. For this, you might want to use this method that returns the name of the column containing the maximum of each row of a table:
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-DF <- data.frame(V1=c(2,8,1),V2=c(7,3,5),V3=c(9,6,4))
+DF <- tibble(V1=c(2,8,1),V2=c(7,3,5),V3=c(9,6,4))
 DF
-colnames(DF)[max.col(DF)]
+names(DF)[max.col(DF)]
 ```
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 DF <- religion %>% select(Buddhists:Unaffiliated)
 religion <- religion %>% 
-        mutate(Religion=colnames(DF)[max.col(DF)])
+        mutate(Religion=names(DF)[max.col(DF)])
 ```
 
 3. Using `pivot_longer()`, make all datasets tidy. 
@@ -124,6 +124,8 @@ You should end up with a dataset like this one:
 dat
 ```
 
+In case you struggled to get there, [download this dataframe here in order to be able to continue](Data_Religion/dat.csv).
+
 Now our dataset is ready, let's plot it.
 
 # Plotting
@@ -173,14 +175,14 @@ dat_france_region <- dat%>%
 
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 ggplot(data=dat_france_region, aes(x=Year, y=Income, col=Country, size=Population))+
-    ggtitle("Household income in France")+
+    ggtitle("Household income in France and its region")+
     xlab("Year")+
     ylab("Household income per capita per year [constant $]")+
     annotate("rect", xmin=1914, xmax=1918, ymin=-Inf, ymax=Inf, alpha=.3)+
     annotate("rect", xmin=1939, xmax=1945, ymin=-Inf, ymax=Inf, alpha=.3)+
     geom_point(alpha=0.5)
 ggplot(data=dat_france_region, aes(x=Year, y=Fertility, col=Country, size=Population))+
-    ggtitle("Fertility in France")+
+    ggtitle("Fertility in France and its region")+
     xlab("Year")+
     lims(y=c(0,5))+
     ylab("Children per woman")+

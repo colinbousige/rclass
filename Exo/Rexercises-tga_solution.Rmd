@@ -33,7 +33,7 @@ d <- read_table2("Data/ATG.txt",
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 d_filtered <- d %>% 
         filter(t < t[which.max(Tr)], # Remove data from the temperature decrease
-               Tr > 25) %>%          # Remove repeated data at the beginning
+               Tr > min(Tr)) %>%     # Remove repeated data at the beginning
         mutate(T_K = Tr + 273.15)    # Convert degrees Celsius to Kelvins
 # Define nice axis labels with the units
 p0 <- d_filtered %>% 

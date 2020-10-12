@@ -1,6 +1,6 @@
 install.packages("tidyverse")
 library(tidyverse)
-df <-read.table("/Users/Danny/OneDrive/Documents/ATG.txt",
+df <-read.table("Data/ATG.txt",
                 skip = 12,
                 header = FALSE,
                 nrows = 4088 )

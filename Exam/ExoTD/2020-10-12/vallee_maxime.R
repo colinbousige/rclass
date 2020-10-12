@@ -1,0 +1,158 @@
+---
+  title : "R Exercises - Religion and babies"
+date  : "`r Sys.Date()`"
+output: 
+  html_document:
+  toc            : true
+toc_float      : true
+toc_depth      : 4
+highlight      : tango
+number_sections: true
+code_download  : FALSE
+---
+  
+In these exercises we will see the power of the libraries `ggplot2` and `plotly` to make sense of statistical data. The goal is to reproduce the moving chart that you can see in this video from Hans Rosling -- I invite you to watch his other videos, they are quite enlightning and inspiring:
+  
+  <div style="max-width:854px"><div style="position:relative;height:0;padding-bottom:56.25%"><iframe src="https://embed.ted.com/talks/hans_rosling_religions_and_babies" width="854" height="480" style="position:absolute;left:0;top:0;width:100%;height:100%" frameborder="0" scrolling="no" allowfullscreen></iframe></div></div>
+  
+  <br>
+  <br>
+  
+  For this, we will need to gather the data:
+  
+  - From [Gapminder](https://www.gapminder.org/data/), data per country and per year from 1800 to 2018:
+  - [The children per woman total fertility](Data_Religion/children_per_woman_total_fertility.csv)
+- [The income per capita](Data_Religion/income_per_person_gdppercapita_ppp_inflation_adjusted.csv)
+- [The total population](Data_Religion/population_total.csv)
+- From the [PEW research center](https://www.pewforum.org/2015/04/02/religious-projection-table/2010/percent/all/), data per country:
+  + [The religious composition](Data_Religion/religion.csv)
+
+------- 
+  
+  # Data handling
+  
+  The first thing to do is to load and regroup all these datasets into a single one.
+
+1. Load the `tidyverse` library and, using `read_csv()`, load the 4 datasets in 4 separate data.frames called `children`, `income`, `pop` and `religion`.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+library(tidyverse)
+pop <- read_csv("population_total.csv")
+head(pop)
+children <- read_csv("children_per_woman_total_fertility.csv")
+head(children)
+income <- read_csv("income_per_person_gdppercapita_ppp_inflation_adjusted.csv")
+head(income)
+religion <- read_csv("religion.csv")
+head(religion)
+```
+
+2. To reproduce the chart on the video, we need to determine the dominant religion in each country. In the `religion` dataset, add a column `Religion` that will give the name of the dominant religion for each country. For this, you might want to use this method that returns the name of the column containing the maximum of each row of a `data.frame`:
+  
+  ```
+names(religion)
+DF <- religion %>% select(Buddhists:Unaffiliated)
+religion <- religion %>% mutate(Religion=colnames(DF)[max.col(DF)])
+```
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+3. Using `pivot_longer()`, make all datasets tidy. 
+
+- `children` should now contain 3 columns: `Country`, `Year` and `Fertility`. 
+- `income` should now contain 3 columns: `Country`, `Year` and `Income`. 
+- `pop` should now contain 3 columns: `Country`, `Year` and `Population`. 
+
+We will only consider data from 1800 to 2018. Example of syntax using the pipe operator `%>%`:
+  
+  ```
+children %>% 
+  select(name, '1800':'2018') %>%
+  pivot_longer(-country,
+               names_to="Years",
+               values_to= "Fertility")
+
+income %>% 
+  select(name, '1800':'2018') %>%
+  pivot_longer(-country,
+               names_to="Years",
+               values_to= "income")
+
+pop %>%
+  select(name, '1800':'2018') %>%
+  pivot_longer(-country,
+               names_to="Years",
+               values_to= "population")
+```
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+4. Now we want to combine all these datasets into a single one called `dat`, containing the columns `Country`, `Year`, `Population`, `Religion`, `Fertility` and `Income`. Look into the `inner_join()` function of the `dplyr` library (which is part of the `tidyverse` library). For the `religion` dataset, we will consider that the proportions of 2010 are representative of all times.
+
+```
+dat <- inner_join(pop,income,religion,children)
+
+{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+#Now our dataset is ready, let's plot it.
+
+#Plotting
+
+1. Load the library `ggplot2` and set the global theme to `theme_bw()` using `theme_set()`
+
+```
+library(ggplot2)
+ggplot(data = dat) + 
+  aes (x =pop, income, religion, children)
+  theme_bw()
+
+{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+2. Create a subset of `dat` concerning your origin country. For me it will be `dat_france`
+
+```
+dat %>% dat_france <- select(france)
+
+{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+3. Plot the evolution of the income per capita and the number of children per woman as a function of the years, and make it look like that (notice the kinks during the two world wars):
+
+```{r echo=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+4. Create a subset of `dat` containing the data for your country plus all the neighbor countries (if you come from an island, the nearest countries...). For me, `dat_france_region` will contain data from France, Spain, Italy, Switzerland, Germany, Luxembourg and Belgium.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+5. Plot again income and fertility as a function of the years, but add a color corresponding to the country and a point size to its population:
+
+```{r echo=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+6. Load the library `plotly` and make the previous graphs interactive. You can make an interactive graph by calling `ggplotly()`, like that:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+7. Finally, you can add a slider to the interactive graph allowing selecting a value for another variable (just like in the video) by adding the keyword `frame =` in the chart's aesthetics. So now, make the graph of the video ! (you can also add the aesthetics `id=Country` to show the country name in the popup when hovering on a point).
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```

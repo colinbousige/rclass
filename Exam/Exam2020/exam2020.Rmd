@@ -1,0 +1,173 @@
+---
+title : "Exam R"
+date  : "01/12/2020"
+output: 
+    bookdown::pdf_document2: 
+        toc            : false
+        number_sections: false
+        fig_caption    : true
+        fig_number     : true
+header-includes:
+   - \usepackage{cmbright}
+   - \usepackage{amssymb}
+params: 
+    solution:
+        value: false
+---
+
+# Exercise 1 - Climate change
+
+
+
+# Exercise 2 - Experimental data
+
+In this exercise we will recursively treat some x-ray diffraction (XRD) data obtained during a high-pressure experiment at the ESRF (the synchrotron in Grenoble). In this experiment, we measured the XRD patterns as a function of the pressure for two samples of the same rock, nicknamed *PY02*. PY02 is a pyrobitumen, *i.e.* some coal-like amorphous and porous carbon structure. The goal was to measure the *bulk modulus* $\kappa$ of this rock, defined as:
+$$\frac{1}{\kappa}=-\frac{1}{V}\frac{\partial V}{\partial P}.$$
+The bulk modulus characterizes the volume reduction of a sample as a function of the applied pressure, it's unit being a pressure unit (usually in the GPa range).
+
+The bulk modulus is usually obtained during a high pressure experiment thanks to the Murnaghan equation of state:
+
+$$
+    \frac{V}{V_0}=\left(1+P\frac{\kappa'}{\kappa}\right)^{-1/\kappa'}
+$$
+where $V$ is the volume of the unit cell, $V_0$ the volume at ambient pressure, and $\kappa'$ is the pressure derivative of $\kappa$. In first approximation, we will consider that $\kappa'$ is constant and that $\kappa'\simeq4$.
+
+- First, load the libraries `tidyverse` and `broom` and set the global theme to `theme_bw()`.
+
+```{r include=params$solution, include=FALSE, warning = FALSE, cache=FALSE}
+library(tidyverse)
+library(broom)
+theme_set(theme_bw())
+```
+
+- Define the Murnaghan function that, given the pressure $P$, the bulk modulus $K$ and its derivative $Kp$ (defaulting to $Kp=4$), returns the relative volume $\frac{V}{V_0}$
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+Murnaghan <- function(P, K, Kp=4){
+    (1+P*Kp/K)^(-1/Kp)
+}
+```
+
+- Find in the `Data` folder all the files containing the `PY02` pattern, and store this list of files in `flist`.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+flist  <- list.files(path="Data", pattern = "PY02")
+```
+
+- Define the `get_pressure(flist)` function that, given **a vector** of file names, returns **a vector** of the pressures of the corresponding files. The output pressure must be given in **GPa**. The files are under the form `PY02_xx.dat` or `PY02bis_xx.dat`, where `xx` is the pressure **in kbar** (1 kbar = 10 GPa).
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+get_pressure <- function(flist){
+    Press  <- gsub("PY02_","",flist)
+    Press  <- gsub("PY02bis_","",Press)
+    as.numeric(gsub(".dat","",Press))/10
+}
+```
+
+- Define the `get_sample(flist)` function that, given **a vector** of file names, returns the name of the sample (*i.e.* PY02 or PY02bis). For this, you will want to split the file names according to the "\_" character (use `strsplit()`), make the result a vector using `unlist()`, and take every other two elements of the resulting vector.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+get_sample <- function(flist){
+    all <- unlist(strsplit(flist,"_"))
+    all[seq(1,length(all), by=2)]
+}
+```
+
+- Define the `norm01(x)` function that given a vector, returns this vector normalized to [0,1]
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+norm01 <- function(x) {(x-min(x))/(max(x)-min(x))}
+```
+
+- Now let's read all the data files in `flist` and store the result in a tidy `tibble` with three columns, `file`, `q` and `int` (the data files containing the diffracted intensity as a function of the scattering vector $q$). Either use a `for loop` or the `tidyverse`-friendly version using `purrr::map` (+1 bonus for this version). Add the `int_n` column containing the normalized intensity for each file.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+d <- tibble(file=flist) %>% 
+    mutate(data=map(file, ~ read_table2(file.path("Data",.), 
+                               col_names=c("q","int")))) %>% 
+    unnest(data) %>% 
+    group_by(file) %>% 
+    mutate(int_n=norm01(int))
+```
+
+- Plot all the diffractograms on top of each other, with lines of a different color for each file, and define niece axis labels, such as *Scattering Vector q [1/Å]* and *Intensity [arb. units]*.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+d %>%
+    ggplot(aes(x=q, y=int_n+as.numeric(factor(file))-1, color=file))+
+        geom_line()+
+        labs(x = "Scattering Vector q [1/Å]", 
+             y = "Intensity [arb. units]")
+```
+
+- We are interested in the position of the first peak around $q=1.8$ Å$^{-1}$. Create the `pospeak` tibble that stores the position `Q` of the maximum of each diffractogram. 
+    - Make sure to filter data for scattering vectors below 2.5 Å$^{-1}$. 
+    - We will also add the `dQ` column that stores the error on the value of `Q`. We will estimate it as the average value of the difference between each neighbor value of `q`.
+    - Add the columns `P` and `sample` that contain the pressure and sample name for each file.
+    - Finally, order the tibble by ascending pressure for each sample
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+pospeak <- d %>% 
+    filter(q<2.5) %>% 
+    group_by(file) %>% 
+    summarise(Q  = q[which.max(int)],
+              dQ = mean(diff(q))) %>% 
+    mutate(P      = get_pressure(file),
+           sample = get_sample(file)) %>% 
+    arrange(sample, P)
+```
+
+In case you didn't manage to get there, here is the expected `pospeak` table so that you can continue with the exercise:
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+data.frame(pospeak)
+```
+
+- We now need to estimate the volume variation and the error on its measurement. Normally, we would need to get the crystal lattice volume, but as mentioned earlier, the PY02 sample is an amorphous rock, and thus has no crystalline order. In first approximation, we can consider that the volume reduction is linked to the interactomic distance reduction through:
+$$
+\frac{V}{V_0}=\left(\frac{r}{r_0}\right)^3,
+$$
+where $r$ is the most representative interatomic distance (*i.e.* the one whose Fourier transform will have the highest intensity), the scattering vector $q$ being linked to the distance $r$ by $q=2\pi/r$.
+Using this, add to the `pospeak` tibble the columns `VV0` and `dVV0` containing the volume reduction and an estimation of its measurement error, respectively. 
+    - Make sure that the `V0` part refers to the value at ambient pressure. 
+    - Make sure you propagate the errors in a proper way.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+pospeak <- pospeak %>% 
+    group_by(sample) %>% 
+    mutate(VV0=(Q[P==0]/Q)^3,
+          dVV0=3*(dQ[P==0]/Q[P==0] + dQ/Q))
+```
+
+- Fit the Murnaghan equation of state to the experimental data. Make sure to add an amplitude parameter $A$ (that should be close to 1) to allow for more leeway on the fit.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+fit <- nls(data = pospeak,
+           VV0 ~ A*Murnaghan(P, K),
+           start = list(A=1, K=1))
+```
+
+- Store the resulting values of $K$ and it's fitting standard error $dK$ in two variables. Round the values appropriately.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+K <- round(tidy(fit) %>% filter(term=="K") %>% .$estimate,0)
+dK <- round(tidy(fit) %>% filter(term=="K") %>% .$std.error,0)
+```
+
+- Finally, make the plot of the experimental points (a color per sample) and the fit. Make it look like so:
+
+```{r echo=params$solution, warning=FALSE, message=FALSE}
+pospeak %>%
+    ggplot(aes(x=P, y=VV0))+
+        geom_point(alpha=0.5, aes(color=sample))+
+        geom_errorbar(alpha=0.5, aes(color=sample, ymin=VV0-dVV0, ymax=VV0+dVV0))+
+        geom_line(data=augment(fit), aes(x=P, y=.fitted), color="royalblue", lty=2)+
+        labs(x="Pressure [GPa]",
+             y="V/V0")+
+        scale_color_manual(values = c("black","red"), name="Sample")+
+        ggtitle(paste("Murnaghan fit: K = (your value) ± (your value) GPa"))+
+        theme(legend.position = c(.9,.85))
+```
+
+
+

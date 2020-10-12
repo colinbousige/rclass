@@ -9,6 +9,7 @@ output:
         highlight      : tango
         number_sections: true
         code_download  : true
+        code_folding   : show
 params: 
     solution:
         value: true
@@ -124,6 +125,8 @@ You should end up with a dataset like this one:
 dat
 ```
 
+In case you struggled to get there, [download this dataframe here in order to be able to continue](Data_Religion/dat.csv).
+
 Now our dataset is ready, let's plot it.
 
 # Plotting
@@ -138,7 +141,7 @@ theme_set(theme_bw())
 2. Create a subset of `dat` concerning your origin country. For me it will be `dat_france`
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-dat_france <- dat%>%filter(Country=="France")
+dat_france <- dat %>% filter(Country=="France")
 ```
 
 3. Plot the evolution of the income per capita and the number of children per woman as a function of the years, and make it look like that (notice the kinks during the two world wars):
@@ -152,6 +155,9 @@ ggplot(data=dat_france, aes(x=Year, y=Income))+
     annotate("rect", xmin=1939, xmax=1945, ymin=-Inf, ymax=Inf, alpha=.3)+
     geom_point(alpha=0.2, size=5)+
     geom_smooth()
+```
+
+```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 ggplot(data=dat_france, aes(x=Year, y=Fertility))+
     ggtitle("Fertility in France")+
     xlab("Year")+
@@ -166,7 +172,8 @@ ggplot(data=dat_france, aes(x=Year, y=Fertility))+
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 dat_france_region <- dat%>%
-        filter(Country %in% c("France", "Spain", "Italy", "Switzerland", "Germany", "Luxembourg", "Belgium"))
+        filter(Country %in% c("France", "Spain", "Italy", 
+                             "Switzerland", "Germany", "Luxembourg", "Belgium"))
 ```
 
 5. Plot again income and fertility as a function of the years, but add a color corresponding to the country and a point size to its population:
@@ -179,6 +186,9 @@ ggplot(data=dat_france_region, aes(x=Year, y=Income, col=Country, size=Populatio
     annotate("rect", xmin=1914, xmax=1918, ymin=-Inf, ymax=Inf, alpha=.3)+
     annotate("rect", xmin=1939, xmax=1945, ymin=-Inf, ymax=Inf, alpha=.3)+
     geom_point(alpha=0.5)
+```
+
+```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 ggplot(data=dat_france_region, aes(x=Year, y=Fertility, col=Country, size=Population))+
     ggtitle("Fertility in France")+
     xlab("Year")+
@@ -203,18 +213,19 @@ ggplotly(P)# add dynamicTicks=TRUE allows redrawing ticks when zooming in
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 library(plotly)
-P <- ggplot(data=dat, aes(x=Income, 
-                          y=Fertility, 
-                          frame=Year, 
-                          col=Religion, 
-                          size=Population,
-                          id=Country))+
-    geom_point(alpha=0.5)+
-    ggtitle("Fertility vs. Income in the World")+
-    xlab("Household income per capita per year [constant $]")+
-    lims(y=c(0,8))+
-    scale_x_log10()+
-    scale_size(range=c(1, 15))+
-    ylab("Children per woman")
+P <- dat %>% filter(Year>=1900) %>% 
+    ggplot(aes(x     = Income, 
+               y     = Fertility, 
+               frame = Year, 
+               col   = Religion, 
+               size  = Population,
+               id    = Country))+
+        geom_point(alpha=0.5)+
+        ggtitle("Fertility vs. Income in the World")+
+        xlab("Household income per capita per year [constant $]")+
+        lims(y=c(0,8))+
+        scale_x_log10()+
+        scale_size(range=c(1, 15))+
+        ylab("Children per woman")
 ggplotly(P)
 ```
