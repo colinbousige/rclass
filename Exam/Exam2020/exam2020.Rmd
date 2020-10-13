@@ -1,5 +1,6 @@
 ---
 title : "Exam R"
+author: Colin Bousige
 date  : "01/12/2020"
 output: 
     bookdown::pdf_document2: 
@@ -12,14 +13,82 @@ header-includes:
    - \usepackage{amssymb}
 params: 
     solution:
-        value: false
+        value: true
 ---
 
-# Exercise 1 - Climate change
+# Global setup (1 point)
 
+- Unzip the `Exam_2020.zip` file somewhere on the computer, and rename the Rmd file as *name_firstname.Rmd*. You will work in this Rmd file and send it to me by email at the end, at **colin.bousige@univ-lyon1.fr**. Change the name of the author in the YAML header to your own name, but don't touch anything else. You will get a bonus if the file you sent me can be knitted without error.
+- Load the libraries `tidyverse` and `broom` and set the global `ggplot2` theme to `theme_bw()`.
 
+```{r include=params$solution, include=FALSE, warning = FALSE, cache=FALSE}
+library(tidyverse)
+library(broom)
+theme_set(theme_bw())
+```
 
-# Exercise 2 - Experimental data
+---
+
+# Exercise 1 - Starwars (5 points)
+
+- Look at the help on the built-in `starwars` tibble.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+?starwars
+```
+
+- Add a column `BMI` containing the body mass index of each character. It is defined as $BMI=mass[kg]/height[m]^2$.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+starwars <- starwars %>% 
+    mutate(BMI = mass/(height/100)^2)
+```
+
+- Display the average BMI per species, and remove the lines containing `NA` values. What are the species with the maximum and minimum average BMI?
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+(starwars_ave <- starwars %>% 
+    group_by(species) %>% 
+    summarize(BMI_average = mean(BMI)) %>% 
+    na.omit())
+starwars_ave %>% filter(BMI_average %in% range(BMI_average))
+```
+
+- Using the whole `starwars` tibble, plot the mass as a function of the height, with a different color per gender.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+starwars %>%
+    ggplot(aes(x=height, y=mass, color=gender))+
+        geom_point(alpha=0.5)
+```
+
+- Remove the outlier, and make again the same plot
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+starwars %>%
+    filter(mass < 1000) %>% 
+    ggplot(aes(x=height, y=mass, color=gender))+
+        geom_point(alpha=0.5)
+```
+
+- Make a linear fit of the mass as a function of the height (all genders aside) and display the slope and intercept, their errors, and the plot with the linear fit.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+library(broom)
+starwars %>%
+    filter(mass < 1000) %>% 
+    lm(data=., mass~height) %>% 
+    tidy()
+starwars %>%
+    filter(mass < 1000) %>% 
+    ggplot(aes(x=height, y=mass))+
+        geom_point(alpha=0.5)+
+        geom_smooth(method = "lm")
+```
+
+---
+
+## Exercise 2 - Experimental data (14 points)
 
 In this exercise we will recursively treat some x-ray diffraction (XRD) data obtained during a high-pressure experiment at the ESRF (the synchrotron in Grenoble). In this experiment, we measured the XRD patterns as a function of the pressure for two samples of the same rock, nicknamed *PY02*. PY02 is a pyrobitumen, *i.e.* some coal-like amorphous and porous carbon structure. The goal was to measure the *bulk modulus* $\kappa$ of this rock, defined as:
 $$\frac{1}{\kappa}=-\frac{1}{V}\frac{\partial V}{\partial P}.$$
@@ -28,19 +97,11 @@ The bulk modulus characterizes the volume reduction of a sample as a function of
 The bulk modulus is usually obtained during a high pressure experiment thanks to the Murnaghan equation of state:
 
 $$
-    \frac{V}{V_0}=\left(1+P\frac{\kappa'}{\kappa}\right)^{-1/\kappa'}
+\frac{V}{V_0}=\left(1+P\frac{\kappa'}{\kappa}\right)^{-1/\kappa'}
 $$
 where $V$ is the volume of the unit cell, $V_0$ the volume at ambient pressure, and $\kappa'$ is the pressure derivative of $\kappa$. In first approximation, we will consider that $\kappa'$ is constant and that $\kappa'\simeq4$.
 
-- First, load the libraries `tidyverse` and `broom` and set the global theme to `theme_bw()`.
-
-```{r include=params$solution, include=FALSE, warning = FALSE, cache=FALSE}
-library(tidyverse)
-library(broom)
-theme_set(theme_bw())
-```
-
-- Define the Murnaghan function that, given the pressure $P$, the bulk modulus $K$ and its derivative $Kp$ (defaulting to $Kp=4$), returns the relative volume $\frac{V}{V_0}$
+- Define the `Murnaghan(P, K, Kp)` function that, given the pressure $P$, the bulk modulus $K$ and its derivative $Kp$ (defaulting to $Kp=4$), returns the relative volume $\frac{V}{V_0}$
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 Murnaghan <- function(P, K, Kp=4){
@@ -48,28 +109,39 @@ Murnaghan <- function(P, K, Kp=4){
 }
 ```
 
-- Find in the `Data` folder all the files containing the `PY02` pattern, and store this list of files in `flist`.
+- Find in the `Data` folder all the files containing the experimental diffraction patterns. They are under the form `PY02_Pxx.dat` or `PY02bis_Pxx.dat`. Store this list of files in a vector called `flist`.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
-flist  <- list.files(path="Data", pattern = "PY02")
+flist  <- list.files(path="Data", pattern = "_P")
 ```
 
-- Define the `get_pressure(flist)` function that, given **a vector** of file names, returns **a vector** of the pressures of the corresponding files. The output pressure must be given in **GPa**. The files are under the form `PY02_xx.dat` or `PY02bis_xx.dat`, where `xx` is the pressure **in kbar** (1 kbar = 10 GPa).
+- Read and store the two files containing the pressures of each run, `PY02_pressures.dat` and `PY02bis_pressures.dat`. Combine these two tables into a single tidy one called `Pressures`, containing three columns `run`, `P.kbar` and `sample`.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
-get_pressure <- function(flist){
-    Press  <- gsub("PY02_","",flist)
-    Press  <- gsub("PY02bis_","",Press)
-    as.numeric(gsub(".dat","",Press))/10
+PY02_P    <- read_table2("Data/PY02_pressures.dat")
+PY02bis_P <- read_table2("Data/PY02bis_pressures.dat")
+PY02bis_P$sample <- "PY02bis"
+PY02_P$sample    <- "PY02"
+Pressures <- bind_rows(PY02_P,PY02bis_P)
+```
+
+
+- Define the `get_run(flist)` function that, given **a vector** of file names, returns **a vector** of the run number of the corresponding files. The output pressure must be given in **GPa**. The files are under the form `PY02_Pxx.dat` or `PY02bis_Pxx.dat`, where `xx` is the  run number.
+
+```{r include=params$solution, warning=FALSE, message=FALSE}
+get_run <- function(flist){
+    run  <- gsub("PY02_P","",flist)
+    run  <- gsub("PY02bis_P","",run)
+    as.numeric(gsub(".dat","",run))
 }
 ```
 
-- Define the `get_sample(flist)` function that, given **a vector** of file names, returns the name of the sample (*i.e.* PY02 or PY02bis). For this, you will want to split the file names according to the "\_" character (use `strsplit()`), make the result a vector using `unlist()`, and take every other two elements of the resulting vector.
+- Define the `get_sample(flist)` function that, given **a vector** of file names, returns the names of the samples (*i.e.* PY02 or PY02bis, *i.e.* the text before the first occurrence of the "\_" character). For this, you will want to split the file names according to the "\_" character (use `strsplit()`), make the result a vector using `unlist()`, and take every other two elements of the resulting vector.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 get_sample <- function(flist){
-    all <- unlist(strsplit(flist,"_"))
-    all[seq(1,length(all), by=2)]
+    all <- unlist(strsplit(flist, "_"))
+    all[seq_along(all) %% 2 == 1]
 }
 ```
 
@@ -90,7 +162,7 @@ d <- tibble(file=flist) %>%
     mutate(int_n=norm01(int))
 ```
 
-- Plot all the diffractograms on top of each other, with lines of a different color for each file, and define niece axis labels, such as *Scattering Vector q [1/Å]* and *Intensity [arb. units]*.
+- Plot all the diffractograms on top of each other, with lines of a different color for each file, and define nice axis labels, such as *Scattering Vector q [1/Å]* and *Intensity [arb. units]*.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 d %>%
@@ -103,8 +175,8 @@ d %>%
 - We are interested in the position of the first peak around $q=1.8$ Å$^{-1}$. Create the `pospeak` tibble that stores the position `Q` of the maximum of each diffractogram. 
     - Make sure to filter data for scattering vectors below 2.5 Å$^{-1}$. 
     - We will also add the `dQ` column that stores the error on the value of `Q`. We will estimate it as the average value of the difference between each neighbor value of `q`.
-    - Add the columns `P` and `sample` that contain the pressure and sample name for each file.
-    - Finally, order the tibble by ascending pressure for each sample
+    - Add the columns `run` and `sample` that contain the run number and sample name for each file (using the two functions defined above).
+    - Finally, order the tibble by ascending run for each sample
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 pospeak <- d %>% 
@@ -112,24 +184,48 @@ pospeak <- d %>%
     group_by(file) %>% 
     summarise(Q  = q[which.max(int)],
               dQ = mean(diff(q))) %>% 
-    mutate(P      = get_pressure(file),
+    mutate(run    = get_run(file),
            sample = get_sample(file)) %>% 
-    arrange(sample, P)
+    arrange(sample, run)
 ```
 
-In case you didn't manage to get there, here is the expected `pospeak` table so that you can continue with the exercise:
+- Now join this table together with the `Pressures` one in order to get the sample names and pressures in this table. Finally, add the new column `P` containing the pressure in GPa (1 GPa = 10 kbar).
 
-```{r echo=FALSE, warning=FALSE, message=FALSE}
-data.frame(pospeak)
+```{r include=params$solution, warning=FALSE, message=FALSE}
+pospeak <- pospeak %>% 
+    inner_join(Pressures) %>% 
+    mutate(P=P.kbar/10)
 ```
 
-- We now need to estimate the volume variation and the error on its measurement. Normally, we would need to get the crystal lattice volume, but as mentioned earlier, the PY02 sample is an amorphous rock, and thus has no crystalline order. In first approximation, we can consider that the volume reduction is linked to the interactomic distance reduction through:
+In case you didn't manage to get there, I provide in the exam .Rmd file the expected `pospeak` table so that you can continue with the exercise.
+
+```{r include=FALSE, warning=FALSE, message=FALSE}
+pospeak <- read_table2("file    Q    dQ    run    sample    P.kbar    P
+PY02_P1.dat       1.802587    0.003839376    1       PY02     0.00 0.000
+PY02_P2.dat       1.840981    0.003839376    2       PY02     2.40 0.240
+PY02_P3.dat       1.875535    0.003839376    3       PY02     8.80 0.880
+PY02_P4.dat       1.875535    0.003839376    4       PY02    15.90 1.590
+PY02_P5.dat       1.890893    0.003839376    5       PY02    27.75 2.775
+PY02_P6.dat       1.929286    0.003839376    6       PY02    36.00 3.600
+PY02_P7.dat       1.936965    0.003839376    7       PY02    40.00 4.000
+PY02_P8.dat       1.971520    0.003839376    8       PY02    51.00 5.100
+PY02_P9.dat       1.902411    0.003839376    9       PY02    23.00 2.300
+PY02_P10.dat      1.867856    0.003839376   10       PY02     7.50 0.750
+PY02_P11.dat      1.802587    0.003839376   11       PY02     0.10 0.010
+PY02bis_P1.dat    1.821784    0.003839376    1    PY02bis     0.00 0.000
+PY02bis_P2.dat    1.883214    0.003839376    2    PY02bis     3.00 0.300
+PY02bis_P3.dat    1.883214    0.003839376    3    PY02bis    16.00 1.600
+PY02bis_P4.dat    1.933126    0.003839376    4    PY02bis    38.00 3.800
+PY02bis_P5.dat    1.971520    0.003839376    5    PY02bis    48.00 4.800")
+```
+
+- We now need to estimate the volume variation and the error on its measurement. Normally, we would need to get the crystal lattice volume, but as mentioned earlier, the PY02 sample is an amorphous rock, and thus it has no crystalline order. In first approximation, we can consider that the volume reduction is linked to the interactomic distance reduction through:
 $$
 \frac{V}{V_0}=\left(\frac{r}{r_0}\right)^3,
 $$
 where $r$ is the most representative interatomic distance (*i.e.* the one whose Fourier transform will have the highest intensity), the scattering vector $q$ being linked to the distance $r$ by $q=2\pi/r$.
 Using this, add to the `pospeak` tibble the columns `VV0` and `dVV0` containing the volume reduction and an estimation of its measurement error, respectively. 
-    - Make sure that the `V0` part refers to the value at ambient pressure. 
+    - Make sure that the `V0` part refers to the value at ambient pressure (*i.e.* $P=0$). 
     - Make sure you propagate the errors in a proper way.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
@@ -147,7 +243,7 @@ fit <- nls(data = pospeak,
            start = list(A=1, K=1))
 ```
 
-- Store the resulting values of $K$ and it's fitting standard error $dK$ in two variables. Round the values appropriately.
+- Store the resulting values of $K$ and it's fitting standard error $dK$ in two variables. Round the values to the appropriate floating number. You may use the `broom::tidy()` function.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 K <- round(tidy(fit) %>% filter(term=="K") %>% .$estimate,0)
@@ -166,7 +262,7 @@ pospeak %>%
              y="V/V0")+
         scale_color_manual(values = c("black","red"), name="Sample")+
         ggtitle(paste("Murnaghan fit: K = (your value) ± (your value) GPa"))+
-        theme(legend.position = c(.9,.85))
+        theme(legend.position = c(.9,.85))->p
 ```
 
 
