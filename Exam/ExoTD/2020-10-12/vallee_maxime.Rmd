@@ -29,20 +29,20 @@ In these exercises we will see the power of the libraries `ggplot2` and `plotly`
 
 ------- 
   
-  # Data handling
+# Data handling
   
-  The first thing to do is to load and regroup all these datasets into a single one.
+The first thing to do is to load and regroup all these datasets into a single one.
 
 1. Load the `tidyverse` library and, using `read_csv()`, load the 4 datasets in 4 separate data.frames called `children`, `income`, `pop` and `religion`.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
 library(tidyverse)
-pop <- read_csv("population_total.csv")
+pop <- read_csv("pop.csv")
 head(pop)
-children <- read_csv("children_per_woman_total_fertility.csv")
+children <- read_csv("children.csv")
 head(children)
-income <- read_csv("income_per_person_gdppercapita_ppp_inflation_adjusted.csv")
+income <- read_csv("income.csv")
 head(income)
 religion <- read_csv("religion.csv")
 head(religion)
@@ -50,7 +50,7 @@ head(religion)
 
 2. To reproduce the chart on the video, we need to determine the dominant religion in each country. In the `religion` dataset, add a column `Religion` that will give the name of the dominant religion for each country. For this, you might want to use this method that returns the name of the column containing the maximum of each row of a `data.frame`:
   
-  ```
+```{r}
 names(religion)
 DF <- religion %>% select(Buddhists:Unaffiliated)
 religion <- religion %>% mutate(Religion=colnames(DF)[max.col(DF)])
@@ -68,7 +68,7 @@ religion <- religion %>% mutate(Religion=colnames(DF)[max.col(DF)])
 
 We will only consider data from 1800 to 2018. Example of syntax using the pipe operator `%>%`:
   
-  ```
+```{r}
 children %>% 
   select(name, '1800':'2018') %>%
   pivot_longer(-country,
@@ -94,8 +94,9 @@ pop %>%
 
 4. Now we want to combine all these datasets into a single one called `dat`, containing the columns `Country`, `Year`, `Population`, `Religion`, `Fertility` and `Income`. Look into the `inner_join()` function of the `dplyr` library (which is part of the `tidyverse` library). For the `religion` dataset, we will consider that the proportions of 2010 are representative of all times.
 
-```
+```{r}
 dat <- inner_join(pop,income,religion,children)
+
 
 {r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
@@ -107,7 +108,7 @@ dat <- inner_join(pop,income,religion,children)
 
 1. Load the library `ggplot2` and set the global theme to `theme_bw()` using `theme_set()`
 
-```
+```{r}
 library(ggplot2)
 ggplot(data = dat) + 
   aes (x =pop, income, religion, children)
@@ -119,7 +120,7 @@ ggplot(data = dat) +
 
 2. Create a subset of `dat` concerning your origin country. For me it will be `dat_france`
 
-```
+```{r}
 dat %>% dat_france <- select(france)
 
 {r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}

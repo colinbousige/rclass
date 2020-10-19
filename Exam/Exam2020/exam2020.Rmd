@@ -1,5 +1,5 @@
 ---
-title : "Exam R"
+title : "Reproducible data treatment with R -- Exam"
 author: Colin Bousige
 date  : "01/12/2020"
 output: 
@@ -13,13 +13,13 @@ header-includes:
    - \usepackage{amssymb}
 params: 
     solution:
-        value: true
+        value: false
 ---
 
 # Global setup (1 point)
 
-- Unzip the `Exam_2020.zip` file somewhere on the computer, and rename the Rmd file as *name_firstname.Rmd*. You will work in this Rmd file and send it to me by email at the end, at **colin.bousige@univ-lyon1.fr**. Change the name of the author in the YAML header to your own name, but don't touch anything else. You will get a bonus if the file you sent me can be knitted without error.
-- Load the libraries `tidyverse` and `broom` and set the global `ggplot2` theme to `theme_bw()`.
+- Unzip the `Exam_2020.zip`{.R} file somewhere on the computer, and rename the Rmd file as *name_firstname.Rmd*. You will work in this Rmd file and send it to me by email at the end, at **colin.bousige@univ-lyon1.fr**. Change the name of the author in the YAML header to your own name, but don't touch anything else. You will get a bonus if the file you sent me can be knitted without error.
+- Load the libraries `tidyverse`{.R} and `broom` and set the global `ggplot2`{.R} theme to `theme_bw()`{.R}.
 
 ```{r include=params$solution, include=FALSE, warning = FALSE, cache=FALSE}
 library(tidyverse)
@@ -29,62 +29,34 @@ theme_set(theme_bw())
 
 ---
 
-# Exercise 1 - Starwars (5 points)
+# Exercise 1 - Correlation and causation (5 points)
 
-- Look at the help on the built-in `starwars` tibble.
-
-```{r include=params$solution, warning=FALSE, message=FALSE}
-?starwars
-```
-
-- Add a column `BMI` containing the body mass index of each character. It is defined as $BMI=mass[kg]/height[m]^2$.
+- Load in a tibble the `Data/correlation.csv`{.R} file. It contains the per capita consumption of mozarella cheese and the number of people who died by falling down the stairs as a function of the years (source: [Spurious Correlations](http://www.tylervigen.com/spurious-correlations)).
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
-starwars <- starwars %>% 
-    mutate(BMI = mass/(height/100)^2)
+d <- read_csv("Data/correlation.csv")
 ```
 
-- Display the average BMI per species, and remove the lines containing `NA` values. What are the species with the maximum and minimum average BMI?
+- Using `cor()`{.R}, compute the correlation between the number of people who died by falling down the stairs as a function of the per capita consumption of mozarella cheese.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
-(starwars_ave <- starwars %>% 
-    group_by(species) %>% 
-    summarize(BMI_average = mean(BMI)) %>% 
-    na.omit())
-starwars_ave %>% filter(BMI_average %in% range(BMI_average))
+cor(d[[2]], d[[3]])
 ```
 
-- Using the whole `starwars` tibble, plot the mass as a function of the height, with a different color per gender.
+- Plot the number of people who died by falling down the stairs as a function of the per capita consumption of mozarella cheese. Make the axis labels pretty, add the correlation value as the title, and add a linear fit.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
-starwars %>%
-    ggplot(aes(x=height, y=mass, color=gender))+
-        geom_point(alpha=0.5)
+ggplot(d, aes(x=per_capita_consumption_of_mozarella_cheese, 
+              y=people_who_died_by_falling_down_the_stairs))+
+    geom_point(size=5, alpha=.5)+
+    geom_smooth(method="lm")+
+    labs(x="Per capita consumption of mozarella cheese",
+         y="People who died by falling down the stairs")+
+    ggtitle(paste("Correlation:",round(cor(d[[2]], d[[3]]),2)))
 ```
 
-- Remove the outlier, and make again the same plot
+- Do you think that *correlation* implies *causation* for these two datasets?
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-starwars %>%
-    filter(mass < 1000) %>% 
-    ggplot(aes(x=height, y=mass, color=gender))+
-        geom_point(alpha=0.5)
-```
-
-- Make a linear fit of the mass as a function of the height (all genders aside) and display the slope and intercept, their errors, and the plot with the linear fit.
-
-```{r include=params$solution, warning=FALSE, message=FALSE}
-library(broom)
-starwars %>%
-    filter(mass < 1000) %>% 
-    lm(data=., mass~height) %>% 
-    tidy()
-starwars %>%
-    filter(mass < 1000) %>% 
-    ggplot(aes(x=height, y=mass))+
-        geom_point(alpha=0.5)+
-        geom_smooth(method = "lm")
-```
 
 ---
 
@@ -101,7 +73,7 @@ $$
 $$
 where $V$ is the volume of the unit cell, $V_0$ the volume at ambient pressure, and $\kappa'$ is the pressure derivative of $\kappa$. In first approximation, we will consider that $\kappa'$ is constant and that $\kappa'\simeq4$.
 
-- Define the `Murnaghan(P, K, Kp)` function that, given the pressure $P$, the bulk modulus $K$ and its derivative $Kp$ (defaulting to $Kp=4$), returns the relative volume $\frac{V}{V_0}$
+- Define the `Murnaghan(P, K, Kp)`{.R} function that, given the pressure $P$, the bulk modulus $K$ and its derivative $Kp$ (defaulting to $Kp=4$), returns the relative volume $\frac{V}{V_0}$
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 Murnaghan <- function(P, K, Kp=4){
@@ -109,13 +81,13 @@ Murnaghan <- function(P, K, Kp=4){
 }
 ```
 
-- Find in the `Data` folder all the files containing the experimental diffraction patterns. They are under the form `PY02_Pxx.dat` or `PY02bis_Pxx.dat`. Store this list of files in a vector called `flist`.
+- Find in the `Data`{.R} folder all the files containing the experimental diffraction patterns. They are under the form `PY02_Pxx.dat`{.R} or `PY02bis_Pxx.dat`{.R}. Store this list of files in a vector called `flist`{.R}.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 flist  <- list.files(path="Data", pattern = "_P")
 ```
 
-- Read and store the two files containing the pressures of each run, `PY02_pressures.dat` and `PY02bis_pressures.dat`. Combine these two tables into a single tidy one called `Pressures`, containing three columns `run`, `P.kbar` and `sample`.
+- Read and store the two files containing the pressures of each run, `PY02_pressures.dat`{.R} and `PY02bis_pressures.dat`{.R}. Combine these two tables into a single tidy one called `Pressures`{.R}, containing three columns `run`{.R}, `P.kbar`{.R} and `sample`{.R}.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 PY02_P    <- read_table2("Data/PY02_pressures.dat")
@@ -126,7 +98,7 @@ Pressures <- bind_rows(PY02_P,PY02bis_P)
 ```
 
 
-- Define the `get_run(flist)` function that, given **a vector** of file names, returns **a vector** of the run number of the corresponding files. The output pressure must be given in **GPa**. The files are under the form `PY02_Pxx.dat` or `PY02bis_Pxx.dat`, where `xx` is the  run number.
+- Define the `get_run(flist)`{.R} function that, given **a vector** of file names, returns **a vector** of the run number of the corresponding files. The output pressure must be given in **GPa**. The files are under the form `PY02_Pxx.dat` or `PY02bis_Pxx.dat`, where `xx` is the  run number.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 get_run <- function(flist){
@@ -136,7 +108,7 @@ get_run <- function(flist){
 }
 ```
 
-- Define the `get_sample(flist)` function that, given **a vector** of file names, returns the names of the samples (*i.e.* PY02 or PY02bis, *i.e.* the text before the first occurrence of the "\_" character). For this, you will want to split the file names according to the "\_" character (use `strsplit()`), make the result a vector using `unlist()`, and take every other two elements of the resulting vector.
+- Define the `get_sample(flist)`{.R} function that, given **a vector** of file names, returns the names of the samples (*i.e.* PY02 or PY02bis, *i.e.* the text before the first occurrence of the "\_" character). For this, you will want to split the file names according to the "\_" character (use `strsplit()`{.R}), make the result a vector using `unlist()`{.R}, and take every other two elements of the resulting vector.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 get_sample <- function(flist){
@@ -145,13 +117,13 @@ get_sample <- function(flist){
 }
 ```
 
-- Define the `norm01(x)` function that given a vector, returns this vector normalized to [0,1]
+- Define the `norm01(x)`{.R} function that given a vector, returns this vector normalized to [0,1]
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 norm01 <- function(x) {(x-min(x))/(max(x)-min(x))}
 ```
 
-- Now let's read all the data files in `flist` and store the result in a tidy `tibble` with three columns, `file`, `q` and `int` (the data files containing the diffracted intensity as a function of the scattering vector $q$). Either use a `for loop` or the `tidyverse`-friendly version using `purrr::map` (+1 bonus for this version). Add the `int_n` column containing the normalized intensity for each file.
+- Now let's read all the data files in `flist` and store the result in a tidy `tibble` with three columns, `file`, `q` and `int` (the data files containing the diffracted intensity as a function of the scattering vector $q$). Either use a `for loop` or the `tidyverse`-friendly version using `purrr::map()`{.R} (+1 bonus for this version). Add the `int_n` column containing the normalized intensity for each file.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 d <- tibble(file=flist) %>% 
@@ -162,7 +134,7 @@ d <- tibble(file=flist) %>%
     mutate(int_n=norm01(int))
 ```
 
-- Plot all the diffractograms on top of each other, with lines of a different color for each file, and define nice axis labels, such as *Scattering Vector q [1/Å]* and *Intensity [arb. units]*.
+- Plot all the normalized diffractograms on top of each other, with lines of a different color for each file, and define nice axis labels, such as *Scattering Vector q [1/Å]* and *Intensity [arb. units]*.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 d %>%
@@ -223,8 +195,8 @@ PY02bis_P5.dat    1.971520    0.003839376    5    PY02bis    48.00 4.800")
 $$
 \frac{V}{V_0}=\left(\frac{r}{r_0}\right)^3,
 $$
-where $r$ is the most representative interatomic distance (*i.e.* the one whose Fourier transform will have the highest intensity), the scattering vector $q$ being linked to the distance $r$ by $q=2\pi/r$.
-Using this, add to the `pospeak` tibble the columns `VV0` and `dVV0` containing the volume reduction and an estimation of its measurement error, respectively. 
+where $r$ is the most representative interatomic distance (*i.e.* the one whose Fourier transform will have the highest intensity), the scattering vector $q$ being linked to the distance $r$ by $q=2\pi/r$. In our case, $r \simeq 2\pi/1.8\simeq 3.5$ Å is the distance between two graphitic-like planes.
+Using this, add to the `pospeak` tibble the columns `VV0` and `dVV0` containing, respectively, the volume reduction and an estimation of its measurement error. 
     - Make sure that the `V0` part refers to the value at ambient pressure (*i.e.* $P=0$). 
     - Make sure you propagate the errors in a proper way.
 
@@ -235,7 +207,7 @@ pospeak <- pospeak %>%
           dVV0=3*(dQ[P==0]/Q[P==0] + dQ/Q))
 ```
 
-- Fit the Murnaghan equation of state to the experimental data. Make sure to add an amplitude parameter $A$ (that should be close to 1) to allow for more leeway on the fit.
+- Fit the Murnaghan equation of state to the experimental data. Make sure to add an amplitude parameter $A$ (that should be close to 1) to allow for more leeway on the fit. We fix the derivative value $Kp=4$.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 fit <- nls(data = pospeak,
@@ -243,7 +215,7 @@ fit <- nls(data = pospeak,
            start = list(A=1, K=1))
 ```
 
-- Store the resulting values of $K$ and it's fitting standard error $dK$ in two variables. Round the values to the appropriate floating number. You may use the `broom::tidy()` function.
+- Store the resulting values of $K$ and it's fitting standard error $dK$ in two variables. Round the values to the appropriate floating number. You may use the `broom::tidy()`{.R} function.
 
 ```{r include=params$solution, warning=FALSE, message=FALSE}
 K <- round(tidy(fit) %>% filter(term=="K") %>% .$estimate,0)
@@ -257,12 +229,12 @@ pospeak %>%
     ggplot(aes(x=P, y=VV0))+
         geom_point(alpha=0.5, aes(color=sample))+
         geom_errorbar(alpha=0.5, aes(color=sample, ymin=VV0-dVV0, ymax=VV0+dVV0))+
-        geom_line(data=augment(fit), aes(x=P, y=.fitted), color="royalblue", lty=2)+
+        geom_line(data=augment(fit2), aes(x=P, y=.fitted), color="royalblue", lty=2)+
         labs(x="Pressure [GPa]",
              y="V/V0")+
         scale_color_manual(values = c("black","red"), name="Sample")+
         ggtitle(paste("Murnaghan fit: K = (your value) ± (your value) GPa"))+
-        theme(legend.position = c(.9,.85))->p
+        theme(legend.position = c(.9,.85))
 ```
 
 

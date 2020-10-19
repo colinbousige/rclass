@@ -10,16 +10,16 @@ install.packages("plotly")
 
 #1
 
-children_per_woman<-read.csv("C:/Users/Lenovo/Documents/Assignment_R/children_per_woman_total_fertility.csv")
+children_per_woman<-read.csv("Data/children_per_woman_total_fertility.csv")
 children <- data.frame(children_per_woman)
 print (children)
-income_per_person<-read.csv("C:/Users/Lenovo/Documents/Assignment_R/income_per_person_gdppercapita_ppp_inflation_adjusted.csv")
+income_per_person<-read.csv("Data/income_per_person_gdppercapita_ppp_inflation_adjusted.csv")
 income <- data.frame(income_per_person)
 print (income)
-pop_total<-read.csv("C:/Users/Lenovo/Documents/Assignment_R/population_total.csv")
+pop_total<-read.csv("Data/population_total.csv")
 pop <- data.frame(pop_total)
 print (pop)
-reli<-read.csv("C:/Users/Lenovo/Documents/Assignment_R/religion.csv")
+reli<-read.csv("Data/religion.csv")
 religion <- data.frame(reli)
 print (religion)
 

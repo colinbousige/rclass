@@ -1,0 +1,121 @@
+---
+title: "R Exercises - Religion and babies"
+author: "Sarvenaz Khodayari"
+date: "10/10/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo= FALSE}
+library(tidyverse)
+#children
+children<- data.frame(read.csv("children.csv"))
+#incomes
+income<- data.frame(read.csv("income.csv"))
+#population
+pop<- data.frame(read.csv("pop.csv"))
+#religion
+religion<- data.frame(read.csv("religion.csv"),header= TRUE)
+DF<- religion[,7:14]
+religion$Religion<-max.religion<-colnames(DF)[max.col(DF)]
+
+
+names(children)<- c("Country",c(1800:2018))
+names(income)<- c("Country",c(1800:2040))
+names(pop)<- c("Country",c(1800:2100))
+
+```
+```{r,echo= FALSE}
+###PART1
+library(tidyverse)
+###Pivot_longer
+dc<- children%>%
+  select(Country,'1800':'2018')%>%
+  pivot_longer(col=-Country,
+               names_to="Year",
+               values_to="Fertility",
+               names_transform=list(Year = as.numeric))
+
+               
+di<-income%>%
+  select(Country,'1800':'2018')%>%
+  pivot_longer(col=-Country,
+               names_to="Year",
+               values_to="Income",
+               names_transform=list(Year = as.numeric))
+
+dp<-pop%>%
+  select(Country,'1800':'2018')%>%
+  pivot_longer(col=-Country,
+               names_to="Year",
+               values_to="Population",
+               names_transform=list(Year = as.numeric))
+               
+dr <- religion %>% select("Country","Religion")
+  
+
+
+
+  print("inner join of datas:")
+join<-inner_join(dc,di,by=c("Country","Year"))%>% 
+      inner_join(dp,by=c("Country","Year"))%>%
+  inner_join(dr,by="Country")
+
+      join
+
+  
+```
+```{r,echo=FALSE}
+
+###PART2
+##Platting
+library(ggplot2)
+library(plotly)
+library(dplyr)
+dat_Iran<- filter(join, Country=="Iran")
+print("Dat_Iran:")
+dat_Iran
+
+
+##income plot
+
+
+ggplot(dat_Iran,aes(x=Year,y=Income))+geom_rect(aes(xmin=1914,xmax=1918,ymin= -Inf,ymax=Inf),alpha=0.7,fill='grey')+geom_rect(aes(xmin=1939,xmax=1945,ymin= -Inf,ymax=Inf),alpha=0.4,fill='grey')+
+  geom_point(alpha=0.08,size=4,col="black")+geom_smooth(size=1,col='dark blue')+ theme_bw()+
+  labs(x='Year',y='Household income per capita per year[constant$]',title='Household income in Iran')
+
+## fertility plot
+ggplot(dat_Iran,aes(x=Year,y=Fertility))+geom_rect(aes(xmin=1914,xmax=1918,ymin= -Inf,ymax=Inf),alpha=0.7,fill='grey')+geom_rect(aes(xmin=1939,xmax=1945,ymin= -Inf,ymax=Inf),alpha=0.7,fill='grey')+
+  geom_smooth(size=1.8,col='red')+labs(x="Year",y='Children per woman',title='Fertility in Iran',size=2)
+
+
+##Iran's neighbors
+
+dat_Iran_region<- filter(join,Country %in%  c('Iran','Afghanistan','Armenia','Iraq','Azerbaijan','Turkey','Turkmenistan','Pakistan'))
+print("Dat_Iran_Region:")
+dat_Iran_region
+
+#plot neighbors-income-
+
+ggplot(dat_Iran_region,aes(x=Year,y=Income,size=Population))+geom_rect(aes(xmin=1914,xmax=1918,ymin= -Inf,ymax=Inf),alpha=0.7,fill='grey')+geom_rect(aes(xmin=1939,xmax=1945,ymin= -Inf,ymax=Inf),alpha=0.7,fill='grey')+ geom_point(alpha=0.3,aes(col=Country)) +
+  labs(x='Year',y='Household income per capita per year[constant$]',title='Household income in Iran and neighbors')
+  
+#plot neighbors -fertility-
+  ggplot(dat_Iran_region,aes(x=Year,y=Fertility,size=Population))+geom_rect(aes(xmin=1914,xmax=1918,ymin= -Inf,ymax=Inf),alpha=0.7,fill='grey')+geom_rect(aes(xmin=1939,xmax=1945,ymin= -Inf,ymax=Inf),alpha=0.7,fill='grey')+ geom_point(alpha=0.3,aes(col=Country))+
+  labs(x="Year",y='Children per woman',title='Fertility in Iran and neighbors')
+
+  
+library(plotly)
+  print("Plotly part")
+P <- ggplot(dat_Iran, aes(x=Population, y=Income))+
+        geom_point(alpha=0.5,aes(col=Income))+labs(title='Income/Population in Iran',size=0.5 )
+ggplotly(P)
+
+
+allplots <- ggplot(dat_Iran_region, aes(x=Population, y=Income,id=Year,id=Country))+
+        geom_point(aes(frame=Year,col=Country,size=Population))+labs(title='Income/Pop in Iran & neighbors')
+ggplotly(allplots)
+

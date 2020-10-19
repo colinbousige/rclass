@@ -4,6 +4,8 @@
 
 ```{r include=FALSE, warning = FALSE, message=FALSE, cache=FALSE}
 rm(list = ls())
+library(ggplot2)
+library(patchwork)
 ```
 
 Let's learn how to do simple fits with R and plot the results.
@@ -38,6 +40,7 @@ to_print <- paste("y = ", round(coef(fit)[1],2)," + x*",
                     round(coef(fit)[2],2), sep="")
 text(50, 50, to_print)
 library(ggplot2)
+theme_set(theme_bw())
 ggplot(data=d, aes(x,y)) + 
     geom_point(cex=3) +
     geom_smooth(method="lm") +
@@ -47,10 +50,11 @@ ggplot(data=d, aes(x,y)) +
 The function `geom_smooth()` will fit the data and display the fitted line, but to retrieve the actual coefficients you still need to run `lm()`.
 
 
-## Non linear fitting
+## Nonlinear Least Squares fitting
 
+### The `nls` workhorse
 
-You can fit data with your own functions and constraints using `nls`. Example:
+You can fit data with your own functions and constraints using [`nls`](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/nls). Example:
 
 
 ```{r, warnings=FALSE}
@@ -58,6 +62,9 @@ You can fit data with your own functions and constraints using `nls`. Example:
 x  <- seq(-7,7,.1)
 y  <- dnorm(x, sd = .5) + dnorm(x, mean=2, sd = 1) + runif(length(x))/10
 df <- data.frame(x=x,y=y)
+ggplot(data=df, aes(x,y))+
+    geom_point()+
+    ggtitle("Some fake data we want to fit with 2 Gaussians")
 # Create a function to fit the data
 myfunc <- function(x, y0, x0, A, B) {
     y0 + dnorm(x, sd=A) + dnorm(x, mean=x0, sd=B)
@@ -73,14 +80,19 @@ coef(fit)
 par(cex.lab=1.5, cex.axis=1.4, mgp = c(2.4, .5, 0),
     tck=0.02, mar=c(4, 4, .5, .5), lwd=2, las=1)
 plot(x, y, pch=16, ylim=c(0,1.1))
-lines(x, predict(fit, x), col="red", lwd=2)
+lines(x, predict(fit), col="red", lwd=2)
 ```
 
 Or with `ggplot2`:
 
 ```{r}
-ggplot(data=df, aes(x,y))+
-    geom_point() +
+P1 <- ggplot(data=df, aes(x,y))+
+    ggtitle("Retrieving the fit performed beforehand")+
+    geom_point(size=2, alpha=.5) +
+    geom_line(aes(y=predict(fit)), color="red", size=1)
+P2 <- ggplot(data=df, aes(x,y))+
+    ggtitle("Doing the fit directly withing ggplot2")+
+    geom_point(size=2, alpha=.5) +
     geom_smooth(method = "nls", 
                 method.args = list(formula = y ~ myfunc(x, y0, x0, A, B),
                                    start=list(y0=0, x0=1.5, A=.2, B=.2)
@@ -88,7 +100,10 @@ ggplot(data=df, aes(x,y))+
                 data = df,
                 se = FALSE,
                 color="red")
+P1/P2
 ```
+
+### Using constraints
 
 In `nls` it is even possible to constraint the fitting by adding lower and upper boundaries. You have to be careful with these and not provide stupid ones, *e.g.*:
 
@@ -104,8 +119,31 @@ fit2 <- nls(y~ myfunc(x, y0, x0, A, B),
 par(cex.lab=1.5, cex.axis=1.4, mgp = c(2.4, .5, 0),
     tck=0.02, mar=c(4, 4, 2, .5), lwd=2, las=1)
 plot(x, y, pch=16, ylim=c(0,1.1), main="Beware of constraints")
-lines(x, predict(fit2, x), col="royalblue", lwd=2)
+lines(x, predict(fit2), col="royalblue", lwd=2)
 ```
+
+
+### A more robust version of `nls`
+
+Sometimes, `nls` will struggle to converge towards a solution, especially if you provide initial guesses that are too far from the expected values.
+
+```{r warning=FALSE, message=FALSE, error=TRUE}
+fit3 <- nls(y~ myfunc(x, y0, x0, A, B),
+           start=list(y0=-10, x0=500, A=10000, B=2000)
+           )
+```
+
+In that case, you may want to use a more robust `nls` function such as `nlsLM` from the `minpack.lm` package.
+
+```{r warning=FALSE, message=FALSE}
+library(minpack.lm)
+fit3 <- nlsLM(y~ myfunc(x, y0, x0, A, B),
+           start=list(y0=-10, x0=500, A=10000, B=2000)
+           )
+summary(fit);
+summary(fit3);
+```
+
 
 ## The broom library
 
@@ -138,34 +176,36 @@ It is then easy to make a recursive fit on your data without using a `for loop`:
 library(broom)
 library(tidyverse)
 library(ggplot2)
+theme_set(theme_bw())
 # Create fake data
-a <- seq(-10,10,.2)
+a <- seq(-10,10,.1)
 centers <- runif(3, min=-8, max=8)
 widths  <- runif(3, min=0.5, max=1)
 amp     <- runif(3, min=2, max=10)
 noise   <- .3*runif(length(a))-.15
 d <- tibble(x=rep(a,3),
-            y=c(amp[1]*dnorm(a,mean=centers[1],sd=widths[1]) + noise,
-                amp[2]*dnorm(a,mean=centers[2],sd=widths[2]) + noise,
-                amp[3]*dnorm(a,mean=centers[3],sd=widths[3]) + noise),
-            T=factor(rep(1:3, each=length(a)))
+            y=c(amp[1]*dnorm(a,mean=centers[1],sd=widths[1]) + sample(noise),
+                amp[2]*dnorm(a,mean=centers[2],sd=widths[2]) + sample(noise),
+                amp[3]*dnorm(a,mean=centers[3],sd=widths[3]) + sample(noise)),
+            T=rep(1:3, each=length(a))
             )
 # Plot the data
-d %>% ggplot(aes(x=x, y=y, color=T))+
-        geom_point()
+d %>% ggplot(aes(x=x, y=y, color=factor(T)))+
+        geom_line()
 # Fit all data
 d_fitted <- d %>% 
     nest(data=-T) %>%
     mutate(fit = purrr::map(data, ~ nls(data = .,
-                                 y ~ y0 + A*dnorm(x, mean=x0, sd=FW), 
-                                 start=list(A  = max(.$y),
-                                            y0 = .01, 
-                                            x0 = .$x[which.max(.$y)], 
-                                            FW = .7)
-                                 )),
+                                y ~ y0 + A*dnorm(x, mean=x0, sd=FW), 
+                                start=list(A  = max(.$y),
+                                           y0 = .01, 
+                                           x0 = .$x[which.max(.$y)], 
+                                           FW = .7)
+                                )),
            tidied = purrr::map(fit, tidy),
            augmented = purrr::map(fit, augment)
           )
+d_fitted
 # data and fit resulting curve
 d_fitted %>% 
   unnest(augmented)
@@ -181,7 +221,7 @@ d_fitted %>%
 # plot fit result
 d_fitted %>% 
     unnest(augmented) %>% 
-    ggplot(aes(x=x, color=T))+
+    ggplot(aes(x=x, color=factor(T)))+
         geom_point(aes(y=y), alpha=0.5, size=3) + 
         geom_line(aes(y=.fitted))
 ```
@@ -219,62 +259,69 @@ write.table(df, "Data/exo_fit.txt", quote=FALSE, row.names=FALSE)
 
 - Load the Raman spectrum <a href="Data/rubis_01.txt" download target="_blank">rubis_01.txt</a>, normalize it to [0,1] and plot it
 - Define the Lorentzian function
-- Create a function that is the sum of 2 Lorentzians
 - Guess grossly the initial parameters and plot the resulting curve as a blue dashed line
 - Fit the data by a sum of 2 Lorentzians using `nls`
 - Add the result on the plot as a red line
-- Add the 2 Lorentzian components as area-filled curves with `alpha=0.2` and two different colors (see the function `polygon()`)
-- Do the same plot with `ggplot2`
+- Add the 2 Lorentzian components as area-filled curves with `alpha=0.2` and two different colors
 
 
 <details>
     <summary>Solution</summary>
 
 ```{r, warnings=FALSE, error=TRUE}
+library(tidyverse)
 # Load rubis_1.txt, normalize it to [0,1] and plot it
-d <- read.table("Data/rubis_01.txt", header=FALSE, col.names=c("w", "Int"))
+d <- read_table2("Data/rubis_01.txt", col_names=c("w", "Int"))
 norm01 <- function(x) {(x-min(x))/(max(x)-min(x))}
 d$Int_n <- norm01(d$Int)
-par(cex.lab=1.5, cex.axis=1.4, mgp = c(2.4, .5, 0),
-    tck=0.02, mar=c(4, 4, 2, .5), lwd=2, las=1)
-plot(d$w, d$Int_n)
+P <- d %>%
+    ggplot(aes(x=w, y=Int_n))+
+        geom_point(alpha=0.5)
+P
 # Define the Lorentzian function
-Lorentzian <- function(x,x0=0,FWHM=1,A=1,y0=0){
-    y0 + 2*A/(pi*FWHM)/( 1 + ((x-x0)/(FWHM/2))^2 )
-}
-# Create a function that is the sum of 2 Lorentzians
-Lor2 <- function(x,y0,x1,FWHM1,A1,x2,FWHM2,A2){
-    y0 + Lorentzian(x,x0=x1,FWHM=FWHM1,A=A1,y0=0) + 
-         Lorentzian(x,x0=x2,FWHM=FWHM2,A=A2,y0=0) 
+Lorentzian <- function(x, x0=0, FWHM=1){
+    2/(pi*FWHM)/( 1 + ((x-x0)/(FWHM/2))^2 )
 }
 # Guess grossly the initial parameters and plot the resulting curve as a blue dashed line
-plot(d$w, d$Int_n)
-lines(d$w,Lor2(d$w,y0=0.03, x1=3160, FWHM1=10, A1=3, 
-                   x2=3210, FWHM2=10, A2=7), col="blue", lty=2)
+P+geom_line(aes(y=.03 + 
+                    3*Lorentzian(w, x0=3160, FWHM=10) +
+                    7*Lorentzian(w, x0=3210, FWHM=10)),
+            col="blue", lty=2)
 # Fit the data by a sum of 2 Lorentzians using `nls`
-fit <- nls(data=d, Int_n ~ Lor2(w,y0,x1,FWHM1,A1,x2,FWHM2,A2), 
-           start=list(x1=3160, FWHM1=10, A1=3, y0=0.03,
+fit <- nls(data=d, Int_n ~ y0 +
+                    A1*Lorentzian(w,x1,FWHM1)+
+                    A2*Lorentzian(w,x2,FWHM2), 
+           start=list(y0=0.03,
+                      x1=3160, FWHM1=10, A1=3,
                       x2=3200, FWHM2=10, A2=7)
            )
 summary(fit)
 # Add the result on the plot as a red line
-lines(d$w, predict(fit, d$w), col="red")
+P + geom_line(aes(y=.03 + 
+                    3*Lorentzian(w, x0=3160, FWHM=10) +
+                    7*Lorentzian(w, x0=3210, FWHM=10)),
+            col="blue", lty=2)+
+    geom_line(aes(y=predict(fit)), col="red")
 # Add the 2 Lorentzian components as area-filled curves with `alpha=0.2` and two different colors
 y0   <- coef(fit)['y0']
-lor1 <- Lorentzian(d$w,x0=coef(fit)['x1'],FWHM=coef(fit)['FWHM1'],A=coef(fit)['A1'],y0=0)
-lor2 <- Lorentzian(d$w,x0=coef(fit)['x2'],FWHM=coef(fit)['FWHM2'],A=coef(fit)['A2'],y0=0)
-polygon(d$w, lor1+y0,col=adjustcolor("royalblue", alpha=.2), border=NA)
-polygon(d$w, lor2+y0,col=adjustcolor("orange", alpha=.2), border=NA)
-# Do the same plot with `ggplot2`
-library(ggplot2)
-dd <- data.frame(d, ytot=lor1+lor2+y0,lor1=lor1+y0, lor2=lor2+y0)
-ggplot(data=dd, aes(x=w))+
-    labs(x="Raman Shift [1/cm]", y="Intensity [arb. units]")+
-    geom_point(aes(y=Int_n), alpha=.5)+
-    geom_line(aes(y=ytot), col="red")+
+lor1 <- coef(fit)['A1']*Lorentzian(d$w,x0=coef(fit)['x1'],FWHM=coef(fit)['FWHM1'])
+lor2 <- coef(fit)['A2']*Lorentzian(d$w,x0=coef(fit)['x2'],FWHM=coef(fit)['FWHM2'])
+P + geom_line(aes(y=.03 + 
+                    3*Lorentzian(w, x0=3160, FWHM=10) +
+                    7*Lorentzian(w, x0=3210, FWHM=10)),
+            col="blue", lty=2)+
+    geom_line(aes(y=predict(fit)), col="red")+
     geom_area(aes(y=lor1), fill="royalblue", alpha=.2)+
-    geom_area(aes(y=lor2), fill="orange", alpha=.2)+
-    theme_bw()
+    geom_area(aes(y=lor2), fill="orange", alpha=.2)
+# Or, more compact:
+# dd <- data.frame(d, ytot=lor1+lor2+y0,lor1=lor1+y0, lor2=lor2+y0)
+# ggplot(data=dd, aes(x=w))+
+#     labs(x="Raman Shift [1/cm]", y="Intensity [arb. units]")+
+#     geom_point(aes(y=Int_n), alpha=.5)+
+#     geom_line(aes(y=ytot), col="red")+
+#     geom_area(aes(y=lor1), fill="royalblue", alpha=.2)+
+#     geom_area(aes(y=lor2), fill="orange", alpha=.2)+
+#     theme_bw()
 ```
 
 </details>

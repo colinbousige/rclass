@@ -6,10 +6,10 @@ setwd(dir = "C:/Users/leodu/Desktop/Rfile/religion_and_babies")
 
 ### DATA
 #1
-woman <- read_csv("children_per_woman_total_fertility.csv", col_names = TRUE,col_types = NULL)
-incomes <- read_csv("income_per_person_gdppercapita_ppp_inflation_adjusted.csv", col_names = TRUE, ,col_types = NULL)
-population <- read_csv("population_total.csv", col_names = TRUE, ,col_types = NULL)
-religion <- read_csv("religion.csv", col_names = TRUE, col_types = NULL)
+woman <- read_csv("Data/children_per_woman_total_fertility.csv", col_names = TRUE,col_types = NULL)
+incomes <- read_csv("Data/income_per_person_gdppercapita_ppp_inflation_adjusted.csv", col_names = TRUE, ,col_types = NULL)
+population <- read_csv("Data/population_total.csv", col_names = TRUE, ,col_types = NULL)
+religion <- read_csv("Data/religion.csv", col_names = TRUE, col_types = NULL)
 
 
 head(woman)
@@ -52,7 +52,6 @@ tt <- arrange(tt, tt$Year)
 dat <- inner_join(population,incomes, by = NULL)
 dat <- inner_join(dat,woman, by = NULL)
 dat <- full_join(dat, tt, by = NULL)
-dat
 
 ###PLOTTING
 #1

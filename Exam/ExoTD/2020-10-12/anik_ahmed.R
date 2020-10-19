@@ -2,7 +2,7 @@ library(tidyverse)
 # Part 1
 children <-
   read_csv(
-    "children_per_woman_total_fertility.csv",
+    "children.csv",
     col_names = TRUE,
     col_types = NULL
   )
@@ -10,17 +10,17 @@ children <-
 income <-
   (
     read_csv(
-      "income_per_person_gdppercapita_ppp_inflation_adjusted.csv",
+      "income.csv",
       col_names = TRUE,
       col_types = NULL
     )
   )
 
 pop <-
-  read_csv("population_total.csv")
+  read_csv("pop.csv")
 
 religion <-
-  read.csv("Religious_Composition_by_Country_2010-2050.csv")
+  read.csv("religion.csv")
 dim(religion)
 str(religion)
 names(religion)
