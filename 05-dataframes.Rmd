@@ -3,7 +3,7 @@
 ## Defining a data.frame
 
 
-In R, the principal object is *the data*. Hence the `data.frame` object, which is basically a table of vectors. A `data.frame` is a list presented under the form of a table – *i.e.* a spreadsheet. On a day-to-day basis, you will either define `data.frame` from existing vectors or other `data.frame`, or define a `data.frame` from a file (text, Excel...). In this example, we use <a href="Data/test.dat" download target="_blank">test.dat</a> and <a href="Data/test.xlsx" download target="_blank">test.xlsx</a>.
+In R, the principal object is *the data*. Hence the `data.frame`{.R} object, which is basically a table of vectors. A `data.frame`{.R} is a list presented under the form of a table – *i.e.* a spreadsheet. On a day-to-day basis, you will either define `data.frame`{.R} from existing vectors or other `data.frame`{.R}, or define a `data.frame`{.R} from a file (text, Excel...). In this example, we use <a href="Data/test.dat" download target="_blank">test.dat</a> and <a href="Data/test.xlsx" download target="_blank">test.xlsx</a>.
 
 ```{r, warnings=FALSE, message=FALSE}
 # x = 10 random numbers between -10 and 10
@@ -137,7 +137,7 @@ You can find more information on data import and [tidyness](https://garrettgman.
 
 ### Tibbles
 
-A `tibble` is an enhanced version of the `data.frame` provided by the `tidyverse` package. The main advantage of `tibble` is that it has easier initialization and nicer printing than `data.frame`, and the performance are also enhanced – especially for the reading from files with `read_delim()`, `read_tsv()` and `read_csv()`. Otherwise, the handling is basically the same.
+A `tibble`{.R} is an enhanced version of the `data.frame`{.R} provided by the `tidyverse` package. The main advantage of `tibble`{.R} is that it has easier initialization and nicer printing than `data.frame`{.R}, and the performance are also enhanced – especially for the reading from files with `read_delim()`{.R}, `read_tsv()`{.R} and `read_csv()`{.R}. Otherwise, the handling is basically the same.
 
 More on tibbles [here](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
 
@@ -158,14 +158,14 @@ head(tib[,1])  # is a tibble
 
 ### Data tables
 
-A `data.table`, much like a tibble, is an enhanced version of the `data.frame` provided by the [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) package. In case you have very large files to read and do statistics upon, consider using it in conjunction with `fread()` in preference to `data.frames` and `read.table()`.
+A `data.table`, much like a tibble, is an enhanced version of the `data.frame`{.R} provided by the [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html) package. In case you have very large files to read and do statistics upon, consider using it in conjunction with `fread()`{.R} in preference to `data.frames` and `read.table()`{.R}.
 
 
 ## Operations in the tidyverse
 
 In the end, base R and the `tidyverse` package provide many efficient functions to perform most of the tasks you would want to perform recursively, thus allowing avoiding explicit for loops.
 
-Here are some examples, and you will find much more [here](https://dplyr.tidyverse.org/). Note the use of the pipe operator, `%>%`, that allows a clear syntax for successive operations:
+Here are some examples, and you will find much more [here](https://dplyr.tidyverse.org/). Note the use of the pipe operator, `%>%`{.R}, that allows a clear syntax for successive operations:
 
 ```{r, message=FALSE}
 # create a random tibble
@@ -219,18 +219,18 @@ dt %>% filter(abs(y)> 0.1) %>%
 <details>
 <summary>**Exercise 1**</summary>
 
-- Create a 3 column `data.frame` containing 100 random values, their sinus, and the sum of the two first columns.
-- Do the same with a `tibble`
-- Look into the function `write.table` to write a text file containing this `data.frame`
+- Create a 3 column `data.frame`{.R} containing 100 random values, their sinus, and the sum of the two first columns.
+- Do the same with a `tibble`{.R}
+- Look into the function `write.table()`{.R} to write a text file containing this `data.frame`{.R}
 
 </details>
 
 
 <details>
-    <summary>**Exercise 2**: `data.frame` from a "complicated" data file</summary>
+    <summary>**Exercise 2**: `data.frame`{.R} from a "complicated" data file</summary>
 
 - Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
-- Load it into a `data.frame`. Look into the options of `read.table` to get the proper data fields.
+- Load it into a `data.frame`{.R}. Look into the options of `read.table()`{.R} to get the proper data fields.
 
 <details>
     <summary>Solution</summary>
@@ -257,22 +257,22 @@ head(d)
 <details>
     <summary>**Exercise 3**</summary>
 
-- Create a `data.frame` (or a `tibble`) called `people` from <a href="Data/people.txt" download target="_blank">people.txt</a>. Try using the function `read.table` or its `tidyverse` equivalent `read_table2`.
+- Create a `data.frame`{.R} (or a `tibble`{.R}) called `people` from <a href="Data/people.txt" download target="_blank">people.txt</a>. Try using the function `read.table` or its `tidyverse` equivalent `read_table2`.
 - What are the column names of `people`?
 - Add a column `age` and fill it with the appropriate values
-    + *Bonus Tip:* to interactively enter the data, look into the function `readline()` and try making a `for` loop
+    + *Bonus Tip:* to interactively enter the data, look into the function `readline()`{.R} and try making a `for` loop
 - What is the average age of the class?
 - How many students are in the class?
 - What is the percentage of female/male students in the class?
 - Get the columns 1 and 3
 - Print `people` where you removed the rows 1, 5 and 6
-- Get the columns of `age` and `origin` in another `data.frame`
-- Subset `people` to get the list of people from China and Ukraine in one `data.frame`
+- Get the columns of `age` and `origin` in another `data.frame`{.R}
+- Subset `people` to get the list of people from China and Ukraine in one `data.frame`{.R}
 - How many students come from the USA? from France?
-- Order the `data.frame` `people` by student name
-- Order the `data.frame` `people` by country of origin and then by age
+- Order the `data.frame`{.R} `people` by student name
+- Order the `data.frame`{.R} `people` by country of origin and then by age
 - Select 5 random students from `people`
-- Using the `tidyverse`, get the average age of females and males in the class in a `tibble`
+- Using the `tidyverse`, get the average age of females and males in the class in a `tibble`{.R}
 
 </details>
 
@@ -281,7 +281,7 @@ head(d)
 <details>
 <summary>**Exercise 4**</summary>
 
-Download <a href="Data/population.txt" download target="_blank">population.txt</a> and load it into a `data.frame`.
+Download <a href="Data/population.txt" download target="_blank">population.txt</a> and load it into a `data.frame`{.R}.
 
 - Are the data tidy?
 - What are the names of the columns?
@@ -296,7 +296,7 @@ Download <a href="Data/population.txt" download target="_blank">population.txt</
 <summary>Solution</summary>
 
 ```{r}
-# Download population.txt and load it into a `data.frame`.
+# Download population.txt and load it into a `data.frame`{.R}.
 popul <- read.table("Data/population.txt", header=TRUE)
 # Are the data tidy?
 head(popul) # yes
@@ -339,19 +339,19 @@ popul %>%
 
 - First, load the `tidyverse` and `lubridate` package
 - Load <a href="Data/people1.csv" download target="_blank">people1.csv</a> and <a href="Data/people2.csv" download target="_blank">people2.csv</a> into `pp1` and `pp2`
-- Create a new tibble `pp` by using the pipe operator (`%>%`) and successively:
-    - joining the two tibbles into one using `inner_join()`
-    - adding a column `age` containing the age in years (use lubridate's `time_length(x, 'years')` with x a time difference in days) by using `mutate()`
-- Display a summary of the table using `str()`
-- Using `groupe_by()` and `summarize()`:
-    - Show the number of males and females in the table (use the counter `n()`)
+- Create a new tibble `pp` by using the pipe operator (`%>%`{.R}) and successively:
+    - joining the two tibbles into one using `inner_join()`{.R}
+    - adding a column `age` containing the age in years (use lubridate's `time_length(x, 'years')`{.R} with x a time difference in days) by using `mutate()`{.R}
+- Display a summary of the table using `str()`{.R}
+- Using `groupe_by()`{.R} and `summarize()`{.R}:
+    - Show the number of males and females in the table (use the counter `n()`{.R})
     - Show the average age per gender
     - Show the average size per gender and institution
-    - Show the number of people from each country, sorted by descending population (`arrange()`)
-- Using `select()`, display:
+    - Show the number of people from each country, sorted by descending population (`arrange()`{.R})
+- Using `select()`{.R}, display:
     - only the name and age columns
     - all but the name column
-- Using `filter()`, show data only for
+- Using `filter()`{.R}, show data only for
     - Chinese people
     - From institution ECL and UCBL
     - People older than 22 

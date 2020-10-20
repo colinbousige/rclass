@@ -1,10 +1,10 @@
 # 3D color plots {#colorplots}
 
-You may want to plot your data as a color map, like the evolution of a Raman spectrum as a function of temperature, pressure or position. In some cases you'll have a 3-columns `data.frame` with x, y, and z values (_e.g._ intensity of a peak as a function of the position on the sample), in some cases you can have a list of spectra evolving with a given parameter. 
+You may want to plot your data as a color map, like the evolution of a Raman spectrum as a function of temperature, pressure or position. In some cases you'll have a 3-columns `data.frame`{.R} with x, y, and z values (_e.g._ intensity of a peak as a function of the position on the sample), in some cases you can have a list of spectra evolving with a given parameter. 
 
 ## The ggplot2 solution
 
-Let's create a dummy set of spectra that we will gather in a tidy `tibble`.
+Let's create a dummy set of spectra that we will gather in a tidy `tibble`{.R}.
 
 ```{r, message=FALSE}
 Nspec <- 40                           # Amount of spectra
@@ -26,7 +26,7 @@ for (i in 1:Nspec) {
 fake_data
 ```
 
-OK, so now we have some fake experimental data stored in a tidy `tibble` called `fake_data`. We want to plot it as a color map in order to grasp the evolution of the spectra:
+OK, so now we have some fake experimental data stored in a tidy `tibble`{.R} called `fake_data`. We want to plot it as a color map in order to grasp the evolution of the spectra:
 
 ```{r, out.width='100%', message = FALSE, fig.asp=.7,cache=FALSE}
 # Plotting
@@ -79,7 +79,7 @@ ggplotly(P3, tooltip = "text", dynamicTicks = TRUE)
 
 ## The base graphics solution
 
-In some cases you end up with a matrix _z_, and two vectors _x_ and _y_. This is easy to plot using the base `image` function. For the sake of example, let's just use the `acast` function on our melted 3-columns data.frame:
+In some cases you end up with a matrix _z_, and two vectors _x_ and _y_. This is easy to plot using the base `image()`{.R} function. For the sake of example, let's just use the `acast()`{.R} function on our melted 3-columns data.frame:
 
 ```{r, out.width='100%', message = FALSE, warning = FALSE, fig.asp=.6,cache=FALSE}
 library(reshape2)
@@ -102,7 +102,7 @@ image.plot(x,y,z, col = colors)
 
 ## The plotly solution
 
-And finally, if you want to make this an interactive plot, you can use `plotly`:
+And finally, if you want to make this an interactive plot, you can use `plot_ly()`{.R}:
 ```{r, out.width='100%', message = FALSE, warning = FALSE, fig.asp=.6,cache=FALSE}
 library(plotly)
 aX <- list(title = "Raman Shift [1/cm]")
@@ -124,7 +124,7 @@ plot_ly(x=x,y=y,z=z,type = "surface",colors=colors) %>%
 
 In case you have a set of non-regular data, plotting it as a color map can get tricky: how do we tell the plotting device what color should be in a place where there is no data point?
 
-The solution is to use a spline (or linear, but spline looks usually nicer) interpolation of your 2D data. For this, we can use the `akima` package and its `interp()` function, like so:
+The solution is to use a spline (or linear, but spline looks usually nicer) interpolation of your 2D data. For this, we can use the `akima` package and its `interp()`{.R} function, like so:
 
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
@@ -187,7 +187,7 @@ plot_grid(p1,p2,p3,p4)
 ```
 
 
-Or the base `smoothScatter()` function could do the trick:
+Or the base `smoothScatter()`{.R} function could do the trick:
 ```{r}
 smoothScatter(df)
 ```

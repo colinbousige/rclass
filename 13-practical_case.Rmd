@@ -10,7 +10,7 @@ You will find <a href="https://github.com/colinbousige/Rclass/raw/master/Data/XP
 My way of doing things – again, maybe not the best, but it's what I do – is that for each experiment I create a folder containing at least 4 objects:
 
 - `log.Rmd`: the markdown or R notebook in which I treat the data. I can produce a pdf or html document from it. We will see about that in the next section.
-- `myfunc.R`: my user-defined functions that I can load in my working environment using `source(myfunc.R)`
+- `myfunc.R`: my user-defined functions that I can load in my working environment using `source(myfunc.R)`{.R}
 - `Data/`: folder containing the original data (usually ASCII files) that I _never modify_ (reproducible data treatment and all that)
 - `Plots/`: folder containing the static (pdf) plots produced with `log.Rmd`
 
@@ -43,7 +43,7 @@ spec   <- tibble()
 fitpar <- tibble()
 ```
 
-Now let's read the data, store them in the tibble `spec` together with other informations, such as the name of the file, the fitted curves of the peaks, or the obtained pressure (the function `Pruby()` is defined in `myfunc.R`).
+Now let's read the data, store them in the tibble `spec` together with other informations, such as the name of the file, the fitted curves of the peaks, or the obtained pressure (the function `Pruby()`{.R} is defined in `myfunc.R`).
 
 ```{r, out.width='100%', fig.asp=.85, cache=FALSE, warning=FALSE, message=FALSE}
 # Reading and storing all treated data 
@@ -101,7 +101,7 @@ for(file in frubis){
 }
 ```
 
-Now let's take a global look at our data. For this I like the slider functionality of `plotly`. Make your `ggplot` as usual, and just add the keyword `frame` that is read by `ggplotly()`:
+Now let's take a global look at our data. For this I like the slider functionality of `plotly`. Make your `ggplot` as usual, and just add the keyword `frame` that is read by `ggplotly()`{.R}:
 
 ```{r, out.width='100%', fig.asp=.85, cache=FALSE, warning=FALSE, message=FALSE}
 gg <- ggplot(data=spec,aes(x=w)) +
@@ -140,7 +140,7 @@ for(file in frubis){
 dev.off()
 ```
 
-where the line `print(p)` is necessary, since `ggplot` does not output plots when embedded in a for loop.
+where the line `print(p)`{.R} is necessary, since `ggplot2` does not output plots when embedded in a for loop.
 
 Now we can also plot the evolution of the fit parameters. Let's only look at the position of the peaks and the error on the fit:
 

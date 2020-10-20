@@ -11,7 +11,7 @@ A shiny application is an `app.R` file (it must be named like that) containing 3
 
 1. `ui`: definition of the interface layout (where are the buttons, text input, plot output, etc.) and the input parameters
 2. `server`: definition of the various actions to perform with the input parameters
-3. `shinyApp(ui, server)`: launches the shiny app with the above defined parameters
+3. `shinyApp(ui, server)`{.R}: launches the shiny app with the above defined parameters
 
 In Rstudio, create a new "Shiny web app". It will create an `app.R` file containing this:
 
@@ -53,27 +53,27 @@ shinyApp(ui = ui, server = server)
 
 Run it by clicking "Run App": a window opens and you can pan the slider and see the resulting output.
 
-In case you want to clean up the code, you can separate `app.R` into `ui.R` and `server.R`. No need to add the `shinyApp(ui = ui, server = server)` line in that case.
+In case you want to clean up the code, you can separate `app.R` into `ui.R` and `server.R`. No need to add the `shinyApp(ui = ui, server = server)`{.R} line in that case.
 
 All user-defined functions and variable definitions can be defined in a `global.R` file that will be sourced by default when launching the app.
 
 
 ### The layout
 
-In the `ui <- fluidPage(...)` item, you define the layout of your application. In the above example:
+In the `ui <- fluidPage(...)`{.R} item, you define the layout of your application. In the above example:
 
-- `titlePanel("Title")` creates a title
-- `sidebarLayout()` separates the layout in a short one on the left (`sidebarPanel`) and a main one on the right (`mainPanel`)
-- `sliderInput("name_of_slider", "text to display", min=min_value, max=max_value, value=current_value, step=step_value)` creates a slider to input a value. This value will be retrieved by `input$name_of_slider` in the `server()` function.
-- `plotOutput("name_of_plot")` plots the result of `output$name_of_plot` defined in the `server()` function.
+- `titlePanel("Title")`{.R} creates a title
+- `sidebarLayout()`{.R} separates the layout in a short one on the left (`sidebarPanel()`{.R}) and a main one on the right (`mainPanel()`{.R})
+- `sliderInput("name_of_slider", "text to display", min=min_value, max=max_value, value=current_value, step=step_value)`{.R} creates a slider to input a value. This value will be retrieved by `input$name_of_slider`{.R} in the `server()`{.R} function.
+- `plotOutput("name_of_plot")`{.R} plots the result of `output$name_of_plot`{.R} defined in the `server()`{.R} function.
 
 See the [guide to application layout](https://shiny.rstudio.com/articles/layout-guide.html) for more layout options.
 
 ### The server
 
-In the `server <- function(input, output){...}` function, you define the various actions and outputs in reaction to an input change. 
+In the `server <- function(input, output){...}`{.R} function, you define the various actions and outputs in reaction to an input change. 
 
-In the above example, we define `output$distPlot` as a `renderPlot()` function whose results depends on `input$bins`. The plot is rendered in the `ui` by `plotOutput("distPlot")`.
+In the above example, we define `output$distPlot`{.R} as a `renderPlot()`{.R} function whose results depends on `input$bins`{.R}. The plot is rendered in the `ui` by `plotOutput("distPlot")`{.R}.
 
 ### Various useful functions
 
@@ -222,7 +222,7 @@ output$plot_name <- renderPlot({
     })
 ```
 
-If you want an interactive plot, use `plotlyOutput` and `renderPlotly` instead.
+If you want an interactive plot, use `plotlyOutput()`{.R} and `renderPlotly()`{.R} instead.
 
 <a id="display-text"></a>
 
@@ -268,7 +268,7 @@ output$table_to_display <- renderDataTable({ df })
 
 ##### Reactive events
 
-In case you want the plots or text display to react to a change in input value, you can wrap the corresponding code in the `reactive()` function on the server side:
+In case you want the plots or text display to react to a change in input value, you can wrap the corresponding code in the `reactive()`{.R} function on the server side:
 
 ```r
 # # # # # # # # # 
@@ -311,14 +311,14 @@ updateNumericInput(session, "value_name", value = new_value)
 
 ##### Writing a file
 
-This is not a function of shiny, but you may want to write a text file. If this comes from a `data.frame`, you can use the function `write.table()`:
+This is not a function of shiny, but you may want to write a text file. If this comes from a `data.frame`{.R}, you can use the function `write.table()`{.R}:
 
 ```r
 df <- data.frame(x=1:10,y=sin(1:10))
 write.table(df, "test.dat", quote=FALSE, row.names=FALSE)
 ```
 
-For other forms of printing, look into the `write()` function:
+For other forms of printing, look into the `write()`{.R} function:
 
 ```r
 toprint <- paste("hello", "world")
@@ -327,7 +327,7 @@ write(toprint, file=outfile)
 close(outfile)
 ```
 
-You can for example write a Rmd file that you will render (as pdf, etc...) using [render()](https://www.rdocumentation.org/packages/rmarkdown/versions/1.13/topics/render):
+You can for example write a Rmd file that you will render (as pdf, etc...) using [`render()`{.R}](https://www.rdocumentation.org/packages/rmarkdown/versions/1.13/topics/render):
 
 ```r
 rmarkdown::render("file_name.Rmd")
@@ -487,7 +487,7 @@ This option is certainly easy: just send your `app.R` file (or Rmd file with shi
 
 However, this needs a little bit of know-how from the users: they need to install R and Rstudio, install the needed packages, and run the app.
 
-A good option to remove the "package-installing" step is to define a function `check.package()` that will check if the package is installed, install it if needed, and load it:
+A good option to remove the "package-installing" step is to define a function `check.package()`{.R} that will check if the package is installed, install it if needed, and load it:
 
 ```r
 check.packages <- function(pkg){
@@ -512,7 +512,7 @@ Applications deployed on shinyapps.io will be accessible from anywhere through a
     + *Configure RSconnect*: in your shinyapps.io dashboard, click your name, then Tokens, and create a token for a new app. Copy the text in the popup window.
     + *Deploy the app* from the Rstudio window by clicking on the "Publish" button in the top right corner of the interface. Follow the steps along the *shinyapps.io* way.
 
-Note that in that case, you should not have any `install.package()` command in your code. Most packages are supported by shinyapps.io.
+Note that in that case, you should not have any `install.package()`{.R} command in your code. Most packages are supported by shinyapps.io.
 
 
 <a id="deploying-on-your-own-linux-server"></a>
@@ -557,7 +557,7 @@ On **any platform**: there is the possibility described [here](https://www.youtu
 - Add a title, a left panel and a main panel
 - Add an input numerical value defaulting to 1 and with a step of 0.05, name it "bw"
 - Add a slider input from 0 to 1e3 by steps of 1e2 defaulting to 5e2,  name it "N_val"
-- Add a plot of the `density` of `rnorm(N_val)` with bandwidth `bw`
+- Add a plot of the `density` of `rnorm(N_val)`{.R} with bandwidth `bw`
 - Make sure `bw>0`, otherwise don't produce the plot
 
 <details>
@@ -607,10 +607,10 @@ Create a shiny application that will:
 - fit the data by two Lorentzians
 - plot the data interactively
 - ask for the laser wavelength as an input and give 568.189 nm as default
-- write the corresponding pressure on the page using the `Pruby()` function defined in `myfunc.R` found in <a href="https://github.com/colinbousige/Rclass/raw/master/Data/XPdata.zip" download target="_blank">XPdata.zip</a>.
+- write the corresponding pressure on the page using the `Pruby()`{.R} function defined in `myfunc.R` found in <a href="https://github.com/colinbousige/Rclass/raw/master/Data/XPdata.zip" download target="_blank">XPdata.zip</a>.
 - insert a button that will, when pressed, render a pdf report displaying the laser wavelength, the plot, the fit and the pressure found:
     + write a separate Rmd file with the proper parameters
-    + render the Rmd file as a pdf (see the `render()` function and [this help](https://shiny.rstudio.com/articles/generating-reports.html))
+    + render the Rmd file as a pdf (see the `render()`{.R} function and [this help](https://shiny.rstudio.com/articles/generating-reports.html))
 
 </details>
 

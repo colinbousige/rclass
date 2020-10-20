@@ -2,7 +2,7 @@
 
 ## Definition
 
-To get the manual on a base function, type `?function_name`.
+To get the manual on a base function, type `?function_name`{.R}.
 
 A function returns the last thing that is called in it:
 ```{r, warnings=FALSE}
@@ -58,7 +58,7 @@ testfunc3(plot, 1:10, sin(1:10), type="l")
 
 ## Interpolation of data
 
-It is possible to interpolate data through the `approxfun()` and `splinefun()` functions: while the former uses linear interpolation, the latter uses cubic splines (polynomials).
+It is possible to interpolate data through the `approxfun()`{.R} and `splinefun()`{.R} functions: while the former uses linear interpolation, the latter uses cubic splines (polynomials).
 
 ```{r}
 xmin <- -2*pi; xmax <- 2*pi
@@ -167,7 +167,7 @@ sumGaussian2 <- function(x,x0,FWHM,A=1){
 <details>
 <summary>**Exercise 3**</summary>
 
-Write a function returning a `tibble` (created if not supplied, incremented if supplied) containing the name, age, gender and country of origin of the people in the class. Print it. Play around with the obtained tibble to make some statistics about the class population.
+Write a function returning a `tibble`{.R} (created if not supplied, incremented if supplied) containing the name, age, gender and country of origin of the people in the class. Print it. Play around with the obtained tibble to make some statistics about the class population.
 
 <details>
 <summary>Solution</summary>

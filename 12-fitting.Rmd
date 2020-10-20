@@ -1,6 +1,6 @@
 # Fitting
 
-## Linear fitting
+## Linear fitting with `lm()`
 
 ```{r include=FALSE, warning = FALSE, message=FALSE, cache=FALSE}
 rm(list = ls())
@@ -8,7 +8,8 @@ library(ggplot2)
 library(patchwork)
 ```
 
-Let's learn how to do simple fits with R and plot the results.
+Let's learn how to do simple linear fits with R's `lm()`{.R} and plot the results.
+
 ```{r, warnings=FALSE}
 # Create some fake data
 d <- read.table(header=TRUE,text="
@@ -47,14 +48,14 @@ ggplot(data=d, aes(x,y)) +
     annotate("text", x = 50, y = 50, label = to_print)
 ```
 
-The function `geom_smooth()` will fit the data and display the fitted line, but to retrieve the actual coefficients you still need to run `lm()`.
+The function `geom_smooth()`{.R} will fit the data and display the fitted line, but to retrieve the actual coefficients you still need to run `lm()`{.R}.
 
 
 ## Nonlinear Least Squares fitting
 
-### The `nls` workhorse
+### The `nls()` workhorse
 
-You can fit data with your own functions and constraints using [`nls`](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/nls). Example:
+You can fit data with your own functions and constraints using [`nls()`{.R}](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/nls). Example:
 
 
 ```{r, warnings=FALSE}
@@ -70,26 +71,24 @@ myfunc <- function(x, y0, x0, A, B) {
     y0 + dnorm(x, sd=A) + dnorm(x, mean=x0, sd=B)
 }
 # Fit the data using a user function
-fit <- nls(y ~ myfunc(x, y0, x0, A, B),
-           data=df,
-           start=list(y0=0, x0=1.5, A=.2, B=.2) # provide starting point
-           )
-summary(fit)
-coef(fit)
+fit_nls <- nls(data=df,
+               y ~ myfunc(x, y0, x0, A, B),
+               start=list(y0=0, x0=1.5, A=.2, B=.2) # provide starting point
+               )
+summary(fit_nls)
+coef(fit_nls)
 # Plotting the resulting function in red
-par(cex.lab=1.5, cex.axis=1.4, mgp = c(2.4, .5, 0),
-    tck=0.02, mar=c(4, 4, .5, .5), lwd=2, las=1)
 plot(x, y, pch=16, ylim=c(0,1.1))
-lines(x, predict(fit), col="red", lwd=2)
+lines(x, predict(fit_nls), col="red", lwd=2)
 ```
 
-Or with `ggplot2`:
+Or with `ggplot2`{.R}:
 
-```{r}
+```{r, fig.asp=1.2, message=FALSE, warnings=FALSE}
 P1 <- ggplot(data=df, aes(x,y))+
     ggtitle("Retrieving the fit performed beforehand")+
     geom_point(size=2, alpha=.5) +
-    geom_line(aes(y=predict(fit)), color="red", size=1)
+    geom_line(aes(y=predict(fit_nls)), color="red", size=1)
 P2 <- ggplot(data=df, aes(x,y))+
     ggtitle("Doing the fit directly withing ggplot2")+
     geom_point(size=2, alpha=.5) +
@@ -105,72 +104,61 @@ P1/P2
 
 ### Using constraints
 
-In `nls` it is even possible to constraint the fitting by adding lower and upper boundaries. You have to be careful with these and not provide stupid ones, *e.g.*:
+In `nls()`{.R} it is even possible to constraint the fitting by adding lower and upper boundaries. These boundaries are useful when you want to give some physical meaning to your parameters, for example. However, you have to be careful with these and not provide stupid ones, *e.g.*:
 
 ```{r, warnings=FALSE}
 # Constraining the upper and lower values of the fitting parameters
-fit2 <- nls(y~ myfunc(x, y0, x0, A, B),
-           start=list(y0=0, x0=5, A=.2, B=.2),
-           upper=list(y0=Inf, x0=Inf, A=.4, B=1),
-           lower=list(y0=-Inf, x0=4, A=-Inf, B=-Inf),
-           algorithm = "port"
-           )
+fit_constr <- nls(data=df,
+                  y ~ myfunc(x, y0, x0, A, B),
+                  start=list(y0=0, x0=5, A=.2, B=.2),
+                  upper=list(y0=Inf, x0=Inf, A=.4, B=1),
+                  lower=list(y0=-Inf, x0=4, A=-Inf, B=-Inf),
+                  algorithm = "port"
+                  )
 # Plotting the resulting function in blue
-par(cex.lab=1.5, cex.axis=1.4, mgp = c(2.4, .5, 0),
-    tck=0.02, mar=c(4, 4, 2, .5), lwd=2, las=1)
 plot(x, y, pch=16, ylim=c(0,1.1), main="Beware of constraints")
-lines(x, predict(fit2), col="royalblue", lwd=2)
+lines(x, predict(fit_constr), col="royalblue", lwd=2)
 ```
 
 
 ### A more robust version of `nls`
 
-Sometimes, `nls` will struggle to converge towards a solution, especially if you provide initial guesses that are too far from the expected values.
+Sometimes, `nls()`{.R} will struggle to converge towards a solution, especially if you provide initial guesses that are too far from the expected values.
 
 ```{r warning=FALSE, message=FALSE, error=TRUE}
-fit3 <- nls(y~ myfunc(x, y0, x0, A, B),
-           start=list(y0=-10, x0=500, A=10000, B=2000)
-           )
+fit3 <- nls(data=df,
+            y ~ myfunc(x, y0, x0, A, B),
+            start=list(y0=-10, x0=10, A=10000, B=2000)
+            )
 ```
 
-In that case, you may want to use a more robust `nls` function such as `nlsLM` from the `minpack.lm` package.
+In that case, you may want to use a more robust `nls()`{.R} function such as `nlsLM()`{.R} from the `minpack.lm`{.R} package.
 
 ```{r warning=FALSE, message=FALSE}
 library(minpack.lm)
-fit3 <- nlsLM(y~ myfunc(x, y0, x0, A, B),
-           start=list(y0=-10, x0=500, A=10000, B=2000)
-           )
-summary(fit);
-summary(fit3);
+fit_nlsLM <- nlsLM(data=df,
+                   y ~ myfunc(x, y0, x0, A, B),
+                   start=list(y0=-10, x0=10, A=10000, B=2000)
+                   )
+summary(fit_nls);
+summary(fit_nlsLM);
 ```
 
 
 ## The broom library
 
 
-Thanks to the [`broom`](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) library, it is easy to retrieve all the fit parameters in a `tibble`:
+Thanks to the [`broom`](https://cran.r-project.org/web/packages/broom/vignettes/broom.html) library, it is easy to retrieve all the fit parameters in a `tibble`{.R}:
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-x  <- seq(-7,7,.1)
-y  <- dnorm(x, sd = .5) + dnorm(x, mean=2, sd = 1) + runif(length(x))/10
-df <- data.frame(x=x,y=y)
-# Create a function to fit the data
-myfunc <- function(x, y0, x0, A, B) {
-    y0 + dnorm(x, sd=A) + dnorm(x, mean=x0, sd=B)
-}
-# Fit the data using a user function
-fit <- nls(y ~ myfunc(x, y0, x0, A, B),
-           data=df,
-           start=list(y0=0, x0=1.5, A=.2, B=.2) # provide starting point
-           )
 library(broom)
 # Get all parameters and their error
-tidy(fit)
-# Get the fitted curve and residuals
-augment(fit)
+tidy(fit_nls)
+# Get the fitted curve and residuals next to the original data
+augment(fit_nls)
 ```
 
-It is then easy to make a recursive fit on your data without using a `for loop`:
+It is then easy to make a recursive fit on your data without using a `for loop`{.R}:
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
 library(broom)
@@ -179,7 +167,7 @@ library(ggplot2)
 theme_set(theme_bw())
 # Create fake data
 a <- seq(-10,10,.1)
-centers <- runif(3, min=-8, max=8)
+centers <- c(-2*pi,pi,pi/6)
 widths  <- runif(3, min=0.5, max=1)
 amp     <- runif(3, min=2, max=10)
 noise   <- .3*runif(length(a))-.15
@@ -191,7 +179,7 @@ d <- tibble(x=rep(a,3),
             )
 # Plot the data
 d %>% ggplot(aes(x=x, y=y, color=factor(T)))+
-        geom_line()
+        geom_point(alpha=.5)
 # Fit all data
 d_fitted <- d %>% 
     nest(data=-T) %>%
@@ -226,7 +214,7 @@ d_fitted %>%
         geom_line(aes(y=.fitted))
 ```
 
-In case you want to provide fit parameters that vary depending on the group you are looking at, use the notation `.$column_name`, like is done above.
+In case you want to provide fit parameters that vary depending on the group you are looking at, use the notation `.$column_name`{.R}, like is done above.
 
 
 
@@ -236,9 +224,9 @@ In case you want to provide fit parameters that vary depending on the group you 
 <details>
     <summary>**Exercise 1**</summary>
 
-- Load <a href="Data/exo_fit.txt" download target="_blank">exo_fit.txt</a> in a `data.frame`.
-- Using `lm` or `nls` fit each column as a function of `x` and display the "experimental" data and the fit on the same graph.
-    + Tip: Take a look at the function `dnorm` to define a Gaussian
+- Load <a href="Data/exo_fit.txt" download target="_blank">exo_fit.txt</a> in a `data.frame`{.R}.
+- Using `lm()`{.R} or `nls()`{.R} fit each column as a function of `x` and display the "experimental" data and the fit on the same graph.
+    + Tip: Take a look at the function `dnorm()`{.R} to define a Gaussian
 
 <!-- ```{r}
 x <- seq(-10,10,.1)
@@ -260,9 +248,9 @@ write.table(df, "Data/exo_fit.txt", quote=FALSE, row.names=FALSE)
 - Load the Raman spectrum <a href="Data/rubis_01.txt" download target="_blank">rubis_01.txt</a>, normalize it to [0,1] and plot it
 - Define the Lorentzian function
 - Guess grossly the initial parameters and plot the resulting curve as a blue dashed line
-- Fit the data by a sum of 2 Lorentzians using `nls`
+- Fit the data by a sum of 2 Lorentzians using `nls()`{.R}
 - Add the result on the plot as a red line
-- Add the 2 Lorentzian components as area-filled curves with `alpha=0.2` and two different colors
+- Add the 2 Lorentzian components as area-filled curves with `alpha=0.2`{.R} and two different colors
 
 
 <details>

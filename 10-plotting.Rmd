@@ -93,7 +93,7 @@ legend("topleft",
 
 Most needs should be covered with this simple plot that can be adapted.
 
-A plot can be exported if surrounded by `XXX` and `dev.off()`, with `XXX` that can be `pdf("xxx.pdf",height=6, width=8)`, `png("xxx.png",height=6, width=8)`... Example:
+A plot can be exported if surrounded by `XXX` and `dev.off()`{.R}, with `XXX` that can be `pdf("xxx.pdf",height=6, width=8)`{.R}, `png("xxx.png",height=6, width=8)`{.R}... Example:
 ```r
 pdf("test.pdf",height=6, width=8)
 plot(x,y,
@@ -103,7 +103,7 @@ plot(x,y,
 dev.off()
 ```
 
-You can also export the graph as a `.tex` file using `tikz`, which allows you to use $\LaTeX$ mathematical expressions (don't forget to escape the `\` character):
+You can also export the graph as a `.tex` file using `tikz()`{.R}, which allows you to use $\LaTeX$ mathematical expressions (don't forget to escape the `\` character):
 ```r
 library(tikzDevice)
 tikz("plot.tex",height=6, width=8,pointsize = 10,standAlone=TRUE)
@@ -204,7 +204,7 @@ axis(4, labels=FALSE)
 
 #### Panel plots
 
-Lets create a plot with different panels (a bit ugly without styling, you need to tweak the margins and text distance to plot with `par(mar(), mgp())` before each plot):
+Lets create a plot with different panels (a bit ugly without styling, you need to tweak the margins and text distance to plot with `par(mar(), mgp())`{.R} before each plot):
 
 ```{r, fig.height=6, fig.width=6}
 # some fake data
@@ -272,7 +272,7 @@ Plot the histogram of the age distribution in the class.
 
 Further reading [here](https://ggplot2-book.org/introduction.html) and on the [cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf) for example.
 
-`ggplot2` is a package (now even available for python) that completely changes the methodology of plotting data. With `ggplot2`, data are gathered in a **tidy** `data.frame`, and each column can be used as a parameter to tweak colors, point size, etc.
+`ggplot2` is a package (now even available for python) that completely changes the methodology of plotting data. With `ggplot2`, data are gathered in a **tidy** `data.frame`{.R}, and each column can be used as a parameter to tweak colors, point size, etc.
 
 First things first, load the library:
 ```r
@@ -282,7 +282,7 @@ library(tidyverse) # for easier data manipulation
 
 ### A quick plot
 
-A quick plot can be made using the function `qplot` (for "quickplot"), very similar to the base graphics `plot` function. It's great for allowing you to produce plots quickly, but it is highly recommended learning `ggplot()` as it makes it easier to create complex graphics. 
+A quick plot can be made using the function `qplot` (for "quickplot"), very similar to the base graphics `plot` function. It's great for allowing you to produce plots quickly, but it is highly recommended learning `ggplot()`{.R} as it makes it easier to create complex graphics. 
 
 Note how different is the default theme of the plot:
 
@@ -307,7 +307,7 @@ plot_grid(p1,p2, labels=c("P1", "P2"))
 
 ### The grammar of graphics
 
-With `ggplot2` is introduced the notion of "grammar of graphics" through the function `ggplot()`. What it means is that the plots are built through independent blocks that can be combined to create any wanted graphical display.
+With `ggplot2` is introduced the notion of "grammar of graphics" through the function `ggplot()`{.R}. What it means is that the plots are built through independent blocks that can be combined to create any wanted graphical display.
 To construct a plot, you need to provide building blocks such as:
 
 - data gathered in a *tidy* data.frame
@@ -325,7 +325,7 @@ Since a figure is worth a thousand words, let's get to it. We will use the datas
 diamonds
 ```
 
-`diamonds` contains 53940 lines and 10 columns in a `tibble`. `ggplot` can easily handle such large dataset.
+`diamonds` contains 53940 lines and 10 columns in a `tibble`{.R}. `ggplot2` can easily handle such large dataset.
 
 Let's say we want to see whether there is a correlation between price and weight (carat) of the diamonds:
 
@@ -361,7 +361,7 @@ p <- diamonds %>% filter(carat<=3) %>%
 p + geom_point(alpha=0.5) + geom_smooth()
 ```
 
-It is often easier to grasp a multi-variable problem by plotting all our data in a facet plot using `facet_wrap()`
+It is often easier to grasp a multi-variable problem by plotting all our data in a facet plot using `facet_wrap()`{.R}:
 ```{r, warning = FALSE, message=FALSE}
 colors <- rainbow(length(unique(diamonds$clarity)))
 p <- ggplot(diamonds, aes(x=price,y=carat)) + 
@@ -391,7 +391,7 @@ p
 
 ### Theming
 
-It is very easy to keep the same theme on all your graphs thanks to the `theme` function.
+It is very easy to keep the same theme on all your graphs thanks to the `theme()`{.R} function.
 There are a collection of pre-defined themes, like:
 ```{r, warnings=FALSE}
 p + theme_grey() # the default
@@ -402,7 +402,7 @@ p + theme_dark()
 p + theme_light()
 ```
 
-You can define all the parameters you want, like this (hit `?theme` like usual to see all the parameters):
+You can define all the parameters you want, like this (hit `?theme`{.R} like usual to see all the parameters):
 
 ```{r, warnings=FALSE}
 my_theme <- theme_bw()+
@@ -437,28 +437,21 @@ ggplotly(p, dynamicTicks = TRUE)
 
 ### Gathering plots on a grid
 
-If you have several plot you want to gather on a grid and you can't use `facet_wrap` (because they come from different data sets), you can use the library `cowplot` and its function [plot_grid()](https://cran.r-project.org/web/packages/cowplot/vignettes/plot_grid.html):
-
-```{r, message=FALSE}
+If you have several plot you want to gather on a grid and you can't use `facet_wrap()`{.R} (because they come from different data sets), you can use the library [patchwork](https://patchwork.data-imaginist.com/articles/patchwork.html):
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+library(patchwork)
 library(ggplot2)
-library(cowplot)
 x  <- seq(-2*pi,2*pi,.1)
 p1 <- qplot(x,sin(x), geom="line")
 p2 <- qplot(x,cos(x), geom="line")
 p3 <- qplot(x,atan(x), geom="line")
 p4 <- qplot(x,dnorm(x), geom="line")
-plot_grid(p1, p2, p3, p4, 
-            labels=c("a)","b)","c)","d)"), 
-            ncol=3, align = 'v', axis = 'l')
-plot_grid(p1, p2, p3, p4, labels=c("a)","b)","c)","d)"), nrow=2)
-```
-
-Alternatively, you can also use the [patchwork](https://patchwork.data-imaginist.com/articles/patchwork.html) package:
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-library(patchwork)
 p1 + p2
-p1 + p2 / p3 + p4 + plot_annotation(tag_levels = 'a', tag_suffix=")")
-(p1+p2)/p3/p4
+p1 + p2 / p3 + p4 + 
+    plot_annotation(tag_levels = 'a', tag_suffix=")")
+(p1 + p2 + plot_layout(widths = c(1,3))) /
+p3/p4 + 
+    plot_layout(heights = c(6, 2, 1))
 ```
 
 
@@ -468,10 +461,10 @@ p1 + p2 / p3 + p4 + plot_annotation(tag_levels = 'a', tag_suffix=")")
     <summary>**Exercise 1**</summary>
 
 - Download the two sample Raman spectra: <a href="Data/PPC60_G_01.txt" download target="_blank">PPC60_G_01.txt</a> and <a href="Data/PPC60_G_30.txt" download target="_blank">PPC60_G_30.txt</a>
-- Load them in two separate `tibble`
-- Gather the two `data.frame` in another single tidy one: it should have three columns, `w`, `Intensity` and `file_name`
-- Create a function `norm01` that, given a vector, returns the same vector normalized to [0,1]
-- Using `group_by` and `mutate`, add a column `norm_int` of normalized intensity for each file
+- Load them in two separate `tibble`{.R}
+- Gather the two `data.frame`{.R} in another single tidy one: it should have three columns, `w`, `Intensity` and `file_name`
+- Create a function `norm01()`{.R} that, given a vector, returns the same vector normalized to [0,1]
+- Using `group_by()`{.R} and `mutate()`{.R}, add a column `norm_int` of normalized intensity for each file
 - Plot the two normalized spectra on the same graph using lines of different colors
 - Play with the theme and parameters to reproduce the following plot:
 
@@ -569,10 +562,10 @@ df_tidy %>%
 <details>
     <summary>**Exercise 2**</summary>
 
-- Download <a href="Data/rubis_01.txt" download target="_blank">rubis_01.txt</a>, <a href="Data/rubis_02.txt" download target="_blank">rubis_02.txt</a>, <a href="Data/rubis_03.txt" download target="_blank">rubis_03.txt</a> and <a href="Data/rubis_04.txt" download target="_blank">rubis_04.txt</a> and load them into a tidy `tibble`.
+- Download <a href="Data/rubis_01.txt" download target="_blank">rubis_01.txt</a>, <a href="Data/rubis_02.txt" download target="_blank">rubis_02.txt</a>, <a href="Data/rubis_03.txt" download target="_blank">rubis_03.txt</a> and <a href="Data/rubis_04.txt" download target="_blank">rubis_04.txt</a> and load them into a tidy `tibble`{.R}.
 - Normalize all data to [0,1] in a 4th column
 - Plot the 4 spectra on top of each other with a vertical shift of 1, with a different color for each spectrum
-    + For this, check out the `factor()` function:
+    + For this, check out the `factor()`{.R} function:
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 x <- c("a","a","b","c","a")
@@ -580,7 +573,7 @@ factor(x)
 as.numeric(factor(x))
 ```
 
-- Annotate on the base line with the name of the file. For this, use `annotate("text", x, y, label)`
+- Annotate on the base line with the name of the file. For this, use `annotate("text", x, y, label)`{.R}
 - It should look like this:
 
 ```{r, echo=FALSE, warnings=FALSE, message=FALSE}
@@ -774,9 +767,9 @@ ggplotly(P, dynamicTicks = TRUE)
     <summary>**Exercise 4**</summary>
 
 
-- Download <a href="Data/population.csv" download target="_blank">population.csv</a> and load it into a `data.frame`
-- Is it a tidy `data.frame`?
-    + Do we want a tidy `data.frame`?
+- Download <a href="Data/population.csv" download target="_blank">population.csv</a> and load it into a `data.frame`{.R}
+- Is it a tidy `data.frame`{.R}?
+    + Do we want a tidy `data.frame`{.R}?
     + Why?
     + Act accordingly
 - Plot the population vs. year with a color for each city
@@ -784,7 +777,7 @@ ggplotly(P, dynamicTicks = TRUE)
     + With lines
     + With a black and white theme
     + Make it interactive
-- Try reproducing the following plots (Google is your friend) (look into the function `reorder()` and [this help](https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets) to use it with facets):
+- Try reproducing the following plots (Google is your friend) (look into the function `reorder()`{.R} and [this help](https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets) to use it with facets):
 
 ```{r echo=FALSE, message=FALSE}
 df <- read.csv("Data/population.csv")

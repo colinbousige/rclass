@@ -1,6 +1,6 @@
 # Simple variables
 
-In R, the variable attribution is done through the arrow operator `<-` instead of the `=` one – for historical reasons. The equal sign, `=`, would still work though, but you should just take up the habit of using `<-`.
+In R, the variable attribution is done through the arrow operator `<-`{.R} instead of the `=`{.R} one – for historical reasons. The equal sign, `=`{.R}, would still work though, but you should just take up the habit of using `<-`{.R}.
 
 In reality, scalar numbers don't exist in R, they are simply 1 element vector: this is why `[1]` is printed in the following outputs.
 
@@ -24,7 +24,7 @@ x-y
 ```
 
 ### Booleans
-Booleans are handled with the `TRUE` and `FALSE` keywords. Any number non 0 is equivalent to TRUE, 0 is FALSE.
+Booleans are handled with the `TRUE`{.R} and `FALSE`{.R} keywords. Any number non 0 is equivalent to TRUE, 0 is FALSE.
 ```{r, warnings=FALSE}
 z <- TRUE; typeof(z)
 as.logical(1)
@@ -39,7 +39,7 @@ x == y | x < y  # operator "or"
 ```
 
 ### Special values
-R handles infinity, NaN, and has $\pi$ defined. Missing numbers are handled through the `NA` keyword (the function `is.na()` checks if the given value contains `NA`).
+R handles infinity, NaN, and has $\pi$ defined. Missing numbers are handled through the `NA`{.R} keyword (the function `is.na()`{.R} checks if the given value contains `NA`{.R}).
 ```{r, warnings=FALSE}
 pi
 10/0
@@ -64,7 +64,7 @@ Im(exp(1i*pi))
 ## Strings
 
 
-A string is defined between quotation marks `"string"`. Here are some operations on strings :
+A string is defined between quotation marks `"string"`{.R}. Here are some operations on strings :
 ```{r, warnings=FALSE, error=TRUE}
 phrase <- " Hello World " # definition of a string
 paste("phrase =", phrase, ", class(phrase) =", class(phrase))
