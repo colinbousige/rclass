@@ -6,24 +6,21 @@
 rm(list = ls())
 library(ggplot2)
 library(patchwork)
+library(tidyverse)
+theme_set(theme_bw())
 ```
 
 Let's learn how to do simple linear fits with R's `lm()`{.R} and plot the results.
 
+```{r include=FALSE}
+par(cex.lab=1.3, cex.axis=1.3, mgp = c(2.4, .5, 0),
+    tck=0.02, mar=c(4, 4, .5, .5), lwd=2, las=1)
+```
+
 ```{r, warnings=FALSE}
 # Create some fake data
-d <- read.table(header=TRUE,text="
-   x           y
-   39.11       6.67
-   46.1        10.8
-   52.02       16.36
-   56.07       23.16
-   61.00       26.5
-   65.26       31.3
-   69.16       33.5
-   74.00       41.0
-   81.70       50.3
-   ")
+d <- tibble(x = 1:10,
+            y = x + 1.5*runif(10))
 # Fit with a linear model
 fit <- lm(y~x, data=d)
 # Summary of the fit
@@ -33,19 +30,16 @@ attributes(fit)
 coef(fit); coef(fit)[1]; coef(fit)['(Intercept)']
 summary(fit)$coefficients; summary(fit)$coefficients["x","Std. Error"]
 # Plotting the points and the fit
-par(cex.lab=1.5, cex.axis=1.4, mgp = c(2.4, .5, 0),
-    tck=0.02, mar=c(4, 4, .5, .5), lwd=2, las=1)
-plot(d, pch=16)
-abline(coef(fit), col="red")
 to_print <- paste("y = ", round(coef(fit)[1],2)," + x*",
                     round(coef(fit)[2],2), sep="")
-text(50, 50, to_print)
+plot(d, pch=16,main=to_print)
+abline(coef(fit), col="red")
 library(ggplot2)
 theme_set(theme_bw())
 ggplot(data=d, aes(x,y)) + 
     geom_point(cex=3) +
     geom_smooth(method="lm") +
-    annotate("text", x = 50, y = 50, label = to_print)
+    ggtitle(to_print)
 ```
 
 The function `geom_smooth()`{.R} will fit the data and display the fitted line, but to retrieve the actual coefficients you still need to run `lm()`{.R}.
@@ -60,9 +54,9 @@ You can fit data with your own functions and constraints using [`nls()`{.R}](htt
 
 ```{r, warnings=FALSE}
 # Create fake data
-x  <- seq(-7,7,.1)
-y  <- dnorm(x, sd = .5) + dnorm(x, mean=2, sd = 1) + runif(length(x))/10
-df <- data.frame(x=x,y=y)
+x  <- seq(-5,7,.1)
+y  <- dnorm(x, sd = .5) + dnorm(x, mean=2, sd = 1) + runif(length(x))/10 - 0.05
+df <- tibble(x=x, y=y)
 ggplot(data=df, aes(x,y))+
     geom_point()+
     ggtitle("Some fake data we want to fit with 2 Gaussians")
@@ -78,7 +72,7 @@ fit_nls <- nls(data=df,
 summary(fit_nls)
 coef(fit_nls)
 # Plotting the resulting function in red
-plot(x, y, pch=16, ylim=c(0,1.1))
+plot(x, y, pch=16)
 lines(x, predict(fit_nls), col="red", lwd=2)
 ```
 
@@ -104,20 +98,22 @@ P1/P2
 
 ### Using constraints
 
-In `nls()`{.R} it is even possible to constraint the fitting by adding lower and upper boundaries. These boundaries are useful when you want to give some physical meaning to your parameters, for example. However, you have to be careful with these and not provide stupid ones, *e.g.*:
+In `nls()`{.R} it is even possible to constraint the fitting by adding lower and upper boundaries. These boundaries are useful when you want to give some physical meaning to your parameters, for example, like forcing the width and amplitude to be positive or above a certain minimum value. However, you have to be careful with these and not provide stupid ones, *e.g.*:
 
 ```{r, warnings=FALSE}
 # Constraining the upper and lower values of the fitting parameters
-fit_constr <- nls(data=df,
+fit_constr <- nls(data = df,
                   y ~ myfunc(x, y0, x0, A, B),
-                  start=list(y0=0, x0=5, A=.2, B=.2),
-                  upper=list(y0=Inf, x0=Inf, A=.4, B=1),
-                  lower=list(y0=-Inf, x0=4, A=-Inf, B=-Inf),
+                  start = list(y0=0, x0=5, A=.2, B=.2),
+                  upper = list(y0=Inf, x0=Inf, A=.4, B=1),
+                  lower = list(y0=-Inf, x0=4, A=-Inf, B=-Inf),
                   algorithm = "port"
                   )
 # Plotting the resulting function in blue
-plot(x, y, pch=16, ylim=c(0,1.1), main="Beware of constraints")
-lines(x, predict(fit_constr), col="royalblue", lwd=2)
+ggplot(data=df, aes(x,y))+
+    ggtitle("Beware of bad constraints!")+
+    geom_point(size=2, alpha=.5) +
+    geom_line(aes(y = predict(fit_constr)), color="royalblue", size=1)
 ```
 
 
@@ -126,9 +122,9 @@ lines(x, predict(fit_constr), col="royalblue", lwd=2)
 Sometimes, `nls()`{.R} will struggle to converge towards a solution, especially if you provide initial guesses that are too far from the expected values.
 
 ```{r warning=FALSE, message=FALSE, error=TRUE}
-fit3 <- nls(data=df,
+fit3 <- nls(data = df,
             y ~ myfunc(x, y0, x0, A, B),
-            start=list(y0=-10, x0=10, A=10000, B=2000)
+            start = list(y0=0, x0=5, A=1, B=1)
             )
 ```
 
@@ -136,14 +132,27 @@ In that case, you may want to use a more robust `nls()`{.R} function such as `nl
 
 ```{r warning=FALSE, message=FALSE}
 library(minpack.lm)
-fit_nlsLM <- nlsLM(data=df,
+fit_nlsLM <- nlsLM(data = df,
                    y ~ myfunc(x, y0, x0, A, B),
-                   start=list(y0=-10, x0=10, A=10000, B=2000)
+                   start = list(y0=0, x0=5, A=1, B=1)
                    )
 summary(fit_nls);
 summary(fit_nlsLM);
 ```
 
+Also, `nlsLM()`{.R} won't fail when the fit is exact, whereas `nls()`{.R} will:
+```{r warning=FALSE, message=FALSE, error=TRUE}
+testdf <- tibble(x = seq(-10,10),
+                 y = dnorm(x))
+nls(data = testdf,
+    y ~ A*dnorm(x, sd=B, mean=x0) + y0,
+    start = list(y0=0, x0=0, A=1, B=1)
+    )
+nlsLM(data = testdf,
+    y ~ A*dnorm(x, sd=B, mean=x0) + y0,
+    start = list(y0=0, x0=0, A=1, B=1)
+    )
+```
 
 ## The broom library
 
@@ -158,7 +167,7 @@ tidy(fit_nls)
 augment(fit_nls)
 ```
 
-It is then easy to make a recursive fit on your data without using a `for loop`{.R}:
+It is then easy to make a recursive fit on your data without using a `for loop`{.R}, like so:
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
 library(broom)
@@ -178,11 +187,11 @@ d <- tibble(x=rep(a,3),
             T=rep(1:3, each=length(a))
             )
 # Plot the data
-d %>% ggplot(aes(x=x, y=y, color=factor(T)))+
-        geom_point(alpha=.5)
+d %>% ggplot(aes(x=x, y=y, color=factor(T))) + 
+    geom_line()
 # Fit all data
 d_fitted <- d %>% 
-    nest(data=-T) %>%
+    nest(data = -T) %>%
     mutate(fit = purrr::map(data, ~ nls(data = .,
                                 y ~ y0 + A*dnorm(x, mean=x0, sd=FW), 
                                 start=list(A  = max(.$y),
@@ -194,13 +203,20 @@ d_fitted <- d %>%
            augmented = purrr::map(fit, augment)
           )
 d_fitted
+```
+
+In case you want to provide fit parameters that vary depending on the group you are looking at, use the notation `.$column_name`{.R}, like is done here.
+
+Then you can see the results for all your data at once:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
 # data and fit resulting curve
 d_fitted %>% 
   unnest(augmented)
 # fit parameters
 d_fitted %>% 
   unnest(tidied)
-# fit parameters as a tidy table
+# fit parameters as a wide table
 d_fitted %>% 
   unnest(tidied) %>% 
   select(T, term, estimate, std.error) %>% 
@@ -212,9 +228,19 @@ d_fitted %>%
     ggplot(aes(x=x, color=factor(T)))+
         geom_point(aes(y=y), alpha=0.5, size=3) + 
         geom_line(aes(y=.fitted))
+# plot fit parameters
+d_fitted %>% 
+  unnest(tidied) %>% 
+  ggplot(aes(x=T, y=estimate, color=term))+
+    geom_point()+
+    geom_errorbar(aes(ymin=estimate-std.error,
+                      ymax=estimate+std.error),
+                  width=.1)+
+    facet_wrap(~term, scales="free_y")+
+    theme(legend.position = "none")
 ```
 
-In case you want to provide fit parameters that vary depending on the group you are looking at, use the notation `.$column_name`{.R}, like is done above.
+
 
 
 
