@@ -1,0 +1,131 @@
+---
+title : "R Exercises - Particle analysis from SEM images"
+date  : "`r Sys.Date()`"
+output: 
+    bookdown::html_document2:
+        toc            : TRUE
+        toc_float      : TRUE
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: TRUE
+        code_folding   : show
+        code_download  : TRUE
+params: 
+    solution:
+        value: TRUE
+---
+
+```{r echo=FALSE, message=FALSE, fig.cap="Typical SEM image of Ni nanoparticles", fig.align="center"}
+knitr::include_graphics("Data_SEM/ML26_01.png")
+```
+
+
+```{r include=params$solution, warning = FALSE, message=FALSE}
+library(tidyverse)
+library(readxl)
+library(units)
+library(ggforce)
+theme_set(theme_bw()+
+          theme(strip.background = element_blank(),
+                strip.text=element_text(face = "bold", size=14)
+                ))
+flist <- list.files(path="Data_SEM", pattern=".csv")
+
+gofr <- function(x, y, dr=.01, Rmax=10){
+    # Get a vector of all Euclidian distances
+    dd <- as.vector(dist(tibble::tibble(x,y)))
+    # Make a histogram out of it
+    dd.hist <- hist(dd, 
+                    breaks=seq(0, max(dd)+dr, by=dr), 
+                    plot=FALSE)
+    # Get the r values
+    r    <- dd.hist$mids
+    # Compute the normalization by the bin surface
+    rlo  <- r - dr/2
+    rup  <- r + dr/2
+    nideal  <- pi*(rup^2 - rlo^2)
+    # Return the tibble containing r and G(r)
+    tibble::tibble(R    = r[r<Rmax], 
+                   GofR = dd.hist$counts[r<Rmax]/nideal[r<Rmax]) %>% 
+        rename(r="R",gofr="GofR")
+}
+samples <- read_excel("Data_SEM/sample.xlsx") %>% 
+    rename(sample="name",
+           T="Temperature (°C)",
+           time="Time (minutes)",
+           sub="Substrate (nm)") %>% 
+    separate(sub, c("sub_thick","sub_age"), convert = TRUE) %>% 
+    mutate(sub_thick=factor(paste(sub_thick,"nm Ni"), 
+                            levels=c("5 nm Ni","10 nm Ni")),
+           time=set_units(time,"min"),
+           T=set_units(T,"degC")
+           )
+particles <- tibble(file=flist) %>% 
+    mutate(data   = map(file, ~read_csv(file.path("Data_SEM",.)) %>% 
+                                    select(X,Y,Area) %>% 
+                                    rename(x="X",y="Y",area="Area")),
+           ) %>% 
+    separate(file, c("sample","number","aire","unit"), sep="_") %>% 
+    unnest(data) %>% 
+    mutate(x=ifelse(unit=="um.csv", x*1000, x),
+           y=ifelse(unit=="um.csv", y*1000, y),
+           area=ifelse(unit=="um.csv", area*1000*1000, area),
+           diameter=sqrt(4*area/pi)
+           ) %>% 
+    select(-c(aire,unit)) %>% 
+    inner_join(samples) %>% 
+    mutate(x=set_units(x,"nm"),
+           y=set_units(y,"nm"),
+           area=set_units(area,"nm^2"),
+           diameter=set_units(diameter,"nm"),
+           )
+
+particles_ave <- particles %>% 
+    group_by(sub_thick,sub_age, time, T) %>% 
+    summarise(diam=mean(diameter),
+              sddiam=set_units(sd(diameter),"nm")
+              )
+
+particles_gofr <- particles %>% 
+    group_by(sample, number) %>% 
+    do(GofR=gofr(.$x, .$y, dr=2, Rmax=500)) %>% 
+    unnest(GofR) %>% 
+    group_by(sample, r) %>% 
+    summarize(gofr=mean(gofr)) %>% 
+    inner_join(samples) %>% 
+    filter(r>1) %>% 
+    mutate(r=set_units(r,"nm"))
+
+particles %>% 
+    ggplot(aes(x=diameter, fill=factor(time)))+
+        geom_density(alpha=.5, color=NA, bw=4)+
+        labs(x="`Particle Diameter`",
+             y="Density [arb. units]",
+             fill="Time [min]")+
+        facet_grid(sub_age~sub_thick, scales="free_y")+
+        theme(legend.position = "top")
+
+particles_ave %>% 
+    ggplot(aes(x=time, y=diam, color=sub_thick))+
+        geom_point(alpha=.5)+
+        expand_limits(x = 0, y=0)+
+        geom_errorbar(aes(ymin=diam-sddiam,ymax=diam+sddiam), width=.2)+
+        geom_smooth(method="lm", se=FALSE, )+
+        facet_wrap(~sub_age)+
+        labs(x="Time",
+             y="`Average particle diameter`",
+             color="Substrate thickness")+
+        theme(legend.position = "top")
+
+particles_gofr %>% 
+    ggplot(aes(x=r, y=gofr, color=factor(time)))+
+        geom_smooth(method="loess", alpha=.5, span=.15, se=FALSE)+
+        geom_line(alpha=.2)+
+        expand_limits(x = 0, y=0)+
+        facet_grid(sub_age~sub_thick, scales="free_y")+
+        theme(legend.position = "top")+
+        labs(x="r",
+             y="G(r)",
+             color="Time [min]")
+
+```
