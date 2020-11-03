@@ -3,7 +3,6 @@
 Working in materials science (or any other field, for that matter), you will encounter many different types of files. ASCII text files are usually predominant, but you may want to read files from coming from Excel, Origin, etc..
 Here is a non-exhaustive reminder to help you read the kinds of files you often encounter in Materials Science with R. I invite you to visit the [RopenSci webpage](https://ropensci.org/) for more packages, and if this isn't enough for your need, well, [Google is your friend](http://letmegooglethat.com/?q=r+read+my+file+type).
 
-
 ## Column text files
 
 Most base R functions like `read.csv()`{.R} or `read.table()`{.R} have their `tidyverse` counterpart, like `read_csv()`{.R} and `read_table()`{.R}. I usually prefer the `tidyverse` version as it outputs a `tibble` instead of a `data.frame`. These functions can also be directly provided with an url to the text file.
@@ -82,7 +81,7 @@ library(tiff)
 readTIFF("image.tiff")
 ```
 
-For more image (pictures or videos) processing, I recommend the [`imager` package](https://dahtah.github.io/imager/imager.html).
+For more image processing (pictures or videos), I recommend the [`imager` package](https://dahtah.github.io/imager/imager.html).
 
 
 ## Spectroscopic files
