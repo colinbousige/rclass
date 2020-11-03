@@ -9,11 +9,11 @@ Most base R functions like `read.csv()`{.R} or `read.table()`{.R} have their `ti
 
 If your data file is "complicated" -- in the sense that it contains lines or columns to be skipped -- look at the help on the reader function with `?function_name`.
 
-### Comma separated values
+- **Comma separated values**
 
 Input file looks like this:
-```{r}
-system("head Data/tot_population.csv")
+```{bash echo=FALSE}
+head Data/tot_population.csv
 ```
 
 ```{r}
@@ -23,11 +23,11 @@ read_csv("Data/tot_population.csv", skip=1)
 read_csv("Data/tot_population.csv", skip=1, col_names=LETTERS[1:4])
 ```
 
-### Space separated values
+- **Space separated values**
 
 Input file looks like this:
-```{r}
-system("head Data/rubis_01.txt")
+```{bash echo=FALSE}
+head Data/rubis_01.txt
 ```
 
 ```r
@@ -37,7 +37,7 @@ read_table2("Data/rubis_01.txt", col_names=c("w","int"))
 ```
 
 
-### Other separators
+- **Other separators**
 
 For tab-separated values, use `read_tsv()`{.R}. For other exotic separators, look into `read_delim()`{.R}.
 
