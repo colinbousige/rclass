@@ -1,0 +1,100 @@
+# Reading all kinds of files
+
+Working in materials science (or any other field, for that matter), you will encounter many different types of files. ASCII text files are usually predominant, but you may want to read files from coming from Excel, Origin, etc..
+Here is a non-exhaustive reminder to help you read the kinds of files you often encounter in Materials Science with R. I invite you to visit the [RopenSci webpage](https://ropensci.org/) for more packages, and if this isn't enough for your need, well, [Google is your friend](http://letmegooglethat.com/?q=r+read+my+file+type).
+
+
+## Column text files
+
+Most base R functions like `read.csv()`{.R} or `read.table()`{.R} have their `tidyverse` counterpart, like `read_csv()`{.R} and `read_table()`{.R}. I usually prefer the `tidyverse` version as it outputs a `tibble` instead of a `data.frame`. These functions can also be directly provided with an url to the text file.
+
+If your data file is "complicated" -- in the sense that it contains lines or columns to be skipped -- look at the help on the reader function with `?function_name`.
+
+### Comma separated values
+
+Input file looks like this:
+```{r}
+system("head Data/tot_population.csv")
+```
+
+```{r}
+library(tidyverse)
+read_csv("Data/tot_population.csv")
+read_csv("Data/tot_population.csv", skip=1)
+read_csv("Data/tot_population.csv", skip=1, col_names=LETTERS[1:4])
+```
+
+### Space separated values
+
+Input file looks like this:
+```{r}
+system("head Data/rubis_01.txt")
+```
+
+```r
+library(tidyverse)
+read_table2("Data/rubis_01.txt")
+read_table2("Data/rubis_01.txt", col_names=c("w","int"))
+```
+
+
+### Other separators
+
+For tab-separated values, use `read_tsv()`{.R}. For other exotic separators, look into `read_delim()`{.R}.
+
+
+## Excel files
+
+For this, use the `readxl` library and its function `read_excel()`{.R}:
+
+```{r warning=FALSE, message=FALSE}
+library(readxl)
+read_excel("Data/test.xlsx")
+read_excel("Data/test.xlsx", sheet=2)
+```
+
+In case your Excel file contains merged cells, `read_excel()`{.R} will fill the merged cells by `NA` values. If you want to avoid this behavior, use `openxlsx::read.xlsx()`{.R} (which returns a `data.frame`):
+
+```{r warning=FALSE, message=FALSE}
+read_excel("Data/test.xlsx", sheet=3)
+library(openxlsx)
+read.xlsx("Data/test.xlsx", fillMergedCells = TRUE, sheet = 3)
+```
+
+
+## Origin files
+
+If you moved to R coming from a workflow where you used [Origin](https://www.originlab.com/origin), chances are you have some .opj files lying around that you still want to be able to read. Lucky you, the `Ropj` library is here:
+
+```r
+library(Ropj)
+read.opj("Data/opjfile.opj")
+```
+
+## Images
+
+You can read an image as a matrix. For example:
+
+```r
+library(png)
+readPNG("image.png")
+library(tiff)
+readTIFF("image.tiff")
+```
+
+For more image (pictures or videos) processing, I recommend the [`imager` package](https://dahtah.github.io/imager/imager.html).
+
+
+## Spectroscopic files
+
+In case your spectroscopic data wasn't saved as an ASCII file but as a `spc` or another format, take a look at the [`lightr` package](https://docs.ropensci.org/lightr/), for example.
+
+
+## HDF files
+
+Go to [this vignette](https://www.bioconductor.org/packages/release/bioc/vignettes/rhdf5/inst/doc/rhdf5.html) to see how to read Hierarchical Data Files.
+
+
+
+
+

@@ -23,6 +23,13 @@ d/t
 set_units(d/t,"km/h")
 T <- set_units(1,"fs")
 set_units(1/T,"THz")
+T1 <- set_units(1,"fs");T2 <- set_units(1,"ps");
+units(T2) <- units(T1)
+T2
+UNIT <- "m"
+set_units(1:10, UNIT)
+set_units(1:10, UNIT, mode="standard")
+set_units(1:10, units(T2), mode="standard")
 # You can give units to table columns
 library(tidyverse)
 starwars
