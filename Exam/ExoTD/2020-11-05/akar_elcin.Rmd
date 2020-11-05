@@ -1,0 +1,286 @@
+---
+title : "R Exercises - COVID"
+author: Elçin Akar
+date  : "`r Sys.Date()`"
+output: 
+    html_document:
+        toc            : true
+        toc_float      : true
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: true
+---
+
+
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  font-size: 1em;
+}
+</style>
+
+
+The COVID-19 pandemics is a lot of bad things, but it's also a source of data to play with...
+
+Here we're gonna use the data gathered by the John's Hopkins Hospital and published on [GitHub](https://github.com/CSSEGISandData/COVID-19), for [confirmed cases](https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv) and [deaths](https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv).
+
+In case the links above die at some point, here is a version of these files as of April 21st, 2020:
+
+- [confirmed cases](Data/time_series_covid19_confirmed_global.csv)
+- [deaths](Data/time_series_covid19_deaths_global.csv)
+
+In fact, a [quick lookup](https://www.statsandr.com/blog/top-r-resources-on-covid-19-coronavirus/#r-shiny-apps) on the Internet will now return plenty of versions for this data, with even cleaner (tidy) versions, including country population, etc. There are even R packages to get this.
+The point here is to learn how to read a given dataset, clean it and use it, so we'll stay with the JHU dataset.
+
+
+# Data wrangling
+
+- First, load the `tidyverse` and `lubridate` packages
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
+library(readxl)
+library(tidyr)
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+library(patchwork)
+library(readr)
+library(lubridate)
+library(stringr)
+library(ggrepel)
+```
+
+- Load the raw .csv files from the links above and store them in `confirmed_raw` and `deaths_raw`. You can provide `read_csv()`{.R} with an url. The numbers given in these tables are cumulative numbers of confirmed cases and deaths.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
+#I also tried with URL but it only shows data until 2020-04-20.
+#confirmed_raw <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
+
+#deaths_raw2 <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
+
+confirmed_raw <- read_csv("Data/confirmed_raw.csv")
+
+deaths_raw <- read_csv("Data/deaths_raw.csv")
+```
+
+- Using successive operations with the pipe operator `%>%`{.R} create a function `tidyfy_jhh(df, name)`{.R}, that, given a tibble `df` (_i.e._, the data from JHH we just loaded), will:
+    + Rename the columns `Province/State` and `Country/Region` to `state` and `country`
+    + Remove the lines from the `Diamond Princess`
+    + Remove the columns from `state`, `Lat` and `Long`
+    + Make the table tidy by having 3 columns : `country`, `date` and `count`
+    + Remove any duplicated lines
+    + Using the `mdy()`{.R} function from the `lubridate` package, convert the `date` column to a R Date format
+    + Some countries appear several times as their numbers are separated by provinces or states. Summarize the counts per country and per date as the total number of cases per country and per day. 
+        + Give this column the name of the type of case we look at (confirmed or deaths, string that id provided in the `name` parameter of the function `tidyfy_jhh(df, name)`{.R}. For this, use the notation `summarize(!!sym(name):= your_result_here)`{.R} to tell R that `name` should be used as a column name)
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
+ tidyfy_jhh <- function(df,name){
+ a <- df %>% rename("state"="Province/State", "country"="Country/Region") %>%
+            filter(!grepl("Diamond Princess", state)) %>%
+            select(-state, -Lat, -Long) %>%
+            pivot_longer(col= -country,
+                names_to='date',
+                values_to='count') %>% 
+            distinct(, .keep_all = TRUE) %>%
+            mutate(date=mdy(date)) %>%
+            group_by(country, date) %>%
+            summarize(!!sym(name):= sum(count))
+   a
+}
+
+```
+
+- Apply this function to the raw tibbles to get tidy `confirmed` and `deaths` tibbles.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
+confirmed <- tidyfy_jhh(confirmed_raw,"confirmed")
+
+deaths <- tidyfy_jhh(deaths_raw, "deaths")
+
+#Since my csv files (confirmed_raw, deaths_raw) contains data until 2020-04-20, I will use the data you provided in this section.
+
+confirmed2 <- read_csv("Data/covid_confirmed.csv")
+
+deaths2 <- read_csv("Data/covid_deaths.csv")
+  
+```
+
+> In case you didn't manage to get there, here are the csv files containing:
+> 
+> - [confirmed](Data/covid_confirmed.csv)
+> - [deaths](Data/covid_deaths.csv)
+
+Now, join these three tibbles in `alldata`, and successively:
+
+- Add the columns `newcases` and `newdeaths` containing the number of new cases and deaths every day, as `confirmed` and `deaths` contain cumulative numbers. For this look into the `lag()`{.R} function.
+- Filter rows to remove data for which the number of cases is lower than the minimum number of cases in China (for easier comparison). This day will be considered as `Day 1`.
+- Add a `day` column containing the day number since `Day 1`.
+- Filter rows to have only countries for which we have at least one week of data
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
+alldata <- inner_join(confirmed2, deaths2) %>%
+  mutate(newcases=confirmed-lag(confirmed), newdeaths=deaths-lag(deaths))
+
+#China dataframe
+Chinadf <- alldata %>% filter(country == 'China')
+alldata <- alldata %>% 
+            filter(confirmed>=min(Chinadf$confirmed)) %>% 
+            #Adding the day numbers
+            group_by(country) %>%
+            mutate(day=row_number())
+
+#Keeping the countries which have data at least one week
+countriesToKeep <- alldata %>% filter(day>=7)
+alldata <- alldata %>% filter(country %in% countriesToKeep$country)
+
+```
+
+> In case you didn't manage to get there, [here is a csv file](Data/covid_alldata.csv) containing `alldata` so that you can continue with the exercise.
+
+
+# Plotting
+
+- Using `ggplot2`, plot (P1) **side by side** the number of **confirmed** cases and **deaths** vs time in 5 countries of your choice.
+    - Using `ggrepel`, add the country names as annotation
+    - Do the plot using linear scale, then a log scale
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=.8}
+alldata_fivecountries <- alldata %>%
+                  filter(country %in% c("France", "Turkey", "China", 
+                             "Italy", "Germany"))
+PC <-ggplot(data= alldata_fivecountries, aes(x=day, y=confirmed, col=country)) + 
+      xlab("Day")+
+      ylab("Confirmed")+
+      geom_point(alpha=0.5) +
+      scale_x_continuous(trans = "log10") +
+      scale_y_continuous(trans = "log10")
+
+PD <- ggplot(data= alldata_fivecountries, aes(x=day, y=deaths, col=country)) + 
+      xlab("Day")+
+      ylab("Deaths")+
+      geom_point(alpha=0.5) +
+      scale_x_continuous(trans = "log10") +
+      scale_y_continuous(trans = "log10") 
+
+P1 <- plot_grid(PC, PD)
+#P1 + geom_label_repel()
+P1
+```
+
+- Plot (P2) the death ratio (*i.e.* deaths per confirmed cases) per country averaged over time as a barplot, for 50 random countries.
+    + Try ordering the countries per decreasing ratio using `reorder()`{.R}
+    + Flip the plot to have horizontal bars
+    + Is there anything wrong?
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.7}
+DeathRatio <- alldata %>% 
+  mutate(deathratio=deaths/confirmed) %>% 
+  group_by(country) %>%
+  summarise(ratio=mean(deathratio))
+DeathRatio <- DeathRatio[sample(nrow(DeathRatio), 50),]
+
+#Plotting
+P2 <- ggplot(DeathRatio, aes(x=reorder(country, -ratio), y=ratio)) +
+      ggtitle("Death Ratio Per Country") +
+      geom_bar(stat="identity", position="dodge", alpha=1, width=0.7) +
+      theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+      xlab("Country") + ylab("Death Ratio ")
+      #ylim(0, 0.12)
+P2
+
+#Horizontal bar plot
+P2b <- P2 + coord_flip() + theme(axis.text.x = element_text(angle = 0, hjust = 1))
+#P2b
+
+#In horizontal bar plot the value is the same for death ratio however, the scale is not the same. Therefore to understand and interpret the difference between countries' death ratio, it is better to work with vertical bar plot.
+
+```
+
+- To better see the effect of confinement regulation, it's probably more interesting to plot the number of new confirmed cases. 
+    - Plot as a barplot the number of new confirmed cases per day for 2 countries of your choice, and add a vertical line corresponding to the date of application of confinement rules. For example, in France and Italy it was on March 17th and March 10th, respectively.
+    - Add a smooth line to smooth out the effect or irregular numbers reporting. You can play with the `span` parameter to have a more or less smooth curve.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
+
+alldata_FranceItaly <- alldata %>%
+            filter(country %in% c("France", "Italy"))
+
+confinement_date_france <- alldata_FranceItaly %>%
+                          filter(country == "France")
+confinement_date_france <- which(confinement_date_france$date == "2020-03-17")
+
+confinement_date_italy <- alldata_FranceItaly %>%
+                          filter(country == "Italy")
+confinement_date_italy <- which(confinement_date_italy$date == "2020-03-10")
+
+P6 <- ggplot(alldata_FranceItaly, aes(x=day, y=newcases, fill=country)) +
+      ggtitle("New Confirmed Cases For France & Italy") +
+      geom_bar(stat="identity", position="dodge", alpha=1, width=1) +
+      geom_vline(xintercept = confinement_date_france, linetype="dashed", size=.3, color= "red") +
+      geom_vline(xintercept = confinement_date_italy, linetype="dashed", size=.3, color= "black") +
+      xlab("Day") + 
+      ylab("New Confirmed Cases") +
+      geom_smooth(span= .3)
+P6
+```
+
+
+# Fitting
+
++ Load the library `broom` ([vignette](https://cran.r-project.org/web/packages/broom/vignettes/broom.html)). `broom` allows tidying the output of fit functions such as `lm()` or `nls()`, taking the text output and making it into a tibble. Example:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+library(broom)
+theme_set(theme_bw())
+library(purrr)
+```
+
+Here, by combining `nest()` and `purrr::map()`, we can apply the fit to each group. The result is a tibble containing the fit result for each group. Then, using `broom`'s function `augment()` and `tidy()`, we respectively get the fitted values and residues, and the fitting parameters.
+
+- Now then, using the same procedure as in the example above, fit the total Confirmed cases for the 5 countries you chose earlier **for the 100 first days** using a [logistic function](https://en.wikipedia.org/wiki/Logistic_function), and plot the data and their fit, and show the results of the fits.
+
+```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+
+alldata_fivecountries_100Days <- alldata_fivecountries %>%
+                                  filter(day<=100)
+
+Logistic_function <- function(x, x0=0, k=1, L=1){
+                  L/(1+(exp(-k*(x-x0))))
+}
+
+#There is a problem with the initial parameters so the fit_covid does not work.  
+fit_covid <- alldata_fivecountries_100Days %>%
+      nest(data= -country) %>%
+      mutate(fit = purrr::map(data, ~ nls(data= .,
+                              confirmed~Logistic_function(day, x0, k, L),
+                              start = list(x0=125,
+                                           k=1,
+                                           L=250000))),
+      tidied = map(fit, tidy),
+      augmented = map(fit, augment))  
+
+#Test with a different equation that gives data for plotting.
+#fit_covid <- alldata_fivecountries_100Days %>%
+#      nest(data= -country) %>%
+#      mutate(fit = purrr::map(data, ~ nls(data= .,
+#                              confirmed~day*A+B,
+#                              start = list(A = 1,
+#                                           B = 1))),
+#      tidied = map(fit, tidy),
+#      augmented = map(fit, augment))
+
+#This is the code to get the ggplot with fitting (if fit_covid was working)
+ggplot(data=alldata_fivecountries_100Days, aes(x=day, y=confirmed, col=country))+
+    geom_point(alpha=0.5, size=2) +
+    xlab("Confirmed Cases") +
+    ylab("Day") + 
+    #geom_line(data=fit_covid %>% unnest(augmented), 
+        #aes(x=day,y=.fitted, col=country)) +
+        ylim(0, 250000)
+
+```
+
+In fact, this exponential model is rather wrong... A better model of epidemics dynamics is done by the SIR model, for Susceptible, Infectious, Recovered. A description of the SIR modeling through R can be found [here](https://staff.math.su.se/hoehle/blog/2020/03/16/flatteningthecurve.html), for example.
