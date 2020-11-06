@@ -441,6 +441,7 @@ If you have several plot you want to gather on a grid and you can't use `facet_w
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 library(patchwork)
 library(ggplot2)
+theme_set(theme_bw())
 x  <- seq(-2*pi,2*pi,.1)
 p1 <- qplot(x,sin(x), geom="line")
 p2 <- qplot(x,cos(x), geom="line")
@@ -462,8 +463,8 @@ If you want to make an inset plot, first make your plots, then add a plot within
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 library(ggplot2)
 p4 + annotation_custom(ggplotGrob(p3), 
-                       xmin = -7, xmax = -2, 
-                       ymin = .2, ymax = .4)
+                       xmin = -6.5, xmax = -1.5, 
+                       ymin = .2,   ymax = .4)
 ```
 
 
