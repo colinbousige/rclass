@@ -62,7 +62,6 @@ deaths_raw    <- read_csv(urlDeaths)
     + Remove the lines from the `Diamond Princess`
     + Remove the columns from `state`, `Lat` and `Long`
     + Make the table tidy by having 3 columns : `country`, `date` and `count`
-    + Remove any duplicated lines
     + Using the `mdy()`{.R} function from the `lubridate` package, convert the `date` column to a R Date format
     + Some countries appear several times as their numbers are separated by provinces or states. Summarize the counts per country and per date as the total number of cases per country and per day. 
         + Give this column the name of the type of case we look at (confirmed or deaths, string that id provided in the `name` parameter of the function `tidyfy_jhh(df, name)`{.R}. For this, use the notation `summarize(!!sym(name):= your_result_here)`{.R} to tell R that `name` should be used as a column name)
@@ -77,7 +76,6 @@ tidyfy_jhh <- function(df, name) {
         pivot_longer(cols      = -country,
                      names_to  = "date",
                      values_to = "count") %>% 
-        distinct() %>% 
         mutate(date = mdy(date)) %>% 
         group_by(country, date) %>% 
         summarize(!!sym(name):=sum(count)) %>% 

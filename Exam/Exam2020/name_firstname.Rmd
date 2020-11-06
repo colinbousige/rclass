@@ -1,18 +1,10 @@
 ---
 title : "Reproducible data treatment with R -- Exam"
+author: Firstname NAME
 date  : "01/12/2020"
 output: 
-    bookdown::pdf_document2: 
-        toc            : false
-        number_sections: false
-        fig_caption    : true
-        fig_number     : true
-header-includes:
-   - \usepackage{cmbright}
-   - \usepackage{amssymb}
-params: 
-    solution:
-        value: FALSE
+    html_document:
+        highlight: tango
 ---
 
 # Global setup (1 point)
@@ -21,10 +13,8 @@ params:
 2. All plots should be performed using `ggplot2`.
 3. Load the libraries `tidyverse`{.R} and `broom` and set the global `ggplot2`{.R} theme to `theme_bw()`{.R}.
 
-```{r include=params$solution, include=FALSE, warning = FALSE, cache=FALSE}
-library(tidyverse)
-library(broom)
-theme_set(theme_bw())
+```{r}
+
 ```
 
 ---
@@ -33,30 +23,25 @@ theme_set(theme_bw())
 
 1. Load in a tibble the `Data/correlation.csv` file. It contains the per capita consumption of mozzarella cheese and the number of people who died by falling down the stairs as a function of the years (source: [Spurious Correlations](http://www.tylervigen.com/spurious-correlations)).
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-d <- read_csv("Data/correlation.csv")
+```{r}
+
 ```
 
 2. Using `cor()`{.R}, compute the correlation between the number of people who died by falling down the stairs as a function of the per capita consumption of mozzarella cheese. The correlation is the cosine of the angle between the two vectors. A correlation close to thus 1 means that the two considered vectors have the same direction, *i.e.* the data they contain are linearly related.
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-cor(d[[2]], d[[3]])
+```{r}
+
 ```
 
 3. Plot the number of people who died by falling down the stairs as a function of the per capita consumption of mozzarella cheese. Make the axis labels pretty, add the correlation value as the title, and add a linear fit.
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-ggplot(d, aes(x=per_capita_consumption_of_mozzarella_cheese, 
-              y=people_who_died_by_falling_down_the_stairs))+
-    geom_point(size=5, alpha=.5)+
-    geom_smooth(method="lm")+
-    labs(x="Per capita consumption of mozzarella cheese",
-         y="People who died by falling down the stairs")+
-    ggtitle(paste("Correlation:",round(cor(d[[2]], d[[3]]),2)))
+```{r}
+
 ```
 
 4. Do you think that *correlation* implies *causation* for these two datasets?
 
+Write your answer here
 
 ---
 
@@ -75,74 +60,50 @@ where $V$ is the volume of the unit cell, $V_0$ the volume at ambient pressure, 
 
 1. Define the `Murnaghan(P, K, Kp)`{.R} function that, given the pressure $P$, the bulk modulus $K$ and its derivative $Kp$ (defaulting to $Kp=4$), returns the relative volume $\frac{V}{V_0}$.
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-Murnaghan <- function(P, K, Kp=4){
-    (1+P*Kp/K)^(-1/Kp)
-}
+```{r}
+
 ```
 
 2. Find in the `Data`{.R} folder all the files containing the experimental diffraction patterns. They are under the form `PY02_Pxx.dat`{.R} or `PY02bis_Pxx.dat`{.R}. Store this list of files in a vector called `flist`{.R}.
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-flist  <- list.files(path="Data", pattern = "_P")
+```{r}
+
 ```
 
 3. Read and store the two files containing the pressures of each run, `PY02_pressures.dat`{.R} and `PY02bis_pressures.dat`{.R}. Combine these two tables into a single tidy one called `Pressures`{.R}, containing three columns `run`{.R}, `P.kbar`{.R} and `sample`{.R} (`sample`{.R} being either `PY02` or `PY02bis`).
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-PY02_P    <- read_table2("Data/PY02_pressures.dat")
-PY02bis_P <- read_table2("Data/PY02bis_pressures.dat")
-PY02bis_P$sample <- "PY02bis"
-PY02_P$sample    <- "PY02"
-Pressures <- bind_rows(PY02_P,PY02bis_P)
+```{r}
+
 ```
 
 4. Define the `get_run(flist)`{.R} function that, given **a vector** of file names, returns **a vector** of the run number of the corresponding files. The files are under the form `PY02_Pxx.dat` or `PY02bis_Pxx.dat`, where `xx` is the  run number. Make sure the run number is given as a numeric value and not a string. Test the function on `flist`.
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-get_run <- function(flist){
-    run  <- gsub("PY02_P","",flist)
-    run  <- gsub("PY02bis_P","",run)
-    as.numeric(gsub(".dat","",run))
-}
-get_run(flist)
+```{r}
+
 ```
 
 5. Define the `get_sample(flist)`{.R} function that, given **a vector** of file names, returns the names of the samples (*i.e.* PY02 or PY02bis, *i.e.* the text before the first occurrence of the "\_" character). For this, you will want to split the file names according to the "\_" character (use `strsplit()`{.R}), make the result a vector using `unlist()`{.R}, and take every other two elements of the resulting vector (or equivalently, every odd number). Test the function on `flist`.
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-get_sample <- function(flist){
-    all <- unlist(strsplit(flist, "_"))
-    all[seq_along(all) %% 2 == 1]
-}
-get_sample(flist)
+```{r}
+
 ```
 
 6. Define the `norm01(x)`{.R} function that given a vector, returns this vector normalized to [0,1]
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-norm01 <- function(x) {(x-min(x))/(max(x)-min(x))}
+```{r}
+
 ```
 
 7. Now let's read all the data files in `flist` and store the result in a tidy `tibble` with three columns, `file`, `q` and `int` (the data files containing the diffracted intensity as a function of the scattering vector $q$). Either use a `for loop` or the `tidyverse`-friendly version using `purrr::map()`{.R} (+1 bonus for this version). Add the `int_n` column containing the normalized intensity for each file.
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-d <- tibble(file=flist) %>% 
-    mutate(data=map(file, ~ read_table2(file.path("Data",.), 
-                               col_names=c("q","int")))) %>% 
-    unnest(data) %>% 
-    group_by(file) %>% 
-    mutate(int_n=norm01(int))
+```{r}
+
 ```
 
 8. Plot all the normalized diffractograms on top of each other, with lines of a different color for each file, and define nice axis labels, such as *Scattering Vector q [1/Å]* and *Intensity [arb. units]*.
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-d %>%
-    ggplot(aes(x=q, y=int_n+as.numeric(factor(file))-1, color=file))+
-        geom_line()+
-        labs(x = "Scattering Vector q [1/Å]", 
-             y = "Intensity [arb. units]")
+```{r}
+
 ```
 
 9. We are interested in the position of the first peak around $q=1.8$ Å$^{-1}$. Create the `pospeak` tibble that stores the position `Q` of the maximum of each diffractogram. 
@@ -151,23 +112,14 @@ d %>%
     - Add the columns `run` and `sample` that contain the run number and sample name for each file (using the two functions defined above).
     - Finally, order the tibble by ascending run for each sample
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-pospeak <- d %>% 
-    filter(q<2.5) %>% 
-    group_by(file) %>% 
-    summarise(Q  = q[which.max(int)],
-              dQ = mean(diff(q))) %>% 
-    mutate(run    = get_run(file),
-           sample = get_sample(file)) %>% 
-    arrange(sample, run)
+```{r}
+
 ```
 
 10. Now join this table together with the `Pressures` one in order to get the sample names and pressures in this table. Finally, add the new column `P` containing the pressure in GPa (1 GPa = 10 kbar).
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-pospeak <- pospeak %>% 
-    inner_join(Pressures) %>% 
-    mutate(P=P.kbar/10)
+```{r}
+
 ```
 
 **In case you didn't manage to get there, I provide in the exam .Rmd file the expected `pospeak` table so that you can continue with the exercise.**
@@ -201,41 +153,26 @@ Using this, add to the `pospeak` tibble the columns `VV0` and `dVV0` containing,
     - Make sure that the `V0` part refers to the value at ambient pressure (*i.e.* $P=0$) *of the corresponding sample*. 
     - Make sure you propagate the errors in a proper way.
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-pospeak <- pospeak %>% 
-    group_by(sample) %>% 
-    mutate(VV0=(Q[P==0]/Q)^3,
-          dVV0=3*(dQ[P==0]/Q[P==0] + dQ/Q))
+```{r}
+
 ```
 
 12. Fit the Murnaghan equation of state to the experimental data. Make sure to add an amplitude parameter $A$ (that should be close to 1) to allow for more leeway on the fit. We fix the derivative value at $Kp=4$. The bulk modulus $K$ should be of the order of a few GPa.
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-fit <- nls(data = pospeak,
-           VV0 ~ A*Murnaghan(P, K),
-           start = list(A=1, K=1))
+```{r}
+
 ```
 
 13. Store the resulting values of $K$ and it's fitting standard error $dK$ in two variables. Round the values to the appropriate floating number. You may use the `broom::tidy()`{.R} function.
 
-```{r include=params$solution, warning=FALSE, message=FALSE}
-K  <- round(tidy(fit) %>% filter(term=="K") %>% .$estimate,0)
-dK <- round(tidy(fit) %>% filter(term=="K") %>% .$std.error,0)
+```{r}
+
 ```
 
-14. Finally, make the plot of the experimental points (a color per sample) and the fit. Make it look like so:
+14. Finally, make the plot of the experimental points (a color per sample) and the fit.
 
-```{r echo=params$solution, warning=FALSE, message=FALSE}
-pospeak %>%
-    ggplot(aes(x=P, y=VV0))+
-        geom_point(alpha=0.5, aes(color=sample))+
-        geom_errorbar(alpha=0.5, aes(color=sample, ymin=VV0-dVV0, ymax=VV0+dVV0))+
-        geom_line(data=augment(fit), aes(x=P, y=.fitted), color="royalblue", lty=2)+
-        labs(x="Pressure [GPa]",
-             y="V/V0")+
-        scale_color_manual(values = c("black","red"), name="Sample")+
-        ggtitle(paste("Murnaghan fit: K = (your value) ± (your value) GPa"))+
-        theme(legend.position = c(.9,.85))
+```{r}
+
 ```
 
 

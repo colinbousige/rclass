@@ -9,7 +9,6 @@ output:
         highlight      : tango
         number_sections: true
         code_download  : true
-        code_folding   : show
 params: 
     solution:
         value: true
@@ -220,32 +219,35 @@ alldata %>%
     filter(country %in% c("France", "Italy")) %>%
     filter(newcases>0) %>% 
     ggplot(aes(x=date, y=newcases, fill=country))+
-        scale_fill_manual(values=colors, name="")+
-        scale_color_manual(values=colors, name="")+
+        scale_fill_manual(values=colors)+
+        scale_color_manual(values=colors)+
         geom_bar(stat = 'identity', position = 'dodge', alpha=.7)+
-        geom_smooth(span=.15, se=FALSE, aes(color=country))+
-        geom_vline(data=confdates, aes(xintercept = date, color=country), lty=2)+
+        geom_smooth(span=.15, se=FALSE, aes(color=country), show.legend = FALSE)+
+        geom_vline(data=confdates, aes(xintercept = date, color=country), 
+                   lty=2, show.legend = FALSE)+
         scale_x_date(minor_breaks='1 week')+
-        theme(legend.position='none')+
         coord_cartesian(y=c(0,.6e5))+
         labs(x="Date",
-             y="New confirmed cases")+
+             y="New confirmed cases",
+             fill="")+
         ggtitle("New confirmed cases") -> P1
 alldata %>% 
     filter(country %in% c("France", "Italy")) %>%
     filter(newdeaths>0) %>% 
     filter(date>as.Date("2020-02-25")) %>% 
     ggplot(aes(x=date, y=newdeaths, fill=country))+
-        scale_fill_manual(values=colors, name="")+
-        scale_color_manual(values=colors, name="")+
+        scale_fill_manual(values=colors)+
+        scale_color_manual(values=colors)+
         geom_bar(stat = 'identity', position = 'dodge', alpha=.7)+
-        geom_smooth(span=.15, se=FALSE, aes(color=country))+
-        geom_vline(data=confdates, aes(xintercept = date, color=country), lty=2)+
+        geom_smooth(span=.15, se=FALSE, aes(color=country), show.legend = FALSE)+
+        geom_vline(data=confdates, aes(xintercept = date, color=country), 
+                   lty=2, show.legend = FALSE)+
         scale_x_date(minor_breaks='1 week')+
         labs(x="Date",
-             y="New deaths")+
+             y="New deaths",
+             fill="")+
         ggtitle("New deaths") -> P2
-P1+P2
+P1 + P2 + plot_layout(guides = "collect") & theme(legend.position='bottom')
 ```
 
 

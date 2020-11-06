@@ -455,6 +455,18 @@ p3/p4 +
 ```
 
 
+### Plots with insets
+
+If you want to make an inset plot, first make your plots, then add a plot within the other using `annotation_custom()`{.R}, specifying the x and y positions of the 4 corners of the inset plot:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+library(ggplot2)
+p4 + annotation_custom(ggplotGrob(p3), 
+                       xmin = -7, xmax = -2, 
+                       ymin = .2, ymax = .4)
+```
+
+
 ## Exercises {#exo-plots}
 
 <details>

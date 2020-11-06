@@ -13,8 +13,8 @@ cp -r Exo/Rexercises-plot0_solution* _book/Exo/
 cp -r Exo/Rexercises-spectro_solution* _book/Exo/
 cp -r Exo/Rexercises-tga_solution* _book/Exo/
 cp -r Exo/Rexercises-religion_babies_solution* _book/Exo/
+cp -r Exo/Rexercises-covid_solution* _book/Exo/
 # cp -r Exo/Rexercises-co2_solution* _book/Exo/
-# cp -r Exo/Rexercises-covid_solution* _book/Exo/
 # cp -r Exo/Rexercises-Grt_solution* _book/Exo/
 
 
