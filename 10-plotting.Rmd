@@ -393,25 +393,29 @@ p
 
 It is very easy to keep the same theme on all your graphs thanks to the `theme()`{.R} function.
 There are a collection of pre-defined themes, like:
-```{r, warnings=FALSE}
-p + theme_grey() # the default
-p + theme_classic()
-p + theme_bw()
-p + theme_minimal()
-p + theme_dark()
-p + theme_light()
+```{r, include=FALSE}
+library(patchwork)
+```
+
+```{r, echo=FALSE, warnings=FALSE, fig.asp=1.4}
+((p + ggtitle("p + theme_grey() # the default") + theme_grey() + theme(legend.position = "none")) +
+ (p + ggtitle("p + theme_classic()") + theme_classic() + theme(legend.position = "none"))) /
+((p + ggtitle("p + theme_bw()") + theme_bw() + theme(legend.position = "none")) +
+ (p + ggtitle("p + theme_minimal()") + theme_minimal() + theme(legend.position = "none"))) /
+((p + ggtitle("p + theme_dark()") + theme_dark() + theme(legend.position = "none")) +
+(p + ggtitle("p + theme_light()") + theme_light() + theme(legend.position = "none")))
 ```
 
 You can define all the parameters you want, like this (hit `?theme`{.R} like usual to see all the parameters):
 
 ```{r, warnings=FALSE}
 my_theme <- theme_bw()+
-            theme(axis.text = element_text(size = 14,family = "Helvetica",colour="black"),
-                  text = element_text(size = 14,family = "Helvetica"),
-                  axis.ticks = element_line(colour = "black"),
-                  legend.text = element_text(size = 14,family = "Helvetica",colour="black"),
-                  panel.border = element_rect(colour = "black", fill=NA, size=1),
-                  legend.key.height=unit(0.5,"cm")
+            theme(text = element_text(size = 18, family = "Times", face="bold"),
+                  axis.ticks = element_line(size=1),
+                  legend.text = element_text(size = 14, family = "Times"),
+                  panel.border = element_rect(size=2),
+                  panel.grid.major = element_blank(), 
+                  panel.grid.minor = element_blank()
                   )
 p + my_theme
 ```

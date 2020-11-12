@@ -250,7 +250,7 @@ output$text_to_display <- renderPrint({ "some text" })
 tableOutput("table_to_display")
 # # # # # # # # # 
 # In server:
-output$table_to_display <- renderTable( df )
+output$table_to_display <- renderTable({ df })
 ```
 
 Or in case you want interactive tables, use the package [datatable](https://shiny.rstudio.com/articles/datatables.html):
@@ -342,10 +342,9 @@ rmarkdown::render("file_name.Rmd")
 Create a new shiny app with the following code, and play around with it. The input file should be the tidy <a href="Data/population.txt" download target="_blank">population.txt</a>.
 
 ```r
-library(ggplot2)
 library(shiny)
+library(tidyverse)
 library(plotly)
-library(tidyr)
 library(DT)
 
 ui <- fluidPage(
@@ -366,50 +365,50 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-    
+
     # myData() returns the data if a file is provided
     myData <- reactive({
         inFile <- input$file_in
         if (is.null(inFile)) {
             return(NULL)
         } else {
-            return(read.table(inFile$datapath, header=TRUE))
+            df <- read.table(inFile$datapath, header=TRUE)
+            # in case something changes,
+            # update the city input selection list
+            updateSelectInput(session, "sel_city",
+                              choices = unique(df$city),
+                              selected = unique(df$city)[1])
+            return(df)
         }
     })
-    
-    # in case something changes, 
-    # update the city input selection list
-    observe({
-        updateSelectInput(session, "sel_city",
-                          choices = unique(myData()$city),
-                          selected = unique(myData()$city)[1])
-    })
-    
+
     # plot the pop vs year for the selected cities
     output$cityplot <- renderPlotly({
         df <- myData()
         if(is.null(df)) return(NULL)
-        p <- ggplot(data=subset(df, city %in% input$sel_city), 
-                    aes(x=year, y=pop, size=pop, color=city)) +
-            geom_point() + 
-            geom_smooth(method="lm", alpha=0.1, show.legend = FALSE, 
-                        aes(fill=city)) + 
-            ggtitle(paste("Population in ",input$city,sep=""))+
-            labs(x="Year", y="Population")+
-            theme_light() +
-            theme(legend.text = element_text(size = 16))
+        p <- df %>% 
+            filter(city %in% input$sel_city) %>%
+            ggplot(aes(x=year, y=pop, size=pop, color=city)) +
+                geom_point() +
+                geom_smooth(method="lm", alpha=0.1,
+                            show.legend = FALSE,
+                            aes(fill=city)) +
+                ggtitle(paste0("Population in ",
+                               paste(input$sel_city, collapse = ", ")
+                               ))+
+                labs(x="Year", y="Population")+
+                theme_light()
         ggplotly(p, dynamicTicks = TRUE)
     })
-    
+
     # show data as a table
     output$table <- renderDataTable({
-        df <- myData()
+        df <- myData() %>% filter(city %in% input$sel_city)
         if(is.null(df)) return(NULL)
         df <- pivot_wider(df, names_from=year, values_from=pop)
-        rownames(df) <- df[,1]
-        df[,-1]
-    }) 
-    
+        datatable(df, rownames = FALSE)
+    })
+
 }
 
 shinyApp(ui = ui, server = server)

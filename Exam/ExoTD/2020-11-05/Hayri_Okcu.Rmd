@@ -92,9 +92,24 @@ tidyfy_fyy <- function(df,name){
   group_by(country,date) %>%
   summarise_all(sum)
   df <- df %>%
-  summarize(!!sym(name):= date,count)
+  summarize(!!sym(name):=date, count)
+  df
   }
 
+tidyfy_jhh <- function(df, name) {
+    df %>% 
+        rename(state   = `Province/State`,
+               country = `Country/Region`) %>%
+        filter(country != "Diamond Princess") %>%
+        select(-c(state, Lat, Long)) %>%
+        pivot_longer(cols      = -country,
+                     names_to  = "date",
+                     values_to = "count") %>% 
+        mutate(date = mdy(date)) %>% 
+        group_by(country, date) %>% 
+        summarize(!!sym(name):=sum(count)) %>% 
+        ungroup()
+}
 ```
 
 - Apply this function to the raw tibbles to get tidy `confirmed` and `deaths` tibbles.

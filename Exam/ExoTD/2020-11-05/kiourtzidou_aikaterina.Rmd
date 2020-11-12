@@ -124,6 +124,7 @@ Now, join these three tibbles in `alldata`, and successively:
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
 
+
 alldata <- inner_join(conf,death)
 alldata
 
@@ -298,7 +299,8 @@ library(broom)
 
 d_fit <- data %>% 
          nest(T1= -country) %>%
-         mutate(fit = purrr::map(T1, ~ nls(T1=., y ~ L/(1+exp(-k*(x-x0))),start=list(L=1,k=1, x=1,x0=1))),
+         mutate(fit = purrr::map(T1, ~ nls(data=., confirmed ~ L/(1+exp(-k*(day-x0))),
+            start=list(L=1,k=1,x0=1))),
          tidied = map(fit, tidy),
          augmented = map(fit, augment)
          )

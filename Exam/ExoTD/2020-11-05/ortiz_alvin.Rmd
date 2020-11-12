@@ -414,7 +414,7 @@ fit <- deaths_plot %>%
   group_by(nest(data=-country)) %>% 
   mutate(fit=map(data, ~ nls(data = .,
                              confirmed~A/(1+exp(-B*day)), 
-                             start=list(A=500, B=1))),
+                             start=list(A=50000, B=1))),
          tidied = map(fit, tidy),
          augmented = map(fit, augment))
 fit

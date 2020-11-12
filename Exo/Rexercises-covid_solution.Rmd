@@ -189,20 +189,18 @@ P1a + P1b
     + Is there anything wrong?
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.7}
-P2 <- alldata %>% 
-    filter(country %in% sample( unique(country), 50) ) %>% 
+alldata %>% 
     group_by(country) %>% 
-    summarize(ratio=mean(deaths/confirmed*100)) %>% 
+    summarize(ratio = mean(deaths/confirmed*100)) %>% 
+    sample_n(50) %>% 
     ggplot(aes(x=reorder(country,ratio), y=ratio, fill=country))+
         geom_bar(stat="identity", position="dodge") +
         ylab("Death ratio [%]")+
         coord_flip()+
         theme(axis.title.y=element_blank(),
               axis.ticks.y=element_blank(),
-              legend.position = 'none'
-              )+
+              legend.position = 'none')+
         ggtitle("Death ratio")
-P2
 ```
 
 - To better see the effect of confinement regulation, it's probably more interesting to plot the number of new confirmed cases. 

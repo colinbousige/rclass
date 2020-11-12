@@ -94,9 +94,9 @@ df <- df %>% unique() %>%
 df.list <- list(Confirmed, Deaths) 
 lapply(df.list, tidyfy_jhh)
 
-```
 Confirmed2 <- read_csv("covid_confirmed.csv")
 Deaths2 <- read_csv("covid_deaths.csv")
+```
 
 Now, join these three tibbles in `alldata`, and successively:
 
@@ -120,13 +120,13 @@ alldata[alldata$country %in% names(which(table(alldata$country) > 7)),]
 
 # Plotting
 
-covidalldata <- read_csv("covid_alldata.csv")
 
 - Using `ggplot2`, plot (P1) **side by side** the number of **confirmed** cases and **deaths** vs time in 5 countries of your choice.
     - Using `ggrepel`, add the country names as annotation
     - Do the plot using linear scale, then a log scale
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=.8}
+covidalldata <- read_csv("covid_alldata.csv")
 library(ggplot2)
 library(grid)
 library(scales)
@@ -318,10 +318,10 @@ Here, by combining `nest()` and `purrr::map()`, we can apply the fit to each gro
 dat_5_fit <- dat_5 %>% 
   nest(data = country) %>%
   mutate(fit = purrr::map(data, ~ nls(data = .,
-                                confirmed ~ deaths/(1+exp(-(newdeaths+newcases*day)), 
-                                start=list(deaths=0, neawdeaths=0,newcases=0)),
+                                confirmed ~ deaths/(1+exp(-(newdeaths+newcases*day))), 
+                                start=list(deaths=0, neawdeaths=0,newcases=0))),
            tidied = purrr::map(fit, tidy),
-           augmented = purrr::map(fit, augment))))
+           augmented = purrr::map(fit, augment))
 dat_5_fit
 
 ```

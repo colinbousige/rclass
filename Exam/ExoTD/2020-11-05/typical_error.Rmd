@@ -1,0 +1,126 @@
+---
+title : "Typical errors"
+date  : "`r Sys.Date()`"
+output: 
+    bookdown::pdf_document2: 
+        toc            : false
+        highlight      : tango
+        theme          : cosmo
+---
+
+# Installing/Loading libraries
+
+**Do not** leave a `install.packages()` in a Rmd file: otherwise you will install it every time you knit the document. Do it once, then just load the library once.
+
+```{r warning=FALSE, error=TRUE}
+install.packages(tidyverse) # put the quotes in install.packages()
+library(tidyverse) #no quotes required in library()
+```
+
+
+# Reading files
+
+**Always** prefer the `tidyverse` version that directly returns a tibble and better reads the column names:
+
+
+| file    | Base R    | tidyverse  |
+|:---:|:---:|:---:|
+| .csv    |  `read.csv()`{.R}   |  `read_csv()`{.R}   |
+| .tsv    |  `read.tsv()`{.R}   |  `read_tsv()`{.R}   |
+| .txt/.dat (space separation)    |  `read.table()`{.R}   |  `read_table2()`{.R}   |
+
+
+```r
+confirmed_raw <- tibble(read.csv(url("https://....")))
+colnames(confirmed_raw) <- gsub("X","",names(confirmed_raw), fixed = TRUE)
+# REPLACE WITH
+confirmed_raw <- read_csv("https://....")
+```
+
+# Changing a variable
+
+
+Prints the results but **no change** to the variable `df`:
+```r
+df %>% filter(x>0)
+```
+
+**Changes** `df`:
+```r
+df <- df %>% filter(x>0)
+```
+
+# Functions
+
+
+Functions return **the last thing that is called**.
+
+```r
+myfunc <- function(x){
+    y <- x^2
+}#returns nothing
+myfunc <- function(x){
+    y <- x^2
+    y
+}#returns y
+myfunc <- function(x){
+    y <- x^2
+    return(y)
+}#returns y
+myfunc <- function(x){
+    y <- x^2
+    if(x>1){
+        y+2
+    }
+    z <- x+y
+    z
+}#returns z
+myfunc <- function(x){
+    y <- x^2
+    if(x>1){
+        return(y+2) #stops here
+    }
+    z <- x+y
+    z
+}#returns y+2 or z depending on x
+```
+
+So to make a function returning operations on a data.frame, you can do this (but see how **you still have to save it**):
+
+```{r}
+myfunc <- function(df, min){
+    df %>% filter(x > min)
+}
+df <- tibble(x=-2:2)
+df2 <- myfunc(df, 0)
+df
+df2
+```
+
+
+
+
+# Hardcoding
+
+**Do not** do stuff like that :
+
+```r
+# Remove the lines from the Diamond Princess
+df <- df[-89,]
+# Data for cases above the minimum in China
+alldata <- alldata %>% filter(confirmed >=521 )
+# Where does this 521 value come from ???
+```
+
+But **always** prefer explicit operations:
+
+```r
+#Remove the lines from the Diamond Princess
+df <- df %>% filter(country!="Diamond Princess")
+# Data for cases above the minimum in China
+minChina <- alldata %>% 
+                filter(country == 'China') %>% 
+                select(confirmed) %>% 
+                min()
+alldata <- alldata %>% filter(confirmed >= minChina)
+```

@@ -124,6 +124,7 @@ alldata<- cbind(confirmed,deaths)
 alldata<-alldata[,-c(4,5)]
 colnames(alldata)<- c("country","date","confirmed","deaths")
 
+
 ##finding the new deaths and the new cases
 alldata$newcases<-lag(lead(alldata$confirmed,1)-alldata$confirmed)
 alldata$newcases[alldata$newcases<0]<-0
@@ -267,16 +268,18 @@ subdata<- tibble(alldata)%>%
             )
 d %>% ggplot(aes(x=x, y=y, color=factor(T))) + 
     geom_line()
-
+library(minpack.lm)
 d_fitted <- d %>% 
     nest(data = -T) %>%
-    mutate(fit = purrr::map(data, ~ nls(data = .,
-                                y~(A(1+e^(-B*x))), 
-                                start=list(A=510, B=1)
+    mutate(fit = purrr::map(data, ~ nlsLM(data = .,
+                                y~(A*(1+exp(-B*x))), 
+                                start=list(A=10, B=.1)
                                 )),
            tidied = purrr::map(fit, tidy),
            augmented = purrr::map(fit, augment)
           )
+x <- seq(-10, 10,.1)
+plot(x, 1+exp(x))
 d_fitted
 d_fitted %>% 
   unnest(augmented)

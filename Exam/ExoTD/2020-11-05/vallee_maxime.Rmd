@@ -51,7 +51,8 @@ library(lubridate)
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
 urlConfirmed <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv")
 urlDeaths <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv")
-
+Confirmed_raw <- read_csv("time_series_covid19_confirmed_global.csv")
+Death_raw<- read_csv("time_series_covid19_deaths_global.csv")
 ```
 
 - Using successive operations with the pipe operator `%>%`{.R} create a function `tidyfy_jhh(df, name)`{.R}, that, given a tibble `df` (_i.e._, the data from JHH we just loaded), will:
@@ -60,36 +61,27 @@ urlDeaths <- read_csv("https://raw.githubusercontent.com/CSSEGISandData/COVID-19
     + Remove the columns from `state`, `Lat` and `Long`
     + Make the table tidy by having 3 columns : `country`, `date` and `count`
     + Remove any duplicated lines
-    + Using the `mdy()`{.R} function from the `lubridate` package, convert the `date` column to a R Date format
+    + Using the ` `{.R} function from the `lubridate` package, convert the `date` column to a R Date format
     + Some countries appear several times as their numbers are separated by provinces or states. Summarize the counts per country and per date as the total number of cases per country and per day. 
         + Give this column the name of the type of case we look at (confirmed or deaths, string that id provided in the `name` parameter of the function `tidyfy_jhh(df, name)`{.R}. For this, use the notation `summarize(!!sym(name):= your_result_here)`{.R} to tell R that `name` should be used as a column name)
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
-tidyfy_jhh(df, name) %>%
-
-urlConfirmed <- rename(urlConfirmed, state="Province/State", country="Country/Region")
-urlDeaths <- rename(urlDeaths, state="Province/State", country="Country/Region")
-
-urlConfirmed <- urlConfirmed[-103,-c(1,3,4)]
-urlDeaths <- urlDeaths[-103,-c(1,3,4)]
-
-urlConfirmed %>% 
-   pivot_longer(-"Country/Region",
+library(dplyr)
+tidyfy_jhh <- function(df, name) {
+  df %>%
+    rename(state="Province/State", country="Country/Region") %>%
+    filter(!country=="Diamond Princess") %>%
+    urlConfirmed[,-c(1,3,4)] %>%
+    pivot_longer(col=-country,
                names_to= "Dates",
-               values_to= "Count")
-urlDeaths %>% 
-  pivot_longer(-"Country/Region",
-               names_to= "Dates",
-               values_to= "Count")
+               values_to= "Count") %>% 
+    unique(urlConfirmed) %>%
+    mutate(date=myd(date)) %>%
+    group_by(country, date) %>%
+    summarize(!!sym(name):= sum(your_result_here))
+}
 
-urlConfirmed %>% unique(urlConfirmed)
-urlDeaths %>% unique(urlDeaths)
-
-help(mdy)
-example("mdy")
-
-mdy(urlConfirmed)
-mdy(urlDeaths)
+df
 
 
 ```
@@ -97,7 +89,8 @@ mdy(urlDeaths)
 - Apply this function to the raw tibbles to get tidy `confirmed` and `deaths` tibbles.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
-
+Confirmed <- tidyfy_jhh(Confirmed_raw, Confirmed)
+Deaths <- tidyfy_jhh(Death_raw, Deaths)
 ```
 
 > In case you didn't manage to get there, here are the csv files containing:
@@ -113,28 +106,29 @@ Now, join these three tibbles in `alldata`, and successively:
 - Filter rows to have only countries for which we have at least one week of data
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
+library(tidyverse)
 deaths <- read_csv("covid_deaths.csv")
 confirmed <- read_csv("covid_confirmed.csv")
 alldata <- inner_join(deaths, confirmed)
 
-help(lag)
-example(lag)
+#help(lag)
+#example(lag)
 
-alldata %>%
+alldata <- alldata %>%
   mutate(lagdeath = lag(deaths),
          newdeaths = deaths - lagdeath) %>%
-  select(lagdeath, deaths, newdeaths)
+  select(-lagdeath)
 
-alldata %>%
+alldata <- alldata %>%
   mutate(lagconf = lag(confirmed),
          newcases = confirmed - lagconf) %>%
-  select(lagconf, confirmed, newcases)
-colnames(DF)[min.col(DF)]
+  select(-lagconf)
 
-alldata %>% by_group(country)  %>% mutate(day=row_number())
+alldata <- alldata %>% filter(confirmed>521)
 
-alldata %>%
-  mutate(day =date %>% filter(day>7))
+alldata <- alldata %>% group_by(country)  %>% mutate(day=row_number())
+
+alldata <- alldata %>% filter(day>7)
 ```
 
 > In case you didn't manage to get there, [here is a csv file](Data/covid_alldata.csv) containing `alldata` so that you can continue with the exercise.
@@ -147,8 +141,13 @@ alldata %>%
     - Do the plot using linear scale, then a log scale
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=.8}
+library(tidyverse)
 library(ggplot2)
 library(broom)
+library(patchwork)
+#install.packages(ggrepel)
+#library(ggrepel)
+
 covid <-read_csv("covid_alldata.csv")
 covid19 <- covid %>% filter(country %in% c("Algeria","China","France","Greece","Japan"))
 
@@ -156,19 +155,18 @@ x <- covid19 %>%
   ggplot(aes(x = day, y = confirmed, color=country))+
         geom_line(size=1)+
         theme_bw()
-x
 
 y <- covid19 %>%
   ggplot(aes(x = day, y = deaths, color=country))+
         geom_line(size=1)+
         theme_bw()
-y
+
+x + y
 
 u <- covid19 %>%
   ggplot(aes(x = day, y = confirmed, color=country))+
         geom_line(size=1)+
         theme_bw()+
-  scale_x_log10("day")+
   scale_y_log10("confirmed")
 u
 
@@ -176,7 +174,6 @@ v <- covid19 %>%
   ggplot(aes(x = day, y = deaths, color=country))+
         geom_line(size=1)+
         theme_bw()+
-  scale_x_log10("day")+
   scale_y_log10("deaths")
 v
 
@@ -188,12 +185,24 @@ v
     + Is there anything wrong?
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.7}
-covid19x <- covid19 %>% mutate(ratio=(deaths/confirmed))
-w <- covid19x %>%
-  ggplot(aes(x = day, y = ratio, color=country))+
-        geom_line(size=1)+
-        theme_bw()
+library(tidyverse)
+covid <-read_csv("covid_alldata.csv")
+
+covid <- covid %>%
+  mutate(ratio = deaths/confirmed)
+covid <- covid %>% group_by(country) %>%
+  summarise(mratio=mean(ratio))
+
+w <- covid %>%
+  ggplot(aes(x=reorder(country, -(mratio)), 
+                   y=mratio, 
+                   fill=mratio)) +
+  geom_bar(stat="identity") +
+  ggtitle("ratio per country")+
+            labs(x="country", y="ratio")
 w
+
+w + coord_flip()
 ```
 
 - To better see the effect of confinement regulation, it's probably more interesting to plot the number of new confirmed cases. 
@@ -201,7 +210,22 @@ w
     - Add a smooth line to smooth out the effect or irregular numbers reporting. You can play with the `span` parameter to have a more or less smooth curve.
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.5}
+library(broom)
+library(ggplot2)
+covid <-read_csv("covid_alldata.csv")
 
+covid2 <- covid %>%
+  filter(country %in% c("France", "Italy"))
+
+m <- covid2 %>%
+  ggplot(aes( x=day, y=newcases, color=country)) +
+  geom_bar(stat="identity") +
+  ggtitle("newcases per day")+
+            labs(x="day", y="newcases")
+
+m + geom_vline(xintercept=11, color = "red") +
+  geom_vline(xintercept=4, color = "green") +
+  geom_smooth()
 ```
 
 
@@ -210,7 +234,11 @@ w
 + Load the library `broom` ([vignette](https://cran.r-project.org/web/packages/broom/vignettes/broom.html)). `broom` allows tidying the output of fit functions such as `lm()` or `nls()`, taking the text output and making it into a tibble. Example:
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-
+library(broom)
+library(tidyverse)
+library(ggplot2)
+theme_set(theme_bw())
+#??
 ```
 
 Here, by combining `nest()` and `purrr::map()`, we can apply the fit to each group. The result is a tibble containing the fit result for each group. Then, using `broom`'s function `augment()` and `tidy()`, we respectively get the fitted values and residues, and the fitting parameters.
