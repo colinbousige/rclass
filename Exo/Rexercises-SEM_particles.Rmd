@@ -97,8 +97,8 @@ readfile <- function(filename){
     UNIT <- unlist(strsplit(filename,"_"))
     UNIT <- gsub(".csv","",UNIT[length(UNIT)])
     read_csv(filename) %>% 
-        select(X,Y,Area) %>% 
-        rename(x="X",y="Y",area="Area") %>% 
+        rename_all(tolower) %>% 
+        select(x,y,area) %>% 
         mutate(file=gsub("Data_SEM/","",filename)) %>% 
         separate(file, c("sample","number","unit"), sep="_") %>% 
         select(-unit) %>% 
@@ -124,7 +124,7 @@ particles <- tibble(file=flist) %>%
 write_tsv(particles, "Data_SEM/particles.dat")
 ```
 
-> In case you didn't manage to get there, [here](Data_SEM/particles.tsv) is the `particles` tibble (it doesn't contain the units though as you can't save it in a text file.)
+> In case you didn't manage to get there, [here](Data_SEM/particles.dat) is the `particles` tibble (it doesn't contain the units though as you can't save it in a text file.)
 
 
 # Plotting and analysis
@@ -175,7 +175,7 @@ particles_ave %>%
         facet_grid(T~sub_age)+
         labs(x     = "Time",
              y     = "`Average particle diameter`",
-             color = "Substrate thickness")+
+             color = "Substrate thickness [nm]")+
         theme(legend.position = "top")+
         scale_y_unit(unit="nm")
 ```
@@ -192,7 +192,15 @@ particles_ave %>%
     mutate(fit    = map(data, ~lm(data=., diam~time, weights = 1/sddiam)),
            tidied = map(fit, tidy)) %>% 
     unnest(tidied) %>% 
-    select(sub_thick,sub_age,T,term,estimate)
+    select(sub_thick,sub_age,T,term,estimate,std.error) %>% 
+    mutate(term=gsub("\\(Intercept\\)","y0",term)) %>% 
+    mutate(term=gsub("time","slope",term)) %>% 
+    pivot_wider(names_from = term, 
+               values_from = c(estimate,std.error)) %>% 
+    set_names(~ str_to_lower(.) %>%
+                str_replace_all("estimate_","") %>% 
+                str_replace_all("std.error_","d")) %>% 
+    select(sub_thick,sub_age,t,y0,dy0,slope,dslope)
 ```
 
 ## Density and ordering analysis

@@ -81,6 +81,7 @@ In the above example, we define `output$distPlot`{.R} as a `renderPlot()`{.R} fu
 
 - [Input](#input)
     - [Buttons](#buttons)
+    - [Checkbox](#checkbox)
     - [Text/numeric](#textnumeric)
     - [Slider](#slider)
     - [File](#file)
@@ -116,6 +117,17 @@ observeEvent(input$button_name, {
 some_function <- eventReactive(input$button_name, {
                                # do something
                                })
+```
+
+##### Checkbox
+
+```r
+# # # # # # # # # 
+# In ui:
+checkboxInput("checkbox_name", "Text to display", value=FALSE)
+# # # # # # # # # 
+# In server:
+input$checkbox_name #TRUE or FALSE
 ```
 
 <a id="textnumeric"></a>
