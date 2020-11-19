@@ -27,11 +27,11 @@ In these exercises we will see the power of the libraries `ggplot2` and `plotly`
 For this, we will need to gather the data:
 
 - From [Gapminder](https://www.gapminder.org/data/), data per country and per year from 1800 to 2018:
-    - [The children per woman total fertility](Data_Religion/children_per_woman_total_fertility.csv)
-    - [The income per capita](Data_Religion/income_per_person_gdppercapita_ppp_inflation_adjusted.csv)
-    - [The total population](Data_Religion/population_total.csv)
+    - [The children per woman total fertility](Data/children_per_woman_total_fertility.csv)
+    - [The income per capita](Data/income_per_person_gdppercapita_ppp_inflation_adjusted.csv)
+    - [The total population](Data/population_total.csv)
 - From the [PEW research center](https://www.pewforum.org/2015/04/02/religious-projection-table/2010/percent/all/), data per country:
-    + [The religious composition](Data_Religion/religion.csv)
+    + [The religious composition](Data/religion.csv)
 
 ------- 
 
@@ -44,10 +44,10 @@ The first thing to do is to load and regroup all these datasets into a single on
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 library(tidyverse)
 library(readxl)
-children <- read_csv("Data_Religion/children_per_woman_total_fertility.csv")
-income   <- read_csv("Data_Religion/income_per_person_gdppercapita_ppp_inflation_adjusted.csv")
-pop      <- read_csv("Data_Religion/population_total.csv")
-religion <- read_csv("Data_Religion/religion.csv")
+children <- read_csv("Data/children_per_woman_total_fertility.csv")
+income   <- read_csv("Data/income_per_person_gdppercapita_ppp_inflation_adjusted.csv")
+pop      <- read_csv("Data/population_total.csv")
+religion <- read_csv("Data/religion.csv")
 ```
 
 2. To reproduce the chart on the video, we need to determine the dominant religion in each country. In the `religion` dataset, add a column `Religion` that will give the name of the dominant religion for each country. For this, you might want to use this method that returns the name of the column containing the maximum of each row of a `data.frame`:
@@ -125,7 +125,7 @@ You should end up with a dataset like this one:
 dat
 ```
 
-In case you struggled to get there, [download this dataframe here in order to be able to continue](Data_Religion/dat.csv).
+In case you struggled to get there, [download this dataframe here in order to be able to continue](Data/dat.csv).
 
 Now our dataset is ready, let's plot it.
 

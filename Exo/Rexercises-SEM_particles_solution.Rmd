@@ -37,7 +37,7 @@ Some Ni-covered Si wafers were prepared before the first confinement (substrates
 To perform this study, we prepared samples from various substrates at various temperatures and during various times. The substrates are then observed with SEM, and several pictures are taken to increase the statistics. These pictures are then analyzed with [ImageJ](https://imagej.net/Welcome), as shown on Figure \@ref(fig:SEMimages). 
 
 ```{r SEMimages, echo=FALSE, message=FALSE, fig.cap="Typical SEM image of Ni nanoparticles: from the raw image to particle analysis", fig.align="center", out.width="33%", fig.show='hold'}
-myimages <- c("Data_SEM/ML26_01.png", "Data_SEM/ML26_01-threshold.png", "Data_SEM/ML26_01-particles.png")
+myimages <- c("Data/ML26_01.png", "Data/ML26_01-threshold.png", "Data/ML26_01-particles.png")
 knitr::include_graphics(myimages)
 ```
 
@@ -59,10 +59,10 @@ theme_set(theme_bw()+
                 ))
 ```
 
-- Find all csv files in the `Data_SEM` folder and store them in `flist`.
+- Find all MLxx_xx_cc.csv files in the `Data` folder and store them in `flist`.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE}
-flist <- list.files(path="Data_SEM", pattern=".csv")
+flist <- list.files(path="Data", pattern="m.csv")
 ```
 
 - Read the `sample.xlsx` file that contain all characteristics of the various samples, such as their temperature, substrate type, time of reaction, and store the result in `samples`. 
@@ -71,7 +71,7 @@ flist <- list.files(path="Data_SEM", pattern=".csv")
     - Give the columns their proper unit when applicable (refer to [this example](https://lmi.cnrs.fr/r/working-with-units.html))
 
 ```{r include=params$solution, warning = FALSE, message=FALSE}
-samples <- read_excel("Data_SEM/sample.xlsx") %>% 
+samples <- read_excel("Data/sample.xlsx") %>% 
     rename(sample    = "name",
            T         = "Temperature (°C)",
            time      = "Time (minutes)",
@@ -100,7 +100,7 @@ readfile <- function(filename){
     read_csv(filename) %>% 
         rename_all(tolower) %>% 
         select(x,y,area) %>% 
-        mutate(file=gsub("Data_SEM/","",filename)) %>% 
+        mutate(file=gsub("Data/","",filename)) %>% 
         separate(file, c("sample","number","unit"), sep="_") %>% 
         select(-unit) %>% 
         mutate(x        = set_units(x, UNIT, mode = "standard"),
@@ -108,24 +108,24 @@ readfile <- function(filename){
                area     = set_units(area, paste0(UNIT,"*",UNIT), mode = "standard"),
                diameter = sqrt(4*area/pi))
 }
-readfile("Data_SEM/ML16_02_um.csv")
-readfile("Data_SEM/ML16_04_nm.csv")
+readfile("Data/ML16_02_um.csv")
+readfile("Data/ML16_04_nm.csv")
 ```
 
 - Using `readfile()`{.R} that you just defined, read all csv files and store them into a tidy tibble called `particles`. **Do not use a for loop to do so.** Join this table with the `samples` one. You will see that, since we attributed units to some columns, all data are automatically converted to a single unit.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE}
 particles <- tibble(file=flist) %>% 
-    mutate(data = map(file, ~readfile(file.path("Data_SEM",.)))) %>% 
+    mutate(data = map(file, ~readfile(file.path("Data",.)))) %>% 
     unnest(data) %>% 
     inner_join(samples)
 ```
 
 ```{r include=FALSE, warning = FALSE, message=FALSE}
-write_tsv(particles, "Data_SEM/particles.dat")
+write_tsv(particles, "Data/particles.dat")
 ```
 
-> In case you didn't manage to get there, [here](Data_SEM/particles.dat) is the `particles` tibble (it doesn't contain the units though as you can't save it in a text file.)
+> In case you didn't manage to get there, [here](Data/particles.dat) is the `particles` tibble (it doesn't contain the units though as you can't save it in a text file.)
 
 
 # Plotting and analysis

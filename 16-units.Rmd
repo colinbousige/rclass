@@ -1,4 +1,6 @@
-# Working with units
+# Working with units and experimental errors
+
+## Working with units
 
 It is easy to work with units in *R* thanks to the package `units` (see [vignette](https://r-quantities.github.io/units/articles/measurement_units_in_R.html#handling-data-with-units-in-r-the-units-package-1)).
 
@@ -9,16 +11,19 @@ Here is the gist of it:
 ```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
 # Load the 'units' library
 library(units)
-t <- seq(.1,1,.1)
+t <- seq(0.1,1,length=3)
 # t here has no unit
 t; units(t)
 # attribute a unit, here 'seconds':
-t <- set_units(t,"s") 
+t <- set_units(t, "s") 
 units(t)
 t
 # automatic units conversion
-d <- set_units(1:10,"m")
-d/t
+d1    <- set_units(seq(1,2,length=3),"m")
+(tib1 <- tibble(t=t,d=d1,speed=d1/t))
+d2    <- set_units(seq(0.1,.3,length=3),"cm")
+(tib2 <- tibble(t=t,d=d2,speed=d2/t))
+bind_rows(tib1,tib2)
 # You can convert between units systems
 set_units(d/t,"km/h")
 T <- set_units(1,"fs")
@@ -42,10 +47,69 @@ library(ggforce) # to have ggplot work with units
 p <- starwars %>% 
     mutate(height = set_units(height,"cm"),
            mass   = set_units(mass,"kg")) %>% 
+    filter(sex!="hermaphroditic") %>%
     ggplot(aes(x=height, y=mass, color=sex))+
         geom_point(size=2)+
         labs(x="Height", y="Mass")
 p
 p + scale_x_unit(unit = 'inches') +
     scale_y_unit(unit = 'pounds')
+```
+
+
+## Working with experimental errors
+
+When working in experimental science, you have to account for measurement errors and error propagation all along your data treatment.
+This is made really easy thanks to the [`quantities` package](https://github.com/r-quantities/quantities) that gathers the `error` and `units` packages. Most importantly, this allows you **propagating** the errors in the proper way. So, you input your experimental error once, and you don't have to think about it anymore. Neat, isn't it?
+
+Here is the gist of it:
+
+```{r warning=FALSE, message=FALSE}
+library(quantities)
+options(errors.notation="plus-minus", errors.digits=4)
+a <- set_errors(1, 0.1)
+b <- set_errors(1, 0.1)
+a+b
+a-b
+a*b
+a^3
+options(errors.notation="parenthesis", errors.digits=1)
+# Lets consider a circuit with 2 resistors in parallel
+# measurement of voltages U1 and U2 with 10% errors
+U1 <- set_quantities(10, "V", 10*.1); U1
+U2 <- set_quantities(1, "kV", 1*.1); U2
+# measurement of currents I1 and I2 with 5% error
+I1 <- set_quantities(5, "mA", 5*.05); I1
+I2 <- set_quantities(1, "A", 1*.05); I2
+# Compute the equivalent resistance from U=R*I and 1/Req=1/R1+1/R2
+R1 <- U1/I1; R1
+R2 <- U2/I2; R2
+Req <- R1*R2/(R1+R2); Req
+Req <- set_units(Req, "ohm"); Req
+options(errors.notation="plus-minus", errors.digits=4)
+Req
+errors_min(Req)
+errors_max(Req)
+```
+
+It thus becomes easy to plot the error bars from your experimental data:
+
+```{r warning=FALSE, message=FALSE}
+options(errors.notation="parenthesis", errors.digits=1)
+starwars %>% 
+    mutate(height=set_quantities(height,"cm",height*.05),
+           mass=set_quantities(mass,"kg",mass*.05)
+           )
+starwars %>% 
+    mutate(height=set_quantities(height,"cm",height*.05),
+           mass=set_quantities(mass,"kg",mass*.05)
+           ) %>% 
+    filter(sex!="hermaphroditic") %>% 
+    ggplot(aes(x=height, y=mass, color=sex))+
+        geom_point(size=2)+
+        labs(x="Height", y="Mass")+
+        geom_errorbar(aes(ymin=errors_min(mass),
+                          ymax=errors_max(mass)))+
+        geom_errorbarh(aes(xmin=errors_min(height),
+                           xmax=errors_max(height)))
 ```
