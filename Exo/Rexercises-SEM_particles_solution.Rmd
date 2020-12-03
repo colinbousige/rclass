@@ -112,13 +112,14 @@ readfile("Data/ML16_02_um.csv")
 readfile("Data/ML16_04_nm.csv")
 ```
 
-- Using `readfile()`{.R} that you just defined, read all csv files and store them into a tidy tibble called `particles`. **Do not use a for loop to do so.** Join this table with the `samples` one. You will see that, since we attributed units to some columns, all data are automatically converted to a single unit.
+- Using `readfile()`{.R} that you just defined, read all csv files and store them into a tidy tibble called `particles`. **Do not use a for loop to do so.** Join this table with the `samples` one. You will see that, since we attributed units to some columns, all data are automatically converted to a single unit. Filter the data for diameters lower than 40 µm as some very large particles were detected in the image processing that are actually not particles.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE}
 particles <- tibble(file=flist) %>% 
     mutate(data = map(file, ~readfile(file.path("Data",.)))) %>% 
     unnest(data) %>% 
-    inner_join(samples)
+    inner_join(samples) %>% 
+    filter(diameter<set_units(40,"um"))
 ```
 
 ```{r include=FALSE, warning = FALSE, message=FALSE}
@@ -132,7 +133,7 @@ write_tsv(particles, "Data/particles.dat")
 
 ## Size analysis
 
-- Now, plot the histogram of all particle diameters, with a fill color depending on the time (you need to convert time to a factor), and with a grid showing substrate age vs substrate thickness (thickness on the columns). Put the legend on top of the graph, and add some transparency to your colors.
+- Now, plot the histogram of all particle diameters, with a fill color depending on the time (you need to convert time to a factor), and with a grid showing temperature vs. substrate age and thickness. Put the legend on top of the graph, and add some transparency to your colors.
 - In fact, I usually prefer to plot it using `geom_density()`{.R} which is basically an histogram convoluted with a Gaussian distribution of bandwidth `bw`. This allows for smoother graphs. Make this plot and play with the `bw` parameter.
 - Convert -- *with ggplot* -- the unit of the particle diameters to nanometers or any other unit you want.
 
@@ -143,9 +144,11 @@ particles %>%
         labs(x    = "`Particle Diameter`",
              y    = "Density [arb. units]",
              fill = "Time [min]")+
-        facet_grid(sub_age~sub_thick, scales="free_y")+
+        facet_grid(reorder(paste(T,"K"),T)~
+                   reorder(paste(sub_thick,"nm Ni -",sub_age),sub_thick), 
+                   scales="free_y")+
         theme(legend.position = "top")+
-        scale_x_unit(unit="nm")
+        scale_x_unit(unit="nm", limits=c(0,300))
 ```
 
 - Now, store in `particles_ave` the average particle diameter and its standard deviation per substrate thickness and age, time and temperature of reaction. You will note that `mean()`{.R} keeps the unit of vectors while `sd()`{.R} loses it. Make sure that the standard deviation column has the proper unit (use `units(a) <- units(b)`{.R}).
@@ -154,8 +157,7 @@ particles %>%
 particles_ave <- particles %>% 
     group_by(sub_thick, sub_age, time, T) %>% 
     summarise(diam   = mean(diameter),
-              sddiam = sd(diameter)
-              )
+              sddiam = sd(diameter))
 units(particles_ave$sddiam) <- units(particles_ave$diam)
 ```
 

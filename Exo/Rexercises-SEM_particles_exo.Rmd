@@ -1,6 +1,5 @@
 ---
 title : "R Exercises - Particle analysis from SEM images"
-author: Your NAME
 date  : "`r Sys.Date()`"
 output: 
     bookdown::html_document2:
@@ -34,7 +33,7 @@ Some Ni-covered Si wafers were prepared before the first confinement (substrates
 To perform this study, we prepared samples from various substrates at various temperatures and during various times. The substrates are then observed with SEM, and several pictures are taken to increase the statistics. These pictures are then analyzed with [ImageJ](https://imagej.net/Welcome), as shown on Figure \@ref(fig:SEMimages). 
 
 ```{r SEMimages, echo=FALSE, message=FALSE, fig.cap="Typical SEM image of Ni nanoparticles: from the raw image to particle analysis", fig.align="center", out.width="33%", fig.show='hold'}
-myimages <- c("Data_SEM/ML26_01.png", "Data_SEM/ML26_01-threshold.png", "Data_SEM/ML26_01-particles.png")
+myimages <- c("Data/ML26_01.png", "Data/ML26_01-threshold.png", "Data/ML26_01-particles.png")
 knitr::include_graphics(myimages)
 ```
 
@@ -50,8 +49,8 @@ In this exercise, we are going to treat the tables obtained from ImageJ: these t
 
 - Find all MLxx_xx_cc.csv files in the `Data` folder and store them in `flist`.
 
-```{r warning = FALSE, message=FALSE}
-
+```{r include=params$solution, warning = FALSE, message=FALSE}
+flist <- list.files(path="Data", pattern="m.csv")
 ```
 
 - Read the `sample.xlsx` file that contain all characteristics of the various samples, such as their temperature, substrate type, time of reaction, and store the result in `samples`. 
@@ -77,20 +76,22 @@ In this exercise, we are going to treat the tables obtained from ImageJ: these t
 
 ```
 
-- Using `readfile()`{.R} that you just defined, read all csv files and store them into a tidy tibble called `particles`. **Do not use a for loop to do so.** Join this table with the `samples` one. You will see that, since we attributed units to some columns, all data are automatically converted to a single unit.
+- Using `readfile()`{.R} that you just defined, read all csv files and store them into a tidy tibble called `particles`. **Do not use a for loop to do so.** Join this table with the `samples` one. You will see that, since we attributed units to some columns, all data are automatically converted to a single unit. Filter the data for diameters lower than 40 µm as some very large particles were detected in the image processing that are actually not particles.
 
 ```{r warning = FALSE, message=FALSE}
 
 ```
 
-> In case you didn't manage to get there, [here](Data_SEM/particles.tsv) is the `particles` tibble (it doesn't contain the units though as you can't save it in a text file.)
+
+
+> In case you didn't manage to get there, [here](Data/particles.dat) is the `particles` tibble (it doesn't contain the units though as you can't save it in a text file.)
 
 
 # Plotting and analysis
 
 ## Size analysis
 
-- Now, plot the histogram of all particle diameters, with a fill color depending on the time (you need to convert time to a factor), and with a grid showing substrate age vs substrate thickness (thickness on the columns). Put the legend on top of the graph, and add some transparency to your colors.
+- Now, plot the histogram of all particle diameters, with a fill color depending on the time (you need to convert time to a factor), and with a grid showing temperature vs. substrate age and thickness. Put the legend on top of the graph, and add some transparency to your colors.
 - In fact, I usually prefer to plot it using `geom_density()`{.R} which is basically an histogram convoluted with a Gaussian distribution of bandwidth `bw`. This allows for smoother graphs. Make this plot and play with the `bw` parameter.
 - Convert -- *with ggplot* -- the unit of the particle diameters to nanometers or any other unit you want.
 
@@ -169,10 +170,6 @@ gofr <- function(x, y, dr=.2, Rmax=10){
 ```{r warning = FALSE, message=FALSE}
 
 ```
-
-
-
-
 
 
 

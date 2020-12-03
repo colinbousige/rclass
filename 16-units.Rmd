@@ -25,11 +25,14 @@ d2    <- set_units(seq(0.1,.3,length=3),"cm")
 (tib2 <- tibble(t=t,d=d2,speed=d2/t))
 bind_rows(tib1,tib2)
 # You can convert between units systems
-set_units(d/t,"km/h")
+set_units(d1/t,"km/h")
 T <- set_units(1,"fs")
 set_units(1/T,"THz")
-T1 <- set_units(1,"fs");T2 <- set_units(1,"ps");
-units(T2) <- units(T1)
+T1 <- set_units(1,"fs"); 
+T2 <- set_units(1,"ps");
+T2
+units(T2) <- "ns"; T2
+units(T2) <- units(T1); T2
 T2
 UNIT <- "m"
 set_units(1:10, UNIT)
@@ -88,6 +91,7 @@ Req <- R1*R2/(R1+R2); Req
 Req <- set_units(Req, "ohm"); Req
 options(errors.notation="plus-minus", errors.digits=4)
 Req
+errors(Req)
 errors_min(Req)
 errors_max(Req)
 ```
