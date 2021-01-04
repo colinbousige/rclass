@@ -63,7 +63,7 @@ Murnaghan<- function(P,K,Kp=4){
 #Storing the files in flist variable
 pattern1 = c("PY02_","PY02bis_.dat")
 flist<-list.files(pattern="PY02",
-                  path="C:\\Users\\Lubna\\Downloads\\Datas")  
+                  path="Data")  
 flist
 
 
@@ -75,7 +75,7 @@ flist
 #rock stores the files with the name "PY02_pressures.dat"and "PY02bis_pressures.dat"
 rock<-tibble()
 for (file in flist){
-  d <- read_table2(file.path("Datas",file), col_names=FALSE)
+  d <- read_table2(file.path("Data",file), col_names=FALSE)
   names(d)<-c("run","P.kbar")
   d<-d%>%
      mutate(samples=file)
@@ -103,7 +103,7 @@ x-min(x)/max(x)-min(x)
 ```{r}
 data<-tibble()
 for (file in flist){
-  d <- read_table2(file.path("Datas",file), col_names=FALSE)
+  d <- read_table2(file.path("Data",file), col_names=FALSE)
    d<-d%>%
      mutate(file)
   data<-rbind(data,d)

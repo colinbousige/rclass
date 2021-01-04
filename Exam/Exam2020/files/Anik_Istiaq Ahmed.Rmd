@@ -69,9 +69,9 @@ flist
 3. Read and store the two files containing the pressures of each run, `PY02_pressures.dat`{.R} and `PY02bis_pressures.dat`{.R}. Combine these two tables into a single tidy one called `Pressures`{.R}, containing three columns `run`{.R}, `P.kbar`{.R} and `sample`{.R} (`sample`{.R} being either `PY02` or `PY02bis`).
 
 ```{r}
-PY02_pressures<-read.table("/NEW/Data/PY02_pressures.dat",header=TRUE)
+PY02_pressures<-read.table("Data/PY02_pressures.dat",header=TRUE)
 PY02_pressures
-PY02bis_pressures<-read.table("/NEW/Data/PY02bis_pressures.dat",header=TRUE)
+PY02bis_pressures<-read.table("Data/PY02bis_pressures.dat",header=TRUE)
 PY02bis_pressures
 library(dplyr)
 PY02_pressures_tidy<- PY02_pressures%>%

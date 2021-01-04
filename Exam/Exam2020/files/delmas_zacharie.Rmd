@@ -53,8 +53,8 @@ flist <- list.files(pattern = "PY", path = "data")
 3. Read and store the two files containing the pressures of each run, `PY02_pressures.dat`{.R} and `PY02bis_pressures.dat`{.R}. Combine these two tables into a single tidy one called `Pressures`{.R}, containing three columns `run`{.R}, `P.kbar`{.R} and `sample`{.R} (`sample`{.R} being either `PY02` or `PY02bis`).
 
 ```{r}
-Py0 <- read.delim("PY02_pressures.dat")
-Py1 <- read.delim("PY02bis_pressures.dat")
+Py0 <- read.delim("Data/PY02_pressures.dat")
+Py1 <- read.delim("Data/PY02bis_pressures.dat")
 
 Pressures <- Py0 %>%
    full_join(Py1) %>%

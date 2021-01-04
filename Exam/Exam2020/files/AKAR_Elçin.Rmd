@@ -131,23 +131,23 @@ norm01 <- function(x){
 
 ```{r include=FALSE, warning=FALSE, message=FALSE}
 #read_table2 is giving error everywhere so I put comment.
-#pospeak <- read_table2("sample run        Q          dQ P.kbar     P
-   #PY02   1 1.802587 0.009012934   0.00 0.000
-   #PY02   2 1.840981 0.009204904   2.40 0.240
-   #PY02   3 1.875535 0.009377675   8.80 0.880
-   #PY02   4 1.875535 0.009377675  15.90 1.590
-   #PY02   5 1.890893 0.009454463  27.75 2.775
-   #PY02   6 1.929286 0.009646432  36.00 3.600
-   #PY02   7 1.936965 0.009684826  40.00 4.000
-   #PY02   8 1.971520 0.009857598  51.00 5.100
-   #PY02   9 1.902411 0.009512053  23.00 2.300
-   #PY02  10 1.867856 0.009339282   7.50 0.750
-   #PY02  11 1.802587 0.009012934   0.10 0.010
-#PY02bis   1 1.821784 0.009108919   0.00 0.000
-#PY02bis   2 1.883214 0.009416069   3.00 0.300
-#PY02bis   3 1.883214 0.009416069  16.00 1.600
-#PY02bis   4 1.933126 0.009665629  38.00 3.800
-#PY02bis   5 1.971520 0.009857598  48.00 4.800")
+pospeak <- read_table2("sample run        Q          dQ P.kbar     P
+   PY02   1 1.802587 0.009012934   0.00 0.000
+   PY02   2 1.840981 0.009204904   2.40 0.240
+   PY02   3 1.875535 0.009377675   8.80 0.880
+   PY02   4 1.875535 0.009377675  15.90 1.590
+   PY02   5 1.890893 0.009454463  27.75 2.775
+   PY02   6 1.929286 0.009646432  36.00 3.600
+   PY02   7 1.936965 0.009684826  40.00 4.000
+   PY02   8 1.971520 0.009857598  51.00 5.100
+   PY02   9 1.902411 0.009512053  23.00 2.300
+   PY02  10 1.867856 0.009339282   7.50 0.750
+   PY02  11 1.802587 0.009012934   0.10 0.010
+PY02bis   1 1.821784 0.009108919   0.00 0.000
+PY02bis   2 1.883214 0.009416069   3.00 0.300
+PY02bis   3 1.883214 0.009416069  16.00 1.600
+PY02bis   4 1.933126 0.009665629  38.00 3.800
+PY02bis   5 1.971520 0.009857598  48.00 4.800")
 ```
 
 
@@ -164,8 +164,8 @@ Using this, add to the `pospeak` tibble the columns `VV0` and `dVV0` containing,
     - Make sure you propagate the errors in a proper way.
 
 ```{r}
-#pospeak %>% mutate(VVO= Murnaghan(0, 1.802587, 4 ),
-                   #DVVO = Q-VVO)
+pospeak %>% mutate(VVO= Murnaghan(0, 1.802587, 4 ),
+                   DVVO = Q-VVO)
 ```
 
 10. Fit the Murnaghan equation of state to the experimental data. Make sure to add an amplitude parameter $A$ (that should be close to 1) to allow for more leeway on the fit. We fix the derivative value at $Kp=4$. The bulk modulus $K$ should be of the order of a few GPa, so work with pressures in GPa.

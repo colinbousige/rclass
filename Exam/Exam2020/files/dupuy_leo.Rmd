@@ -52,7 +52,7 @@ Murnagham <- function(P, K, Kp = 4){
 2. Find in the `Data`{.R} folder all the files containing the experimental diffraction patterns. They are under the form `PY02_Pxx.dat`{.R} or `PY02bis_Pxx.dat`{.R}. Store this list of files in a vector called `flist`{.R}.
 
 ```{r}
-flist <- list.files(path = file.path("C:/Users/leodu/Desktop/Rfile/Dataexam"), pattern = ".dat")
+flist <- list.files(path = file.path("Data"), pattern = ".dat")
 flist <- flist[!(flist %in% c("PY02_pressures.dat","PY02bis_pressures.dat"))]
 
 ```
@@ -60,8 +60,8 @@ flist <- flist[!(flist %in% c("PY02_pressures.dat","PY02bis_pressures.dat"))]
 3. Read and store the two files containing the pressures of each run, `PY02_pressures.dat`{.R} and `PY02bis_pressures.dat`{.R}. Combine these two tables into a single tidy one called `Pressures`{.R}, containing three columns `run`{.R}, `P.kbar`{.R} and `sample`{.R} (`sample`{.R} being either `PY02` or `PY02bis`).
 
 ```{r}
-PYO2 <- read_table2("C:/Users/leodu/Desktop/Rfile/Dataexam/PY02_pressures.dat") %>% mutate(sample = "PY02")
-PYO2bis <- read_table2("C:/Users/leodu/Desktop/Rfile/Dataexam/PY02bis_pressures.dat") %>% mutate(sample = "PY02bis")
+PYO2 <- read_table2("Data/PY02_pressures.dat") %>% mutate(sample = "PY02")
+PYO2bis <- read_table2("Data/PY02bis_pressures.dat") %>% mutate(sample = "PY02bis")
 SUM <- rbind(PYO2,PYO2bis)
 
 ```
@@ -78,7 +78,7 @@ norm01 <- function(x){
 
 ```{r}
 readfile <- function(fille){
-   read_table2(file.path("C:/Users/leodu/Desktop/Rfile/Dataexam",fille), col_names = c("q","int")) %>%
+   read_table2(file.path("Data",fille), col_names = c("q","int")) %>%
       mutate(int_n = norm01(int)) %>%
       mutate(file = fille)
 }

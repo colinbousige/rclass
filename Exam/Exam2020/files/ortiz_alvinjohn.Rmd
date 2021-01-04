@@ -19,7 +19,7 @@ library(tidyverse)
 library(broom)
 theme_bw()
 
-setwd("C:/Users/AJ Ortiz/Desktop/Nanoscale Engineering/R Practices/exam2020/Data")
+
 
 
 
@@ -58,7 +58,7 @@ Murnaghan <- function(df){
 
 ```{r}
 
-flist <- list.files(path="C:/Users/AJ Ortiz/Desktop/Nanoscale Engineering/R Practices/exam2020/Data", pattern="PY02_Pxx.dat")
+flist <- list.files(path="Data", pattern="PY02_Pxx.dat")
 flist
 
 ```
@@ -67,8 +67,8 @@ flist
 
 ```{r}
 
-P1 <- read_table2("C:/Users/AJ Ortiz/Desktop/Nanoscale Engineering/R Practices/exam2020/Data/PY02_pressures.dat")[-c(1),]
-P2 <- read_table2("C:/Users/AJ Ortiz/Desktop/Nanoscale Engineering/R Practices/exam2020/Data/PY02bis_pressures.dat")
+P1 <- read_table2("Data/PY02_pressures.dat")[-c(1),]
+P2 <- read_table2("Data/PY02bis_pressures.dat")
 P1
 P2
 P3 <- rbind(P1,P2)

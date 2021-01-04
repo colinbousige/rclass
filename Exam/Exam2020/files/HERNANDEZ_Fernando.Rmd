@@ -53,7 +53,7 @@ Murnaghan(1,2)
 2. Find in the `Data`{.R} folder all the files containing the experimental diffraction patterns. They are under the form `PY02_Pxx.dat`{.R} or `PY02bis_Pxx.dat`{.R}. Store this list of files in a vector called `flist`{.R}.
 
 ```{r}
-flist <- list.files(path="C:/Users/carlo/Downloads/exam2020/Data", pattern=".dat")
+flist <- list.files(path="Data", pattern=".dat")
 flist
 ```
 
@@ -61,12 +61,12 @@ flist
 
 ```{r}
 
-PY02 <- read.csv("C:/Users/carlo/Downloads/exam2020/Data/PY02_pressures.dat") %>%
+PY02 <- read.csv("Data/PY02_pressures.dat") %>%
    mutate(sample="PY02") %>% 
    separate("run....P.kbar", c("run","P.kbar"), convert = TRUE) 
 
 
-PY02bis <- read.csv("C:/Users/carlo/Downloads/exam2020/Data/PY02bis_pressures.dat") %>%
+PY02bis <- read.csv("Data/PY02bis_pressures.dat") %>%
    mutate(sample="PY02bis") %>% 
    separate("run....P.kbar", c("run","P.kbar"), convert = TRUE)
 

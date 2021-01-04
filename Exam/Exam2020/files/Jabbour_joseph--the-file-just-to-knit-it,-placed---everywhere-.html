@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Elçin AKAR" />
+<meta name="author" content="Joseph JABBOUR" />
 
 <meta name="date" content="2020-01-12" />
 
@@ -498,7 +498,7 @@ summary {
 
 
 <h1 class="title toc-ignore">Reproducible data treatment with R – Exam</h1>
-<h4 class="author">Elçin AKAR</h4>
+<h4 class="author">Joseph JABBOUR</h4>
 <h4 class="date">01/12/2020</h4>
 
 </div>
@@ -511,17 +511,10 @@ summary {
 <li>All plots should be performed using <code>ggplot2</code>.</li>
 <li>Load the libraries <code class="sourceCode r">tidyverse</code> and <code>broom</code> and set the global <code class="sourceCode r">ggplot2</code> theme to <code class="sourceCode r"><span class="kw">theme_bw</span>()</code>.</li>
 </ol>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(readxl)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(tidyr)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">library</span>(broom)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="kw">library</span>(patchwork)</span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="kw">library</span>(readr)</span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">library</span>(lubridate)</span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="kw">library</span>(minpack.lm)</span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="kw">theme_set</span>(<span class="kw">theme_bw</span>())</span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="co"># setwd(&quot;/home/marc/Documents/Elcin_folder/RCourse/Data/exam2020&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(broom)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">theme_set</span>(<span class="kw">theme_bw</span>())</span></code></pre></div>
 <hr />
 </div>
 <div id="exercise" class="section level1">
@@ -536,51 +529,51 @@ summary {
 <ol style="list-style-type: decimal">
 <li>Define the <code class="sourceCode r"><span class="kw">Murnaghan</span>(P, K, Kp)</code> function that, given the pressure <span class="math inline">\(P\)</span>, the bulk modulus <span class="math inline">\(K\)</span> and its derivative <span class="math inline">\(Kp\)</span> (defaulting to <span class="math inline">\(Kp=4\)</span>), returns the relative volume <span class="math inline">\(\frac{V}{V_0}\)</span>.</li>
 </ol>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>Murnaghan &lt;-<span class="st"> </span><span class="cf">function</span>(P, K, <span class="dt">Kp=</span><span class="dv">4</span>){ </span>
-<span id="cb2-2"><a href="#cb2-2"></a>  a &lt;-<span class="st"> </span>(<span class="dv">1</span> <span class="op">+</span><span class="st"> </span>(P<span class="op">*</span>(Kp<span class="op">/</span>K)))<span class="op">^</span>(<span class="op">-</span><span class="dv">1</span><span class="op">/</span>Kp)</span>
-<span id="cb2-3"><a href="#cb2-3"></a>  a</span>
-<span id="cb2-4"><a href="#cb2-4"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>Murnaghan &lt;-<span class="st"> </span><span class="cf">function</span>(P,K,<span class="dt">Kp=</span><span class="dv">4</span>){</span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a>   (<span class="dv">1</span><span class="op">+</span>P<span class="op">*</span>(<span class="dv">4</span><span class="op">/</span>K))<span class="op">^</span>(<span class="op">-</span><span class="dv">1</span><span class="op">/</span><span class="dv">4</span>)   </span>
+<span id="cb2-4"><a href="#cb2-4"></a>   </span>
+<span id="cb2-5"><a href="#cb2-5"></a>}</span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Find in the <code class="sourceCode r">Data</code> folder all the files containing the experimental diffraction patterns. They are under the form <code class="sourceCode r">PY02_Pxx.dat</code> or <code class="sourceCode r">PY02bis_Pxx.dat</code>. Store this list of files in a vector called <code class="sourceCode r">flist</code>.</li>
 </ol>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>flist &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="st">&quot;Data&quot;</span>, <span class="dt">pattern =</span> <span class="st">&quot;.dat&quot;</span>)</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="co">#flist &lt;- tibble(flist)</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="co">#flist &lt;- flist[-6,]</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co">#flist &lt;- flist[-17,]</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>flist &lt;-<span class="st"> </span><span class="kw">list.files</span>(<span class="dt">path =</span> <span class="st">&quot;C:/Users/toshiba/Desktop/joseph university-france/R in class/Data&quot;</span>, <span class="dt">pattern=</span> <span class="st">&quot;PY02&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>flist</span></code></pre></div>
+<pre><code>## character(0)</code></pre>
 <ol start="3" style="list-style-type: decimal">
 <li>Read and store the two files containing the pressures of each run, <code class="sourceCode r">PY02_pressures.dat</code> and <code class="sourceCode r">PY02bis_pressures.dat</code>. Combine these two tables into a single tidy one called <code class="sourceCode r">Pressures</code>, containing three columns <code class="sourceCode r">run</code>, <code class="sourceCode r">P.kbar</code> and <code class="sourceCode r">sample</code> (<code class="sourceCode r">sample</code> being either <code>PY02</code> or <code>PY02bis</code>).</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>PY02bisPressure &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;Data/PY02bis_pressures.dat&quot;</span>)</span>
-<span id="cb4-2"><a href="#cb4-2"></a>PY02bisPressure &lt;-<span class="st"> </span><span class="kw">tibble</span>(PY02bisPressure)</span>
-<span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a>PY02Pressure &lt;-<span class="st"> </span><span class="kw">read.table</span>(<span class="st">&quot;Data/PY02_pressures.dat&quot;</span>)</span>
-<span id="cb4-5"><a href="#cb4-5"></a>PY02Pressure &lt;-<span class="st"> </span><span class="kw">tibble</span>(PY02Pressure)</span>
-<span id="cb4-6"><a href="#cb4-6"></a></span>
-<span id="cb4-7"><a href="#cb4-7"></a>Pressures &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(PY02bisPressure, PY02Pressure) <span class="op">%&gt;%</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a><span class="st">            </span><span class="kw">mutate</span>(<span class="dt">sample=</span> <span class="kw">row_number</span>())</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#Pressure1&lt;- read_table2(&quot;C:/Users/toshiba/Desktop/joseph university-france/R in #class/Data/PY02_pressures.dat&quot;, col_names = c(&quot;run&quot;, &quot;P.Kbar&quot;))</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#Pressure1 &lt;- read_table2(&quot;C:/Users/toshiba/Desktop/joseph university-france/R in #class/Data/PY02bis_pressures.dat&quot;)</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co">#pressures &lt;- full_join(Pressure1, pressure2)</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="co">#pressures</span></span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
 <li>Define the <code class="sourceCode r"><span class="kw">norm01</span>(x)</code> function that given a vector, returns this vector normalized to [0,1]</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>norm01 &lt;-<span class="st"> </span><span class="cf">function</span>(x){</span>
-<span id="cb5-2"><a href="#cb5-2"></a>  (x<span class="op">-</span><span class="kw">min</span>(x))<span class="op">/</span>(<span class="kw">max</span>(x)<span class="op">-</span><span class="kw">min</span>(x))</span>
-<span id="cb5-3"><a href="#cb5-3"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>norm01 &lt;-<span class="st"> </span><span class="cf">function</span>(x){</span>
+<span id="cb6-2"><a href="#cb6-2"></a>   (x<span class="op">-</span><span class="kw">min</span>(x))<span class="op">/</span>(<span class="kw">max</span>(x)<span class="op">-</span><span class="kw">min</span>(x))</span>
+<span id="cb6-3"><a href="#cb6-3"></a>   </span>
+<span id="cb6-4"><a href="#cb6-4"></a>}</span></code></pre></div>
 <ol start="5" style="list-style-type: decimal">
 <li>Now let’s read all the data files in <code>flist</code> and store the result in a tidy <code>tibble</code> called <code>data</code> with three columns, <code>file</code>, <code>q</code> and <code>int</code> (the data files containing the diffracted intensity as a function of the scattering vector <span class="math inline">\(q\)</span>). Either use a <code>for loop</code> or the <code>tidyverse</code>-friendly version using <code class="sourceCode r">purrr<span class="op">::</span><span class="kw">map</span>()</code> (+1 bonus for this version). Add the <code>int_n</code> column containing the normalized intensity <strong>for each file</strong> (<em>i.e.</em> each file’s data should be normalized to [0,1], do not normalize the whole <code>int</code> column directly).</li>
 </ol>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#Read_table2 is giving error I don&#39;t know why so I put comment on this code. It is supposed to work.</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="co">#data &lt;- tibble(name=flist) %&gt;% </span></span>
-<span id="cb6-3"><a href="#cb6-3"></a>    <span class="co">#mutate(data=purrr::map(name, ~read_table2(file.path(&quot;Data&quot;,.)), col_names= c(&quot;file&quot;, &quot;q&quot;, &quot;int&quot;))) %&gt;%</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>    <span class="co">#unnest(data) %&gt;% </span></span>
-<span id="cb6-5"><a href="#cb6-5"></a>    <span class="co">#select(-c(run,P.kbar))#%&gt;%</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a>    <span class="co">#rename(&quot;name&quot;= &quot;file&quot;,</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>         <span class="co">#&quot;0.0019196879&quot; = &quot;q&quot;,</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>         <span class="co">#&quot;0&quot; = &quot;int&quot;) %&gt;%</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a>    <span class="co">#mutate(int_n= norm(int))</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a>    <span class="co">#mutate(q= round(q, digits=3),</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a>                    <span class="co">#int= col_double(int)) </span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>  <span class="co">#data &lt;- tibble(name = flist) %&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>   <span class="co">#filter(-c(&quot;PY02_pressures.dat&quot; , &quot;PY02bis_pressures.dat&quot;))%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>   <span class="co"># mutate(data = purrr::map(name,</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>      <span class="co">#     ~ read_table2(file      = file.path(&quot;Data&quot;, .),</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>        <span class="co">#                 col_names = c(&quot;q&quot;, &quot;int&quot;)) %&gt;%</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>        <span class="co">#      mutate(int_n = norm01(int)) </span></span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">
-<li><p>Plot all the normalized diffractograms on top of each other, with lines of a different color for each file, and define nice axis labels, such as <em>Scattering Vector q [1/Å]</em> and <em>Intensity [arb. units]</em>.</p></li>
-<li><p>We are interested in the position of the first peak around <span class="math inline">\(q=1.8\)</span> Å<span class="math inline">\(^{-1}\)</span>. Starting from <code>data</code>, create the <code>pospeak</code> tibble that stores the position <code>Q</code> of the maximum of each diffractogram. You will do so by recursively (use the pipe <code>%&gt;%</code>):</p>
+<li>Plot all the normalized diffractograms on top of each other, with lines of a different color for each file, and define nice axis labels, such as <em>Scattering Vector q [1/Å]</em> and <em>Intensity [arb. units]</em>.</li>
+</ol>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#library(ggplot2)</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#data %&gt;% </span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#    group_by(name) %&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a> <span class="co">#   ggplot(aes(x=q, y=int_n,color=file)+</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a> <span class="co">#       geom_line()+</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a> <span class="co">#       labs(x=&quot;Scattering Vector q [1/Å]&quot;, y=&quot;Scattering Vector q [1/Å]&quot;)</span></span></code></pre></div>
+<ol start="7" style="list-style-type: decimal">
+<li>We are interested in the position of the first peak around <span class="math inline">\(q=1.8\)</span> Å<span class="math inline">\(^{-1}\)</span>. Starting from <code>data</code>, create the <code>pospeak</code> tibble that stores the position <code>Q</code> of the maximum of each diffractogram. You will do so by recursively (use the pipe <code>%&gt;%</code>):
 <ul>
 <li>Make sure to filter data for scattering vectors below 2.5 Å<span class="math inline">\(^{-1}\)</span>.</li>
 <li>For each file, summarize the data by creating the columns
@@ -591,7 +584,17 @@ summary {
 <li>Using the function <code class="sourceCode r"><span class="kw">separate</span>(column_name, <span class="kw">c</span>(<span class="st">&quot;sample&quot;</span>,<span class="st">&quot;run&quot;</span>,<span class="st">&quot;extension&quot;</span>))</code>, add the columns <code>run</code> and <code>sample</code> that transforms the column <code>file</code> to the run number and sample name. Make sure the column <code>run</code> contains a number (so, remove the string “P”), and get rid of the <code>extension</code> column.</li>
 <li>Finally, order the tibble by ascending run for each sample</li>
 </ul></li>
-<li><p>Now join this table together with the <code>Pressures</code> one in order to get the sample names and pressures in this table. Finally, add the new column <code>P</code> containing the pressure in GPa (1 GPa = 10 kbar).</p></li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">#pospeak &lt;- </span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#   data %&gt;%</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#   filter(q &lt;2.5)%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>  <span class="co"># group_by(file)%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a> <span class="co">#  summarise( Q= which.max(int),</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#              dQ = 0.5*Q/100) %&gt;%</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co"># separate(run, c(&quot;sample&quot;,&quot;run&quot;,&quot;extension&quot;), sep=&quot;_&quot;, convert = TRUE)%&gt;%</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a> <span class="co">#  separate(sample, c(&quot;sample&quot;,&quot;run&quot;,&quot;extension&quot;), sep=&quot;_&quot;, convert = TRUE)</span></span></code></pre></div>
+<ol start="8" style="list-style-type: decimal">
+<li>Now join this table together with the <code>Pressures</code> one in order to get the sample names and pressures in this table. Finally, add the new column <code>P</code> containing the pressure in GPa (1 GPa = 10 kbar).</li>
 </ol>
 <p><strong>In case you didn’t manage to get there, I provide in the exam .Rmd file the expected <code>pospeak</code> table so that you can continue with the exercise.</strong></p>
 </div>
@@ -606,42 +609,53 @@ summary {
 <li>Make sure you propagate the errors in a proper way.</li>
 </ul></li>
 </ol>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#pospeak %&gt;% mutate(VVO= Murnaghan(0, 1.802587, 4 ),</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>                   <span class="co">#DVVO = Q-VVO)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>min &lt;-<span class="st"> </span><span class="kw">which.min</span>(pospeak<span class="op">$</span>P)</span>
+<span id="cb10-2"><a href="#cb10-2"></a>min</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>pospeak &lt;-</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="st">   </span>pospeak <span class="op">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">VV0=</span> Q[min]<span class="op">*</span>((<span class="dv">2</span><span class="op">*</span>pi<span class="op">/</span>Q)<span class="op">/</span>(<span class="dv">2</span><span class="op">*</span>pi<span class="op">/</span>Q[min]))<span class="op">^</span><span class="dv">3</span>,</span>
+<span id="cb12-4"><a href="#cb12-4"></a>         <span class="dt">dV0=</span><span class="fl">0.5</span><span class="op">*</span>VV0<span class="op">/</span><span class="dv">100</span>)</span>
+<span id="cb12-5"><a href="#cb12-5"></a>pospeak</span></code></pre></div>
+<pre><code>## # A tibble: 16 x 8
+##    sample    run     Q      dQ P.kbar     P   VV0     dV0
+##    &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+##  1 PY02        1  1.80 0.00901    0    0     1.80 0.00901
+##  2 PY02        2  1.84 0.00920    2.4  0.24  1.69 0.00846
+##  3 PY02        3  1.88 0.00938    8.8  0.88  1.60 0.00800
+##  4 PY02        4  1.88 0.00938   15.9  1.59  1.60 0.00800
+##  5 PY02        5  1.89 0.00945   27.8  2.78  1.56 0.00781
+##  6 PY02        6  1.93 0.00965   36    3.6   1.47 0.00735
+##  7 PY02        7  1.94 0.00968   40    4     1.45 0.00726
+##  8 PY02        8  1.97 0.00986   51    5.1   1.38 0.00689
+##  9 PY02        9  1.90 0.00951   23    2.3   1.53 0.00767
+## 10 PY02       10  1.87 0.00934    7.5  0.75  1.62 0.00810
+## 11 PY02       11  1.80 0.00901    0.1  0.01  1.80 0.00901
+## 12 PY02bis     1  1.82 0.00911    0    0     1.75 0.00873
+## 13 PY02bis     2  1.88 0.00942    3    0.3   1.58 0.00790
+## 14 PY02bis     3  1.88 0.00942   16    1.6   1.58 0.00790
+## 15 PY02bis     4  1.93 0.00967   38    3.8   1.46 0.00731
+## 16 PY02bis     5  1.97 0.00986   48    4.8   1.38 0.00689</code></pre>
 <ol start="10" style="list-style-type: decimal">
 <li>Fit the Murnaghan equation of state to the experimental data. Make sure to add an amplitude parameter <span class="math inline">\(A\)</span> (that should be close to 1) to allow for more leeway on the fit. We fix the derivative value at <span class="math inline">\(Kp=4\)</span>. The bulk modulus <span class="math inline">\(K\)</span> should be of the order of a few GPa, so work with pressures in GPa.</li>
 </ol>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">#I could not get the Section 9, but here is how I would write the fit.</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#fits &lt;- pospeak %&gt;% </span></span>
-<span id="cb8-3"><a href="#cb8-3"></a>    <span class="co">#nest(data = -sample) %&gt;%</span></span>
-<span id="cb8-4"><a href="#cb8-4"></a>    <span class="co">#mutate(fit = purrr::map(data, ~ nlsLM(data = .,</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>                                <span class="co">#VVO ~ A*Murnaghan(P, K, Kp=4), </span></span>
-<span id="cb8-6"><a href="#cb8-6"></a>                                <span class="co">#start=list(A = 1,</span></span>
-<span id="cb8-7"><a href="#cb8-7"></a>                                           <span class="co">#K= 1,</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a>                                           <span class="co">#Kp=4,</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a>                                <span class="co">#))),</span></span>
-<span id="cb8-10"><a href="#cb8-10"></a>           <span class="co">#tidied = purrr::map(fit, tidy),</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a>           <span class="co">#augmented = purrr::map(fit, augment)</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#)</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#fits</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co">#</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a> <span class="co">#   fits &lt;- pospeak %&gt;% </span></span>
+<span id="cb14-3"><a href="#cb14-3"></a> <span class="co">#   mutate(fit=map(data, ~ nlsLM(data = .,</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="co">#             VV0 ~ A(1+P*(4/K))^(-1/4), </span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="co">#             start=list(A=1, K))),</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a> <span class="co">#          tidied = map(fit, tidy),</span></span>
+<span id="cb14-7"><a href="#cb14-7"></a>  <span class="co">#         augmented = map(fit, augment))</span></span></code></pre></div>
 <ol start="11" style="list-style-type: decimal">
-<li><p>Store the resulting values of <span class="math inline">\(K\)</span> and it’s fitting standard error <span class="math inline">\(dK\)</span> in two variables. Round the values to the appropriate floating number. You may use the <code class="sourceCode r">broom<span class="op">::</span><span class="kw">tidy</span>()</code> function.</p></li>
-<li><p>Finally, make the plot of the experimental points (a color per sample) and the fit.</p></li>
+<li>Store the resulting values of <span class="math inline">\(K\)</span> and it’s fitting standard error <span class="math inline">\(dK\)</span> in two variables. Round the values to the appropriate floating number. You may use the <code class="sourceCode r">broom<span class="op">::</span><span class="kw">tidy</span>()</code> function.</li>
 </ol>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>colors &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;orange&quot;</span>)</span>
-<span id="cb9-2"><a href="#cb9-2"></a></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#fits %&gt;% unnest(augmented) %&gt;%</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a>  <span class="co">#ggplot(aes(x=P, y=VVO, color=sample)) +</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>  <span class="co">#labs(x= &quot;Pressure[GPa]&quot;,</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>       <span class="co">#y= &quot;V/V0&quot;,</span></span>
-<span id="cb9-7"><a href="#cb9-7"></a>       <span class="co">#color= &quot;Sample&quot;)+</span></span>
-<span id="cb9-8"><a href="#cb9-8"></a>  <span class="co">#geom_line(aes(y=.fitted)) +</span></span>
-<span id="cb9-9"><a href="#cb9-9"></a>  <span class="co">#geom_point(alpha=0.5) +</span></span>
-<span id="cb9-10"><a href="#cb9-10"></a>  <span class="co">#geom_errorbar(aes(ymin=,</span></span>
-<span id="cb9-11"><a href="#cb9-11"></a>                      <span class="co">#ymax=),</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a>                  <span class="co">#width=.1) +</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a>  <span class="co">#scale_color_manual(values=colors) +</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a>  <span class="co">#ggtitle(&quot;Murnaghan fit&quot;)</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co">#fits %&gt;% unnest(tidied) %&gt;% </span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="co">#  select(sample, term, estimate) %&gt;% </span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="co">#  pivot_wider(names_from = term, </span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co">#              values_from = estimate)</span></span></code></pre></div>
+<ol start="12" style="list-style-type: decimal">
+<li>Finally, make the plot of the experimental points (a color per sample) and the fit.</li>
+</ol>
 </div>
 </div>
 

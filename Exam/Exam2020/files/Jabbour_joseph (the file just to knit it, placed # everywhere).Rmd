@@ -50,17 +50,17 @@ Murnaghan <- function(P,K,Kp=4){
 2. Find in the `Data`{.R} folder all the files containing the experimental diffraction patterns. They are under the form `PY02_Pxx.dat`{.R} or `PY02bis_Pxx.dat`{.R}. Store this list of files in a vector called `flist`{.R}.
 
 ```{r}
-flist <- list.files(path = "C:/Users/toshiba/Desktop/joseph university-france/R in class/Data", pattern= "PY02")
+flist <- list.files(path = "Data", pattern= "PY02")
 flist
 ```
 
 3. Read and store the two files containing the pressures of each run, `PY02_pressures.dat`{.R} and `PY02bis_pressures.dat`{.R}. Combine these two tables into a single tidy one called `Pressures`{.R}, containing three columns `run`{.R}, `P.kbar`{.R} and `sample`{.R} (`sample`{.R} being either `PY02` or `PY02bis`).
 
 ```{r}
-#Pressure1<- read_table2("C:/Users/toshiba/Desktop/joseph university-france/R in #class/Data/PY02_pressures.dat", col_names = c("run", "P.Kbar"))
-#Pressure1 <- read_table2("C:/Users/toshiba/Desktop/joseph university-france/R in #class/Data/PY02bis_pressures.dat")
-#pressures <- full_join(Pressure1, pressure2)
-#pressures
+Pressure1<- read_table2("Data/PY02_pressures.dat", col_names = c("run", "P.Kbar"))
+Pressure1 <- read_table2("Data/PY02bis_pressures.dat")
+pressures <- full_join(Pressure1, pressure2)
+pressures
 
 
 
@@ -80,24 +80,24 @@ norm01 <- function(x){
 5. Now let's read all the data files in `flist` and store the result in a tidy `tibble` called `data` with three columns, `file`, `q` and `int` (the data files containing the diffracted intensity as a function of the scattering vector $q$). Either use a `for loop` or the `tidyverse`-friendly version using `purrr::map()`{.R} (+1 bonus for this version). Add the `int_n` column containing the normalized intensity **for each file** (*i.e.* each file's data should be normalized to [0,1], do not normalize the whole `int` column directly).
 
 ```{r}
-
-  #data <- tibble(name = flist) %>%
-   #filter(-c("PY02_pressures.dat" , "PY02bis_pressures.dat"))%>%
-   # mutate(data = purrr::map(name,
-      #     ~ read_table2(file      = file.path("Data", .),
-        #                 col_names = c("q", "int")) %>%
-        #      mutate(int_n = norm01(int)) 
+  data <- tibble(name = flist) %>%
+   filter(-c("PY02_pressures.dat" , "PY02bis_pressures.dat"))%>%
+   mutate(data = purrr::map(name,
+          ~ read_table2(file      = file.path("Data", .),
+                        col_names = c("q", "int")) %>%
+             mutate(int_n = norm01(int)) 
 ```
 
 6. Plot all the normalized diffractograms on top of each other, with lines of a different color for each file, and define nice axis labels, such as *Scattering Vector q [1/Å]* and *Intensity [arb. units]*.
 
 ```{r}
-#library(ggplot2)
-#data %>% 
-#    group_by(name) %>%
- #   ggplot(aes(x=q, y=int_n,color=file)+
- #       geom_line()+
- #       labs(x="Scattering Vector q [1/Å]", y="Scattering Vector q [1/Å]")
+library(ggplot2)
+data %>% 
+   group_by(name) %>%
+   ggplot(aes(x=q, y=int_n, color=file)+
+       geom_line()+
+       labs(x="Scattering Vector q [1/Å]", 
+            y="Scattering Vector q [1/Å]")
 ```
 
 7. We are interested in the position of the first peak around $q=1.8$ Å$^{-1}$. Starting from `data`, create the `pospeak` tibble that stores the position `Q` of the maximum of each diffractogram. You will do so by recursively (use the pipe `%>%`):
@@ -109,14 +109,14 @@ norm01 <- function(x){
     - Finally, order the tibble by ascending run for each sample
 
 ```{r}
-#pospeak <- 
-#   data %>%
-#   filter(q <2.5)%>%
-  # group_by(file)%>%
- #  summarise( Q= which.max(int),
-#              dQ = 0.5*Q/100) %>%
-# separate(run, c("sample","run","extension"), sep="_", convert = TRUE)%>%
- #  separate(sample, c("sample","run","extension"), sep="_", convert = TRUE)
+pospeak <- 
+  data %>%
+  filter(q <2.5)%>%
+  group_by(file)%>%
+  summarise( Q= which.max(int),
+             dQ = 0.5*Q/100) %>%
+separate(run, c("sample","run","extension"), sep="_", convert = TRUE)%>%
+  separate(sample, c("sample","run","extension"), sep="_", convert = TRUE)
    
 ```
 
@@ -174,13 +174,13 @@ pospeak
 10. Fit the Murnaghan equation of state to the experimental data. Make sure to add an amplitude parameter $A$ (that should be close to 1) to allow for more leeway on the fit. We fix the derivative value at $Kp=4$. The bulk modulus $K$ should be of the order of a few GPa, so work with pressures in GPa.
 
 ```{r}
-#
- #   fits <- pospeak %>% 
- #   mutate(fit=map(data, ~ nlsLM(data = .,
-  #             VV0 ~ A(1+P*(4/K))^(-1/4), 
-  #             start=list(A=1, K))),
- #          tidied = map(fit, tidy),
-  #         augmented = map(fit, augment))
+
+   fits <- pospeak %>% 
+   mutate(fit=map(data, ~ nlsLM(data = .,
+              VV0 ~ A(1+P*(4/K))^(-1/4), 
+              start=list(A=1, K))),
+          tidied = map(fit, tidy),
+          augmented = map(fit, augment))
 
     
 ```
