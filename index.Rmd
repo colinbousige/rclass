@@ -77,10 +77,10 @@ load("plot_data.Rdata")
 ```{r, echo=FALSE, warning = FALSE}
 ggplotly(gg, dynamicTicks = TRUE) %>%
   animation_opts(5)%>%
-  layout(xaxis = list(autorange=FALSE, range = c(3050, 3550)))%>%
+  layout(xaxis = list(autorange = FALSE, range = c(3050, 3550)))%>%
   animation_slider(
     currentvalue = list(prefix = "Pressure: ", 
-                        suffix = " GPa", font = list(color="red"))
+                        suffix = " GPa", font = list(color = "red"))
   )
 remove(list = ls())
 ```

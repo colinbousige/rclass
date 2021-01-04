@@ -24,7 +24,7 @@ library(readr)
 library(lubridate)
 library(minpack.lm)
 theme_set(theme_bw())
-setwd("/home/marc/Documents/Elcin_folder/RCourse/Data/exam2020")
+# setwd("/home/marc/Documents/Elcin_folder/RCourse/Data/exam2020")
 
 ```
 
@@ -52,7 +52,6 @@ Murnaghan <- function(P, K, Kp=4){
   a <- (1 + (P*(Kp/K)))^(-1/Kp)
   a
 }
-
 ```
 
 2. Find in the `Data`{.R} folder all the files containing the experimental diffraction patterns. They are under the form `PY02_Pxx.dat`{.R} or `PY02bis_Pxx.dat`{.R}. Store this list of files in a vector called `flist`{.R}.
