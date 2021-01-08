@@ -21,7 +21,7 @@ More on the [Rstudio cheatsheet](https://github.com/rstudio/cheatsheets/raw/mast
 ## The more advanced way
 
 
-If you don't want to use Rstudio but rather want to keep with your favorite text editor, like I do[^2]  ([Sublime Text](https://www.sublimetext.com/3), [Atom](https://atom.io/), [Visual Studio Code](https://code.visualstudio.com/)...)
+If you don't want to use Rstudio but rather want to keep with your favorite text editor, like I do ([Sublime Text](https://www.sublimetext.com/3) (see configuration below), [Atom](https://atom.io/), [Visual Studio Code](https://code.visualstudio.com/)...)
 
 - I still recommend [downloading](https://cran.r-project.org/) and installing R via CRAN (I had some packages problems due to a homebrew installation).
 - To be fully operational with Rmarkdown files without using Rstudio, you need to install `pandoc`:
@@ -34,8 +34,32 @@ pip install pandoc-fignos
 pip install pandoc-tablenos
 ```
 
+<details>
+    <summary>**Configuring Sublime Text**</summary>
 
-[^2]: I personally use [Sublime Text 3](https://www.sublimetext.com/3). First, install [Package control](https://packagecontrol.io/installation). Then set up command line launch: `ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime`. Install the packages `R-box`, `SublimeREPL`, `SendCode`, `LatexTools`, `BracketHighlighter`, `CiteBibtex`, `Path Tools`, `SidebarEnhancements`. To be able to send code from a code chunk in Rmarkdown to the REPL window, click `Preferences > Browse Packages`, and then open `Packages/SublimeREPL/config/R/Main.sublime-menu`. Find the option `"additional_scopes"` and change it into: `"additional_scopes": ["HTML.markdown.rmarkdown","tex.latex.knitr"],`. Save the file, close the REPL tab, restart ST3, and open a new REPL instance.
+I personally use [Sublime Text 3](https://www.sublimetext.com/3). 
+
+- First, install [Package control](https://packagecontrol.io/installation). 
+- To set up command line launch: `ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime`. 
+- Install *a minima* the packages `LSP`, `R-IDE`, `Terminus`, and `SendCode`, and also the [radian](https://github.com/randy3k/radian) console. 
+- You can also add the useful packages `LatexTools`, `BracketHighlighter`, `RainbowBrackets`, `Citer`, `Path Tools`, `SidebarEnhancements`, `SidebarTools`, `Git`, `GitGutter`, `Alignment`, `AutoFileName`. 
+- Install the language server protocol package in R with: `install.packages("languageserver")`{.R}
+- To create a keyboard shortcut to open a terminal with the radian console as the R interpreter, add this to your keybinding file:
+```bash
+{ "keys": ["super+option+r"], # put whatever you want here
+    "command": "terminus_open",
+    "args": {
+        "post_window_hooks": [
+            ["carry_file_to_pane", {"direction": "right"}]
+        ],
+        "cmd" : "radian"
+    }
+}
+```
+- Select `Terminus` as the destination of SendCode
+- You should be good to go: ⌘+⏎ will send the current line/selection to the radian console, ⌘+B will render the current Rmd file, ⌘+\\ will set the working directory to the current file's folder.
+
+</details>
 
 
 ## In any case: install LaTeX
@@ -46,6 +70,14 @@ A **full** $\LaTeX$ distribution (emphasis on **full**) will be needed to knit m
 - Windows: go [here](https://miktex.org/download) and download the Net Installer to install the **complete distribution**
 - Mac: go [here](https://tug.org/mactex/mactex-download.html) or type `brew cask install mactex` in the terminal if you have [Homebrew](https://treehouse.github.io/installation-guides/mac/homebrew) installed
 - Linux: [here](https://dzone.com/articles/installing-latex-ubuntu) fore example
+
+Alternatively, you can also work with [TinyTeX](https://yihui.name/tinytex/) that will install the needed packages on the fly. Just run this in the R console:
+
+```r
+install.packages("tinytex")
+tinytex::install_tinytex()
+# to uninstall TinyTeX, run tinytex::uninstall_tinytex()
+```
 
 
 ## Setting up the environment
@@ -84,7 +116,4 @@ setwd("your/path/")
 ```
 
 Or, to set it to the directory the current file is in, just click `Session > Set Working Directory > To Source File Location`.
-
-
-
 
