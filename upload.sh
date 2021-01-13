@@ -2,21 +2,27 @@
 
 cp -r Data/* _book/Data/
 cp -r Plots/* _book/Plots/
-cp -r Exo/Data _book/Exo/
-cp -r Exo/Data_Religion _book/Exo/
-rmdremove=`ls _book/Exo/*.html`
-for file in rmdremove; do 
-    rm -f _book/Exo/${file//.html/}.Rmd
+cp -r Exo _book
+dataremove=`ls -1d _book/Exo/*/Data`
+for folder in ${dataremove[@]}; do 
+    rm -rf ${folder}
 done
-rm -f _book/Exo/*_solution.Rmd
-cp -r Exo/Rexercises-plot0_solution* _book/Exo/
-cp -r Exo/Rexercises-spectro_solution* _book/Exo/
-cp -r Exo/Rexercises-tga_solution* _book/Exo/
-cp -r Exo/Rexercises-religion_babies_solution* _book/Exo/
-cp -r Exo/Rexercises-covid_solution* _book/Exo/
-cp -r Exo/Rexercises-SEM_particles_solution* _book/Exo/
-cp -r Exo/Rexercises-co2_solution* _book/Exo/
-cp -r Exo/Rexercises-Grt_solution* _book/Exo/
+rmdremove=`ls _book/Exo/*/*.html`
+for file in ${rmdremove[@]}; do 
+    rm -f ${file//.html/}.Rmd
+done
+solremove=`ls _book/Exo/*/solution.*`
+for file in ${solremove[@]}; do 
+    rm -f ${file}
+done
+cp -r Exo/plot0/solution.html _book/Exo/plot0/
+cp -r Exo/spectro/solution.html _book/Exo/spectro/
+cp -r Exo/tga/solution.html _book/Exo/tga/
+cp -r Exo/religion_babies/solution.html _book/Exo/religion_babies/
+cp -r Exo/covid/solution.html _book/Exo/covid/
+cp -r Exo/SEM_particles/solution.html _book/Exo/SEM_particles/
+cp -r Exo/co2/solution.html _book/Exo/co2/
+cp -r Exo/Grt/solution.html _book/Exo/Grt/
 
 
 

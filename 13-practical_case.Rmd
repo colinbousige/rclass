@@ -204,29 +204,27 @@ frubis <- list.files(path="Data", pattern = "rubis")
 # Load all data and do the fits in a single pipe flow
 data <- tibble(name = frubis) %>%
     mutate(data = purrr::map(name,
-           ~ read_table2(file      = file.path("Data", .),
-                         col_names = c("w", "Int")))
-        ) %>% 
-    mutate(fit = purrr::map(data, 
-        ~ nls(data = .,
-              Int ~ y0 + A1*Lor(w,x1,FWHM1) + A2*Lor(w,x2,FWHM2), 
-              start=list(y0 = 0.01,
-                         x1 = .$w[which.max(.$Int)] - 2,
-                         x2 = .$w[which.max(.$Int)] - 30,
-                         FWHM1 = 10,
-                         FWHM2 = 10,
-                         A1    = max(.$Int)*10,
-                         A2    = max(.$Int)*10),
-              lower = list(y0 = 0, 
-                           x1 = 0, x2 = 0,
-                           FWHM1 = 0, FWHM2 = 0,
-                           A1 = 0, A2 = 0),
-              algorithm = "port")),
+                             ~read_table2(file      = file.path("Data", .),
+                                          col_names = c("w", "Int"))),
+           fit = purrr::map(data, 
+                    ~ nls(data = .,
+                          Int ~ y0 + A1*Lor(w,x1,FWHM1) + A2*Lor(w,x2,FWHM2),
+                          start=list(y0 = 0.01,
+                                     x1 = .$w[which.max(.$Int)] - 2,
+                                     x2 = .$w[which.max(.$Int)] - 30,
+                                     FWHM1 = 10,
+                                     FWHM2 = 10,
+                                     A1    = max(.$Int)*10,
+                                     A2    = max(.$Int)*10),
+                          lower = list(y0 = 0, 
+                                       x1 = 0, x2 = 0,
+                                       FWHM1 = 0, FWHM2 = 0,
+                                       A1 = 0, A2 = 0),
+                          algorithm = "port")),
           tidied = purrr::map(fit, tidy),
-          augmented = purrr::map(fit, augment)
-          ) %>% 
-    mutate(P=purrr::map(tidied, 
-            ~round(Pruby(.$estimate[.$term=='x1']),2))) %>% 
+          augmented = purrr::map(fit, augment),
+          P = purrr::map(tidied, ~round(Pruby(.$estimate[.$term=='x1']),2))
+        ) %>% 
     unnest(P)
 # make the plot of the fits
 P <- data %>% 

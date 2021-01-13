@@ -213,21 +213,86 @@ dt %>% filter(abs(y)> 0.1) %>%
         geom_point()
 ```
 
-
 ## Exercises {#exo-df}
 
 <details>
 <summary>**Exercise 1**</summary>
 
-- Create a 3 column `data.frame`{.R} containing 100 random values, their sinus, and the sum of the two first columns.
-- Do the same with a `tibble`{.R}
+- Create a 3 column `data.frame`{.R} containing 10 random values, their sinus, and the sum of the two first columns.
+- Print the 4 first lines of the table
+- Print the second column
+- Print the average of the third column
+- Using `plot(x,y)`{.R} where `x` and `y` are vectors, plot the 2nd column as a function of the first
 - Look into the function `write.table()`{.R} to write a text file containing this `data.frame`{.R}
+- Do the all the same things with a `tibble`{.R}
 
+<details>
+    <summary>Solution</summary>
+
+```{r, warnings=FALSE}
+# Create a 3 column `data.frame`{.R} containing 10 random values, their sinus, 
+# and the sum of the two first columns.
+x <- runif(10)
+y <- sin(x)
+z <- x + y
+df <- data.frame(x=x, y=y, z=z)
+# Print the 4 first lines of the table
+head(df, 4)
+# Print the second column
+df[,2]
+# Print the average of the third column
+mean(df$z); mean(df[3]); mean(df[,3])
+# Using `plot(x,y)`{.R} where `x` and `y` are vectors, 
+# plot the 2nd column as a function of the first
+plot(df[,1], df[,2])
+plot(df$x, df$y)
+# Look into the function `write.table()`{.R} to write a text file 
+# containing this `data.frame`{.R}
+write.table(df, "Data/some_data.dat", quote = FALSE, row.names = FALSE)
+# # # # # # # # # # # # # # # # # 
+# Tibble version
+library(tidyverse)
+df_tib <- tibble(a = runif(10), b = sin(a), c = a + b)
+head(df_tib, 4)
+df_tib[,2]; df_tib[[2]];
+mean(df_tib$c); mean(df_tib[3]); mean(df_tib[,3]); mean(df_tib[[3]])
+write.table(df_tib, "Data/some_data.dat", quote = FALSE, row.names = FALSE)
+plot(df_tib$a, df_tib$b)
+```
+
+</details>
 </details>
 
 
 <details>
-    <summary>**Exercise 2**: `data.frame`{.R} from a "complicated" data file</summary>
+    <summary>**Exercise 2**</summary>
+
+- Download the files:
+    - <a href="Data/rubis_01.txt" download target="_blank">rubis_01.txt</a>
+    - <a href="Data/population.csv" download target="_blank">population.csv</a>
+    - <a href="Data/FTIR_rocks.xlsx" download target="_blank">FTIR_rocks.xlsx</a>
+- Load them into separate `data.frames`{.R}. Look into the options of `read.table()`{.R}, `read.csv()`{.R}, `readxl::read_excel()`{.R},  to get the proper data fields.
+- Print their dimensions and column names
+- Add the appropriate names ("w", "intensity") to the data.frame containing rubis_01.txt. 
+
+<details>
+    <summary>Solution</summary>
+
+```{r, warnings=FALSE}
+rubis_01   <- read.table("Data/rubis_01.txt", col.names = c("w", "intensity"))
+population <- read.csv("Data/population.csv")
+FTIR_rocks <- readxl::read_excel("Data/FTIR_rocks.xlsx")
+dim(rubis_01); names(rubis_01)
+dim(population); names(population)
+dim(FTIR_rocks); names(FTIR_rocks)
+```
+
+</details>
+</details>
+
+
+<details>
+    <summary>**Exercise 3**: `data.frame`{.R} from a "complicated" data file</summary>
 
 - Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
 - Load it into a `data.frame`{.R}. Look into the options of `read.table()`{.R} to get the proper data fields.
@@ -255,7 +320,7 @@ head(d)
 
 
 <details>
-    <summary>**Exercise 3**</summary>
+    <summary>**Exercise 4**</summary>
 
 - Create a `data.frame`{.R} (or a `tibble`{.R}) called `people` from <a href="Data/people.txt" download target="_blank">people.txt</a>. Try using the function `read.table` or its `tidyverse` equivalent `read_table2`.
 - What are the column names of `people`?
@@ -279,7 +344,7 @@ head(d)
 
 
 <details>
-<summary>**Exercise 4**</summary>
+<summary>**Exercise 5**</summary>
 
 Download <a href="Data/population.txt" download target="_blank">population.txt</a> and load it into a `data.frame`{.R}.
 
@@ -335,7 +400,7 @@ popul %>%
 
 
 <details>
-    <summary>**Exercise 5:** tidy data wrangling</summary>
+    <summary>**Exercise 6:** tidy data wrangling</summary>
 
 - First, load the `tidyverse` and `lubridate` package
 - Load <a href="Data/people1.csv" download target="_blank">people1.csv</a> and <a href="Data/people2.csv" download target="_blank">people2.csv</a> into `pp1` and `pp2`
