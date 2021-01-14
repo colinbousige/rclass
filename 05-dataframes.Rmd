@@ -100,7 +100,7 @@ df # is not tidy
 
 ```r
 library(tidyr)
-df <- pivot_longer(df, cols=-Year, names_to="city", values_to="pop")
+df <- pivot_longer(df, cols=-year, names_to="city", values_to="pop")
 df #is tidy
 ```
 
@@ -109,7 +109,7 @@ df #is tidy
 
 ```{r echo=FALSE, message=FALSE}
 library(tidyr)
-df <- pivot_longer(df, cols=-Year, names_to="city", values_to="pop")
+df <- pivot_longer(df, cols=-year, names_to="city", values_to="pop")
 df #is tidy
 ```
 
@@ -346,10 +346,10 @@ head(d)
 <details>
 <summary>**Exercise 5**</summary>
 
-Download <a href="Data/population.txt" download target="_blank">population.txt</a> and load it into a `data.frame`{.R}.
+Download <a href="Data/population.csv" download target="_blank">population.csv</a> and load it into a `data.frame`{.R}.
 
-- Are the data tidy?
 - What are the names of the columns?
+- Are the data tidy? make the table tidy if needed
 - Create a subset containing the data for Montpellier
     + What is the max and min of population in this city?
     + The average population over time?
@@ -362,16 +362,22 @@ Download <a href="Data/population.txt" download target="_blank">population.txt</
 
 ```{r}
 # Download population.txt and load it into a `data.frame`{.R}.
-popul <- read.table("Data/population.txt", header=TRUE)
-# Are the data tidy?
-head(popul) # yes
+library(tidyverse)
+popul <- read_csv("Data/population.csv")
 # What are the names of the columns and the dimension of the table?
 names(popul); dim(popul)
+# Are the data tidy?
+head(popul) # no
+popul.tidy <- popul %>% 
+    pivot_longer(cols=-year,
+                 names_to = "city",
+                 values_to = "pop"
+                )
+popul.tidy
 # Create a subset containing the data for Montpellier
-mtp <- subset(popul, city == "Montpellier")
+mtp <- subset(popul.tidy, city == "Montpellier")
 # I prefer the tidyverse version
-library(tidyverse)
-mtp <- popul %>% filter(city == "Montpellier")
+mtp <- popul.tidy %>% filter(city == "Montpellier")
 # What is the max and min of population in this city?
 max(mtp$pop)
 min(mtp$pop)
@@ -379,17 +385,17 @@ range(mtp$pop)
 # The average population over time?
 mean(mtp$pop)
 # What is the total population in 2012?
-sum(popul[popul$year == 2012, "pop"])
-popul %>% 
+sum(popul.tidy[popul.tidy$year == 2012, "pop"])
+popul.tidy %>% 
     filter(year==2012) %>% 
     select(pop) %>% 
     sum()
 # What is the total population per year?
-popul %>% 
+popul.tidy %>% 
     group_by(year) %>% 
     summarise(pop_tot=sum(pop))
 # What is the average population per city over the years?
-popul %>% 
+popul.tidy %>% 
     group_by(city) %>% 
     summarise(pop_ave=mean(pop))
 ```

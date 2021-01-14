@@ -799,7 +799,7 @@ ggplotly(P, dynamicTicks = TRUE)
 ```{r echo=FALSE, message=FALSE}
 df <- read.csv("Data/population.csv")
 library(tidyr)
-df <- pivot_longer(df, cols=-Year, 
+df <- pivot_longer(df, cols=-year, 
                    names_to="City", 
                    values_to="Population")
 df$City <- gsub("\\.", " ", df$City)
@@ -812,7 +812,7 @@ my_theme <- theme_bw()+
                   )
 colors <- c("royalblue","red")
 p1 <- df %>% filter(City%in%c("Montpellier","Nantes")) %>% 
-    ggplot(aes(x=Year, y=Population, size=Population, color=City)) +
+    ggplot(aes(x=year, y=Population, size=Population, color=City)) +
         geom_point() + 
         geom_smooth(method="lm", aes(fill=City), alpha=0.1, show.legend = FALSE) + 
         scale_color_manual(values=colors)+
@@ -821,7 +821,7 @@ p1 <- df %>% filter(City%in%c("Montpellier","Nantes")) %>%
         labs(x="Year", y="Population")+
         my_theme 
 p1
-p2 <- ggplot(data=subset(df,Year==2012), 
+p2 <- ggplot(data=subset(df,year==2012), 
             aes(x=reorder(City,-Population), y=Population/1e6, fill=Population/1e6)) +
         geom_bar(stat="identity", position="dodge") + 
         ggtitle("Population in 2012 (in millions)")+
@@ -843,19 +843,19 @@ p2
 library(tidyverse)
 df <- read.csv("Data/population.csv")
 df <- pivot_longer(df, 
-                   cols=-Year, #year should stay a column
+                   cols=-year, #year should stay a column
                    names_to="City", #column names should go to the column `city`
                    values_to="Population" #values should go to the column `population`
                    )
 df$City <- gsub("\\.", " ", df$City) # replace dots by spaces in city names
 # Plot the population vs. year with a different color for each city
-p <- ggplot(data=df, aes(x=Year, y=Population, color=City))
+p <- ggplot(data=df, aes(x=year, y=Population, color=City))
 # With points
 p + geom_point()
 # With lines
 p + geom_line()
 # With a black and white theme
-# Change the axis labels to "Year" and "Population"
+# Change the axis labels to "year" and "Population"
 p <- p + geom_line() + theme_bw(); p
 # Make it interactive
 library(plotly)
@@ -870,7 +870,7 @@ my_theme <- theme_bw()+
                   )
 colors <- c("royalblue","red")
 p1 <- df %>% filter(City%in%c("Montpellier","Nantes")) %>% 
-        ggplot(aes(x=Year, y=Population, size=Population, color=City)) +
+        ggplot(aes(x=year, y=Population, size=Population, color=City)) +
             geom_point() + 
             geom_smooth(method="lm", aes(fill=City), 
                         alpha=0.1, show.legend = FALSE) + 
@@ -880,7 +880,7 @@ p1 <- df %>% filter(City%in%c("Montpellier","Nantes")) %>%
             labs(x="Year", y="Population")+
             my_theme 
 p1
-p2 <- df %>% filter(Year==2012) %>% 
+p2 <- df %>% filter(year==2012) %>% 
         ggplot(aes(x=reorder(City,-Population), 
                    y=Population/1e6, 
                    fill=Population/1e6)) +
