@@ -161,40 +161,7 @@ snippet ggplot
 
 
 <details>
-    <summary>**Exercise**</summary>
-
-Try reproducing these plots:
-
-```{r, echo=FALSE}
-Gaussian <- function(x,x0,FWHM,A=1,y0=0){
-    y0 + 2.*A*sqrt(2*log(2))/sqrt(2*pi)/FWHM*exp(-(x-x0)^2*4*log(2)/FWHM^2)
-}
-par(family = "Helvetica", cex.lab=1.5, cex.axis=1.4, 
-    mgp = c(2.4, .5, 0), tck=0.02, mar=c(4, 4, 2, .5), lwd=2, las=1)
-x <- seq(-10,10,.5)
-plot(x,sin(x),type="b")
-plot(x,sin(x),type="l", lwd=5, lty=2)
-points(x,sin(x),cex=3, col="blue", pch=2)
-abline(h=0, col="red")
-x <- seq(30,80,.01)
-plot(x, Gaussian(x,40,1)+Gaussian(x,50,2)+Gaussian(x,70,5), 
-    type="l", ylim=c(0,1), xlab="Raman Shift [1/cm]",
-    ylab="Intensity [arb. units]", lwd=2)
-legend("topright",
-    cex=1.7,
-    lty=c(1),
-    lwd=c(2),
-    col=c("black"),
-    bty = "n",
-    legend=c("Some Raman spectrum")
-    )
-axis(3, labels=FALSE)
-axis(4, labels=FALSE)
-```
-
-</details>
-
-### Going further
+    <summary>**Going further**</summary>
 
 #### Panel plots
 
@@ -254,13 +221,43 @@ points(x, jitter(rep(.01,length(x)), amount=.01),
         cex=1,pch=16, col=adjustcolor("royalblue", alpha=.01))
 ```
 
-<details>
-    <summary>**Exercise**</summary>
-
-Plot the histogram of the age distribution in the class.
 
 </details>
 
+
+<details>
+    <summary>**Exercise**</summary>
+
+Try reproducing these plots:
+
+```{r, echo=FALSE}
+Gaussian <- function(x,x0,FWHM,A=1,y0=0){
+    y0 + 2.*A*sqrt(2*log(2))/sqrt(2*pi)/FWHM*exp(-(x-x0)^2*4*log(2)/FWHM^2)
+}
+par(family = "Helvetica", cex.lab=1.5, cex.axis=1.4, 
+    mgp = c(2.4, .5, 0), tck=0.02, mar=c(4, 4, 2, .5), lwd=2, las=1)
+x <- seq(-10,10,.5)
+plot(x,sin(x),type="b")
+plot(x,sin(x),type="l", lwd=5, lty=2)
+points(x,sin(x),cex=3, col="blue", pch=2)
+abline(h=0, col="red")
+x <- seq(30,80,.01)
+plot(x, Gaussian(x,40,1)+Gaussian(x,50,2)+Gaussian(x,70,5), 
+    type="l", ylim=c(0,1), xlab="Raman Shift [1/cm]",
+    ylab="Intensity [arb. units]", lwd=2)
+legend("topright",
+    cex=1.7,
+    lty=c(1),
+    lwd=c(2),
+    col=c("black"),
+    bty = "n",
+    legend=c("Some Raman spectrum")
+    )
+axis(3, labels=FALSE)
+axis(4, labels=FALSE)
+```
+
+</details>
 
 ## Advanced plotting using ggplot2
 
@@ -268,36 +265,13 @@ Further reading [here](https://ggplot2-book.org/introduction.html) and on the [c
 
 `ggplot2` is a package (now even available for python) that completely changes the methodology of plotting data. With `ggplot2`, data are gathered in a **tidy** `data.frame`{.R}, and each column can be used as a parameter to tweak colors, point size, etc.
 
-First things first, load the library:
+First things first, load the library :
 ```{r, message=FALSE, warnings=FALSE}
 library(ggplot2)
 library(tidyverse) # for easier data manipulation
 ```
 
-### A quick plot
-
-A quick plot can be made using the function `qplot` (for "quickplot"), very similar to the base graphics `plot` function. It's great for allowing you to produce plots quickly, but it is highly recommended learning `ggplot()`{.R} as it makes it easier to create complex graphics. 
-
-Note how different is the default theme of the plot:
-
-```r
-# some fake data
-x  <- seq(-10,10,.5)
-y  <- sin(x)
-p1 <- qplot(x,y, geom="line") # ggplot2 quick plot
-p2 <- qplot(x,y, geom="point") # ggplot2 quick plot
-p1; p2
-```
-```{r, echo=FALSE, warnings=FALSE, message=FALSE}
-# some fake data
-x  <- seq(-10,10,.5)
-y  <- sin(x)
-p1 <- qplot(x,y, geom="line") # ggplot2 quick plot
-p2 <- qplot(x,y, geom="point") # ggplot2 quick plot
-library(cowplot)
-plot_grid(p1,p2, labels=c("P1", "P2"))
-```
-
+Actually, `ggplot2` is attached to `tidyverse` so a simple `library(tidyverse)`{.R} is enough.
 
 ### The grammar of graphics
 
@@ -306,12 +280,22 @@ To construct a plot, you need to provide building blocks such as:
 
 - data gathered in a *tidy* data.frame
 - an *aesthetics* mapping: what column is *x*, *y*, the color, the size, etc...
-- geometric object: points, lines, bars...
-- statistical transformations
-- scales
+- geometric object: point, line, bar, histogram, tile...
+- statistical transformations if needed
+- scales: color_manual, x_continuous, ...
 - coordinate system
-- position adjustments
-- faceting
+- faceting: wrap, grid
+- theme: theme_bw(), theme_light()...
+
+The typical call to `ggplot()`{.R} is thus (the arguments between `<>` are yours to specify):
+
+```r
+ggplot(data=<data>, aes(x=<x>, y=<y>, color=<z>, size=<w>))+
+    geom_<geometry>()+
+    scale_<scales>()+
+    facet_<facets>()+
+    <theme>
+```
 
 Since a figure is worth a thousand words, let's get to it. We will use the dataset `diamonds` built-in with the `ggplot2` package. Let's have a look:
 
@@ -324,7 +308,7 @@ diamonds
 Let's say we want to see whether there is a correlation between price and weight (carat) of the diamonds:
 
 ```{r, warnings=FALSE}
-p <- ggplot(data=diamonds,aes(x=carat,y=price))
+p <- ggplot(data = diamonds, aes(x = carat,y = price))
 p + geom_point()
 ```
 
@@ -332,14 +316,14 @@ OK, we're onto something, but we can probably add some information to this plot.
 
 ```{r, warnings=FALSE}
 p <- diamonds %>% filter(carat<=3) %>% 
-        ggplot(aes(x=carat,y=price))
+        ggplot(aes(x = carat, y = price))
 p + geom_point(alpha=0.5)
 ```
 
 Let's now see whether the clarity plays a role here by coloring the points according to the diamonds cut:
 ```{r, warnings=FALSE}
 p <- diamonds %>% filter(carat<=3) %>% 
-        ggplot(aes(x=carat,y=price, color=cut))
+        ggplot(aes(x = carat, y = price, color = cut))
 p + geom_point(alpha=0.5)
 ```
 
@@ -351,35 +335,35 @@ p + geom_point(alpha=0.5) + geom_smooth()
 The slope evolution shows that in general, the better the cut, the higher the price. But there are some discrepancies that may be explained in another manner:
 ```{r, warnings=FALSE}
 p <- diamonds %>% filter(carat<=3) %>% 
-        ggplot(aes(x=carat,y=price, color=clarity))
+        ggplot(aes(x = carat, y = price, color = clarity))
 p + geom_point(alpha=0.5) + geom_smooth()
 ```
 
 It is often easier to grasp a multi-variable problem by plotting all our data in a facet plot using `facet_wrap()`{.R}:
 ```{r, warning = FALSE, message=FALSE}
 colors <- rainbow(length(unique(diamonds$clarity)))
-p <- ggplot(diamonds, aes(x=price,y=carat)) + 
-        geom_point(aes(color=clarity), alpha=0.5, size=1) + 
-        geom_smooth(color="black") + 
-        scale_colour_manual(values = colors, name="Clarity") +
+p <- ggplot(diamonds, aes(x = price, y = carat)) + 
+        geom_point(aes(color = clarity), alpha = 0.5, size = 1) + 
+        geom_smooth(color = "black") + 
+        scale_colour_manual(values = colors, name = "Clarity") +
         facet_wrap(~cut) 
 p
 ```
 
 Or by adding another graphical parameter such as the size of the points:
 ```{r, warnings=FALSE}
-p <- ggplot(diamonds, aes(x=price,y=carat, size=cut)) + 
-        geom_point(aes(color=clarity), alpha=0.5) + 
-        scale_colour_manual(values = colors, name="Clarity")
+p <- ggplot(diamonds, aes(x = price, y = carat, size = cut)) + 
+        geom_point(aes(color = clarity), alpha = 0.5) + 
+        scale_colour_manual(values = colors, name = "Clarity")
 p
 ```
 
 OK, maybe not here because the graph gets clogged, so we can lighten it by sampling data:
 ```{r, warnings=FALSE}
 p <- ggplot(diamonds[sample(nrow(diamonds), size=500),], 
-            aes(x=carat,y=price, size=cut)) + 
-        geom_point(aes(color=clarity), alpha=0.5) + 
-        scale_colour_manual(values = colors, name="Clarity")
+            aes(x = carat, y = price, size = cut)) + 
+        geom_point(aes(color = clarity), alpha = 0.5) + 
+        scale_colour_manual(values = colors, name = "Clarity")
 p
 ```
 
@@ -404,10 +388,10 @@ You can define all the parameters you want, like this (hit `?theme`{.R} like usu
 
 ```{r, warnings=FALSE}
 my_theme <- theme_bw()+
-            theme(text = element_text(size = 18, family = "Times", face="bold"),
-                  axis.ticks = element_line(size=1),
+            theme(text = element_text(size = 18, family = "Times", face = "bold"),
+                  axis.ticks = element_line(size = 1),
                   legend.text = element_text(size = 14, family = "Times"),
-                  panel.border = element_rect(size=2),
+                  panel.border = element_rect(size = 2),
                   panel.grid.major = element_blank(), 
                   panel.grid.minor = element_blank()
                   )
@@ -425,9 +409,9 @@ library(plotly)
 library(plotly)
 ```
 ```{r, warnings=FALSE}
-p <- ggplot(diamonds[sample(nrow(diamonds), size=100),], 
-        aes(x=carat,y=price)) + 
-        geom_point(aes(color=clarity), alpha=0.5, size=2) + 
+p <- ggplot(diamonds[sample(nrow(diamonds), size = 100),], 
+        aes(x = carat, y = price)) + 
+        geom_point(aes(color = clarity), alpha = 0.5, size = 2) + 
         my_theme
 ggplotly(p, dynamicTicks = TRUE)
 ```
@@ -441,10 +425,10 @@ library(patchwork)
 library(ggplot2)
 theme_set(theme_bw())
 x  <- seq(-2*pi,2*pi,.1)
-p1 <- qplot(x,sin(x), geom="line")
-p2 <- qplot(x,cos(x), geom="line")
-p3 <- qplot(x,atan(x), geom="line")
-p4 <- qplot(x,dnorm(x), geom="line")
+p1 <- qplot(x,sin(x), geom = "line")
+p2 <- qplot(x,cos(x), geom = "line")
+p3 <- qplot(x,atan(x), geom = "line")
+p4 <- qplot(x,dnorm(x), geom = "line")
 p1 + p2
 p1 + p2 / p3 + p4 + 
     plot_annotation(tag_levels = 'a', tag_suffix=")")
@@ -649,7 +633,7 @@ ggplot(data=df, aes(x=w,
 <details>
     <summary>**Exercise 3**</summary>
 
-- Download <a href="https://github.com/colinbousige/Rclass/raw/master/Data/dataG.zip" download target="_blank">dataG.zip</a>
+- Download <a href="Data/dataG.zip" download target="_blank">dataG.zip</a>
 - Make a plot similar to this one (don't bother with the fit), plotting the evolution of a Raman spectrum as a function of pressure:
 
 ![](Plots/data_RBM.png){ width=50% }

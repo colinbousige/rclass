@@ -5,7 +5,7 @@
 
 Here I will provide an example workflow for treating large amounts of experimental measurements. There are many ways of doing this, this is just a working example. 
 
-You will find <a href="https://github.com/colinbousige/Rclass/raw/master/Data/XPdata.zip" download target="_blank">here</a> the corresponding experimental data.
+You will find <a href="Data/XPdata.zip" download target="_blank">here</a> the corresponding experimental data.
 
 My way of doing things – again, maybe not the best, but it's what I do – is that for each experiment I create a folder containing at least 4 objects:
 
@@ -29,7 +29,7 @@ Lor <- function(x,x0=0,FWHM=1){
 }
 ```
 
-In the working directory, we create a folder `Data` in which we extract the <a href="https://github.com/colinbousige/Rclass/raw/master/Data/XPdata.zip" download target="_blank">XPdata.zip</a> archive. It contains a number of txt files named `rubis_XX.txt`. They are Raman spectra of ruby chips under pressure used for the calibration of pressure in a diamond anvil cell, their shift is directly correlated to the pressure in the DAC.
+In the working directory, we create a folder `Data` in which we extract the <a href="Data/XPdata.zip" download target="_blank">XPdata.zip</a> archive. It contains a number of txt files named `rubis_XX.txt`. They are Raman spectra of ruby chips under pressure used for the calibration of pressure in a diamond anvil cell, their shift is directly correlated to the pressure in the DAC.
 
 First, let's list all these files:
 ```{r, warning=FALSE}

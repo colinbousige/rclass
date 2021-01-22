@@ -614,11 +614,11 @@ shinyApp(ui = ui, server = server)
 
 Create a shiny application that will:
 
-- read an input (through a file dialog) Raman spectrum from a ruby (<a href="https://github.com/colinbousige/Rclass/raw/master/Data/XPdata.zip" download target="_blank">XPdata.zip</a>)
+- read an input (through a file dialog) Raman spectrum from a ruby (<a href="Data/XPdata.zip" download target="_blank">XPdata.zip</a>)
 - fit the data by two Lorentzians
 - plot the data interactively
 - ask for the laser wavelength as an input and give 568.189 nm as default
-- write the corresponding pressure on the page using the `Pruby()`{.R} function defined in `myfunc.R` found in <a href="https://github.com/colinbousige/Rclass/raw/master/Data/XPdata.zip" download target="_blank">XPdata.zip</a>.
+- write the corresponding pressure on the page using the `Pruby()`{.R} function defined in `myfunc.R` found in <a href="Data/XPdata.zip" download target="_blank">XPdata.zip</a>.
 - insert a button that will, when pressed, render a pdf report displaying the laser wavelength, the plot, the fit and the pressure found:
     + write a separate Rmd file with the proper parameters
     + render the Rmd file as a pdf (see the `render()`{.R} function and [this help](https://shiny.rstudio.com/articles/generating-reports.html))
