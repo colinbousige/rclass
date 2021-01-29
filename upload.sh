@@ -22,6 +22,7 @@ cp -r Exo/religion_babies/solution.html _book/Exo/religion_babies/
 cp -r Exo/covid/solution.html _book/Exo/covid/
 cp -r Exo/SEM_particles/solution.html _book/Exo/SEM_particles/
 cp -r Exo/co2/solution.html _book/Exo/co2/
+cp -r Exo/FTIR/solution.html _book/Exo/FTIR/
 cp -r Exo/Grt/solution.html _book/Exo/Grt/
 
 
