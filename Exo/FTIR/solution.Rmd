@@ -1,5 +1,5 @@
 ---
-title : "R Exercises - Load an plot multiple files"
+title : "R Exercises - Load and plot multiple files"
 date  : "`r Sys.Date()`"
 output: 
     html_document:
@@ -121,7 +121,7 @@ ggplot(data=df, aes(x=w, y=intensity))+
     facet_wrap(~name)
 ```
 
-- You see in the file names that there are actually 4 samples with 2 temperatures for each. Based on the column `name` of the `df` data.frame, create the columns `sample` and `temperature` that contain *numerical values*. Think about using the function `gsub()`{.R} to replace (delete) text in a string, the `substr(string, start, end)`{.R} function to get a portion of a string.
+- You see in the file names that there are actually 5 samples with 2 temperatures for each. Based on the column `name` of the `df` data.frame, create the columns `sample` and `temperature` that contain *numerical values*. Think about using the function `gsub()`{.R} to replace (delete) text in a string, the `substr(string, start, end)`{.R} function to get a portion of a string.
 
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 # Base version

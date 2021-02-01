@@ -1,5 +1,5 @@
 ---
-title : "R Exercises - Load an plot multiple files"
+title : "R Exercises - Load and plot multiple files"
 date  : "`r Sys.Date()`"
 output: 
     html_document:
@@ -46,11 +46,13 @@ library(readxl)
 flist <- list.files(path="Data", pattern = ".xls", full.names = TRUE)
 ```
 
-- Open one of the xls files and study the structure of the file. The first group of 2-column data is the blank measurement, while the second group under the blank is the actual raw measurement. Write a function `readFTIR()`{.R} that, given a file name, successively:
+- Open one of the .xls files and study the structure of the file. The first group of 2-column data is the blank measurement, while the second group under the blank is the actual raw measurement. Write a function `readFTIR()`{.R} that, given a file name, successively:
     + reads and store the blank data
     + reads and store the raw data
     + returns a data.frame containing the columns `w`, `blank`, `raw`, and `intensity`, the later being `raw` subtracted of `blank`.
-    + test it on the first file in the list
+    + test it on the first file in the list.
+
+The final table should look like this:
 
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 readFTIR <- function(filename) {
@@ -81,6 +83,8 @@ readFTIR(flist[1])
         + Add the column `name` to `tempdf` containing the current file name. If needed, trim the path from the name string using `basename()`{.R}.
         + Stack `tempdf` below `df` by binding them row-wise.
 
+The final table should look like this:
+
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 df <- tibble()
 for(file in flist){
@@ -102,7 +106,9 @@ df  <- tibble(name = flist) %>%
 
 - Plot all these files together using `ggplot2`. You can try several things, like:
     + Plot them all together in one frame with a color depending on the file name.
-    + Plot them all on a different frame (facet_wrap) for each file
+    + Plot them all on a different frame (facet_wrap) for each file.
+
+The final plots should look like this:
 
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 theme_set(theme_bw()+
@@ -120,7 +126,7 @@ ggplot(data=df, aes(x=w, y=intensity))+
     facet_wrap(~name)
 ```
 
-- You see in the file names that there are actually 4 samples with 2 temperatures for each. Based on the column `name` of the `df` data.frame, create the columns `sample` and `temperature` that contain *numerical values*. Think about using the function `gsub()`{.R} to replace (delete) text in a string, the `substr(string, start, end)`{.R} function to get a portion of a string.
+- You see in the file names that there are actually 5 samples with 2 temperatures for each. Based on the column `name` of the `df` data.frame, create the columns `sample` and `temperature` that contain *numerical values*. Think about using the function `gsub()`{.R} to replace (delete) text in a string, the `substr(string, start, end)`{.R} function to get a portion of a string.
 
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 # Base version
@@ -139,7 +145,9 @@ df  <- tibble(name = flist) %>%
 
 - Now it is time to make nicer plots:
     - Make a grid plot showing the data evolution for each sample as a function of temperature
-    - Make a grid plot with one frame per sample, and the two temperatures in different colors
+    - Make a grid plot with one frame per sample, and the two temperatures in different colors.
+
+The final plots should look like this:
 
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 ggplot(data=df, aes(x=w, y=intensity))+
