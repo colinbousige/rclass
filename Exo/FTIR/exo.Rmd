@@ -27,16 +27,22 @@ In this typical exercise, we will learn how to read multiple files and plot them
 
 ```
 
-- Open one of the xls files and study the structure of the file. The first group of 2-column data is the blank measurement, while the second group under the blank is the actual raw measurement. Write a function `readFTIR()`{.R} that, given a file name, successively:
+- Open one of the .xls files and study the structure of the file. The first group of 2-column data is the blank measurement, while the second group under the blank is the actual raw measurement. Write a function `readFTIR()`{.R} that, given a file name, successively:
     + reads and store the blank data
     + reads and store the raw data
-    + returns a data.frame containing the columns `w`, `blank`, `raw`, and `intensity`, the later being `raw` subtracted of `blank`.
-    + test it on the first file in the list
+    + returns a data.frame containing the columns `w`, `blank`, `raw`, and `transmittance`, the later being the transmittance (in percent) with respect to the blank measurement.
+    + test it on the first file in the list.
+
+The final table should look like this:
 
 ```{r echo=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-readFTIR <- function(filename) {
 
-}
+```
+
+- Plot the first file in `flist`, and try to make your plot look like this:
+
+```{r echo=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
 ```
 
 - Now we want to read all files in the list and store them in a tidy data.frame. For this we will start easy and use a `for` loop.
@@ -46,6 +52,8 @@ readFTIR <- function(filename) {
         + Read the current file with the above-defined function and store it in `tempdf`
         + Add the column `name` to `tempdf` containing the current file name. If needed, trim the path from the name string using `basename()`{.R}.
         + Stack `tempdf` below `df` by binding them row-wise.
+
+The final table should look like this:
 
 ```{r echo=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
@@ -59,16 +67,15 @@ readFTIR <- function(filename) {
 
 - Plot all these files together using `ggplot2`. You can try several things, like:
     + Plot them all together in one frame with a color depending on the file name.
-    + Plot them all on a different frame (facet_wrap) for each file
+    + Plot them all on a different frame (facet_wrap) for each file.
+
+The final plots should look like this:
 
 ```{r echo=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-theme_set(theme_bw()+
-          theme(strip.background = element_blank(),
-                strip.text = element_text(face="bold")))
 
 ```
 
-- You see in the file names that there are actually 4 samples with 2 temperatures for each. Based on the column `name` of the `df` data.frame, create the columns `sample` and `temperature` that contain *numerical values*. Think about using the function `gsub()`{.R} to replace (delete) text in a string, the `substr(string, start, end)`{.R} function to get a portion of a string.
+- You see in the file names that there are actually 5 samples with 2 temperatures for each. Based on the column `name` of the `df` data.frame, create the columns `sample` and `temperature` that contain *numerical values*. Think about using the function `gsub()`{.R} to replace (delete) text in a string, the `substr(string, start, end)`{.R} function to get a portion of a string.
 
 ```{r echo=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
@@ -76,7 +83,9 @@ theme_set(theme_bw()+
 
 - Now it is time to make nicer plots:
     - Make a grid plot showing the data evolution for each sample as a function of temperature
-    - Make a grid plot with one frame per sample, and the two temperatures in different colors
+    - Make a grid plot with one frame per sample, and the two temperatures in different colors.
+
+The final plots should look like this:
 
 ```{r echo=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 

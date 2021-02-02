@@ -47,11 +47,13 @@ library(readxl)
 flist <- list.files(path="Data", pattern = ".xls", full.names = TRUE)
 ```
 
-- Open one of the xls files and study the structure of the file. The first group of 2-column data is the blank measurement, while the second group under the blank is the actual raw measurement. Write a function `readFTIR()`{.R} that, given a file name, successively:
+- Open one of the .xls files and study the structure of the file. The first group of 2-column data is the blank measurement, while the second group under the blank is the actual raw measurement. Write a function `readFTIR()`{.R} that, given a file name, successively:
     + reads and store the blank data
     + reads and store the raw data
-    + returns a data.frame containing the columns `w`, `blank`, `raw`, and `intensity`, the later being `raw` subtracted of `blank`.
-    + test it on the first file in the list
+    + returns a data.frame containing the columns `w`, `blank`, `raw`, and `transmittance`, the later being the transmittance (in percent) with respect to the blank measurement.
+    + test it on the first file in the list.
+
+The final table should look like this:
 
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 readFTIR <- function(filename) {
@@ -65,13 +67,28 @@ readFTIR <- function(filename) {
                 col_names = c("w","raw"))
     # Base R version
     blank$raw <- raw$raw
-    blank$intensity <- blank$raw - blank$blank
+    blank$transmittance <- blank$raw/blank$blank*100
     blank
     # Tidyverse version:
     # inner_join(blank, raw, by = "w") %>% 
-    #     mutate(intensity=raw - blank)
+    #     mutate(transmittance=raw/blank*100)
 }
 readFTIR(flist[1])
+```
+
+- Plot the first file in `flist`, and try to make your plot look like this:
+
+```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+readFTIR(flist[1]) %>% 
+    ggplot(aes(x=w, y=raw))+
+        geom_line(size=1)+
+        geom_line(aes(y=blank), lty=2, col="gray")+
+        labs(x=expression(paste("Wavenumber [", cm^{-1},"]")),
+             y="Transmittance [%]")+
+        scale_x_continuous(breaks=seq(0,5000,500))+
+        theme_bw()+
+        theme(panel.grid=element_blank(),
+              text=element_text(size=16))
 ```
 
 - Now we want to read all files in the list and store them in a tidy data.frame. For this we will start easy and use a `for` loop.
@@ -81,6 +98,8 @@ readFTIR(flist[1])
         + Read the current file with the above-defined function and store it in `tempdf`
         + Add the column `name` to `tempdf` containing the current file name. If needed, trim the path from the name string using `basename()`{.R}.
         + Stack `tempdf` below `df` by binding them row-wise.
+
+The final table should look like this:
 
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 df <- tibble()
@@ -103,21 +122,22 @@ df  <- tibble(name = flist) %>%
 
 - Plot all these files together using `ggplot2`. You can try several things, like:
     + Plot them all together in one frame with a color depending on the file name.
-    + Plot them all on a different frame (facet_wrap) for each file
+    + Plot them all on a different frame (facet_wrap) for each file.
+
+The final plots should look like this:
 
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 theme_set(theme_bw()+
           theme(strip.background = element_blank(),
                 strip.text = element_text(face="bold")))
-
-ggplot(data=df, aes(x=w, y=intensity, color=name))+
+ggplot(data=df, aes(x=w, y=transmittance, color=name))+
     geom_line()+
     labs(x=expression(paste("Wavenumber [", cm^{-1},"]")),
-         y="Intensity [arb. units]")
-ggplot(data=df, aes(x=w, y=intensity))+
+         y="Transmittance [%]")
+ggplot(data=df, aes(x=w, y=transmittance))+
     geom_line()+
     labs(x=expression(paste("Wavenumber [", cm^{-1},"]")),
-         y="Intensity [arb. units]")+
+         y="Transmittance [%]")+
     facet_wrap(~name)
 ```
 
@@ -140,18 +160,20 @@ df  <- tibble(name = flist) %>%
 
 - Now it is time to make nicer plots:
     - Make a grid plot showing the data evolution for each sample as a function of temperature
-    - Make a grid plot with one frame per sample, and the two temperatures in different colors
+    - Make a grid plot with one frame per sample, and the two temperatures in different colors.
+
+The final plots should look like this:
 
 ```{r echo=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-ggplot(data=df, aes(x=w, y=intensity))+
+ggplot(data=df, aes(x=w, y=transmittance))+
     geom_line()+
     labs(x=expression(paste("Wavenumber [", cm^{-1},"]")),
-         y="Intensity [arb. units]")+
+         y="Transmittance [%]")+
     facet_grid(paste("Sample", sample) ~ paste(temperature,"ºC"))
-ggplot(data=df, aes(x=w, y=intensity, color=factor(temperature)))+
+ggplot(data=df, aes(x=w, y=transmittance, color=factor(temperature)))+
     geom_line()+
     labs(x=expression(paste("Wavenumber [", cm^{-1},"]")),
-         y="Intensity [arb. units]",
+         y="Transmittance [%]",
          color="Temperature [ºC]")+
     facet_wrap(~paste("Sample",sample))
 ```
