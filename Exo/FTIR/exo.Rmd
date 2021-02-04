@@ -27,13 +27,16 @@ In this typical exercise, we will learn how to read multiple files and plot them
 
 ```
 
-- Open one of the .xls files and study the structure of the file. The first group of 2-column data is the blank measurement, while the second group under the blank is the actual raw measurement. Write a function `readFTIR()`{.R} that, given a file name, successively:
-    + reads and store the blank data
-    + reads and store the raw data
-    + returns a data.frame containing the columns `w`, `blank`, `raw`, and `transmittance`, the later being the transmittance (in percent) with respect to the blank measurement.
-    + test it on the first file in the list.
+- Open one of the .xls files and study the structure of the file. The first group of 2-column data is the blank measurement, while the second group under the blank is the actual raw measurement. Working on the first file in the list, successively:
+    + Read and store the blank data
+    + Read and store the raw data
+    + Combine them into a data.frame (or a tibble) containing the columns `w`, `blank`, `raw`, and `transmittance`, the later being the transmittance (in percent) with respect to the blank measurement.
 
-The final table should look like this:
+```{r echo=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Wrap this into a function `readFTIR()`{.R} that, given a file name, returns a data.frame (or a tibble) with the columns `w`, `blank`, `raw`, and `transmittance`. Test it on the first file in the list.
 
 ```{r echo=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 
