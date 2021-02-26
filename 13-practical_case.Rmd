@@ -5,7 +5,20 @@
 
 Here I will provide an example workflow for treating large amounts of experimental measurements. There are many ways of doing this, this is just a working example. 
 
-You will find <a href="Data/XPdata.zip" download target="_blank">here</a> the corresponding experimental data.
+You will find here the corresponding experimental data:
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align="center"}
+library(downloadthis)
+download_link(
+  link = "./Data/data_xp/xpdata.zip",
+  output_name = "Data Files",
+  button_label = "Download Data Files",
+  button_type = "default",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
 
 My way of doing things – again, maybe not the best, but it's what I do – is that for each experiment I create a folder containing at least 4 objects:
 
@@ -18,7 +31,6 @@ So, let's begin. First we set up our working environment:
 
 ```{r, warnings=FALSE, message=FALSE}
 # Load the needed libraries and define some functions
-library(ggplot2)
 library(tidyverse)
 library(plotly)
 # Load some user-defined functions (Pruby)

@@ -254,13 +254,15 @@ d_fitted %>%
 - Using `lm()`{.R} or `nls()`{.R} fit each column as a function of `x` and display the "experimental" data and the fit on the same graph.
     + Tip: Take a look at the function `dnorm()`{.R} to define a Gaussian
 
+
 <!-- ```{r}
-x <- seq(-10,10,.1)
+x <- seq(0,10,.1)
 y <- 4*x+6+runif(length(x))*5
-z <- 100*dnorm(x, mean=2.1,sd=2)+runif(length(x)) -.5
-w <- sin(x/1.5)+runif(length(x))/2 -.5/2
-u <- sin(x/1.5)+x*.2+runif(length(x))/5 -.5/5
+z <- 10*dnorm(x, mean=4.1,sd=0.52)+2*runif(length(x)) -.5
+w <- x^3.1+200*runif(length(x))/2
+u <- -pracma::erf(x/.6-5)+runif(length(x), min=-.1, max=.1) + 1
 df <- data.frame(x=x, y=y, z=z, w=w, u=u)
+plot(df$x, df$u)
 write.table(df, "Data/exo_fit.txt", quote=FALSE, row.names=FALSE)
 ``` -->
 

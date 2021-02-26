@@ -87,7 +87,7 @@ legend("topleft",
 
 Most needs should be covered with this simple plot that can be adapted.
 
-A plot can be exported if surrounded by `XXX` and `dev.off()`{.R}, with `XXX` that can be `pdf("xxx.pdf",height=6, width=8)`{.R}, `png("xxx.png",height=6, width=8)`{.R}... Example:
+A plot can be exported if surrounded by `XXX` and `dev.off()`{.R}, with `XXX` that can be `pdf("xxx.pdf",height=6, width=8)`{.R}, `png("xxx.png",height=600, width=800)`{.R}... Example:
 ```r
 pdf("test.pdf",height=6, width=8)
 plot(x,y,
@@ -100,7 +100,7 @@ dev.off()
 You can also export the graph as a `.tex` file using `tikz()`{.R}, which allows you to use $\LaTeX$ mathematical expressions (don't forget to escape the `\` character):
 ```r
 library(tikzDevice)
-tikz("plot.tex",height=6, width=8,pointsize = 10,standAlone=TRUE)
+tikz("plot.tex",height=6, width=8, pointsize = 10, standAlone=TRUE)
 plot(x,y,
      type="l",
      xlab="\\omega_i"
@@ -444,9 +444,8 @@ If you want to make an inset plot, first make your plots, then add a plot within
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 library(ggplot2)
-p4 + annotation_custom(ggplotGrob(p3), 
-                       xmin = -6.5, xmax = -1.5, 
-                       ymin = .2,   ymax = .4)
+p4 + inset_element(p3, left = 0.01, right = .4, 
+                       bottom = .45,   top = .99)
 ```
 
 
