@@ -5,20 +5,7 @@
 
 Here I will provide an example workflow for treating large amounts of experimental measurements. There are many ways of doing this, this is just a working example. 
 
-You will find here the corresponding experimental data:
-
-```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align="center"}
-library(downloadthis)
-download_link(
-  link = "./Data/data_xp/xpdata.zip",
-  output_name = "Data Files",
-  button_label = "Download Data Files",
-  button_type = "default",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
-```
+You can <a href="Data/data_xp/xpdata.zip" target="_blank" download>download here</a> the corresponding experimental data.
 
 My way of doing things – again, maybe not the best, but it's what I do – is that for each experiment I create a folder containing at least 4 objects:
 
@@ -41,7 +28,7 @@ Lor <- function(x,x0=0,FWHM=1){
 }
 ```
 
-In the working directory, we create a folder `Data` in which we extract the <a href="Data/XPdata.zip" download target="_blank">XPdata.zip</a> archive. It contains a number of txt files named `rubis_XX.txt`. They are Raman spectra of ruby chips under pressure used for the calibration of pressure in a diamond anvil cell, their shift is directly correlated to the pressure in the DAC.
+In the working directory, we create a folder `Data` in which we extract the <a href="Data/data_xp/xpdata.zip" download target="_blank">xpdata.zip</a> archive. It contains a number of .txt files named `rubis_XX.txt`. They are Raman spectra of ruby chips under pressure used for the calibration of pressure in a diamond anvil cell, their shift is directly correlated to the pressure in the DAC.
 
 First, let's list all these files:
 ```{r, warning=FALSE}
@@ -55,7 +42,7 @@ spec   <- tibble()
 fitpar <- tibble()
 ```
 
-Now let's read the data, store them in the tibble `spec` together with other informations, such as the name of the file, the fitted curves of the peaks, or the obtained pressure (the function `Pruby()`{.R} is defined in `myfunc.R`).
+Now let's read the data, store them in the tibble `spec` together with other informations, such as the name of the file, the fitted curves of the peaks, or the obtained pressure (the function `Pruby()`{.R} is defined in `myfunc.R`). This is done here in a `for` loop, but the `tidyverse` version is treated as an exercise below.
 
 ```{r, out.width='100%', fig.asp=.85, cache=FALSE, warning=FALSE, message=FALSE}
 # Reading and storing all treated data 
@@ -116,12 +103,13 @@ for(file in frubis){
 Now let's take a global look at our data. For this I like the slider functionality of `plotly`. Make your `ggplot` as usual, and just add the keyword `frame` that is read by `ggplotly()`{.R}:
 
 ```{r, out.width='100%', fig.asp=.85, cache=FALSE, warning=FALSE, message=FALSE}
-gg <- ggplot(data=spec,aes(x=w)) +
-          labs(x="Raman Shift [1/cm]", y="Intensity [arb. units]")+
-          geom_point(aes(y=Int_n, frame=P))+
-          geom_line(aes(y=ytot_n, frame=P),color="red")+
-          geom_line(aes(y=y1_n, frame=P),color="royalblue", alpha=0.5)+
-          geom_line(aes(y=y2_n, frame=P),color="orange", alpha=0.5)+
+gg <- ggplot(data = spec, aes(x = w, frame=P)) +
+          labs(x = "Raman Shift [1/cm]",
+               y = "Intensity [arb. units]")+
+          geom_point(aes(y=Int_n))+
+          geom_line(aes(y=ytot_n), color="red")+
+          geom_line(aes(y=y1_n), color="royalblue", alpha=0.5)+
+          geom_line(aes(y=y2_n), color="orange", alpha=0.5)+
           theme_bw()
 ggplotly(gg, dynamicTicks = TRUE) %>%
   animation_opts(5)%>%
@@ -208,7 +196,7 @@ library(ggplot2)
 library(broom)
 library(plotly)
 source("myfunc.R")
-Lor <- function(x,x0=0,FWHM=1){
+Lor <- function(x, x0=0, FWHM=1){
     2/(pi*FWHM)/( 1 + ((x-x0)/(FWHM/2))^2 )
 }
 # Find all files
@@ -221,9 +209,9 @@ data <- tibble(name = frubis) %>%
            fit = purrr::map(data, 
                     ~ nls(data = .,
                           Int ~ y0 + A1*Lor(w,x1,FWHM1) + A2*Lor(w,x2,FWHM2),
-                          start=list(y0 = 0.01,
-                                     x1 = .$w[which.max(.$Int)] - 2,
-                                     x2 = .$w[which.max(.$Int)] - 30,
+                          start=list(y0    = 0.01,
+                                     x1    = .$w[which.max(.$Int)] - 2,
+                                     x2    = .$w[which.max(.$Int)] - 30,
                                      FWHM1 = 10,
                                      FWHM2 = 10,
                                      A1    = max(.$Int)*10,
@@ -242,11 +230,11 @@ data <- tibble(name = frubis) %>%
 P <- data %>% 
     unnest(augmented) %>% 
     group_by(name) %>% 
-    mutate(Int_n=Int/max(Int), 
-           .fitted_n=.fitted/max(Int)) %>% 
+    mutate(Int_n     = Int/max(Int), 
+           .fitted_n = .fitted/max(Int)) %>% 
     ggplot(aes(x=w, frame=P))+
-        geom_point(aes(y=Int_n), alpha=.3)+
-        geom_line(aes(y=.fitted_n), color="red")
+        geom_point(aes(y = Int_n), alpha=.3)+
+        geom_line(aes(y = .fitted_n), color="red")
 ggplotly(P, dynamicTicks = TRUE) %>% 
     animation_opts(5)%>%
       layout(xaxis = list(autorange=FALSE, range = c(3050, 3550)))%>%

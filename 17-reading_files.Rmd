@@ -88,6 +88,18 @@ For more image processing (pictures or videos), I recommend the [`imager` packag
 
 In case your spectroscopic data wasn't saved as an ASCII file but as a `spc` or another format, take a look at the [`lightr` package](https://docs.ropensci.org/lightr/), for example.
 
+Example of a reading function for an spc file:
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+library(lightr)
+read_spc <- function(fname){
+    d <- lr_parse_spc(fname) # d is a list
+    tibble(w         = d[[1]]$wl, 
+           intensity = d[[1]]$processed)
+}
+```
+
 
 ## Compressed binary data files: HDF, netCDF
 
