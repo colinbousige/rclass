@@ -2,6 +2,8 @@
 
 Here, I'll show you how to read as many data files you want, fit them, get a parameter from the fit to compute a physical value (here, the pressure), and plot the data and the fit result as an interactive plot. This is done here in less than 50 lines of code: at the end of the class, you will understand all this, and of course be able to do this on your own!
 
+## Reading and fitting all your experimental files in one go
+
 ```{r warning=FALSE, message=FALSE}
 # Load the needed libraries
 library(tidyverse)
@@ -13,9 +15,9 @@ Lor <- function(x, x0=0, FWHM=1){
     2/(pi*FWHM)/( 1 + ((x-x0)/(FWHM/2))^2 )
 }
 # Find all wanted files in the Data/ folder
-frubis <- list.files(path="Data", pattern = "rubis")
+flist <- list.files(path="Data", pattern = "rubis")
 # Load all data files and do the fits in a single pipe flow
-data <- tibble(name = frubis) %>%
+data <- tibble(name = flist) %>%
     mutate(data = map(name,
                       ~read_table2(file      = file.path("Data", .),
                                    col_names = c("w", "Int"))),
@@ -30,18 +32,66 @@ data <- tibble(name = frubis) %>%
                                       A2    = max(.$Int)*10))),
           tidied = map(fit, tidy),
           augmented = map(fit, augment),
-          P = map(tidied, ~round(Pruby(.$estimate[.$term=='x1']),2))
+          P = map_dbl(tidied, ~round(Pruby(.$estimate[.$term=='x1']),2))
         ) %>% 
-    unnest(P)
-# Make the plot of the fits
+    separate(name, c("sample","run", NA), convert=TRUE) %>% 
+    relocate(P, .after = run)
+data
+```
+
+## Various ways of plotting it
+
+#### Facet plot
+
+```{r warning=FALSE, message=FALSE}
 P <- data %>% 
     unnest(augmented) %>% 
-    group_by(name) %>% 
+    group_by(run) %>% 
+    mutate(Int_n     = Int/max(Int), 
+           .fitted_n = .fitted/max(Int)) %>% 
+    ggplot(aes(x=w))+
+        geom_point(aes(y = Int_n), alpha=.3)+
+        geom_line(aes(y = .fitted_n), color="red")+
+        facet_wrap(~reorder(paste(P,"GPa"),P))+
+        labs(x="Raman Shift [1/cm]",
+             y="Intensity [arb. units]")+
+        theme_bw()+
+        theme(strip.background = element_blank())
+# Make the plot interactive
+ggplotly(P, dynamicTicks = TRUE)
+```
+
+#### Ridge plot
+
+```{r warning=FALSE, message=FALSE}
+P <- data %>% 
+    unnest(augmented) %>% 
+    group_by(run) %>% 
+    mutate(Int_n     = Int/max(Int), 
+           .fitted_n = .fitted/max(Int)) %>% 
+    ggplot(aes(x=w, group=P))+
+        geom_point(aes(y = Int_n + P), alpha=.2)+
+        geom_line(aes(y = .fitted_n + P), color="red")+
+        labs(x="Raman Shift [1/cm]",
+             y="Pressure [GPa]")+
+        theme_bw()
+# Make the plot interactive
+ggplotly(P, dynamicTicks = TRUE)
+```
+
+#### Slider plot
+
+```{r warning=FALSE, message=FALSE}
+P <- data %>% 
+    unnest(augmented) %>% 
+    group_by(run) %>% 
     mutate(Int_n     = Int/max(Int), 
            .fitted_n = .fitted/max(Int)) %>% 
     ggplot(aes(x=w, frame=P))+
         geom_point(aes(y = Int_n), alpha=.3)+
         geom_line(aes(y = .fitted_n), color="red")+
+        labs(x="Raman Shift [1/cm]",
+             y="Intensity [arb. units]")+
         theme_bw()
 # Make the plot interactive
 ggplotly(P, dynamicTicks = TRUE) %>% 

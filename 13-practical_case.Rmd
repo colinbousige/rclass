@@ -215,17 +215,11 @@ data <- tibble(name = frubis) %>%
                                      FWHM1 = 10,
                                      FWHM2 = 10,
                                      A1    = max(.$Int)*10,
-                                     A2    = max(.$Int)*10),
-                          lower = list(y0 = 0, 
-                                       x1 = 0, x2 = 0,
-                                       FWHM1 = 0, FWHM2 = 0,
-                                       A1 = 0, A2 = 0),
-                          algorithm = "port")),
-          tidied = purrr::map(fit, tidy),
-          augmented = purrr::map(fit, augment),
-          P = purrr::map(tidied, ~round(Pruby(.$estimate[.$term=='x1']),2))
-        ) %>% 
-    unnest(P)
+                                     A2    = max(.$Int)*10))),
+           tidied = purrr::map(fit, tidy),
+           augmented = purrr::map(fit, augment),
+           P = purrr::map_dbl(tidied, ~round(Pruby(.$estimate[.$term=='x1']),2))
+        )
 # make the plot of the fits
 P <- data %>% 
     unnest(augmented) %>% 
