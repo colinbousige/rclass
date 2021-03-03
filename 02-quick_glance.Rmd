@@ -30,10 +30,10 @@ data <- tibble(name = flist) %>%
                                       FWHM1 = 10, FWHM2 = 10,
                                       A1    = max(.$Int)*10,
                                       A2    = max(.$Int)*10))),
-          tidied = map(fit, tidy),
-          augmented = map(fit, augment),
-          P = map_dbl(tidied, ~round(Pruby(.$estimate[.$term=='x1']),2))
-        ) %>% 
+           tidied = map(fit, tidy),
+           augmented = map(fit, augment),
+           P = map_dbl(tidied, ~round(Pruby(.$estimate[.$term=='x1']),2))
+           ) %>% 
     separate(name, c("sample","run", NA), convert=TRUE) %>% 
     relocate(P, .after = run)
 data
@@ -41,10 +41,10 @@ data
 
 ## Various ways of plotting it
 
-#### Facet plot
+**Facet plot**
 
 ```{r warning=FALSE, message=FALSE}
-P <- data %>% 
+data %>% 
     unnest(augmented) %>% 
     group_by(run) %>% 
     mutate(Int_n     = Int/max(Int), 
@@ -52,19 +52,17 @@ P <- data %>%
     ggplot(aes(x=w))+
         geom_point(aes(y = Int_n), alpha=.3)+
         geom_line(aes(y = .fitted_n), color="red")+
-        facet_wrap(~reorder(paste(P,"GPa"),P))+
+        facet_wrap(~reorder(paste(P,"GPa"),P), ncol=3)+
         labs(x="Raman Shift [1/cm]",
              y="Intensity [arb. units]")+
         theme_bw()+
         theme(strip.background = element_blank())
-# Make the plot interactive
-ggplotly(P, dynamicTicks = TRUE)
 ```
 
-#### Ridge plot
+**Ridge plot**
 
 ```{r warning=FALSE, message=FALSE}
-P <- data %>% 
+data %>% 
     unnest(augmented) %>% 
     group_by(run) %>% 
     mutate(Int_n     = Int/max(Int), 
@@ -75,11 +73,9 @@ P <- data %>%
         labs(x="Raman Shift [1/cm]",
              y="Pressure [GPa]")+
         theme_bw()
-# Make the plot interactive
-ggplotly(P, dynamicTicks = TRUE)
 ```
 
-#### Slider plot
+**Slider plot**
 
 ```{r warning=FALSE, message=FALSE}
 P <- data %>% 
@@ -101,3 +97,4 @@ ggplotly(P, dynamicTicks = TRUE) %>%
         currentvalue = list(prefix = "Pressure: ", 
                             suffix = " GPa", font = list(color="grey")))
 ```
+
