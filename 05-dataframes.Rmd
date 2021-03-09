@@ -161,7 +161,7 @@ head(tib[,1])  # is a tibble
 
 In the end, base R and the `tidyverse` package provide many efficient functions to perform most of the tasks you would want to perform recursively, thus allowing avoiding explicit for loops.
 
-Here are some examples, and you will find much more [here](https://dplyr.tidyverse.org/). Note the use of the pipe operator, `%>%`{.R}, that allows a clear syntax for successive operations:
+Here are some examples, and you will find much more [here](https://dplyr.tidyverse.org/). Take a look at the cheatsheet there, it's really helpful. Note the use of the pipe operator, `%>%`{.R}, that allows a clear syntax for successive operations:
 
 ```{r, message=FALSE}
 # create a random tibble
@@ -177,11 +177,11 @@ dt
 dt %>% 
     group_by(signx) %>% 
     summarise(mean_x = mean(x), 
-              sd_x   = sd(x)
-             )
+              sd_x   = sd(x))
 dt %>% 
     group_by(signx, signy) %>% 
-    summarise(mean_x=mean(x), mean_y=mean(y))
+    summarise(mean_x=mean(x), 
+              mean_y=mean(y))
 # sorting
 dt %>% arrange(x)
 dt %>% arrange(x, desc(y))
@@ -191,6 +191,10 @@ dt2 <- tibble(signx=c("positive","positive","negative","negative"),
               value=c(TRUE, FALSE, FALSE, TRUE))
 dt2
 inner_join(dt,dt2)
+# merge tables row-wise, even if there are missing rows
+dt3 <- tibble(a=1:3, b=3:5, c=6:8)
+dt4 <- tibble(a=3:1, c=3:5)
+bind_rows(dt3,dt4)
 # add/modify a column
 dt %>% mutate(w=seq_along(x), z=sin(x))
 dt %>% mutate(x=seq_along(x))
@@ -202,6 +206,37 @@ dt %>% select(-x) # all but x
 # filtering columns
 dt %>% filter(signx=="positive")
 dt %>% filter(x<0, y>.1)
+# reorder columns
+dt %>% relocate(y, .after = signy)
+# separate columns into multiple ones based on separators
+dt5 <- tibble(file=list.files(path="Exo/FTIR/Data/"))
+dt5
+dt5 %>% separate(file, c(NA, "sample", "temperature", NA), convert = TRUE)
+# apply a function recursively on each element of a column with map()
+dt6 <- tibble(file=list.files(path="Exo/spectro/Data/", pattern = ".txt")) %>% 
+    mutate(data = map(file, 
+                      ~read_table2(file.path("Exo/spectro/Data", .),
+                                   col_names = c("w", "int"))
+                      ),
+           fit = map(data, ~nls(data=., 
+                                int ~ y0+A1*Lor(w, w1, sd1)+A2*Lor(w, w2, sd2),
+                                start=list(y0  = .1,
+                                           A1  = max(.$int)*10, 
+                                           A2  = max(.$int)*10,
+                                           w1  = .$w[which.max(.$int)],
+                                           w2  = .$w[which.max(.$int)]-30,
+                                           sd1 = 10, sd2 = 10))
+                     ),
+           tidied = map(fit, broom::tidy),
+           mean_int = map_dbl(data, ~mean(.$int))
+           )
+dt6
+# un-nesting data
+dt7 <- dt6 %>% unnest(tidied)
+dt7
+# nesting data per repeated values in a column (~equivalent to grouping)
+dt7 %>% nest(data=-file)
+dt7 %>% nest(data=-c(file, mean_int))
 # providing data to ggplot
 library(ggplot2)
 dt %>% filter(abs(y)> 0.1) %>% 

@@ -71,7 +71,7 @@ x <- runif(1e8)
 test_time(forloop, x); test_time(noforloop, x)
 ```
 
-Avoiding loops should therefore be sought for when possible. R helps us in this way through the base functions `apply()`{.R}, `sapply()`{.R} and `lapply()`{.R}. Operations in the `tidyverse`{.R} are also a good way of avoiding loops. 
+Avoiding loops should therefore be sought for when possible. R helps us in this way through the base functions `apply()`{.R}, `sapply()`{.R} and `lapply()`{.R}. [Operations in the `tidyverse`{.R}](#operations-in-the-tidyverse) are also a good way of avoiding loops. 
 
 Take a look at the help on these functions, but the summary is that `apply(df, direction, function)`{.R} applies a function in the wanted direction (1 for rows, 2 for columns) of the given `data.frame`{.R} (or vector). Example:
 
