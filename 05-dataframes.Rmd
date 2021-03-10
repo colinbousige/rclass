@@ -156,15 +156,31 @@ head(tib[[1]]) # is a vector
 head(tib[,1])  # is a tibble
 ```
 
+Another interesting feature of tibbles is that their columns can contain vectors, like usual, but also lists of any R objects like other tibbles, `nls()`{.R} object, etc. This is called "nesting":
+
+```{r warning=FALSE, message=FALSE}
+tib1 <- tibble(x=1:3, y=1:3)
+tib2 <- tibble(x=1:5, y=1:5)
+tib <- tibble(number=1:2, data=list(tib1, tib2))
+tib
+tib_unnested <- tib %>% unnest(data)
+tib_unnested
+tib_unnested %>% nest(data=c(number,y))
+tib_unnested %>% nest(data=c(number,y)) %>% pull(data)
+```
+
+
 
 ## Operations in the tidyverse
 
 In the end, base R and the `tidyverse` package provide many efficient functions to perform most of the tasks you would want to perform recursively, thus allowing avoiding explicit for loops.
 
-Here are some examples, and you will find much more [here](https://dplyr.tidyverse.org/). Take a look at the cheatsheet there, it's really helpful. Note the use of the pipe operator, `%>%`{.R}, that allows a clear syntax for successive operations:
+Here are some examples, and you will find much more [here](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html). Take a look at the cheatsheets on [tidyr](https://github.com/rstudio/cheatsheets/blob/master/data-import.pdf) and on [dplyr](https://github.com/rstudio/cheatsheets/blob/master/data-transformation.pdf), it's really helpful. 
+
+Note the use of the pipe operator, `%>%`{.R}, that allows a clear syntax for successive operations.
 
 ```{r, message=FALSE}
-# create a random tibble
+# Let's create a random tibble
 library(tidyverse)
 N <- 500
 dt <- tibble(x     = rep(runif(N,-1,1),3), 
@@ -173,46 +189,117 @@ dt <- tibble(x     = rep(runif(N,-1,1),3),
              signy = ifelse(y>0,"positive","negative")
 )
 dt
-# means/sd by groups of another variable
+```
+
+### Sampling data
+```{r, message=FALSE}
+dt %>% slice(1:3)  # by index
+dt %>% sample_n(3) # randomly
+```
+
+### Operations on groups of a variable
+`group_by(column)`{.R} groups by similar values of the wanted column(s) and performs the next operations on each element of the group successively.
+
+```{r, message=FALSE}
 dt %>% 
     group_by(signx) %>% 
-    summarise(mean_x = mean(x), 
+    sample_n(3)
+dt %>% 
+    group_by(signx, signy) %>% 
+    sample_n(3)
+```
+
+### Summary by groups of a variable
+`summarise()`{.R} returns a single value for each element of the groups.
+
+```{r, message=FALSE}
+dt %>% 
+    group_by(signx) %>% 
+    summarise(count  = n(),
+              mean_x = mean(x), 
               sd_x   = sd(x))
 dt %>% 
     group_by(signx, signy) %>% 
-    summarise(mean_x=mean(x), 
-              mean_y=mean(y))
-# sorting
+    summarise(count  = n(),
+              mean_x = mean(x), 
+              mean_y = mean(y))
+```
+
+### Sorting
+
+```{r, message=FALSE}
 dt %>% arrange(x)
 dt %>% arrange(x, desc(y))
-# merge table information
+```
+
+### Merge tables column-wise
+
+At least one column with the **exact** same name must be present in each table.
+```{r, message=FALSE}
 dt2 <- tibble(signx=c("positive","positive","negative","negative"), 
               signy=c("positive","negative","positive","negative"), 
               value=c(TRUE, FALSE, FALSE, TRUE))
 dt2
 inner_join(dt,dt2)
-# merge tables row-wise, even if there are missing rows
+```
+
+### Merge tables row-wise
+This works even if there are missing rows.
+```{r, message=FALSE}
 dt3 <- tibble(a=1:3, b=3:5, c=6:8)
 dt4 <- tibble(a=3:1, c=3:5)
 bind_rows(dt3,dt4)
-# add/modify a column
+```
+
+### Add/modify a column
+`mutate()`{.R}, like `$`{.R}, adds a column if it doesn't exist, and modifies it if it does.
+```{r, message=FALSE}
 dt %>% mutate(w=seq_along(x), z=sin(x))
 dt %>% mutate(x=seq_along(x))
-# selecting columns
-dt %>% select(starts_with("sign"))
-dt %>% select(contains("x"))
+```
+
+### Selecting columns
+
+```{r, message=FALSE}
 dt %>% select(x)  # only x
 dt %>% select(-x) # all but x
-# filtering columns
+dt %>% select(starts_with("sign"))
+dt %>% select(contains("x"))
+```
+
+### Filtering columns
+
+```{r, message=FALSE}
 dt %>% filter(signx=="positive")
-dt %>% filter(x<0, y>.1)
-# reorder columns
+dt %>% filter(x<0, y>.1) # multiple filters can be applied at once
+```
+
+### Reorder columns
+
+```{r, message=FALSE}
 dt %>% relocate(y, .after = signy)
-# separate columns into multiple ones based on separators
+```
+
+### Separate columns
+
+The separation is based on standard separators such as "-", "\_", ".", etc. A single separator can be specified with the argument "sep".
+
+```{r, message=FALSE}
 dt5 <- tibble(file=list.files(path="Exo/FTIR/Data/"))
 dt5
 dt5 %>% separate(file, c(NA, "sample", "temperature", NA), convert = TRUE)
-# apply a function recursively on each element of a column with map()
+dt5 %>% separate(file, 
+                 c("name", "extension"), 
+                 sep = "\\."
+                 )
+```
+
+### Apply a function recursively on each element of a column with map()
+
+```{r, message=FALSE}
+Lor <- function(x, x0=0, FWHM=1){
+    2/(pi*FWHM)/( 1 + ((x-x0)/(FWHM/2))^2 )
+}
 dt6 <- tibble(file=list.files(path="Exo/spectro/Data/", pattern = ".txt")) %>% 
     mutate(data = map(file, 
                       ~read_table2(file.path("Exo/spectro/Data", .),
@@ -231,13 +318,26 @@ dt6 <- tibble(file=list.files(path="Exo/spectro/Data/", pattern = ".txt")) %>%
            mean_int = map_dbl(data, ~mean(.$int))
            )
 dt6
-# un-nesting data
+```
+
+### Nesting and un-nesting data
+
+```{r, message=FALSE}
 dt7 <- dt6 %>% unnest(tidied)
 dt7
-# nesting data per repeated values in a column (~equivalent to grouping)
+# Nesting data per repeated values in a column (~equivalent to grouping)
 dt7 %>% nest(data=-file)
 dt7 %>% nest(data=-c(file, mean_int))
-# providing data to ggplot
+# This is equivalent to:
+dt7 %>% 
+    group_by(file, mean_int) %>% 
+    summarise(data=list(tibble(data, fit, term, estimate, 
+                               std.error, statistic, p.value)))
+```
+
+### Providing data to ggplot
+
+```{r, message=FALSE}
 library(ggplot2)
 dt %>% filter(abs(y)> 0.1) %>% 
     ggplot(aes(x=x, y=y, color=signy))+

@@ -360,7 +360,7 @@ p
 
 OK, maybe not here because the graph gets clogged, so we can lighten it by sampling data:
 ```{r, warnings=FALSE}
-p <- ggplot(diamonds[sample(nrow(diamonds), size=500),], 
+p <- ggplot(diamonds %>% sample_n(500), 
             aes(x = carat, y = price, size = cut)) + 
         geom_point(aes(color = clarity), alpha = 0.5) + 
         scale_colour_manual(values = colors, name = "Clarity")
@@ -409,7 +409,7 @@ library(plotly)
 library(plotly)
 ```
 ```{r, warnings=FALSE}
-p <- ggplot(diamonds[sample(nrow(diamonds), size = 100),], 
+p <- ggplot(diamonds %>% sample_n(100), 
         aes(x = carat, y = price)) + 
         geom_point(aes(color = clarity), alpha = 0.5, size = 2) + 
         my_theme
