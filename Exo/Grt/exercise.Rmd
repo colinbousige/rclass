@@ -87,7 +87,7 @@ library(ggplot2)
 Grt_files <- list.files(pattern = "Grt_", path="Data")
 Grt       <- tibble()
 for(Grt_file in Grt_files){#Grt_file <- Grt_files[1]
-    d <- read_table2(file.path("Data",Grt_file), col_names=FALSE)
+    d <- read_table(file.path("Data",Grt_file), col_names=FALSE)
     names(d) <- as.character(seq(0,200, length=ncol(d)))
     d$r.A    <- seq(0,20, length=nrow(d))
     eps <- gsub(".dat","",gsub("Grt_","",Grt_file))

@@ -137,7 +137,7 @@ You can find more information on data import and [tidyness](https://garrettgman.
 
 ### Tibbles
 
-A `tibble`{.R} is an enhanced version of the `data.frame`{.R} provided by the `tidyverse` package. The main advantage of `tibble`{.R} is that it has easier initialization and nicer printing than `data.frame`{.R}, and the performance are also enhanced – especially for the reading from files with `read_delim()`{.R}, `read_tsv()`{.R} and `read_csv()`{.R}. Otherwise, the handling is basically the same.
+A `tibble`{.R} is an enhanced version of the `data.frame`{.R} provided by the `tidyverse` package. The main advantage of `tibble`{.R} is that it has easier initialization and nicer printing than `data.frame`{.R}, and the performance are also enhanced – especially for the reading from files with `read_delim()`{.R}, `read_tsv()`{.R}, `read_table()`{.R} and `read_csv()`{.R}. Otherwise, the handling is basically the same.
 
 More on tibbles [here](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
 
@@ -151,7 +151,8 @@ library(tidyverse)
 data.frame(x=runif(1e3), y=cumsum(x))
 # ATTENTION subsetting
 # Tibbles are quite strict about subsetting. [ always returns another tibble. 
-# Contrast this with a data frame: sometimes [ returns a data frame and sometimes it just returns a vector:
+# Contrast this with a data frame: sometimes [ returns a data frame and 
+# sometimes it just returns a vector:
 head(tib[[1]]) # is a vector
 head(tib[,1])  # is a tibble
 ```
@@ -304,7 +305,7 @@ Lor <- function(x, x0=0, FWHM=1){
 }
 dt6 <- tibble(file=list.files(path="Exo/spectro/Data/", pattern = ".txt")) %>% 
     mutate(data = map(file, 
-                      ~read_table2(file.path("Exo/spectro/Data", .),
+                      ~read_table(file.path("Exo/spectro/Data", .),
                                    col_names = c("w", "int"))
                       ),
            fit = map(data, ~nls(data=., 
@@ -463,7 +464,7 @@ head(d)
 <details>
     <summary>**Exercise 4**</summary>
 
-- Create a `data.frame`{.R} (or a `tibble`{.R}) called `people` from <a href="Data/people.txt" download target="_blank">people.txt</a>. Try using the function `read.table` or its `tidyverse` equivalent `read_table2`.
+- Create a `data.frame`{.R} (or a `tibble`{.R}) called `people` from <a href="Data/people.txt" download target="_blank">people.txt</a>. Try using the function `read.table` or its `tidyverse` equivalent `read_table`.
 - What are the column names of `people`?
 - Add a column `age` and fill it with the appropriate values
     + *Bonus Tip:* to interactively enter the data, look into the function `readline()`{.R} and try making a `for` loop

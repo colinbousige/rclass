@@ -562,13 +562,13 @@ summary {
 <pre><code>## The following object is masked from &#39;package:purrr&#39;:
 ## 
 ##     transpose</code></pre>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>f1&lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="kw">read_table2</span>(<span class="st">&#39;Data/PY02_pressures.dat&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>f1&lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="kw">read_table</span>(<span class="st">&#39;Data/PY02_pressures.dat&#39;</span>))</span></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   run = col_double(),
 ##   P.kbar = col_double()
 ## )</code></pre>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>f2&lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="kw">read_table2</span>(<span class="st">&#39;Data/PY02bis_pressures.dat&#39;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>f2&lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="kw">read_table</span>(<span class="st">&#39;Data/PY02bis_pressures.dat&#39;</span>))</span></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   run = col_double(),
@@ -607,7 +607,7 @@ summary {
 </ol>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>readfile &lt;-<span class="st"> </span><span class="cf">function</span>(filename){</span>
 <span id="cb27-2"><a href="#cb27-2"></a>  </span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="kw">read_table2</span>(filename)</span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="kw">read_table</span>(filename)</span>
 <span id="cb27-4"><a href="#cb27-4"></a></span>
 <span id="cb27-5"><a href="#cb27-5"></a>}</span>
 <span id="cb27-6"><a href="#cb27-6"></a></span>

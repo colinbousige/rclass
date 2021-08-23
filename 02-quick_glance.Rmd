@@ -19,8 +19,8 @@ flist <- list.files(path="Data", pattern = "rubis")
 # Load all data files and do the fits in a single pipe flow
 data <- tibble(name = flist) %>%
     mutate(data = map(name,
-                      ~read_table2(file      = file.path("Data", .),
-                                   col_names = c("w", "Int"))),
+                      ~read_table(file      = file.path("Data", .),
+                                  col_names = c("w", "Int"))),
            fit = map(data, 
                      ~ nls(data = .,
                            Int ~ y0 + A1*Lor(w,x1,FWHM1) + A2*Lor(w,x2,FWHM2),
@@ -41,7 +41,7 @@ data
 
 ## Various ways of plotting it
 
-**Facet plot**
+### Facet plot
 
 ```{r warning=FALSE, message=FALSE}
 data %>% 
@@ -59,7 +59,7 @@ data %>%
         theme(strip.background = element_blank())
 ```
 
-**Ridge plot**
+### Ridge plot
 
 ```{r warning=FALSE, message=FALSE}
 data %>% 
@@ -75,7 +75,7 @@ data %>%
         theme_bw()
 ```
 
-**Slider plot**
+### Slider plot
 
 ```{r warning=FALSE, message=FALSE}
 P <- data %>% 

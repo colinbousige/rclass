@@ -48,7 +48,7 @@ Now let's read the data, store them in the tibble `spec` together with other inf
 # Reading and storing all treated data 
 for(file in frubis){
     # Reading raw data to a tibble
-    d <- read_table2(file.path("Data",file), 
+    d <- read_table(file.path("Data",file), 
                   col_names = c("w", "Int") )
     # Fitting two Lorentzians using the previously defined function Lor()
     # Initial guess of the position and parameters:
@@ -204,7 +204,7 @@ frubis <- list.files(path="Data", pattern = "rubis")
 # Load all data and do the fits in a single pipe flow
 data <- tibble(name = frubis) %>%
     mutate(data = purrr::map(name,
-                             ~read_table2(file      = file.path("Data", .),
+                             ~read_table(file      = file.path("Data", .),
                                           col_names = c("w", "Int"))),
            fit = purrr::map(data, 
                     ~ nls(data = .,

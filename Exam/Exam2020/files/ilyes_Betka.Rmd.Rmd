@@ -55,22 +55,22 @@ Murnaghan <- function(p,k){
 2. Find in the `Data`{.R} folder all the files containing the experimental diffraction patterns. They are under the form `PY02_Pxx.dat`{.R} or `PY02bis_Pxx.dat`{.R}. Store this list of files in a vector called `flist`{.R}.
 
 ```{r}
-a<-read_table2("Data/PY02bis_P1.dat")
-b<- read_table2("Data/PY02bis_P2.dat")
-c<-read_table2("Data/PY02bis_P3.dat")
-d<-read_table2("Data/PY02bis_P4.dat")
-e<- read_table2("Data/PY02bis_P5.dat")
-a1<- read_table2("Data/PY02_P1.dat")
-a2<- read_table2("Data/PY02_P2.dat")
-a3<- read_table2("Data/PY02_P3.dat")
-a4<-  read_table2("Data/PY02_P4.dat")
-a5<- read_table2("Data/PY02_P5.dat")
-a6<- read_table2("Data/PY02_P6.dat")
-a7<- read_table2("Data/PY02_P7.dat")
-a8 <- read_table2("Data/PY02_P8.dat")
-a9<- read_table2("Data/PY02_P9.dat")
-a10<- read_table2("Data/PY02_P10.dat")
-a11<- read_table2("Data/PY02_P11.dat")
+a<-read_table("Data/PY02bis_P1.dat")
+b<- read_table("Data/PY02bis_P2.dat")
+c<-read_table("Data/PY02bis_P3.dat")
+d<-read_table("Data/PY02bis_P4.dat")
+e<- read_table("Data/PY02bis_P5.dat")
+a1<- read_table("Data/PY02_P1.dat")
+a2<- read_table("Data/PY02_P2.dat")
+a3<- read_table("Data/PY02_P3.dat")
+a4<-  read_table("Data/PY02_P4.dat")
+a5<- read_table("Data/PY02_P5.dat")
+a6<- read_table("Data/PY02_P6.dat")
+a7<- read_table("Data/PY02_P7.dat")
+a8 <- read_table("Data/PY02_P8.dat")
+a9<- read_table("Data/PY02_P9.dat")
+a10<- read_table("Data/PY02_P10.dat")
+a11<- read_table("Data/PY02_P11.dat")
 
 flist<- c(a,b,c,d,e,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)
 
@@ -85,8 +85,8 @@ flist<- c(a,b,c,d,e,a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)
 
 ```{r}
 
-d <- read_table2("Data/PY02_pressures.dat")
-f <- read_table2("Data/PY02bis_pressures.dat")
+d <- read_table("Data/PY02_pressures.dat")
+f <- read_table("Data/PY02bis_pressures.dat")
 d <- d %>% mutate(sample="PY02")
 f <- f %>% mutate(sample= "PY02bis")
 Pressures <- rbind(d,f)
@@ -141,7 +141,7 @@ data %>% ggplot(aes(x=q, y=int_n
 **In case you didn't manage to get there, I provide in the exam .Rmd file the expected `pospeak` table so that you can continue with the exercise.**
 
 ```{r include=FALSE, warning=FALSE, message=FALSE}
-pospeak <- read_table2("sample run        Q          dQ P.kbar     P
+pospeak <- read_table("sample run        Q          dQ P.kbar     P
    PY02   1 1.802587 0.009012934   0.00 0.000
    PY02   2 1.840981 0.009204904   2.40 0.240
    PY02   3 1.875535 0.009377675   8.80 0.880

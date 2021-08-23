@@ -5,27 +5,10 @@ author   : Colin Bousige
 date     : "`r format(Sys.time(), '%d/%m/%Y')`"
 url      : 'https\://lmi.cnrs.fr/r/'
 output: 
-    bookdown::gitbook:
-      fig_caption : TRUE
-      fig_number : TRUE
-      self_contained: FALSE
-      split_by: chapter
-      config:
-        toc:
-          collapse: null #subsubsection
-          scroll_highlight: yes
-          before: |
-            <li><a href="https://lmi.cnrs.fr/r/index.html">Reproducible data treatment with R</a></li>
-          after: <br><br><br><br>
-        toolbar:
-          position: fixed
-        edit : null
-        search: yes
-        fontsettings:
-          theme: white
-          family: sans
-          size: 2
-        sharing: null
+    bookdown::bs4_book:
+      css: /Users/colin/Travail/Scripts/JS/style_tuto.css
+      theme:
+        primary: "#174c99"
       includes:
         in_header: google_analytics.html
 ---
@@ -33,7 +16,7 @@ output:
 <!-- 
 Render with:
 system("rm -rf _main.Rmd _book/ _main_files/ _book_files/")
-bookdown::render_book("index.Rmd","bookdown::gitbook")
+bookdown::render_book("index.Rmd", "bookdown::bs4_book")
 system("./upload.sh")
 -->
 
@@ -90,14 +73,17 @@ remove(list = ls())
 <br>
 **You want to produce publication-quality graphs like these?**
 
-|                         |                               |                          |
-|:-----------------------:|:-----------------------------:|:-------------------------|
-| [![](Plots/data_RBM.png)](Plots/data_RBM.png) |  [![](Plots/Grt_CS07_0.5.png)](Plots/Grt_CS07_0.5.png)  | [![](Plots/Fig2epskT.png)](Plots/Fig2epskT.png) |
+```{r, out.width = '33%', echo=FALSE}
+knitr::include_graphics(c("Plots/data_RBM.png", "Plots/Grt_CS07_0.5.png", "Plots/Fig2epskT.png"))
+```
+
 
 <br>
 **You want to be able to build graphical interfaces like this to help you in your data treatment?**
 
-![](Plots/shiny.png)
+```{r, echo=FALSE}
+knitr::include_graphics(c("Plots/shiny.png"))
+```
 
 **Stay tuned! You've come to the right place.**
 

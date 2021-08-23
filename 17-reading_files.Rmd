@@ -23,6 +23,14 @@ read_csv("Data/tot_population.csv", skip=1)
 read_csv("Data/tot_population.csv", skip=1, col_names=LETTERS[1:4])
 ```
 
+Since version 2.0 of `readr`, `read_csv()`{.R} can also take a vector as argument, which will result in reading all files in the vector successively:
+
+```{r}
+read_csv(c("Data/test1.csv",
+           "Data/test2.csv"),
+         id = "file", show_col_types = FALSE)
+```
+
 - **Space separated values**
 
 Input file looks like this:
@@ -32,8 +40,8 @@ head Data/rubis_01.txt
 
 ```r
 library(tidyverse)
-read_table2("Data/rubis_01.txt")
-read_table2("Data/rubis_01.txt", col_names=c("w","int"))
+read_table("Data/rubis_01.txt")
+read_table("Data/rubis_01.txt", col_names=c("w","int"))
 ```
 
 

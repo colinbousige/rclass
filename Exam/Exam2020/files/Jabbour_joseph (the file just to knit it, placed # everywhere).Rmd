@@ -57,8 +57,8 @@ flist
 3. Read and store the two files containing the pressures of each run, `PY02_pressures.dat`{.R} and `PY02bis_pressures.dat`{.R}. Combine these two tables into a single tidy one called `Pressures`{.R}, containing three columns `run`{.R}, `P.kbar`{.R} and `sample`{.R} (`sample`{.R} being either `PY02` or `PY02bis`).
 
 ```{r}
-Pressure1<- read_table2("Data/PY02_pressures.dat", col_names = c("run", "P.Kbar"))
-Pressure1 <- read_table2("Data/PY02bis_pressures.dat")
+Pressure1<- read_table("Data/PY02_pressures.dat", col_names = c("run", "P.Kbar"))
+Pressure1 <- read_table("Data/PY02bis_pressures.dat")
 pressures <- full_join(Pressure1, pressure2)
 pressures
 
@@ -83,7 +83,7 @@ norm01 <- function(x){
   data <- tibble(name = flist) %>%
    filter(-c("PY02_pressures.dat" , "PY02bis_pressures.dat"))%>%
    mutate(data = purrr::map(name,
-          ~ read_table2(file      = file.path("Data", .),
+          ~ read_table(file      = file.path("Data", .),
                         col_names = c("q", "int")) %>%
              mutate(int_n = norm01(int)) 
 ```
@@ -129,7 +129,7 @@ separate(run, c("sample","run","extension"), sep="_", convert = TRUE)%>%
 **In case you didn't manage to get there, I provide in the exam .Rmd file the expected `pospeak` table so that you can continue with the exercise.**
 
 ```{r include=FALSE, warning=FALSE, message=FALSE}
-pospeak <- read_table2("sample run        Q          dQ P.kbar     P
+pospeak <- read_table("sample run        Q          dQ P.kbar     P
    PY02   1 1.802587 0.009012934   0.00 0.000
    PY02   2 1.840981 0.009204904   2.40 0.240
    PY02   3 1.875535 0.009377675   8.80 0.880

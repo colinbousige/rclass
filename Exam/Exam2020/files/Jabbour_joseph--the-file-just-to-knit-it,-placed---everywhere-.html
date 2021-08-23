@@ -543,8 +543,8 @@ summary {
 <ol start="3" style="list-style-type: decimal">
 <li>Read and store the two files containing the pressures of each run, <code class="sourceCode r">PY02_pressures.dat</code> and <code class="sourceCode r">PY02bis_pressures.dat</code>. Combine these two tables into a single tidy one called <code class="sourceCode r">Pressures</code>, containing three columns <code class="sourceCode r">run</code>, <code class="sourceCode r">P.kbar</code> and <code class="sourceCode r">sample</code> (<code class="sourceCode r">sample</code> being either <code>PY02</code> or <code>PY02bis</code>).</li>
 </ol>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#Pressure1&lt;- read_table2(&quot;C:/Users/toshiba/Desktop/joseph university-france/R in #class/Data/PY02_pressures.dat&quot;, col_names = c(&quot;run&quot;, &quot;P.Kbar&quot;))</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#Pressure1 &lt;- read_table2(&quot;C:/Users/toshiba/Desktop/joseph university-france/R in #class/Data/PY02bis_pressures.dat&quot;)</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">#Pressure1&lt;- read_table(&quot;C:/Users/toshiba/Desktop/joseph university-france/R in #class/Data/PY02_pressures.dat&quot;, col_names = c(&quot;run&quot;, &quot;P.Kbar&quot;))</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co">#Pressure1 &lt;- read_table(&quot;C:/Users/toshiba/Desktop/joseph university-france/R in #class/Data/PY02bis_pressures.dat&quot;)</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a><span class="co">#pressures &lt;- full_join(Pressure1, pressure2)</span></span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="co">#pressures</span></span></code></pre></div>
 <ol start="4" style="list-style-type: decimal">
@@ -560,7 +560,7 @@ summary {
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>  <span class="co">#data &lt;- tibble(name = flist) %&gt;%</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a>   <span class="co">#filter(-c(&quot;PY02_pressures.dat&quot; , &quot;PY02bis_pressures.dat&quot;))%&gt;%</span></span>
 <span id="cb7-3"><a href="#cb7-3"></a>   <span class="co"># mutate(data = purrr::map(name,</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>      <span class="co">#     ~ read_table2(file      = file.path(&quot;Data&quot;, .),</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>      <span class="co">#     ~ read_table(file      = file.path(&quot;Data&quot;, .),</span></span>
 <span id="cb7-5"><a href="#cb7-5"></a>        <span class="co">#                 col_names = c(&quot;q&quot;, &quot;int&quot;)) %&gt;%</span></span>
 <span id="cb7-6"><a href="#cb7-6"></a>        <span class="co">#      mutate(int_n = norm01(int)) </span></span></code></pre></div>
 <ol start="6" style="list-style-type: decimal">

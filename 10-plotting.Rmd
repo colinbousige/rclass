@@ -470,9 +470,9 @@ df1 <- read.table("Data/PPC60_G_01.txt", col.names=c("w","Intensity"))
 df2 <- read.table("Data/PPC60_G_30.txt", col.names=c("w","Intensity"))
 df1 <- tibble(df1) # make a tibble from a data.frame
 df2 <- tibble(df2)
-# Direct version using tidyverse (read_table2 returns a tibble)
-df1 <- read_table2("Data/PPC60_G_01.txt", col_names=c("w","Intensity"))
-df2 <- read_table2("Data/PPC60_G_30.txt", col_names=c("w","Intensity"))
+# Direct version using tidyverse (read_table returns a tibble)
+df1 <- read_table("Data/PPC60_G_01.txt", col_names=c("w","Intensity"))
+df2 <- read_table("Data/PPC60_G_30.txt", col_names=c("w","Intensity"))
 # Gather the two `tibbles` in another single tidy one: 
 # it should have three columns, `w`, `Intensity` and `file_name`
 df1$file_name <- "PPC60_G_01" # add the "file_name" column
@@ -512,9 +512,9 @@ df1 <- read.table("Data/PPC60_G_01.txt", col.names=c("w","Intensity"))
 df2 <- read.table("Data/PPC60_G_30.txt", col.names=c("w","Intensity"))
 df1 <- tibble(df1) # make a tibble from a data.frame
 df2 <- tibble(df2)
-# Direct version using tidyverse (read_table2 returns a tibble)
-df1 <- read_table2("Data/PPC60_G_01.txt", col_names=c("w","Intensity"))
-df2 <- read_table2("Data/PPC60_G_30.txt", col_names=c("w","Intensity"))
+# Direct version using tidyverse (read_table returns a tibble)
+df1 <- read_table("Data/PPC60_G_01.txt", col_names=c("w","Intensity"))
+df2 <- read_table("Data/PPC60_G_30.txt", col_names=c("w","Intensity"))
 # Gather the two `tibbles` in another single tidy one: 
 # it should have three columns, `w`, `Intensity` and `file_name`
 df1$file_name <- "PPC60_G_01" # add the "file_name" column
@@ -575,7 +575,7 @@ library(tidyverse)
 library(ggplot2)
 df <- tibble()
 for (i in 1:4) {
-    d  <- read_table2(paste("Data/rubis_0",i,".txt", sep=""), col_names=c("w", "Int"))
+    d  <- read_table(paste("Data/rubis_0",i,".txt", sep=""), col_names=c("w", "Int"))
     d$Int_n <- norm01(d$Int)
     d$name  <- paste0("rubis_0",i)
     df <- bind_rows(df, d)
@@ -604,7 +604,7 @@ norm01 <- function(x) {
     (x-min(x))/(max(x)-min(x))
 }
 for (i in 1:4) {
-    d  <- read_table2(paste0("Data/rubis_0",i,".txt"), col_names=c("w", "Int"))
+    d  <- read_table(paste0("Data/rubis_0",i,".txt"), col_names=c("w", "Int"))
     d$Int_n <- norm01(d$Int)
     d$name  <- paste0("rubis_0",i)
     df      <- bind_rows(df, d)
@@ -662,7 +662,7 @@ norm01 <- function(x) { (x-min(x))/(max(x)-min(x)) }
 alldata <- tibble()
 for (file in allfiles) {#file <- allfiles[1]
     # read the data and stor it in d
-    d <- read_table2(paste0("Data/dataG/",file), col_names=TRUE)
+    d <- read_table(paste0("Data/dataG/",file), col_names=TRUE)
     # normalize data
     d$Int_n <- norm01(d$Int)
     # store file name

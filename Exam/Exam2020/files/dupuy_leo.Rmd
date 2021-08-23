@@ -60,8 +60,8 @@ flist <- flist[!(flist %in% c("PY02_pressures.dat","PY02bis_pressures.dat"))]
 3. Read and store the two files containing the pressures of each run, `PY02_pressures.dat`{.R} and `PY02bis_pressures.dat`{.R}. Combine these two tables into a single tidy one called `Pressures`{.R}, containing three columns `run`{.R}, `P.kbar`{.R} and `sample`{.R} (`sample`{.R} being either `PY02` or `PY02bis`).
 
 ```{r}
-PYO2 <- read_table2("Data/PY02_pressures.dat") %>% mutate(sample = "PY02")
-PYO2bis <- read_table2("Data/PY02bis_pressures.dat") %>% mutate(sample = "PY02bis")
+PYO2 <- read_table("Data/PY02_pressures.dat") %>% mutate(sample = "PY02")
+PYO2bis <- read_table("Data/PY02bis_pressures.dat") %>% mutate(sample = "PY02bis")
 SUM <- rbind(PYO2,PYO2bis)
 
 ```
@@ -78,7 +78,7 @@ norm01 <- function(x){
 
 ```{r}
 readfile <- function(fille){
-   read_table2(file.path("Data",fille), col_names = c("q","int")) %>%
+   read_table(file.path("Data",fille), col_names = c("q","int")) %>%
       mutate(int_n = norm01(int)) %>%
       mutate(file = fille)
 }
@@ -124,7 +124,7 @@ Final <- full_join(SUM, postpeak)
 **In case you didn't manage to get there, I provide in the exam .Rmd file the expected `pospeak` table so that you can continue with the exercise.**
 
 ```{r include=FALSE, warning=FALSE, message=FALSE}
-pospeak <- read_table2("sample run        Q          dQ P.kbar     P
+pospeak <- read_table("sample run        Q          dQ P.kbar     P
    PY02   1 1.802587 0.009012934   0.00 0.000
    PY02   2 1.840981 0.009204904   2.40 0.240
    PY02   3 1.875535 0.009377675   8.80 0.880

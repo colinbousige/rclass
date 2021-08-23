@@ -83,7 +83,7 @@ library(ggplot2)
 flist <- list.files(path = "Data", pattern = "rubis")
 spec  <- maxpos <- tibble()
 for (file in flist){
-    df   <- read_table2(paste0("Data/",file), col_names=c("x","y"))
+    df   <- read_table(paste0("Data/",file), col_names=c("x","y"))
     spec <- bind_rows(spec, tibble(x    = df$x,
                                    y    = norm01(df$y),
                                    name = file)

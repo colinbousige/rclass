@@ -42,7 +42,7 @@ files <- list.files(path="Data", pattern = "MSD")
 
 d <- tibble(file=files) %>% 
     mutate(data=map(file,
-            ~ read_table2(file.path("Data",.), 
+            ~ read_table(file.path("Data",.), 
                         skip=1, col_names=c("t","MSD")))) %>% 
     unnest(data) %>% 
     mutate(t = set_units(t,"ns"),

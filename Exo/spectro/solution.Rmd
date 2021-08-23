@@ -131,7 +131,7 @@ maxpos <- tibble(name=flist, max=NA)
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 for(file in flist){
-    d <- read_table2(file.path("Data",file), col_names = c("w","int"))
+    d <- read_table(file.path("Data",file), col_names = c("w","int"))
     d$name <- file
     maxpos$max[file==flist] <- d$w[which.max(d$int)]
     spec <- bind_rows(spec,d)
@@ -145,7 +145,7 @@ Another version of this that does not use a for loop would be like so (try to un
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 spec <- tibble(name=flist) %>% 
-    mutate(data=map(name, ~read_table2(file.path("Data",.), 
+    mutate(data=map(name, ~read_table(file.path("Data",.), 
                                        col_names = c("w","int")))
           ) %>% 
     unnest(data)

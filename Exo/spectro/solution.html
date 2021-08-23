@@ -1791,7 +1791,7 @@ div.tocify {
 <li>Using a <code>for</code> loop, load each file in <code>flist</code> and store them into <code>spec</code> by <em>making it tidy</em>, and store the position of the maximum of each spectrum in <code>maxpos</code></li>
 </ul>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="cf">for</span>(file <span class="cf">in</span> flist){</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">    d &lt;-<span class="st"> </span><span class="kw">read_table2</span>(<span class="kw">file.path</span>(<span class="st">&quot;Data&quot;</span>,file), <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;w&quot;</span>,<span class="st">&quot;int&quot;</span>))</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">    d &lt;-<span class="st"> </span><span class="kw">read_table</span>(<span class="kw">file.path</span>(<span class="st">&quot;Data&quot;</span>,file), <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;w&quot;</span>,<span class="st">&quot;int&quot;</span>))</a>
 <a class="sourceLine" id="cb19-3" data-line-number="3">    d<span class="op">$</span>name &lt;-<span class="st"> </span>file</a>
 <a class="sourceLine" id="cb19-4" data-line-number="4">    maxpos<span class="op">$</span>max[file<span class="op">==</span>flist] &lt;-<span class="st"> </span>d<span class="op">$</span>w[<span class="kw">which.max</span>(d<span class="op">$</span>int)]</a>
 <a class="sourceLine" id="cb19-5" data-line-number="5">    spec &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(spec,d)</a>
@@ -1834,7 +1834,7 @@ div.tocify {
 ## 17 rubis_29.txt 3400.</code></pre>
 <p>Another version of this that does not use a for loop would be like so (try to understand what’s happening in this code by running each line one after the other and looking at the help on the functions used):</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">spec &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">name=</span>flist) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">data=</span><span class="kw">map</span>(name, <span class="op">~</span><span class="kw">read_table2</span>(<span class="kw">file.path</span>(<span class="st">&quot;Data&quot;</span>,.), </a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">    </span><span class="kw">mutate</span>(<span class="dt">data=</span><span class="kw">map</span>(name, <span class="op">~</span><span class="kw">read_table</span>(<span class="kw">file.path</span>(<span class="st">&quot;Data&quot;</span>,.), </a>
 <a class="sourceLine" id="cb23-3" data-line-number="3">                                       <span class="dt">col_names =</span> <span class="kw">c</span>(<span class="st">&quot;w&quot;</span>,<span class="st">&quot;int&quot;</span>)))</a>
 <a class="sourceLine" id="cb23-4" data-line-number="4">          ) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb23-5" data-line-number="5"><span class="st">    </span><span class="kw">unnest</span>(data)</a>

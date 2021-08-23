@@ -287,7 +287,7 @@ write.table(df, "Data/exo_fit.txt", quote=FALSE, row.names=FALSE)
 ```{r, warnings=FALSE, error=TRUE}
 library(tidyverse)
 # Load rubis_1.txt, normalize it to [0,1] and plot it
-d <- read_table2("Data/rubis_01.txt", col_names=c("w", "Int"))
+d <- read_table("Data/rubis_01.txt", col_names=c("w", "Int"))
 norm01 <- function(x) {(x-min(x))/(max(x)-min(x))}
 d$Int_n <- norm01(d$Int)
 P <- d %>%

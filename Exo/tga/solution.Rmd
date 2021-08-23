@@ -19,7 +19,7 @@ params:
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
 library(tidyverse)
-d <- read_table2("Data/ATG.txt", 
+d <- read_table("Data/ATG.txt", 
                 skip=12,
                 col_names=c("Index", "t", "Ts", "Tr", "Value"), 
                 n_max=4088)
