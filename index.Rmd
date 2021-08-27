@@ -6,7 +6,7 @@ date     : "`r format(Sys.time(), '%d/%m/%Y')`"
 url      : 'https\://lmi.cnrs.fr/r/'
 output: 
     bookdown::bs4_book:
-      css: /Users/colin/Travail/Scripts/JS/style_tuto.css
+      css: style.css
       theme:
         primary: "#174c99"
       includes:
@@ -21,6 +21,7 @@ system("./upload.sh")
 -->
 
 ```{r include=FALSE}
+library(knitr)
 knitr::opts_chunk$set(cache = FALSE, out.width='100%', warnings=FALSE, message=FALSE)
 options(width = 80)
 ```
