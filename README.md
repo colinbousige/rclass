@@ -1,0 +1,1 @@
+This is the repo for the "Reproducible data treatment with R" class that can be found at http://lmi.cnrs.fr/r/

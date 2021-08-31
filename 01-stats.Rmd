@@ -408,7 +408,12 @@ knitr::kable(dat, escape = FALSE,
 
 The **central limit theorem** states that if one takes $N$ random independent samples of a distribution of data that describes some variable $x$, then as $N$ tends to infinity, the distribution of the sum of the samples tends to a Gaussian distribution. 
 
+In other terms: the mean value of a large number $N$ of independent random variables (that can be distributed following any distribution with finite variance), obeying the same distribution with variance $\sigma_0^2$, approaches a normal distribution with variance $\sigma^2 = \sigma _0^2/N$.
+
 > **This result is fundamental** as it implies that **independent measurements of any observable will show values that will be spread following a Gaussian distribution**, and thus statistical uncertainties that are Gaussian in nature.
+> \
+> 
+> Moreover, we see here the typical property of statistical errors, which is that **the relative error is proportional to** $1/\sqrt{N}$. Increasing the number of observations thus decreases the error, *i.e.* increases the precision.
 
 ### Combination of errors
 
@@ -441,7 +446,7 @@ If the variables $u_i$ are independent then the covariance $\sigma_{u_iu_j}$ is 
 Let us consider a function $f$ having a form that depends only on one observable $x$, for example:
 
 \begin{equation}
-f = ax + b
+f = Ax + B
 \end{equation}
 
 Then, following Eq. \@ref(eq:uncertainty), the standard error on that function is given by:
@@ -449,11 +454,11 @@ Then, following Eq. \@ref(eq:uncertainty), the standard error on that function i
 \begin{equation}
 \begin{aligned}
 \sigma_f &= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2}\\
-         &= a\sigma_x
+         &= A\sigma_x
 \end{aligned}
 \end{equation}
 
-So for this function, the error on $f$, given by $\sigma_f$, is $a$ times the error on $x$, $\sigma_x$. **This result is independent of any offset of the measured observable.**
+So, **independently of any offset of the measured observable**, the resulting error must be corrected by the same factor as the intensity.
 
 > **In practice**, let's say we measure a Raman spectrum. As we saw above, the error on each intensity count is given by the square root of this intensity count. 
 > 
@@ -463,19 +468,20 @@ So for this function, the error on $f$, given by $\sigma_f$, is $a$ times the er
 
 #### Functions of two variables
 
-Now consider the function $f = \pm x \pm y$, where we have measured the mean and standard deviation of both $x$ and $y$, and want to compute the standard deviation on their sum/subtraction. We can use the general formula of Eq. \@ref(eq:uncertainty) to determine how to do this, hence:
+Now consider the function $f = Ax + By$, where we have measured the mean and standard deviation of both $x$ and $y$, and want to compute the standard deviation on their sum/subtraction. We can use the general formula of Eq. \@ref(eq:uncertainty) to determine how to do this, hence:
 
 \begin{equation}
 \begin{aligned}
 \sigma_f &= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2 + \left(\frac{\partial f}{\partial y}\right)^2\sigma_y^2}\\
-         &= \sqrt{\sigma_x^2 + \sigma_y^2}
+         &= \sqrt{A^2\sigma_x^2 + B^2\sigma_y^2}
 \end{aligned}
 \end{equation}
 
-> **In practice**, let's say we measure an UV spectrum of a molecule in a solvent, and a reference spectrum of this solvent. As we saw above, the error on each intensity count is given by the square root of this intensity count. We want to subtract the signal of the solvent to get only the signal of the molecule.
+> **In practice**, let's say we measure an UV spectrum of a solution (a molecule in a solvent), and a reference spectrum of this solvent. As we saw above, the error on each intensity count is given by the square root of this intensity count. We want to subtract the signal of the solvent to get only the signal of the molecule.
 > \
 > 
-> We thus have to perform the above operation on the errors. It means that in order to have a statistically sound resulting spectrum, the reference needs to be measured with a very good statistics in order to not dominate the resulting error.
+> We thus have to perform the above operation on the errors, $\sigma_{result}=\sqrt{\sigma^2_{solution}+\sigma^2_{reference}}$. It means that in order to have a statistically sound resulting spectrum, the reference needs to be measured with a very good statistics in order to not dominate the resulting error.
+
 
 It is a good thing to think about error propagation and where it comes from... but you don't have to bother computing it by hand, as [packages are here to do it for you](#working-with-experimental-errors), as we will see later in the class.
 
