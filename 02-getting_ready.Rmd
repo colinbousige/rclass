@@ -8,25 +8,13 @@
 - **Windows only:** [Download](https://cran.r-project.org/bin/windows/Rtools/) and install Rtools
 - You're good to go.
 
-Launch Rstudio, click `File > New File > R script`. 
-
-Write whatever you want in the "Source code" panel, and __run__ it by selecting it and hitting ⌘+⏎ (Ctrl+⏎ on Windows). If no text is selected, hitting ⌘+⏎ will launch the current line. 
-
-The code output will be seen in the "R Console" panel if it's a text, or in the "Graph" panel if it's a graph. A list of all defined variables and functions is available in the "Environment" panel.
-
-```{r, echo=FALSE}
-knitr::include_graphics("Plots/rstudio.png")
-```
-
-More on the [Rstudio cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf).
-
 ## The more advanced way
 
+If you don't want to use Rstudio but rather want to keep with your favorite text editor, like I do ([Sublime Text](https://www.sublimetext.com/3) (see configuration below), [Visual Studio Code](https://code.visualstudio.com/)...)
 
-If you don't want to use Rstudio but rather want to keep with your favorite text editor, like I do ([Sublime Text](https://www.sublimetext.com/3) (see configuration below), [Atom](https://atom.io/), [Visual Studio Code](https://code.visualstudio.com/)...)
-
-- I still recommend [downloading](https://cran.r-project.org/) and installing R via CRAN (I had some packages problems due to a homebrew installation).
+- I still recommend [downloading](https://cran.r-project.org/) and installing R via CRAN (I had some packages problems due to a `homebrew` installation).
 - To be fully operational with Rmarkdown files without using Rstudio, you need to install `pandoc`:
+
 ```bash
 brew install openssl
 brew install pandoc
@@ -81,6 +69,28 @@ tinytex::install_tinytex()
 # to uninstall TinyTeX, run tinytex::uninstall_tinytex()
 ```
 
+## Working in Rstudio
+
+> Remember: **Always Work with Projects!!**
+
+Launch Rstudio, click `File > New Project`, and follow the dialog box (existing directory or not, etc.). When you have several ongoing projects, you can switch between them using the Project navigator (see Fig. \@ref(fig:rstudio)).
+
+```{r rstudio, echo=FALSE, fig.cap="The Rstudio interface."}
+knitr::include_graphics("Plots/rstudio.png")
+```
+
+The great interest of working with Projects is that the default working directory will be relative to the root directory of the Project. In other words, if you store your data in a `Data` folder, you can read it by running `read_function("Data/your_file.txt")`{.R}. This is one of the fundamentals of reproducible data treatment as:
+- You won't have to write the absolute path towards your file, like ``read_function("C://path/to/your_file.txt")`{.R}`{.R}, path that is unlikely to be the same depending on the computer it is located on. This helps you share your whole project folder with others, or just move it around on your computer and still have a working code.
+- You won't have to start your script by a `setwd("/path/to/your/data")`{.R} command (for set working directory), which is much better for the same reasons as above.
+
+Write whatever you want in the "Source code" panel and save it in a `.R` (or `.Rmd`) file, and __run__ it by selecting it and hitting ⌘+⏎ (Ctrl+⏎ on Windows). If no text is selected, hitting ⌘+⏎ will launch the current line. You can see the file contents of your project in the project's file explorer (see bottom right corner of Fig. \@ref(fig:rstudio)).
+
+The code output will be seen in the "R Console" panel if it's a text, or in the "Graph" panel if it's a graph. A list of all defined variables and functions is available in the "Environment" panel. You can also directly write and run code in the "R Console" panel, if it's code you don't care to save in a script (like installing a package or whatever).
+
+You can install packages by running the `install.packages("package_name")`{.R} command in the R console or R script, or you can also click on the "Packages" tab in the bottom right corner, and then "Install" or "Update" in case you want to install or update your packages. "Update" will show you a list of installed packages that have a new published version. All verified packages are located on the CRAN (Comprehensive R Archive Network). It is thus really easy to install packages and maintain (update) your packages in R. There is also the possibility to install packages from source if you want to install custom packages -- "homemade" packages that didn't go through the CRAN verification process: do so at your own risks. But it's generally fine.
+
+More on the [Rstudio cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf).
+
 
 ## Setting up the environment
 
@@ -91,6 +101,10 @@ install.packages("devtools")
 install.packages("tidyverse")
 install.packages("rmarkdown")
 install.packages("knitr")
+install.packages("shiny")
+install.packages("patchwork")
+install.packages("broom")
+install.packages("plotly")
 install.packages("shiny")
 ```
 
@@ -105,17 +119,4 @@ package_name::function_name(parameters)
 ```
 If you want to access the documentation on a given package, click the link on this package in the "Packages" tab.
 In a more general way, help on a function is accessed by typing in `?function_name`, the help appearing in the "Graph" panel.
-
-
-To get the path of your working environment, type in:
-```{r}
-getwd()
-```
-
-To set it to the directory you want:
-```r
-setwd("your/path/")
-```
-
-Or, to set it to the directory the current file is in, just click `Session > Set Working Directory > To Source File Location`.
 
