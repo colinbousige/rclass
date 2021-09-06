@@ -1,3 +1,12 @@
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+</style>
+
 # Getting ready
 
 ## The easy way
@@ -73,6 +82,7 @@ tinytex::install_tinytex()
 
 > Remember: **Always Work with Projects!!**
 
+
 Launch Rstudio, click `File > New Project`, and follow the dialog box (existing directory or not, etc.). When you have several ongoing projects, you can switch between them using the Project navigator (see Fig. \@ref(fig:rstudio)).
 
 ```{r rstudio, echo=FALSE, fig.cap="The Rstudio interface."}
@@ -80,7 +90,8 @@ knitr::include_graphics("Plots/rstudio.png")
 ```
 
 The great interest of working with Projects is that the default working directory will be relative to the root directory of the Project. In other words, if you store your data in a `Data` folder, you can read it by running `read_function("Data/your_file.txt")`{.R}. This is one of the fundamentals of reproducible data treatment as:
-- You won't have to write the absolute path towards your file, like ``read_function("C://path/to/your_file.txt")`{.R}`{.R}, path that is unlikely to be the same depending on the computer it is located on. This helps you share your whole project folder with others, or just move it around on your computer and still have a working code.
+
+- You won't have to write the absolute path towards your file, like `read_function("C://path/to/your_file.txt")`{.R}, path that is unlikely to be the same depending on the computer it is located on. This helps you share your whole project folder with others, or just move it around on your computer and still have a working code.
 - You won't have to start your script by a `setwd("/path/to/your/data")`{.R} command (for set working directory), which is much better for the same reasons as above.
 
 Write whatever you want in the "Source code" panel and save it in a `.R` (or `.Rmd`) file, and __run__ it by selecting it and hitting ⌘+⏎ (Ctrl+⏎ on Windows). If no text is selected, hitting ⌘+⏎ will launch the current line. You can see the file contents of your project in the project's file explorer (see bottom right corner of Fig. \@ref(fig:rstudio)).
@@ -105,7 +116,6 @@ install.packages("shiny")
 install.packages("patchwork")
 install.packages("broom")
 install.packages("plotly")
-install.packages("shiny")
 ```
 
 Later on, a package can be loaded by calling:
