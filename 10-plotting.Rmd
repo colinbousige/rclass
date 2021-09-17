@@ -339,7 +339,7 @@ p <- diamonds %>% filter(carat<=3) %>%
 p + geom_point(alpha=0.5) + geom_smooth()
 ```
 
-It is often easier to grasp a multi-variable problem by plotting all our data in a facet plot using `facet_wrap()`{.R}:
+It is often easier to grasp a multi-variable problem by plotting all our data in a facet plot using `facet_wrap(~variable1)`{.R} if you want one variable changing in each plot:
 ```{r, warning = FALSE, message=FALSE}
 colors <- rainbow(length(unique(diamonds$clarity)))
 p <- ggplot(diamonds, aes(x = price, y = carat)) + 
@@ -347,6 +347,16 @@ p <- ggplot(diamonds, aes(x = price, y = carat)) +
         geom_smooth(color = "black") + 
         scale_colour_manual(values = colors, name = "Clarity") +
         facet_wrap(~cut) 
+p
+```
+
+... or `facet_grid(variable1~variable2)`{.R} if you want to see one variable as a function of another:
+```{r, warning = FALSE, message=FALSE, fig.asp=1.4}
+p <- ggplot(diamonds, aes(x = price, y = carat)) + 
+        geom_point(aes(color = color), alpha = 0.8, size = 1) + 
+        geom_smooth(method="lm", color = "black") + 
+        scale_colour_brewer(palette = "Spectral", name = "Color") +
+        facet_grid(clarity~cut) 
 p
 ```
 
