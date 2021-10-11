@@ -1,0 +1,121 @@
+---
+title : "R Exercises - Load and plot multiple files"
+date  : "`r Sys.Date()`"
+output: 
+    html_document:
+        toc            : no
+        toc_float      : no
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: false
+        code_download  : FALSE
+---
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align="center"}
+library(downloadthis)
+download_link(
+  link = "./Archive.zip",
+  output_name = "Data Files",
+  button_label = "Download Data Files",
+  button_type = "default",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+<br>
+
+----
+
+In this typical exercise, we will learn how to read multiple files and plot them all together. This is the basic step of data analysis.
+
+# Reading the data files
+
+- Load the `tidyverse` and `readxl` libraries
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Store into `flist` the list of all `.xls` files in the `Data/` folder. Take a look at the `list.files()`{.R} function for this, and especially at its parameters `path`, `pattern`, and `full.names`.
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Open one of the .xls files with Excel and study the structure of the file. At the top of the file, the first group of 2-column data is the blank measurement (columns A and B, lines 8 through 3408), while the second group under the blank is the actual raw measurement (columns A and B, lines 3413 through 6813). Working on the first file in the list, successively:
+    + Read and store the blank data in a tibble called `blank.df`
+    + Read and store the raw data in a tibble called `raw.df`
+    + Combine them into a tibble called  `alldata` containing the columns `w`, `blank`, `raw`, and `transmittance`, the later being the transmittance (in percent) with respect to the blank measurement (*i.e.* `transmittance = raw / blank * 100`).
+
+The final table should look like this:
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Wrap this procedure into a function `readFTIR()`{.R} that, given a file name, returns a tibble with the columns `w`, `blank`, `raw`, and `transmittance`. This means you just need to do the same thing as before but providing the file name as a variable, and finish the function by printing the `alldata` tibble -- if you don't print it as the last action of your function, it won't return the tibble. Test it on the first file in the list.
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+- Plot the first file in `flist`, and try to make your plot look like this:
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Now we want to read all files in the list and store them in a tidy tibble. For this we will start easy and use a `for` loop. This is the step-by-step procedure:
+    + Define an empty tibble called `df`
+    + Define a `for` loop on all elements of `flist`
+    + Then, within this `for` loop, successively:
+        + Read the current file with the above-defined `readFTIR()` function and store it in `tempdf`
+        + Add the column `name` to `tempdf` containing the current file name. If needed, trim the path from the name string using `basename()`{.R}.
+        + Stack `tempdf` below `df` by binding them row-wise (look at `bind_rows()`{.R}).
+
+The final table should look like this:
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- More advanced: you can do this without using a `for` loop using the `tidyverse`
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+# Plotting
+
+In case you didn't manage to do the above procedure, just load the `alldata.csv` file in the `Data` folder by running `df <- read_csv("Data/alldata.csv")`{.R}.
+
+We will now plot all these files together using `ggplot2`.
+
+- First, you can try several things, like:
+    + Plot them all together in one frame with a color depending on the file name.
+    + Plot them all on a different frame (facet_wrap) for each file.
+
+The final plots should look like this:
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- You see in the file names that there are actually 5 samples with 2 temperatures for each. Based on the column `name` of the `df` tibble, create the columns `sample` and `temperature` that contain *numerical values* of the sample number and temperature. Think about using the function `gsub()`{.R} to replace (delete) text in a string, the `substr(string, start, end)`{.R} function to get a portion of a string. You can also take a look at the `separate()`{.R} function from the `tidyverse`.
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Now it is time to make nicer plots:
+    - Make a grid plot showing the data evolution for each sample as a function of temperature
+    - Make a grid plot with one frame per sample, and the two temperatures in different colors.
+
+The final plots should look like this:
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
