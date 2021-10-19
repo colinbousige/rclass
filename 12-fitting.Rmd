@@ -250,21 +250,24 @@ d_fitted %>%
 <details>
     <summary>**Exercise 1**</summary>
 
-- Load <a href="Data/exo_fit.txt" download target="_blank">exo_fit.txt</a> in a `data.frame`{.R}.
+- Load <a href="Data/exo_fit.txt" download target="_blank">exo_fit.txt</a> in a `tibble`{.R}.
 - Using `lm()`{.R} or `nls()`{.R} fit each column as a function of `x` and display the "experimental" data and the fit on the same graph.
     + Tip: Take a look at the function `dnorm()`{.R} to define a Gaussian
 
 
-<!-- ```{r}
-x <- seq(0,10,.1)
+```{r, include=FALSE}
+x <- seq(0.2,10,.2)
 y <- 4*x+6+runif(length(x))*5
-z <- 10*dnorm(x, mean=4.1,sd=0.52)+2*runif(length(x)) -.5
+z <- 10*dnorm(x, mean=4.1,sd=0.52)+runif(length(x)) - .5
 w <- x^3.1+200*runif(length(x))/2
-u <- -pracma::erf(x/.6-5)+runif(length(x), min=-.1, max=.1) + 1
-df <- data.frame(x=x, y=y, z=z, w=w, u=u)
-plot(df$x, df$u)
-write.table(df, "Data/exo_fit.txt", quote=FALSE, row.names=FALSE)
-``` -->
+u <- log(x/2) + runif(length(x)) / 5
+s <- exp(-x/2) + runif(length(x)) / 10
+df <- tibble(x = x, y = y, z = z, w = w, u = u, s = s)
+# plot(df$x, df$s)
+# plot(df$x, log(df$s))
+# lm(data=df, exp(u) ~ x)
+write_tsv(df, "Data/exo_fit.txt")
+```
 
 
 </details>
@@ -320,8 +323,8 @@ P + geom_line(aes(y=.03 +
     geom_line(aes(y=predict(fit)), col="red")
 # Add the 2 Lorentzian components as area-filled curves with `alpha=0.2` and two different colors
 y0   <- coef(fit)['y0']
-lor1 <- coef(fit)['A1']*Lorentzian(d$w,x0=coef(fit)['x1'],FWHM=coef(fit)['FWHM1'])
-lor2 <- coef(fit)['A2']*Lorentzian(d$w,x0=coef(fit)['x2'],FWHM=coef(fit)['FWHM2'])
+lor1 <- coef(fit)['A1']*Lorentzian(d$w, x0=coef(fit)['x1'], FWHM=coef(fit)['FWHM1'])
+lor2 <- coef(fit)['A2']*Lorentzian(d$w, x0=coef(fit)['x2'], FWHM=coef(fit)['FWHM2'])
 P + geom_line(aes(y=.03 + 
                     3*Lorentzian(w, x0=3160, FWHM=10) +
                     7*Lorentzian(w, x0=3210, FWHM=10)),
