@@ -402,13 +402,16 @@ P + geom_line(aes(y=.03 +
 - Create a `read_ruby(filename)` function that, given a file name `filename`, reads the file into a tibble, gives the proper column names, normalizes the intensity to [0,1], and returns the tibble.
 - Create a `fitfunc(tib)` function that, given a tibble `tib`, fits this tibble's *y* values as a function of the *x* values using the sum of two Lorentzians, and returns the `nls()` fit result. Make sure to provide "clever" starting parameters, especially for the positions of the two peaks. For example, one peak is where the spectrum maximum is, and the other one is always at an energy roughly 30 cm^-1^ lower.
 - Using pipe operations and `purrr::map()`, recursively:
+    - Create a tibble with only one column called `file`, which contains the list of file names `flist`.
     - Create a column `data` containing a list of all read files, obtained by mapping `read_ruby()` onto `flist`.
     - Create a column `fit` containing a list of `nls()` objects, obtained by mapping `fitfunc()` onto the list (column) `data`
     - Create a column `tidied` containing a list of tidied `nls()` tibbles, obtained by mapping `bbroom::tidy()` onto the list (column) `fit`
     - Create a column `augmented` containing a list of augmented `nls()` tibbles, obtained by mapping `bbroom::augment()` onto the list (column) `fit`
+    - Turn the `file` column into `run` that will contain the run number (*i.e.* the number in the file name) as a numeric value. Use the function `separate()`{.R} to do so.
 - Plot all the experimental data and the fit with black points and red lines into a faceted plot. Play with various ways of plotting this, like a ridge or slider plot.
-- Plot the evolution of the position of the peaks as a function of the file name. Turn the file name by an angle of 45˚ for better visualization.
-
+- Plot the evolution of all fitting parameters as a function of the run number.
+- Plot the evolution of the position of the higher energy peak as a function of the file name.
+- Fit linearly the evolution of the higher intensity peaks with respect to the run number. Display the fitted parameters and R^2^. Plot the fit as a red line. Make sure to use proper weighing for the fit.
 
 <details>
     <summary>Solution</summary>
@@ -454,6 +457,8 @@ fitfunc <- function(tib){
 # fitfunc(df)
 # 
 # - Using pipe operations and `purrr::map()`, recursively:
+#     - Create a tibble with only one column called `file`, which contains the 
+#       list of file names `flist`.
 #     - Create a column `data` containing a list of all read files, 
 #       obtained by mapping `read_ruby()` onto `flist`.
 #     - Create a column `fit` containing a list of `nls()` objects, 
@@ -462,12 +467,16 @@ fitfunc <- function(tib){
 #       obtained by mapping `bbroom::tidy()` onto the list (column) `fit`
 #     - Create a column `augmented` containing a list of augmented `nls()` tibbles, 
 #       obtained by mapping `bbroom::augment()` onto the list (column) `fit`
+#     - Turn the `file` column into `run` that will contain the run number 
+#       (*i.e.* the number in the file name) as a numeric value. 
+#       Use the function `separate()`{.R} to do so.
 data <- tibble(file=flist) %>% 
     mutate(data = map(file, read_ruby),
            fit = map(data, fitfunc),
            tidied = map(fit, tidy),
            augmented = map(fit, augment)
-           )
+           ) %>% 
+    separate(file, c(NA, NA, "run", NA), convert = TRUE)
 # - Plot all the experimental data and the fit with black points and red lines 
 # into a faceted plot. Play with various ways of plotting this, 
 # like a ridge or slider plot.
@@ -476,31 +485,59 @@ data %>%
     ggplot(aes(x = w, y = Int)) +
        geom_point(alpha=0.5)+
        geom_line(aes(y=.fitted), col="red")+
-       facet_wrap(~basename(file))
+       facet_wrap(~run)
 data %>% 
     unnest(augmented) %>% 
-    ggplot(aes(x = w, y = Int + as.numeric(factor(file)), group=file)) +
+    ggplot(aes(x = w, y = Int + as.numeric(factor(run)), group=run)) +
        geom_point(alpha=0.5)+
-       geom_line(aes(y = .fitted + as.numeric(factor(file))), col = "red")
+       geom_line(aes(y = .fitted + as.numeric(factor(run))), col = "red")
 P <- data %>%
     unnest(augmented) %>%
-    ggplot(aes(x = w, y = Int, frame=basename(file))) +
+    ggplot(aes(x = w, y = Int, frame=run)) +
         geom_point(alpha = 0.5) +
         geom_line(aes(y = .fitted), col = "red")
-plotly::ggplotly(P, dynamicTicks = TRUE) %>% 
+library(plotly)
+ggplotly(P, dynamicTicks = TRUE) %>% 
     animation_opts(5)%>%
     layout(xaxis = list(autorange=FALSE, range = c(3050, 3550)))
-# - Plot the evolution of the position of the peaks.
-# Turn the file name by an angle of 45˚ for better visualization.
+# - Plot the evolution of all fitting parameters as a function of the run number.
+data %>%
+    unnest(tidied) %>% 
+    ggplot(aes(x = run, y = estimate)) +
+        geom_point()+
+        facet_wrap(~term, scales = "free")+
+        geom_errorbar(aes(ymin = estimate - std.error,
+                          ymax = estimate + std.error),
+                      width=0.5)
+# - Plot the evolution of the position of the higher intensity peaks.
 data %>%
     unnest(tidied) %>% 
     filter(term == "x1") %>% 
-    ggplot(aes(x = basename(file), y = estimate)) +
+    ggplot(aes(x = run, y = estimate)) +
         geom_point()+
         geom_errorbar(aes(ymin = estimate - std.error,
                           ymax = estimate + std.error),
-                     width=0.5)+
-        theme(axis.text.x = element_text(angle = 45, hjust = 1))
+                      width=0.5)
+# - Fit linearly the evolution of the higher intensity peaks with respect to the 
+#   run number. Display the fitted parameters and R^2^.Plot the fit as a red line. 
+#   Make sure to use proper weighing for the fit.
+lmfit <- data %>%
+    unnest(tidied) %>%
+    filter(term == "x1") %>% 
+    lm(data=., 
+       estimate ~ run, 
+       weights = 1/std.error^2)
+tidy(lmfit)
+glance(lmfit)
+data %>%
+    unnest(tidied) %>% 
+    filter(term == "x1") %>% 
+    ggplot(aes(x = run, y = estimate)) +
+        geom_point()+
+        geom_errorbar(aes(ymin = estimate - std.error,
+                          ymax = estimate + std.error),
+                      width=0.5)+
+        geom_line(aes(y = predict(lmfit)), col="red")
 ```
 
 </details>
