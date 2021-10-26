@@ -319,8 +319,10 @@ write_tsv(df, "Data/exo_fit.txt")
 <details>
     <summary>**Exercise 2: application to real data**</summary>
 
+- Load the `tidyverse` library.
+- Define a function `norm01(x)`, that, given a vector `x`, returns this vector normalized to [0,1].
 - Load the Raman spectrum <a href="Data/rubis_01.txt" download target="_blank">rubis_01.txt</a>, normalize it to [0,1] and plot it
-- Define the Lorentzian function
+- Define the normalized Lorentzian function `Lorentzian(x, x0, FWHM)`, defined by $L(x, x_0, FWHM)=\frac{FWHM}{2\pi}\frac{1}{(FWHM/2)^2 + (x-x_0)^2}$
 - Guess grossly the initial parameters and plot the resulting curve as a blue dashed line
 - Fit the data by a sum of 2 Lorentzians using `nls()`{.R}
 - Add the result on the plot as a red line
@@ -331,32 +333,32 @@ write_tsv(df, "Data/exo_fit.txt")
     <summary>Solution</summary>
 
 ```{r, warnings=FALSE, error=TRUE}
+# Load the `tidyverse` library.
 library(tidyverse)
-# Load rubis_1.txt, normalize it to [0,1] and plot it
-d <- read_table("Data/rubis_01.txt", col_names=c("w", "Int"))
+# Define a function `norm01(x)`, that, given a vector `x`, returns this vector normalized to [0,1].
 norm01 <- function(x) {(x-min(x))/(max(x)-min(x))}
-d$Int_n <- norm01(d$Int)
+# Load rubis_1.txt, normalize it to [0,1] and plot it
+d <- read_table("Data/rubis_01.txt", col_names=c("w", "Int")) %>% 
+    mutate(Int_n = norm01(Int))
 P <- d %>%
     ggplot(aes(x=w, y=Int_n))+
         geom_point(alpha=0.5)
 P
 # Define the Lorentzian function
 Lorentzian <- function(x, x0=0, FWHM=1){
-    2/(pi*FWHM)/( 1 + ((x-x0)/(FWHM/2))^2 )
+    FWHM / (2*pi) / ((FWHM/2)^2 + (x - x0)^2)
 }
 # Guess grossly the initial parameters and plot the resulting curve as a blue dashed line
-P+geom_line(aes(y=.03 + 
+P+geom_line(aes(y = 0.03 + 
                     3*Lorentzian(w, x0=3160, FWHM=10) +
                     7*Lorentzian(w, x0=3210, FWHM=10)),
             col="blue", lty=2)
 # Fit the data by a sum of 2 Lorentzians using `nls`
-fit <- nls(data=d, Int_n ~ y0 +
-                    A1*Lorentzian(w,x1,FWHM1)+
-                    A2*Lorentzian(w,x2,FWHM2), 
+fit <- nls(data=d, 
+           Int_n ~ y0 + A1*Lorentzian(w,x1,FWHM1) + A2*Lorentzian(w,x2,FWHM2), 
            start=list(y0=0.03,
                       x1=3160, FWHM1=10, A1=3,
-                      x2=3200, FWHM2=10, A2=7)
-           )
+                      x2=3200, FWHM2=10, A2=7))
 summary(fit)
 # Add the result on the plot as a red line
 P + geom_line(aes(y=.03 + 
@@ -365,25 +367,19 @@ P + geom_line(aes(y=.03 +
             col="blue", lty=2)+
     geom_line(aes(y=predict(fit)), col="red")
 # Add the 2 Lorentzian components as area-filled curves with `alpha=0.2` and two different colors
-y0   <- coef(fit)['y0']
-lor1 <- coef(fit)['A1']*Lorentzian(d$w, x0=coef(fit)['x1'], FWHM=coef(fit)['FWHM1'])
-lor2 <- coef(fit)['A2']*Lorentzian(d$w, x0=coef(fit)['x2'], FWHM=coef(fit)['FWHM2'])
+y0  <- coef(fit)['y0']
+A1  <- coef(fit)['A1'];   A2   <- coef(fit)['A2']
+x1  <- coef(fit)['x1'];   x2   <- coef(fit)['x2']
+FW1 <- coef(fit)['FWHM1']; FW2 <- coef(fit)['FWHM2']
 P + geom_line(aes(y=.03 + 
                     3*Lorentzian(w, x0=3160, FWHM=10) +
                     7*Lorentzian(w, x0=3210, FWHM=10)),
             col="blue", lty=2)+
-    geom_line(aes(y=predict(fit)), col="red")+
-    geom_area(aes(y=lor1), fill="royalblue", alpha=.2)+
-    geom_area(aes(y=lor2), fill="orange", alpha=.2)
-# Or, more compact:
-# dd <- data.frame(d, ytot=lor1+lor2+y0,lor1=lor1+y0, lor2=lor2+y0)
-# ggplot(data=dd, aes(x=w))+
-#     labs(x="Raman Shift [1/cm]", y="Intensity [arb. units]")+
-#     geom_point(aes(y=Int_n), alpha=.5)+
-#     geom_line(aes(y=ytot), col="red")+
-#     geom_area(aes(y=lor1), fill="royalblue", alpha=.2)+
-#     geom_area(aes(y=lor2), fill="orange", alpha=.2)+
-#     theme_bw()
+    geom_line(aes(y = predict(fit)), col="red")+
+    geom_area(aes(y = A1*Lorentzian(w, x0=x1, FWHM=FW1)), 
+                fill="royalblue", alpha=.2)+
+    geom_area(aes(y = A2*Lorentzian(w, x0=x2, FWHM=FW2)), 
+                fill="orange", alpha=.2)
 ```
 
 </details>
