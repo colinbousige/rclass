@@ -33,10 +33,136 @@ pip install pandoc-fignos
 pip install pandoc-tablenos
 ```
 
+
+
+<details>
+    <summary>**Configuring VS Code**</summary>
+
+I personally use [VS Code](https://code.visualstudio.com/). 
+
+- First, install the [radian](https://github.com/randy3k/radian) console.
+- Install the language server protocol package in *R* with: `install.packages("languageserver")`{.R}
+- In VS Code, install the following extensions:
+    - [VSCode R](https://marketplace.visualstudio.com/items?itemName=Ikuyadeu.r)
+    - [R LSP Client](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r-lsp)
+- Enable `r.bracketedPaste` for using Radian
+- Set up `r.rterm.windows`, `r.rterm.mac` or `r.rterm.linux`: Path to Radian (where you installed radian)
+- You should be good to go: ⌘+⏎ will send the current line/selection to the radian console, ⌘+B will render the current Rmd file, ⌘+\\ will set the working directory to the current file's folder.
+
+Here is the relevant part of my `settings.json` file:
+```json
+{
+    "r.rterm.mac": "/Library/Frameworks/Python.framework/Versions/3.9/bin/radian",
+    "r.rpath.mac": "/usr/local/bin/R",
+    "r.bracketedPaste": true,
+    "r.lsp.diagnostics": false,
+    "r.sessionWatcher": true,
+    "r.rmarkdown.knit.useBackgroundProcess": false,
+    "editor.guides.bracketPairs": true
+}
+```
+
+Also, I recommend turning on the session watcher (`"r.sessionWatcher": true`), and then adding the following code to your `.Rprofile`. This way, the help, tables and figures can be viewed in the VS Code browser panel.
+
+```r
+options(vsc.browser = "Beside")
+options(vsc.viewer = "Beside")
+options(vsc.page_viewer = "Beside")
+options(vsc.view = "Beside")
+options(vsc.helpPanel = "Beside")
+
+if (interactive() && Sys.getenv("TERM_PROGRAM") == "vscode") {
+    if ("httpgd" %in% .packages(all.available = TRUE)) {
+        options(vsc.plot = FALSE)
+        options(device = function(...) {
+            httpgd::hgd(silent = TRUE)
+            .vsc.browser(httpgd::hgd_url(), viewer = "Beside")
+        })
+    }
+}
+```
+
+Here are also a few keybindings that I use (`keybindings.json`):
+
+```json
+[
+    {
+        "description": "Create R terminal",
+        "key": "alt+cmd+r",
+        "command": "r.createRTerm"
+    },
+    {
+        "description": "Insert code block",
+        "key": "cmd+shift+i",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus && editorLangId == 'rmd'",
+        "args": {
+            "snippet": "```{r}\n$0\n```"
+            }
+    },
+    {
+        "description": "Setwd to current file path",
+        "key": "cmd+\\",
+        "command": "r.runCommandWithEditorPath",
+        "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+        "args": "setwd(dirname(\"$$\"))"
+    },
+    {
+        "description": "Insert R arrow",
+        "key": "ctrl+,",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+        "args": {
+            "snippet": " <- "
+            }
+    },
+    {
+        "description": "Insert pipe",
+        "key": "ctrl+.",
+        "command": "editor.action.insertSnippet",
+        "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+        "args": {
+            "snippet": " %>% "
+         }
+    },
+    {
+        "description": "help document",
+        "key": "ctrl+h",
+        "command": "r.runCommandWithSelectionOrWord",
+        "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+        "args": "help($$)"
+    },
+    {
+        "description": "view table",
+        "key": "cmd+shift+u",
+        "command": "r.runCommandWithSelectionOrWord",
+        "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+        "args": "DT::datatable($$)"
+    },
+    {
+        "description": "reopen figure panel if closed",
+        "key": "ctrl+alt+p",
+        "command": "r.runCommand",
+        "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+        "args": ".vsc.browser(httpgd::hgd_url(), viewer = \"Beside\")"
+    },
+    {
+        "description": "view object",
+        "key": "cmd+u",
+        "command": "r.runCommandWithSelectionOrWord",
+        "when": "editorTextFocus && editorLangId =~ /r|rmd/",
+        "args": "View($$)"
+    }
+]
+```
+
+</details>
+
+
 <details>
     <summary>**Configuring Sublime Text**</summary>
 
-I personally use [Sublime Text 3](https://www.sublimetext.com/3). 
+I have personally used [Sublime Text 3](https://www.sublimetext.com/3) for a long time, but switched to [VS Code](https://code.visualstudio.com/) recently. Here is what I used to do: 
 
 - First, install [Package control](https://packagecontrol.io/installation). 
 - To set up command line launch: `ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime`. 
@@ -59,7 +185,6 @@ I personally use [Sublime Text 3](https://www.sublimetext.com/3).
 - You should be good to go: ⌘+⏎ will send the current line/selection to the radian console, ⌘+B will render the current Rmd file, ⌘+\\ will set the working directory to the current file's folder.
 
 </details>
-
 
 ## In any case: install LaTeX
 
