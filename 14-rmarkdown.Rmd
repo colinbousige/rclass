@@ -1,5 +1,14 @@
 # Writing documents with Rmarkdown
 
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+</style>
+
 ## What is markdown?
 
 Markdown is a simplified language that can be used to produce a variety of rich documents: a single .md file can be compiled and outputted to .docx, .odt, .html, .rtf, .pdf or .tex. This output format as well as various options (font size, template, table of contents, numbered sections...) are specified in a YAML header, *i.e.* text between two lines like that `---` (we'll see an example later).
@@ -70,7 +79,7 @@ In-line code ``r ''`r 1+2`
 ```
 will render as: In-line code `r 1+2`.
 
-This very webpage is fully written in Rmarkdown (you can download the Rmd file if you click the link in the top banner).
+This very webpage is fully written in Rmarkdown (see the "View book source" at the bottom of the left sidebar).
 
 Rmarkdown supports a number of languages:
 ```{r}
@@ -87,7 +96,7 @@ Example:
 
 - chunk 1: bash, call a program that creates some files
 - chunk 2: python, call a program that do some big computation on these files
-- chunk 3: r, plot the data
+- chunk 3: R, do some data treatment, plot the data
 
 
 ## Further reading
@@ -100,6 +109,8 @@ To see all about Rmarkdown and combining languages in a single document:
 - [Rmarkdown cookbook](https://dr-harper.github.io/rmarkdown-cookbook/index.html)
 
 ## Example {#example-Rmd}
+
+Download <a href="Data/biblio.bib" target="_blank" download>biblio.bib</a> and <a href="Data/nature.csl" target="_blank" download>nature.csl</a> and put them at the root of your project.
 
 Create an _example.Rmd_ file with the following YAML header (**the indentation is important**):
 
@@ -115,8 +126,8 @@ output :
         highlight      : tango
         number_sections: false
         code_folding   : hide    
-bibliography: "path/to/biblio.bib"
-csl         : "path/to/nature.csl"
+bibliography: "biblio.bib"
+csl         : "nature.csl"
 ---
 ```
 How to understand this header:
@@ -159,8 +170,8 @@ output:
         code_folding   : show
         code_download  : true
     # bookdown::pdf_document2 #instead of pdf_document, for referencing images
-bibliography: "path/to/biblio.bib"
-csl         : "path/to/nature.csl"
+bibliography: "biblio.bib"
+csl         : "nature.csl"
 ---
 
 # First section
@@ -168,7 +179,7 @@ csl         : "path/to/nature.csl"
 I am writing _italic_ and __bold__ stuff.
 
 - This is an item
-- This is another item with a citation [@Bibkey]
+- Another one with citations [@bevan_statistical_2013;@rcoreteam_language_2017]
 
 # Second section
 ## First subsection that I want to refer to {#subsectionID}

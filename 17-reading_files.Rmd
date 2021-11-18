@@ -1,5 +1,14 @@
 # Reading all kinds of files
 
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+</style>
+
 Working in materials science (or any other field, for that matter), you will encounter many different types of files. ASCII text files are usually predominant, but you may want to read files from coming from Excel, Origin, etc..
 Here is a non-exhaustive reminder to help you read the kinds of files you often encounter in Materials Science with R. I invite you to visit the [RopenSci webpage](https://ropensci.org/) for more packages, and if this isn't enough for your need, well, [Google is your friend](http://letmegooglethat.com/?q=r+read+my+file+type).
 
@@ -9,7 +18,7 @@ Most base R functions like `read.csv()`{.R} or `read.table()`{.R} have their `ti
 
 If your data file is "complicated" -- in the sense that it contains lines or columns to be skipped -- look at the help on the reader function with `?function_name`.
 
-- **Comma separated values**
+### Comma separated values
 
 Input file looks like this:
 ```{bash echo=FALSE}
@@ -31,7 +40,7 @@ read_csv(c("Data/test1.csv",
          id = "file", show_col_types = FALSE)
 ```
 
-- **Space separated values**
+### Space separated values
 
 Input file looks like this:
 ```{bash echo=FALSE}
@@ -45,7 +54,7 @@ read_table("Data/rubis_01.txt", col_names=c("w","int"))
 ```
 
 
-- **Other separators**
+### Other separators
 
 For tab-separated values, use `read_tsv()`{.R}. For other exotic separators, look into `read_delim()`{.R}.
 

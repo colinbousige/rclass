@@ -1,4 +1,13 @@
-# Simple variables
+# Variables, booleans and strings
+
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+</style>
 
 In R, the variable attribution is done through the arrow operator `<-`{.R} instead of the `=`{.R} one – for historical reasons. The equal sign, `=`{.R}, would still work though, but you should just take up the habit of using `<-`{.R}.
 
@@ -6,36 +15,24 @@ In reality, scalar numbers don't exist in R, they are simply 1 element vector: t
 
 To understand what you will encounter further down this class, inputs (what you type in the R script and hit Ctrl+⏎ (⌘+⏎)) are the shaded areas with syntax coloring, while outputs (what R returns) are the shaded are underneath starting with `## [1]`. In case the output spans several lines, each line would start with `## [x]` where `x` is the index of the first element printed on the line.
 
+> Note that different instructions are usually given on separated lines (*i.e.* one instruction per line), but several instructions can be written on a single line if separated with a `;` sign. 
+
+> In R code, what is written after the "#" sign is a comment and is thus not interpreted.
+
 ## Scalars and booleans
 
-
-Separate in-line instructions with a `;` or just skip a line. 
-Different ways of defining a scalar:
+Defining a scalar value is done with:
 ```{r, warnings=FALSE}
-x <- 1
-x
-y <- floor(1.2); y
+x <- 1 # attribute the value '1' to the variable 'x'
+x      # print the value of 'x'
 ```
 
 You can use the R console as an advanced calculator:
 ```{r, warnings=FALSE}
-1+3
-x-y
-```
-
-### Booleans
-Booleans are handled with the `TRUE`{.R} and `FALSE`{.R} keywords. Any number non 0 is equivalent to TRUE, 0 is FALSE.
-```{r, warnings=FALSE}
-z <- TRUE; typeof(z)
-as.logical(1)
-as.logical(0)
-x <- 1; y <- 2
-x == y # is equal
-x != y # is not equal
-x < y  # is smaller than
-x <= y # is smaller or equal than
-x == y & x < y  # operator "and"
-x == y | x < y  # operator "or"
+1 + 3
+x <- 1/2
+y <- exp(log(sin(cos(x*pi))))
+x - y
 ```
 
 ### Special values
@@ -45,12 +42,72 @@ pi
 10/0
 -10/0
 0/0
-is.na(NA)
+```
+
+### Booleans and common tests on values
+
+Booleans are handled with the `TRUE`{.R} and `FALSE`{.R} keywords, and are usually obtained as the result of a test on values. Let's us create two variables `x` and `y`:
+
+```{r}
+x <- 1
+y <- 2
+```
+and now let's test some assertions on these two variables:
+
+- Is x equal to y?
+```{r}
+x == y
+```
+
+- Is x not equal to y?
+```{r}
+x != y
+```
+
+- Is x smaller than y?
+```{r}
+x < y 
+```
+
+- Is x smaller or equal than y?
+```{r}
+x <= y
+```
+
+- Operator "and"
+```{r}
+x == y & x < y 
+```
+
+- Operator "or"
+```{r}
+x == y | x < y 
+```
+
+- Is x a NaN?
+```{r}
+is.nan(x)
+```
+
+- Is x a NA?
+```{r}
+is.na(x)
+```
+
+- Operator "not" (inverse)
+```{r}
+!is.na(x)
+```
+
+A number can by converted to a boolean using `as.logical()`{.R}: any number non 0 is equivalent to TRUE, and 0 is FALSE.
+```{r, warnings=FALSE}
+as.logical(1)
+as.logical(0)
 ```
 
 
-
-### Complex values
+<details>
+<summary>**Complex values**</summary>
 R also natively handles complex values:
 ```{r, warnings=FALSE, error=TRUE}
 1+i   # not a valid complex value
@@ -60,39 +117,74 @@ sqrt(-1)
 sqrt(-1 + 0i)
 Im(exp(1i*pi))
 ```
+</details>
+
+
 
 ## Strings
 
+A string is defined between quotation marks such as: `"string"`{.R}. Thus `"1"`{.R} is not the number *1*, but rather the character "1". Here are some operations on strings :
 
-A string is defined between quotation marks `"string"`{.R}. Here are some operations on strings :
-```{r, warnings=FALSE, error=TRUE}
-phrase <- " Hello World " # definition of a string
-paste("phrase =", phrase, ", class(phrase) =", class(phrase))
-substr(phrase, 2, 5) # sub-string
-paste(tolower(phrase), toupper(phrase), sep=" - ") # change case
-sub("o", "a", phrase)  # change the first occurrence of "o" in "a"
-gsub("o", "a", phrase) # change all occurrences of "o" in "a"
-trimws(phrase)         # trim white spaces
-phrase2 <- "1234"
-phrase2 - 4321             # won't work: string - double
-as.numeric(phrase2) - 4321 # conversion of string to double
+- Definition of a string:
+```{r}
+phrase <- "Hello World " 
 ```
 
-For more complex operations, see the [stringr](https://cran.r-project.org/web/packages/stringr/vignettes/stringr.html) package or the [string cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf).
+- Concatenation of strings using `paste()`{.R}:
+```{r}
+paste("phrase", phrase, sep=" = ")
+```
+
+- Acessing a sub-string:
+```{r}
+substr(phrase, 1, 4)
+```
+
+- Change case of string with `tolower()`{.R} and `toupper()`{.R}:
+```{r}
+tolower(phrase); toupper(phrase)
+```
+
+- Change the first occurrence of "o" in "a" with `sub()`{.R}:
+```{r}
+sub("o", "a", phrase)
+```
+
+- Change all occurrences of "o" in "a" with `gsub()`{.R}:
+```{r}
+gsub("o", "a", phrase)
+```
+
+- Trim white spaces with `trimws()`{.R}:
+```{r}
+trimws(phrase)
+```
+
+- Get a vector from sting separation based on a character with `strsplit()`{.R}:
+```{r}
+strsplit(phrase, " ")         # returns a list
+unlist(strsplit(phrase, " ")) # returns a vector
+```
+
+> **Attention!!**
+> ```{r, warnings=FALSE, error=TRUE}
+> phrase2 <- "1234"
+> phrase2 - 4321             # won't work: string - double
+> as.numeric(phrase2) - 4321 # conversion of string to double
+> ```
+
+For more complex operations, see the `stringr` package and its [cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf).
 
 ## Exercises {#exo-variables}
 
-
 What will be the output of the following entries?
-
-
 
 ```{r}
 x <- "100"; y <- 99.6; 
 ```
 
-
 ```r
+x - floor(y)
 x - ceiling(y)
 ```
 
@@ -100,6 +192,7 @@ x - ceiling(y)
 <summary>Show output</summary>
 
 ```{r, warnings=FALSE, error=TRUE, echo=FALSE}
+x - floor(y)
 x - ceiling(y)
 ```
 
@@ -146,6 +239,13 @@ cos(pi/2)-cos(3*pi/2)
 cos(pi/2)-cos(3*pi/2)
 ```
 
+
+`.Machine$double.eps` is the smallest positive floating-point number x such that `1 + x != 1`: it depends on the machine (computer) you are running on:
+```{r}
+.Machine$double.eps
+(cos(pi / 2) - cos(3 * pi / 2)) > .Machine$double.eps
+```
+
 </details>
 <br>
 
@@ -160,7 +260,10 @@ all.equal(cos(pi/2),cos(3*pi/2))
 all.equal(cos(pi/2),cos(3*pi/2))
 ```
 
+
 </details>
+
+
 
 <br>
 <br>

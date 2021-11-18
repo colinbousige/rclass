@@ -19,10 +19,10 @@ blockquote {
 
 ## The more advanced way
 
-If you don't want to use Rstudio but rather want to keep with your favorite text editor, like I do ([Sublime Text](https://www.sublimetext.com/3) (see configuration below), [Visual Studio Code](https://code.visualstudio.com/)...)
+If you don't want to use Rstudio but rather want to keep with your favorite text editor, like I do ([Visual Studio Code](https://code.visualstudio.com/) or [Sublime Text](https://www.sublimetext.com/3),  see configuration below)
 
 - I still recommend [downloading](https://cran.r-project.org/) and installing R via CRAN (I had some packages problems due to a `homebrew` installation).
-- To be fully operational with Rmarkdown files without using Rstudio, you need to install `pandoc`:
+- To be fully operational with Rmarkdown files without using Rstudio, you need to [install `pandoc`](https://pandoc.org/installing.html):
 
 ```bash
 brew install openssl
@@ -32,8 +32,6 @@ pip install pandoc-eqnos
 pip install pandoc-fignos
 pip install pandoc-tablenos
 ```
-
-
 
 <details>
     <summary>**Configuring VS Code**</summary>
@@ -47,7 +45,7 @@ I personally use [VS Code](https://code.visualstudio.com/).
     - [R LSP Client](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r-lsp)
 - Enable `r.bracketedPaste` for using Radian
 - Set up `r.rterm.windows`, `r.rterm.mac` or `r.rterm.linux`: Path to Radian (where you installed radian)
-- You should be good to go: ⌘+⏎ will send the current line/selection to the radian console, ⌘+B will render the current Rmd file, ⌘+\\ will set the working directory to the current file's folder.
+- You should be good to go: ⌘+⏎ will send the current line/selection to the radian console and ⌘+Shift+K will render the current Rmd file.
 
 Here is the relevant part of my `settings.json` file:
 ```json
@@ -82,7 +80,9 @@ if (interactive() && Sys.getenv("TERM_PROGRAM") == "vscode") {
 }
 ```
 
-Here are also a few keybindings that I use (`keybindings.json`):
+
+
+<details><summary>**Here are also a few keybindings that I use (`keybindings.json`):**</summary>
 
 ```json
 [
@@ -158,6 +158,8 @@ Here are also a few keybindings that I use (`keybindings.json`):
 
 </details>
 
+</details>
+
 
 <details>
     <summary>**Configuring Sublime Text**</summary>
@@ -170,6 +172,7 @@ I have personally used [Sublime Text 3](https://www.sublimetext.com/3) for a lon
 - You can also add the useful packages `LatexTools`, `BracketHighlighter`, `RainbowBrackets`, `Citer`, `Path Tools`, `SidebarEnhancements`, `SidebarTools`, `Git`, `GitGutter`, `Alignment`, `AutoFileName`. 
 - Install the language server protocol package in R with: `install.packages("languageserver")`{.R}
 - To create a keyboard shortcut to open a terminal with the radian console as the R interpreter, add this to your keybinding file:
+
 ```bash
 { "keys": ["super+option+r"], # put whatever you want here
     "command": "terminus_open",
@@ -195,7 +198,7 @@ A **full** $\LaTeX$ distribution (emphasis on **full**) will be needed to knit m
 - Mac: go [here](https://tug.org/mactex/mactex-download.html) or type `brew cask install mactex` in the terminal if you have [Homebrew](https://treehouse.github.io/installation-guides/mac/homebrew) installed
 - Linux: [here](https://dzone.com/articles/installing-latex-ubuntu) fore example
 
-Alternatively, you can also work with [TinyTeX](https://yihui.name/tinytex/) that will install the needed packages on the fly. Just run this in the R console:
+Alternatively, you can also work with [TinyTeX](https://yihui.name/tinytex/) that will install the needed packages on the fly. It is recommended on the `knitr` package help, but I only had problems with this, so I recommend the full $\LaTeX$ distribution option if you don't mind taking up a few gigabytes of your disk. If you do, just run this in the R console:
 
 ```r
 install.packages("tinytex")
@@ -219,18 +222,18 @@ The great interest of working with Projects is that the default working director
 - You won't have to write the absolute path towards your file, like `read_function("C://path/to/your_file.txt")`{.R}, path that is unlikely to be the same depending on the computer it is located on. This helps you share your whole project folder with others, or just move it around on your computer and still have a working code.
 - You won't have to start your script by a `setwd("/path/to/your/data")`{.R} command (for set working directory), which is much better for the same reasons as above.
 
-Write whatever you want in the "Source code" panel and save it in a `.R` (or `.Rmd`) file, and __run__ it by selecting it and hitting ⌘+⏎ (Ctrl+⏎ on Windows). If no text is selected, hitting ⌘+⏎ will launch the current line. You can see the file contents of your project in the project's file explorer (see bottom right corner of Fig. \@ref(fig:rstudio)).
+Write whatever you want in the "Source code" panel and save it in a `.R` (or `.Rmd`) file, and __run__ it by selecting it and hitting ⌘+⏎ (Ctrl+⏎ on Windows, Linux). If no text is selected, hitting ⌘+⏎ will launch the current line. You can see the file contents of your project in the project's file explorer (see bottom right corner of Fig. \@ref(fig:rstudio)).
 
 The code output will be seen in the "R Console" panel if it's a text, or in the "Graph" panel if it's a graph. A list of all defined variables and functions is available in the "Environment" panel. You can also directly write and run code in the "R Console" panel, if it's code you don't care to save in a script (like installing a package or whatever).
 
-You can install packages by running the `install.packages("package_name")`{.R} command in the R console or R script, or you can also click on the "Packages" tab in the bottom right corner, and then "Install" or "Update" in case you want to install or update your packages. "Update" will show you a list of installed packages that have a new published version. All verified packages are located on the CRAN (Comprehensive R Archive Network). It is thus really easy to install packages and maintain (update) your packages in R. There is also the possibility to install packages from source if you want to install custom packages -- "homemade" packages that didn't go through the CRAN verification process: do so at your own risks. But it's generally fine.
+You can install packages by running the `install.packages("package_name")`{.R} command in the R console or R script, or you can also click on the "Packages" tab in the bottom right corner, and then "Install" or "Update" in case you want to install or update your packages. "Update" will show you a list of installed packages that have a new published version. All verified packages are located on the CRAN (Comprehensive R Archive Network). It is thus really easy to install packages and maintain (update) your packages in R. There is also the possibility to install packages from source if you want to install custom packages -- "homemade" packages that didn't go through the CRAN verification process: do so at your own risks.
 
 More on the [Rstudio cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf).
 
 
 ## Setting up the environment
 
-Make sure you have the following packages installed by launching the following commands: copy-paste them in the "Source code" panel (upper left after having crated a new R script), select all the lines and hit Ctrl+⏎ (Windows, Linux) or ⌘+⏎ (Mac).
+Make sure you have the following packages installed by launching the following commands: copy-paste them in the "Source code" panel (upper left after having crated a new R script), select all the lines and hit Ctrl+⏎ (Windows, Linux) or ⌘+⏎ (Mac). These are the main packages that we will use in this class.
 
 ```r
 install.packages("devtools")
@@ -241,17 +244,21 @@ install.packages("shiny")
 install.packages("patchwork")
 install.packages("broom")
 install.packages("plotly")
+install.packages("quantities")
+install.packages("minpack.lm")
+install.packages("tikzDevice")
 ```
 
 Later on, a package can be loaded by calling:
 ```r
 library(package_name)
 ```
-or by checking it in the "Graph" panel under the "Packages" tab.
-If you want to access a function from a given package without loading it (or because several packages define the same function and you want to specify which to use), type:
+or by checking it in the "Graphs" panel under the "Packages" tab.
+If you want to access a function from a given package without loading it (or because several packages define the same function and you want to specify which one to use), type:
 ```r
 package_name::function_name(parameters)
 ```
+
 If you want to access the documentation on a given package, click the link on this package in the "Packages" tab.
 In a more general way, help on a function is accessed by typing in `?function_name`, the help appearing in the "Graph" panel.
 

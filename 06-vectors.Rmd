@@ -1,121 +1,262 @@
 # Vectors
 
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+</style>
+
 **R is a vectorized language** with built-in arithmetic and relational operators, mathematical functions and types of number. It means that each mathematical function and operator works on a set of data rather than a single scalar value as traditional computer language do, and thus __formal looping can _usually_ be avoided__.
 
 ## Different ways of defining a vector
 
+If you want to define a vector by specifying the values, use the function `c()`{.R}, like so:
 
+- Here, `x` is a vector of doubles:
 ```{r, warnings=FALSE}
-x <- c(1,5,3,12,4.2); x # x is a vector of doubles
-x <- c(1,5,3,12,"skdjnc"); x # x is converted to a vector of strings
+x <- c(1, 5, 3, 12, 4.2)
+x
+```
+- But here, `x` is converted to a vector of strings because it contains a string:
+```{r, warnings=FALSE}
+x <- c(1, 5, 3, "hello")
+x
+```
+
+- To define a sequence of increasing numbers, either use the notation `start:end` for a sequence going from `start` to `end` by step of 1, or use the `seq()`{.R} function that is more versatile:
+```{r, warnings=FALSE}
 1:10
-1:10*.1  # no need to loop on the elements to multiply them!
-1:10 + 1:10*.5 # or to add/subtract/multiply vectors
-1:10*1:10
-seq(-10,10,by=.5)
-seq(-10,10,length=6)
-seq(-10,10,along=x)
-rep(0,10)
-rep(c(0,2), 5)
-rep(c(0,2),each=5)
-# vector with 10 random values normally distributed around mean
+seq(-10, 10, by = .5)
+seq(-10, 10, length = 6)
+seq(-10, 10, along = x)
+```
+- To repeat values, use the `rep()`{.R} function:
+```{r, warnings=FALSE}
+rep(0, 10)
+rep(c(0, 2), 5)
+rep(c(0, 2), each = 5)
+```
+- To create vectors of random numbers, use `rnorm()`{.R} or `runif()`{.R} for normally or uniformly distributed numbers, respectively:
+```{r, warnings=FALSE}
+# vector with 10 random values normally distributed around mean 
+# with given standard deviation `sd`
 rnorm(10, mean=3, sd=1)
-# vector with 10 random values uniformly distributed
+# vector with 10 random values uniformly distributed between min and max
 runif(10, min = 0, max = 1)
 ```
 
 ## Principal operations on vectors
 
+### Mathematical operations
+Because R is a vectorized language, you don't need to loop on all elements of a vector to perform element-wise operations on it. Let's say that `x <- 1:6`{.R}, then:
+```{r, include=FALSE}
+x <- 1:6
+```
+
+- Addition of a value to all elements:
+```{r}
+x + 2.5
+```
+- Multiplication / division of all elements:
+```{r}
+x*2
+```
+- Integer division:
+```{r}
+x %/% 3
+```
+- Math functions apply on all elements:
+```{r}
+sqrt(abs(cos(x)))
+```
+- Power:
+```{r}
+x^2.5
+```
+- Multiplication of vectors of the same size is performed element by element:
+```{r}
+y <- c(2.3, 5, 7, 10, 12, 20)
+x*y
+```
+- Multiplication of vectors of different sizes: the smaller vector is automatically repeated the number of times needed to get a vector of the size of the larger one. It will work also if the longer object length is not a multiple of shorter object length, but the shorter object will be truncated and you'll get an error:
+```{r}
+x*1:2
+x*1:4
+```
+- Modulo:
+```{r}
+x %% 2
+```
+- Outer product of vectors (the result is a matrix):
+```{r}
+x %o% y
+```
+
+
+### Accessing values
+Let's work on this vector `x`:
+```{r}
+x <- c(5, 3, 4, 9, 3)
+```
+
+#### Accessing values by index
+
+- To access values of a vector `x`, use the `x[i]` notation, where `i` is the index you want to access. `i` can be (and in fact, is always) a vector.
+
+> **Attention:** In R, indexes numbering start at **1** !!!
 
 ```{r, warnings=FALSE}
-x <- c(1,5,3,12,3,4.2)
-y <- c(a=0,b=2,c=1,d=9,e=10,f=-1) # each element can be named
-x; y
-names(x);names(y)
-```
-### Accessing values
-__!!! In R, indexes numbering start at 1 !!!__
-```{r, warnings=FALSE}
 # accessing by indexes
-x[1]; y[4]; 
-# accessing by name
-y[c('b','d')]; y[['c']]
+x[3]
 # access index 1, 5 and 2
 x[c(1,5,2)] 
-# remove elements 1 and 3
-x[-c(1,3)] 
 ```
-### Sorting
+
+- To remove elements `j` from a vector `x`, use the notation `x[-j]`{.R}:
+```{r}
+# remove elements 1 and 3
+x[-c(1,3)]
+```
+
+> Writing `x[-c(1,3)]`{.R} will **just print** the result of `x[-c(1,3)]`{.R}, but not actually modify `x`. To really modify `x`, you'd need to write `x <- x[-c(1,3)]`{.R}.
+
+#### Filtering values with tests
+
+You can access values with booleans. Values getting a `TRUE`{.R} will be kept, while values with a `FALSE`{.R} will be discarded:
+```{r}
+x[c(TRUE,TRUE,TRUE,FALSE,TRUE,TRUE)]
+```
+Therefore, you can apply tests on your values and filter them very easily:
+```{r}
+x > 4 # is a vector of booleans
+x[x > 4] # is a filtered vector
+```
+
+#### Accessing values by name
+
+Finally, values in vectors can be **named**, and thus can be accessed by their name:
 ```{r, warnings=FALSE}
-# ascending
-sort(x) 
-# descending
+y <- c(age=32, name="John", pet="Cat")
+y
+y[c('age','pet')] # prints a named vector
+y[['name']] # prints an un-named vector
+```
+
+And you can access the names of the vector using `names()`{.R}:
+```{r, warnings=FALSE}
+names(y)
+```
+
+
+### Sorting, removing duplicates, sampling
+
+
+- Sorting by ascending number:
+```{r, warnings=FALSE}
+sort(x)
+```
+- It works with strings too, but `gtools::mixedsort()`{.R} might be needed for strings mixing letters and numbers:
+```{r, warnings=FALSE}
+sort(c("c","a","d","ab")) 
+sort(c("c", "a10", "a2", "d", "ab"))
+gtools::mixedsort(c("c", "a10", "a2", "d", "ab"))
+```
+- Sorting by descending number:
+```{r, warnings=FALSE}
 sort(x, decreasing = TRUE) 
-# find the order of the indexes of the sorting
-order(x); x[order(x)]
-# find duplicates
+```
+- Inverting the order of the vector:
+```{r}
+rev(x)
+```
+
+- Find the order of the indexes of the sorting:
+```{r, warnings=FALSE}
+order(x)
+x[order(x)] # is thus equivalent to `sort(x)`
+```
+- Find duplicates:
+```{r, warnings=FALSE}
 duplicated(x)
-# remove duplicates
+```
+- Remove duplicates:
+```{r, warnings=FALSE}
 unique(x)
-# choose 3 random values
+```
+- Choose 3 random values:
+```{r, warnings=FALSE}
 sample(x, 3)
 ```
+
 ### Maximum and minimum
+This is quite straightforward:
 ```{r, warnings=FALSE}
 # maximum of x and its index
 x; max(x); which.max(x) 
-# minimum of y and its index
-y; min(y); which.min(y)
+# minimum of x and its index
+x; min(x); which.min(x)
 # range of a vector
 range(x)
 ```
-### Mathematical operations
-```{r, warnings=FALSE, error=TRUE}
-x + 2             # addition of a value to all elements
-x*2               # multiplication / division
-x%/%3             # integer division
-sqrt(abs(cos(x))) # math functions apply on all elements
-x^2.5             # power
-x*y               # multiplication of vectors of the same size
-x*1:2             # multiplication of vectors of different sizes
-x%%2              # modulo
-x %o% y           # outer product of vectors (the result is a matrix)
-```
-### Statistics on vectors
+
+### Characteristics of vectors
+
+- Size of a vector:
 ```{r, warnings=FALSE}
-length(x)  # size of vector
-summary(x) # statistics on vector
-sum(x)     # sum of all terms
-mean(x)    # average value
-median(x)  # median value
-sd(x)      # standard deviation
-table(x)   # count occurrence of values
+length(x)
 ```
-### More stuff
+- Statistics on vector:
 ```{r, warnings=FALSE}
-# cumulative sum
+summary(x)
+```
+- Sum of all terms:
+```{r, warnings=FALSE}
+sum(x)
+```
+- Average value:
+```{r, warnings=FALSE}
+mean(x)
+```
+- Median value:
+```{r, warnings=FALSE}
+median(x)
+```
+- Standard deviation:
+```{r, warnings=FALSE}
+sd(x)
+```
+- Count occurrence of values:
+```{r, warnings=FALSE}
+table(x)
+```
+- Cumulative sum:
+```{r}
 cumsum(x)
-# term-by-term difference
+```
+- Term-by-term difference
+```{r}
 diff(x)
-# reverse order
-rev(1:5)
-# append values
-append(x, 4)    # at the end
-append(x, 4, 3) # or after a given index
+```
+
+### Concatenation of vectors
+This is done using the `c()` notation: you basically create a vector of vectors, the result being a new vector:
+```{r, warnings=FALSE}
 # concatenate vectors
 z <- c(-1:4, NA, -x); z
-# find NA values
-is.na(z); anyNA(z)
-# remove NA values (operator "!" means "is not")
-z <- z[!is.na(z)]; z
-# returns a vector of the indexes verifying the condition
-z==2; which(z==2)
-# positive values of z
-z; z>0; z[z>0]; z[which(z>0)]
+```
+
+Another option is to use the `append()`{.R} function that allows for more options:
+```{r, warnings=FALSE}
+# append values
+append(x, 4)    # at the end
+append(x, 4:1, 3) # or after a given index
 ```
 
 
-## Exercises {#exo-vactors}
+## Exercises {#exo-vectors}
 
 
 <details>
@@ -140,7 +281,7 @@ Consider two vectors, a, b
 a <- c(1,5,4,3,6)
 b <- c(3,5,2,1,9)
 ```
-What is the value of: `a<=b`{.R}?
+Without typing it into Rstudio, what is the value of: `a<=b`{.R}?
 
 </details>
 
@@ -151,7 +292,7 @@ If
 ```r
 x <- c(1:12)
 ```
-What is the value of: `length(x)`{.R}
+Without typing it into Rstudio, what is the value of: `length(x)`{.R}
 
 </details>
 
@@ -162,7 +303,7 @@ If
 ```r
 a <- c(12:5)
 ```
-What is the value of: `is.numeric(a)`{.R}
+Without typing it into Rstudio, what is the value of: `is.numeric(a)`{.R}
 
 </details>
 
@@ -174,20 +315,20 @@ Consider two vectors, x, y
 x <- c(12:4)
 y <- c(0,1,2,0,1,2,0,1,2)
 ```
-What is the value of: `which(!is.finite(x/y))`{.R}?
+Without typing it into Rstudio, what is the value of: `which(!is.finite(x/y))`{.R}?
 
 
 </details>
 
+
 <details>
 <summary>**Exercise 6**</summary>
 
-Consider two vectors, x, y
+If 
 ```r
-x <- letters[1:10]
-y <- letters[15:24]
+x <- c('blue','red','green','yellow')
 ```
-What is the value of: `x<y`{.R}?
+Without typing it into Rstudio, what is the value of: `is.character(x)`{.R}?
 
 </details>
 
@@ -196,27 +337,16 @@ What is the value of: `x<y`{.R}?
 
 If 
 ```r
-x <- c('blue','red','green','yellow')
+x <- c('blue',10,'green',20)
 ```
-What is the value of: `is.character(x)`{.R}?
+Without typing it into Rstudio, what is the value of: `is.character(x)`{.R}?
 
 </details>
 
 <details>
 <summary>**Exercise 8**</summary>
 
-If 
-```r
-x <- c('blue',10,'green',20)
-```
-What is the value of: `is.character(x)`{.R}?
-
-</details>
-
-<details>
-<summary>**Exercise 9**</summary>
-
-Assign value 5 to variable x.
+Assign value 5 to the variable x.
 
 Is there a difference between `1:x-1`{.R} and `1:(x-1)`{.R} ?
 
@@ -225,14 +355,14 @@ Explain.
 </details>
 
 <details>
-<summary>**Exercise 10**</summary>
+<summary>**Exercise 9**</summary>
 
 Generate the sequence `9, 18, 27, 36, 45, 54, 63, 72, 81, 90`{.R} in 4 different manners.
 
 </details>
 
 <details>
-<summary>**Exercise 11**</summary>
+<summary>**Exercise 10**</summary>
 
 If `x <- c("w", "h", "f", "g", "k")`{.R}, what will be the output for `x[c(2,3)]`{.R}?
 
@@ -240,13 +370,13 @@ If `x <- c("w", "h", "f", "g", "k")`{.R}, what will be the output for `x[c(2,3)]
 1. "h"
 1. "f"
 
-What will be the third value in the index vector operation `x[c(2, 4, 4)]`{.R}?
+Without typing it into Rstudio, what will be the third value in the index vector operation `x[c(2, 4, 4)]`{.R}?
 
 1. "h"
 1. NA
 1. "g"
 
-What will be the fourth value in the index vector operation `x[-2]`{.R}?
+Without typing it into Rstudio, what will be the fourth value in the index vector operation `x[-2]`{.R}?
 
 1. "h"
 1. "g"
@@ -260,7 +390,7 @@ What will be the fourth value in the index vector operation `x[-2]`{.R}?
 
 Let `a <- c(2, 4, 6, 8)`{.R} and `b <- c(TRUE, FALSE, TRUE, FALSE)`{.R}.
 
-What will be the output for the R expression `max(a[b])`{.R}?
+Without typing it into Rstudio, what will be the output for the R expression `max(a[b])`{.R}?
 
 
 </details>
@@ -276,13 +406,13 @@ Open Rstudio and create a new R script, save it as `population.R` in your wanted
 
 <a href="Data/population.csv" download target="_blank">Download</a> the `population.csv` file and save it in your working directory.
 
-A csv file contains raw data stored as plain text and separated by a comma (Comma Separated Values). Open it from a text editor, as Excel and the likes don't work well with csv files.
+A csv file contains raw data stored as plain text and separated by a comma (Comma Separated Values). Open it with Rstudio.
 
-We can of course directly load such file with R and store its data in an appropriate format (_i.e._ a `data.frame`), but this is for a next section. For now, just copy-paste the text in the Rstudio script area to:
+We can of course directly load such file with R and store its data in an appropriate format (_i.e._ a `data.frame`), but this is for the next chapter. For now, just copy-paste the text in the Rstudio script area to:
 
 - Create a `cities` vector containing all the cities listed in `population.csv`
 - Create a `pop_1962` and `pop_2012` vectors containing the populations of each city at these years. Print the 2 vectors. 
-- Use names() to name values of `pop_1962` and `pop_2012`. Print the 2 vectors again. Are there any change?
+- Use `names()`{.R} to name values of `pop_1962` and `pop_2012`. Print the 2 vectors again. Are there any change?
 - What are the cities with more than 200000 people in 1962? For these, how many residents in 2012?
 - What is the population evolution of Montpellier and Nantes?
 - Create a `pop_diff` vector to store population change between 1962 and 2012
@@ -290,9 +420,8 @@ We can of course directly load such file with R and store its data in an appropr
 - Print cities which broke the 300000 people barrier between 1962 and 2012
 - Compute the total change in population of the 10 largest cities (as of 1962) between 1962 and 2012.
 - Compute the population mean for year 1962
-- Compute the population mean of Paris
-- Sort the cities by decreasing order of population for both years
-- Check to see which cities changed rank during these years (check out the `match` function).
+- Compute the population mean of Paris over these two years
+- Sort the cities by decreasing order of population for 1962
 
 <details>
 <summary>Solution</summary>
@@ -301,7 +430,7 @@ We can of course directly load such file with R and store its data in an appropr
 # Create a `cities` vector containing all the cities listed in `population.csv`
 cities <- c("Angers", "Bordeaux", "Brest", "Dijon", "Grenoble", "Le Havre", 
             "Le Mans", "Lille", "Lyon", "Marseille", "Montpellier", "Nantes", 
-            "Nice", "Paris", "Reims", "Rennes", "Saint-Étienne", "Strasbourg", 
+            "Nice", "Paris", "Reims", "Rennes", "Saint-Etienne", "Strasbourg", 
             "Toulon", "Toulouse")
 # Create a `pop_1962` and `pop_2012` vectors containing the populations 
 # of each city at these years. Print the 2 vectors. 
@@ -336,14 +465,8 @@ sum(pop_2012[ten_largest] - pop_1962[ten_largest])
 mean(pop_1962)
 # Compute the population mean of Paris
 mean(c(pop_1962['Paris'], pop_2012['Paris']))
-# Sort the cities by decreasing order of population for both years
+# Sort the cities by decreasing order of population for 1962
 (pop_1962_sorted <- sort(pop_1962, decreasing = TRUE))
-(pop_2012_sorted <- sort(pop_2012, decreasing = TRUE))
-# Check to see which cities changed rank (and by how much) 
-# during these years (check out the `match` function).
-ranked_cities <- match(names(pop_1962_sorted),names(pop_2012_sorted)) - seq_along(cities)
-names(ranked_cities) <- names(pop_1962_sorted)
-ranked_cities
 ```
 
 

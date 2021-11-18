@@ -4,12 +4,15 @@
 
 To get the manual on a base function, type `?function_name`{.R}.
 
-A function returns the last thing that is called in it:
+A function returns the last thing that is called in it. Thus a function defined like that will return nothing:
 ```{r, warnings=FALSE}
 geom_mean <- function(x, y){
     a <- sqrt(x*y)
 }
-geom_mean(1,2) #returns nothing
+geom_mean(1,2)
+```
+While this will return what you want:
+```{r}
 geom_mean <- function(x, y){
     a <- sqrt(x*y)
     a
@@ -29,18 +32,18 @@ joe
 
 One can add default values to variables:
 ```{r, warnings=FALSE}
-testfunc <- function(x,y=1){
+testfunc <- function(x, y=1){
     x*y
 }
 testfunc(1)
-testfunc(1,y=2)
-testfunc(1:3,y=.1)
+testfunc(1, y=2)
+testfunc(1:3, y=.1)
 ```
 
 And pass arguments to other functions:
 ```{r, warnings=FALSE}
-testfunc2 <- function(x,...){
-    head(x,...)
+testfunc2 <- function(x, ...){
+    head(x, ...)
 }
 testfunc2(1:100)
 testfunc2(1:100,2)
@@ -48,10 +51,10 @@ testfunc2(1:100,2)
 
 Or even pass a function as argument:
 ```{r, warnings=FALSE}
-testfunc3 <- function(FUN,...){
+testfunc3 <- function(FUN, ...){
     FUN(...)
 }
-testfunc3(sum,1:10)
+testfunc3(sum, 1:10)
 testfunc3(plot, 1:10, sin(1:10), type="l")
 ```
 
@@ -76,7 +79,7 @@ yy_spl     <- spline(x, y, xout=xx) #is a list containing x and y
 
 par(family = "Helvetica", cex.lab=1.5, cex.axis=1.4, 
     mgp = c(2.4, .5, 0), tck=0.02, mar=c(4, 4, 2, .5), lwd=2, las=1)
-plot(x, y, pch=16, cex=2, ylim=c(-1,1.5))
+plot(x, y, pch=16, cex=2, ylim=c(-1,1.6))
 lines(xx, lin_interp(xx), col="royalblue") # equivalent to: lines(yy_lin, col="royalblue")
 lines(xx, spl_interp(xx), col="red", lty=2)# equivalent to: lines(yy_spl, col="red")
 legend("topright",

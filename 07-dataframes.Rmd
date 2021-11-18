@@ -1,75 +1,163 @@
 # Data frames
 
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+</style>
+
 ## Defining a data.frame
 
+### Defining a data.frame from vectors
 
 In R, the principal object is *the data*. Hence the `data.frame`{.R} object, which is basically a table of vectors. A `data.frame`{.R} is a list presented under the form of a table – *i.e.* a spreadsheet. On a day-to-day basis, you will either define `data.frame`{.R} from existing vectors or other `data.frame`{.R}, or define a `data.frame`{.R} from a file (text, Excel...). In this example, we use <a href="Data/test.dat" download target="_blank">test.dat</a> and <a href="Data/test.xlsx" download target="_blank">test.xlsx</a>.
 
+To define a `data.frame` from known vectors, we just have to do:
 ```{r, warnings=FALSE, message=FALSE}
-# x = 10 random numbers between -10 and 10
-x  <- runif(10, min=-10, max=10) 
+x  <- seq(-pi, pi, length = 6) 
 y  <- sin(x)
-df <- data.frame(x,y) # df is a data.frame (a table)
+df <- data.frame(x, y) # df is a data.frame (a table)
 df
-# dimension of df
-dim(df);nrow(df);ncol(df)
-# first and last 3 values
+```
+
+Then some information about our table are readily accessible, like:
+
+- The dimension, the number of rows and columns:
+```{r, warnings=FALSE, message=FALSE}
+dim(df); nrow(df); ncol(df)
+```
+- Print the first and last 3 values
+```{r, warnings=FALSE, message=FALSE}
 head(df, 3); tail(df, 3)
-# information on df
+```
+- Print some information on `df`
+```{r, warnings=FALSE, message=FALSE}
 str(df)
-# statistics on df
+```
+- Print some statistics on `df`
+```{r, warnings=FALSE, message=FALSE}
 summary(df)
-# changing column name
-df <- data.frame(xxx=x,yyy=y)
-head(df,2)
-names(df) <- c("thisISx","THISisY")
-head(df,2)
-# from a matrix
-A <- matrix(1:9,ncol=3)
-as.data.frame(A)
-# from a file
-read.table("Data/test.dat")            # default column name is V1, V2, V3, etc
-read.table("Data/test.dat",header=TRUE)# use first line as column names
-read.table("Data/test.dat",skip=1)     # skip first line. 
-# ?read.table for more options
+```
+
+
+
+If not defined when creating the `data.frame`, the column names will be by default the vector names. To specify your own column names, do it when creating the `data.frame`:
+```{r}
+df <- data.frame(xxx = x, yyy = y)
+head(df, 2)
+```
+Or, once it's created, do it using `names()`{.R}
+```{r}
+names(df)
+names(df) <- c("X", "Y")
+head(df, 2)
+```
+
+
+### Defining a data.frame from a file
+
+Let's say we have `test.dat` that looks like this:
+```{bash}
+# Bash code:
+head Data/test.dat
+```
+
+- Then, to read this file into a `data.frame`, we will use `read.table()`{.R}. If you don't specify that the file contains a header, `read.table()`{.R} will default to attirbuting column names that will be V1, V2, V3, etc:
+```{r}
+read.table("Data/test.dat")
+```
+- If your file contains column names, you will use first line as column names like so:
+```{r}
+read.table("Data/test.dat", header=TRUE)
+```
+- If you want to skip some lines before starting the reading, use `skip`:
+```{r}
+read.table("Data/test.dat", skip=1)
+```
+- You can specify your own column names using `col.names`:
+```{r}
+read.table("Data/test.dat", skip=1, col.names = c("A","B"))
+```
+- You can type `?read.table` for more options.
+
+- Now, to read an Excel file, use the `read_excel` library:
+```{r}
 library(readxl) # load readxl from tidyverse to read Excel files
 read_excel("Data/test.xlsx", sheet=1)
 read_excel("Data/test.xlsx", sheet=2)
 ```
 
+--- 
+
 ## Accessing values 
 
+- Like with vectors, accessing values is done using the `[]` notation, except that here there are two indexes: `df[row, column]`:
 ```{r, warnings=FALSE}
-# column number
-df[,1] # this is a vector
-df[[1]]# this is a vector too
-# column name
-df$thisISx; df[,"THISisY"] # a vector too
-# first row; row 1 to 3
-df[1,]; df[1:3,]
-# through conditions
-df[x<0 & y>0, ]  # Here x and y are vectors, not the column names
-df[ df[,"thisISx"]<0 & df[,2]>0, ]  # conditions on columns
-# subsetting using column names
-subset(df, thisISx>2 & THISisY>0)
-subset(df, thisISx>2 & THISisY>0, select = c(thisISx))
+df[3,1]
 ```
+- In general however, what you want is to access a given column, by its index:
+```{r, warnings=FALSE}
+df[,1]
+df[[1]]# this is a vector too
+```
+- Or by its name using the `$` notation:
+```{r, warnings=FALSE}
+df$X
+```
+- Finally, you may want to apply filters on your table:
+```{r, warnings=FALSE}
+df[df$X < 0, ]
+```
+- Using the function `subset()`{.R}, the conditions are applied on column names (no need for df$col_name here, while you need it in the above expression):
+```{r, warnings=FALSE}
+subset(df, X>1)
+subset(df, X>1, select = c(X))
+```
+
+---
 
 ## Adding columns or rows
 
+### Adding columns
+- To add a column, just attribute a value to an column that do not exist yet, it will be created:
 ```{r, warnings=FALSE}
 # Adding columns
 df   <- data.frame(x,y)
-df$z <- (df$x)^2; df
-data.frame(df,w=1:length(x), xx=NA, yy=1, zz=1:2)
-cbind(df, data.frame(a=1:length(x), b=1:length(x)) )
-# Adding rows
-rbind(df, df)     # with a data.frame
-rbind(df, 1:2)    # with a vector
-# deleting rows/columns
+df$z <- df$x^2
+df
+```
+- You can also create a `data.frame` of a `data.frame`:
+```{r, warnings=FALSE}
+data.frame(df, z=df$x^2, u=cos(df$x))
+```
+- Finally, you can use the `cbind()`{.R} function to bind two `data.frame` column-wise:
+```{r, warnings=FALSE}
+df2 <- data.frame(a = 1:length(x), b = 1:length(x))
+cbind(df, df2)
+```
+
+### Adding rows
+
+For this, use the `rbind()`{.R} function.
+
+> **Attention:** the two data.frame must have the same number of columns _**and**_ the same column names.
+
+```{r, warnings=FALSE}
+rbind(df, df)
+```
+
+### Deleting rows/columns
+
+This works like with vectors:
+```{r, warnings=FALSE}
 df[-1,]
 df[,-1]
 ```
+
+---
 
 ## Tidy up!
 
@@ -82,7 +170,12 @@ df[,-1]
 - Each observation is placed in its own row
 - Each value is placed in its own cell
 
-Data that satisfies these rules is known as tidy data. Example:
+```{r tidy, echo=FALSE, fig.cap="Illustration of tidy data.", fig.align="center", out.width="100%"}
+knitr::include_graphics("./Plots/tidy.png")
+```
+Data that satisfies these rules is known as tidy data: you see that thanks to this representation, a 2D table can handle an arbitrary number of variables – this avoids using multi-dimensional arrays or multi-tab Excel documents. Note that it does't matter if a value is repeated in a column. 
+
+Here is an example:
 
 ```r
 df <- read.csv("Data/population.csv")
@@ -97,6 +190,8 @@ df # is not tidy
 ```
 
 </details>
+
+<br>
 
 ```r
 library(tidyr)
@@ -114,11 +209,13 @@ df #is tidy
 ```
 
 </details>
+<br>
 
 ```r
 # is not tidy
 pivot_wider(df, names_from="city", values_from="pop")
 ```
+
 <details>
     <summary>Show output</summary>
 
@@ -128,16 +225,14 @@ pivot_wider(df, names_from="city", values_from="pop")
 ```
 
 </details>
+<br>
 
-</details>
-
-
-You can find more information on data import and [tidyness](https://garrettgman.github.io/tidying/) on the [data-import cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf) and on the [tidyr](http://www.sthda.com/english/wiki/tidyr-crucial-step-reshaping-data-with-r-for-easier-analyses) package.
+You can find more information on data import and [tidyness](https://garrettgman.github.io/tidying/) on the [data-import cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf) and on the [tidyr](http://www.sthda.com/english/wiki/tidyr-crucial-step-reshaping-data-with-r-for-easier-analyses) package.
 
 
 ### Tibbles
 
-A `tibble`{.R} is an enhanced version of the `data.frame`{.R} provided by the `tidyverse` package. The main advantage of `tibble`{.R} is that it has easier initialization and nicer printing than `data.frame`{.R}, and the performance are also enhanced – especially for the reading from files with `read_delim()`{.R}, `read_tsv()`{.R}, `read_table()`{.R} and `read_csv()`{.R}. Otherwise, the handling is basically the same.
+A `tibble`{.R} is an enhanced version of the `data.frame`{.R} provided by the `tibble` package (which is part of the `tidyverse`). The main advantage of `tibble`{.R} is that it has easier initialization and nicer printing than `data.frame`{.R}. Moreover, the performance are also enhanced for the reading from files with `read_csv()`{.R}, `read_tsv()`{.R}, `read_table()`{.R} and `read_delim()`{.R} that do the same things as their `read.xx()` counterparts and return a `tibble`. Otherwise, the handling is basically the same.
 
 More on tibbles [here](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
 
@@ -145,32 +240,39 @@ More on tibbles [here](https://cran.r-project.org/web/packages/tibble/vignettes/
 rm(x)
 ```
 
+- Note that when initializing `tibble`s, the construction is iterative. It means that when creating a second column, one can refer to the first one that was created. This does't work with `data.frame`s.
+
 ```{r, error=TRUE, warnings=FALSE, message=FALSE}
 library(tidyverse)
-( tib <- tibble(x=runif(1e3), y=cumsum(x)) )
 data.frame(x=runif(1e3), y=cumsum(x))
-# ATTENTION subsetting
-# Tibbles are quite strict about subsetting. [ always returns another tibble. 
-# Contrast this with a data frame: sometimes [ returns a data frame and 
-# sometimes it just returns a vector:
+tib <- tibble(x=runif(1e3), y=cumsum(x))
+tib
+```
+
+> **Attention**
+
+`Tibble`s are quite strict about subsetting. `[` always returns another `tibble`. Contrast this with a data frame: sometimes `[` returns a data frame and sometimes it just returns a vector:
+```{r}
 head(tib[[1]]) # is a vector
 head(tib[,1])  # is a tibble
 ```
+Unless you want to get a `tibble`, I recommend always using the `$` notation when you want to get a column as a vector to avoid problems.
 
-Another interesting feature of tibbles is that their columns can contain vectors, like usual, but also lists of any R objects like other tibbles, `nls()`{.R} object, etc. This is called "nesting":
+- Another interesting feature of `tibble`s is that their columns can contain vectors, like usual, but also lists of any R objects like other tibbles, `nls()`{.R} objects, etc. This is called "nesting", and you can nest and un-nest `tibble`s using these explicit functions:
 
 ```{r warning=FALSE, message=FALSE}
 tib1 <- tibble(x=1:3, y=1:3)
 tib2 <- tibble(x=1:5, y=1:5)
-tib <- tibble(number=1:2, data=list(tib1, tib2))
+tib  <- tibble(number=1:2, data=list(tib1, tib2))
 tib
-tib_unnested <- tib %>% unnest(data)
+tib_unnested <- unnest(tib, data)
 tib_unnested
-tib_unnested %>% nest(data=c(number,y))
-tib_unnested %>% nest(data=c(number,y)) %>% pull(data)
+tib_unnested_renested <- nest(tib_unnested, data = c(number, y))
+tib_unnested_renested
+tib_unnested_renested$data # The `data` column is a list
 ```
 
-
+---
 
 ## Operations in the tidyverse
 
@@ -178,8 +280,7 @@ In the end, base R and the `tidyverse` package provide many efficient functions 
 
 Here are some examples, and you will find much more [here](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html). Take a look at the cheatsheets on [tidyr](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf) and on [dplyr](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf), it's really helpful. 
 
-Note the use of the pipe operator, `%>%`{.R}, that allows a clear syntax for successive operations.
-
+Let's work on this `tibble`:
 ```{r, message=FALSE}
 # Let's create a random tibble
 library(tidyverse)
@@ -191,6 +292,29 @@ dt <- tibble(x     = rep(runif(N,-1,1),3),
 )
 dt
 ```
+
+
+### The pipe operator
+
+In the following, we will introduce the pipe operator from the `magrittr` package: `%>%`{.R}.
+This operator allows a clear syntax for successive operations, as "what is on the left of the operator is given as first argument of what is on the right". It is thus a good habit to write each operation on a separate line to facilitate the reading. This is particularly helpful when performing multiple nested operations. For example, `summary(head(tail(dt),2))`{.R}, which is hard to read, would translate to:
+
+```r
+dt %>% 
+    tail() %>% 
+    head(2) %>% 
+    summary()
+```
+
+Note that the 4.1 version of R introduced a native pipe operator: `|>`{.R}. However, for backward compatibility with all my previous code I still stick to the `magrittr` version `%>%`, but that's not the only reason. Indeed, in base R's pipe, the piped object can only be given as first argument to the function on the right. This is also the default behavior of `%>%`, but `%>%` allows for retrieving the piped object with the operator `.`. 
+
+Silly example:
+
+```{r, error=TRUE}
+"Hello" %>% gsub("o", "e")
+"Hello" %>% gsub("o", "e", .)
+```
+
 
 ### Sampling data
 ```{r, message=FALSE}
@@ -211,7 +335,7 @@ dt %>%
 ```
 
 ### Summary by groups of a variable
-`summarise()`{.R} returns a single value for each element of the groups.
+`summarise()`{.R} returns a **single value** for each element of the groups.
 
 ```{r, message=FALSE}
 dt %>% 
@@ -235,24 +359,26 @@ dt %>% arrange(x, desc(y))
 
 ### Merge tables column-wise
 
-At least one column with the **exact** same name must be present in each table.
+At least one column with the **exact** same name must be present in each table to use the `xx_join()`{.R} functions. There are more possibilities than `inner_join()`{.R} that I show here, see the help for more information.
 ```{r, message=FALSE}
 dt2 <- tibble(signx=c("positive","positive","negative","negative"), 
               signy=c("positive","negative","positive","negative"), 
               value=c(TRUE, FALSE, FALSE, TRUE))
 dt2
-inner_join(dt,dt2)
+inner_join(dt, dt2)
 ```
 
 ### Merge tables row-wise
+
 This works even if there are missing rows.
 ```{r, message=FALSE}
 dt3 <- tibble(a=1:3, b=3:5, c=6:8)
 dt4 <- tibble(a=3:1, c=3:5)
-bind_rows(dt3,dt4)
+bind_rows(dt3, dt4)
 ```
 
 ### Add/modify a column
+
 `mutate()`{.R}, like `$`{.R}, adds a column if it doesn't exist, and modifies it if it does.
 ```{r, message=FALSE}
 dt %>% mutate(w=seq_along(x), z=sin(x))
@@ -283,10 +409,10 @@ dt %>% relocate(y, .after = signy)
 
 ### Separate columns
 
-The separation is based on standard separators such as "-", "\_", ".", etc. A single separator can be specified with the argument "sep".
+The separation is based on standard separators such as "-", "\_", ".", " ", etc. A single separator can be specified with the argument `sep`, otherwise all separators are used. One must provide the resulting vector of new column names: if one value is `NA`{.R}, this column will be discarded. Examples:
 
 ```{r, message=FALSE}
-dt5 <- tibble(file=list.files(path="Exo/FTIR/Data/"))
+dt5 <- tibble(file=list.files(path="Exo/FTIR/Data/", pattern=".xls"))
 dt5
 dt5 %>% separate(file, c(NA, "sample", "temperature", NA), convert = TRUE)
 dt5 %>% separate(file, 
@@ -297,30 +423,36 @@ dt5 %>% separate(file,
 
 ### Apply a function recursively on each element of a column
 
-Take a look at the [cheatsheet on the `purrr` package](https://github.com/rstudio/cheatsheets/raw/master/purrr.pdf) for more options. I show here a use of `purrr::map(vector, ~function(.))`{.R} that returns a list, or its equivalent `purrr::map_dbl(vector, ~function(.))`{.R} that returns a vector of doubles. In case you need more parameters, you can use `purrr::map2(vector1, vector2, ~function(.x, .y))`{.R}, where `.x` and `.y` refer to `vector1` and `vector2`, respectively (it's always `.x` and `.y` whatever the name of `vector1` and `vector2`).
+Take a look at the [cheatsheet on the `purrr` package](https://github.com/rstudio/cheatsheets/raw/master/purrr.pdf) for more options. I show here a use of `purrr::map(vector, function)`{.R} that returns a list. `map(x, f)`{.R} applies the function `f()` to each element of the vector `x`, putting the result in a separate element of a list: `map(x, f) -> list(f(x1), f(x2), ... f(xn))`{.R}. In case `f(xi)` returns a single value, you might want to use `map_dbl()` or `map_chr()`, for example, that will return a vector of doubles or of characters, respectively.
 
 ```{r, message=FALSE}
-Lor <- function(x, x0=0, FWHM=1){
-    2/(pi*FWHM)/( 1 + ((x-x0)/(FWHM/2))^2 )
-}
-dt6 <- tibble(file=list.files(path="Exo/spectro/Data/", pattern = ".txt")) %>% 
-    mutate(data = map(file, 
-                      ~read_table(file.path("Exo/spectro/Data", .),
-                                   col_names = c("w", "int"))
-                      ),
-           fit = map(data, ~nls(data=., 
-                                int ~ y0+A1*Lor(w, w1, sd1)+A2*Lor(w, w2, sd2),
-                                start=list(y0  = .1,
-                                           A1  = max(.$int)*10, 
-                                           A2  = max(.$int)*10,
-                                           w1  = .$w[which.max(.$int)],
-                                           w2  = .$w[which.max(.$int)]-30,
-                                           sd1 = 10, sd2 = 10))
-                     ),
-           tidied = map(fit, broom::tidy),
-           mean_int = map_dbl(data, ~mean(.$int))
-           )
+x <- c(pi, pi/3, pi/2)
+map(x, sin)     # returns a list
+x %>% map_dbl(sin) # returns a vector
+```
+
+Of course, in the above case, it's a stupid use of the power of `map()`{.R}. A typical use case is when you want to read multiple files, for example:
+```{r, message=FALSE, warning=FALSE}
+dt6 <- tibble(file=list.files(path="Exo/spectro/Data", 
+                              pattern = ".txt", 
+                              full.names = TRUE)) %>% 
+    slice(1:5) %>% 
+    mutate(data = map(file, read_table))
 dt6
+```
+This is (almost) equivalent to:
+```{r, message=FALSE, warning=FALSE}
+dt6 <- tibble(file=list.files(path="Exo/spectro/Data", 
+                              pattern = ".txt", 
+                              full.names = TRUE)) %>% 
+    slice(1:5) %>%
+    mutate(data = map(file, ~ read_table(., col_names = c("w", "Int"))))
+```
+
+You see that you can create the function directly within the call to map using the shortcut `map(vector, ~ function(.))`{.R}. This is useful to provide more arguments to the function -- another solution is to write your own function before the call to `map()`{.R} and then call this function in `map()`{.R}.
+
+Note that in case you need more parameters, you can use `purrr::map2(vector1, vector2, ~function(.x, .y))`{.R}, where `.x` and `.y` refer to `vector1` and `vector2`, respectively (it's always `.x` and `.y` whatever the name of `vector1` and `vector2`).
+```{r}
 tibble(x=1:3, y=5:7) %>% 
     mutate(sum = map2_dbl(x, y, sum))
 tibble(a=list(tibble(x=1:3, y=5:7), 
@@ -334,16 +466,12 @@ tibble(a=list(tibble(x=1:3, y=5:7),
 ### Nesting and un-nesting data
 
 ```{r, message=FALSE}
-dt7 <- dt6 %>% unnest(tidied)
+dt7 <- dt6 %>% 
+    mutate(file = basename(file)) %>% 
+    unnest(data)
 dt7
 # Nesting data per repeated values in a column (~equivalent to grouping)
 dt7 %>% nest(data=-file)
-dt7 %>% nest(data=-c(file, mean_int))
-# This is equivalent to:
-dt7 %>% 
-    group_by(file, mean_int) %>% 
-    summarise(data=list(tibble(data, fit, term, estimate, 
-                               std.error, statistic, p.value)))
 ```
 
 ### Providing data to ggplot
@@ -488,7 +616,7 @@ head(d)
 <details>
 <summary>**Exercise 5**</summary>
 
-Download <a href="Data/population.csv" download target="_blank">population.csv</a> and load it into a `data.frame`{.R}.
+Download <a href="Data/population.csv" download target="_blank">population.csv</a> and load it into a `tibble`{.R}.
 
 - What are the names of the columns?
 - Are the data tidy? make the table tidy if needed
@@ -554,7 +682,7 @@ popul.tidy %>%
 - Load <a href="Data/people1.csv" download target="_blank">people1.csv</a> and <a href="Data/people2.csv" download target="_blank">people2.csv</a> into `pp1` and `pp2`
 - Create a new tibble `pp` by using the pipe operator (`%>%`{.R}) and successively:
     - joining the two tibbles into one using `inner_join()`{.R}
-    - adding a column `age` containing the age in years (use lubridate's `time_length(x, 'years')`{.R} with x a time difference in days) by using `mutate()`{.R}
+    - adding a column `age` containing the age in years (use `lubridate::time_length(x, 'years')`{.R} with x a time difference in days) by using `mutate()`{.R}
 - Display a summary of the table using `str()`{.R}
 - Using `groupe_by()`{.R} and `summarize()`{.R}:
     - Show the number of males and females in the table (use the counter `n()`{.R})

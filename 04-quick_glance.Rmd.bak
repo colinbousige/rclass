@@ -1,0 +1,109 @@
+# Teaser: practical case
+
+Here, I'll show you how to read as many data files you want, fit them, get a parameter from the fit to compute a physical value (here, the pressure), and plot the data and the fit result as an interactive plot. This is done here in less than 50 lines of code: at the end of the class, you will understand all this, and of course be able to do this on your own!
+
+You can <a href="Data/data_teaser.zip" target="_blank" download>download here</a> the corresponding files.
+
+## Reading and fitting all your experimental files in one go
+
+```{r warning=FALSE, message=FALSE}
+# Load the needed libraries
+library(tidyverse)
+library(broom)
+library(plotly)
+# Define some functions
+source("myfunc.R") # for the Pruby() function
+Lor <- function(x, x0=0, FWHM=1){
+    2/(pi*FWHM)/( 1 + ((x-x0)/(FWHM/2))^2 )
+}
+# Define the reading and fitting functions
+read_func <- function(filename) {
+    read_table(
+        file = file.path("Data", filename),
+        col_names = c("w", "Int")
+    )
+}
+fit_func <- function(ruby_df) {
+    nls(data = ruby_df,
+        Int ~ y0 + A1*Lor(w,x1,FWHM1) + A2*Lor(w,x2,FWHM2),
+        start=list(y0    = 0.01,
+                   x1    = ruby_df$w[which.max(ruby_df$Int)] - 2,
+                   x2    = ruby_df$w[which.max(ruby_df$Int)] - 30,
+                   FWHM1 = 10, FWHM2 = 10,
+                   A1    = max(ruby_df$Int)*10,
+                   A2    = max(ruby_df$Int)*10))
+}
+# Find all wanted files in the Data/ folder
+flist <- list.files(path="Data", pattern = "rubis")
+# Load all data files and do the fits in a single pipe flow
+data <- tibble(name = flist) %>%
+    mutate(data = map(name, read_func),
+           fit = map(data, fit_func),
+           tidied = map(fit, tidy),
+           augmented = map(fit, augment),
+           P = map_dbl(tidied, ~round(Pruby(.$estimate[.$term=='x1']),2))
+          ) %>% 
+    separate(name, c("sample","run", NA), convert=TRUE) %>% 
+    relocate(P, .after = run)
+data
+```
+
+## Various ways of plotting it
+
+### Facet plot
+
+```{r warning=FALSE, message=FALSE}
+data %>% 
+    unnest(augmented) %>% 
+    group_by(run) %>% 
+    mutate(Int_n     = Int/max(Int), 
+           .fitted_n = .fitted/max(Int)) %>% 
+    ggplot(aes(x=w))+
+        geom_point(aes(y = Int_n), alpha=.3)+
+        geom_line(aes(y = .fitted_n), color="red")+
+        facet_wrap(~reorder(paste(P,"GPa"),P), ncol=3)+
+        labs(x="Raman Shift [1/cm]",
+             y="Intensity [arb. units]")+
+        theme_bw()+
+        theme(strip.background = element_blank())
+```
+
+### Ridge plot
+
+```{r warning=FALSE, message=FALSE}
+data %>% 
+    unnest(augmented) %>% 
+    group_by(run) %>% 
+    mutate(Int_n     = Int/max(Int), 
+           .fitted_n = .fitted/max(Int)) %>% 
+    ggplot(aes(x=w, group=P))+
+        geom_point(aes(y = Int_n + P), alpha=.2)+
+        geom_line(aes(y = .fitted_n + P), color="red")+
+        labs(x="Raman Shift [1/cm]",
+             y="Pressure [GPa]")+
+        theme_bw()
+```
+
+### Slider plot
+
+```{r warning=FALSE, message=FALSE}
+P <- data %>% 
+    unnest(augmented) %>% 
+    group_by(run) %>% 
+    mutate(Int_n     = Int/max(Int), 
+           .fitted_n = .fitted/max(Int)) %>% 
+    ggplot(aes(x=w, frame=P))+
+        geom_point(aes(y = Int_n), alpha=.3)+
+        geom_line(aes(y = .fitted_n), color="red")+
+        labs(x="Raman Shift [1/cm]",
+             y="Intensity [arb. units]")+
+        theme_bw()
+# Make the plot interactive
+ggplotly(P, dynamicTicks = TRUE) %>% 
+    animation_opts(5) %>%
+      layout(xaxis = list(autorange=FALSE, range = c(3050, 3550))) %>%
+      animation_slider(
+        currentvalue = list(prefix = "Pressure: ", 
+                            suffix = " GPa", font = list(color="grey")))
+```
+
