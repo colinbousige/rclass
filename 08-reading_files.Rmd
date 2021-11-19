@@ -1,0 +1,202 @@
+# Reading/writing all kinds of files
+
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+</style>
+
+
+## Reading files
+
+Working in any data-based scientific field, you will encounter many different types of files. ASCII text files are usually predominant, but you may want to read files from coming from Excel, Origin, etc.
+Here is a non-exhaustive reminder to help you read the kinds of files you often encounter with R. I invite you to visit the [RopenSci webpage](https://ropensci.org/) for more packages, and if this isn't enough for your need, well, [Google is your friend](http://letmegooglethat.com/?q=r+read+my+file+type).
+
+
+### Column text files
+
+Most base R functions like `read.csv()`{.R} or `read.table()`{.R} have their `tidyverse` counterpart, like `read_csv()`{.R} and `read_table()`{.R}. I usually prefer the `tidyverse` version as it outputs a `tibble` instead of a `data.frame`. These functions can also be directly provided with an url to the text file.
+
+If your data file is "complicated" -- in the sense that it contains lines or columns to be skipped -- look at the help on the reader function with `?function_name`.
+
+#### Comma separated values
+
+Input file looks like this:
+```{bash echo=FALSE}
+head Data/tot_population.csv
+```
+
+```{r}
+library(tidyverse)
+read_csv("Data/tot_population.csv")
+read_csv("Data/tot_population.csv", skip = 1)
+read_csv("Data/tot_population.csv", skip = 1, col_names = LETTERS[1:4])
+```
+
+Since version 2.0 of `readr`, `read_csv()`{.R} can also take a vector as argument, which will result in reading all files in the vector successively:
+
+```{r}
+read_csv(c("Data/test1.csv",
+           "Data/test2.csv"),
+         id = "file", show_col_types = FALSE)
+```
+
+#### Space separated values
+
+Input file looks like this:
+```{bash echo=FALSE}
+head Data/rubis_01.txt
+```
+
+```r
+library(tidyverse)
+read_table("Data/rubis_01.txt")
+read_table("Data/rubis_01.txt", col_names = c("w","int"))
+```
+
+
+#### Other separators
+
+For tab-separated values, use `read_tsv()`{.R}. For other exotic separators, look into `read_delim()`{.R}.
+
+
+## Excel files
+
+For this, use the `readxl` library and its function `read_excel()`{.R} returning a `tibble`:
+
+```{r warning=FALSE, message=FALSE}
+library(readxl)
+read_excel("Data/test.xlsx")
+read_excel("Data/test.xlsx", sheet=2) # specify the sheet by its number or its name
+```
+
+In case your Excel file contains merged cells, `read_excel()`{.R} will fill the merged cells by `NA` values. If you want to avoid this behavior, use `openxlsx::read.xlsx()`{.R} (which returns a `data.frame`):
+
+```{r warning=FALSE, message=FALSE}
+read_excel("Data/test.xlsx", sheet=3)
+library(openxlsx)
+read.xlsx("Data/test.xlsx", fillMergedCells = TRUE, sheet = 3)
+```
+
+
+### Origin files
+
+If you moved to R coming from a workflow where you used [Origin](https://www.originlab.com/origin), chances are you have some .opj files lying around that you still want to be able to read. Lucky you, the `Ropj` library is here:
+
+```r
+library(Ropj)
+read.opj("Data/opjfile.opj")
+```
+
+### Matlab files
+
+To read Matlab's .mat format datasets, use the [R.matlab package](https://github.com/HenrikBengtsson/R.matlab) and its `readMat()`{.R} function.
+
+```r
+library(R.matlab)
+df <- readMat("yourfile.mat")
+```
+
+
+### Images
+
+You can read an image as a matrix. For example:
+
+```r
+library(png)
+readPNG("image.png")
+library(tiff)
+readTIFF("image.tiff")
+```
+
+For more image processing (pictures or videos), I recommend the [`imager` package](https://dahtah.github.io/imager/imager.html).
+
+
+### Spectroscopic files
+
+In case your spectroscopic data wasn't saved as an ASCII file but as a `spc` or another format, take a look at the [`lightr` package](https://docs.ropensci.org/lightr/), for example.
+
+Example of a reading function for an spc file:
+
+```r
+library(tidyverse)
+library(lightr)
+read_spc <- function(fname){
+    d <- lr_parse_spc(fname) # d is a list
+    tibble(w         = d[[1]]$wl, 
+           intensity = d[[1]]$processed)
+}
+```
+
+
+### Compressed binary data files: HDF, netCDF
+
+**HDF**: Go to [this vignette](https://www.bioconductor.org/packages/release/bioc/vignettes/rhdf5/inst/doc/rhdf5.html) to see how to read Hierarchical Data Files.
+
+**netCDF**: see [here](https://www.rdocumentation.org/packages/RNetCDF/versions/2.4-2/topics/read.nc).
+
+
+
+## Reading multiple files into a tidy table
+
+We very often encounter the situation where we need to read multiple similar files into a tidy table.
+For this, you can use a `for`{.R} loop, which would work but would be un-R-ly. Let's say we store the list of file names into a vector `file_list` and read these files using the function `read_function()`{.R}:
+
+```r
+library(tidyverse)
+df <- tibble() # empty initialization
+for (file in file_list) {
+    df_temp <- read_function(file) %>% 
+            mutate(name = file) # add the column `name` too make the tibble tidy
+    df <- bind_rows(df, def_temp)
+}
+```
+
+An R-friendly way of doing this would be to avoid using a `for`{.R} loop:
+```r
+library(tidyverse)
+df <- tibble(name = file_list) %>% 
+    mutate(data = map(name, read_function)) %>% 
+    unnest(data)
+```
+
+In case you are reading csv files, you can use the fact that since the version 2.0 of `readr`, `read_csv()`{.R} takes a vector as first argument. You'll also need to use the `id` argument to get a column with the list of file names:
+
+```r
+library(tidyverse)
+df <- read_csv(file_list, id = "name")
+```
+
+
+## Writing files
+
+### Text files
+
+- Sometimes, you want to output your data as a csv or an Excel file to share it with others or to save your data. Use the `write_csv()`{.R} function to write a csv file (prefer the `tidyverse`'s `write_csv()`{.R} to the base R `write.csv()`{.R} as it is more easy to use):
+
+```{r}
+library(tidyverse)
+write_csv(df, "your_file.csv")
+```
+
+
+Note that the `write_*()`{.R} functions will automatically compress outputs if an appropriate extension is given. Three extensions are currently supported: .gz for gzip compression, .bz2 for bzip2 compression and .xz for lzma compression. See the examples for more information.
+
+If you don't want to use csv files, look into `write_tsv()`{.R} for tab-separated values or `write_delim()`{.R} for any delimiter. in case you want to output fixed width files, look into [`gdata`'s `write.fwf()`{.R}](https://www.rdocumentation.org/packages/gdata/versions/2.18.0/topics/write.fwf).
+
+
+### Excel files
+
+To write Excel files, use the library `openxlsx` and its function `write.xlsx()`{.R} (see the help on the function for more options):
+
+```r
+library(openxlsx)
+write.xlsx(df, "your_file.xlsx")
+```
+
+
+
+
