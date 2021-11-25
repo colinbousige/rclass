@@ -485,8 +485,9 @@ dt %>% filter(abs(y)> 0.1) %>%
 
 ## Exercises {#exo-df}
 
+
 <details>
-<summary>**Exercise 1**</summary>
+    <summary>**Exercise 1**</summary>
 
 - Create a 3 column `data.frame`{.R} containing 10 random values, their sinus, and the sum of the two first columns.
 - Print the 4 first lines of the table
@@ -533,7 +534,6 @@ plot(df_tib$a, df_tib$b)
 </details>
 </details>
 
-
 <details>
     <summary>**Exercise 2**</summary>
 
@@ -542,30 +542,33 @@ plot(df_tib$a, df_tib$b)
     - <a href="Data/population.csv" download target="_blank">population.csv</a>
     - <a href="Data/FTIR_rocks.xlsx" download target="_blank">FTIR_rocks.xlsx</a>
 - Load them into separate `data.frames`{.R}. Look into the options of `read.table()`{.R}, `read.csv()`{.R}, `readxl::read_excel()`{.R},  to get the proper data fields.
-- Print their dimensions and column names
-- Add the appropriate names ("w", "intensity") to the data.frame containing rubis_01.txt. 
+- Print their dimensions and column names to the data.frame containing `rubis_01.txt`. 
+- Do the same things with tibbles
 
 <details>
     <summary>Solution</summary>
 
-```{r, warnings=FALSE}
+```{r, warnings=FALSE, message=FALSE}
 rubis_01   <- read.table("Data/rubis_01.txt", col.names = c("w", "intensity"))
 population <- read.csv("Data/population.csv")
 FTIR_rocks <- readxl::read_excel("Data/FTIR_rocks.xlsx")
 dim(rubis_01); names(rubis_01)
 dim(population); names(population)
 dim(FTIR_rocks); names(FTIR_rocks)
+library(tidyverse)
+rubis_01 <- read_table("Data/rubis_01.txt", col_names = c("w", "intensity"))
+population <- read_csv("Data/population.csv")
 ```
 
 </details>
 </details>
 
-
 <details>
-    <summary>**Exercise 3**: `data.frame`{.R} from a "complicated" data file</summary>
+    <summary>**Exercise 3**</summary>
 
 - Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
 - Load it into a `data.frame`{.R}. Look into the options of `read.table()`{.R} to get the proper data fields.
+- Do the same with a tibble
 
 <details>
     <summary>Solution</summary>
@@ -583,11 +586,16 @@ d <- read.table("Data/ATG.txt",
                 header=TRUE, 
                 nrows=4088)
 head(d)
+library(tidyverse)
+d <- read_table("Data/ATG.txt", 
+                skip    = 10,
+                comment = "[") %>% 
+        drop_na()
+d
 ```
 
 </details>
 </details>
-
 
 <details>
     <summary>**Exercise 4**</summary>
@@ -609,12 +617,12 @@ head(d)
 - Select 5 random students from `people`
 - Using the `tidyverse`, get the average age of females and males in the class in a `tibble`{.R}
 
+
+
 </details>
 
-
-
 <details>
-<summary>**Exercise 5**</summary>
+    <summary>**Exercise 5**</summary>
 
 Download <a href="Data/population.csv" download target="_blank">population.csv</a> and load it into a `tibble`{.R}.
 
@@ -673,10 +681,8 @@ popul.tidy %>%
 </details>
 </details>
 
-
-
 <details>
-    <summary>**Exercise 6:** tidy data wrangling</summary>
+    <summary>**Exercise 6**</summary>
 
 - First, load the `tidyverse` and `lubridate` package
 - Load <a href="Data/people1.csv" download target="_blank">people1.csv</a> and <a href="Data/people2.csv" download target="_blank">people2.csv</a> into `pp1` and `pp2`
@@ -750,7 +756,11 @@ pp %>% filter(grepl('e',name))
 
 
 </details>
-</details>
+
+
+
+
+----
 
 For more interesting exercises in the tidyverse, look at:
 
@@ -764,10 +774,6 @@ For more interesting exercises in the tidyverse, look at:
 <br>
 <br>
 <br>
-
-
-
-
 
 <br>
 <br>

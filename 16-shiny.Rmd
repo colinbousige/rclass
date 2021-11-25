@@ -601,8 +601,6 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-    
-    # plot the pop vs year for the selected cities
     output$plot <- renderPlot({
                         if(input$bw==0) return(NULL)
                         plot(density(rnorm(input$N_val), bw=abs(input$bw)))
@@ -614,9 +612,6 @@ shinyApp(ui = ui, server = server)
 
 </details>
 </details>
-
-
-
 
 <details>
     <summary>**Exercise 2**</summary>
@@ -632,8 +627,9 @@ Create a shiny application that will:
     + write a separate Rmd file with the proper parameters
     + render the Rmd file as a pdf (see the `render()`{.R} function and [this help](https://shiny.rstudio.com/articles/generating-reports.html))
 
-</details>
 
+
+</details>
 
 
 <br>

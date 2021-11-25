@@ -36,12 +36,13 @@ x - y
 ```
 
 ### Special values
-R handles infinity, NaN, and has $\pi$ defined. Missing numbers are handled through the `NA`{.R} keyword (the function `is.na()`{.R} checks if the given value contains `NA`{.R}).
+R handles infinity, NaN, and has $\pi$ defined. Missing numbers are handled through the `NA`{.R} keyword.
+
 ```{r, warnings=FALSE}
 pi
 10/0
--10/0
 0/0
+NA
 ```
 
 ### Booleans and common tests on values
@@ -160,7 +161,7 @@ gsub("o", "a", phrase)
 trimws(phrase)
 ```
 
-- Get a vector from sting separation based on a character with `strsplit()`{.R}:
+- Get a vector from string separation based on a character with `strsplit()`{.R}:
 ```{r}
 strsplit(phrase, " ")         # returns a list
 unlist(strsplit(phrase, " ")) # returns a vector

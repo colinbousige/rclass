@@ -1,5 +1,36 @@
 # About the class
 
+<style type="text/css">
+blockquote {
+    font-size: 14px;
+    font-style: italic;
+    margin: 0.25em 0;
+    padding: 0.35em 40px;
+    line-height: 1.45;
+    position: relative;
+    color: #383838;
+}
+
+blockquote:before {
+    display: block;
+    padding-left: 10px;
+    content: "\201C";
+    font-size: 80px;
+    position: absolute;
+    left: -20px;
+    top: -20px;
+    color: #7a7a7a;
+}
+
+
+.rmdnote {
+  background: #b7eeb6;
+  border-left: 5px solid #15985d;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+
+</style>
 
 ## Objectives of the class
 
@@ -16,48 +47,8 @@ What you will learn here will be useful in **any** scientific domain. The exampl
 
 ## Prerequisites
 
-- Coding skills: none expected
-- The students should come with a laptop with admin rights (*i.e.* you should be able to install stuff)
-
-
-## Teaser
-
-```{r setup, include=FALSE, warning = FALSE, cache=FALSE}
-remove(list = ls())
-library(plotly)
-library(ggplot2)
-load("plot_data.Rdata")
-```
-
-**You want to be able to produce interactive plots like these in an automatic experimental report?**
-
-```{r, echo=FALSE, warning = FALSE}
-ggplotly(gg, dynamicTicks = TRUE) %>%
-  animation_opts(5)%>%
-  layout(xaxis = list(autorange = FALSE, range = c(3050, 3550)))%>%
-  animation_slider(
-    currentvalue = list(prefix = "Pressure: ", 
-                        suffix = " GPa", font = list(color = "red"))
-  )
-remove(list = ls())
-```
-
-<br>
-**You want to produce publication-quality graphs like these?**
-
-```{r, out.width = '33%', echo=FALSE}
-knitr::include_graphics(c("Plots/data_RBM.png", "Plots/Grt_CS07_0.5.png", "Plots/Fig2epskT.png"))
-```
-
-
-<br>
-**You want to be able to build graphical interfaces like this to help you in your data treatment?**
-
-```{r, echo=FALSE}
-knitr::include_graphics(c("Plots/shiny.png"))
-```
-
-**Stay tuned! You've come to the right place.**
+- **Coding skills:** none expected.
+- The students should **come with a laptop** with admin rights (*i.e.* you should be able to install stuff).
 
 
 ## Motivations
@@ -65,9 +56,9 @@ knitr::include_graphics(c("Plots/shiny.png"))
 
 ### Reproducible data treatment: why it matters
 
-An introduction from the [Wikipedia](https://en.wikipedia.org/wiki/Reproducibility#Reproducible_research) page on reproducible research:
+Here is an introduction from the [Wikipedia page](https://en.wikipedia.org/wiki/Reproducibility#Reproducible_research) on reproducible research:
 
-> In 2016, Nature conducted a survey of 1576 researchers who took a brief online questionnaire on reproducibility in research. According to the survey, more than 70% of researchers have tried and failed to reproduce another scientist's experiments, and more than half have failed to reproduce their own experiments. [...] Although 52% of those surveyed agree there is a significant 'crisis' of reproducibility, less than 31% think failure to reproduce published results means the result is probably wrong, and most say they still trust the published literature.[^1]
+> In 2016, Nature conducted a survey of 1576 researchers who took a brief online questionnaire on reproducibility in research. According to the survey, **more than 70% of researchers have tried and failed to reproduce another scientist's experiments**, and **more than half have failed to reproduce their own experiments.** [...] Although 52% of those surveyed agree there is a significant 'crisis' of reproducibility, **less than 31% think failure to reproduce published results means the result is probably wrong**, and most say they still trust the published literature.[^1]
 
 [^1]: [https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970](https://www.nature.com/news/1-500-scientists-lift-the-lid-on-reproducibility-1.19970)
 
@@ -78,12 +69,13 @@ An introduction from the [Wikipedia](https://en.wikipedia.org/wiki/Reproducibili
 - Help you to **make sense** of all your data, and avoid disregarding some data (hence help you keep your scientific integrity)
 - **Gain tremendous amounts of time**
 
-It is the objective of this class to provide you the tools necessary to work within this philosophy.
-
+::: {.rmdnote}
+**It is the objective of this class to provide you the tools necessary to work within this philosophy.**
+:::
 
 ### Why with R and not python?
 
-The eternal question... [R](https://www.r-project.org/) was originally designed by statisticians for statisticians and in my opinion suffers from this "statistics only" label that sticks to it. 
+The eternal question... [R](https://www.r-project.org/) was originally designed by statisticians for statisticians and it might still suffers from this "statistics only" label that sticks to it. 
 
 [Python](https://www.python.org/) is a __wide spectrum__ programming language with very efficient numerical libraries used in the computer science community. 
 
@@ -153,3 +145,44 @@ This class is indented to provide the students with the tools to handle themselv
     + The official [Shiny video tutorial](https://shiny.rstudio.com/tutorial/)
 - And as always, if you have a question, [Google](https://www.google.fr/search?source=hp&ei=g0MLXeGwKNLPgweV04-IBA&q=r+how+to&oq=r+how+to) is your friend!
 
+
+
+
+## Teaser
+
+```{r setup, include=FALSE, warning = FALSE, cache=FALSE}
+remove(list = ls())
+library(plotly)
+library(ggplot2)
+load("plot_data.Rdata")
+```
+
+**You want to be able to produce interactive plots like these in an automatic experimental report?**
+
+```{r, echo=FALSE, warning = FALSE}
+ggplotly(gg, dynamicTicks = TRUE) %>%
+  animation_opts(5)%>%
+  layout(xaxis = list(autorange = FALSE, range = c(3050, 3550)))%>%
+  animation_slider(
+    currentvalue = list(prefix = "Pressure: ", 
+                        suffix = " GPa", font = list(color = "red"))
+  )
+remove(list = ls())
+```
+
+<br>
+**You want to produce publication-quality graphs like these?**
+
+```{r, out.width = '33%', echo=FALSE}
+knitr::include_graphics(c("Plots/data_RBM.png", "Plots/Grt_CS07_0.5.png", "Plots/Fig2epskT.png"))
+```
+
+
+<br>
+**You want to be able to build graphical interfaces like this to help you in your data treatment?**
+
+```{r, echo=FALSE}
+knitr::include_graphics(c("Plots/shiny.png"))
+```
+
+**Stay tuned! You've come to the right place.**

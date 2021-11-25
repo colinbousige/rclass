@@ -258,9 +258,8 @@ append(x, 4:1, 3) # or after a given index
 
 ## Exercises {#exo-vectors}
 
-
 <details>
-<summary>**Exercise 1**</summary>
+    <summary>**Exercise 1**</summary>
 
 Consider two vectors, x, y:
 ```r
@@ -273,7 +272,7 @@ Without typing it into Rstudio, what are the values of `x`, `y`, and `x*y`?
 </details>
 
 <details>
-<summary>**Exercise 2**</summary>
+    <summary>**Exercise 2**</summary>
 
 Consider two vectors, a, b
 
@@ -283,46 +282,43 @@ b <- c(3,5,2,1,9)
 ```
 Without typing it into Rstudio, what is the value of: `a<=b`{.R}?
 
-</details>
 
 <details>
-<summary>**Exercise 3**</summary>
+    <summary>**Exercise 3**</summary>
 
 If 
 ```r
-x <- c(1:12)
+x <- c(1:12, NA, 5:2)
 ```
 Without typing it into Rstudio, what is the value of: `length(x)`{.R}
 
 </details>
 
 <details>
-<summary>**Exercise 4**</summary>
+    <summary>**Exercise 4**</summary>
 
 If 
 ```r
-a <- c(12:5)
+a <- 12:5
 ```
 Without typing it into Rstudio, what is the value of: `is.numeric(a)`{.R}
 
 </details>
 
 <details>
-<summary>**Exercise 5**</summary>
+    <summary>**Exercise 5**</summary>
 
 Consider two vectors, x, y
 ```r
-x <- c(12:4)
+x <- 12:4
 y <- c(0,1,2,0,1,2,0,1,2)
 ```
 Without typing it into Rstudio, what is the value of: `which(!is.finite(x/y))`{.R}?
 
-
 </details>
 
-
 <details>
-<summary>**Exercise 6**</summary>
+    <summary>**Exercise 6**</summary>
 
 If 
 ```r
@@ -333,7 +329,7 @@ Without typing it into Rstudio, what is the value of: `is.character(x)`{.R}?
 </details>
 
 <details>
-<summary>**Exercise 7**</summary>
+    <summary>**Exercise 7**</summary>
 
 If 
 ```r
@@ -344,7 +340,7 @@ Without typing it into Rstudio, what is the value of: `is.character(x)`{.R}?
 </details>
 
 <details>
-<summary>**Exercise 8**</summary>
+    <summary>**Exercise 8**</summary>
 
 Assign value 5 to the variable x.
 
@@ -355,14 +351,14 @@ Explain.
 </details>
 
 <details>
-<summary>**Exercise 9**</summary>
+    <summary>**Exercise 9**</summary>
 
 Generate the sequence `9, 18, 27, 36, 45, 54, 63, 72, 81, 90`{.R} in 4 different manners.
 
 </details>
 
 <details>
-<summary>**Exercise 10**</summary>
+    <summary>**Exercise 10**</summary>
 
 If `x <- c("w", "h", "f", "g", "k")`{.R}, what will be the output for `x[c(2,3)]`{.R}?
 
@@ -386,7 +382,7 @@ Without typing it into Rstudio, what will be the fourth value in the index vecto
 </details>
 
 <details>
-<summary>**Exercise 11**</summary>
+    <summary>**Exercise 11**</summary>
 
 Let `a <- c(2, 4, 6, 8)`{.R} and `b <- c(TRUE, FALSE, TRUE, FALSE)`{.R}.
 
@@ -395,11 +391,27 @@ Without typing it into Rstudio, what will be the output for the R expression `ma
 
 </details>
 
+<details>
+    <summary>**Exercise 12**</summary>
+
+Let's create a named vector containing age of the students in the class, the names of each value being the first name of the students. Then:
+
+- Compute the average age and its standard deviation
+- Compute the median age
+- What is the maximum, minimum and range of the ages in the class?
+- What are all the student names in the class?
+- Print the sorted ages by increasing and decreasing order
+- Print the ages sorted by alphabetically ordered names (increasing and decreasing)
+- Show a histogram of the ages distribution using `hist()`{.R} and play with the parameter `breaks` to modify the histogram
+- Show a boxplot of the ages distribution using `boxplot()`{.R}
+
+
+</details>
 
 <details>
-<summary>**Exercise 12: Case Application**</summary>
+    <summary>**Exercise 13**</summary>
 
-(adapted from [here](https://perso.esiee.fr/~courivad/R/05-vectors.html#application-population-in-french-cities-1962-2012))
+This exercise is adapted from [here](https://perso.esiee.fr/~courivad/R/05-vectors.html#application-population-in-french-cities-1962-2012).
 
 Open Rstudio and create a new R script, save it as `population.R` in your wanted directory, say `Rcourse/`.
 
@@ -468,7 +480,6 @@ mean(c(pop_1962['Paris'], pop_2012['Paris']))
 # Sort the cities by decreasing order of population for 1962
 (pop_1962_sorted <- sort(pop_1962, decreasing = TRUE))
 ```
-
 
 </details>
 </details>

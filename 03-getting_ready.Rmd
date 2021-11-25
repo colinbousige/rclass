@@ -21,17 +21,8 @@ blockquote {
 
 If you don't want to use Rstudio but rather want to keep with your favorite text editor, like I do ([Visual Studio Code](https://code.visualstudio.com/) or [Sublime Text](https://www.sublimetext.com/3),  see configuration below)
 
-- I still recommend [downloading](https://cran.r-project.org/) and installing R via CRAN (I had some packages problems due to a `homebrew` installation).
-- To be fully operational with Rmarkdown files without using Rstudio, you need to [install `pandoc`](https://pandoc.org/installing.html):
-
-```bash
-brew install openssl
-brew install pandoc
-brew install pandoc-citeproc
-pip install pandoc-eqnos
-pip install pandoc-fignos
-pip install pandoc-tablenos
-```
+- I still recommend [downloading](https://cran.r-project.org/) and installing R via CRAN (I had some packages problems due to a `homebrew` installation on Mac).
+- To be fully operational with Rmarkdown files without using Rstudio, you need to [install `pandoc`](https://pandoc.org/installing.html).
 
 <details>
     <summary>**Configuring VS Code**</summary>
@@ -194,16 +185,20 @@ I have personally used [Sublime Text 3](https://www.sublimetext.com/3) for a lon
 
 A **full** $\LaTeX$ distribution (emphasis on **full**) will be needed to knit markdown files to PDFs (you don't need it to output html files though):
 
-- Windows: go [here](https://miktex.org/download) and download the Net Installer to install the **complete distribution**
-- Mac: go [here](https://tug.org/mactex/mactex-download.html) or type `brew cask install mactex` in the terminal if you have [Homebrew](https://treehouse.github.io/installation-guides/mac/homebrew) installed
-- Linux: [here](https://dzone.com/articles/installing-latex-ubuntu) fore example
+- **Windows:** go [here](https://miktex.org/download) and download the Net Installer to install the **complete distribution**
+- **Mac:** go [here](https://tug.org/mactex/mactex-download.html) or type `brew cask install mactex` in the terminal if you have [Homebrew](https://treehouse.github.io/installation-guides/mac/homebrew) installed
+- **Linux:** [here](https://dzone.com/articles/installing-latex-ubuntu) fore example
 
 Alternatively, you can also work with [TinyTeX](https://yihui.name/tinytex/) that will install the needed packages on the fly. It is recommended on the `knitr` package help, but I only had problems with this, so I recommend the full $\LaTeX$ distribution option if you don't mind taking up a few gigabytes of your disk. If you do, just run this in the R console:
 
 ```r
 install.packages("tinytex")
 tinytex::install_tinytex()
-# to uninstall TinyTeX, run tinytex::uninstall_tinytex()
+```
+
+To uninstall TinyTeX, run:
+```r
+tinytex::uninstall_tinytex()
 ```
 
 ## Working in Rstudio
@@ -247,6 +242,7 @@ install.packages("plotly")
 install.packages("quantities")
 install.packages("minpack.lm")
 install.packages("tikzDevice")
+install.packages("ggforce")
 ```
 
 Later on, a package can be loaded by calling:
