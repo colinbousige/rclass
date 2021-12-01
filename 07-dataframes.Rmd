@@ -486,6 +486,24 @@ dt %>% filter(abs(y)> 0.1) %>%
 ## Exercises {#exo-df}
 
 
+Interactive exercises can be found in the [`tutoR`](https://github.com/colinbousige/tutoR) package. For this, if you haven't already, run:
+
+```r
+install.packages("devtools")
+devtools::install_github("rstudio/gradethis", force = TRUE)
+devtools::install_github("rstudio/learnr", force = TRUE)
+devtools::install_github("colinbousige/tutoR")
+```
+
+Then launch the tutorial by running:
+
+```r
+library(tutoR)
+tuto("dataframes")
+```
+
+
+
 <details>
     <summary>**Exercise 1**</summary>
 
@@ -542,8 +560,9 @@ plot(df_tib$a, df_tib$b)
     - <a href="Data/population.csv" download target="_blank">population.csv</a>
     - <a href="Data/FTIR_rocks.xlsx" download target="_blank">FTIR_rocks.xlsx</a>
 - Load them into separate `data.frames`{.R}. Look into the options of `read.table()`{.R}, `read.csv()`{.R}, `readxl::read_excel()`{.R},  to get the proper data fields.
-- Print their dimensions and column names to the data.frame containing `rubis_01.txt`. 
-- Do the same things with tibbles
+- Add column names to the data.frame containing `rubis_01.txt`. 
+- Print their dimensions.
+- Do the same things with tibbles.
 
 <details>
     <summary>Solution</summary>
