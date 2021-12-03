@@ -88,7 +88,7 @@ if (interactive() && Sys.getenv("TERM_PROGRAM") == "vscode") {
         "command": "editor.action.insertSnippet",
         "when": "editorTextFocus && editorLangId == 'rmd'",
         "args": {
-            "snippet": "```{r}\n$0\n```"
+            "snippet": "``` {r}\n$0\n```"
             }
     },
     {
@@ -237,7 +237,6 @@ install.packages("rmarkdown")
 install.packages("knitr")
 install.packages("shiny")
 install.packages("patchwork")
-install.packages("broom")
 install.packages("plotly")
 install.packages("quantities")
 install.packages("minpack.lm")
@@ -246,11 +245,13 @@ install.packages("ggforce")
 ```
 
 Later on, a package can be loaded by calling:
+
 ```r
 library(package_name)
 ```
 or by checking it in the "Graphs" panel under the "Packages" tab.
 If you want to access a function from a given package without loading it (or because several packages define the same function and you want to specify which one to use), type:
+
 ```r
 package_name::function_name(parameters)
 ```
