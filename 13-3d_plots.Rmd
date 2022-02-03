@@ -33,20 +33,35 @@ fake_data <- fake_data %>% unnest(spec)
 fake_data
 ```
 
-OK, so now we have some fake experimental data stored in a tidy `tibble`{.R} called `fake_data`. We want to plot it as a color map in order to grasp the evolution of the spectra:
+OK, so now we have some fake experimental data stored in a tidy `tibble`{.R} called `fake_data`. We want to plot it as a color map in order to grasp the evolution of the spectra. This can be done through the use of `geom_contour()`{.R} and `geom_contour_filled()`{.R} functions and by providing the `z` aesthetics, or by using the `geom_raster()`{.R} or `geom_tile()`{.R} functions with a `fill` aesthetics. Both methods can be combined, as shown below:
 
 ```{r, out.width='100%', message = FALSE, fig.asp=.7,cache=FALSE}
 # Plotting
 colors <- colorRampPalette(c("white","royalblue","seagreen",
-                             "orange","red","brown"))(500)
-ggplot(data=fake_data, aes(x=w, y=T, fill=Intensity)) + 
-      geom_raster() + #geom_tile would work
+                             "orange","red","brown"))
+Nbins <- 10
+ggplot(data=fake_data, aes(x=w, y=T, z=Intensity)) + 
+      geom_contour_filled(bins = Nbins) + 
       ggtitle("Some fake data") + 
-      scale_fill_gradientn(colors=colors,name="Intensity\n[arb. units]") +
+      scale_fill_manual(values = colors(Nbins),
+                        name = "Intensity\n[arb. units]") +
       labs(x = "Fake Raman Shift [1/cm]",
            y = "Fake Temperature [K]") +
       theme_bw()
-# Some other way : a stacking of plots 
+
+ggplot(data=fake_data, aes(x = w, y = T)) + 
+      geom_raster(aes(fill = Intensity)) + #geom_tile would work
+      geom_contour(aes(z = Intensity), color = "black", bins = 5)+
+      ggtitle("Some fake data") + 
+      scale_fill_gradientn(colors = colors(10), 
+                           name = "Intensity\n[arb. units]") +
+      labs(x = "Fake Raman Shift [1/cm]",
+           y = "Fake Temperature [K]") +
+      theme_bw()
+```
+
+Another option is to make a "ridge plot", or a stacking of plots:
+```{r, out.width='100%', message = FALSE, fig.asp=.7,cache=FALSE}
 colors <- colorRampPalette(c("royalblue","seagreen","orange",
                              "red","brown"))(length(unique(fake_data$T)))
 fake_data$T_round <- round(fake_data$T,1)

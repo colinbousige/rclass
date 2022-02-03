@@ -48,6 +48,41 @@ rnorm(10, mean=3, sd=1)
 runif(10, min = 0, max = 1)
 ```
 
+## Numerical and categorical data types
+
+Data can be of two different types: numerical, or categorical. Let's say you are measuring a the temperature in a room and recording its value over time: 
+
+```{r}
+T1 <- c(22.3, 23.5, 26.0, 30.2)
+```
+
+`T1` is a vector containing **numerical** data.
+
+Let's say that now you are recording the temperature level, which can be `low`, `high` or `medium`
+
+```{r}
+T2 <- c("low", "low", "medium", "high")
+```
+
+`T2` is a vector containing **categorical** data, _i.e._ the data in this example can fall into either of 3 categories. For now, `T2` is however a vector of strings, and we need to tell R that it contains categorical data by using the function `factor()`{.R}:
+
+```{r}
+T2 <- factor(T)
+T2
+```
+
+We see here that we now have 3 levels, and a numerization of `T2` leads to obtaining the numbers 1, 2 and 3 according to the levels in `T2`:
+
+```{r}
+as.numeric(T2)
+```
+
+Numerical data can be converted to factors in the same way -- this can be useful sometimes, _e.g._ when plotting with `ggplot` as we will see later:
+
+```{r}
+factor(T1)
+```
+
 ## Principal operations on vectors
 
 ### Mathematical operations
