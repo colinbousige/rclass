@@ -24,7 +24,7 @@ library(tidyverse)
 Nspec <- 40                           # Amount of spectra
 N     <- 500                          # Size of the x vector
 # Create a fake data tibble
-fake_data <- tibble(T=seq(273, 500, length=Nspec)) %>% 
+fake_data <- tibble(T = round(seq(273, 500, length=Nspec), 1)) %>% 
     mutate(spec = map(T, ~tibble(w = seq(0, 100, length = N),
                          Intensity = 50*dnorm(w, mean = (./T[1])*20 + 25, 
                                                   sd  = 10+runif(1,max=5)))))
@@ -64,11 +64,10 @@ Another option is to make a "ridge plot", or a stacking of plots:
 ```{r, out.width='100%', message = FALSE, fig.asp=.7,cache=FALSE}
 colors <- colorRampPalette(c("royalblue","seagreen","orange",
                              "red","brown"))(length(unique(fake_data$T)))
-fake_data$T_round <- round(fake_data$T,1)
 ggplot(data = fake_data, 
        aes(x = w, 
            y = Intensity + as.numeric(factor(T))-1,
-           color = factor(T_round))
+           color = factor(T))
        ) + 
     geom_line() + 
     labs(x = "Fake Raman Shift [1/cm]", 
@@ -96,18 +95,15 @@ ggplot(data=fake_data,
 In some cases you end up with a matrix _z_, and two vectors _x_ and _y_. This is easy to plot using the base `image()`{.R} function. For the sake of example, let's just pivot our 3-columns data.frame to such a matrix using `pivot_wider()`{.R}:
 
 ```{r, out.width='100%', message = FALSE, warning = FALSE, fig.asp=.6,cache=FALSE}
-x <- unique(data.frame(fake_data)[,"w"])
-y <- unique(data.frame(fake_data)[,"T"])
+x <- sort(unique(fake_data$w))
+y <- sort(unique(fake_data$T))
 z <- as.matrix(fake_data %>% 
-                select(-T_round) %>% 
-                pivot_wider(values_from=Intensity, names_from = T) %>% 
+                pivot_wider(values_from = Intensity, names_from = T) %>% 
                 select(-w)
                )
-x <- x[order(x)]
-y <- y[order(y)]
-colors <- colorRampPalette(c("white","royalblue","seagreen","orange","red","brown"))(500)
-par(mar=c(4, 4, .5, 4), lwd=2)
-image(x,y,z,col = colors)
+colors <- colorRampPalette(c("white","royalblue","seagreen","orange","red","brown"))(50)
+par(mar = c(4, 4, .5, 4), lwd = 2)
+image(x, y, z, col = colors)
 ```
 
 You can add a legend by using the `image.plot` function:
@@ -128,12 +124,12 @@ aY <- list(title = "Temperature [K]")
 # Weird but you need to use t(z) here:
 z <- t(z)
 # Color plot
-plot_ly(x=x,y=y,z=z,type = "heatmap",colors=colors) %>% 
+plot_ly(x = x, y = y, z = z, type = "heatmap", colors = colors) %>% 
    layout(xaxis = aX, yaxis = aY)
 ```
 Or, very cool, an interactive surface plot:
 ```{r, out.width='100%', message = FALSE, warning = FALSE, fig.asp=.9,cache=FALSE}
-plot_ly(x=x,y=y,z=z,type = "surface",colors=colors) %>%
+plot_ly(x=x, y=y, z=z, type = "surface", colors=colors) %>%
    layout(scene = list(xaxis = aX, yaxis = aY, dragmode="turntable"))
 ```
 
