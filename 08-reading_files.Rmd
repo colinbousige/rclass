@@ -63,7 +63,7 @@ read_table("Data/rubis_01.txt", col_names = c("w","int"))
 For tab-separated values, use `read_tsv()`{.R}. For other exotic separators, look into `read_delim()`{.R}.
 
 
-## Excel files
+### Excel files
 
 For this, use the `readxl` library and its function `read_excel()`{.R} returning a `tibble`:
 
@@ -185,9 +185,9 @@ write_csv(df, "your_file.csv")
 ```
 
 
-Note that the `write_*()`{.R} functions will automatically compress outputs if an appropriate extension is given. Three extensions are currently supported: .gz for gzip compression, .bz2 for bzip2 compression and .xz for lzma compression. See the examples for more information.
+Note that the `write_*()`{.R} functions will automatically compress outputs if an appropriate extension is given. Three extensions are currently supported: .gz for gzip compression, .bz2 for bzip2 compression and .xz for lzma compression. See the examples in the help for more information.
 
-If you don't want to use csv files, look into `write_tsv()`{.R} for tab-separated values or `write_delim()`{.R} for any delimiter. in case you want to output fixed width files, look into [`gdata`'s `write.fwf()`{.R}](https://www.rdocumentation.org/packages/gdata/versions/2.18.0/topics/write.fwf).
+If you don't want to use csv files, look into `write_tsv()`{.R} for tab-separated values or `write_delim()`{.R} for any delimiter. In case you want to output fixed width files, look into [`gdata`'s `write.fwf()`{.R}](https://www.rdocumentation.org/packages/gdata/versions/2.18.0/topics/write.fwf).
 
 
 ### Excel files
