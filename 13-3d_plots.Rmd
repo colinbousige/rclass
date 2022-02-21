@@ -93,7 +93,7 @@ ggplot(data=fake_data,
 
 ## The base graphics solution
 
-In some cases you end up with a matrix _z_, and two vectors _x_ and _y_. This is easy to plot using the base `image()`{.R} function. For the sake of example, let's just use the `acast()`{.R} function on our melted 3-columns data.frame:
+In some cases you end up with a matrix _z_, and two vectors _x_ and _y_. This is easy to plot using the base `image()`{.R} function. For the sake of example, let's just pivot our 3-columns data.frame to such a matrix using `pivot_wider()`{.R}:
 
 ```{r, out.width='100%', message = FALSE, warning = FALSE, fig.asp=.6,cache=FALSE}
 x <- unique(data.frame(fake_data)[,"w"])
