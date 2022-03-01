@@ -221,7 +221,7 @@ Write whatever you want in the "Source code" panel and save it in a `.R` (or `.R
 
 The code output will be seen in the "R Console" panel if it's a text, or in the "Graph" panel if it's a graph. A list of all defined variables and functions is available in the "Environment" panel. You can also directly write and run code in the "R Console" panel, if it's code you don't care to save in a script (like installing a package or whatever).
 
-You can install packages by running the `install.packages("package_name")`{.R} command in the R console or R script, or you can also click on the "Packages" tab in the bottom right corner, and then "Install" or "Update" in case you want to install or update your packages. "Update" will show you a list of installed packages that have a new published version. All verified packages are located on the CRAN (Comprehensive R Archive Network). It is thus really easy to install packages and maintain (update) your packages in R. There is also the possibility to install packages from source if you want to install custom packages -- "homemade" packages that didn't go through the CRAN verification process: do so at your own risks.
+You can install packages by running the `install.packages("package_name")` command in the R console or R script, or you can also click on the "Packages" tab in the bottom right corner, and then "Install" or "Update" in case you want to install or update your packages. "Update" will show you a list of installed packages that have a new published version. All verified packages are located on the CRAN (Comprehensive R Archive Network). It is thus really easy to install packages and maintain (update) your packages in R. There is also the possibility to install packages from source if you want to install custom packages -- "homemade" packages that didn't go through the CRAN verification process: do so at your own risks.
 
 More on the [Rstudio cheatsheet](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf).
 
@@ -246,13 +246,13 @@ install.packages("ggforce")
 
 Later on, a package can be loaded by calling:
 
-```r
+```
 library(package_name)
 ```
 or by checking it in the "Graphs" panel under the "Packages" tab.
 If you want to access a function from a given package without loading it (or because several packages define the same function and you want to specify which one to use), type:
 
-```r
+```
 package_name::function_name(parameters)
 ```
 
