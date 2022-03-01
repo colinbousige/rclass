@@ -57,9 +57,8 @@ starwars %>%
            mass   = set_units(mass,"kg"))
 ```
 
-- You can plot using units and easily convert between units while plotting. For this though, you need to use the `ggforce` package:
+- You can plot using units and easily convert between units while plotting:
 ```{r}
-library(ggforce) # to have ggplot work with units
 p <- starwars %>% 
     mutate(height = set_units(height,"cm"),
            mass   = set_units(mass,"kg")) %>% 
@@ -68,8 +67,8 @@ p <- starwars %>%
         geom_point(size=2)+
         labs(x="Height", y="Mass")
 p
-p + scale_x_unit(unit = 'inches') +
-    scale_y_unit(unit = 'pounds')
+p + ggforce::scale_x_unit(unit = "inches") +
+    ggforce::scale_y_unit(unit = "pounds")
 ```
 
 
@@ -84,29 +83,13 @@ Here is the gist of it:
 library(quantities)
 options(errors.notation="plus-minus", errors.digits=4)
 a <- set_errors(1, 0.1)
-b <- set_errors(1, 0.1)
+b <- set_errors(2, 0.2)
 a+b
-a-b
 a*b
 a^3
-options(errors.notation="parenthesis", errors.digits=1)
-# Lets consider a circuit with 2 resistors in parallel
-# measurement of voltages U1 and U2 with 10% errors
-U1 <- set_quantities(10, "V", 10*.1); U1
-U2 <- set_quantities(1, "kV", 1*.1); U2
-# measurement of currents I1 and I2 with 5% error
-I1 <- set_quantities(5, "mA", 5*.05); I1
-I2 <- set_quantities(1, "A", 1*.05); I2
-# Compute the equivalent resistance from U=R*I and 1/Req=1/R1+1/R2
-R1 <- U1/I1; R1
-R2 <- U2/I2; R2
-Req <- R1*R2/(R1+R2); Req
-Req <- set_units(Req, "ohm"); Req
-options(errors.notation="plus-minus", errors.digits=4)
-Req
-errors(Req)
-errors_min(Req)
-errors_max(Req)
+errors(a)
+errors_min(a)
+errors_max(a)
 ```
 
 It thus becomes easy to plot the error bars from your experimental data:
