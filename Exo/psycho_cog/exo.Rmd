@@ -1,0 +1,106 @@
+---
+title : "R Exercises - Cognitive Psychology"
+date  : "`r Sys.Date()`"
+output: 
+    html_document:
+        toc            : true
+        toc_float      : true
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: true
+        code_download  : FALSE
+---
+
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  font-size: 1em;
+}
+</style>
+
+----
+
+This exercise is based on data from a PhD student in cognitive psychology. In his work, this student collects response times (RT) to two simultaneous tasks, and then he has to analyse the response times.
+
+- At $t_0$, the stimulus S1 is triggered
+- At $t_1=t_0 + SOA$, the stimulus S2 is triggered (SOA is the time between the 2 stimuli)
+- At $t_2=t_0 + RT1$, the subject responds to stimulus S1
+- At $t_3=t_1 + RT2$, the subject responds to stimulus S2
+
+The inter-response interval (IRI) is defined as the time difference between $t_3$ and $t_2$, thus $IRI=SOA+RT2-RT1$. Negatives IRI therefore mean that the response to S2 is emitted before the response to S1.
+
+For theoretical reasons, one can consider that if $SOA=1500$ ms, both stimulis are answered independently. One can thus use the RT1 and RT2 values for SOA=1500 ms to estimate the IRI in the case of independent responses to the stimuli.
+
+---
+
+# Data wrangling
+
+- Download the datafiles <a href="Archive.zip" download target="_blank">archive</a> and unzip it, then create a R project in this folder in Rstudio.
+- Load the `tidyverse` and `patchwork` packages:
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Load the .csv file in the `Data` folder and save it into `raw_data`. Look into the help of `read_csv()`{.R} to help you get rid of the error.
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Using successive **pipe operations**, we will now create a `dataclean` table from `raw_data`, where we:
+    - **Filter** `raw_data` so that `Procedure[Trial]` is only equal to `"EssaisDT"`
+    - **Mutate** the table by adding a column `IRI` containing `SOAdur + S2Visuel.RT - S1Audio.RT`
+    - **Filter** the table so that some extreme values are excluded:
+        - `S1Audio.RT` is smaller or equal to 2500 and larger or equal to 100
+        - `S2Visuel.RT` is smaller or equal to 2500 and larger or equal to 100
+        - `S1Audio.ACC`, `S1response.ACC` and `S2Visuel.ACC` are equal to 1
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Let's compute the simulated values in the case the responses to the stimuli are independent, _i.e._ using SOA=1500ms. Using successive pipe operations and starting from `dataclean`:
+    - **Filter** rows so that `SOAdur` is equal to 1500
+    - Delete the `SOAdur` and `IRI` columns
+    - **Mutate** the table to add 3 columns `IRI_sim_xx`, where `xx`=15, 65 or 250 and `IRI_sim_xx = xx + S2Visuel.RT - S1Audio.RT`.
+    - Using `pivot_longer()`{.R} and the options `names_to = c(".value", "SOA_dur"), names_pattern = "(.+)_(.+)"`, pivot the columns containing `"IRI_sim_"` into a long table.
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- We want now to get the averaged `IRI` per subject and per SOA, and its standard deviation. Using `group_by()`{.R} and `summarise()`{.R}, store the mean and standard deviation of `IRI` in a table called `stats_obs`, starting from `dataclean`. It should look like this:
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- We want to do the same for the 3 simulated IRI. 
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+# Plotting
+
+- We want now to produce a graph showing the histograms of the observed `IRI` column using `ggplot2`. 
+    - Create a `ggplot` using the `dataclean` dataset
+    - Set the aesthetics to `x = IRI`
+    - Create the histograms using `geom_histogram()`{.R}, with a fill color depending on `SOAdur`
+    - Arrange the plots on a grid depending on the `Subject` column using `facet_wrap()`{.R}
+    - Add a vertical lign marking the average value for each subject using `geom_vline()`{.R}. The data for these lines are stored in the `stats_obs` dataset.
+    - Play with the theme and other ggplot commands to make the plot look like the one below
+        - Try plotting a normalized histogram by [looking up on the Internet how to do this](https://www.google.fr/search?source=hp&ei=g0MLXeGwKNLPgweV04-IBA&q=ggplot+normalized+histogram&oq=ggplot+normalized+histogram)
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Let's do the same for the simulated dataset. It should look like this:
+
+```{r warning = FALSE, message=FALSE, cache=FALSE}
+
+```
