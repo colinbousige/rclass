@@ -83,7 +83,7 @@ read.table("Data/test.dat", skip=1, col.names = c("A","B"))
 ```
 - You can type `?read.table` for more options.
 
-- Now, to read an Excel file, use the `read_excel` library:
+- Now, to read an Excel file, use the `readxl` library:
 ```{r}
 library(readxl) # load readxl from tidyverse to read Excel files
 read_excel("Data/test.xlsx", sheet=1)
@@ -103,7 +103,7 @@ df[3,1]
 df[,1]
 df[[1]]# this is a vector too
 ```
-- Or by its name using the `$` notation:
+- Or, **preferably**, by its name using the `$` notation:
 ```{r, warnings=FALSE}
 df$X
 ```

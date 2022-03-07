@@ -231,7 +231,12 @@ input$menu_name
 ```r
 # # # # # # # # # 
 # In ui:
-plotOutput("plot_name", height = 600)
+plotOutput("plot_name", height = 600,
+           click = "plot_click", # to retrieve the click position
+           dblclick = "plot_dblclick", # to retrieve the double click position
+           hover = "plot_hover", # to retrieve the mouse position
+           brush = "plot_brush" # to retrieve the rectangle coordinates
+           )
 # # # # # # # # # 
 # In server:
 output$plot_name <- renderPlot({

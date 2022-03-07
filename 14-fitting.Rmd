@@ -11,6 +11,8 @@ blockquote {
 
 ## Linear fitting with `lm()`
 
+### Single variable
+
 ```{r include=FALSE, warning = FALSE, message=FALSE, cache=FALSE}
 rm(list = ls())
 library(ggplot2)
@@ -55,7 +57,12 @@ coef(fit)
 coef(fit)[1]
 coef(fit)['(Intercept)']
 ```
-To get it properly stored in a tibble, see the [`broom` package](#the-broom-library) that we describe later in this chapter.
+To get it properly stored in a tibble, see the [`broom` package](#the-broom-library) that we describe later in this chapter:
+
+```{r, warnings=FALSE}
+# Summary of the fit
+broom::tidy(fit)
+```
 
 To get the standard error of the fitted parameters and the R^2^:
 ```{r, warnings=FALSE}
@@ -101,6 +108,7 @@ d %>% ggplot(aes(x,y)) +
     geom_abline(slope = coef(fit1.5)[1], intercept = 1.5, col="royalblue")+
     expand_limits(x = 0, y = 0)
 ```
+
 
 ## Nonlinear Least Squares fitting
 
