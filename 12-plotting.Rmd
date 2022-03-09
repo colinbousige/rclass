@@ -94,27 +94,6 @@ legend("topleft",
 
 Most needs should be covered with this simple plot that can be adapted.
 
-A plot can be exported if surrounded by `XXX` and `dev.off()`{.R}, with `XXX` that can be `pdf("xxx.pdf",height=6, width=8)`{.R}, `png("xxx.png",height=600, width=800)`{.R}... Example:
-```r
-pdf("test.pdf",height=6, width=8)
-plot(x,y,
-     type="l",
-     xlab="x"
-     )
-dev.off()
-```
-
-You can also export the graph as a `.tex` file using `tikz()`{.R}, which allows you to use $\LaTeX$ mathematical expressions (don't forget to escape the `\` character):
-```r
-library(tikzDevice)
-tikz("plot.tex",height=6, width=8, pointsize = 10, standAlone=TRUE)
-plot(x,y,
-     type="l",
-     xlab="\\omega_i"
-     )
-dev.off()
-```
-
 <details>
     <summary>**Pro Tip: make a _code snippet_**</summary>
 
@@ -465,6 +444,74 @@ p4 + inset_element(p3, left   = 0.01, right = .4,
                        bottom = .45,    top = .99)
 ```
 
+
+## Exporting a plot to pdf or png
+
+
+### A single plot
+
+A plot can be exported if surrounded by `XXX` and `dev.off()`{.R}, with `XXX` that can be `pdf("xxx.pdf",height=6, width=8)`{.R}, `png("xxx.png",height=600, width=800)`{.R}... Examples:
+
+```r
+P <- ggplot(df, aes(x,y)) + geom_point()
+pdf("plot.pdf",height=6, width=8)
+P
+dev.off()
+```
+
+```r
+pdf("plot.png",height=600, width=800)
+plot(x,y,
+     type="l",
+     xlab="x"
+     )
+dev.off()
+```
+
+You can also export the graph as a `.tex` file using `tikz()`{.R}, which allows you to use $\LaTeX$ mathematical expressions (don't forget to escape the `\` character):
+```r
+library(tikzDevice)
+tikz("plot.tex",height=6, width=8, pointsize = 10, standAlone=TRUE)
+plot(x,y,
+     type="l",
+     xlab="$\\omega_i$"
+     )
+dev.off()
+tools::texi2pdf("plot.tex") # compile the tex fileto pdf
+system("open -a Skim plot.pdf") # on Mac: open the resulting pdf with Skim
+```
+
+### Multiple plots
+
+In case you want to output multiple plots with a for loop, you have two options: 
+
+1. Ouptut a separate file for each plot
+2. For pdf output only: ouptut a single file with a each plot in a different page 
+
+In both cases, if you plot with `ggplot` (which I always recommend), then you need to explicitly `print()` the plot in the for loop, like so:
+
+- Output a separate file for each plot:
+
+```r
+for(i in 1:4){
+    plot_name = paste0("plot_",i,".pdf")
+    P <- ggplot(my_data[[i]], aes(x, y)) + geom_point()
+    pdf(plot_name, height = 6, width = 8)
+    print(P)
+    dev.off()
+}
+```
+
+- Output a single file with a page for each plot:
+
+```r
+pdf("plots.pdf", height = 6, width = 8)
+for(i in 1:4){
+    P <- ggplot(my_data[[i]], aes(x, y)) + geom_point()
+    print(P)
+}
+dev.off()
+```
 
 ## Exercises {#exo-plots}
 
