@@ -35,7 +35,7 @@ fake_data
 
 OK, so now we have some fake experimental data stored in a tidy `tibble`{.R} called `fake_data`. We want to plot it as a color map in order to grasp the evolution of the spectra. This can be done through the use of `geom_contour()`{.R} and `geom_contour_filled()`{.R} functions and by providing the `z` aesthetics, or by using the `geom_raster()`{.R} or `geom_tile()`{.R} functions with a `fill` aesthetics. Both methods can be combined, as shown below:
 
-```{r, out.width='100%', message = FALSE, fig.asp=.7,cache=FALSE}
+```{r, out.width='100%', warning=FALSE, message = FALSE, fig.asp=.7,cache=FALSE}
 # Plotting
 colors <- colorRampPalette(c("white","royalblue","seagreen",
                              "orange","red","brown"))

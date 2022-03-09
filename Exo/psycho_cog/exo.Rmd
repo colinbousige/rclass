@@ -21,6 +21,12 @@ blockquote {
 }
 </style>
 
+```{r include=FALSE}
+library(knitr)
+knitr::opts_chunk$set(cache = FALSE, out.width='100%', warnings=FALSE, message=FALSE)
+options(width = 80)
+```
+
 ----
 
 This exercise is based on data from a PhD student in cognitive psychology. In his work, this student collects response times (RT) to two simultaneous tasks, and then he has to analyse the response times.
@@ -63,7 +69,7 @@ For theoretical reasons, one can consider that if $SOA=1500$ ms, both stimulis a
 
 ```
 
-- Let's compute the simulated values in the case the responses to the stimuli are independent, _i.e._ using SOA=1500ms. Using successive pipe operations and starting from `dataclean`:
+- Let's compute the simulated values in the case the responses to the stimuli are independent, _i.e._ using SOA=1500ms, and save it into a tibble called `IRI_sim`. Using successive pipe operations and starting from `dataclean`:
     - **Filter** rows so that `SOAdur` is equal to 1500
     - Delete the `SOAdur` and `IRI` columns
     - **Mutate** the table to add 3 columns `IRI_sim_xx`, where `xx`=15, 65 or 250 and `IRI_sim_xx = xx + S2Visuel.RT - S1Audio.RT`.

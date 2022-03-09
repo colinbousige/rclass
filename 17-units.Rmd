@@ -58,7 +58,7 @@ starwars %>%
 ```
 
 - You can plot using units and easily convert between units while plotting:
-```{r, error=TRUE}
+```{r, error=TRUE, warning=FALSE}
 p <- starwars %>% 
     mutate(height = set_units(height,"cm"),
            mass   = set_units(mass,"kg")) %>% 
@@ -92,9 +92,10 @@ errors_min(a)
 errors_max(a)
 ```
 
-It thus becomes easy to plot the error bars from your experimental data:
+It thus becomes easy to plot the error bars from your experimental data. I recommend using the `ggforce` library to make `ggplot2` work better with `quantities`:
 
 ```{r warning=FALSE, message=FALSE, error=TRUE}
+library(ggforce)
 options(errors.notation="parenthesis", errors.digits=1)
 starwars %>% 
     mutate(height=set_quantities(height,"cm",height*.05),
