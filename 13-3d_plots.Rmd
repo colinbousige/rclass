@@ -143,38 +143,37 @@ The solution is to use a spline (or linear, but spline looks usually nicer) inte
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 # let's make our data irregular and see the plot is now not working:
-fake_data_irreg <- fake_data[sample(nrow(fake_data), nrow(fake_data)/3),]
+irreg.df <- fake_data[sample(nrow(fake_data), nrow(fake_data)/3),]
 # let's plot these irregular data
 colors <- colorRampPalette(c("white","royalblue","seagreen",
                              "orange","red","brown"))(500)
-ggplot(data=fake_data_irreg, aes(x=w, y=T, fill=Intensity)) + 
+ggplot(data=irreg.df, aes(x=w, y=T, fill=Intensity)) + 
       geom_raster() + #geom_tile would work
       ggtitle("Some irregular and ugly fake data") + 
       scale_fill_gradientn(colors=colors,name="Intensity\n[arb. units]") +
       labs(x = "Fake Raman Shift [1/cm]",
            y = "Fake Temperature [K]") +
       theme_bw()
-# now let's interpolate the data on a regular grid
+# now let's interpolate the data on a 100x100 regular grid
+# linear = FALSE -> cubic interpolation
 library(akima)
-fake_data_irreg.interp <- with(fake_data_irreg, 
-    interp(x = w, y = T, z = Intensity, 
-           duplicate="median",
-           xo=seq(min(fake_data_irreg$w), max(fake_data_irreg$w), length = 100),
-           yo=seq(min(fake_data_irreg$T), max(fake_data_irreg$T), length = 100),
-           extrap=FALSE, linear=FALSE)
+irreg.df.interp <- with(irreg.df, 
+    interp(x=w, y=T, z=Intensity, nx = 100, ny = 100,
+           duplicate = "median", extrap = FALSE, linear = FALSE)
     )
-# fake_data_irreg.interp is a list of 2 vectors and a matrix
-str(fake_data_irreg.interp)
+# irreg.df.interp is a list of 2 vectors and a matrix
+str(irreg.df.interp)
 # Regrouping this list to a 3-columns data.frame
-melt_x <- rep(fake_data_irreg.interp$x, times=length(fake_data_irreg.interp$y))
-melt_y <- rep(fake_data_irreg.interp$y, each=length(fake_data_irreg.interp$x))
-melt_z <- as.vector(fake_data_irreg.interp$z)
-fake_data_irreg.smooth <- na.omit(data.frame(w=melt_x, T=melt_y, Intensity=melt_z))
+irreg.df.smooth <- expand.grid(w = irreg.df.interp$x, 
+                               T = irreg.df.interp$y) %>% 
+                        tibble() %>% 
+                        mutate(Intensity = as.vector(irreg.df.interp$z)) %>% 
+                        na.omit()
 # Plotting
-fake_data_irreg.smooth %>% 
+irreg.df.smooth %>% 
     ggplot(aes(x=w, y=T, fill=Intensity)) + 
         geom_raster() + 
-        ggtitle("Some irregular fake data that have been spline-interpolated") + 
+        ggtitle("Some irregular fake data that have been cubic-interpolated") + 
         scale_fill_gradientn(colors=colors, name="Intensity\n[arb. units]") +
         labs(x = "Fake Raman Shift [1/cm]", 
              y = "Fake Temperature [K]") +
