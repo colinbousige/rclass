@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2022-03-09" />
+<meta name="date" content="2022-03-21" />
 
 <title>R Exercises - Cognitive Psychology</title>
 
@@ -44,6 +44,7 @@
   div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
   ul.task-list{list-style: none;}
     </style>
+
 
 
 <style type="text/css">
@@ -167,6 +168,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -324,7 +328,7 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">R Exercises - Cognitive Psychology</h1>
-<h4 class="date">2022-03-09</h4>
+<h4 class="date">2022-03-21</h4>
 
 </div>
 
@@ -375,7 +379,7 @@ blockquote {
 <li><strong>Filter</strong> rows so that <code>SOAdur</code> is equal to 1500</li>
 <li>Delete the <code>SOAdur</code> and <code>IRI</code> columns</li>
 <li><strong>Mutate</strong> the table to add 3 columns <code>IRI_sim_xx</code>, where <code>xx</code>=15, 65 or 250 and <code>IRI_sim_xx = xx + S2Visuel.RT - S1Audio.RT</code>.</li>
-<li>Using <code class="sourceCode r"><span class="fu">pivot_longer</span>()</code> and the options <code>names_to = c(&quot;.value&quot;, &quot;SOA_dur&quot;), names_pattern = &quot;(.+)_(.+)&quot;</code>, pivot the columns containing <code>&quot;IRI_sim_&quot;</code> into a long table.</li>
+<li>Using <code class="sourceCode r"><span class="fu">pivot_longer</span>()</code> and the options <code>names_prefix = &quot;IRI_sim_&quot;, names_to = &quot;SOAdur&quot;, values_to = &quot;IRI_sim&quot;</code>, pivot the columns containing <code>&quot;IRI_sim_&quot;</code> into a long table (you need to add the option to select the corresponding columns).</li>
 </ul></li>
 <li><p>We want now to get the averaged <code>IRI</code> per subject and per SOA, and its standard deviation. Using <code class="sourceCode r"><span class="fu">group_by</span>()</code> and <code class="sourceCode r"><span class="fu">summarise</span>()</code>, store the mean and standard deviation of <code>IRI</code> in a table called <code>stats_obs</code>, starting from <code>dataclean</code>. It should look like this:</p></li>
 </ul>

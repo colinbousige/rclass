@@ -96,18 +96,23 @@ dataclean <- raw_data %>%
     - **Filter** rows so that `SOAdur` is equal to 1500
     - Delete the `SOAdur` and `IRI` columns
     - **Mutate** the table to add 3 columns `IRI_sim_xx`, where `xx`=15, 65 or 250 and `IRI_sim_xx = xx + S2Visuel.RT - S1Audio.RT`.
-    - Using `pivot_longer()`{.R} and the options `names_to = c(".value", "SOA_dur"), names_pattern = "(.+)_(.+)"`, pivot the columns containing `"IRI_sim_"` into a long table.
+    - Using `pivot_longer()`{.R} and the options `names_prefix = "IRI_sim_", names_to = "SOAdur", values_to = "IRI_sim"`, pivot the columns containing `"IRI_sim_"` into a long table (you need to add the option to select the corresponding columns).
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-IRI_sim <- dataclean %>% 
-    filter(SOAdur == 1500) %>% 
-    select(-c(SOAdur, IRI)) %>% 
-    mutate(IRI_sim_15 = 15 + S2Visuel.RT - S1Audio.RT,
-           IRI_sim_65 = 65 + S2Visuel.RT - S1Audio.RT,
-           IRI_sim_250 = 250 + S2Visuel.RT - S1Audio.RT) %>% 
-    pivot_longer(cols = contains("IRI_sim_"),
-                 names_to = c(".value", "SOAdur"),
-                 names_pattern = "(.+)_(.+)")
+IRI_sim <- dataclean %>%
+    filter(SOAdur == 1500) %>%
+    select(-c(SOAdur, IRI)) %>%
+    mutate(
+        IRI_sim_15 = 15 + S2Visuel.RT - S1Audio.RT,
+        IRI_sim_65 = 65 + S2Visuel.RT - S1Audio.RT,
+        IRI_sim_250 = 250 + S2Visuel.RT - S1Audio.RT
+    ) %>%
+    pivot_longer(
+        cols = contains("IRI_sim_"),
+        names_prefix = "IRI_sim_",
+        names_to = "SOAdur",
+        values_to = "IRI_sim"
+    )
 ```
 
 - We want now to get the averaged `IRI` per subject and per SOA, and its standard deviation. Using `group_by()`{.R} and `summarise()`{.R}, store the mean and standard deviation of `IRI` in a table called `stats_obs`, starting from `dataclean`. It should look like this:
