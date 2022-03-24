@@ -168,7 +168,7 @@ fit_constr <- nls(data = df,
                   upper = list(y0=Inf, x1=Inf, x2=Inf, sd1=Inf, sd2=Inf, A1=2, A2=2),
                   lower = list(y0=-Inf, x1=-Inf, x2=2.9, sd1=0, sd2=0, A1=0, A2=0),
                   algorithm = "port"
-                  )
+                 )
 # Plotting the resulting function in blue
 ggplot(data=df, aes(x,y))+
     ggtitle("Beware of bad constraints!")+
