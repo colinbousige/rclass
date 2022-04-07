@@ -1,0 +1,67 @@
+---
+title : "Title"
+author: "Author"
+date  : "`r Sys.Date()`"
+output: 
+    bookdown::html_document2: 
+        toc            : yes
+        toc_float      : yes
+        code_folding   : hide
+        code_download  : yes
+        highlight      : tango
+        number_sections: true
+        fig_caption    : true
+        fig_number     : true
+        theme          : cosmo
+        css            : "style.css"
+csl: nature.csl
+bibliography: biblio.bib
+---
+
+# This is a title
+
+This is $LATEX_{text}$ and an equation:
+
+$$
+  f\left(k\right) = \binom{n}{k} p^k\left(1-p\right)^{n-k}
+  (\#eq:binom)
+$$
+
+And a reference to Eq. \@ref(eq:binom).
+
+
+## This is a subtitle
+
+This is a reference to an article [@fake_article] and a book [@ashcroft_solid_1976].
+
+```{r anRchunk, fig.cap="This is a static figure", fig.align="center"}
+library(ggplot2)
+theme_set(theme_bw())
+P <- ggplot(mtcars, aes(mpg, cyl)) + geom_point()
+P
+```
+
+And this is a reference to Fig. \@ref(fig:anRchunk).
+
+
+```{r anRchunk2, fig.cap="This is an interactive figure", fig.align="center", message=FALSE, warning=FALSE}
+library(plotly)
+ggplotly(P, dynamicTicks = TRUE)
+```
+
+## Printing tables
+
+And see Table \@ref(tab:mtcars).
+
+```{r mtcars, echo=FALSE}
+knitr::kable(mtcars[1:5, 1:5], caption = "The mtcars data.")
+```
+
+```{r mtcars_DT, echo=FALSE}
+DT::datatable(mtcars)
+```
+
+
+# References
+
+More information here: https://bookdown.org/yihui/bookdown/a-single-document.html
