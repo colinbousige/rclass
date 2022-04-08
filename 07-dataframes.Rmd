@@ -230,6 +230,12 @@ pivot_wider(df, names_from="city", values_from="pop")
 You can find more information on data import and [tidyness](https://garrettgman.github.io/tidying/) on the [data-import cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf) and on the [tidyr](http://www.sthda.com/english/wiki/tidyr-crucial-step-reshaping-data-with-r-for-easier-analyses) package.
 
 
+```{r pivotgif, echo = FALSE, fig.cap = "Understanding long and wide data with an animation. Source: [tidyexplain](https://github.com/gadenbuie/tidyexplain)", fig.align="center", out.width="70%"}
+knitr::include_graphics('./Plots/tidyr-pivoting.gif')
+```
+
+
+
 ### Tibbles
 
 A `tibble`{.R} is an enhanced version of the `data.frame`{.R} provided by the `tibble` package (which is part of the `tidyverse`). The main advantage of `tibble`{.R} is that it has easier initialization and nicer printing than `data.frame`{.R}. Moreover, the performance are also enhanced for the reading from files with `read_csv()`{.R}, `read_tsv()`{.R}, `read_table()`{.R} and `read_delim()`{.R} that do the same things as their `read.xx()` counterparts and return a `tibble`. Otherwise, the handling is basically the same.
