@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>3 Getting ready | Reproducible data treatment with R</title>
+<meta name="author" content="Colin Bousige">
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
+<meta property="og:title" content="3 Getting ready | Reproducible data treatment with R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://lmi.cnrs.fr/r/getting-ready.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3 Getting ready | Reproducible data treatment with R">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.10.0/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-152051691-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-152051691-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content="blockquote {  background: #E9F9FF;  border-left: 5px solid #026086;  margin: 1.5em 10px;  padding: 0.5em 10px; }  3.1 The easy way  Download and install R Download and install Rstudio Windows...">
+<meta property="og:description" content="blockquote {  background: #E9F9FF;  border-left: 5px solid #026086;  margin: 1.5em 10px;  padding: 0.5em 10px; }  3.1 The easy way  Download and install R Download and install Rstudio Windows...">
+<meta name="twitter:description" content="blockquote {  background: #E9F9FF;  border-left: 5px solid #026086;  margin: 1.5em 10px;  padding: 0.5em 10px; }  3.1 The easy way  Download and install R Download and install Rstudio Windows...">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="An introduction">Reproducible data treatment with R</a>:
+        <small class="text-muted">An introduction</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="about-the-class.html"><span class="header-section-number">1</span> About the class</a></li>
+<li><a class="" href="a-little-reminder-on-statistics.html"><span class="header-section-number">2</span> A little reminder on Statistics</a></li>
+<li><a class="active" href="getting-ready.html"><span class="header-section-number">3</span> Getting ready</a></li>
+<li><a class="" href="variables-booleans-and-strings.html"><span class="header-section-number">4</span> Variables, booleans and strings</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">5</span> Vectors</a></li>
+<li><a class="" href="data-frames.html"><span class="header-section-number">6</span> Data frames</a></li>
+<li><a class="" href="readingwriting-all-kinds-of-files.html"><span class="header-section-number">7</span> Reading/writing all kinds of files</a></li>
+<li><a class="" href="lists.html"><span class="header-section-number">8</span> Lists</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">9</span> Functions</a></li>
+<li><a class="" href="conditional-actions-and-loops.html"><span class="header-section-number">10</span> Conditional actions and loops</a></li>
+<li><a class="" href="plotting.html"><span class="header-section-number">11</span> Plotting</a></li>
+<li><a class="" href="colorplots.html"><span class="header-section-number">12</span> 3D color plots</a></li>
+<li><a class="" href="fitting.html"><span class="header-section-number">13</span> Fitting</a></li>
+<li><a class="" href="writing-documents-with-rmarkdown.html"><span class="header-section-number">14</span> Writing documents with Rmarkdown</a></li>
+<li><a class="" href="graphical-interfaces-with-shiny.html"><span class="header-section-number">15</span> Graphical interfaces with Shiny</a></li>
+<li><a class="" href="working-with-units-and-experimental-errors.html"><span class="header-section-number">16</span> Working with units and experimental errors</a></li>
+<li><a class="" href="list-of-exercises.html"><span class="header-section-number">17</span> List of exercises</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/colinbousige/Rclass">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="getting-ready" class="section level1" number="3">
+<h1>
+<span class="header-section-number">3</span> Getting ready<a class="anchor" aria-label="anchor" href="#getting-ready"><i class="fas fa-link"></i></a>
+</h1>
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+</style>
+<div id="the-easy-way" class="section level2" number="3.1">
+<h2>
+<span class="header-section-number">3.1</span> The easy way<a class="anchor" aria-label="anchor" href="#the-easy-way"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>
+<a href="https://cran.r-project.org/">Download</a> and install R</li>
+<li>
+<a href="https://www.rstudio.com/products/rstudio/download/#download">Download</a> and install Rstudio</li>
+<li>
+<strong>Windows only:</strong> <a href="https://cran.r-project.org/bin/windows/Rtools/">Download</a> and install Rtools</li>
+<li>You’re good to go.</li>
+</ul>
+</div>
+<div id="the-more-advanced-way" class="section level2" number="3.2">
+<h2>
+<span class="header-section-number">3.2</span> The more advanced way<a class="anchor" aria-label="anchor" href="#the-more-advanced-way"><i class="fas fa-link"></i></a>
+</h2>
+<p>If you don’t want to use Rstudio but rather want to keep with your favorite text editor, like I do (<a href="https://code.visualstudio.com/">Visual Studio Code</a> or <a href="https://www.sublimetext.com/3">Sublime Text</a>, see configuration below)</p>
+<ul>
+<li>I still recommend <a href="https://cran.r-project.org/">downloading</a> and installing R via CRAN (I had some packages problems due to a <code>homebrew</code> installation on Mac).</li>
+<li>To be fully operational with Rmarkdown files without using Rstudio, you need to <a href="https://pandoc.org/installing.html">install <code>pandoc</code></a>.</li>
+</ul>
+<details><summary><strong>Configuring VS Code</strong>
+</summary><p>I personally use <a href="https://code.visualstudio.com/">VS Code</a>.</p>
+<ul>
+<li>First, install the <a href="https://github.com/randy3k/radian">radian</a> console.</li>
+<li>Install the language server protocol package in <em>R</em> with: <code class="sourceCode r"><span class="fu">install.packages</span>(<span class="st">"languageserver"</span>)</code>
+</li>
+<li>In VS Code, install the following extensions:
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=Ikuyadeu.r">VSCode R</a></li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=REditorSupport.r-lsp">R LSP Client</a></li>
+</ul>
+</li>
+<li>Enable <code>r.bracketedPaste</code> for using Radian</li>
+<li>Set up <code>r.rterm.windows</code>, <code>r.rterm.mac</code> or <code>r.rterm.linux</code>: Path to Radian (where you installed radian)</li>
+<li>You should be good to go: ⌘+⏎ will send the current line/selection to the radian console and ⌘+Shift+K will render the current Rmd file.</li>
+</ul>
+<p>Here is the relevant part of my <code>settings.json</code> file:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb1-1"><a href="getting-ready.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb1-2"><a href="getting-ready.html#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.rterm.mac"</span><span class="fu">:</span> <span class="st">"/usr/local/bin/radian"</span><span class="fu">,</span></span>
+<span id="cb1-3"><a href="getting-ready.html#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.rpath.mac"</span><span class="fu">:</span> <span class="st">"/usr/local/bin/R"</span><span class="fu">,</span></span>
+<span id="cb1-4"><a href="getting-ready.html#cb1-4" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.bracketedPaste"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb1-5"><a href="getting-ready.html#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.lsp.diagnostics"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb1-6"><a href="getting-ready.html#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.sessionWatcher"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb1-7"><a href="getting-ready.html#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.rmarkdown.knit.useBackgroundProcess"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb1-8"><a href="getting-ready.html#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"editor.guides.bracketPairs"</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb1-9"><a href="getting-ready.html#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code></pre></div>
+<p>Also, I recommend turning on the session watcher (<code>"r.sessionWatcher": true</code>), and then adding the following code to your <code>.Rprofile</code>. This way, the help, tables and figures can be viewed in the VS Code browser panel.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.browser <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.viewer <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.page_viewer <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.view <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.helpPanel <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span>
+
+<span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"TERM_PROGRAM"</span><span class="op">)</span> <span class="op">==</span> <span class="st">"vscode"</span><span class="op">)</span> <span class="op">{</span>
+    <span class="kw">if</span> <span class="op">(</span><span class="st">"httpgd"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/zpackages.html">.packages</a></span><span class="op">(</span>all.available <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
+        <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>device <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+            <span class="fu">httpgd</span><span class="fu">::</span><span class="fu"><a href="https://nx10.github.io/httpgd/reference/hgd.html">hgd</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+            <span class="fu">.vsc.browser</span><span class="op">(</span><span class="fu">httpgd</span><span class="fu">::</span><span class="fu"><a href="https://nx10.github.io/httpgd/reference/hgd_url.html">hgd_url</a></span><span class="op">(</span><span class="op">)</span>, viewer <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span>
+        <span class="op">}</span><span class="op">)</span>
+    <span class="op">}</span>
+<span class="op">}</span></code></pre></div>
+<details><summary><strong>Here are also a few keybindings that I use (<code>keybindings.json</code>):</strong>
+</summary><div class="sourceCode" id="cb3"><pre class="sourceCode json"><code class="sourceCode json"><span id="cb3-1"><a href="getting-ready.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb3-2"><a href="getting-ready.html#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-3"><a href="getting-ready.html#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Create R terminal"</span><span class="fu">,</span></span>
+<span id="cb3-4"><a href="getting-ready.html#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"alt+cmd+r"</span><span class="fu">,</span></span>
+<span id="cb3-5"><a href="getting-ready.html#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.createRTerm"</span></span>
+<span id="cb3-6"><a href="getting-ready.html#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-7"><a href="getting-ready.html#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-8"><a href="getting-ready.html#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Insert code block"</span><span class="fu">,</span></span>
+<span id="cb3-9"><a href="getting-ready.html#cb3-9" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+shift+i"</span><span class="fu">,</span></span>
+<span id="cb3-10"><a href="getting-ready.html#cb3-10" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"editor.action.insertSnippet"</span><span class="fu">,</span></span>
+<span id="cb3-11"><a href="getting-ready.html#cb3-11" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId == 'rmd'"</span><span class="fu">,</span></span>
+<span id="cb3-12"><a href="getting-ready.html#cb3-12" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-13"><a href="getting-ready.html#cb3-13" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"snippet"</span><span class="fu">:</span> <span class="st">"``` {r}</span><span class="ch">\n</span><span class="st">$0</span><span class="ch">\n</span><span class="st">```"</span></span>
+<span id="cb3-14"><a href="getting-ready.html#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
+<span id="cb3-15"><a href="getting-ready.html#cb3-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-16"><a href="getting-ready.html#cb3-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-17"><a href="getting-ready.html#cb3-17" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Setwd to current file path"</span><span class="fu">,</span></span>
+<span id="cb3-18"><a href="getting-ready.html#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+</span><span class="ch">\\</span><span class="st">"</span><span class="fu">,</span></span>
+<span id="cb3-19"><a href="getting-ready.html#cb3-19" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithEditorPath"</span><span class="fu">,</span></span>
+<span id="cb3-20"><a href="getting-ready.html#cb3-20" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb3-21"><a href="getting-ready.html#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"setwd(dirname(</span><span class="ch">\"</span><span class="st">$$</span><span class="ch">\"</span><span class="st">))"</span></span>
+<span id="cb3-22"><a href="getting-ready.html#cb3-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-23"><a href="getting-ready.html#cb3-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-24"><a href="getting-ready.html#cb3-24" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Insert R arrow"</span><span class="fu">,</span></span>
+<span id="cb3-25"><a href="getting-ready.html#cb3-25" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+,"</span><span class="fu">,</span></span>
+<span id="cb3-26"><a href="getting-ready.html#cb3-26" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"editor.action.insertSnippet"</span><span class="fu">,</span></span>
+<span id="cb3-27"><a href="getting-ready.html#cb3-27" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb3-28"><a href="getting-ready.html#cb3-28" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-29"><a href="getting-ready.html#cb3-29" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"snippet"</span><span class="fu">:</span> <span class="st">" &lt;- "</span></span>
+<span id="cb3-30"><a href="getting-ready.html#cb3-30" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
+<span id="cb3-31"><a href="getting-ready.html#cb3-31" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-32"><a href="getting-ready.html#cb3-32" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-33"><a href="getting-ready.html#cb3-33" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Insert pipe"</span><span class="fu">,</span></span>
+<span id="cb3-34"><a href="getting-ready.html#cb3-34" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+."</span><span class="fu">,</span></span>
+<span id="cb3-35"><a href="getting-ready.html#cb3-35" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"editor.action.insertSnippet"</span><span class="fu">,</span></span>
+<span id="cb3-36"><a href="getting-ready.html#cb3-36" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb3-37"><a href="getting-ready.html#cb3-37" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb3-38"><a href="getting-ready.html#cb3-38" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"snippet"</span><span class="fu">:</span> <span class="st">" %&gt;% "</span></span>
+<span id="cb3-39"><a href="getting-ready.html#cb3-39" aria-hidden="true" tabindex="-1"></a>         <span class="fu">}</span></span>
+<span id="cb3-40"><a href="getting-ready.html#cb3-40" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-41"><a href="getting-ready.html#cb3-41" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-42"><a href="getting-ready.html#cb3-42" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"help document"</span><span class="fu">,</span></span>
+<span id="cb3-43"><a href="getting-ready.html#cb3-43" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+h"</span><span class="fu">,</span></span>
+<span id="cb3-44"><a href="getting-ready.html#cb3-44" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithSelectionOrWord"</span><span class="fu">,</span></span>
+<span id="cb3-45"><a href="getting-ready.html#cb3-45" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb3-46"><a href="getting-ready.html#cb3-46" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"help($$)"</span></span>
+<span id="cb3-47"><a href="getting-ready.html#cb3-47" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-48"><a href="getting-ready.html#cb3-48" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-49"><a href="getting-ready.html#cb3-49" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"view table"</span><span class="fu">,</span></span>
+<span id="cb3-50"><a href="getting-ready.html#cb3-50" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+shift+u"</span><span class="fu">,</span></span>
+<span id="cb3-51"><a href="getting-ready.html#cb3-51" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithSelectionOrWord"</span><span class="fu">,</span></span>
+<span id="cb3-52"><a href="getting-ready.html#cb3-52" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb3-53"><a href="getting-ready.html#cb3-53" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"DT::datatable($$)"</span></span>
+<span id="cb3-54"><a href="getting-ready.html#cb3-54" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-55"><a href="getting-ready.html#cb3-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-56"><a href="getting-ready.html#cb3-56" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"reopen figure panel if closed"</span><span class="fu">,</span></span>
+<span id="cb3-57"><a href="getting-ready.html#cb3-57" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+alt+p"</span><span class="fu">,</span></span>
+<span id="cb3-58"><a href="getting-ready.html#cb3-58" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommand"</span><span class="fu">,</span></span>
+<span id="cb3-59"><a href="getting-ready.html#cb3-59" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb3-60"><a href="getting-ready.html#cb3-60" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">".vsc.browser(httpgd::hgd_url(), viewer = </span><span class="ch">\"</span><span class="st">Beside</span><span class="ch">\"</span><span class="st">)"</span></span>
+<span id="cb3-61"><a href="getting-ready.html#cb3-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb3-62"><a href="getting-ready.html#cb3-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb3-63"><a href="getting-ready.html#cb3-63" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"view object"</span><span class="fu">,</span></span>
+<span id="cb3-64"><a href="getting-ready.html#cb3-64" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+u"</span><span class="fu">,</span></span>
+<span id="cb3-65"><a href="getting-ready.html#cb3-65" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithSelectionOrWord"</span><span class="fu">,</span></span>
+<span id="cb3-66"><a href="getting-ready.html#cb3-66" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb3-67"><a href="getting-ready.html#cb3-67" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"View($$)"</span></span>
+<span id="cb3-68"><a href="getting-ready.html#cb3-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb3-69"><a href="getting-ready.html#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span></code></pre></div>
+</details></details><details><summary><strong>Configuring Sublime Text</strong>
+</summary><p>I have personally used <a href="https://www.sublimetext.com/3">Sublime Text 3</a> for a long time, but switched to <a href="https://code.visualstudio.com/">VS Code</a> recently. Here is what I used to do:</p>
+<ul>
+<li>First, install <a href="https://packagecontrol.io/installation">Package control</a>.</li>
+<li>To set up command line launch: <code>ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime</code>.</li>
+<li>Install <em>a minima</em> the packages <code>LSP</code>, <code>R-IDE</code>, <code>Terminus</code>, and <code>SendCode</code>, and also the <a href="https://github.com/randy3k/radian">radian</a> console.</li>
+<li>You can also add the useful packages <code>LatexTools</code>, <code>BracketHighlighter</code>, <code>RainbowBrackets</code>, <code>Citer</code>, <code>Path Tools</code>, <code>SidebarEnhancements</code>, <code>SidebarTools</code>, <code>Git</code>, <code>GitGutter</code>, <code>Alignment</code>, <code>AutoFileName</code>.</li>
+<li>Install the language server protocol package in R with: <code class="sourceCode r"><span class="fu">install.packages</span>(<span class="st">"languageserver"</span>)</code>
+</li>
+<li>To create a keyboard shortcut to open a terminal with the radian console as the R interpreter, add this to your keybinding file:</li>
+</ul>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="getting-ready.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">{</span> <span class="st">"keys"</span><span class="ex">:</span> [<span class="st">"super+option+r"</span>], <span class="co"># put whatever you want here</span></span>
+<span id="cb4-2"><a href="getting-ready.html#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"command"</span><span class="ex">:</span> <span class="st">"terminus_open"</span>,</span>
+<span id="cb4-3"><a href="getting-ready.html#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"args"</span><span class="ex">:</span> {</span>
+<span id="cb4-4"><a href="getting-ready.html#cb4-4" aria-hidden="true" tabindex="-1"></a>        <span class="st">"post_window_hooks"</span><span class="ex">:</span> [</span>
+<span id="cb4-5"><a href="getting-ready.html#cb4-5" aria-hidden="true" tabindex="-1"></a>            <span class="ex">[</span><span class="st">"carry_file_to_pane"</span><span class="ex">,</span> {<span class="st">"direction"</span>: <span class="st">"right"</span>}]</span>
+<span id="cb4-6"><a href="getting-ready.html#cb4-6" aria-hidden="true" tabindex="-1"></a>        <span class="ex">],</span></span>
+<span id="cb4-7"><a href="getting-ready.html#cb4-7" aria-hidden="true" tabindex="-1"></a>        <span class="st">"cmd"</span> : <span class="st">"radian"</span></span>
+<span id="cb4-8"><a href="getting-ready.html#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="kw">}</span></span>
+<span id="cb4-9"><a href="getting-ready.html#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="er">}</span></span></code></pre></div>
+<ul>
+<li>Select <code>Terminus</code> as the destination of SendCode</li>
+<li>You should be good to go: ⌘+⏎ will send the current line/selection to the radian console, ⌘+B will render the current Rmd file, ⌘+\ will set the working directory to the current file’s folder.</li>
+</ul></details>
+</div>
+<div id="in-any-case-install-latex" class="section level2" number="3.3">
+<h2>
+<span class="header-section-number">3.3</span> In any case: install LaTeX<a class="anchor" aria-label="anchor" href="#in-any-case-install-latex"><i class="fas fa-link"></i></a>
+</h2>
+<p>A <strong>full</strong> <span class="math inline">\(\LaTeX\)</span> distribution (emphasis on <strong>full</strong>) will be needed to knit markdown files to PDFs (you don’t need it to output html files though):</p>
+<ul>
+<li>
+<strong>Windows:</strong> go <a href="https://miktex.org/download">here</a> and download the Net Installer to install the <strong>complete distribution</strong>
+</li>
+<li>
+<strong>Mac:</strong> go <a href="https://tug.org/mactex/mactex-download.html">here</a> or type <code>brew cask install mactex</code> in the terminal if you have <a href="https://treehouse.github.io/installation-guides/mac/homebrew">Homebrew</a> installed</li>
+<li>
+<strong>Linux:</strong> <a href="https://dzone.com/articles/installing-latex-ubuntu">here</a> fore example</li>
+</ul>
+<p>Alternatively, you can also work with <a href="https://yihui.name/tinytex/">TinyTeX</a> that will install the needed packages on the fly. It is recommended on the <code>knitr</code> package help, but I only had problems with this, so I recommend the full <span class="math inline">\(\LaTeX\)</span> distribution option if you don’t mind taking up a few gigabytes of your disk. If you do, just run this in the R console:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tinytex"</span><span class="op">)</span>
+<span class="fu">tinytex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/install_tinytex.html">install_tinytex</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p>To uninstall TinyTeX, run:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu">tinytex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/install_tinytex.html">uninstall_tinytex</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+</div>
+<div id="working-in-rstudio" class="section level2" number="3.4">
+<h2>
+<span class="header-section-number">3.4</span> Working in Rstudio<a class="anchor" aria-label="anchor" href="#working-in-rstudio"><i class="fas fa-link"></i></a>
+</h2>
+<blockquote>
+<p>Remember: <strong>Always Work with Projects!!</strong></p>
+</blockquote>
+<p>Launch Rstudio, click <code>File &gt; New Project</code>, and follow the dialog box (existing directory or not, etc.). When you have several ongoing projects, you can switch between them using the Project navigator (see Fig. <a href="getting-ready.html#fig:rstudio">3.1</a>).</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:rstudio"></span>
+<img src="Plots/rstudio.png" alt="The Rstudio interface." width="100%"><p class="caption">
+Figure 3.1: The Rstudio interface.
+</p>
+</div>
+<p>The great interest of working with Projects is that the default working directory will be relative to the root directory of the Project. In other words, if you store your data in a <code>Data</code> folder, you can read it by running <code class="sourceCode r"><span class="fu">read_function</span>(<span class="st">"Data/your_file.txt"</span>)</code>. This is one of the fundamentals of reproducible data treatment as:</p>
+<ul>
+<li>You won’t have to write the absolute path towards your file, like <code class="sourceCode r"><span class="fu">read_function</span>(<span class="st">"C://path/to/your_file.txt"</span>)</code>, path that is unlikely to be the same depending on the computer it is located on. This helps you share your whole project folder with others, or just move it around on your computer and still have a working code.</li>
+<li>You won’t have to start your script by a <code class="sourceCode r"><span class="fu">setwd</span>(<span class="st">"/path/to/your/data"</span>)</code> command (for set working directory), which is much better for the same reasons as above.</li>
+</ul>
+<p>Write whatever you want in the “Source code” panel and save it in a <code>.R</code> (or <code>.Rmd</code>) file, and <strong>run</strong> it by selecting it and hitting ⌘+⏎ (Ctrl+⏎ on Windows, Linux). If no text is selected, hitting ⌘+⏎ will launch the current line. You can see the file contents of your project in the project’s file explorer (see bottom right corner of Fig. <a href="getting-ready.html#fig:rstudio">3.1</a>).</p>
+<p>The code output will be seen in the “R Console” panel if it’s a text, or in the “Graph” panel if it’s a graph. A list of all defined variables and functions is available in the “Environment” panel. You can also directly write and run code in the “R Console” panel, if it’s code you don’t care to save in a script (like installing a package or whatever).</p>
+<p>You can install packages by running the <code>install.packages("package_name")</code> command in the R console or R script, or you can also click on the “Packages” tab in the bottom right corner, and then “Install” or “Update” in case you want to install or update your packages. “Update” will show you a list of installed packages that have a new published version. All verified packages are located on the CRAN (Comprehensive R Archive Network). It is thus really easy to install packages and maintain (update) your packages in R. There is also the possibility to install packages from source if you want to install custom packages – “homemade” packages that didn’t go through the CRAN verification process: do so at your own risks.</p>
+<p>More on the <a href="https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf">Rstudio cheatsheet</a>.</p>
+</div>
+<div id="setting-up-the-environment" class="section level2" number="3.5">
+<h2>
+<span class="header-section-number">3.5</span> Setting up the environment<a class="anchor" aria-label="anchor" href="#setting-up-the-environment"><i class="fas fa-link"></i></a>
+</h2>
+<p>Make sure you have the following packages installed by launching the following commands: copy-paste them in the “Source code” panel (upper left after having crated a new R script), select all the lines and hit Ctrl+⏎ (Windows, Linux) or ⌘+⏎ (Mac). These are the main packages that we will use in this class:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"rmarkdown"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"knitr"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"shiny"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"patchwork"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"plotly"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"quantities"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"minpack.lm"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tikzDevice"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggforce"</span><span class="op">)</span></code></pre></div>
+<p>Later on, a package can be loaded by calling:</p>
+<pre><code><a href="https://rdrr.io/r/base/library.html">library(package_name)</a></code></pre>
+<p>or by checking it in the “Graphs” panel under the “Packages” tab.
+If you want to access a function from a given package without loading it (or because several packages define the same function and you want to specify which one to use), type:</p>
+<pre><code>package_name::function_name(parameters)</code></pre>
+<p>If you want to access the documentation on a given package, click the link on this package in the “Packages” tab.
+In a more general way, help on a function is accessed by typing in <code>?function_name</code>, the help appearing in the “Graph” panel.</p>
+</div>
+<div id="the-tutor-package" class="section level2" number="3.6">
+<h2>
+<span class="header-section-number">3.6</span> The <code>tutor</code> package<a class="anchor" aria-label="anchor" href="#the-tutor-package"><i class="fas fa-link"></i></a>
+</h2>
+<p>Finally, I also made some interactive exercises that are bundled in the <a href="https://lmi.cnrs.fr/r/tutor/"><code>tutor</code></a> package. I let you go there and follow the instructions for installing it – you have to get used to going to GitHub to install packages and find information on them.</p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="a-little-reminder-on-statistics.html"><span class="header-section-number">2</span> A little reminder on Statistics</a></div>
+<div class="next"><a href="variables-booleans-and-strings.html"><span class="header-section-number">4</span> Variables, booleans and strings</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#getting-ready"><span class="header-section-number">3</span> Getting ready</a></li>
+<li><a class="nav-link" href="#the-easy-way"><span class="header-section-number">3.1</span> The easy way</a></li>
+<li><a class="nav-link" href="#the-more-advanced-way"><span class="header-section-number">3.2</span> The more advanced way</a></li>
+<li><a class="nav-link" href="#in-any-case-install-latex"><span class="header-section-number">3.3</span> In any case: install LaTeX</a></li>
+<li><a class="nav-link" href="#working-in-rstudio"><span class="header-section-number">3.4</span> Working in Rstudio</a></li>
+<li><a class="nav-link" href="#setting-up-the-environment"><span class="header-section-number">3.5</span> Setting up the environment</a></li>
+<li><a class="nav-link" href="#the-tutor-package"><span class="header-section-number">3.6</span> The tutor package</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/colinbousige/Rclass/blob/master/03-getting_ready.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/colinbousige/Rclass/edit/master/03-getting_ready.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Reproducible data treatment with R</strong>: An introduction" was written by Colin Bousige. It was last built on 07/04/2022.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

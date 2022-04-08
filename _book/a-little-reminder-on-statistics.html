@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>2 A little reminder on Statistics | Reproducible data treatment with R</title>
+<meta name="author" content="Colin Bousige">
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
+<meta property="og:title" content="2 A little reminder on Statistics | Reproducible data treatment with R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://lmi.cnrs.fr/r/a-little-reminder-on-statistics.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="2 A little reminder on Statistics | Reproducible data treatment with R">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.10.0/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-152051691-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-152051691-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content="blockquote {  background: #E9F9FF;  border-left: 5px solid #026086;  margin: 1.5em 10px;  padding: 0.5em 10px; }  2.1 Why are statistical tools necessary in physical science? When doing Science,...">
+<meta property="og:description" content="blockquote {  background: #E9F9FF;  border-left: 5px solid #026086;  margin: 1.5em 10px;  padding: 0.5em 10px; }  2.1 Why are statistical tools necessary in physical science? When doing Science,...">
+<meta name="twitter:description" content="blockquote {  background: #E9F9FF;  border-left: 5px solid #026086;  margin: 1.5em 10px;  padding: 0.5em 10px; }  2.1 Why are statistical tools necessary in physical science? When doing Science,...">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="An introduction">Reproducible data treatment with R</a>:
+        <small class="text-muted">An introduction</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="about-the-class.html"><span class="header-section-number">1</span> About the class</a></li>
+<li><a class="active" href="a-little-reminder-on-statistics.html"><span class="header-section-number">2</span> A little reminder on Statistics</a></li>
+<li><a class="" href="getting-ready.html"><span class="header-section-number">3</span> Getting ready</a></li>
+<li><a class="" href="variables-booleans-and-strings.html"><span class="header-section-number">4</span> Variables, booleans and strings</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">5</span> Vectors</a></li>
+<li><a class="" href="data-frames.html"><span class="header-section-number">6</span> Data frames</a></li>
+<li><a class="" href="readingwriting-all-kinds-of-files.html"><span class="header-section-number">7</span> Reading/writing all kinds of files</a></li>
+<li><a class="" href="lists.html"><span class="header-section-number">8</span> Lists</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">9</span> Functions</a></li>
+<li><a class="" href="conditional-actions-and-loops.html"><span class="header-section-number">10</span> Conditional actions and loops</a></li>
+<li><a class="" href="plotting.html"><span class="header-section-number">11</span> Plotting</a></li>
+<li><a class="" href="colorplots.html"><span class="header-section-number">12</span> 3D color plots</a></li>
+<li><a class="" href="fitting.html"><span class="header-section-number">13</span> Fitting</a></li>
+<li><a class="" href="writing-documents-with-rmarkdown.html"><span class="header-section-number">14</span> Writing documents with Rmarkdown</a></li>
+<li><a class="" href="graphical-interfaces-with-shiny.html"><span class="header-section-number">15</span> Graphical interfaces with Shiny</a></li>
+<li><a class="" href="working-with-units-and-experimental-errors.html"><span class="header-section-number">16</span> Working with units and experimental errors</a></li>
+<li><a class="" href="list-of-exercises.html"><span class="header-section-number">17</span> List of exercises</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/colinbousige/Rclass">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="a-little-reminder-on-statistics" class="section level1" number="2">
+<h1>
+<span class="header-section-number">2</span> A little reminder on Statistics<a class="anchor" aria-label="anchor" href="#a-little-reminder-on-statistics"><i class="fas fa-link"></i></a>
+</h1>
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+</style>
+<div id="why-are-statistical-tools-necessary-in-physical-science" class="section level2" number="2.1">
+<h2>
+<span class="header-section-number">2.1</span> Why are statistical tools necessary in physical science?<a class="anchor" aria-label="anchor" href="#why-are-statistical-tools-necessary-in-physical-science"><i class="fas fa-link"></i></a>
+</h2>
+<p>When doing Science, one has to fully grasp the concept of <em>physical measurement</em>. Let’s take an example to visualize the importance of this concept.</p>
+<div id="a-practical-example" class="section level3" number="2.1.1">
+<h3>
+<span class="header-section-number">2.1.1</span> A practical example<a class="anchor" aria-label="anchor" href="#a-practical-example"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s say you want to communicate to someone a temperature, and tell this person that the temperature is “38”. If this is a random person in the street, they might think: “nice, let’s go to the beach today!”. If this random person is from the USA, they’re gonna think: “damn, where did I put my coat?”. If that person happens to be a physician, they might think: “that kid’s got a slight fever”. If they are a physicist doing a cryostat experiment, they might think “let’s check the He tank level”… you see that one of the most important part of the measurement is missing: its unit. Units are there so that people understand each other when exchanging data, and you see here that 38 Celsius, 38 Fahrenheit or 38 Kelvin are quite different, and this quantity will mean different things in different contexts. A physical quantity given without its unit would be absolutely meaningless (unless, of course, you are looking at a unit-less quantity, like a count).</p>
+<p>Now let’s consider the body temperature of 38 °C given to a physician. How did you measure this temperature? With a mercury graduated thermometer or with a thermocouple? In the first case, you can probably assume that this value is given with a measurement error of at least 1 °C, meaning that the temperature you give to the physician is (38±1) °C, <em>i.e.</em> the physician won’t be able to decide whether they should be concerned or not. In the second case, the temperature is often given with a 0.1 °C precision, so the physician, seeing that the body temperature is (38±0.1) °C, will probably tell you to take an aspirin and rest instead of giving you something stronger to treat a possible infection. Given that the uncertainty on the given value is of 0.1 °C, one should in fact give the temperature with matching decimal precision, <em>i.e.</em> (38.0±0.1) °C. Writing (38±0.1) °C, (38.00001±0.1) °C or (38.00±0.10000) °C would be meaningless too.</p>
+<blockquote>
+<p>With this, we see that a physical measurement should be given with four parts: its actual <strong>value</strong>, its <strong>decimal precision</strong>, its <strong>uncertainty</strong>, and its <strong>unit</strong>. Should any of these four parts be missing in a physical quantity that you wanted to share, it would at best be imprecise, and at worst be utterly meaningless.</p>
+</blockquote>
+</div>
+<div id="probabilistic-description-of-physical-systems" class="section level3" number="2.1.2">
+<h3>
+<span class="header-section-number">2.1.2</span> Probabilistic description of physical systems<a class="anchor" aria-label="anchor" href="#probabilistic-description-of-physical-systems"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let’s continue with our example of the body temperature measured with a thermocouple or a laser thermometer with a 0.1 °C precision.
+Our first measurement of the body temperature yielded (38.0±0.1) °C. Now let’s repeat this measurement a number of times in various area of the body (which are left to your imagination). Let’s say it then shows (38.1±0.1) °C, (38.0±0.1) °C, (38.3±0.1) °C, (37.9±0.1) °C, (38.2±0.1) °C, (38.1±0.1) °C, (38.1±0.1) °C, (39.8±0.1) °C. What is the actual body temperature then? Should we stick to a single measurement? Of course not. We have to make an histogram of the measured values, and study the distribution of the measurements (Fig. <a href="a-little-reminder-on-statistics.html#fig:histogramT">2.1</a>). We can then see that one of the values is clearly an outlier – something might have gone wrong there. What if we had done the measurement only once and only measured that value? We might have jumped to a very wrong conclusion, with possibly a very serious consequence like giving the wrong medicine.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:histogramT"></span>
+<img src="_main_files/figure-html/histogramT-1.png" alt="Histogram of the body temperature measurements. The red line is the mean value, the orange one is the mode and the blue one is the median." width="100%"><p class="caption">
+Figure 2.1: Histogram of the body temperature measurements. The red line is the mean value, the orange one is the mode and the blue one is the median.
+</p>
+</div>
+<p>With this example, we see that <strong>a physical measurement is not absolute</strong>. In fact, a physical measurement is an assessment of the <strong>probability</strong> that the physical value is within a certain range. In the case of our example, after removing the outlier for which we are certain that the measurement is wrong, it means that the measured body temperature has a high probability to be somewhere between 38.0 °C and 38.2 °C.
+In other (more general) terms, one could consider a measurement of a quantity <span class="math inline">\(X\)</span> as a probability <span class="math inline">\(P(x - \sigma &lt; X &lt; x + \sigma )\)</span> that the quantity <span class="math inline">\(X\)</span> has a value between <span class="math inline">\(x-\sigma\)</span> and <span class="math inline">\(x+\sigma\)</span>. The <strong>uncertainty</strong> <span class="math inline">\(\sigma\)</span> around the <strong>mean value</strong> <span class="math inline">\(x\)</span> is usually given as the <strong>standard deviation</strong> of the distribution of measurements around the mean.</p>
+<blockquote>
+<p>Since physical measurements are in fact <strong>probabilities</strong>, we <strong>can</strong> – and <strong>must</strong> – use <strong>statistical tools</strong> to characterize them.</p>
+</blockquote>
+</div>
+</div>
+<div id="quantifying-the-properties-of-data" class="section level2" number="2.2">
+<h2>
+<span class="header-section-number">2.2</span> Quantifying the properties of data<a class="anchor" aria-label="anchor" href="#quantifying-the-properties-of-data"><i class="fas fa-link"></i></a>
+</h2>
+<div id="data-representation-presenting-a-measurement" class="section level3" number="2.2.1">
+<h3>
+<span class="header-section-number">2.2.1</span> Data representation – presenting a measurement<a class="anchor" aria-label="anchor" href="#data-representation-presenting-a-measurement"><i class="fas fa-link"></i></a>
+</h3>
+<p>Depending on the data you are looking at, various ways of representing them are possible. I can’t stress enough the importance of picking the right representation for your data, it is the expression of your physical sense. A good representation will help you make sense of your data and communicate your results. A bad representation, well…</p>
+<div id="histograms" class="section level4" number="2.2.1.1">
+<h4>
+<span class="header-section-number">2.2.1.1</span> Histograms<a class="anchor" aria-label="anchor" href="#histograms"><i class="fas fa-link"></i></a>
+</h4>
+<p>When looking at discrete values or when you want to characterize the distribution of a measurement, it is often a good idea to use the histogram representation, which represents the frequency at which a measurement is made within a certain range, called bin. Let’s take Fig. <a href="a-little-reminder-on-statistics.html#fig:histogramT">2.1</a> and plot it with various bin sizes. One can see that the choice of bin size is important, as it determines whether your data are noisy or lack fine information.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-6"></span>
+<img src="_main_files/figure-html/unnamed-chunk-6-1.png" alt="Histogram of the body temperature measurements with different bin widths." width="32%"><img src="_main_files/figure-html/unnamed-chunk-6-2.png" alt="Histogram of the body temperature measurements with different bin widths." width="32%"><img src="_main_files/figure-html/unnamed-chunk-6-3.png" alt="Histogram of the body temperature measurements with different bin widths." width="32%"><p class="caption">
+Figure 2.2: Histogram of the body temperature measurements with different bin widths.
+</p>
+</div>
+</div>
+<div id="graphs" class="section level4" number="2.2.1.2">
+<h4>
+<span class="header-section-number">2.2.1.2</span> Graphs<a class="anchor" aria-label="anchor" href="#graphs"><i class="fas fa-link"></i></a>
+</h4>
+<p>In case you want to represent continuous data, say the evolution of a quantity <span class="math inline">\(y\)</span> with respect to a quantity <span class="math inline">\(x\)</span>, you should then use the graph representation. As we saw before, any physical quantity should be given with its uncertainty and unit. <strong>The same applies to a graph</strong>: it <strong>must</strong> clearly display the <strong>units</strong> of the quantities <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and <strong>error bars</strong> that are usually taken as the standard deviation of each individual measurement (that should thus be performed a number of times, depending on what you are looking at).</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:unnamed-chunk-7"></span>
+<img src="_main_files/figure-html/unnamed-chunk-7-1.png" alt="Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data." width="32%"><img src="_main_files/figure-html/unnamed-chunk-7-2.png" alt="Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data." width="32%"><img src="_main_files/figure-html/unnamed-chunk-7-3.png" alt="Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data." width="32%"><p class="caption">
+Figure 2.3: Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data.
+</p>
+</div>
+<p>You can think of each set of {datapoint + error bar} as an histogram: the displayed point is the mean value of the histogram, and the error bar is its standard deviation. <strong>Therefore, plotting a straight line between points is usually pointless</strong>. Plotting a line going through the data points only has meaning if this line results from a physical model explaining the variation of the quantity <span class="math inline">\(y\)</span> with the evolution of the quantity <span class="math inline">\(x\)</span> – this is called a <strong>fit</strong>, and we will see more about it in the <a href="fitting.html#fitting">R class later</a>.</p>
+</div>
+</div>
+<div id="characterizing-an-ensemble-of-measurements" class="section level3" number="2.2.2">
+<h3>
+<span class="header-section-number">2.2.2</span> Characterizing an ensemble of measurements<a class="anchor" aria-label="anchor" href="#characterizing-an-ensemble-of-measurements"><i class="fas fa-link"></i></a>
+</h3>
+<p>If we take <span class="math inline">\(N\)</span> repeated measurements of an observable <span class="math inline">\(x\)</span>, it is then natural to try to assess our knowledge of the ensemble of measures through (1) a single number representing the measured quantity, and (2) a second number representing the spread of measurements. As we saw before, the observable <span class="math inline">\(x\)</span> is thus generally defined by its central (mean) value <span class="math inline">\(\left&lt; x \right&gt;\)</span>, its spread <span class="math inline">\(\sigma_x\)</span> (standard deviation or uncertainty), and its unit.</p>
+<div id="central-value-mode-median-and-mean" class="section level4" number="2.2.2.1">
+<h4>
+<span class="header-section-number">2.2.2.1</span> Central value: mode, median and mean<a class="anchor" aria-label="anchor" href="#central-value-mode-median-and-mean"><i class="fas fa-link"></i></a>
+</h4>
+<p>The <strong>mode</strong> of an ensemble of measurements is its <em>most frequent value</em>. If the measurement in question is of a continuous variable, one has to bin the data in terms of a histogram in order to quantify the modal value of that distribution: the mode will be the position of the maximum of the histogram.</p>
+<p>The <strong>median</strong> value of the ensemble is the value of <span class="math inline">\(x\)</span> for which there are an equal number of measurements above and below that point. If there is an even number of measurements, then the median value is taken as the midpoint between the two most central values.</p>
+<p>The <strong>mean</strong> (or arithmetic average) is more often used than the two previous quantities, as it usually provides a better way to quantify the “typical” value measured. The mean value is denoted either by <span class="math inline">\(\overline{x}\)</span> or <span class="math inline">\(\left&lt; x \right&gt;\)</span>, and is given by:</p>
+<p><span class="math display">\[\begin{equation}
+\overline{x}=\left&lt; x \right&gt;=\frac{1}{N}\sum_{i=1}^Nx_i,
+\end{equation}\]</span>
+where <span class="math inline">\(x_i\)</span> is the <span class="math inline">\(i\)</span>-th measurement of <span class="math inline">\(x\)</span>.</p>
+<p>Figure <a href="a-little-reminder-on-statistics.html#fig:histogramT">2.1</a> shows the representation of a sample of data plotted in a histogram. This figure shows the mode, mean and median. For this particular sample of data, the mean is 38.3 °C, the median is 38.1 °C, and the mode is 38.0 °C. The fact that the mode is smaller than the mean is an indication that the data are asymmetric about the mean. We usually refer to such a distribution as being skewed, and in this case the data are skewed to the right.</p>
+</div>
+<div id="quantifying-the-spread-of-data-variance-and-standard-deviation" class="section level4" number="2.2.2.2">
+<h4>
+<span class="header-section-number">2.2.2.2</span> Quantifying the spread of data: variance and standard deviation<a class="anchor" aria-label="anchor" href="#quantifying-the-spread-of-data-variance-and-standard-deviation"><i class="fas fa-link"></i></a>
+</h4>
+<p>The mean of an ensemble of data doesn’t provide any information as to how the data are distributed. So any description of a set of data just quoting a mean value is incomplete. We need a second number in order to quantify the dispersion of data around the mean value. The average deviations from the mean, <span class="math inline">\(\left&lt; x-\overline{x} \right&gt;\)</span>, is not a useful quantity as, by definition, this will be zero for a symmetrically distributed sample of data (which is always the case for randomly distributed data – a consequence of the central limit theorem, as we will see later). We should rather consider the average value of the squared deviations from the mean as a measure of the spread of our ensemble of measurements. This is called the <strong>variance</strong> <span class="math inline">\(V(x)\)</span>, which is given by:</p>
+<p><span class="math display" id="eq:variance">\[\begin{equation}
+\begin{aligned}
+V(x)&amp;=\left&lt; (x-\overline{x})^2 \right&gt;\\
+    &amp;=\frac{1}{N}\sum_{i=1}^N(x_i-\overline{x})^2\\
+    &amp;=\overline{x^2}-\overline{x}^2
+\end{aligned}
+\tag{2.1}
+\end{equation}\]</span></p>
+<p>The square root of the mean-squared (root-mean-squared or RMS) deviation is called the <strong>standard deviation</strong>, and this is given by:</p>
+<p><span class="math display" id="eq:sd">\[\begin{equation}
+\begin{aligned}
+\sigma(x)&amp;=\sqrt{V(x)}\\
+         &amp;=\sqrt{\overline{x^2}-\overline{x}^2}
+\end{aligned}
+\tag{2.2}
+\end{equation}\]</span></p>
+<p>The standard deviation quantifies the amount by which it is reasonable for a measurement of <span class="math inline">\(x\)</span> to differ from the mean value <span class="math inline">\(\overline{x}\)</span>. Considering a Gaussian distribution, we would expect to have 31.7% of measurements deviating from the mean value by more than 1<span class="math inline">\(\sigma\)</span>, and this goes down to 4.5% of measurements to deviate by more than 2<span class="math inline">\(\sigma\)</span>, and 0.3% of measurements to deviate by more than 3<span class="math inline">\(\sigma\)</span>. Thus, if we perform a measurement that deviates by a significant margin from the expected value of <span class="math inline">\(\left&lt; x \right&gt;\pm\sigma\)</span>, we need to ask ourselves about the significance of our measurement.</p>
+<p>In general, scientists often prefer using the standard deviation rather than the variance when describing data, since as the former has the same units as the observable being measured.</p>
+<blockquote>
+<p>A measurement of a quantity <span class="math inline">\(x\)</span> is therefore usually presented under the form <span class="math inline">\(\left&lt; x \right&gt;\pm\sigma_x\)</span>, where <span class="math inline">\(\left&lt; x \right&gt;\)</span> is the arithmetic average and <span class="math inline">\(\sigma_x\)</span> is the standard deviation of the data.</p>
+</blockquote>
+</div>
+<div id="caveats" class="section level4" number="2.2.2.3">
+<h4>
+<span class="header-section-number">2.2.2.3</span> Caveats<a class="anchor" aria-label="anchor" href="#caveats"><i class="fas fa-link"></i></a>
+</h4>
+<p>The above considerations all assume that the distribution of measured values is mono-modal, <em>i.e.</em> the histogram of the measured values is centered around a single value. In the case of a multimodal distribution such as shown in Fig. <a href="a-little-reminder-on-statistics.html#fig:multimodal">2.4</a>, it would be meaningless to use such tools as the fine information on the distribution would be lost.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:multimodal"></span>
+<img src="_main_files/figure-html/multimodal-1.png" alt="A trimodal distribution of measurements. The red line shows the mean value of the distribution: it fails to grasp the reality of the distribution." width="100%"><p class="caption">
+Figure 2.4: A trimodal distribution of measurements. The red line shows the mean value of the distribution: it fails to grasp the reality of the distribution.
+</p>
+</div>
+<p>In this case, one should try to deconvolute the distribution in terms of individual peaks, and gather their positions, widths and intensities.</p>
+</div>
+</div>
+</div>
+<div id="useful-distributions" class="section level2" number="2.3">
+<h2>
+<span class="header-section-number">2.3</span> Useful distributions<a class="anchor" aria-label="anchor" href="#useful-distributions"><i class="fas fa-link"></i></a>
+</h2>
+<div id="probability-density-functions" class="section level3" number="2.3.1">
+<h3>
+<span class="header-section-number">2.3.1</span> Probability Density Functions<a class="anchor" aria-label="anchor" href="#probability-density-functions"><i class="fas fa-link"></i></a>
+</h3>
+<p>We should now introduce the notion of <strong>Probability Density Function</strong> (PDF).
+<em>By definition</em>, a PDF is a distribution where the <strong>total area is unity</strong>. The variation of the PDF is represents the probability of something occurring at that point in the parameter space.
+In general, a PDF will be described by some function <span class="math inline">\(P(x)\)</span>, where</p>
+<p><span class="math display" id="eq:PDFnorm">\[\begin{equation}
+\int_a^b P(x)dx=1,
+\tag{2.3}
+\end{equation}\]</span>
+where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are the limits of the valid domain for the <span class="math inline">\(P(x)\)</span> function. The probability of obtaining a result between <span class="math inline">\(x\)</span> and <span class="math inline">\(x + dx\)</span> is thus <span class="math inline">\(P(x)dx\)</span>. Usual PDFs encountered in physics are the Poisson distribution as well as the Gaussian distribution, that we will describe in a bit.</p>
+</div>
+<div id="pdfs-mean-and-variance" class="section level3" number="2.3.2">
+<h3>
+<span class="header-section-number">2.3.2</span> PDFs, mean and variance<a class="anchor" aria-label="anchor" href="#pdfs-mean-and-variance"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let us define a PDF <span class="math inline">\(P(x)\)</span> describing a continuous distribution.
+We can compute the average value of some quantity by computing the integral over this quantity multiplied by the PDF.</p>
+<p>For example, the <strong>average value</strong> of the variable <span class="math inline">\(x\)</span>, distributed according to the PDF <span class="math inline">\(P(x)\)</span> in the domain <span class="math inline">\(-\infty &lt; x &lt;\infty\)</span>, is given by:</p>
+<p><span class="math display" id="eq:firstmoment">\[\begin{equation}
+\begin{aligned}
+\left&lt; x \right&gt;&amp;=\int_{-\infty}^{\infty}xP(x)dx\\
+\text{or } \left&lt; x \right&gt;&amp;=\sum_{i}x_iP(x_i) \text{ in the case of a discrete distribution}
+\end{aligned}
+\tag{2.4}
+\end{equation}\]</span></p>
+<p>This is called the <em>first moment</em> of the PDF.</p>
+<p>This method can be used to compute average values of more complicated expressions. The mean value of <span class="math inline">\((x - \overline{x})^2\)</span>, <em>i.e.</em> the variance <span class="math inline">\(V\)</span>, is thus given by the <span class="math inline">\(\overline{x}\)</span>-centered second moment of the PDF, such as:</p>
+<p><span class="math display" id="eq:secondmoment">\[\begin{equation}
+\begin{aligned}
+V&amp;=\int_{-\infty}^{\infty}(x - \overline{x})^2P(x)dx\\
+\text{or } V&amp;=\sum_{i}(x_i - \overline{x})^2P(x_i) \text{ in the case of a discrete distribution}
+\end{aligned}
+\tag{2.5}
+\end{equation}\]</span></p>
+</div>
+<div id="the-poisson-distribution" class="section level3" number="2.3.3">
+<h3>
+<span class="header-section-number">2.3.3</span> The Poisson distribution<a class="anchor" aria-label="anchor" href="#the-poisson-distribution"><i class="fas fa-link"></i></a>
+</h3>
+<div id="definition" class="section level4" number="2.3.3.1">
+<h4>
+<span class="header-section-number">2.3.3.1</span> Definition<a class="anchor" aria-label="anchor" href="#definition"><i class="fas fa-link"></i></a>
+</h4>
+<p>When a certain reaction happens randomly in time with an average frequency <span class="math inline">\(\lambda\)</span> in a given time interval, then the number <span class="math inline">\(k\)</span> of reactions in that time interval will follow a Poisson distribution:</p>
+<p><span class="math display" id="eq:poisson">\[\begin{equation}
+P_\lambda(k) = \frac{\lambda^ke^{-\lambda}}{k!}
+\tag{2.6}
+\end{equation}\]</span></p>
+<p>Examples of encounters of Poisson distributions could be as various as the number of calls received per hours in a call center, the yearly number of Prussian soldiers killed by horse kicks… or the number of particles (photons, neutrons, neutrinos…) hitting a detector every second.</p>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:poissondistrib"></span>
+<img src="_main_files/figure-html/poissondistrib-1.png" alt="Poisson distribution for various parameters. While asymmetric for small values of $k$ and $\lambda$, it tends towards a Gaussian lineshape at larger values." width="32%"><img src="_main_files/figure-html/poissondistrib-2.png" alt="Poisson distribution for various parameters. While asymmetric for small values of $k$ and $\lambda$, it tends towards a Gaussian lineshape at larger values." width="32%"><img src="_main_files/figure-html/poissondistrib-3.png" alt="Poisson distribution for various parameters. While asymmetric for small values of $k$ and $\lambda$, it tends towards a Gaussian lineshape at larger values." width="32%"><p class="caption">
+Figure 2.5: Poisson distribution for various parameters. While asymmetric for small values of <span class="math inline">\(k\)</span> and <span class="math inline">\(\lambda\)</span>, it tends towards a Gaussian lineshape at larger values.
+</p>
+</div>
+</div>
+<div id="characteristics" class="section level4" number="2.3.3.2">
+<h4>
+<span class="header-section-number">2.3.3.2</span> Characteristics<a class="anchor" aria-label="anchor" href="#characteristics"><i class="fas fa-link"></i></a>
+</h4>
+<p>As shown on Fig. <a href="a-little-reminder-on-statistics.html#fig:poissondistrib">2.5</a>, for small <span class="math inline">\(\lambda\)</span> the distribution is asymmetric and skewed to the right. As <span class="math inline">\(\lambda\)</span> increases the Poisson distribution becomes more symmetric.</p>
+<p>Following Eq. <a href="a-little-reminder-on-statistics.html#eq:firstmoment">(2.4)</a>, the average number of observed events, <span class="math inline">\(\left&lt; k \right&gt;\)</span>, is given by:</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+\left&lt; k \right&gt; &amp;= \sum_{k=0}^\infty kP_\lambda(k) = \sum_{k=1}^\infty k\frac{\lambda^ke^{-\lambda}}{k!}\\
+        &amp;= \lambda e^{-\lambda} \sum_{k=1}^\infty \frac{\lambda^{k-1}}{(k-1)!}= \lambda e^{-\lambda} \sum_{k=0}^\infty \frac{\lambda^{k}}{k!}\\
+        &amp;= \lambda
+\end{aligned}
+\end{equation}\]</span></p>
+<p>In the same manner and by using the “trick” <span class="math inline">\(x^2=x(x-1)+x\)</span>, the variance <span class="math inline">\(\sigma^2(k)\)</span> of the distribution is given by:</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+\sigma^2(k) &amp;= \sum_{k=1}^\infty (k-\lambda)^2\frac{\lambda^k e^{-\lambda}}{k!}\\
+        &amp;= \lambda e^{-\lambda} \left[\sum_{k=1}^\infty k^2\frac{\lambda^{k-1}}{k!} \underbrace{-2\lambda\sum_{k=1}^\infty \frac{\lambda^{k-1}}{(k-1)!}}_{-2\lambda e^\lambda}+\underbrace{\sum_{k=1}^\infty \lambda^2\frac{\lambda^{k-1}}{k!}}_{\lambda e^\lambda}\right]\\
+        &amp;= \lambda e^{-\lambda} \left[ \underbrace{\sum_{k=2}^\infty k(k-1)\frac{\lambda^{k-1}}{k!}}_{\lambda e^\lambda} + \underbrace{\sum_{k=1}^\infty k\frac{\lambda^{k-1}}{k!}}_{e^\lambda} - \lambda e^\lambda\right]\\
+        &amp;=\lambda = \left&lt; k \right&gt;
+\end{aligned}
+\end{equation}\]</span></p>
+<blockquote>
+<p>The important result here is that, <strong>when counting random events with an average of</strong> <span class="math inline">\(\left&lt; N \right&gt;\)</span>, <strong>the standard deviation is</strong> <span class="math inline">\(\sigma=\sqrt{\left&lt; N \right&gt;}\)</span>. This is typically what happens when performing a diffraction or spectroscopic measurement, such as X-ray diffraction, Raman, IR or neutron spectroscopy, etc.: the longer we acquire data, the higher the number of detected “events” <span class="math inline">\(N\)</span> (particle hits detector), and the “better is the statistics”. Indeed, the relative error is thus <span class="math inline">\(\sqrt{N}/N=1/\sqrt{N}\)</span>.<br></p>
+<p>The consequence of this is that to make a factor 10 improvement on the relative error, one has to increase by 100 the number of events. This is usually done by increasing the acquisition time, which is fine as long as it is short enough. If irrealistic acquisition times start to become necessary, one should maybe try to find another way to increase <span class="math inline">\(N\)</span>: this can be done by improving the detector efficiency, increasing the probe (laser, neutron/x-ray) brightness, changing the experimental geometry, etc.<br></p>
+<p>Finally, for “large” numbers (<span class="math inline">\(\lambda\gtrsim 100\)</span>) the Poisson distribution tends towards a symmetric Gaussian distribution that we will describe just after.</p>
+</blockquote>
+</div>
+</div>
+<div id="the-gaussian-distribution" class="section level3" number="2.3.4">
+<h3>
+<span class="header-section-number">2.3.4</span> The Gaussian distribution<a class="anchor" aria-label="anchor" href="#the-gaussian-distribution"><i class="fas fa-link"></i></a>
+</h3>
+<div id="definition-1" class="section level4" number="2.3.4.1">
+<h4>
+<span class="header-section-number">2.3.4.1</span> Definition<a class="anchor" aria-label="anchor" href="#definition-1"><i class="fas fa-link"></i></a>
+</h4>
+<p>The Gaussian distribution, also known as the <em>normal distribution</em>, with a mean value <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span> as a function of some variable <span class="math inline">\(x\)</span> is given by:</p>
+<p><span class="math display">\[\begin{equation}
+P(x, \mu, \sigma)=\frac{1}{\sigma\sqrt{2\pi}}e^{-(x-\mu)^2/2\sigma^2}
+\end{equation}\]</span></p>
+<p>It is useful to transform data from the <span class="math inline">\(x\)</span> space to a corresponding <span class="math inline">\(z\)</span> space which has a mean value of zero, and a standard deviation of one. This transformation is given by the mapping <span class="math inline">\(z=\frac{x-\mu}{\sigma}\)</span>, and the Gaussian distribution in terms of <span class="math inline">\(z\)</span> is thus:</p>
+<p><span class="math display">\[\begin{equation}
+P(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2}
+\end{equation}\]</span></p>
+</div>
+<div id="characteristics-1" class="section level4" number="2.3.4.2">
+<h4>
+<span class="header-section-number">2.3.4.2</span> Characteristics<a class="anchor" aria-label="anchor" href="#characteristics-1"><i class="fas fa-link"></i></a>
+</h4>
+<div class="figure" style="text-align: center">
+<span style="display:block;" id="fig:gaussian"></span>
+<img src="_main_files/figure-html/gaussian-1.png" alt="A zero-centered Gaussian distribution with standard deviation of 1, $P(z)$. The red line marks the half maximum, $P(z_{HM})=1/2\sqrt{2\pi}$, and the blue lines the values of $z$ for which the half maximum is obtained, $z_{HM}=\pm\sqrt{2\ln{2}}$." width="100%"><p class="caption">
+Figure 2.6: A zero-centered Gaussian distribution with standard deviation of 1, <span class="math inline">\(P(z)\)</span>. The red line marks the half maximum, <span class="math inline">\(P(z_{HM})=1/2\sqrt{2\pi}\)</span>, and the blue lines the values of <span class="math inline">\(z\)</span> for which the half maximum is obtained, <span class="math inline">\(z_{HM}=\pm\sqrt{2\ln{2}}\)</span>.
+</p>
+</div>
+<p>Sometimes instead of quantifying a Gaussian distribution (or any monomodal distribution, for that matter) using the variance or standard deviation, scientists will speak about the full width at half maximum (<strong>FWHM</strong>).
+This has the advantage that any extreme outliers of the distribution do not contribute to the quantification of the spread of data. As the name suggests, the FWHM is the width of the distribution (the spread above and below the mean) at the points where the distribution reaches half of its maximum.</p>
+<p>For a Gaussian distribution <span class="math inline">\(P(z)\)</span>, the half maximum is attained when <span class="math inline">\(z_{HM}\)</span> is so that:</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+\frac{1}{\sqrt{2\pi}}e^{-z_{HM}^2/2}&amp;= \frac{1}{2}\frac{1}{\sqrt{2\pi}}\\
+\Rightarrow z_{HM}&amp;=\pm\sqrt{2\ln{2}}
+\end{aligned}
+\end{equation}\]</span></p>
+<p>The FWHM of <span class="math inline">\(P(z)\)</span> is therefore <span class="math inline">\(FWHM=2\sqrt{2\ln{2}}\simeq2.355\)</span>. Using the relation between <span class="math inline">\(z\)</span> and <span class="math inline">\(\sigma\)</span>, we get the relation between the FWHM and the standard deviation:</p>
+<p><span class="math display">\[\begin{equation}
+FWHM=2\sqrt{2\ln{2}}\times\sigma
+\end{equation}\]</span></p>
+<p>As can be seen on Table <a href="a-little-reminder-on-statistics.html#tab:tablevalues">2.1</a>, using the FWHM ensures that roughly 76% of the data are comprised between <span class="math inline">\(\mu-\sigma\)</span> and <span class="math inline">\(\mu+\sigma\)</span>, and this goes up to <span class="math inline">\(\sim95\)</span>% for <span class="math inline">\(\mu-2\sigma\)</span> and <span class="math inline">\(\mu+2\sigma\)</span>.</p>
+<div class="inline-table"><table class="table table-sm">
+<caption>
+<span id="tab:tablevalues">Table 2.1: </span>Integral values for various values of <span class="math inline">\(a\)</span> in <span class="math inline">\(\int_{-a}^aP(z)dz\)</span>.
+</caption>
+<thead><tr>
+<th style="text-align:left;">
+Integration range <span class="math inline">\(a\)</span>
+</th>
+<th style="text-align:left;">
+<span class="math inline">\(\int_{-a}^aP(z)dz\)</span>
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\sigma\)</span>
+</td>
+<td style="text-align:left;">
+0.68293
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(\sqrt{2\ln{2}}\sigma\)</span>
+</td>
+<td style="text-align:left;">
+0.76100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(2\sigma\)</span>
+</td>
+<td style="text-align:left;">
+0.95455
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(3\sigma\)</span>
+</td>
+<td style="text-align:left;">
+0.99730
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<span class="math inline">\(4\sigma\)</span>
+</td>
+<td style="text-align:left;">
+0.99994
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div id="uncertainty-and-errors" class="section level2" number="2.4">
+<h2>
+<span class="header-section-number">2.4</span> Uncertainty and errors<a class="anchor" aria-label="anchor" href="#uncertainty-and-errors"><i class="fas fa-link"></i></a>
+</h2>
+<div id="central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty" class="section level3" number="2.4.1">
+<h3>
+<span class="header-section-number">2.4.1</span> Central limit theorem: on the Gaussian nature of statistical uncertainty<a class="anchor" aria-label="anchor" href="#central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty"><i class="fas fa-link"></i></a>
+</h3>
+<p>The <strong>central limit theorem</strong> states that if one takes <span class="math inline">\(N\)</span> random independent samples of a distribution of data that describes some variable <span class="math inline">\(x\)</span>, then as <span class="math inline">\(N\)</span> tends to infinity, the distribution of the sum of the samples tends to a Gaussian distribution.</p>
+<p>In other terms: the mean value of a large number <span class="math inline">\(N\)</span> of independent random variables (that can be distributed following any distribution with finite variance), obeying the same distribution with variance <span class="math inline">\(\sigma_0^2\)</span>, approaches a normal distribution with variance <span class="math inline">\(\sigma^2 = \sigma _0^2/N\)</span>.</p>
+<blockquote>
+<p><strong>This result is fundamental</strong> as it implies that <strong>independent measurements of any observable will show values that will be spread following a Gaussian distribution</strong>, and thus statistical uncertainties that are Gaussian in nature.<br></p>
+<p>Moreover, we see here the typical property of statistical errors, which is that <strong>the relative error is proportional to</strong> <span class="math inline">\(1/\sqrt{N}\)</span>. Increasing the number of observations thus decreases the error, <em>i.e.</em> increases the precision.</p>
+</blockquote>
+</div>
+<div id="combination-of-errors" class="section level3" number="2.4.2">
+<h3>
+<span class="header-section-number">2.4.2</span> Combination of errors<a class="anchor" aria-label="anchor" href="#combination-of-errors"><i class="fas fa-link"></i></a>
+</h3>
+<p>Let us consider a function of <span class="math inline">\(n\)</span> variables, <span class="math inline">\(f(u_1, u_2, ..., u_n)\)</span>. We can Taylor expand this function about the various mean values <span class="math inline">\(u_i=\overline{u_i}\)</span>, so that, at the first order:</p>
+<p><span class="math display">\[\begin{equation}
+f(u_1, ..., u_n) = f(\overline{u_1}, ..., \overline{u_n}) + \sum_{i=1}^n (u_i-\overline{u_i})\frac{\partial f}{\partial u_i}
+\end{equation}\]</span></p>
+<p>Considering that the variance of a quantity <span class="math inline">\(f\)</span> is given by <span class="math inline">\(\sigma^2(f) = (f - \overline{f} )^2\)</span>, it follows that the variance of our multivariable function is given by:</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+\sigma^2(f) &amp;= \left(\sum_{i=1}^n (u_i-\overline{u_i})\frac{\partial f}{\partial u_i}\right)^2\\
+         &amp;= \sum_{i=1}^n \left(\frac{\partial f}{\partial u_i}\right)^2\sigma_{u_i}^2 + 2\sum_{i\ne j}\frac{\partial f}{\partial u_i}\frac{\partial f}{\partial u_j}\sigma_{u_iu_j}\\
+\end{aligned}
+\end{equation}\]</span>
+where we have replaced <span class="math inline">\((u_i-\overline{u_i})^2\)</span> by the variance <span class="math inline">\(\sigma_{u_i}^2\)</span> and <span class="math inline">\((u_i-\overline{u_i})(u_j-\overline{u_j})\)</span> by the covariance <span class="math inline">\(\sigma_{u_iu_j}\)</span>.<br></p>
+<p>If the variables <span class="math inline">\(u_i\)</span> are independent then the covariance <span class="math inline">\(\sigma_{u_iu_j}\)</span> is null, and it follows the general expression of the standard error that can be applied to <strong>any function of independent variables</strong>:</p>
+<blockquote>
+<p><span class="math display" id="eq:uncertainty">\[\begin{equation}
+\sigma(f) = \sqrt{\sum_{i=1}^n \left(\frac{\partial f}{\partial u_i}\right)^2\sigma_{u_i}^2}
+\tag{2.7}
+\end{equation}\]</span></p>
+</blockquote>
+<div id="functions-of-one-variable" class="section level4" number="2.4.2.1">
+<h4>
+<span class="header-section-number">2.4.2.1</span> Functions of one variable<a class="anchor" aria-label="anchor" href="#functions-of-one-variable"><i class="fas fa-link"></i></a>
+</h4>
+<p>Let us consider a function <span class="math inline">\(f\)</span> having a form that depends only on one observable <span class="math inline">\(x\)</span>, for example:</p>
+<p><span class="math display">\[\begin{equation}
+f = Ax + B
+\end{equation}\]</span></p>
+<p>Then, following Eq. <a href="a-little-reminder-on-statistics.html#eq:uncertainty">(2.7)</a>, the standard error on that function is given by:</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+\sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2}\\
+         &amp;= A\sigma_x
+\end{aligned}
+\end{equation}\]</span></p>
+<p>So, <strong>independently of any offset of the measured observable</strong>, the resulting error must be corrected by the same factor as the intensity.</p>
+<blockquote>
+<p><strong>In practice</strong>, let’s say we measure a Raman spectrum. As we saw above, the error on each intensity count is given by the square root of this intensity count.</p>
+<ul>
+<li>It is possible to shift vertically this spectrum without having to recompute the error bars.</li>
+<li>But if you want to normalize (say, to 1) this spectrum, you have to multiply all the errors by the renormalization constant.</li>
+</ul>
+</blockquote>
+</div>
+<div id="functions-of-two-variables" class="section level4" number="2.4.2.2">
+<h4>
+<span class="header-section-number">2.4.2.2</span> Functions of two variables<a class="anchor" aria-label="anchor" href="#functions-of-two-variables"><i class="fas fa-link"></i></a>
+</h4>
+<p>Now consider the function <span class="math inline">\(f = Ax + By\)</span>, where we have measured the mean and standard deviation of both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and want to compute the standard deviation on their sum/subtraction. We can use the general formula of Eq. <a href="a-little-reminder-on-statistics.html#eq:uncertainty">(2.7)</a> to determine how to do this, hence:</p>
+<p><span class="math display">\[\begin{equation}
+\begin{aligned}
+\sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2 + \left(\frac{\partial f}{\partial y}\right)^2\sigma_y^2}\\
+         &amp;= \sqrt{A^2\sigma_x^2 + B^2\sigma_y^2}
+\end{aligned}
+\end{equation}\]</span></p>
+<blockquote>
+<p><strong>In practice</strong>, let’s say we measure an UV spectrum of a solution (a molecule in a solvent), and a reference spectrum of this solvent. As we saw above, the error on each intensity count is given by the square root of this intensity count. We want to subtract the signal of the solvent to get only the signal of the molecule.<br></p>
+<p>We thus have to perform the above operation on the errors, <span class="math inline">\(\sigma_{result}=\sqrt{\sigma^2_{solution}+\sigma^2_{reference}}\)</span>. It means that in order to have a statistically sound resulting spectrum, the reference needs to be measured with a very good statistics in order to not dominate the resulting error.</p>
+</blockquote>
+<p>It is a good thing to think about error propagation and where it comes from… but you don’t have to bother computing it by hand, as <a href="working-with-units-and-experimental-errors.html#working-with-experimental-errors">packages are here to do it for you</a>, as we will see later in the class.</p>
+</div>
+</div>
+</div>
+<div id="further-reading-1" class="section level2" number="2.5">
+<h2>
+<span class="header-section-number">2.5</span> Further reading<a class="anchor" aria-label="anchor" href="#further-reading-1"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>A. Bevan, <em><a href="https://www.cambridge.org/core/books/statistical-data-analysis-for-the-physical-sciences/2E3D132870E72277EE5FB96FE616B9F1">Statistical Data Analysis for the Physical Sciences</a></em>, Cambridge University Press (2013)</li>
+<li>G. Bohm, <em><a href="http://www-library.desy.de/preparch/books/vstatmp_engl.pdf">Introduction to Statistics and Data Analysis for Physicists</a></em>, Hamburg: Verl. Dt. Elektronen-Synchrotron (2010).</li>
+<li>J. Watkins, <em><a href="https://www.math.arizona.edu/~jwatkins/statbook.pdf">An Introduction to the Science of Statistics</a></em>
+</li>
+</ul>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="about-the-class.html"><span class="header-section-number">1</span> About the class</a></div>
+<div class="next"><a href="getting-ready.html"><span class="header-section-number">3</span> Getting ready</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#a-little-reminder-on-statistics"><span class="header-section-number">2</span> A little reminder on Statistics</a></li>
+<li>
+<a class="nav-link" href="#why-are-statistical-tools-necessary-in-physical-science"><span class="header-section-number">2.1</span> Why are statistical tools necessary in physical science?</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#a-practical-example"><span class="header-section-number">2.1.1</span> A practical example</a></li>
+<li><a class="nav-link" href="#probabilistic-description-of-physical-systems"><span class="header-section-number">2.1.2</span> Probabilistic description of physical systems</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#quantifying-the-properties-of-data"><span class="header-section-number">2.2</span> Quantifying the properties of data</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#data-representation-presenting-a-measurement"><span class="header-section-number">2.2.1</span> Data representation – presenting a measurement</a></li>
+<li><a class="nav-link" href="#characterizing-an-ensemble-of-measurements"><span class="header-section-number">2.2.2</span> Characterizing an ensemble of measurements</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#useful-distributions"><span class="header-section-number">2.3</span> Useful distributions</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#probability-density-functions"><span class="header-section-number">2.3.1</span> Probability Density Functions</a></li>
+<li><a class="nav-link" href="#pdfs-mean-and-variance"><span class="header-section-number">2.3.2</span> PDFs, mean and variance</a></li>
+<li><a class="nav-link" href="#the-poisson-distribution"><span class="header-section-number">2.3.3</span> The Poisson distribution</a></li>
+<li><a class="nav-link" href="#the-gaussian-distribution"><span class="header-section-number">2.3.4</span> The Gaussian distribution</a></li>
+</ul>
+</li>
+<li>
+<a class="nav-link" href="#uncertainty-and-errors"><span class="header-section-number">2.4</span> Uncertainty and errors</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty"><span class="header-section-number">2.4.1</span> Central limit theorem: on the Gaussian nature of statistical uncertainty</a></li>
+<li><a class="nav-link" href="#combination-of-errors"><span class="header-section-number">2.4.2</span> Combination of errors</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#further-reading-1"><span class="header-section-number">2.5</span> Further reading</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/colinbousige/Rclass/blob/master/02-stats.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/colinbousige/Rclass/edit/master/02-stats.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Reproducible data treatment with R</strong>: An introduction" was written by Colin Bousige. It was last built on 07/04/2022.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+---
+title : "R Exercises - TGA data"
+date  : "`r Sys.Date()`"
+output: 
+    html_document:
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: true
+        code_download  : FALSE
+---
+
+- Load the `tidyverse` package
+- Download the TGA data file <a href="Data/ATG.txt" download target="_blank">ATG.txt</a>
+- Load it into a `tibble`.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Plot the mass (column `Value`) as a function of the temperature `Tr` (Temperature Read) with lines, using `ggplot2`
+    + Remove data from the temperature decrease
+    + Define nice axis labels with the units
+    + Convert degrees Celsius to Kelvins
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+- Write a function returning the derivative $\partial y/\partial x$ given two vectors x and y
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+- Add the temperature derivative of the mass reading in a red dashed line in a panel below the previous graph
+    + Zoom on the data to see the variations
+    + Remove the x label of the top panel and have the same x axis for both panels
+    + Try to reproduce the following graph:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```

@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>4 Variables, booleans and strings | Reproducible data treatment with R</title>
+<meta name="author" content="Colin Bousige">
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
+<meta property="og:title" content="4 Variables, booleans and strings | Reproducible data treatment with R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://lmi.cnrs.fr/r/variables-booleans-and-strings.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="4 Variables, booleans and strings | Reproducible data treatment with R">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.10.0/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-152051691-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-152051691-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content="blockquote {  background: #E9F9FF;  border-left: 5px solid #026086;  margin: 1.5em 10px;  padding: 0.5em 10px; } In R, the variable attribution is done through the arrow operator &lt;- instead of the...">
+<meta property="og:description" content="blockquote {  background: #E9F9FF;  border-left: 5px solid #026086;  margin: 1.5em 10px;  padding: 0.5em 10px; } In R, the variable attribution is done through the arrow operator &lt;- instead of the...">
+<meta name="twitter:description" content="blockquote {  background: #E9F9FF;  border-left: 5px solid #026086;  margin: 1.5em 10px;  padding: 0.5em 10px; } In R, the variable attribution is done through the arrow operator &lt;- instead of the...">
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="An introduction">Reproducible data treatment with R</a>:
+        <small class="text-muted">An introduction</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="about-the-class.html"><span class="header-section-number">1</span> About the class</a></li>
+<li><a class="" href="a-little-reminder-on-statistics.html"><span class="header-section-number">2</span> A little reminder on Statistics</a></li>
+<li><a class="" href="getting-ready.html"><span class="header-section-number">3</span> Getting ready</a></li>
+<li><a class="active" href="variables-booleans-and-strings.html"><span class="header-section-number">4</span> Variables, booleans and strings</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">5</span> Vectors</a></li>
+<li><a class="" href="data-frames.html"><span class="header-section-number">6</span> Data frames</a></li>
+<li><a class="" href="readingwriting-all-kinds-of-files.html"><span class="header-section-number">7</span> Reading/writing all kinds of files</a></li>
+<li><a class="" href="lists.html"><span class="header-section-number">8</span> Lists</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">9</span> Functions</a></li>
+<li><a class="" href="conditional-actions-and-loops.html"><span class="header-section-number">10</span> Conditional actions and loops</a></li>
+<li><a class="" href="plotting.html"><span class="header-section-number">11</span> Plotting</a></li>
+<li><a class="" href="colorplots.html"><span class="header-section-number">12</span> 3D color plots</a></li>
+<li><a class="" href="fitting.html"><span class="header-section-number">13</span> Fitting</a></li>
+<li><a class="" href="writing-documents-with-rmarkdown.html"><span class="header-section-number">14</span> Writing documents with Rmarkdown</a></li>
+<li><a class="" href="graphical-interfaces-with-shiny.html"><span class="header-section-number">15</span> Graphical interfaces with Shiny</a></li>
+<li><a class="" href="working-with-units-and-experimental-errors.html"><span class="header-section-number">16</span> Working with units and experimental errors</a></li>
+<li><a class="" href="list-of-exercises.html"><span class="header-section-number">17</span> List of exercises</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/colinbousige/Rclass">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="variables-booleans-and-strings" class="section level1" number="4">
+<h1>
+<span class="header-section-number">4</span> Variables, booleans and strings<a class="anchor" aria-label="anchor" href="#variables-booleans-and-strings"><i class="fas fa-link"></i></a>
+</h1>
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+}
+</style>
+<p>In R, the variable attribution is done through the arrow operator <code class="sourceCode r"><span class="ot">&lt;-</span></code> instead of the <code class="sourceCode r"><span class="ot">=</span></code> one – for historical reasons. The equal sign, <code class="sourceCode r"><span class="ot">=</span></code>, would still work though, but you should just take up the habit of using <code class="sourceCode r"><span class="ot">&lt;-</span></code>.</p>
+<p>In reality, scalar numbers don’t exist in R, they are simply 1 element vector: this is why <code>[1]</code> is printed in the following outputs.</p>
+<p>To understand what you will encounter further down this class, inputs (what you type in the R script and hit Ctrl+⏎ (⌘+⏎)) are the shaded areas with syntax coloring, while outputs (what R returns) are the shaded are underneath starting with <code>## [1]</code>. In case the output spans several lines, each line would start with <code>## [x]</code> where <code>x</code> is the index of the first element printed on the line.</p>
+<blockquote>
+<p>Note that different instructions are usually given on separated lines (<em>i.e.</em> one instruction per line), but several instructions can be written on a single line if separated with a <code>;</code> sign.</p>
+</blockquote>
+<blockquote>
+<p>In R code, what is written after the “#” sign is a comment and is thus not interpreted.</p>
+</blockquote>
+<div id="scalars-and-booleans" class="section level2" number="4.1">
+<h2>
+<span class="header-section-number">4.1</span> Scalars and booleans<a class="anchor" aria-label="anchor" href="#scalars-and-booleans"><i class="fas fa-link"></i></a>
+</h2>
+<p>Defining a scalar value is done with:</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="co"># attribute the value '1' to the variable 'x'</span>
+<span class="va">x</span>      <span class="co"># print the value of 'x'</span></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<p>You can use the R console as an advanced calculator:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">1</span> <span class="op">+</span> <span class="fl">3</span></code></pre></div>
+<pre><code>## [1] 4</code></pre>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span>
+<span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">x</span> <span class="op">-</span> <span class="va">y</span></code></pre></div>
+<pre><code>## [1] 0.5</code></pre>
+<blockquote>
+<p><strong>Attention:</strong> typing <code class="sourceCode r">x <span class="sc">+</span> <span class="dv">1</span></code> will <strong>only print</strong> the result of <code class="sourceCode r">x <span class="sc">+</span> <span class="dv">1</span></code>, but not add 1 to <code>x</code> and save this as the new value of <code>x</code>. <strong>To actually modify</strong> <code>x</code>, type <code class="sourceCode r">x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">1</span></code>.</p>
+</blockquote>
+<div id="special-values" class="section level3" number="4.1.1">
+<h3>
+<span class="header-section-number">4.1.1</span> Special values<a class="anchor" aria-label="anchor" href="#special-values"><i class="fas fa-link"></i></a>
+</h3>
+<p>R handles infinity, NaN, and has <span class="math inline">\(\pi\)</span> defined. Missing numbers are handled through the <code class="sourceCode r"><span class="cn">NA</span></code> keyword.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">pi</span></code></pre></div>
+<pre><code>## [1] 3.141593</code></pre>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">10</span><span class="op">/</span><span class="fl">0</span></code></pre></div>
+<pre><code>## [1] Inf</code></pre>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">0</span><span class="op">/</span><span class="fl">0</span></code></pre></div>
+<pre><code>## [1] NaN</code></pre>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="cn">NA</span></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+</div>
+<div id="booleans-and-common-tests-on-values" class="section level3" number="4.1.2">
+<h3>
+<span class="header-section-number">4.1.2</span> Booleans and common tests on values<a class="anchor" aria-label="anchor" href="#booleans-and-common-tests-on-values"><i class="fas fa-link"></i></a>
+</h3>
+<p>Booleans are handled with the <code class="sourceCode r"><span class="cn">TRUE</span></code> and <code class="sourceCode r"><span class="cn">FALSE</span></code> keywords, and are usually obtained as the result of a test on values. Let’s us create two variables <code>x</code> and <code>y</code>:</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+<span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">2</span></code></pre></div>
+<p>and now let’s test some assertions on these two variables:</p>
+<ul>
+<li>Is x equal to y?</li>
+</ul>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">==</span> <span class="va">y</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<ul>
+<li>Is x not equal to y?</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">!=</span> <span class="va">y</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<ul>
+<li>Is x smaller than y?</li>
+</ul>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;</span> <span class="va">y</span> </code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<ul>
+<li>Is x smaller or equal than y?</li>
+</ul>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;=</span> <span class="va">y</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<ul>
+<li>Operator “and”</li>
+</ul>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">==</span> <span class="va">y</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;</span> <span class="va">y</span> </code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<ul>
+<li>Operator “or”</li>
+</ul>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">==</span> <span class="va">y</span> <span class="op">|</span> <span class="va">x</span> <span class="op">&lt;</span> <span class="va">y</span> </code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<ul>
+<li>Is x a NaN?</li>
+</ul>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.nan</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<ul>
+<li>Is x a NA?</li>
+</ul>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<ul>
+<li>Operator “not” (inverse)</li>
+</ul>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>A number can by converted to a boolean using <code class="sourceCode r"><span class="fu">as.logical</span>()</code>: any number non 0 is equivalent to TRUE, and 0 is FALSE.</p>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<details><summary><strong>Complex values</strong>
+</summary><p>R also natively handles complex values:</p>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">1</span><span class="op">+</span><span class="va">i</span>   <span class="co"># not a valid complex value</span></code></pre></div>
+<pre><code>## Error in eval(expr, envir, enclos): object 'i' not found</code></pre>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fl">1</span><span class="op">+</span><span class="fl">1i</span>  <span class="co"># valid complex value</span></code></pre></div>
+<pre><code>## [1] 1+1i</code></pre>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">1i</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] -1+0i</code></pre>
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+<pre><code>## Warning in sqrt(-1): NaNs produced</code></pre>
+<pre><code>## [1] NaN</code></pre>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">0i</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 0+1i</code></pre>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/complex.html">Im</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">1i</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 1.224647e-16</code></pre>
+</details>
+</div>
+</div>
+<div id="strings" class="section level2" number="4.2">
+<h2>
+<span class="header-section-number">4.2</span> Strings<a class="anchor" aria-label="anchor" href="#strings"><i class="fas fa-link"></i></a>
+</h2>
+<p>A string is defined between quotation marks such as: <code class="sourceCode r"><span class="st">"string"</span></code>. Thus <code class="sourceCode r"><span class="st">"1"</span></code> is not the number <em>1</em>, but rather the character “1”. Here are some operations on strings :</p>
+<ul>
+<li>Definition of a string:</li>
+</ul>
+<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">phrase</span> <span class="op">&lt;-</span> <span class="st">"Hello World "</span> </code></pre></div>
+<ul>
+<li>Concatenation of strings using <code class="sourceCode r"><span class="fu">paste</span>()</code>:</li>
+</ul>
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"phrase"</span>, <span class="va">phrase</span>, sep<span class="op">=</span><span class="st">" = "</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "phrase = Hello World "</code></pre>
+<ul>
+<li>Acessing a sub-string:</li>
+</ul>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "Hell"</code></pre>
+<ul>
+<li>Change case of string with <code class="sourceCode r"><span class="fu">tolower</span>()</code> and <code class="sourceCode r"><span class="fu">toupper</span>()</code>:</li>
+</ul>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">toupper</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "hello world "</code></pre>
+<pre><code>## [1] "HELLO WORLD "</code></pre>
+<ul>
+<li>Change the first occurrence of “o” in “a” with <code class="sourceCode r"><span class="fu">sub</span>()</code>:</li>
+</ul>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"o"</span>, <span class="st">"a"</span>, <span class="va">phrase</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "Hella World "</code></pre>
+<ul>
+<li>Change all occurrences of “o” in “a” with <code class="sourceCode r"><span class="fu">gsub</span>()</code>:</li>
+</ul>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"o"</span>, <span class="st">"a"</span>, <span class="va">phrase</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "Hella Warld "</code></pre>
+<ul>
+<li>Trim white spaces with <code class="sourceCode r"><span class="fu">trimws</span>()</code>:</li>
+</ul>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/trimws.html">trimws</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "Hello World"</code></pre>
+<ul>
+<li>Get a vector from string separation based on a character with <code class="sourceCode r"><span class="fu">strsplit</span>()</code>:</li>
+</ul>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="st">" "</span><span class="op">)</span>         <span class="co"># returns a list</span></code></pre></div>
+<pre><code>## [[1]]
+## [1] "Hello" "World"</code></pre>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span> <span class="co"># returns a vector</span></code></pre></div>
+<pre><code>## [1] "Hello" "World"</code></pre>
+<blockquote>
+<p><strong>Attention!!</strong></p>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">phrase2</span> <span class="op">&lt;-</span> <span class="st">"1234"</span>
+<span class="va">phrase2</span> <span class="op">-</span> <span class="fl">4321</span>             <span class="co"># won't work: string - double</span></code></pre></div>
+<pre><code>## Error in phrase2 - 4321: non-numeric argument to binary operator</code></pre>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">phrase2</span><span class="op">)</span> <span class="op">-</span> <span class="fl">4321</span> <span class="co"># conversion of string to double</span></code></pre></div>
+<pre><code>## [1] -3087</code></pre>
+</blockquote>
+<p>For more complex operations, see the <code>stringr</code> package and its <a href="https://github.com/rstudio/cheatsheets/blob/main/strings.pdf">cheatsheet</a>.</p>
+</div>
+<div id="exo-variables" class="section level2" number="4.3">
+<h2>
+<span class="header-section-number">4.3</span> Exercises<a class="anchor" aria-label="anchor" href="#exo-variables"><i class="fas fa-link"></i></a>
+</h2>
+<p>Interactive exercises can be found in the <a href="https://lmi.cnrs.fr/r/tutor/"><code>tutor</code></a> package. For this, simply run:</p>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tutor</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/tutor/man/tuto.html">tuto</a></span><span class="op">(</span><span class="st">"variables"</span><span class="op">)</span></code></pre></div>
+<p><br><br><br><br><br></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="getting-ready.html"><span class="header-section-number">3</span> Getting ready</a></div>
+<div class="next"><a href="vectors.html"><span class="header-section-number">5</span> Vectors</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#variables-booleans-and-strings"><span class="header-section-number">4</span> Variables, booleans and strings</a></li>
+<li>
+<a class="nav-link" href="#scalars-and-booleans"><span class="header-section-number">4.1</span> Scalars and booleans</a><ul class="nav navbar-nav">
+<li><a class="nav-link" href="#special-values"><span class="header-section-number">4.1.1</span> Special values</a></li>
+<li><a class="nav-link" href="#booleans-and-common-tests-on-values"><span class="header-section-number">4.1.2</span> Booleans and common tests on values</a></li>
+</ul>
+</li>
+<li><a class="nav-link" href="#strings"><span class="header-section-number">4.2</span> Strings</a></li>
+<li><a class="nav-link" href="#exo-variables"><span class="header-section-number">4.3</span> Exercises</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/colinbousige/Rclass/blob/master/05-variables.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/colinbousige/Rclass/edit/master/05-variables.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Reproducible data treatment with R</strong>: An introduction" was written by Colin Bousige. It was last built on 07/04/2022.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

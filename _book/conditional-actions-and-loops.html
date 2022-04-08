@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>10 Conditional actions and loops | Reproducible data treatment with R</title>
+<meta name="author" content="Colin Bousige">
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
+<meta property="og:title" content="10 Conditional actions and loops | Reproducible data treatment with R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://lmi.cnrs.fr/r/conditional-actions-and-loops.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="10 Conditional actions and loops | Reproducible data treatment with R">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.10.0/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-152051691-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-152051691-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content='10.1 Conditional actions Conditional actions in R can be determined through the usual if then else statements: x &lt;- 1; y &lt;- 2 if(x&gt;y){   print("x is larger than y") }else if(x&lt;y){   print("x is...'>
+<meta property="og:description" content='10.1 Conditional actions Conditional actions in R can be determined through the usual if then else statements: x &lt;- 1; y &lt;- 2 if(x&gt;y){   print("x is larger than y") }else if(x&lt;y){   print("x is...'>
+<meta name="twitter:description" content='10.1 Conditional actions Conditional actions in R can be determined through the usual if then else statements: x &lt;- 1; y &lt;- 2 if(x&gt;y){   print("x is larger than y") }else if(x&lt;y){   print("x is...'>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="An introduction">Reproducible data treatment with R</a>:
+        <small class="text-muted">An introduction</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="about-the-class.html"><span class="header-section-number">1</span> About the class</a></li>
+<li><a class="" href="a-little-reminder-on-statistics.html"><span class="header-section-number">2</span> A little reminder on Statistics</a></li>
+<li><a class="" href="getting-ready.html"><span class="header-section-number">3</span> Getting ready</a></li>
+<li><a class="" href="variables-booleans-and-strings.html"><span class="header-section-number">4</span> Variables, booleans and strings</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">5</span> Vectors</a></li>
+<li><a class="" href="data-frames.html"><span class="header-section-number">6</span> Data frames</a></li>
+<li><a class="" href="readingwriting-all-kinds-of-files.html"><span class="header-section-number">7</span> Reading/writing all kinds of files</a></li>
+<li><a class="" href="lists.html"><span class="header-section-number">8</span> Lists</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">9</span> Functions</a></li>
+<li><a class="active" href="conditional-actions-and-loops.html"><span class="header-section-number">10</span> Conditional actions and loops</a></li>
+<li><a class="" href="plotting.html"><span class="header-section-number">11</span> Plotting</a></li>
+<li><a class="" href="colorplots.html"><span class="header-section-number">12</span> 3D color plots</a></li>
+<li><a class="" href="fitting.html"><span class="header-section-number">13</span> Fitting</a></li>
+<li><a class="" href="writing-documents-with-rmarkdown.html"><span class="header-section-number">14</span> Writing documents with Rmarkdown</a></li>
+<li><a class="" href="graphical-interfaces-with-shiny.html"><span class="header-section-number">15</span> Graphical interfaces with Shiny</a></li>
+<li><a class="" href="working-with-units-and-experimental-errors.html"><span class="header-section-number">16</span> Working with units and experimental errors</a></li>
+<li><a class="" href="list-of-exercises.html"><span class="header-section-number">17</span> List of exercises</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/colinbousige/Rclass">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="conditional-actions-and-loops" class="section level1" number="10">
+<h1>
+<span class="header-section-number">10</span> Conditional actions and loops<a class="anchor" aria-label="anchor" href="#conditional-actions-and-loops"><i class="fas fa-link"></i></a>
+</h1>
+<div id="conditional-actions" class="section level2" number="10.1">
+<h2>
+<span class="header-section-number">10.1</span> Conditional actions<a class="anchor" aria-label="anchor" href="#conditional-actions"><i class="fas fa-link"></i></a>
+</h2>
+<p>Conditional actions in R can be determined through the usual <code class="sourceCode r"><span class="cf">if</span> then <span class="cf">else</span></code> statements:</p>
+<div class="sourceCode" id="cb575"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span>; <span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">2</span>
+<span class="kw">if</span><span class="op">(</span><span class="va">x</span><span class="op">&gt;</span><span class="va">y</span><span class="op">)</span><span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"x is larger than y"</span><span class="op">)</span>
+<span class="op">}</span><span class="kw">else</span> <span class="kw">if</span><span class="op">(</span><span class="va">x</span><span class="op">&lt;</span><span class="va">y</span><span class="op">)</span><span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"x is smaller than y"</span><span class="op">)</span>
+<span class="op">}</span><span class="kw">else</span><span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="st">"x is equal to y"</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<pre><code>## [1] "x is smaller than y"</code></pre>
+<p>Sometimes, it’s usefull to be able to do this in one line using <code class="sourceCode r"><span class="fu">ifesle</span>(test, yes, no)</code>:</p>
+<div class="sourceCode" id="cb577"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">3</span><span class="op">:</span><span class="fl">7</span>
+<span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">x</span><span class="op">&gt;</span><span class="fl">5</span>, <span class="st">"larger than 5"</span>, <span class="st">"lower than 5"</span><span class="op">)</span> </code></pre></div>
+<pre><code>## [1] "lower than 5"  "lower than 5"  "lower than 5"  "larger than 5"
+## [5] "larger than 5"</code></pre>
+</div>
+<div id="loops" class="section level2" number="10.2">
+<h2>
+<span class="header-section-number">10.2</span> Loops…<a class="anchor" aria-label="anchor" href="#loops"><i class="fas fa-link"></i></a>
+</h2>
+<p>Loops in R are provided through the usual <code class="sourceCode r"><span class="cf">for</span></code> and <code class="sourceCode r"><span class="cf">while</span></code> keywords:</p>
+<div class="sourceCode" id="cb579"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># For loop</span>
+<span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span><span class="op">{</span>
+    <span class="co"># pass to next index directly</span>
+    <span class="kw">if</span><span class="op">(</span><span class="va">i</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>,<span class="fl">8</span>,<span class="fl">5</span><span class="op">)</span><span class="op">)</span> <span class="kw">next</span> 
+    <span class="co"># break loop</span>
+    <span class="kw">if</span><span class="op">(</span><span class="va">i</span><span class="op">==</span><span class="fl">10</span><span class="op">)</span> <span class="kw">break</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<pre><code>## [1] 1
+## [1] 2
+## [1] 4
+## [1] 6
+## [1] 7
+## [1] 9</code></pre>
+<div class="sourceCode" id="cb581"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">phrase</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"hello"</span>, <span class="st">"world"</span><span class="op">)</span>
+<span class="kw">for</span><span class="op">(</span><span class="va">word</span> <span class="kw">in</span> <span class="va">phrase</span><span class="op">)</span><span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">word</span><span class="op">)</span>
+<span class="op">}</span></code></pre></div>
+<pre><code>## [1] "hello"
+## [1] "world"</code></pre>
+<div class="sourceCode" id="cb583"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># While loop</span>
+<span class="va">i</span> <span class="op">&lt;-</span> <span class="fl">1</span>
+<span class="kw">while</span><span class="op">(</span><span class="va">i</span><span class="op">&lt;</span><span class="fl">8</span><span class="op">)</span><span class="op">{</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">i</span><span class="op">)</span>
+    <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span><span class="op">+</span><span class="fl">2</span>
+<span class="op">}</span></code></pre></div>
+<pre><code>## [1] 1
+## [1] 3
+## [1] 5
+## [1] 7</code></pre>
+</div>
+<div id="and-how-to-avoid-them" class="section level2" number="10.3">
+<h2>
+<span class="header-section-number">10.3</span> … and how to avoid them<a class="anchor" aria-label="anchor" href="#and-how-to-avoid-them"><i class="fas fa-link"></i></a>
+</h2>
+<p>However, since R is a vectorized language, it means that loops are to be avoided when possible because they are very inefficient:</p>
+<div class="sourceCode" id="cb585"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">test_time</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">FUN</span>,<span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+    <span class="va">start_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span>
+    <span class="fu">FUN</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
+    <span class="va">elapsed_time</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.time.html">Sys.time</a></span><span class="op">(</span><span class="op">)</span><span class="op">-</span><span class="va">start_time</span>
+    <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"Elapsed time :"</span>, <span class="va">elapsed_time</span>, <span class="st">"s - "</span>,
+                <span class="fu"><a href="https://rdrr.io/r/base/character.html">as.character</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/substitute.html">substitute</a></span><span class="op">(</span><span class="va">FUN</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+         <span class="op">)</span>
+<span class="op">}</span>
+<span class="va">forloop</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
+    <span class="kw">for</span><span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">{</span>
+        <span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fl">2</span><span class="op">*</span><span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span>
+    <span class="op">}</span>
+    <span class="va">x</span>
+<span class="op">}</span>
+<span class="va">noforloop</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">{</span>
+    <span class="fl">2</span><span class="op">*</span><span class="va">x</span>
+<span class="op">}</span>
+<span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e8</span><span class="op">)</span>
+<span class="fu">test_time</span><span class="op">(</span><span class="va">forloop</span>, <span class="va">x</span><span class="op">)</span>; <span class="fu">test_time</span><span class="op">(</span><span class="va">noforloop</span>, <span class="va">x</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "Elapsed time : 6.36099100112915 s -  forloop"</code></pre>
+<pre><code>## [1] "Elapsed time : 0.424988031387329 s -  noforloop"</code></pre>
+<p>Avoiding loops should therefore be sought for when possible. R helps us in this way through the base functions <code class="sourceCode r"><span class="fu">apply</span>()</code>, <code class="sourceCode r"><span class="fu">sapply</span>()</code> and <code class="sourceCode r"><span class="fu">lapply</span>()</code>. <a href="data-frames.html#operations-in-the-tidyverse">Operations in the <code class="sourceCode r">tidyverse</code></a> are also a very good way of avoiding loops.</p>
+<p>Take a look at the help on these functions, but the summary is that <code class="sourceCode r"><span class="fu">apply</span>(df, direction, <span class="cf">function</span>)</code> applies a function in the wanted direction (1 for rows, 2 for columns) of the given <code class="sourceCode r">data.frame</code> (or vector). Example:</p>
+<div class="sourceCode" id="cb588"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
+<span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, y<span class="op">=</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span>, z<span class="op">=</span><span class="va">x</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span>;<span class="va">dt</span></code></pre></div>
+<pre><code>## # A tibble: 5 × 3
+##       x     y     z
+##   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1     1     1     1
+## 2     2     4     8
+## 3     3     9    27
+## 4     4    16    64
+## 5     5    25   125</code></pre>
+<div class="sourceCode" id="cb590"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">dt</span>, <span class="fl">1</span>, <span class="va">mean</span><span class="op">)</span> <span class="co"># mean of the rows</span></code></pre></div>
+<pre><code>## [1]  1.000000  4.666667 13.000000 28.000000 51.666667</code></pre>
+<div class="sourceCode" id="cb592"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">dt</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span> <span class="co"># mean of the columns</span></code></pre></div>
+<pre><code>##  x  y  z 
+##  3 11 45</code></pre>
+<div class="sourceCode" id="cb594"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># row/column means</span>
+<span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowMeans</a></span><span class="op">(</span><span class="va">dt</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1]  1.000000  4.666667 13.000000 28.000000 51.666667</code></pre>
+<div class="sourceCode" id="cb596"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">colMeans</a></span><span class="op">(</span><span class="va">dt</span><span class="op">)</span></code></pre></div>
+<pre><code>##  x  y  z 
+##  3 11 45</code></pre>
+<p><code class="sourceCode r"><span class="fu">lapply</span>()</code> (and equivalently, <code class="sourceCode r"><span class="fu">sapply</span>()</code>) is basically the same thing but applied to lists and it returns a list (a vector):</p>
+<div class="sourceCode" id="cb598"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">my_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">dt</span><span class="op">/</span><span class="fl">3</span>, <span class="va">dt</span><span class="op">/</span><span class="fl">5</span><span class="op">)</span>;<span class="va">my_list</span></code></pre></div>
+<pre><code>## [[1]]
+##           x         y          z
+## 1 0.3333333 0.3333333  0.3333333
+## 2 0.6666667 1.3333333  2.6666667
+## 3 1.0000000 3.0000000  9.0000000
+## 4 1.3333333 5.3333333 21.3333333
+## 5 1.6666667 8.3333333 41.6666667
+## 
+## [[2]]
+##     x   y    z
+## 1 0.2 0.2  0.2
+## 2 0.4 0.8  1.6
+## 3 0.6 1.8  5.4
+## 4 0.8 3.2 12.8
+## 5 1.0 5.0 25.0</code></pre>
+<div class="sourceCode" id="cb600"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">my_list</span>, <span class="st">"["</span>, <span class="fl">1</span>, <span class="op">)</span>  <span class="co"># print first row</span></code></pre></div>
+<pre><code>## [[1]]
+##           x         y         z
+## 1 0.3333333 0.3333333 0.3333333
+## 
+## [[2]]
+##     x   y   z
+## 1 0.2 0.2 0.2</code></pre>
+<div class="sourceCode" id="cb602"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">my_list</span>, <span class="va">rowSums</span><span class="op">)</span>   <span class="co"># sum on rows</span></code></pre></div>
+<pre><code>##           [,1] [,2]
+## [1,]  1.000000  0.6
+## [2,]  4.666667  2.8
+## [3,] 13.000000  7.8
+## [4,] 28.000000 16.8
+## [5,] 51.666667 31.0</code></pre>
+<div class="sourceCode" id="cb604"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">my_list</span>, <span class="va">round</span>, <span class="fl">1</span><span class="op">)</span>  <span class="co"># round to first decimal</span></code></pre></div>
+<pre><code>## [[1]]
+##     x   y    z
+## 1 0.3 0.3  0.3
+## 2 0.7 1.3  2.7
+## 3 1.0 3.0  9.0
+## 4 1.3 5.3 21.3
+## 5 1.7 8.3 41.7
+## 
+## [[2]]
+##     x   y    z
+## 1 0.2 0.2  0.2
+## 2 0.4 0.8  1.6
+## 3 0.6 1.8  5.4
+## 4 0.8 3.2 12.8
+## 5 1.0 5.0 25.0</code></pre>
+<div class="sourceCode" id="cb606"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># For more complex operations, use it this way:</span>
+<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">dt</span><span class="op">)</span>, <span class="kw">function</span><span class="op">(</span><span class="va">i</span><span class="op">)</span><span class="op">{</span>
+    <span class="va">dt</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="va">i</span><span class="op">]</span> <span class="op">+</span> <span class="va">dt</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="op">(</span><span class="va">i</span><span class="op">+</span><span class="fl">2</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">dt</span><span class="op">)</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span> <span class="op">-</span> <span class="va">dt</span><span class="op">$</span><span class="va">z</span><span class="op">[</span><span class="op">(</span><span class="va">i</span><span class="op">+</span><span class="fl">4</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">dt</span><span class="op">)</span><span class="op">+</span><span class="fl">1</span><span class="op">]</span>
+<span class="op">}</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1]   16   19  -23  -56 -111</code></pre>
+</div>
+<div id="exo-loops" class="section level2" number="10.4">
+<h2>
+<span class="header-section-number">10.4</span> Exercises<a class="anchor" aria-label="anchor" href="#exo-loops"><i class="fas fa-link"></i></a>
+</h2>
+<details><summary><strong>Exercise 1</strong>
+</summary><p>Given <code class="sourceCode r">x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="fl">1e3</span>, <span class="at">min=</span><span class="sc">-</span><span class="dv">1</span>, <span class="at">max=</span><span class="dv">1</span>)</code>, create a <code class="sourceCode r">tibble</code> like this one:</p>
+<pre><code>## # A tibble: 1,000 × 2
+##          x y    
+##      &lt;dbl&gt; &lt;chr&gt;
+##  1  0.0681 x&gt;0  
+##  2 -0.346  x&lt;=0 
+##  3  0.387  x&gt;0  
+##  4 -0.971  x&lt;=0 
+##  5 -0.245  x&lt;=0 
+##  6 -0.491  x&lt;=0 
+##  7  0.345  x&gt;0  
+##  8  0.797  x&gt;0  
+##  9  0.258  x&gt;0  
+## 10  0.228  x&gt;0  
+## # … with 990 more rows</code></pre>
+</details><details><summary><strong>Exercise 2</strong>
+</summary><p>Given:</p>
+<div class="sourceCode" id="cb609"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">LL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e2</span><span class="op">)</span>,
+           B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">1e3</span><span class="op">)</span>,
+           C <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e2</span><span class="op">)</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e2</span><span class="op">)</span><span class="op">)</span>
+           <span class="op">)</span></code></pre></div>
+<p>Print the sum of each element of <code>LL</code> in a list, in a vector.</p>
+<details><summary>
+Solution
+</summary><div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">LL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e2</span><span class="op">)</span>,
+           B <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">1e3</span><span class="op">)</span>,
+           C <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e2</span><span class="op">)</span>, y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e2</span><span class="op">)</span><span class="op">)</span>
+           <span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></code></pre></div>
+<pre><code>## $A
+## [1] 51.42577
+## 
+## $B
+## [1] -11.4057
+## 
+## $C
+## [1] 96.59506</code></pre>
+<div class="sourceCode" id="cb612"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></code></pre></div>
+<pre><code>##         A         B         C 
+##  51.42577 -11.40570  96.59506</code></pre>
+<pre><code>##         A         B         C 
+##  51.42577 -11.40570  96.59506</code></pre>
+</details></details><details><summary><strong>Exercise 3</strong>
+</summary><ul>
+<li>Download <a href="Data/population.csv" download target="_blank">population.csv</a> and load it into a <code class="sourceCode r">data.frame</code>
+</li>
+<li>What is the total population over the years?</li>
+<li>What is the mean population for each city?</li>
+</ul>
+<details><summary>
+Solution
+</summary><div class="sourceCode" id="cb615"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Download population.csv and load it into a `data.frame`</span>
+<span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.csv</a></span><span class="op">(</span><span class="st">"Data/population.csv"</span><span class="op">)</span>
+<span class="co"># What is the total population over the years?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>year<span class="op">=</span><span class="va">df</span><span class="op">[</span>,<span class="st">"year"</span><span class="op">]</span>,
+           pop <span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>,     <span class="co"># a first way</span>
+           pop2<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span><span class="co"># another way</span>
+          <span class="op">)</span></code></pre></div>
+<pre><code>##   year     pop    pop2
+## 1 1962 7349547 7349547
+## 2 1968 7550999 7550999
+## 3 1975 7298183 7298183
+## 4 1982 6933230 6933230
+## 5 1990 6857291 6857291
+## 6 1999 6965325 6965325
+## 7 2007 7235114 7235114
+## 8 2012 7334805 7334805</code></pre>
+<div class="sourceCode" id="cb617"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># A tidy-compatible version </span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
+<span class="va">popul</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="va">df</span>, cols<span class="op">=</span><span class="op">-</span><span class="va">year</span>, names_to<span class="op">=</span><span class="st">"city"</span>, values_to<span class="op">=</span><span class="st">"pop"</span><span class="op">)</span>
+<span class="va">popul</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>totpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 8 × 2
+##    year  totpop
+##   &lt;int&gt;   &lt;int&gt;
+## 1  1962 7349547
+## 2  1968 7550999
+## 3  1975 7298183
+## 4  1982 6933230
+## 5  1990 6857291
+## 6  1999 6965325
+## 7  2007 7235114
+## 8  2012 7334805</code></pre>
+<div class="sourceCode" id="cb619"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># or equivalently</span>
+<span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">popul</span>, <span class="va">year</span><span class="op">)</span>, totpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 8 × 2
+##    year  totpop
+##   &lt;int&gt;   &lt;int&gt;
+## 1  1962 7349547
+## 2  1968 7550999
+## 3  1975 7298183
+## 4  1982 6933230
+## 5  1990 6857291
+## 6  1999 6965325
+## 7  2007 7235114
+## 8  2012 7334805</code></pre>
+<div class="sourceCode" id="cb621"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># What is the mean population for each city?</span>
+<span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span></code></pre></div>
+<pre><code>##        Angers      Bordeaux         Brest         Dijon      Grenoble 
+##      138783.4      234814.9      149125.1      146735.2      157526.4 
+##       LeHavre        LeMans         Lille          Lyon     Marseille 
+##      193989.6      144347.4      220018.4      470371.1      844253.4 
+##   Montpellier        Nantes          Nice         Paris         Reims 
+##      203114.4      260924.9      334311.6     2321031.9      172278.0 
+##        Rennes Saint.Etienne    Strasbourg        Toulon      Toulouse 
+##      193424.9      198134.6      255429.1      169682.6      382264.9</code></pre>
+<div class="sourceCode" id="cb623"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">popul</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">city</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>avepop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## # A tibble: 20 × 2
+##    city            avepop
+##    &lt;chr&gt;            &lt;dbl&gt;
+##  1 Angers         138783.
+##  2 Bordeaux       234815.
+##  3 Brest          149125.
+##  4 Dijon          146735.
+##  5 Grenoble       157526.
+##  6 LeHavre        193990.
+##  7 LeMans         144347.
+##  8 Lille          220018.
+##  9 Lyon           470371.
+## 10 Marseille      844253.
+## 11 Montpellier    203114.
+## 12 Nantes         260925.
+## 13 Nice           334312.
+## 14 Paris         2321032.
+## 15 Reims          172278 
+## 16 Rennes         193425.
+## 17 Saint.Etienne  198135.
+## 18 Strasbourg     255429.
+## 19 Toulon         169683.
+## 20 Toulouse       382265.</code></pre>
+</details></details><p><br><br><br><br><br></p>
+
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="functions.html"><span class="header-section-number">9</span> Functions</a></div>
+<div class="next"><a href="plotting.html"><span class="header-section-number">11</span> Plotting</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#conditional-actions-and-loops"><span class="header-section-number">10</span> Conditional actions and loops</a></li>
+<li><a class="nav-link" href="#conditional-actions"><span class="header-section-number">10.1</span> Conditional actions</a></li>
+<li><a class="nav-link" href="#loops"><span class="header-section-number">10.2</span> Loops…</a></li>
+<li><a class="nav-link" href="#and-how-to-avoid-them"><span class="header-section-number">10.3</span> … and how to avoid them</a></li>
+<li><a class="nav-link" href="#exo-loops"><span class="header-section-number">10.4</span> Exercises</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/colinbousige/Rclass/blob/master/11-conditions_loops.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/colinbousige/Rclass/edit/master/11-conditions_loops.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Reproducible data treatment with R</strong>: An introduction" was written by Colin Bousige. It was last built on 07/04/2022.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>

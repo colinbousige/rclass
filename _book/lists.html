@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>8 Lists | Reproducible data treatment with R</title>
+<meta name="author" content="Colin Bousige">
+<meta name="generator" content="bookdown 0.25 with bs4_book()">
+<meta property="og:title" content="8 Lists | Reproducible data treatment with R">
+<meta property="og:type" content="book">
+<meta property="og:url" content="https://lmi.cnrs.fr/r/lists.html">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="8 Lists | Reproducible data treatment with R">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.3.1/transition.js"></script><script src="libs/bs3compat-0.3.1/tabs.js"></script><script src="libs/bs3compat-0.3.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><script src="libs/plotly-binding-4.10.0/plotly.js"></script><script src="libs/typedarray-0.1/typedarray.min.js"></script><link href="libs/crosstalk-1.2.0/css/crosstalk.min.css" rel="stylesheet">
+<script src="libs/crosstalk-1.2.0/js/crosstalk.min.js"></script><link href="libs/plotly-htmlwidgets-css-2.5.1/plotly-htmlwidgets.css" rel="stylesheet">
+<script src="libs/plotly-main-2.5.1/plotly-latest.min.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-152051691-1"></script><script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-152051691-1');
+    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
+<link rel="stylesheet" href="style.css">
+<meta name="description" content='8.1 Definition Lists allow you to store all types of objects and types of values: booleans, doubles, characters, vectors, other lists, data.frame, etc # initialization L &lt;- list(name = "John",    ...'>
+<meta property="og:description" content='8.1 Definition Lists allow you to store all types of objects and types of values: booleans, doubles, characters, vectors, other lists, data.frame, etc # initialization L &lt;- list(name = "John",    ...'>
+<meta name="twitter:description" content='8.1 Definition Lists allow you to store all types of objects and types of values: booleans, doubles, characters, vectors, other lists, data.frame, etc # initialization L &lt;- list(name = "John",    ...'>
+</head>
+<body data-spy="scroll" data-target="#toc">
+
+<div class="container-fluid">
+<div class="row">
+  <header class="col-sm-12 col-lg-3 sidebar sidebar-book"><a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    <div class="d-flex align-items-start justify-content-between">
+      <h1>
+        <a href="index.html" title="An introduction">Reproducible data treatment with R</a>:
+        <small class="text-muted">An introduction</small>
+      </h1>
+      <button class="btn btn-outline-primary d-lg-none ml-2 mt-1" type="button" data-toggle="collapse" data-target="#main-nav" aria-expanded="true" aria-controls="main-nav"><i class="fas fa-bars"></i><span class="sr-only">Show table of contents</span></button>
+    </div>
+
+    <div id="main-nav" class="collapse-lg">
+      <form role="search">
+        <input id="search" class="form-control" type="search" placeholder="Search" aria-label="Search">
+</form>
+
+      <nav aria-label="Table of contents"><h2>Table of contents</h2>
+        <ul class="book-toc list-unstyled">
+<li><a class="" href="index.html">Welcome</a></li>
+<li><a class="" href="about-the-class.html"><span class="header-section-number">1</span> About the class</a></li>
+<li><a class="" href="a-little-reminder-on-statistics.html"><span class="header-section-number">2</span> A little reminder on Statistics</a></li>
+<li><a class="" href="getting-ready.html"><span class="header-section-number">3</span> Getting ready</a></li>
+<li><a class="" href="variables-booleans-and-strings.html"><span class="header-section-number">4</span> Variables, booleans and strings</a></li>
+<li><a class="" href="vectors.html"><span class="header-section-number">5</span> Vectors</a></li>
+<li><a class="" href="data-frames.html"><span class="header-section-number">6</span> Data frames</a></li>
+<li><a class="" href="readingwriting-all-kinds-of-files.html"><span class="header-section-number">7</span> Reading/writing all kinds of files</a></li>
+<li><a class="active" href="lists.html"><span class="header-section-number">8</span> Lists</a></li>
+<li><a class="" href="functions.html"><span class="header-section-number">9</span> Functions</a></li>
+<li><a class="" href="conditional-actions-and-loops.html"><span class="header-section-number">10</span> Conditional actions and loops</a></li>
+<li><a class="" href="plotting.html"><span class="header-section-number">11</span> Plotting</a></li>
+<li><a class="" href="colorplots.html"><span class="header-section-number">12</span> 3D color plots</a></li>
+<li><a class="" href="fitting.html"><span class="header-section-number">13</span> Fitting</a></li>
+<li><a class="" href="writing-documents-with-rmarkdown.html"><span class="header-section-number">14</span> Writing documents with Rmarkdown</a></li>
+<li><a class="" href="graphical-interfaces-with-shiny.html"><span class="header-section-number">15</span> Graphical interfaces with Shiny</a></li>
+<li><a class="" href="working-with-units-and-experimental-errors.html"><span class="header-section-number">16</span> Working with units and experimental errors</a></li>
+<li><a class="" href="list-of-exercises.html"><span class="header-section-number">17</span> List of exercises</a></li>
+</ul>
+
+        <div class="book-extra">
+          <p><a id="book-repo" href="https://github.com/colinbousige/Rclass">View book source <i class="fab fa-github"></i></a></p>
+        </div>
+      </nav>
+</div>
+  </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><div id="lists" class="section level1" number="8">
+<h1>
+<span class="header-section-number">8</span> Lists<a class="anchor" aria-label="anchor" href="#lists"><i class="fas fa-link"></i></a>
+</h1>
+<div id="definition-2" class="section level2" number="8.1">
+<h2>
+<span class="header-section-number">8.1</span> Definition<a class="anchor" aria-label="anchor" href="#definition-2"><i class="fas fa-link"></i></a>
+</h2>
+<p>Lists allow you to store all types of objects and types of values: booleans, doubles, characters, vectors, other lists, data.frame, etc</p>
+<div class="sourceCode" id="cb502"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># initialization</span>
+<span class="va">L</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"John"</span>,
+          age  <span class="op">=</span> <span class="fl">43</span>,
+          kids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>name<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Kevin"</span>, <span class="st">"Pamela"</span><span class="op">)</span>, <span class="co"># nested list</span>
+                      age <span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>,<span class="fl">5</span><span class="op">)</span>
+                     <span class="op">)</span>
+         <span class="op">)</span>
+<span class="va">L</span></code></pre></div>
+<pre><code>## $name
+## [1] "John"
+## 
+## $age
+## [1] 43
+## 
+## $kids
+## $kids$name
+## [1] "Kevin"  "Pamela"
+## 
+## $kids$age
+## [1] 4 5</code></pre>
+<div class="sourceCode" id="cb504"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># names of entries (can be changed)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/names.html">names</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] "name" "age"  "kids"</code></pre>
+<div class="sourceCode" id="cb506"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># statistics</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span></code></pre></div>
+<pre><code>##      Length Class  Mode     
+## name 1      -none- character
+## age  1      -none- numeric  
+## kids 2      -none- list</code></pre>
+<div class="sourceCode" id="cb508"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span></code></pre></div>
+<pre><code>## List of 3
+##  $ name: chr "John"
+##  $ age : num 43
+##  $ kids:List of 2
+##   ..$ name: chr [1:2] "Kevin" "Pamela"
+##   ..$ age : num [1:2] 4 5</code></pre>
+</div>
+<div id="accessing-values-and-other-operations" class="section level2" number="8.2">
+<h2>
+<span class="header-section-number">8.2</span> Accessing values and other operations<a class="anchor" aria-label="anchor" href="#accessing-values-and-other-operations"><i class="fas fa-link"></i></a>
+</h2>
+<div class="sourceCode" id="cb510"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">L</span><span class="op">$</span><span class="va">name</span> <span class="co"># is a vector</span></code></pre></div>
+<pre><code>## [1] "John"</code></pre>
+<div class="sourceCode" id="cb512"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">L</span><span class="op">[</span><span class="st">"age"</span><span class="op">]</span>;<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">L</span><span class="op">[</span><span class="st">"age"</span><span class="op">]</span><span class="op">)</span>     <span class="co"># is a list</span></code></pre></div>
+<pre><code>## $age
+## [1] 43</code></pre>
+<pre><code>## [1] "list"</code></pre>
+<div class="sourceCode" id="cb515"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">L</span><span class="op">[[</span><span class="st">"age"</span><span class="op">]</span><span class="op">]</span>;<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">L</span><span class="op">[[</span><span class="st">"age"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># is a vector</span></code></pre></div>
+<pre><code>## [1] 43</code></pre>
+<pre><code>## [1] "double"</code></pre>
+<div class="sourceCode" id="cb518"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">L</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>      <span class="co"># is a list (because 'kids' is a list)</span></code></pre></div>
+<pre><code>## $name
+## [1] "Kevin"  "Pamela"
+## 
+## $age
+## [1] 4 5</code></pre>
+<div class="sourceCode" id="cb520"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">L</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="st">'name'</span><span class="op">]</span>   <span class="co"># is a list</span></code></pre></div>
+<pre><code>## $name
+## [1] "Kevin"  "Pamela"</code></pre>
+<div class="sourceCode" id="cb522"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">L</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="st">'name'</span><span class="op">]</span><span class="op">]</span> <span class="co"># is a vector</span></code></pre></div>
+<pre><code>## [1] "Kevin"  "Pamela"</code></pre>
+<div class="sourceCode" id="cb524"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># empty initialization</span>
+<span class="va">LL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>; <span class="va">LL</span> <span class="co"># no specific size</span></code></pre></div>
+<pre><code>## list()</code></pre>
+<div class="sourceCode" id="cb526"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">LL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, length<span class="op">=</span><span class="fl">3</span><span class="op">)</span>; <span class="va">LL</span> <span class="co"># specific size</span></code></pre></div>
+<pre><code>## [[1]]
+## NULL
+## 
+## [[2]]
+## NULL
+## 
+## [[3]]
+## NULL</code></pre>
+<div class="sourceCode" id="cb528"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Concatenation</span>
+<span class="va">L1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>wife<span class="op">=</span><span class="st">"Kim"</span>, wife.age<span class="op">=</span><span class="fl">38</span><span class="op">)</span>
+<span class="va">L2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">L</span>, <span class="va">L1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">L2</span><span class="op">)</span>; <span class="va">L2</span></code></pre></div>
+<pre><code>## [1] "list"</code></pre>
+<pre><code>## $name
+## [1] "John"
+## 
+## $age
+## [1] 43
+## 
+## $kids
+## $kids$name
+## [1] "Kevin"  "Pamela"
+## 
+## $kids$age
+## [1] 4 5
+## 
+## 
+## $wife
+## [1] "Kim"
+## 
+## $wife.age
+## [1] 38</code></pre>
+</div>
+<div id="exo-lists" class="section level2" number="8.3">
+<h2>
+<span class="header-section-number">8.3</span> Exercises<a class="anchor" aria-label="anchor" href="#exo-lists"><i class="fas fa-link"></i></a>
+</h2>
+<ul>
+<li>Create a list containing 2 strings, 2 numbers, 2 vectors, 1 list and 2 logical values.</li>
+<li>Give names to the elements in the list.</li>
+<li>Access the first and second elements of the list.</li>
+<li>Add a new item <code>g4 = "Hello"</code> to the list.</li>
+<li>Select the second element of the nested list.</li>
+<li>Remove the second element of the list.</li>
+<li>Create a second list with whatever you want</li>
+<li>Merge the two lists into one list.</li>
+<li>Print the number of objects in the merged list.</li>
+<li>Convert <code>list(1,2,3,4)</code> to a vector</li>
+</ul>
+<details><summary>
+Solution
+</summary><div class="sourceCode" id="cb531"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Create a list containing 2 strings, 2 numbers, 2 vectors, 1 list and 2 logical values.</span>
+<span class="co"># Give names to the elements in the list.</span>
+<span class="va">first_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>string1 <span class="op">=</span> <span class="st">"foo"</span>,
+                   string2 <span class="op">=</span> <span class="st">"bar"</span>,
+                   number1 <span class="op">=</span> <span class="fl">42</span>,
+                   number2 <span class="op">=</span> <span class="va">pi</span>,
+                   vec1    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>,<span class="fl">10</span>,<span class="fl">1</span><span class="op">)</span>,
+                   vec2    <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Hello"</span>, <span class="st">"world"</span><span class="op">)</span>,
+                   list1   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, 
+                                  b <span class="op">=</span> <span class="fl">10</span><span class="op">:</span><span class="fl">1</span><span class="op">)</span>,
+                   bool1   <span class="op">=</span> <span class="cn">TRUE</span>,
+                   bool2   <span class="op">=</span> <span class="cn">FALSE</span>
+                  <span class="op">)</span>
+<span class="va">first_list</span></code></pre></div>
+<pre><code>## $string1
+## [1] "foo"
+## 
+## $string2
+## [1] "bar"
+## 
+## $number1
+## [1] 42
+## 
+## $number2
+## [1] 3.141593
+## 
+## $vec1
+##  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8
+## [20]   9  10
+## 
+## $vec2
+## [1] "Hello" "world"
+## 
+## $list1
+## $list1$a
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## $list1$b
+##  [1] 10  9  8  7  6  5  4  3  2  1
+## 
+## 
+## $bool1
+## [1] TRUE
+## 
+## $bool2
+## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb533"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Access the first and second elements of the list.</span>
+<span class="va">first_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] "foo"</code></pre>
+<div class="sourceCode" id="cb535"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">first_list</span><span class="op">[[</span><span class="st">"string2"</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<pre><code>## [1] "bar"</code></pre>
+<div class="sourceCode" id="cb537"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Add a new item `g4 = "Hello"` to the list.</span>
+<span class="va">first_list</span><span class="op">$</span><span class="va">g4</span> <span class="op">&lt;-</span> <span class="st">"Hello"</span>
+<span class="va">first_list</span></code></pre></div>
+<pre><code>## $string1
+## [1] "foo"
+## 
+## $string2
+## [1] "bar"
+## 
+## $number1
+## [1] 42
+## 
+## $number2
+## [1] 3.141593
+## 
+## $vec1
+##  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8
+## [20]   9  10
+## 
+## $vec2
+## [1] "Hello" "world"
+## 
+## $list1
+## $list1$a
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## $list1$b
+##  [1] 10  9  8  7  6  5  4  3  2  1
+## 
+## 
+## $bool1
+## [1] TRUE
+## 
+## $bool2
+## [1] FALSE
+## 
+## $g4
+## [1] "Hello"</code></pre>
+<div class="sourceCode" id="cb539"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Select the second element of the nested list.</span>
+<span class="va">first_list</span><span class="op">[[</span><span class="st">"list1"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></code></pre></div>
+<pre><code>##  [1] 10  9  8  7  6  5  4  3  2  1</code></pre>
+<div class="sourceCode" id="cb541"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Remove the second element of the list.</span>
+<span class="va">first_list</span><span class="op">[</span><span class="op">-</span><span class="fl">2</span><span class="op">]</span></code></pre></div>
+<pre><code>## $string1
+## [1] "foo"
+## 
+## $number1
+## [1] 42
+## 
+## $number2
+## [1] 3.141593
+## 
+## $vec1
+##  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8
+## [20]   9  10
+## 
+## $vec2
+## [1] "Hello" "world"
+## 
+## $list1
+## $list1$a
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## $list1$b
+##  [1] 10  9  8  7  6  5  4  3  2  1
+## 
+## 
+## $bool1
+## [1] TRUE
+## 
+## $bool2
+## [1] FALSE
+## 
+## $g4
+## [1] "Hello"</code></pre>
+<div class="sourceCode" id="cb543"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Create a second list with whatever you want</span>
+<span class="va">second_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, b<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, c<span class="op">=</span><span class="st">"hello"</span><span class="op">)</span>
+<span class="co"># Merge the two lists into one list.</span>
+<span class="va">one_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">first_list</span>, <span class="va">second_list</span><span class="op">)</span>
+<span class="co"># Print the number of objects in the merged list.</span>
+<span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">one_list</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 13</code></pre>
+<div class="sourceCode" id="cb545"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># Convert `list(1,2,3,4)` to a vector</span>
+<span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<pre><code>## [1] 1 2 3 4</code></pre>
+</details>
+</div>
+</div>
+  <div class="chapter-nav">
+<div class="prev"><a href="readingwriting-all-kinds-of-files.html"><span class="header-section-number">7</span> Reading/writing all kinds of files</a></div>
+<div class="next"><a href="functions.html"><span class="header-section-number">9</span> Functions</a></div>
+</div></main><div class="col-md-3 col-lg-2 d-none d-md-block sidebar sidebar-chapter">
+    <nav id="toc" data-toggle="toc" aria-label="On this page"><h2>On this page</h2>
+      <ul class="nav navbar-nav">
+<li><a class="nav-link" href="#lists"><span class="header-section-number">8</span> Lists</a></li>
+<li><a class="nav-link" href="#definition-2"><span class="header-section-number">8.1</span> Definition</a></li>
+<li><a class="nav-link" href="#accessing-values-and-other-operations"><span class="header-section-number">8.2</span> Accessing values and other operations</a></li>
+<li><a class="nav-link" href="#exo-lists"><span class="header-section-number">8.3</span> Exercises</a></li>
+</ul>
+
+      <div class="book-extra">
+        <ul class="list-unstyled">
+<li><a id="book-source" href="https://github.com/colinbousige/Rclass/blob/master/09-lists.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/colinbousige/Rclass/edit/master/09-lists.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+        </ul>
+</div>
+    </nav>
+</div>
+
+</div>
+</div> <!-- .container -->
+
+<footer class="bg-primary text-light mt-5"><div class="container"><div class="row">
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>"<strong>Reproducible data treatment with R</strong>: An introduction" was written by Colin Bousige. It was last built on 07/04/2022.</p>
+  </div>
+
+  <div class="col-12 col-md-6 mt-3">
+    <p>This book was built by the <a class="text-light" href="https://bookdown.org">bookdown</a> R package.</p>
+  </div>
+
+</div></div>
+</footer><!-- dynamically load mathjax for compatibility with self-contained --><script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script><script type="text/x-mathjax-config">const popovers = document.querySelectorAll('a.footnote-ref[data-toggle="popover"]');
+for (let popover of popovers) {
+  const div = document.createElement('div');
+  div.setAttribute('style', 'position: absolute; top: 0, left:0; width:0, height:0, overflow: hidden; visibility: hidden;');
+  div.innerHTML = popover.getAttribute('data-content');
+
+  var has_math = div.querySelector("span.math");
+  if (has_math) {
+    document.body.appendChild(div);
+    MathJax.Hub.Queue(["Typeset", MathJax.Hub, div]);
+    MathJax.Hub.Queue(function() {
+      popover.setAttribute('data-content', div.innerHTML);
+      document.body.removeChild(div);
+    })
+  }
+}
+</script>
+</body>
+</html>
