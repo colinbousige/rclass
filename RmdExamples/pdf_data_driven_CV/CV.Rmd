@@ -16,46 +16,39 @@ header-includes:
     - \definecolor{BLUE}{RGB}{64, 61, 141}
     - \hypersetup{colorlinks=true,linkcolor=BLUE,citecolor=BLUE,urlcolor=BLUE}
 output: 
-  vitae::awesomecv
+    vitae::awesomecv:
+        keep_tex: true
 ---
 
 ```{r setup, include=FALSE}
 library(tidyverse)
 library(glue)
 library(vitae)
-library(httr)
+library(readxl)
+library(janitor)
 knitr::opts_chunk$set(echo = FALSE)
 bibfile <- "biblio.bib"
 myname  <- "Doe"
+myCVdata <- read_excel("./CVdata.xlsx") %>% 
+                nest(details = starts_with("details")) %>% 
+                mutate(details = map(details, ~remove_empty(., "cols"))) %>% 
+                mutate(details = map(details, ~as.list(t(.))))
 ```
 
 # Professional Experience
 
-```{r consulting}
-tribble(
-  ~ lab, ~ position, ~ city, ~ dates, ~ details,
-  "My Fancy Lab name", "Research Scientist", "Lyon, France", "Oct. 2017 - Present", 
-    list("I do this",
-         "and that")
-) %>% 
-  detailed_entries(lab, dates, position, city, details)
+```{r professional}
+myCVdata %>% 
+    filter(entry_type=="professional") %>% 
+    detailed_entries(where, when, what, city, details)
 ```
 
 # Education
 
 ```{r education}
-tribble(
-  ~ degree, ~ uni, ~ loc, ~ dates, ~ details,
-  "PhD, Sciences", "My University", "City, Country", "Mar. 2014 - Nov. 2017", 
-    list("Recipient of the Fancy Honours Memorial Scholarship",
-         "Honours research project was to develop this and that",
-         "Studied units include this nice stuff."),
-  "M2, Sciences", "My old University", "City2, Country2", "2013 - 2014", 
-    list("Recipient of the City Community Leaders Scholarship.",
-         "Participant of this nice program.",
-         "Studied a broad range of units covering many aspects of data science.")
-) %>% 
-  detailed_entries(degree, dates, uni, loc, details)
+myCVdata %>% 
+    filter(entry_type=="education") %>% 
+    detailed_entries(where, when, what, city, details)
 ```
 
 # Teaching experience
@@ -65,13 +58,12 @@ tribble(
 Some blah blah
 
 ```{r tutoring}
-tribble(
-  ~ title, ~ code, ~ where, ~ when,
-  "Applied stuff", "AAA111", "City", "2021 S1",
-  "Communicating stuff", "AAA222", "City", "2020 S2", 
-  "Theroretical stuff", "AAA333", "City", "2020 S1"
-) %>% 
-  brief_entries(glue::glue("\\textbf{<code>}: <title> (<where>)", .open = "<", .close = ">"), when, .protect = FALSE)
+myCVdata %>% 
+    filter(entry_type=="tutoring") %>% 
+    arrange(desc(when)) %>% 
+    brief_entries(glue::glue("\\textbf{<where>}: <what> (<city>)", 
+                             .open = "<", .close = ">"), 
+                  when, .protect = FALSE)
 ```
 
 ## Student mentoring
@@ -79,49 +71,53 @@ tribble(
 Some blah blah
 
 ```{r mentoring}
-tribble(
-  ~ studentname, ~ level, ~ where, ~ year, ~what,
-  "John", "M1", "University of Lyon", "2017", "internship on this and that",
-  "Lisa", "PhD", "University of Boston", "2018-2021", NA
-) %>% 
-    arrange(desc(year)) %>% 
-    mutate(toprint = glue::glue("\\textbf{<studentname>} (<level>)", .open = "<", .close = ">")) %>% 
-    mutate(toprint = ifelse(!is.na(what), 
-                            glue::glue("{toprint}: {what}"), 
+myCVdata %>% 
+    filter(entry_type=="mentoring") %>% 
+    arrange(desc(when)) %>% 
+    mutate(details = map(details, as.character)) %>% 
+    unnest(details, keep_empty = TRUE) %>% 
+    mutate(toprint = glue::glue("\\textbf{<what>} (<where>)", 
+                                .open = "<", .close = ">")) %>% 
+    mutate(toprint = ifelse(!is.na(details), 
+                            glue::glue("{toprint}: {details}"), 
                             toprint)) %>% 
-    brief_entries(toprint, year, where, .protect = FALSE)
+    brief_entries(toprint, when, city, .protect = FALSE)
 ```
 
 
 # Presentations at international conferences
 
 ```{r talks}
-tribble(
-  ~ when, ~ title, ~ details, ~ where, ~ url,
-  "2020", "Forecasting stuff", "Methods and techniques to stuff", "My Conference", "https://my.slides.com",
-  "2020", "Probabilistic bidule", NA, "Other Conference", "https://my.other.slides.com",
-  "2019", "Flexible futures for my kids", "A description.", "Conference 3", NA
-) %>% 
-    mutate(toprint = glue::glue("\\textbf{<title>}", .open = "<", .close = ">")) %>% 
+myCVdata %>% 
+    filter(entry_type=="talks") %>% 
+    arrange(desc(when)) %>% 
+    mutate(details = map(details, as.character)) %>% 
+    unnest(details, keep_empty = TRUE) %>% 
+    mutate(toprint = glue::glue("\\textbf{<what>}", .open = "<", .close = ">")) %>% 
     mutate(toprint = ifelse(!is.na(details), 
                             glue::glue("{toprint}: {details}"), 
                             toprint)) %>% 
-    mutate(toprint = ifelse(!is.na(url), 
-                            glue::glue("<toprint>\\newline \\url{<url>}", .open = "<", .close = ">"),
+    mutate(toprint = ifelse(!is.na(city), 
+                            glue::glue("<toprint>\\newline \\url{<city>}", 
+                            .open = "<", .close = ">"),
                             toprint)) %>% 
     brief_entries(toprint, when, where, .protect = FALSE)
 ```
 
 
+
 # Awards & Achievements
 
-```{r}
-tribble(
-  ~ award, ~ from, ~ year,
-  "Dean's Honour", "City", "2012",
-  "Dean's Commendation", "City", "2014",
-) %>%
-  brief_entries(award, year, from)
+```{r awards}
+myCVdata %>% 
+    filter(entry_type=="awards") %>% 
+    arrange(desc(when)) %>% 
+    mutate(details = map(details, as.character)) %>% 
+    unnest(details, keep_empty = TRUE) %>% 
+    mutate(toprint = ifelse(!is.na(details), 
+            glue::glue("\\textbf{<what>}: <details>", .open = "<", .close = ">"), 
+            glue::glue("\\textbf{<what>}", .open = "<", .close = ">"))) %>% 
+    brief_entries(toprint, when, city, .protect = FALSE)
 ```
 
 \clearpage
