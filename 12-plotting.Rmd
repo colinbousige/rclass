@@ -254,10 +254,13 @@ Further reading [here](https://ggplot2-book.org/introduction.html) and on the [c
 First things first, load the library :
 ```{r, message=FALSE, warnings=FALSE}
 library(ggplot2)
-library(tidyverse) # for easier data manipulation
 ```
 
-Actually, `ggplot2` is attached to `tidyverse` so a simple `library(tidyverse)`{.R} is enough.
+Actually, `ggplot2` is attached to `tidyverse` so a simple:
+```{r, message=FALSE, warnings=FALSE}
+library(tidyverse)
+```
+is enough, as it will load `ggplot2` and most of the useful data manipulation libraries.
 
 ### The grammar of graphics
 
@@ -291,36 +294,54 @@ diamonds
 
 `diamonds` contains 53940 lines and 10 columns in a `tibble`{.R}. `ggplot2` can easily handle such large dataset.
 
-Let's say we want to see whether there is a correlation between price and weight (carat) of the diamonds:
+Let's say we want to see whether there is a correlation between price and weight (carat) of the diamonds.
+We will make a call to `ggplot()`{.R} by providing it the data and the `x` and `y` mapping:
 
 ```{r, warnings=FALSE}
 p <- ggplot(data = diamonds, aes(x = carat,y = price))
+p
+```
+
+You see that our plot `p` here has the proper axis labels and range:
+
+```{r}
+glue::glue("carat {c('min','max')}: {range(diamonds$carat)}")
+glue::glue("price {c('min','max')}: {range(diamonds$price)}")
+```
+
+but it does not display any data points. For this we have to add a geometry to the plot, using one of the `geom_xx()`{.R} functions. Let's plot it using points for now:
+
+```{r, warnings=FALSE}
 p + geom_point()
 ```
 
-OK, we're onto something, but we can probably add some information to this plot. We will first cut the data above 3 carats because they are not relevant, and add some transparency to the points to see some statistical information.
+OK, we're onto something, but we can probably add some information to this plot. We will first cut the data above 3 carats because they are not relevant, and add some transparency to the points to see some statistical information. Let's make use of the pipe operator `%>%` to make this easily readable:
 
 ```{r, warnings=FALSE}
-p <- diamonds %>% filter(carat<=3) %>% 
+p <- diamonds %>% 
+        filter(carat<=3) %>% 
         ggplot(aes(x = carat, y = price))
 p + geom_point(alpha=0.5)
 ```
 
-Let's now see whether the clarity plays a role here by coloring the points according to the diamonds cut:
+Let's now see whether the type of cut plays a role here by coloring the points according to the `cut` variable:
 ```{r, warnings=FALSE}
-p <- diamonds %>% filter(carat<=3) %>% 
+p <- diamonds %>% 
+        filter(carat<=3) %>% 
         ggplot(aes(x = carat, y = price, color = cut))
 p + geom_point(alpha=0.5)
 ```
 
 It looks like the price dispersion is homogeneous, we can make sure by adding a spline smoothing:
 ```{r, warning = FALSE, message=FALSE}
-p + geom_point(alpha=0.5) + geom_smooth()
+p + geom_point(alpha=0.5) + 
+    geom_smooth()
 ```
 
 The slope evolution shows that in general, the better the cut, the higher the price. But there are some discrepancies that may be explained in another manner:
 ```{r, warnings=FALSE}
-p <- diamonds %>% filter(carat<=3) %>% 
+p <- diamonds %>% 
+        filter(carat<=3) %>% 
         ggplot(aes(x = carat, y = price, color = clarity))
 p + geom_point(alpha=0.5) + geom_smooth()
 ```
@@ -328,28 +349,28 @@ p + geom_point(alpha=0.5) + geom_smooth()
 It is often easier to grasp a multi-variable problem by plotting all our data in a facet plot using `facet_wrap(~variable1)`{.R} if you want one variable changing in each plot:
 ```{r, warning = FALSE, message=FALSE}
 colors <- rainbow(length(unique(diamonds$clarity)))
-p <- ggplot(diamonds, aes(x = price, y = carat)) + 
-        geom_point(aes(color = clarity), alpha = 0.5, size = 1) + 
+p <- ggplot(diamonds, aes(x = price, y = carat, color = clarity)) + 
+        geom_point(alpha = 0.5, size = 1) + 
         geom_smooth(color = "black") + 
         scale_colour_manual(values = colors, name = "Clarity") +
         facet_wrap(~cut) 
 p
 ```
 
-... or `facet_grid(variable1~variable2)`{.R} if you want to see one variable as a function of another:
+... or `facet_grid(y_variable ~ x_variable)`{.R} if you want to see one variable as a function of another:
 ```{r, warning = FALSE, message=FALSE, fig.asp=1.4}
-p <- ggplot(diamonds, aes(x = price, y = carat)) + 
-        geom_point(aes(color = color), alpha = 0.8, size = 1) + 
-        geom_smooth(method="lm", color = "black") + 
+p <- ggplot(diamonds, aes(x = price, y = carat, color = color)) + 
+        geom_point(alpha = 0.8, size = 1) + 
+        geom_smooth(method = "lm", color = "black") + 
         scale_colour_brewer(palette = "Spectral", name = "Color") +
-        facet_grid(clarity~cut) 
+        facet_grid(clarity ~ cut) 
 p
 ```
 
 Or by adding another graphical parameter such as the size of the points:
 ```{r, warnings=FALSE}
-p <- ggplot(diamonds, aes(x = price, y = carat, size = cut)) + 
-        geom_point(aes(color = clarity), alpha = 0.5) + 
+p <- ggplot(diamonds, aes(x = price, y = carat, color = clarity, size = cut)) + 
+        geom_point(alpha = 0.5) + 
         scale_colour_manual(values = colors, name = "Clarity")
 p
 ```
@@ -357,8 +378,8 @@ p
 OK, maybe not here because the graph gets clogged, so we can lighten it by sampling data:
 ```{r, warnings=FALSE}
 p <- ggplot(diamonds %>% sample_n(500), 
-            aes(x = carat, y = price, size = cut)) + 
-        geom_point(aes(color = clarity), alpha = 0.5) + 
+            aes(x = carat, y = price, color = clarity, size = cut)) + 
+        geom_point(alpha = 0.5) + 
         scale_colour_manual(values = colors, name = "Clarity")
 p
 ```
@@ -477,7 +498,7 @@ plot(x,y,
      xlab="$\\omega_i$"
      )
 dev.off()
-tools::texi2pdf("plot.tex") # compile the tex fileto pdf
+tools::texi2pdf("plot.tex") # compile the tex file to pdf
 system("open -a Skim plot.pdf") # on Mac: open the resulting pdf with Skim
 ```
 
