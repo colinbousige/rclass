@@ -424,6 +424,8 @@ $if(title)$
 \title{\Huge{\textcolor{BLUE}{\textbf{$title$}}}$if(subtitle)$\\ \LARGE{$subtitle$}$endif$}
 $endif$ 
 
+\let\normalfigure=\figure
+\let\normalendfigure=\endfigure
 
 
 %$if(anonymous)$$else$\author{$for(author)$\Large $author.name$\vspace{0.05in} \newline\normalsize\emph{$author.affiliation$}  $sep$ \and $endfor$}$endif$
@@ -511,8 +513,7 @@ $endif$
 \usepackage{fancyhdr}
 \usepackage{lastpage}
 \usepackage{cmbright}
-
-
+\usepackage{cuted}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % My own bibliography style, with DOI or url links, and backreferences

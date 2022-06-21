@@ -101,6 +101,9 @@ Depending on the data you are looking at, various ways of representing them are 
 
 When looking at discrete values or when you want to characterize the distribution of a measurement, it is often a good idea to use the histogram representation, which represents the frequency at which a measurement is made within a certain range, called bin. Let's take Fig. \@ref(fig:histogramT) and plot it with various bin sizes. One can see that the choice of bin size is important, as it determines whether your data are noisy or lack fine information.
 
+
+
+\renewenvironment{figure}{\begin{figure*}}{\end{figure*}}
 ```{r, out.width='32%', fig.show="hold", fig.cap="Histogram of the body temperature measurements with different bin widths."}
 temp <- tibble(T=c(38, 38.1, 38.0, 38.0, 38.3, 37.9, 38.1, 38.2, 39.8))
 temp %>% 
@@ -125,11 +128,14 @@ temp %>%
        theme(text = element_text(size = 20), title = element_text(size = 16))+
        labs(title="bin width = 1 °C", x="T [°C]")
 ```
+\renewenvironment{figure}{\normalfigure}{\normalendfigure}
+
 
 ### Graphs
 
 In case you want to represent continuous data, say the evolution of a quantity $y$ with respect to a quantity $x$, you should then use the graph representation. As we saw before, any physical quantity should be given with its uncertainty and unit. **The same applies to a graph**: it **must** clearly display the **units** of the quantities $x$ and $y$, and **error bars** that are usually taken as the standard deviation of each individual measurement (that should thus be performed a number of times, depending on what you are looking at). 
 
+\renewenvironment{figure}{\begin{figure*}}{\end{figure*}}
 ```{r, out.width='32%', fig.show="hold", fig.cap="Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data."}
 dat <- tibble(x=seq(0,100,1), 
               y=1+dnorm(x,mean=10,sd=5)+dnorm(x,mean=58,sd=10)+dnorm(x,mean=75,sd=15)+.01*runif(length(x)),
@@ -154,6 +160,8 @@ dat %>%
        theme(text=element_text(size=20), title = element_text(size=16))+
        labs(title="Meaningful graph", x="x [unit]", y="y [unit]")
 ```
+\renewenvironment{figure}{\normalfigure}{\normalendfigure}
+
 
 You can think of each set of {datapoint + error bar} as an histogram: the displayed point is the mean value of the histogram, and the error bar is its standard deviation. **Therefore, plotting a straight line between points is usually pointless**. Plotting a line going through the data points only has meaning if this line results from a physical model explaining the variation of the quantity $y$ with the evolution of the quantity $x$ -- this is called a **fit**, and we will see more about it in the R class later.
 
@@ -282,7 +290,7 @@ P_\lambda(k) = \frac{\lambda^ke^{-\lambda}}{k!}
 Examples of encounters of Poisson distributions could be as various as the number of calls received per hours in a call center, the yearly number of Prussian soldiers killed by horse kicks... or the number of particles (photons, neutrons, neutrinos...) hitting a detector every second.
 
 
-
+\renewenvironment{figure}{\begin{figure*}}{\end{figure*}}
 ```{r, poissondistrib, out.width="32%", fig.show="hold", fig.cap="Poisson distribution for various parameters. While asymmetric for small values of $k$ and $\\lambda$, it tends towards a Gaussian lineshape at larger values."}
 P <- function(lam, k) {
     lam^k*exp(-lam)/factorial(k)
@@ -321,6 +329,8 @@ dat3 %>%
             y = expression(italic("P")[lambda] * (italic("k"))))+
         theme(text = element_text(size = 20), title = element_text(size = 16))
 ```
+\renewenvironment{figure}{\normalfigure}{\normalendfigure}
+
 
 
 ### Characteristics
@@ -338,8 +348,10 @@ Following Eq. \@ref(eq:firstmoment), the average number of observed events, $\av
 \end{equation}
 
 
-In the same manner and by using the "trick" $x^2=x(x-1)+x$, the variance $\sigma^2(k)$ of the distribution is given by:
 
+In the same manner and by using the "trick" $x^2=x(x-1)+x$, the variance $\sigma^2(k)$ of the distribution is given by:
+\newpage
+\begin{strip}
 \begin{equation}
 \begin{aligned}
 \sigma^2(k) &= \sum_{k=1}^\infty (k-\lambda)^2\frac{\lambda^k e^{-\lambda}}{k!}\\
@@ -348,17 +360,18 @@ In the same manner and by using the "trick" $x^2=x(x-1)+x$, the variance $\sigma
         &=\lambda = \ave{k}
 \end{aligned}
 \end{equation}
+\end{strip}
 
 > The important result here is that, **when counting random events with an average of** $\mathbold{\ave{N}}$, **the standard deviation is** $\mathbold{\sigma=\sqrt{\ave{N}}}$. This is typically what happens when performing a diffraction or spectroscopic measurement, such as X-ray diffraction, Raman, IR or neutron spectroscopy, etc.: the longer we acquire data, the higher the number of detected "events" $N$ (particle hits detector), and the "better is the statistics". Indeed, the relative error is thus $\sqrt{N}/N=1/\sqrt{N}$. 
-> \
->
+
+
 > The consequence of this is that to make a factor 10 improvement on the relative error, one has to increase by 100 the number of events. This is usually done by increasing the acquisition time, which is fine as long as it is short enough. If irrealistic acquisition times start to become necessary, one should maybe try to find another way to increase $N$: this can be done by improving the detector efficiency, increasing the probe (laser, neutron/x-ray) brightness, changing the experimental geometry, etc.
 >\
 >
 > Finally, for "large" numbers ($\lambda\gtrsim 100$) the Poisson distribution tends towards a symmetric Gaussian distribution that we will describe just after. 
 
 
-\clearpage
+
 
 ## The Gaussian distribution
 
