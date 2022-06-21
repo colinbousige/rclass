@@ -173,7 +173,7 @@ irreg.df.smooth <- expand.grid(w = irreg.df.interp$x,
 irreg.df.smooth %>% 
     ggplot(aes(x=w, y=T, fill=Intensity)) + 
         geom_raster() + 
-        ggtitle("Some irregular fake data that have been cubic-interpolated") + 
+        ggtitle("Some irregular fake data that have been interpolated with cubic splines") + 
         scale_fill_gradientn(colors=colors, name="Intensity\n[arb. units]") +
         labs(x = "Fake Raman Shift [1/cm]", 
              y = "Fake Temperature [K]") +

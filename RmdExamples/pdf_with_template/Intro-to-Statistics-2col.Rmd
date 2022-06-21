@@ -8,21 +8,21 @@ author:
   email      : colin.bousige@univ-lyon1.fr
 output: 
   bookdown::pdf_document2:
-    template        : template.tex
-    citation_package: biblatex
-    highlight       : tango
-    number_sections : true
-    fig_caption     : true
-    fig_number      : true
-    fig_width       : 4
-    fig_height      : 3
-    df_print        : kable
-    toc             : true
-    toc_depth       : 5
+    template         : template.tex
+    citation_package : biblatex
+    highlight        : tango
+    number_sections  : true
+    fig_caption      : true
+    fig_number       : true
+    fig_width        : 4
+    fig_height       : 3
+    df_print         : kable
+    toc              : false
 abstract: |
     This class aims to provide an introduction to statistics applied to experimental measurements in physics, chemistry or biology. By studying practical cases, we will see the importance of using statistical tools to make sense of experimental data.
-geometry: margin=1in
-fontsize: 11pt
+twocolumn   : true
+geometry    : margin=1in
+fontsize    : 11pt
 bibliography: "biblio.bib"
 ---
 
@@ -73,7 +73,7 @@ Let's continue with our example of the body temperature measured with a thermoco
 Our first measurement of the body temperature yielded $(38.0\pm0.1)$ °C. Now let's repeat this measurement a number of times in various area of the body (which are left to your imagination). Let's say it then shows $(38.1\pm0.1)$ °C, $(38.0\pm0.1)$ °C, $(38.3\pm0.1)$ °C, $(37.9\pm0.1)$ °C, $(38.2\pm0.1)$ °C, $(38.1\pm0.1)$ °C, $(38.1\pm0.1)$ °C, $(39.8\pm0.1)$ °C. What is the actual body temperature then? Should we stick to a single measurement? Of course not. We have to make an histogram of the measured values, and study the distribution of the measurements (Fig. \@ref(fig:histogramT)). We can then see that one of the values is clearly an outlier -- something might have gone wrong there. What if we had done the measurement only once and only measured that value? We might have jumped to a very wrong conclusion, with possibly a very serious consequence like giving the wrong medicine.
 
 
-```{r, histogramT, echo=FALSE, fig.cap="Histogram of the body temperature measurements. The red line is the mean value, the orange one is the mode and the blue one is the median."}
+```{r, histogramT, out.width="100%", echo=FALSE, fig.cap="Histogram of the body temperature measurements. The red line is the mean value, the orange one is the mode and the blue one is the median."}
 temp <- tibble(T=c(38, 38.1, 38.0, 38.0, 38.3, 37.9, 38.1, 38.2, 39.8))
 temp %>% 
     ggplot(aes(x = T)) +
@@ -210,7 +210,7 @@ In general, scientists often prefer using the standard deviation rather than the
 
 The above considerations all assume that the distribution of measured values is mono-modal, *i.e.* the histogram of the measured values is centered around a single value. In the case of a multimodal distribution such as shown in Fig. \@ref(fig:multimodal), it would be meaningless to use such tools as the fine information on the distribution would be lost. 
 
-```{r, multimodal, fig.cap="A trimodal distribution of measurements. The red line shows the mean value of the distribution: it fails to grasp the complexity of the distribution."}
+```{r, multimodal, out.width="100%", fig.cap="A trimodal distribution of measurements. The red line shows the mean value of the distribution: it fails to grasp the complexity of the distribution."}
 dat <- tibble(x=seq(0,130,.1), 
               y=dnorm(x,mean=12,sd=2)+1.5*dnorm(x,mean=54,sd=10)+dnorm(x,mean=80,sd=12)) %>% 
         mutate(y = y/(sum(y)*.1))
@@ -378,7 +378,7 @@ P(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2}
 
 ### Characteristics
 
-```{r, gaussian, fig.cap="A zero-centered Gaussian distribution with standard deviation of 1, $P(z)$. The red line marks the half maximum, $P(z_{HM})=1/2\\sqrt{2\\pi}$, and the blue lines the values of $z$ for which the half maximum is obtained, $z_{HM}=\\pm\\sqrt{2\\ln{2}}$."}
+```{r, gaussian, out.width="100%", fig.cap="A zero-centered Gaussian distribution with standard deviation of 1, $P(z)$. The red line marks the half maximum, $P(z_{HM})=1/2\\sqrt{2\\pi}$, and the blue lines the values of $z$ for which the half maximum is obtained, $z_{HM}=\\pm\\sqrt{2\\ln{2}}$."}
 dat <- tibble(x=seq(-5,5,.1), y=exp(-x^2/2)/sqrt(2*pi))
 seg1 <- tibble(x=c(sqrt(2*log(2)),sqrt(2*log(2))),
                y=c(0,1/2/sqrt(2*pi)))
