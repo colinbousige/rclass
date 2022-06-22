@@ -47,7 +47,7 @@ $endif$
 \usepackage{pgfpages}
 
 \setbeamertemplate{caption}[numbered]
-\setbeamertemplate{caption label separator}{: }
+\setbeamertemplate{caption label separator}{ -- }
 \setbeamercolor{caption name}{fg=normal text.fg}
 \beamertemplatenavigationsymbols$if(navigation)$$navigation$$else$empty$endif$
 $for(beameroption)$
@@ -230,10 +230,10 @@ $endif$
 $if(highlighting-macros)$
 $highlighting-macros$
 $endif$
+\usepackage[font=small,labelfont=bf,labelsep=endash]{caption}
 $if(tables)$
 \usepackage{longtable,booktabs}
 $if(beamer)$
-\usepackage{caption}
 % Make caption package work with longtable
 \makeatletter
 \def\fnum@table{\tablename~\thetable}
@@ -365,9 +365,9 @@ $endif$
 \subtitle{$subtitle$}
 $endif$
 $if(twocolumn)$
-\author{$for(author)$\MakeUppercase{$author.name$}$if(author.affiliation)$\\\small{$author.affiliation$}$endif$$if(author.email)$\\\small{$author.email$}$endif$$sep$ \and $endfor$}
+\author{$for(author)$\MakeUppercase{$author.name$}$if(author.affiliation)$\\\small{$author.affiliation$}$endif$$if(author.email)$\\\small{$author.email$}$endif$$sep$ \\\vskip 0.5em $endfor$}
 $else$
-\author{$for(author)$\MakeUppercase{$author.name$}$if(author.email)$\footnote{~Email: $author.email$}$endif$$if(author.affiliation)$\\\small{$author.affiliation$}$endif$$sep$ \and $endfor$}
+\author{$for(author)$\MakeUppercase{$author.name$}$if(author.email)$\footnote{~Email: $author.email$}$endif$$if(author.affiliation)$\\\small{$author.affiliation$}$endif$$sep$ \\\vskip 0.5em $endfor$}
 $endif$
 \date{$date$}
 $if(beamer)$
@@ -413,7 +413,7 @@ $endif$
 \renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
 \begin{flushleft}
   \textbf{\@title}
-    \vskip 2em
+    \vskip 1.5em
   \@author
 \end{flushleft}\egroup
 }
@@ -434,14 +434,23 @@ $endif$
 \date{}
 
 \usepackage{titlesec}
+\usepackage{titletoc}
 \setlength{\headheight}{14pt}
 
-% $if(sansitup)$\sffamily\uppercase$else$$endif$
-\titleformat*{\section}{\color{BLUE}\large\bfseries$if(sansitup)$\sffamily\uppercase$else$$endif$}
-\titleformat*{\subsection}{\color{BLUE}$if(sansitup)$\bfseries\sffamily$else$\normalsize\itshape$endif$} % \small\uppercase
-\titleformat*{\subsubsection}{\color{BLUE}\normalsize\itshape}
-\titleformat*{\paragraph}{\color{BLUE}\normalsize\itshape}
-\titleformat*{\subparagraph}{\color{BLUE}\normalsize\itshape}
+\titleformat{\section}{\color{BLUE}\normalfont\large\bfseries}{\color{BLUE}}{0em}{\thesection.~}
+\titleformat{\subsection}{\color{BLUE}\normalfont\bfseries}{\color{BLUE}}{0em}{\thesubsection.~}
+\titleformat{\subsubsection}{\normalfont\bfseries}{}{0em}{\thesubsubsection.~}
+\titleformat{\paragraph}{\normalfont\bfseries}{}{0em}{}
+
+\titleformat{name=\section,numberless}{\color{BLUE}\normalfont\large\bfseries}{\color{BLUE}}{0em}{}
+\titleformat{name=\subsection,numberless}{\color{BLUE}\normalfont\bfseries}{\color{BLUE}}{0em}{}
+\titleformat{name=\subsubsection,numberless}{\normalfont\bfseries}{}{0em}{}
+\titleformat{name=\paragraph,numberless}{\normalfont\bfseries}{}{0em}{}
+
+\titlespacing*{\section}{0pt}{1ex}{1ex}
+\titlespacing*{\subsection}{0pt}{1ex}{1ex}
+\titlespacing*{\subsubsection}{0pt}{1ex}{1ex}
+\titlespacing*{\paragraph}{0pt}{1ex}{1ex}
 
 % add some other packages ----------
 
@@ -686,12 +695,15 @@ $if(twocolumn)$
 {\endlist}
 
 \renewenvironment{abstract}{
-  \begin{@bstr@ctlist}\begin{tcolorbox}[halign=justify,arc=0pt,colback=BLUE!5!white,colframe=white!0!white]\abstracttextfont\normalsize}%
+  \begin{@bstr@ctlist}\begin{tcolorbox}[halign=justify,arc=2pt,colback=BLUE!5!white,colframe=white!0!white]\abstracttextfont\normalsize}%
 {\par\end{tcolorbox}\end{@bstr@ctlist}\vskip 2em}
 $endif$
 
 
 \newtheorem{hypothesis}{Hypothesis}
+\renewcommand{\figurename}{Fig.}
+\renewcommand{\tablename}{Tab.}
+
 
 \begin{document}
 
@@ -709,7 +721,7 @@ $if(title)$
     \setlength{\parindent}{0pt}
     \maketitle  % title \par
     \thispagestyle{front}
-    \blfootnote{Version date: $date$}
+    $if(showdate)$\blfootnote{Version date: $date$}$endif$
     
     \vskip 13.5pt\relax \normalsize\fontsize{11}{12} 
     \saythanks
@@ -743,7 +755,7 @@ $else$
     \vfill
 
     \begin{abstract}
-        \begin{tcolorbox}[halign=justify,arc=0pt,colback=BLUE!5!white,colframe=white!0!white]
+        \begin{tcolorbox}[halign=justify,arc=2pt,colback=BLUE!5!white,colframe=white!0!white]
         % \rule{\linewidth}{.5pt}
     %    \hbox{\vrule height .2pt width 39.14pc}
 
