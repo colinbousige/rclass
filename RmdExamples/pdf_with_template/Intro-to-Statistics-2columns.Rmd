@@ -108,7 +108,7 @@ When looking at discrete values or when you want to characterize the distributio
 
 
 \renewenvironment{figure}{\begin{figure*}}{\end{figure*}}
-```{r, out.width='32%', fig.show="hold", fig.cap="Histogram of the body temperature measurements with different bin widths."}
+```{r, histograms, out.width='32%', fig.show="hold", fig.cap="Histogram of the body temperature measurements with different bin widths."}
 temp <- tibble(T=c(38, 38.1, 38.0, 38.0, 38.3, 37.9, 38.1, 38.2, 39.8))
 temp %>% 
     ggplot(aes(x = T)) +
@@ -140,7 +140,7 @@ temp %>%
 In case you want to represent continuous data, say the evolution of a quantity $y$ with respect to a quantity $x$, you should then use the graph representation. As we saw before, any physical quantity should be given with its uncertainty and unit. **The same applies to a graph**: it **must** clearly display the **units** of the quantities $x$ and $y$, and **error bars** that are usually taken as the standard deviation of each individual measurement (that should thus be performed a number of times, depending on what you are looking at). 
 
 \renewenvironment{figure}{\begin{figure*}}{\end{figure*}}
-```{r, out.width='32%', fig.show="hold", fig.cap="Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data."}
+```{r, meaningful-graph, out.width='32%', fig.show="hold", fig.cap="Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data."}
 dat <- tibble(x=seq(0,100,1), 
               y=1+dnorm(x,mean=10,sd=5)+dnorm(x,mean=58,sd=10)+dnorm(x,mean=75,sd=15)+.01*runif(length(x)),
               dy1=.1/y,
