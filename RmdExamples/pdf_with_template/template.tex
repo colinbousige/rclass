@@ -421,7 +421,7 @@ $endif$
 
 
 $if(title)$
-\title{\Huge{\textcolor{BLUE}{\textbf{$title$}}}$if(subtitle)$\\ \LARGE{$subtitle$}$endif$}
+\title{$if(pretitle)${\Large\textbf{$pretitle$}}\\$endif$\Huge{\textcolor{BLUE}{\textbf{$title$}}}$if(subtitle)$\\ \LARGE{$subtitle$}$endif$}
 $endif$ 
 
 \let\normalfigure=\figure
