@@ -1,5 +1,5 @@
 ---
-pretitle : "M1 NSE"
+pretitle : "Your Class Ref Number (or whatever)"
 title    : "Applied Statistics"
 subtitle : "A one-hour introduction"
 date     : "`r format(Sys.time(), '%B %d, %Y')`"
@@ -22,7 +22,7 @@ output:
     fig_width        : 4
     fig_height       : 3
     df_print         : kable
-    toc              : false
+    toc              : true
 abstract: |
     This class aims to provide an introduction to statistics applied to experimental measurements in physics, chemistry or biology. By studying practical cases, we will see the importance of using statistical tools to make sense of experimental data.
 twocolumn   : true
@@ -30,6 +30,9 @@ geometry    : margin=1in
 fontsize    : 11pt
 bibliography: "biblio.bib"
 ---
+
+<!-- to force column break after the TOC, remove if no TOC -->
+\vfill\null 
 
 
 ```{r setup, include=FALSE, warning = FALSE, cache=FALSE}
@@ -68,14 +71,14 @@ When doing Science, one has to fully grasp the concept of *physical measurement*
 
 Let's say you want to communicate to someone a temperature, and tell this person that the temperature is "38". If this is a random person in the street, they might think: "nice, let's go to the beach today!". If this random person is from the USA, they're gonna think: "damn, where did I put my coat?". If that person happens to be a physician, they might think: "that kid's got a slight fever". If they are a physicist doing a cryostat experiment, they might think "let's check the He tank level"... you see that one of the most important part of the measurement is missing: its unit. Units are there so that people understand each other when exchanging data, and you see here that 38 Celsius, 38 Fahrenheit or 38 Kelvin are quite different, and this quantity will mean different things in different contexts. A physical quantity given without its unit would be absolutely meaningless (unless, of course, you are looking at a unit-less quantity, like a count).
 
-Now let's consider the body temperature of 38 °C given to a physician. How did you measure this temperature? With a mercury graduated thermometer or with a thermocouple? In the first case, you can probably assume that this value is given with a measurement error of at least 1 °C, meaning that the temperature you give to the physician is $(38\pm1)$ °C, $i.e.$ the physician won't be able to decide whether they should be concerned or not. In the second case, the temperature is often given with a 0.1 °C precision, so the physician, seeing that the body temperature is $(38\pm0.1)$ °C, will probably tell you to take an aspirin and rest instead of giving you something stronger to treat a possible infection. Given that the uncertainty on the given value is of 0.1 °C, one should in fact give the temperature with matching decimal precision, *i.e.* $(38.0\pm0.1)$ °C. Writing $(38\pm0.1)$ °C, $(38.00001\pm0.1)$ °C or $(38.00\pm0.10000)$ °C would be meaningless too.
+Now let's consider the body temperature of 38\ °C given to a physician. How did you measure this temperature? With a mercury graduated thermometer or with a thermocouple? In the first case, you can probably assume that this value is given with a measurement error of at least 1\ °C, meaning that the temperature you give to the physician is $(38\pm1)$\ °C, $i.e.$ the physician won't be able to decide whether they should be concerned or not. In the second case, the temperature is often given with a 0.1\ °C precision, so the physician, seeing that the body temperature is $(38\pm0.1)$\ °C, will probably tell you to take an aspirin and rest instead of giving you something stronger to treat a possible infection. Given that the uncertainty on the given value is of 0.1\ °C, one should in fact give the temperature with matching decimal precision, *i.e.* $(38.0\pm0.1)$\ °C. Writing $(38\pm0.1)$\ °C, $(38.00001\pm0.1)$\ °C or $(38.00\pm0.10000)$\ °C would be meaningless too.
 
 > With this, we see that a physical measurement should be given with four parts: its actual **value**, its **decimal precision**, its **uncertainty**, and its **unit**. Should any of these four parts be missing in a physical quantity that you wanted to share, it would at best be imprecise, and at worst be utterly meaningless.
 
 ## Probabilistic description of physical systems
 
-Let's continue with our example of the body temperature measured with a thermocouple or a laser thermometer with a 0.1 °C precision.
-Our first measurement of the body temperature yielded $(38.0\pm0.1)$ °C. Now let's repeat this measurement a number of times in various area of the body (which are left to your imagination). Let's say it then shows $(38.1\pm0.1)$ °C, $(38.0\pm0.1)$ °C, $(38.3\pm0.1)$ °C, $(37.9\pm0.1)$ °C, $(38.2\pm0.1)$ °C, $(38.1\pm0.1)$ °C, $(38.1\pm0.1)$ °C, $(39.8\pm0.1)$ °C. What is the actual body temperature then? Should we stick to a single measurement? Of course not. We have to make an histogram of the measured values, and study the distribution of the measurements (Fig. \@ref(fig:histogramT)). We can then see that one of the values is clearly an outlier -- something might have gone wrong there. What if we had done the measurement only once and only measured that value? We might have jumped to a very wrong conclusion, with possibly a very serious consequence like giving the wrong medicine.
+Let's continue with our example of the body temperature measured with a thermocouple or a laser thermometer with a 0.1\ °C precision.
+Our first measurement of the body temperature yielded $(38.0\pm0.1)$\ °C. Now let's repeat this measurement a number of times in various area of the body (which are left to your imagination). Let's say it then shows $(38.1\pm0.1)$\ °C, $(38.0\pm0.1)$\ °C, $(38.3\pm0.1)$\ °C, $(37.9\pm0.1)$\ °C, $(38.2\pm0.1)$\ °C, $(38.1\pm0.1)$\ °C, $(38.1\pm0.1)$\ °C, $(39.8\pm0.1)$\ °C. What is the actual body temperature then? Should we stick to a single measurement? Of course not. We have to make an histogram of the measured values, and study the distribution of the measurements (Fig. \@ref(fig:histogramT)). We can then see that one of the values is clearly an outlier -- something might have gone wrong there. What if we had done the measurement only once and only measured that value? We might have jumped to a very wrong conclusion, with possibly a very serious consequence like giving the wrong medicine.
 
 
 ```{r, histogramT, out.width="100%", echo=FALSE, fig.cap="Histogram of the body temperature measurements. The red line is the mean value, the orange one is the mode and the blue one is the median."}
@@ -89,7 +92,7 @@ temp %>%
        labs(x = "T [°C]")
 ```
 
-With this example, we see that **a physical measurement is not absolute**. In fact, a physical measurement is a **probability** that the measured value is within a certain range. In the case of our example, after removing the outlier for which we are certain that the measurement is wrong, it means that the measured body temperature has a high probability to be somewhere between 38.0 °C and 38.2 °C.
+With this example, we see that **a physical measurement is not absolute**. In fact, a physical measurement is a **probability** that the measured value is within a certain range. In the case of our example, after removing the outlier for which we are certain that the measurement is wrong, it means that the measured body temperature has a high probability to be somewhere between 38.0\ °C and 38.2\ °C.
 In other (more general) terms, one could consider a measurement of a quantity $X$ as a probability $P(x - \sigma < X < x + \sigma )$ that the quantity $X$ has a value between $x-\sigma$ and $x+\sigma$. The **uncertainty** $\sigma$ around the **mean value** $x$ is usually given as the **standard deviation** of the distribution of measurements around the mean.
 
 > Since physical measurements are in fact **probabilities**, we **can** -- and **must** -- use **statistical tools** to characterize them.
@@ -104,8 +107,7 @@ Depending on the data you are looking at, various ways of representing them are 
 
 ### Histograms
 
-When looking at discrete values or when you want to characterize the distribution of a measurement, it is often a good idea to use the histogram representation, which represents the frequency at which a measurement is made within a certain range, called bin. Let's take Fig. \@ref(fig:histogramT) and plot it with various bin sizes. One can see that the choice of bin size is important, as it determines whether your data are noisy or lack fine information.
-
+When looking at discrete values or when you want to characterize the distribution of a measurement, it is often a good idea to use the histogram representation, which represents the frequency at which a measurement is made within a certain range, called bin. Let's take Fig. \@ref(fig:histogramT) and plot it with various bin sizes in Fig. \@ref(fig:histograms). One can see that the choice of bin size is important, as it determines whether your data are noisy or lack fine information.
 
 
 \renewenvironment{figure}{\begin{figure*}}{\end{figure*}}
@@ -117,21 +119,21 @@ temp %>%
        geom_vline(xintercept = mean(temp$T), color="red", size=1)+
        geom_vline(xintercept = median(temp$T), color="royalblue", size=1)+
        theme(text = element_text(size = 20), title = element_text(size = 16))+
-       labs(title="bin width = 0.1 °C", x="T [°C]")
+       labs(title="bin width = 0.1\ °C", x="T [°C]")
 temp %>% 
     ggplot(aes(x = T)) +
        geom_histogram(alpha=.5, color="black", binwidth = 0.2)+
        geom_vline(xintercept = mean(temp$T), color="red", size=1)+
        geom_vline(xintercept = median(temp$T), color="royalblue", size=1)+
        theme(text = element_text(size = 20), title = element_text(size = 16))+
-       labs(title="bin width = 0.2 °C", x="T [°C]")
+       labs(title="bin width = 0.2\ °C", x="T [°C]")
 temp %>% 
     ggplot(aes(x = T)) +
        geom_histogram(alpha=.5, color="black", binwidth =1)+
        geom_vline(xintercept = mean(temp$T), color="red", size=1)+
        geom_vline(xintercept = median(temp$T), color="royalblue", size=1)+
        theme(text = element_text(size = 20), title = element_text(size = 16))+
-       labs(title="bin width = 1 °C", x="T [°C]")
+       labs(title="bin width = 1\ °C", x="T [°C]")
 ```
 \renewenvironment{figure}{\normalfigure}{\normalendfigure}
 
@@ -187,7 +189,7 @@ The **mean** (or arithmetic average) is more often used than the two previous qu
 \end{equation}
 where $x_i$ is the $i$-th measurement of $x$. 
 
-Figure \@ref(fig:histogramT) shows the representation of a sample of data plotted in a histogram. This figure shows the mode, mean and median. For this particular sample of data, the mean is `r round(mean(temp$T),1)` °C, the median is `r round(median(temp$T),1)` °C, and the mode is 38.0 °C. The fact that the mode is smaller than the mean is an indication that the data are asymmetric about the mean. We usually refer to such a distribution as being skewed, and in this case the data are skewed to the right.
+Figure \@ref(fig:histogramT) shows the representation of a sample of data plotted in a histogram. This figure shows the mode, mean and median. For this particular sample of data, the mean is `r round(mean(temp$T),1)`\ °C, the median is `r round(median(temp$T),1)`\ °C, and the mode is 38.0\ °C. The fact that the mode is smaller than the mean is an indication that the data are asymmetric about the mean. We usually refer to such a distribution as being skewed, and in this case the data are skewed to the right.
 
 
 ### Quantifying the spread of data: variance and standard deviation

@@ -747,7 +747,17 @@ $if(twocolumn)$
         \vskip 10pt
       \end{abstract}
     \end{@twocolumnfalse}]
-
+    $if(toc)$
+    {
+    \makeatletter\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{2.3em}}\makeatother
+    \makeatletter\renewcommand*\l@subsection{\@dottedtocline{1}{2.5em}{2.3em}}
+    \makeatother
+    \hypersetup{linkcolor=black}
+    \setcounter{tocdepth}{$toc-depth$}
+    \tableofcontents
+    % \rule[10pt]{\linewidth}{.1pt}
+    }
+    $endif$
     $endif$
 $else$
     $if(abstract)$
