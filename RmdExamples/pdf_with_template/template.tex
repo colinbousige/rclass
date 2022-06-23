@@ -542,13 +542,19 @@ $endif$
 
 \renewcommand*{\finalnamedelim}{~\emph{\&}~}
 \renewcommand*{\newunitpunct}{\addcomma\space}
-\renewbibmacro*{date}{\printtext{\printfield{year}}}
+\renewbibmacro*{date}{\printtext[parens]{\printfield{year}}}
 \renewbibmacro*{volume+number+eid}{\printfield{volume}}
 \renewbibmacro*{journal+issuetitle}{%
   \emph{\usebibmacro{journal}}%
   \setunit*{\addspace}%
   \usebibmacro{volume+number+eid}
   \printtext[parens]{\printfield{year}}%
+}
+\renewbibmacro*{publisher+location+date}{%
+    \printlist{location}%
+    \setunit*{\addspace}
+    \usebibmacro{date}%
+    \newunit
 }
 
 \DeclareBibliographyDriver{article}{%
@@ -622,6 +628,30 @@ $endif$
   \setunit{\bibpagerefpunct}\newblock
   \usebibmacro{pageref}%
 }
+
+\DeclareBibliographyDriver{book}{%
+  \usebibmacro{bibindex}%
+  \usebibmacro{begentry}%
+  \usebibmacro{author/editor+others/translator+others}%
+  \setunit{\labelnamepunct}\newblock
+  \usebibmacro{chapter+pages}%
+  \newunit\newblock
+  \printtext[urllink]{\usebibmacro{maintitle+title}}%
+  \newunit\newblock
+  \usebibmacro{byauthor}%
+  \newunit\newblock
+  \usebibmacro{byeditor+others}%
+  \newunit\newblock
+  \usebibmacro{publisher+location+date}%
+  \newunit
+  \printfield{pagetotal}%
+  \newunit\newblock
+  \printfield{note}%
+  \newunit\newblock
+  \usebibmacro{addendum+pubstate}%
+  \setunit{\bibpagerefpunct}\newblock
+  \usebibmacro{pageref}%
+}
 % % % % % % % % % % % % % % % % % % % % % % % % % % % % % % 
 
 
@@ -639,7 +669,7 @@ $endif$
 \fancypagestyle{refstyle}{%
     \pagestyle{fancyplain}
     \fancyhf{}
-    \fancyhead[L]{References}
+    % \fancyhead[L]{References}
     \renewcommand{\headrulewidth}{0.1pt}
     \renewcommand{\footrulewidth}{0.1pt}
     \cfoot{\thepage/\pageref*{LastPage}}
@@ -669,6 +699,7 @@ $endif$
 \usepackage{pifont}
 \usepackage{indentfirst}
 \usepackage{tikz}
+\setlength{\labelnumberwidth}{16pt}
 
 $for(header-includes)$
 $header-includes$
@@ -870,7 +901,7 @@ $if(beamer)$
 $else$
 % \clearpage
 \thispagestyle{refstyle}
-\printbibliography$if(biblio-title)$[title=$biblio-title$]$endif$
+\printbibliography[heading=none]
 $endif$
 
 $endif$
