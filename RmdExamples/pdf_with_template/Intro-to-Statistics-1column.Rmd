@@ -40,7 +40,6 @@ library(tidyverse)
 library(patchwork)
 library(quantities)
 library(broom)
-opts_chunk$set(fig.align = "center", message = FALSE, warning = FALSE, echo = FALSE)
 theme_set(theme_bw()+
     theme(text=element_text(size=10),
           strip.background = element_blank(),
@@ -56,8 +55,8 @@ knit_print.data.frame <- function(x, ...) {
     res <- paste(c("", "", kable(x)), collapse = "\n")
     asis_output(res)
 }
-opts_chunk$set(fig.align = "center", message = FALSE, warning = FALSE, echo = FALSE)
 registerS3method("knit_print", "data.frame", knit_print.data.frame)
+opts_chunk$set(fig.align = "center", message = FALSE, warning = FALSE, echo = FALSE)
 ```
 
 # Why are statistical tools necessary in physical science?
