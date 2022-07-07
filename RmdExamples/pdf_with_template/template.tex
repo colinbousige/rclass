@@ -356,6 +356,7 @@ $if(subtitle)$
 $if(beamer)$
 $else$
 \usepackage{etoolbox}
+
 \makeatletter
 \providecommand{\subtitle}[1]{% add subtitle to \maketitle
   \apptocmd{\@title}{\par {\large #1 \par}}{}{}
@@ -365,7 +366,7 @@ $endif$
 \subtitle{$subtitle$}
 $endif$
 $if(twocolumn)$
-\author{$for(author)$\MakeUppercase{$author.name$}$if(author.affiliation)$\\\small{$author.affiliation$}$endif$$if(author.email)$\\\small{$author.email$}$endif$$sep$ \\\vskip 0.5em $endfor$}
+\author{$for(author)$\MakeUppercase{$author.name$}$if(author.affiliation)$\thanks{~$author.affiliation$}$endif$$if(author.email)$\thanks{~$author.email$}$endif$$sep$ $endfor$}
 $else$
 \author{$for(author)$\MakeUppercase{$author.name$}$if(author.email)$\footnote{~Email: $author.email$}$endif$$if(author.affiliation)$\\\small{$author.affiliation$}$endif$$sep$ \\\vskip 0.5em $endfor$}
 $endif$
@@ -385,12 +386,13 @@ $endif$
 % Jesus, okay, everything above this comment is default Pandoc LaTeX template. -----
 % ----------------------------------------------------------------------------------
 % I think I had assumed beamer and LaTex were somehow different templates.
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 
-\makeatletter
-\renewcommand*{\@fnsymbol}[1]{\ensuremath{\ifcase#1\or *\or \dagger\or \ddagger\or
-   \mathsection\or \mathparagraph\or \|\or **\or \dagger\dagger
-   \or \ddagger\ddagger \else\@ctrerr\fi}}
-\makeatother
+% \makeatletter
+% \renewcommand*{\@fnsymbol}[1]{\ensuremath{\ifcase#1\or *\or \dagger\or \ddagger\or
+%    \mathsection\or \mathparagraph\or \|\or **\or \dagger\dagger
+%    \or \ddagger\ddagger \else\@ctrerr\fi}}
+% \makeatother
 
 \usepackage{kantlipsum}
 
@@ -433,6 +435,9 @@ $endif$
 
 \date{}
 
+
+
+\usepackage{fontawesome}
 \usepackage{titlesec}
 \usepackage{titletoc}
 \setlength{\headheight}{14pt}
@@ -699,6 +704,7 @@ $endif$
 \usepackage{pifont}
 \usepackage{indentfirst}
 \usepackage{tikz}
+\usepackage[hang,flushmargin]{footmisc}
 \setlength{\labelnumberwidth}{16pt}
 
 $for(header-includes)$
@@ -755,7 +761,6 @@ $if(title)$
     $if(showdate)$\blfootnote{Version date: $date$}$endif$
     
     \vskip 13.5pt\relax \normalsize\fontsize{11}{12} 
-    \saythanks
     % $if(sansitup)$
     %     $if(anonymous)$\hfill $else$$for(author)$\MakeUppercase{\textsf{\large $author.name$}}\footnote{~Email: $author.email$}\par \small{$author.affiliation$}  $sep$ \par $endfor$ $endif$
     % $else$
@@ -778,6 +783,7 @@ $if(twocolumn)$
         \vskip 10pt
       \end{abstract}
     \end{@twocolumnfalse}]
+    \saythanks
     $if(toc)$
     {
     \makeatletter\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{2.3em}}\makeatother
@@ -842,6 +848,9 @@ $else$
     $endif$
 
 $endif$ % removetitleabstract
+
+\setcounter{footnote}{0} 
+\renewcommand{\thefootnote}{\arabic{footnote}}
 
 $for(include-before)$
 $include-before$
