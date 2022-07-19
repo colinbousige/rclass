@@ -1,13 +1,6 @@
 # Working with units and experimental errors
 
-<style type="text/css">
-blockquote {
-  background: #E9F9FF;
-  border-left: 5px solid #026086;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-}
-</style>
+
 
 ## Working with units
 
@@ -50,6 +43,7 @@ set_units(1:10, units(T), mode="standard")
 
 - You can give units to table columns:
 ```{r}
+#| message: false
 library(tidyverse)
 starwars
 starwars %>% 
@@ -58,7 +52,7 @@ starwars %>%
 ```
 
 - You can plot using units and easily convert between units while plotting:
-```{r, error=TRUE, warning=FALSE}
+```{r, error=TRUE, warning=FALSE, message=FALSE}
 p <- starwars %>% 
     mutate(height = set_units(height,"cm"),
            mass   = set_units(mass,"kg")) %>% 

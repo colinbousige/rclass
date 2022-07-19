@@ -1,14 +1,5 @@
 # Graphical interfaces with Shiny
 
-<style type="text/css">
-blockquote {
-  background: #E9F9FF;
-  border-left: 5px solid #026086;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-}
-</style>
-
 You have had a preview of a `shiny` interface in the previous section with the interactive parameter input in a Rmarkdown file.
 
 Using the `shiny` package, you can actually easily build an interactive graphical user interface (GUI) in which you will be able to set parameters (values, files...), visualize the outputs (plots, images, tables...), and write files as output. This is very useful when you have to always repeat the same task with a varying input parameter, for example.
@@ -72,7 +63,7 @@ In the `ui <- fluidPage(...)`{.R} item, you define the layout of your applicatio
 
 - `titlePanel("Title")`{.R} creates a title
 - `sidebarLayout()`{.R} separates the layout in a short one on the left (`sidebarPanel()`{.R}) and a main one on the right (`mainPanel()`{.R})
-- `sliderInput("name_of_slider", "text to display", min=min_value, max=max_value, value=current_value, step=step_value)`{.R} creates a slider to input a value. This value will be retrieved by `input$name_of_slider`{.R} in the `server()`{.R} function.
+- `sliderInput("name_of_slider", "text to display", min=min_value, max=max_value,`{.R} `value=current_value, step=step_value)` creates a slider to input a value. This value will be retrieved by `input$name_of_slider`{.R} in the `server()`{.R} function.
 - `plotOutput("name_of_plot")`{.R} plots the result of `output$name_of_plot`{.R} defined in the `server()`{.R} function.
 
 See the [guide to application layout](https://shiny.rstudio.com/articles/layout-guide.html) for more layout options. I also recommend taking a look at the packages [`shinydashboard`](https://rstudio.github.io/shinydashboard/get_started.html) and [`shinymaterial`](https://github.com/ericrayanderson/shinymaterial).
@@ -490,7 +481,7 @@ The only "problem" with this solution is that the html file that is produced wil
 
 Another solution consists in deploying your app on [shinyapps.io](https://www.shinyapps.io/) and embedding the page in your document with:
 
-````
+````r
 `r ''````{r, echo=FALSE}
 knitr::include_app("https://cbousige.shinyapps.io/shiny_example/", 
                     height = "800px")

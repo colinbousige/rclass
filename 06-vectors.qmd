@@ -1,14 +1,5 @@
 # Vectors
 
-<style type="text/css">
-blockquote {
-  background: #E9F9FF;
-  border-left: 5px solid #026086;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-}
-</style>
-
 **R is a vectorized language** with built-in arithmetic and relational operators, mathematical functions and types of number. It means that each mathematical function and operator works on a set of data rather than a single scalar value as traditional computer language do, and thus __formal looping can _usually_ be avoided__.
 
 ## Different ways of defining a vector
@@ -141,7 +132,10 @@ x <- c(5, 3, 4, 9, 3)
 
 - To access values of a vector `x`, use the `x[i]` notation, where `i` is the index you want to access. `i` can be (and in fact, is always) a vector.
 
-> **Attention:** In R, indexes numbering start at **1** !!!
+:::{.callout-warning}
+## Attention
+In R, indexes numbering start at **1** !!!
+:::
 
 ```{r, warnings=FALSE}
 # accessing by indexes

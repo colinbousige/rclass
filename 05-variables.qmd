@@ -1,23 +1,17 @@
 # Variables, booleans and strings
 
-<style type="text/css">
-blockquote {
-  background: #E9F9FF;
-  border-left: 5px solid #026086;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-}
-</style>
-
 In R, the variable attribution is done through the arrow operator `<-`{.R} instead of the `=`{.R} one – for historical reasons. The equal sign, `=`{.R}, would still work though, but you should just take up the habit of using `<-`{.R}.
 
 In reality, scalar numbers don't exist in R, they are simply 1 element vector: this is why `[1]` is printed in the following outputs.
 
 To understand what you will encounter further down this class, inputs (what you type in the R script and hit Ctrl+⏎ (⌘+⏎)) are the shaded areas with syntax coloring, while outputs (what R returns) are the shaded are underneath starting with `## [1]`. In case the output spans several lines, each line would start with `## [x]` where `x` is the index of the first element printed on the line.
 
-> Note that different instructions are usually given on separated lines (*i.e.* one instruction per line), but several instructions can be written on a single line if separated with a `;` sign. 
+:::{.callout-note} 
 
-> In R code, what is written after the "#" sign is a comment and is thus not interpreted.
+Note that different instructions are usually given on separated lines (*i.e.* one instruction per line), but several instructions can be written on a single line if separated with a `;` sign. 
+
+In R code, what is written after the "#" sign is a comment and is thus not interpreted.
+:::
 
 ## Scalars and booleans
 
@@ -102,15 +96,15 @@ is.na(x)
 !is.na(x)
 ```
 
-A number can by converted to a boolean using `as.logical()`{.R}: any number non 0 is equivalent to TRUE, and 0 is FALSE.
+A number can by converted to a boolean using `as.logical()`{.R}: any number non 0 is equivalent to `TRUE`, and 0 is `FALSE`.
 ```{r, warnings=FALSE}
 as.logical(1)
 as.logical(0)
 ```
 
 
-<details>
-<summary>**Complex values**</summary>
+:::{.callout-note collapse="true"}
+## Complex values
 R also natively handles complex values:
 ```{r, warnings=FALSE, error=TRUE}
 1+i   # not a valid complex value
@@ -120,7 +114,7 @@ sqrt(-1)
 sqrt(-1 + 0i)
 Im(exp(1i*pi))
 ```
-</details>
+:::
 
 
 
@@ -169,12 +163,14 @@ strsplit(phrase, " ")         # returns a list
 unlist(strsplit(phrase, " ")) # returns a vector
 ```
 
-> **Attention!!**
-> ```{r, warnings=FALSE, error=TRUE}
-> phrase2 <- "1234"
-> phrase2 - 4321             # won't work: string - double
-> as.numeric(phrase2) - 4321 # conversion of string to double
-> ```
+:::{.callout-warning}
+## Attention!!
+```{r, warnings=FALSE, error=TRUE}
+phrase2 <- "1234"
+phrase2 - 4321             # won't work: string - double
+as.numeric(phrase2) - 4321 # conversion of string to double
+```
+:::
 
 For more complex operations, see the `stringr` package and its [cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf).
 

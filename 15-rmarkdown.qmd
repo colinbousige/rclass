@@ -1,21 +1,12 @@
 # Writing documents with Rmarkdown
 
-<style type="text/css">
-blockquote {
-  background: #E9F9FF;
-  border-left: 5px solid #026086;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-}
-</style>
-
 ## What is markdown?
 
 Markdown is a simplified language that can be used to produce a variety of rich documents: a single .md file can be compiled and outputted to .docx, .odt, .html, .rtf, .pdf or .tex. This output format as well as various options (font size, template, table of contents, numbered sections...) are specified in a YAML header, *i.e.* text between two lines like that `---` (we'll see an example later).
 
 In markdown can be embedded $\LaTeX$ code for displaying math expressions, html tags for more complicated html stuff, and the rest of the formatting is given by a few easy commands:
 
-```
+```markdown
 # Title
 ## sub-title
 ### sub-sub-title
@@ -56,7 +47,7 @@ For more commands, you can for example get a digested cheat-sheet [here](https:/
 
 Rmarkdown is basically the same thing as markdown (extension: .Rmd instead of .md), with the difference that code chunks in which you specify the language between accolades *will be computed and the result will be displayed*.
 
-````
+````r
 ```r
 # Not computed
 1+1
@@ -343,6 +334,12 @@ The "Knit with parameters" launches a `Shiny` user interface allowing interactiv
 
 But the installation is a tad complicated for the non initiate, and, well, it is just like Rmarkdown but less easy to use and share, in my opinion. But if you mostly work with python, then you have to get used to it since Rmarkdown is better suited for R.
 
+
+## Welcome to the future: Quarto
+
+[Quarto](https://quarto.org/) is a standalone project from the Rstudio team built on [pandoc](https://pandoc.org/) that lookis a lot like Rmarkdown, but tailored not only for R but also for python, julia and observable.
+
+All your `Rmd` files should be directly compatible with quarto upon changing the extension name to `qmd`. Then I invite you to explore the [new possibilities offerd by quarto](https://quarto.org/docs/guide/).
 
 
 ## Exercise {#exo-rmd}

@@ -1,14 +1,5 @@
 # Plotting
 
-<style type="text/css">
-blockquote {
-  background: #E9F9FF;
-  border-left: 5px solid #026086;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-}
-</style>
-
 **Now that we have seen most of the basics, let's start the fun stuff !**
 
 There are two main ways to plot data in R:
@@ -94,8 +85,8 @@ legend("topleft",
 
 Most needs should be covered with this simple plot that can be adapted.
 
-<details>
-    <summary>**Pro Tip: make a _code snippet_**</summary>
+:::{.callout-note collapse="true"}
+## Pro Tip: make a _code snippet_
 
 Go to Rstudio **Preferences**, **Code**, **Edit code snippets**, and add the following lines:
 
@@ -143,11 +134,11 @@ snippet ggplot
         geom_smooth() +
         theme_bw()
 ```
-</details>
+:::
 
+:::{.callout-note collapse="true"}
 
-<details>
-    <summary>**Going further**</summary>
+## Going further
 
 #### Panel plots
 
@@ -208,7 +199,7 @@ points(x, jitter(rep(.01,length(x)), amount=.01),
 ```
 
 
-</details>
+:::
 
 
 <details>
@@ -349,7 +340,8 @@ p + geom_point(alpha=0.5) + geom_smooth()
 It is often easier to grasp a multi-variable problem by plotting all our data in a facet plot using `facet_wrap(~variable1)`{.R} if you want one variable changing in each plot:
 ```{r, warning = FALSE, message=FALSE}
 colors <- rainbow(length(unique(diamonds$clarity)))
-p <- ggplot(diamonds, aes(x = price, y = carat, color = clarity)) + 
+p <- ggplot(diamonds, 
+            aes(x = price, y = carat, color = clarity)) + 
         geom_point(alpha = 0.5, size = 1) + 
         geom_smooth(color = "black") + 
         scale_colour_manual(values = colors, name = "Clarity") +
@@ -359,7 +351,8 @@ p
 
 ... or `facet_grid(y_variable ~ x_variable)`{.R} if you want to see one variable as a function of another:
 ```{r, warning = FALSE, message=FALSE, fig.asp=1.4}
-p <- ggplot(diamonds, aes(x = price, y = carat, color = color)) + 
+p <- ggplot(diamonds, 
+            aes(x = price, y = carat, color = color)) + 
         geom_point(alpha = 0.8, size = 1) + 
         geom_smooth(method = "lm", color = "black") + 
         scale_colour_brewer(palette = "Spectral", name = "Color") +
@@ -369,7 +362,8 @@ p
 
 Or by adding another graphical parameter such as the size of the points:
 ```{r, warnings=FALSE}
-p <- ggplot(diamonds, aes(x = price, y = carat, color = clarity, size = cut)) + 
+p <- ggplot(diamonds, 
+            aes(x = price, y = carat, color = clarity, size = cut)) + 
         geom_point(alpha = 0.5) + 
         scale_colour_manual(values = colors, name = "Clarity")
 p
@@ -405,7 +399,9 @@ You can define all the parameters you want, like this (hit `?theme`{.R} like usu
 
 ```{r, warnings=FALSE}
 my_theme <- theme_bw()+
-            theme(text = element_text(size = 18, family = "Times", face = "bold"),
+            theme(text = element_text(size = 18, 
+                                      family = "Times", 
+                                      face = "bold"),
                   axis.ticks = element_line(size = 1),
                   legend.text = element_text(size = 14, family = "Times"),
                   panel.border = element_rect(size = 2),

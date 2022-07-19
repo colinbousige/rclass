@@ -24,8 +24,8 @@ If you don't want to use Rstudio but rather want to keep with your favorite text
 - I still recommend [downloading](https://cran.r-project.org/) and installing R via CRAN (I had some packages problems due to a `homebrew` installation on Mac).
 - To be fully operational with Rmarkdown files without using Rstudio, you need to [install `pandoc`](https://pandoc.org/installing.html).
 
-<details>
-    <summary>**Configuring VS Code**</summary>
+:::{.callout-caution collapse="true"}
+## Configuring VS Code
 
 I personally use [VS Code](https://code.visualstudio.com/). 
 
@@ -149,11 +149,11 @@ if (interactive() && Sys.getenv("TERM_PROGRAM") == "vscode") {
 
 </details>
 
-</details>
+:::
 
 
-<details>
-    <summary>**Configuring Sublime Text**</summary>
+:::{.callout-caution collapse="true"}
+## Configuring Sublime Text
 
 I have personally used [Sublime Text 3](https://www.sublimetext.com/3) for a long time, but switched to [VS Code](https://code.visualstudio.com/) recently. Here is what I used to do: 
 
@@ -178,7 +178,7 @@ I have personally used [Sublime Text 3](https://www.sublimetext.com/3) for a lon
 - Select `Terminus` as the destination of SendCode
 - You should be good to go: ⌘+⏎ will send the current line/selection to the radian console, ⌘+B will render the current Rmd file, ⌘+\\ will set the working directory to the current file's folder.
 
-</details>
+:::
 
 ## In any case: install LaTeX
 
@@ -203,12 +203,15 @@ tinytex::uninstall_tinytex()
 
 ## Working in Rstudio
 
-> Remember: **Always Work with Projects!!**
+:::{.callout-warning}
+##  Remember
+**Always Work with Projects!!**
+:::
 
 
-Launch Rstudio, click `File > New Project`, and follow the dialog box (existing directory or not, etc.). When you have several ongoing projects, you can switch between them using the Project navigator (see Fig. \@ref(fig:rstudio)).
+Launch Rstudio, click `File > New Project`, and follow the dialog box (existing directory or not, etc.). When you have several ongoing projects, you can switch between them using the Project navigator (see @fig-rstudio).
 
-```{r rstudio, echo=FALSE, fig.cap="The Rstudio interface."}
+```{r fig-rstudio, echo=FALSE, fig.cap="The Rstudio interface."}
 knitr::include_graphics("Plots/rstudio.png")
 ```
 
@@ -217,7 +220,7 @@ The great interest of working with Projects is that the default working director
 - You won't have to write the absolute path towards your file, like `read_function("C://path/to/your_file.txt")`{.R}, path that is unlikely to be the same depending on the computer it is located on. This helps you share your whole project folder with others, or just move it around on your computer and still have a working code.
 - You won't have to start your script by a `setwd("/path/to/your/data")`{.R} command (for set working directory), which is much better for the same reasons as above.
 
-Write whatever you want in the "Source code" panel and save it in a `.R` (or `.Rmd`) file, and __run__ it by selecting it and hitting ⌘+⏎ (Ctrl+⏎ on Windows, Linux). If no text is selected, hitting ⌘+⏎ will launch the current line. You can see the file contents of your project in the project's file explorer (see bottom right corner of Fig. \@ref(fig:rstudio)).
+Write whatever you want in the "Source code" panel and save it in a `.R` (or `.Rmd`) file, and __run__ it by selecting it and hitting ⌘+⏎ (Ctrl+⏎ on Windows, Linux). If no text is selected, hitting ⌘+⏎ will launch the current line. You can see the file contents of your project in the project's file explorer (see bottom right corner of @fig-rstudio).
 
 The code output will be seen in the "R Console" panel if it's a text, or in the "Graph" panel if it's a graph. A list of all defined variables and functions is available in the "Environment" panel. You can also directly write and run code in the "R Console" panel, if it's code you don't care to save in a script (like installing a package or whatever).
 
@@ -246,13 +249,13 @@ install.packages("ggforce")
 
 Later on, a package can be loaded by calling:
 
-```
+```r
 library(package_name)
 ```
 or by checking it in the "Graphs" panel under the "Packages" tab.
 If you want to access a function from a given package without loading it (or because several packages define the same function and you want to specify which one to use), type:
 
-```
+```r
 package_name::function_name(parameters)
 ```
 
