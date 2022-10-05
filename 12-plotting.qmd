@@ -92,47 +92,42 @@ Go to Rstudio **Preferences**, **Code**, **Edit code snippets**, and add the fol
 
 ```r
 snippet plot
-    #pdf("xxx.pdf", height=6, width=8)
-    par(cex.lab=1.7, cex.axis=1.7, mgp = c(3, 0.9, 0), 
-        tck=0.02, mar=c(4.5, 4.5, 1, 1), lwd = 3, las=1)
-    plot(${1:x},${2:y},
-        type="l",      # plot with a line
-        ylim=c( , ),
-        xlim=c( , ),
-        lwd=2,         # width of the line
-        lty=1,         # type of line
-        axes=FALSE,    # do not show axes
-        xlab="${1:x}", # x label
-        ylab="${2:y}", # y label
-        main="")       # Title
-    legend("topright",
-        cex=1.5,       # size of the text
-        pch=c(),       # list of point types
-        lty=c(),       # list of line types
-        lwd=c(),       # list of line widths
-        col=c(),       # list of line colors
-        bty="n",       # no box around the legend
-        legend=c()     # list of legend labels
-        )
-    # Draw axes with minor ticks
-    axis(1, at=seq(0,1,.2), labels=TRUE)
-    axis(1, at=seq(0,1,.1), labels=FALSE, tck=0.01)
-    axis(3, at=seq(0,1,.2), labels=FALSE)
-    axis(3, at=seq(0,1,.1), labels=FALSE, tck=0.01)
-    par(mgp = c(2.5, 0.2, 0))
-    axis(2, at=seq(0,10,1), labels=TRUE)
-    axis(2, at=seq(0,10,.5), labels=FALSE, tck=0.01)
-    axis(4, at=seq(0,10,1), labels=FALSE)
-    axis(4, at=seq(0,10,.5), labels=FALSE, tck=0.01)
-    box() # drow box around plot
-    #dev.off()
+	#pdf("xxx.pdf", height=6, width=8)
+	par(cex.lab=1.7, cex.axis=1.7, mgp = c(3, 0.9, 0), 
+		tck=0.02, mar=c(4.5, 4.5, 1, 1), lwd = 3, las=1)
+	plot(${1:x},${2:y},
+		type="l",      # plot with a line
+		ylim=c( , ),
+		xlim=c( , ),
+		lwd=2,         # width of the line
+		lty=1,         # type of line
+		axes=FALSE,    # do not show axes
+		xlab="${1:x}", # x label
+		ylab="${2:y}", # y label
+		main="")       # Title
+	legend("topright",
+		cex=1.5,       # size of the text
+		pch=c(),       # list of point types
+		lty=c(),       # list of line types
+		lwd=c(),       # list of line widths
+		col=c(),       # list of line colors
+		bty="n",       # no box around the legend
+		legend=c()     # list of legend labels
+		)
+	# Draw axes with minor ticks
+	axis(1, at=seq(0,1,.2), labels=TRUE)
+	axis(1, at=seq(0,1,.1), labels=FALSE, tck=0.01)
+	axis(3, at=seq(0,1,.2), labels=FALSE)
+	axis(3, at=seq(0,1,.1), labels=FALSE, tck=0.01)
+	par(mgp = c(2.5, 0.2, 0))
+	axis(2, at=seq(0,10,1), labels=TRUE)
+	axis(2, at=seq(0,10,.5), labels=FALSE, tck=0.01)
+	axis(4, at=seq(0,10,1), labels=FALSE)
+	axis(4, at=seq(0,10,.5), labels=FALSE, tck=0.01)
+	box() # drow box around plot
+	#dev.off()
 
-snippet ggplot
-    library(ggplot2)
-    ggplot(data=${1:df}, aes(x=${2:x}, y=${3:y}, color=${4:z}, size=${5:w})) +
-        geom_point() +
-        geom_smooth() +
-        theme_bw()
+
 ```
 :::
 
@@ -410,6 +405,23 @@ my_theme <- theme_bw()+
                   )
 p + my_theme
 ```
+
+:::{.callout-note collapse="true"}
+## Pro Tip: make a _code snippet_
+
+Go to Rstudio **Preferences**, **Code**, **Edit code snippets**, and add the following lines:
+```r
+snippet ggplot
+	%>%
+	ggplot(aes(x=${1:x}, y=${2:y}, color=${3:z})) +
+		geom_point() +
+		labs(x = "X label", 
+			 y = "Y label",
+			 color = "Color label") +
+		theme_bw()
+```
+:::
+
 
 ### Making interactive plots with ggplot2 and plotly
 
