@@ -1,9 +1,5 @@
 # Fitting
 
-## Linear fitting with `lm()`
-
-### Single variable
-
 ```{r include=FALSE, warning = FALSE, message=FALSE, cache=FALSE}
 rm(list = ls())
 library(ggplot2)
@@ -11,6 +7,183 @@ library(patchwork)
 library(tidyverse)
 theme_set(theme_bw())
 ```
+
+## What does it mean to "fit data"?
+
+It might sound like a trivial question, but after years of teaching this class, I have realized it is not such an evident concept to all students. So, let's take a look at some experimental measurements of the oscillation period *T* of a pendulum. We have measured this period for various lengths *L* of the pendulum, and it results in such an evolution:
+
+```{r}
+#| label: fig-somedata
+#| fig-cap: "Some experimental data showing the period of a pendulum measured as a function of its lenght."
+#| echo: FALSE
+#| warning: FALSE
+#| message: FALSE
+period <- function(l,g){
+    2*pi*sqrt(l/g)
+}
+df <- tibble(l = seq(.2,20,2),
+             T = period(l,9.81) + 1*runif(length(l)),
+             dT = .2+.1*runif(length(l))
+             )
+df %>% 
+    ggplot(aes(x = l, y = T)) +
+       geom_point(alpha=0.5, size=2)+
+       coord_cartesian(ylim=c(0,10))+
+       geom_errorbar(aes(ymin=T-dT, ymax=T+dT), width=0)+
+       labs(x= "Pendulum length L [m]",
+            y= "Period [s]")
+```
+
+Now, if you recall your high school physics class, you might remember that the period of the pendulum *T* is given by:
+
+$$
+T = 2\pi\sqrt{\frac{L}{g}},
+$$ {#eq-period}
+
+where *L* is the pendulum length and *g* the acceleration of gravity. Such and experimental design, *i.e.* measuring *T* as a function of *L*, is therefore a means to determining the value of *g*.
+
+For this, we need to perform a **fit** of our experimental data by **a physical model**, *i.e.* the one of @eq-period. When doing so, one has to distinguish between:
+
+- **Variables:** the period *T* and the pendulum length *L* are variables, they are the quantities that vary for a given parameter.
+- **Parameters:** the gravity *g* is a parameter of the fit that we wich to determine, *i.e.* a constant.
+
+So now, what exactly *is* a fit?
+
+Fitting a model to experimental data means **finding the parameters of the model that best describe our data**. How do we know the parameters are the best ones to describe our data? For this, we use a tool called the residual error function, $\chi^2$, such as:
+
+$$
+\chi^2=\sum_{i=1}^N\left(y_i(x_i)-m_i(x_i, \{p\})\right)^2,
+$$
+where $y_i(x_i)$ are the *N* experimental observations of the value $y$ as a function of $x$, and $m_i(x_i, \{p\})$ is the value of the model as a function of $x$ and the ensemble of parameters $\{p\}$. We use the *squared* sum of residuals and not the simple sum of residuals because the residuals can either be positive or negative, and we are interested in minimizing the total distance from our model to our experimental data.
+
+Applied to our pendulum problem, we thus get:
+
+$$
+\chi^2=\sum_{i=1}^N\left(T_i-2\pi\sqrt{\frac{L_i}{g}}\right)^2,
+$$
+
+So, let's try a few values of *g* and see what is the resulting residual error $\chi^2$ in each case:
+
+```{r}
+#| label: fig-somedata-fitted
+#| fig-cap: "Measuring the residual error $\\chi^2$ for different values of the parameter *g*. The distances from each experimental data point to the model (*i.e.* the residuals) are shown in blue. The sum of these squared residuals yields the residual error $\\chi^2$."
+#| fig-height: 7
+#| echo: FALSE
+#| warning: FALSE
+#| message: FALSE
+fit <- df %>% nls(data=.,
+            T~period(l,g),
+            start=list(g=10))
+g <- as.numeric(round(coef(fit),3))
+
+df$fit <- predict(fit)
+fitted <- tibble(l=seq(0,20,.01),
+                 T=period(l,g))
+chi1   <- round(sum((df$fit-df$T)^2),3)
+df$fit2 <- period(df$l, 7)
+fitted2 <- tibble(l=seq(0,20,.01),
+                  T=period(l,7))
+chi2    <- round(sum((df$fit2-df$T)^2),3)
+df$fit3 <- period(df$l, 11)
+fitted3 <- tibble(l=seq(0,20,.01),
+                  T=period(l,11))
+chi3    <- round(sum((df$fit3-df$T)^2),3)
+df$fit4 <- period(df$l, 6)
+fitted4 <- tibble(l=seq(0,20,.01),
+                  T=period(l,6))
+chi4    <- round(sum((df$fit4-df$T)^2),3)
+
+P1 <- df %>% 
+    ggplot(aes(x = l, y = T)) +
+       geom_point(alpha=0.5, size=2)+
+       coord_cartesian(ylim=c(0,10))+
+       geom_line(data=fitted, color="red")+
+       geom_segment(aes(xend=l, yend=fit), color="royalblue", linewidth=1)+
+       labs(title = substitute(paste("g = ",~g,~m^{2},"/s"), list(g=g)),
+            subtitle = substitute(paste(chi^2,"= ",~chi1), list(chi1=chi1)),
+            x= "Pendulum length L [m]",
+            y= "Period [s]")
+P2 <- df %>% 
+    ggplot(aes(x = l, y = T)) +
+       geom_point(alpha=0.5, size=2)+
+       coord_cartesian(ylim=c(0,10))+
+       geom_line(data=fitted2, color="red", alpha=.5, lty=2)+
+       geom_segment(aes(xend=l, yend=fit2), color="royalblue", linewidth=1, alpha=.5)+
+       labs(title = substitute(paste("g = ",~g,~m^{2},"/s"), list(g=7)),
+            subtitle = substitute(paste(chi^2,"= ",~chi2), list(chi2=chi2)),
+            x= "Pendulum length L [m]",
+            y= "Period [s]")
+P3 <- df %>% 
+    ggplot(aes(x = l, y = T)) +
+       geom_point(alpha=0.5, size=2)+
+       coord_cartesian(ylim=c(0,10))+
+       geom_line(data=fitted3, color="red", alpha=.5, lty=2)+
+       geom_segment(aes(xend=l, yend=fit3), color="royalblue", linewidth=1, alpha=.5)+
+       labs(title = substitute(paste("g = ",~g,~m^{2},"/s"), list(g=11)),
+            subtitle = substitute(paste(chi^2,"= ",~chi3), list(chi3=chi3)),
+            x= "Pendulum length L [m]",
+            y= "Period [s]")
+P4 <- df %>% 
+    ggplot(aes(x = l, y = T)) +
+       geom_point(alpha=0.5, size=2)+
+       coord_cartesian(ylim=c(0,10))+
+       geom_line(data=fitted4, color="red", alpha=.5, lty=2)+
+       geom_segment(aes(xend=l, yend=fit4), color="royalblue", linewidth=1, alpha=.5)+
+       labs(title = substitute(paste("g = ",~g,~m^{2},"/s"), list(g=6)),
+            subtitle = substitute(paste(chi^2,"= ",~chi4), list(chi4=chi4)),
+            x= "Pendulum length L [m]",
+            y= "Period [s]")
+P4+P2+P1+P3
+```
+
+We see that there is a sweet spot in the values of *g* for which $\chi^2$ is minimum:
+
+```{r}
+#| label: fig-somedata-fitted-chi
+#| fig-cap: "Evolution of $\\chi^2$ as a function of *g*. The sweet spot is found for the red value."
+#| fig-height: 4
+#| echo: FALSE
+#| warning: FALSE
+#| message: FALSE
+df$fit5 <- period(df$l, 8)
+fitted5 <- tibble(l=seq(0,20,.01), T=period(l,8))
+chi5    <- round(sum((df$fit5-df$T)^2),3)
+df$fit6 <- period(df$l, 10)
+fitted6 <- tibble(l=seq(0,20,.01), T=period(l,10))
+chi6    <- round(sum((df$fit6-df$T)^2),3)
+df$fit7 <- period(df$l, 9)
+fitted7 <- tibble(l=seq(0,20,.01), T=period(l,9))
+chi7    <- round(sum((df$fit7-df$T)^2),3)
+X <- tibble(G=c(g,7,11,6,8,10,9),
+            x2=c(chi1, chi2,chi3,chi4,chi5,chi6,chi7))
+X %>% 
+    ggplot(aes(x = G, y = x2)) +
+       geom_point(size=2)+
+       geom_point(aes(x=g,y=chi1),size=4, color="red")+
+       labs(x=expression(paste("g [",m^{2},"/s]")),
+        y=expression(chi^2),
+       )
+```
+
+::: {.callout-note}
+
+## Important
+Fitting a model to experimental data is finding this sweet spot for the ensemble of parameters.
+:::
+
+There are numerous algorithms out there to perform this optimization, but we will not delve into their mechanics. 
+
+Now, let's get back to R. You will mainly use two functions to perform these optimizations:
+
+- When your experimental data follow a linear trend: `lm()`{.R}
+- The rest of the time: `nls()`{.R}
+
+
+
+## Linear fitting with `lm()`
+
+<!-- ### Single variable -->
+
 
 Let's learn how to do simple linear fits with R's `lm()`{.R} and plot the results. Let's start by creating some fake data:
 
