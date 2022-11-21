@@ -373,6 +373,32 @@ p <- ggplot(diamonds %>% sample_n(500),
 p
 ```
 
+
+### Writing maths in the plot
+
+To write mathematical expressions, including subscripts/superscripts, or more complex mathematical formulas, the easiest way is to use $\LaTeX$ expressions thanks to the `latex2exp` package. Just write your text within a `latex2exp::TeX()`{.R} function, and that is all. Since R 4.0, it is recommended to use the raw string literal syntax. The syntax looks like `r"(...)"`, where `...` can contain any character sequence, including `\` (no need to escape the `\` character).
+
+Also, in case you have a variables to add in your string, it is often clearer/easier to use `glue::glue()`{.R} instead of `paste()`{.R} or `paste0()`{.R}. Then, you can combine the two, like so:
+
+
+```{r, echo=TRUE, warnings=FALSE}
+library(latex2exp)
+library(glue)
+A <- 1.2
+B <- 4
+diamonds %>% sample_n(100) %>% 
+    ggplot(aes(x = carat, y = price))+
+        geom_point(alpha = 0.5) +
+        labs(x = "Carat",
+             y = "Price",
+             title = TeX(glue(r'(This is some $\,\LaTeX\,$ maths: $\,\sum_i^{N}\frac{x_i^{[A]}}{[B]}$)', 
+                        .open = "[", .close = "]"))
+            )
+```
+
+For more complicated stuff, I however advise to not use the `TeX()`{.R} function and write directly your text in $\LaTeX$, then [export your plot with `tikzDevice` as a .tex file and compile it to pdf](#a-single-plot).
+
+
 ### Theming
 
 It is very easy to keep the same theme on all your graphs thanks to the `theme()`{.R} function.
@@ -497,13 +523,13 @@ plot(x,y,
 dev.off()
 ```
 
-You can also export the graph as a `.tex` file using `tikz()`{.R}, which allows you to use $\LaTeX$ mathematical expressions (don't forget to escape the `\` character):
+You can also export the graph as a `.tex` file using `tikz()`{.R}, which allows you to use $\LaTeX$ mathematical expressions (don't forget to escape the `\` character or to use raw string literal syntax `r"(...)"`):
 ```r
 library(tikzDevice)
 tikz("plot.tex",height=6, width=8, pointsize = 10, standAlone=TRUE)
 plot(x,y,
      type="l",
-     xlab="$\\omega_i$"
+     xlab=r"($\omega_i$)"
      )
 dev.off()
 tools::texi2pdf("plot.tex") # compile the tex file to pdf

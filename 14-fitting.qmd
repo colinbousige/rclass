@@ -5,6 +5,8 @@ rm(list = ls())
 library(ggplot2)
 library(patchwork)
 library(tidyverse)
+library(latex2exp)
+library(glue)
 theme_set(theme_bw())
 ```
 
@@ -105,8 +107,8 @@ P1 <- df %>%
        coord_cartesian(ylim=c(0,10))+
        geom_line(data=fitted, color="red")+
        geom_segment(aes(xend=l, yend=fit), color="royalblue", linewidth=1)+
-       labs(title = substitute(paste("g = ",~g,~m^{2},"/s"), list(g=g)),
-            subtitle = substitute(paste(chi^2,"= ",~chi1), list(chi1=chi1)),
+       labs(title = TeX(glue(r"(g = {g} m$^{2}$/s)")),
+            subtitle = TeX(glue(r"($\chi^2= {chi1}$)")),
             x= "Pendulum length L [m]",
             y= "Period [s]")
 P2 <- df %>% 
@@ -115,8 +117,8 @@ P2 <- df %>%
        coord_cartesian(ylim=c(0,10))+
        geom_line(data=fitted2, color="red", alpha=.5, lty=2)+
        geom_segment(aes(xend=l, yend=fit2), color="royalblue", linewidth=1, alpha=.5)+
-       labs(title = substitute(paste("g = ",~g,~m^{2},"/s"), list(g=7)),
-            subtitle = substitute(paste(chi^2,"= ",~chi2), list(chi2=chi2)),
+       labs(title = TeX(glue(r"(g = 7 m$^{2}$/s)")),
+            subtitle = TeX(glue(r"($\chi^2= {chi2}$)")),
             x= "Pendulum length L [m]",
             y= "Period [s]")
 P3 <- df %>% 
@@ -125,8 +127,8 @@ P3 <- df %>%
        coord_cartesian(ylim=c(0,10))+
        geom_line(data=fitted3, color="red", alpha=.5, lty=2)+
        geom_segment(aes(xend=l, yend=fit3), color="royalblue", linewidth=1, alpha=.5)+
-       labs(title = substitute(paste("g = ",~g,~m^{2},"/s"), list(g=11)),
-            subtitle = substitute(paste(chi^2,"= ",~chi3), list(chi3=chi3)),
+       labs(title = TeX(glue(r"(g = 11 m$^{2}$/s)")),
+            subtitle = TeX(glue(r"($\chi^2= {chi3}$)")),
             x= "Pendulum length L [m]",
             y= "Period [s]")
 P4 <- df %>% 
@@ -135,8 +137,8 @@ P4 <- df %>%
        coord_cartesian(ylim=c(0,10))+
        geom_line(data=fitted4, color="red", alpha=.5, lty=2)+
        geom_segment(aes(xend=l, yend=fit4), color="royalblue", linewidth=1, alpha=.5)+
-       labs(title = substitute(paste("g = ",~g,~m^{2},"/s"), list(g=6)),
-            subtitle = substitute(paste(chi^2,"= ",~chi4), list(chi4=chi4)),
+       labs(title = TeX(glue(r"(g = 6 m$^{2}$/s)")),
+            subtitle = TeX(glue(r"($\chi^2= {chi4}$)")),
             x= "Pendulum length L [m]",
             y= "Period [s]")
 P4+P2+P1+P3
