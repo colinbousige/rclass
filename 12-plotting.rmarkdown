@@ -14,6 +14,7 @@ There are two main ways to plot data in R:
 
 
 ### Basic plotting
+
 ```{r, warnings=FALSE}
 x  <- seq(-3*pi,3*pi,length=50)
 y  <- sin(x)
@@ -27,9 +28,11 @@ df <- data.frame(x=x, y=y, z=z, w=z*y)
 plot(df)  # plot providing a multi-columns data.frame
 ```
 
+
 ### Adding some style
 OK, easy. Now let's do some tuning of this, because it's a tad ugly...
 Type in each command and see what they do.
+
 ```{r, warnings=FALSE}
 # create some fake data
 x  <- seq(-3*pi,3*pi,length=100)
@@ -82,6 +85,7 @@ legend("topleft",
     legend=c("sin(x)",expression("sin(x)"^2),expression("sin(x)"^3))
     )
 ```
+
 
 Most needs should be covered with this simple plot that can be adapted.
 
@@ -139,6 +143,7 @@ snippet plot
 
 Lets create a plot with different panels (a bit ugly without styling, you need to tweak the margins and text distance to plot with `par(mar(), mgp())`{.R} before each plot):
 
+
 ```{r, fig.height=6, fig.width=6}
 # some fake data
 x  <- seq(-10,10,1)
@@ -177,7 +182,9 @@ plot(d2,type="p")
 plot(d3,type="b")
 ```
 
+
 #### Barplots and densities
+
 
 
 ```{r, warnings=FALSE}
@@ -194,6 +201,7 @@ points(x, jitter(rep(.01,length(x)), amount=.01),
 ```
 
 
+
 :::
 
 
@@ -201,6 +209,7 @@ points(x, jitter(rep(.01,length(x)), amount=.01),
     <summary>**Exercise**</summary>
 
 Try reproducing these plots:
+
 
 ```{r, echo=FALSE}
 Gaussian <- function(x,x0,FWHM,A=1,y0=0){
@@ -229,6 +238,7 @@ axis(3, labels=FALSE)
 axis(4, labels=FALSE)
 ```
 
+
 </details>
 
 ## Advanced plotting using ggplot2
@@ -238,14 +248,18 @@ Further reading [here](https://ggplot2-book.org/introduction.html) and on the [c
 `ggplot2` is a package (now even available for python) that completely changes the methodology of plotting data. With `ggplot2`, data are gathered in a **tidy** `data.frame`{.R}, and each column can be used as a parameter to tweak colors, point size, etc.
 
 First things first, load the library :
+
 ```{r, message=FALSE, warnings=FALSE}
 library(ggplot2)
 ```
 
+
 Actually, `ggplot2` is attached to `tidyverse` so a simple:
+
 ```{r, message=FALSE, warnings=FALSE}
 library(tidyverse)
 ```
+
 is enough, as it will load `ggplot2` and most of the useful data manipulation libraries.
 
 ### The grammar of graphics
@@ -274,34 +288,43 @@ ggplot(data=<data>, aes(x=<x>, y=<y>, color=<z>, size=<w>))+
 
 Since a figure is worth a thousand words, let's get to it. We will use the dataset `diamonds` built-in with the `ggplot2` package. Let's have a look:
 
+
 ```{r, warnings=FALSE}
 diamonds
 ```
+
 
 `diamonds` contains 53940 lines and 10 columns in a `tibble`{.R}. `ggplot2` can easily handle such large dataset.
 
 Let's say we want to see whether there is a correlation between price and weight (carat) of the diamonds.
 We will make a call to `ggplot()`{.R} by providing it the data and the `x` and `y` mapping:
 
+
 ```{r, warnings=FALSE}
 p <- ggplot(data = diamonds, aes(x = carat,y = price))
 p
 ```
 
+
 You see that our plot `p` here has the proper axis labels and range:
+
 
 ```{r}
 glue::glue("carat {c('min','max')}: {range(diamonds$carat)}")
 glue::glue("price {c('min','max')}: {range(diamonds$price)}")
 ```
 
+
 but it does not display any data points. For this we have to add a geometry to the plot, using one of the `geom_xx()`{.R} functions. Let's plot it using points for now:
+
 
 ```{r, warnings=FALSE}
 p + geom_point()
 ```
 
+
 OK, we're onto something, but we can probably add some information to this plot. We will first cut the data above 3 carats because they are not relevant, and add some transparency to the points to see some statistical information. Let's make use of the pipe operator `%>%` to make this easily readable:
+
 
 ```{r, warnings=FALSE}
 p <- diamonds %>% 
@@ -310,7 +333,9 @@ p <- diamonds %>%
 p + geom_point(alpha=0.5)
 ```
 
+
 Let's now see whether the type of cut plays a role here by coloring the points according to the `cut` variable:
+
 ```{r, warnings=FALSE}
 p <- diamonds %>% 
         filter(carat<=3) %>% 
@@ -318,13 +343,17 @@ p <- diamonds %>%
 p + geom_point(alpha=0.5)
 ```
 
+
 It looks like the price dispersion is homogeneous, we can make sure by adding a spline smoothing:
+
 ```{r, warning = FALSE, message=FALSE}
 p + geom_point(alpha=0.5) + 
     geom_smooth()
 ```
 
+
 The slope evolution shows that in general, the better the cut, the higher the price. But there are some discrepancies that may be explained in another manner:
+
 ```{r, warnings=FALSE}
 p <- diamonds %>% 
         filter(carat<=3) %>% 
@@ -332,7 +361,9 @@ p <- diamonds %>%
 p + geom_point(alpha=0.5) + geom_smooth()
 ```
 
+
 It is often easier to grasp a multi-variable problem by plotting all our data in a facet plot using `facet_wrap(~variable1)`{.R} if you want one variable changing in each plot:
+
 ```{r, warning = FALSE, message=FALSE}
 colors <- rainbow(length(unique(diamonds$clarity)))
 p <- ggplot(diamonds, 
@@ -344,7 +375,9 @@ p <- ggplot(diamonds,
 p
 ```
 
+
 ... or `facet_grid(y_variable ~ x_variable)`{.R} if you want to see one variable as a function of another:
+
 ```{r, warning = FALSE, message=FALSE, fig.asp=1.4}
 p <- ggplot(diamonds, 
             aes(x = price, y = carat, color = color)) + 
@@ -355,7 +388,9 @@ p <- ggplot(diamonds,
 p
 ```
 
+
 Or by adding another graphical parameter such as the size of the points:
+
 ```{r, warnings=FALSE}
 p <- ggplot(diamonds, 
             aes(x = price, y = carat, color = clarity, size = cut)) + 
@@ -364,7 +399,9 @@ p <- ggplot(diamonds,
 p
 ```
 
+
 OK, maybe not here because the graph gets clogged, so we can lighten it by sampling data:
+
 ```{r, warnings=FALSE}
 p <- ggplot(diamonds %>% sample_n(500), 
             aes(x = carat, y = price, color = clarity, size = cut)) + 
@@ -374,11 +411,13 @@ p
 ```
 
 
+
 ### Writing maths in the plot
 
 To write mathematical expressions, including subscripts/superscripts, or more complex mathematical formulas, the easiest way is to use $\LaTeX$ expressions thanks to the `latex2exp` package. Just write your text within a `latex2exp::TeX()`{.R} function, and that is all. Since R 4.0, it is recommended to use the raw string literal syntax. The syntax looks like `r"(...)"`, where `...` can contain any character sequence, including `\` (no need to escape the `\` character).
 
 Also, in case you have a variables to add in your string, it is often clearer/easier to use `glue::glue()`{.R} instead of `paste()`{.R} or `paste0()`{.R}. Then, you can combine the two, like so:
+
 
 
 ```{r, echo=TRUE, warnings=FALSE}
@@ -396,6 +435,7 @@ diamonds %>% sample_n(100) %>%
             )
 ```
 
+
 For more complicated stuff, I however advise to not use the `TeX()`{.R} function and write directly your text in $\LaTeX$, then [export your plot with `tikzDevice` as a .tex file and compile it to pdf](#a-single-plot).
 
 
@@ -403,6 +443,7 @@ For more complicated stuff, I however advise to not use the `TeX()`{.R} function
 
 It is very easy to keep the same theme on all your graphs thanks to the `theme()`{.R} function.
 There are a collection of pre-defined themes, like:
+
 ```{r, include=FALSE}
 library(patchwork)
 ```
@@ -416,7 +457,9 @@ library(patchwork)
 (p + ggtitle("p + theme_light()") + theme_light() + theme(legend.position = "none")))
 ```
 
+
 You can define all the parameters you want, like this (hit `?theme`{.R} like usual to see all the parameters):
+
 
 ```{r, warnings=FALSE}
 my_theme <- theme_bw()+
@@ -431,6 +474,7 @@ my_theme <- theme_bw()+
                   )
 p + my_theme
 ```
+
 
 :::{.callout-note collapse="true"}
 ## Pro Tip: make a _code snippet_
@@ -452,13 +496,16 @@ snippet ggplot
 ### Making interactive plots with ggplot2 and plotly
 
 Thanks to the `plotly` package, it is really easy to transform a `ggplot` plot into an interactive plot:
+
 ```{r, include=FALSE, warning = FALSE, message=FALSE}
 library(plotly)
 ```
+
 ```r
 # load plotly
 library(plotly)
 ```
+
 ```{r, warnings=FALSE}
 p <- ggplot(diamonds %>% sample_n(100), 
         aes(x = carat, y = price)) + 
@@ -468,9 +515,11 @@ ggplotly(p, dynamicTicks = TRUE)
 ```
 
 
+
 ### Gathering plots on a grid
 
 If you have several plot you want to gather on a grid and you can't use `facet_wrap()`{.R} (because they come from different data sets), you can use the library [patchwork](https://patchwork.data-imaginist.com/articles/patchwork.html):
+
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 library(patchwork)
 library(ggplot2)
@@ -489,14 +538,17 @@ p3/p4 +
 ```
 
 
+
 ### Plots with insets
 
 If you want to make an inset plot, first make your plots, then add a plot within the other using `patchwork::inset_element()`{.R}, specifying the x and y positions of the 4 corners of the inset plot using relative values:
+
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 p4 + inset_element(p3, left   = 0.01, right = .4, 
                        bottom = .45,    top = .99)
 ```
+
 
 
 ## Exporting a plot to pdf or png
@@ -592,6 +644,7 @@ Alternatively, you can just <a href="Data/exo-in-class.zip" download target="_bl
 - Plot the two normalized spectra on the same graph using lines of different colors
 - Play with the theme and parameters to reproduce the following plot:
 
+
 ```{r, echo=FALSE, message=FALSE}
 # Load them in two separate `tibbles`
 library(tidyverse)
@@ -631,8 +684,10 @@ df_tidy %>%
 ```
 
 
+
 <details>
     <summary>Solution</summary>
+
 
 ```{r, message=FALSE}
 # Load them in two separate `tibbles`
@@ -678,6 +733,7 @@ df_tidy %>%
 ```
 
 
+
 </details>
 </details>
 
@@ -689,14 +745,17 @@ df_tidy %>%
 - Plot the 4 spectra on top of each other with a vertical shift of 1, with a different color for each spectrum
     + For this, check out the `factor()`{.R} function:
 
+
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 x <- c("a","a","b","c","a")
 factor(x)
 as.numeric(factor(x))
 ```
 
+
 - Annotate on the base line with the name of the file. For this, use `annotate("text", x, y, label)`{.R}
 - It should look like this:
+
 
 ```{r, echo=FALSE, warnings=FALSE, message=FALSE}
 library(tidyverse)
@@ -721,8 +780,10 @@ ggplot(data=df, aes(x=w, y=Int_n+as.numeric(factor(name))-1, color=name))+
 
 ```
 
+
 <details>
     <summary>Solution</summary>
+
 
 ```{r, warnings=FALSE, message=FALSE}
 library(tidyverse)
@@ -753,6 +814,7 @@ ggplot(data=df, aes(x=w,
 ```
 
 
+
 </details>
 </details>
 
@@ -772,6 +834,7 @@ ggplot(data=df, aes(x=w,
 
 <details>
     <summary>Solution</summary>
+
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, fig.asp=1.2}
 # get the list of files for the ramps up and down and out of cell
@@ -880,6 +943,7 @@ ggplotly(P, dynamicTicks = TRUE)
 ```
 
 
+
 </details>
 </details>
 
@@ -898,6 +962,7 @@ ggplotly(P, dynamicTicks = TRUE)
     + With a black and white theme
     + Make it interactive
 - Try reproducing the following plots (Google is your friend) (look into the function `reorder()`{.R} and [this help](https://drsimonj.svbtle.com/ordering-categories-within-ggplot2-facets) to use it with facets):
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 df <- read.csv("Data/population.csv")
@@ -934,6 +999,7 @@ p2 <- ggplot(data=subset(df,year==2012),
         theme(axis.text.x = element_text(angle = 45, hjust=1))
 p2
 ```
+
 
 
 
@@ -1005,6 +1071,7 @@ p2
 <br>
 <br>
 <br>
+
 
 
 
