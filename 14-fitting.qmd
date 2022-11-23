@@ -187,6 +187,15 @@ Now, let's get back to R. You will mainly use two functions to perform these opt
 - [The rest of the time: `nls()`{.R}](#nonlinear-least-squares-fitting)
 
 
+::: {.callout-note}
+
+## Important
+Note that, whenever it is possible, it is usually preferable to make your problem a linear one, as it avoids the hassle of providing starting values.
+For example, in the pendulum case above, taking the square of @eq-period results in a linear evolution of $T^2$ with respect to $l$.
+
+:::
+
+
 
 ## Linear fitting with `lm()`
 
