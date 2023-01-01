@@ -2,16 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.16">
+<meta name="generator" content="quarto-1.2.269">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 2&nbsp; A little reminder on Statistics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -50,7 +55,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -63,7 +68,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -241,40 +246,40 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
     </ul>
 </div>
 </nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
 <li>
-<a href="#why-are-statistical-tools-necessary-in-physical-science" id="toc-why-are-statistical-tools-necessary-in-physical-science" class="nav-link active" data-scroll-target="#why-are-statistical-tools-necessary-in-physical-science"> <span class="header-section-number">2.1</span> Why are statistical tools necessary in physical science?</a>
+<a href="#why-are-statistical-tools-necessary-in-physical-science" id="toc-why-are-statistical-tools-necessary-in-physical-science" class="nav-link active" data-scroll-target="#why-are-statistical-tools-necessary-in-physical-science"><span class="toc-section-number">2.1</span>  Why are statistical tools necessary in physical science?</a>
   <ul class="collapse">
-<li><a href="#a-practical-example" id="toc-a-practical-example" class="nav-link" data-scroll-target="#a-practical-example"> <span class="header-section-number">2.1.1</span> A practical example</a></li>
-  <li><a href="#probabilistic-description-of-physical-systems" id="toc-probabilistic-description-of-physical-systems" class="nav-link" data-scroll-target="#probabilistic-description-of-physical-systems"> <span class="header-section-number">2.1.2</span> Probabilistic description of physical systems</a></li>
+<li><a href="#a-practical-example" id="toc-a-practical-example" class="nav-link" data-scroll-target="#a-practical-example"><span class="toc-section-number">2.1.1</span>  A practical example</a></li>
+  <li><a href="#probabilistic-description-of-physical-systems" id="toc-probabilistic-description-of-physical-systems" class="nav-link" data-scroll-target="#probabilistic-description-of-physical-systems"><span class="toc-section-number">2.1.2</span>  Probabilistic description of physical systems</a></li>
   </ul>
 </li>
   <li>
-<a href="#quantifying-the-properties-of-data" id="toc-quantifying-the-properties-of-data" class="nav-link" data-scroll-target="#quantifying-the-properties-of-data"> <span class="header-section-number">2.2</span> Quantifying the properties of data</a>
+<a href="#quantifying-the-properties-of-data" id="toc-quantifying-the-properties-of-data" class="nav-link" data-scroll-target="#quantifying-the-properties-of-data"><span class="toc-section-number">2.2</span>  Quantifying the properties of data</a>
   <ul class="collapse">
-<li><a href="#data-representation-presenting-a-measurement" id="toc-data-representation-presenting-a-measurement" class="nav-link" data-scroll-target="#data-representation-presenting-a-measurement"> <span class="header-section-number">2.2.1</span> Data representation – presenting a measurement</a></li>
-  <li><a href="#characterizing-an-ensemble-of-measurements" id="toc-characterizing-an-ensemble-of-measurements" class="nav-link" data-scroll-target="#characterizing-an-ensemble-of-measurements"> <span class="header-section-number">2.2.2</span> Characterizing an ensemble of measurements</a></li>
+<li><a href="#data-representation-presenting-a-measurement" id="toc-data-representation-presenting-a-measurement" class="nav-link" data-scroll-target="#data-representation-presenting-a-measurement"><span class="toc-section-number">2.2.1</span>  Data representation – presenting a measurement</a></li>
+  <li><a href="#characterizing-an-ensemble-of-measurements" id="toc-characterizing-an-ensemble-of-measurements" class="nav-link" data-scroll-target="#characterizing-an-ensemble-of-measurements"><span class="toc-section-number">2.2.2</span>  Characterizing an ensemble of measurements</a></li>
   </ul>
 </li>
   <li>
-<a href="#useful-distributions" id="toc-useful-distributions" class="nav-link" data-scroll-target="#useful-distributions"> <span class="header-section-number">2.3</span> Useful distributions</a>
+<a href="#useful-distributions" id="toc-useful-distributions" class="nav-link" data-scroll-target="#useful-distributions"><span class="toc-section-number">2.3</span>  Useful distributions</a>
   <ul class="collapse">
-<li><a href="#probability-density-functions" id="toc-probability-density-functions" class="nav-link" data-scroll-target="#probability-density-functions"> <span class="header-section-number">2.3.1</span> Probability Density Functions</a></li>
-  <li><a href="#pdfs-mean-and-variance" id="toc-pdfs-mean-and-variance" class="nav-link" data-scroll-target="#pdfs-mean-and-variance"> <span class="header-section-number">2.3.2</span> PDFs, mean and variance</a></li>
-  <li><a href="#the-poisson-distribution" id="toc-the-poisson-distribution" class="nav-link" data-scroll-target="#the-poisson-distribution"> <span class="header-section-number">2.3.3</span> The Poisson distribution</a></li>
-  <li><a href="#the-gaussian-distribution" id="toc-the-gaussian-distribution" class="nav-link" data-scroll-target="#the-gaussian-distribution"> <span class="header-section-number">2.3.4</span> The Gaussian distribution</a></li>
+<li><a href="#probability-density-functions" id="toc-probability-density-functions" class="nav-link" data-scroll-target="#probability-density-functions"><span class="toc-section-number">2.3.1</span>  Probability Density Functions</a></li>
+  <li><a href="#pdfs-mean-and-variance" id="toc-pdfs-mean-and-variance" class="nav-link" data-scroll-target="#pdfs-mean-and-variance"><span class="toc-section-number">2.3.2</span>  PDFs, mean and variance</a></li>
+  <li><a href="#the-poisson-distribution" id="toc-the-poisson-distribution" class="nav-link" data-scroll-target="#the-poisson-distribution"><span class="toc-section-number">2.3.3</span>  The Poisson distribution</a></li>
+  <li><a href="#the-gaussian-distribution" id="toc-the-gaussian-distribution" class="nav-link" data-scroll-target="#the-gaussian-distribution"><span class="toc-section-number">2.3.4</span>  The Gaussian distribution</a></li>
   </ul>
 </li>
   <li>
-<a href="#uncertainty-and-errors" id="toc-uncertainty-and-errors" class="nav-link" data-scroll-target="#uncertainty-and-errors"> <span class="header-section-number">2.4</span> Uncertainty and errors</a>
+<a href="#uncertainty-and-errors" id="toc-uncertainty-and-errors" class="nav-link" data-scroll-target="#uncertainty-and-errors"><span class="toc-section-number">2.4</span>  Uncertainty and errors</a>
   <ul class="collapse">
-<li><a href="#central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty" id="toc-central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty" class="nav-link" data-scroll-target="#central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty"> <span class="header-section-number">2.4.1</span> Central limit theorem: on the Gaussian nature of statistical uncertainty</a></li>
-  <li><a href="#combination-of-errors" id="toc-combination-of-errors" class="nav-link" data-scroll-target="#combination-of-errors"> <span class="header-section-number">2.4.2</span> Combination of errors</a></li>
+<li><a href="#central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty" id="toc-central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty" class="nav-link" data-scroll-target="#central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty"><span class="toc-section-number">2.4.1</span>  Central limit theorem: on the Gaussian nature of statistical uncertainty</a></li>
+  <li><a href="#combination-of-errors" id="toc-combination-of-errors" class="nav-link" data-scroll-target="#combination-of-errors"><span class="toc-section-number">2.4.2</span>  Combination of errors</a></li>
   </ul>
 </li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"> <span class="header-section-number">2.5</span> Further reading</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="toc-section-number">2.5</span>  Further reading</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/Rclass/blob/main/02-stats.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/Rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -289,6 +294,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -320,7 +326,7 @@ Important
 <div class="cell-output-display">
 <div id="fig-histogramT" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="02-stats_files/figure-html/fig-histogramT-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 2.1: Histogram of the body temperature measurements. The red line is the mean value, the orange one is the mode and the blue one is the median.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.1: Histogram of the body temperature measurements. The red line is the mean value, the orange one is the mode and the blue one is the median.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -371,7 +377,7 @@ Important
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure 2.2: Histogram of the body temperature measurements with different bin widths.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.2: Histogram of the body temperature measurements with different bin widths.</figcaption><p></p>
 </figure>
 </div>
 </section><section id="graphs" class="level4" data-number="2.2.1.2"><h4 data-number="2.2.1.2" class="anchored" data-anchor-id="graphs">
@@ -401,7 +407,7 @@ Important
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure 2.3: Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.3: Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data.</figcaption><p></p>
 </figure>
 </div>
 <p>You can think of each set of {datapoint + error bar} as an histogram: the displayed point is the mean value of the histogram, and the error bar is its standard deviation. <strong>Therefore, plotting a straight line between points is usually pointless</strong>. Plotting a line going through the data points only has meaning if this line results from a physical model explaining the variation of the quantity <span class="math inline">\(y\)</span> with the evolution of the quantity <span class="math inline">\(x\)</span> – this is called a <strong>fit</strong>, and we will see more about it in the <a href="#fitting">R class later</a>.</p>
@@ -415,8 +421,7 @@ Important
 <p>The <strong>mean</strong> (or arithmetic average) is more often used than the two previous quantities, as it usually provides a better way to quantify the “typical” value measured. The mean value is denoted either by <span class="math inline">\(\overline{x}\)</span> or <span class="math inline">\(\left&lt; x \right&gt;\)</span>, and is given by:</p>
 <p><span class="math display">\[
 \overline{x}=\left&lt; x \right&gt;=\frac{1}{N}\sum_{i=1}^Nx_i,
-\]</span></p>
-<p>where <span class="math inline">\(x_i\)</span> is the <span class="math inline">\(i\)</span>-th measurement of <span class="math inline">\(x\)</span>.</p>
+\]</span> where <span class="math inline">\(x_i\)</span> is the <span class="math inline">\(i\)</span>-th measurement of <span class="math inline">\(x\)</span>.</p>
 <p><a href="#fig-histogramT">Figure&nbsp;<span>2.1</span></a> shows the representation of a sample of data plotted in a histogram. This figure shows the mode, mean and median. For this particular sample of data, the mean is 38.3 °C, the median is 38.1 °C, and the mode is 38.0 °C. The fact that the mode is smaller than the mean is an indication that the data are asymmetric about the mean. We usually refer to such a distribution as being skewed, and in this case the data are skewed to the right.</p>
 </section><section id="quantifying-the-spread-of-data-variance-and-standard-deviation" class="level4" data-number="2.2.2.2"><h4 data-number="2.2.2.2" class="anchored" data-anchor-id="quantifying-the-spread-of-data-variance-and-standard-deviation">
 <span class="header-section-number">2.2.2.2</span> Quantifying the spread of data: variance and standard deviation</h4>
@@ -457,7 +462,7 @@ Important
 <div class="cell-output-display">
 <div id="fig-multimodal" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="02-stats_files/figure-html/fig-multimodal-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 2.4: A trimodal distribution of measurements. The red line shows the mean value of the distribution: it fails to grasp the reality of the distribution.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.4: A trimodal distribution of measurements. The red line shows the mean value of the distribution: it fails to grasp the reality of the distribution.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -470,8 +475,7 @@ Important
 <p>We should now introduce the notion of <strong>Probability Density Function</strong> (PDF). <em>By definition</em>, a PDF is a distribution where the <strong>total area is unity</strong>. The variation of the PDF is represents the probability of something occurring at that point in the parameter space. In general, a PDF will be described by some function <span class="math inline">\(P(x)\)</span>, where</p>
 <p><span id="eq-PDFnorm"><span class="math display">\[
 \int_a^b P(x)dx=1,
-\tag{2.3}\]</span></span></p>
-<p>where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are the limits of the valid domain for the <span class="math inline">\(P(x)\)</span> function. The probability of obtaining a result between <span class="math inline">\(x\)</span> and <span class="math inline">\(x + dx\)</span> is thus <span class="math inline">\(P(x)dx\)</span>. Usual PDFs encountered in physics are the Poisson distribution as well as the Gaussian distribution, that we will describe in a bit.</p>
+\tag{2.3}\]</span></span> where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are the limits of the valid domain for the <span class="math inline">\(P(x)\)</span> function. The probability of obtaining a result between <span class="math inline">\(x\)</span> and <span class="math inline">\(x + dx\)</span> is thus <span class="math inline">\(P(x)dx\)</span>. Usual PDFs encountered in physics are the Poisson distribution as well as the Gaussian distribution, that we will describe in a bit.</p>
 </section><section id="pdfs-mean-and-variance" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="pdfs-mean-and-variance">
 <span class="header-section-number">2.3.2</span> PDFs, mean and variance</h3>
 <p>Let us define a PDF <span class="math inline">\(P(x)\)</span> describing a continuous distribution. We can compute the average value of some quantity by computing the integral over this quantity multiplied by the PDF.</p>
@@ -523,7 +527,7 @@ P_\lambda(k) = \frac{\lambda^ke^{-\lambda}}{k!}
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure 2.5: Poisson distribution for various parameters. While asymmetric for small values of <span class="math inline">\(k\)</span> and <span class="math inline">\(\lambda\)</span>, it tends towards a Gaussian lineshape at larger values.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.5: Poisson distribution for various parameters. While asymmetric for small values of <span class="math inline">\(k\)</span> and <span class="math inline">\(\lambda\)</span>, it tends towards a Gaussian lineshape at larger values.</figcaption><p></p>
 </figure>
 </div>
 </section><section id="characteristics" class="level4" data-number="2.3.3.2"><h4 data-number="2.3.3.2" class="anchored" data-anchor-id="characteristics">
@@ -579,7 +583,7 @@ P(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2}
 <div class="cell-output-display">
 <div id="fig-gaussian" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure"><p><img src="02-stats_files/figure-html/fig-gaussian-1.png" class="img-fluid figure-img" width="672"></p>
-<p></p><figcaption class="figure-caption">Figure 2.6: A zero-centered Gaussian distribution with standard deviation of 1, <span class="math inline">\(P(z)\)</span>. The red line marks the half maximum, <span class="math inline">\(P(z_{HM})=1/2\sqrt{2\pi}\)</span>, and the blue lines the values of <span class="math inline">\(z\)</span> for which the half maximum is obtained, <span class="math inline">\(z_{HM}=\pm\sqrt{2\ln{2}}\)</span>.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;2.6: A zero-centered Gaussian distribution with standard deviation of 1, <span class="math inline">\(P(z)\)</span>. The red line marks the half maximum, <span class="math inline">\(P(z_{HM})=1/2\sqrt{2\pi}\)</span>, and the blue lines the values of <span class="math inline">\(z\)</span> for which the half maximum is obtained, <span class="math inline">\(z_{HM}=\pm\sqrt{2\ln{2}}\)</span>.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -599,7 +603,7 @@ FWHM=2\sqrt{2\ln{2}}\times\sigma
 <p>As can be seen on <a href="#tbl-tablevalues">Table&nbsp;<span>2.1</span></a>, using the FWHM ensures that roughly 76% of the data are comprised between <span class="math inline">\(\mu-\sigma\)</span> and <span class="math inline">\(\mu+\sigma\)</span>, and this goes up to <span class="math inline">\(\sim95\)</span>% for <span class="math inline">\(\mu-2\sigma\)</span> and <span class="math inline">\(\mu+2\sigma\)</span>.</p>
 <div id="tbl-tablevalues" class="anchored">
 <table class="table">
-<caption>Table 2.1: Integral values for various values of <span class="math inline">\(a\)</span> in <span class="math inline">\(\int_{-a}^aP(z)dz\)</span>.</caption>
+<caption>Table&nbsp;2.1: Integral values for various values of <span class="math inline">\(a\)</span> in <span class="math inline">\(\int_{-a}^aP(z)dz\)</span>.</caption>
 <thead><tr class="header">
 <th style="text-align: left;">Integration range <span class="math inline">\(a\)</span>
 </th>
@@ -678,8 +682,7 @@ f(u_1, ..., u_n) = f(\overline{u_1}, ..., \overline{u_n}) + \sum_{i=1}^n (u_i-\o
 \sigma^2(f) &amp;= \left(\sum_{i=1}^n (u_i-\overline{u_i})\frac{\partial f}{\partial u_i}\right)^2\\
          &amp;= \sum_{i=1}^n \left(\frac{\partial f}{\partial u_i}\right)^2\sigma_{u_i}^2 + 2\sum_{i\ne j}\frac{\partial f}{\partial u_i}\frac{\partial f}{\partial u_j}\sigma_{u_iu_j}\\
 \end{aligned}
-\]</span></p>
-<p>where we have replaced <span class="math inline">\((u_i-\overline{u_i})^2\)</span> by the variance <span class="math inline">\(\sigma_{u_i}^2\)</span> and <span class="math inline">\((u_i-\overline{u_i})(u_j-\overline{u_j})\)</span> by the covariance <span class="math inline">\(\sigma_{u_iu_j}\)</span>.<br></p>
+\]</span> where we have replaced <span class="math inline">\((u_i-\overline{u_i})^2\)</span> by the variance <span class="math inline">\(\sigma_{u_i}^2\)</span> and <span class="math inline">\((u_i-\overline{u_i})(u_j-\overline{u_j})\)</span> by the covariance <span class="math inline">\(\sigma_{u_iu_j}\)</span>.<br></p>
 <p>If the variables <span class="math inline">\(u_i\)</span> are independent then the covariance <span class="math inline">\(\sigma_{u_iu_j}\)</span> is null, and it follows the general expression of the standard error that can be applied to <strong>any function of independent variables</strong>:</p>
 <div class="callout-note callout callout-style-simple no-icon">
 <div class="callout-body d-flex">
@@ -774,7 +777,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   const toggleBodyColorPrimary = () => {
-    toggleBodyColorMode(window.document.querySelector("link#quarto-bootstrap"));
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
   }
   toggleBodyColorPrimary();  
   const icon = "";
@@ -798,7 +804,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -877,31 +900,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">

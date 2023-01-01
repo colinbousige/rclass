@@ -2,16 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.16">
+<meta name="generator" content="quarto-1.2.269">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 10&nbsp; Conditional actions and loops</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -50,7 +55,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -63,7 +68,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -241,13 +246,13 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
     </ul>
 </div>
 </nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#conditional-actions" id="toc-conditional-actions" class="nav-link active" data-scroll-target="#conditional-actions"> <span class="header-section-number">10.1</span> Conditional actions</a></li>
-  <li><a href="#loops" id="toc-loops" class="nav-link" data-scroll-target="#loops"> <span class="header-section-number">10.2</span> Loops…</a></li>
-  <li><a href="#and-how-to-avoid-them" id="toc-and-how-to-avoid-them" class="nav-link" data-scroll-target="#and-how-to-avoid-them"> <span class="header-section-number">10.3</span> … and how to avoid them</a></li>
-  <li><a href="#exo-loops" id="toc-exo-loops" class="nav-link" data-scroll-target="#exo-loops"> <span class="header-section-number">10.4</span> Exercises</a></li>
+<li><a href="#conditional-actions" id="toc-conditional-actions" class="nav-link active" data-scroll-target="#conditional-actions"><span class="toc-section-number">10.1</span>  Conditional actions</a></li>
+  <li><a href="#loops" id="toc-loops" class="nav-link" data-scroll-target="#loops"><span class="toc-section-number">10.2</span>  Loops…</a></li>
+  <li><a href="#and-how-to-avoid-them" id="toc-and-how-to-avoid-them" class="nav-link" data-scroll-target="#and-how-to-avoid-them"><span class="toc-section-number">10.3</span>  … and how to avoid them</a></li>
+  <li><a href="#exo-loops" id="toc-exo-loops" class="nav-link" data-scroll-target="#exo-loops"><span class="toc-section-number">10.4</span>  Exercises</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/Rclass/blob/main/11-conditions_loops.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/Rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -262,6 +267,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -356,10 +362,10 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e8</span><span class="op">)</span></span>
 <span><span class="fu">test_time</span><span class="op">(</span><span class="va">forloop</span>, <span class="va">x</span><span class="op">)</span>; <span class="fu">test_time</span><span class="op">(</span><span class="va">noforloop</span>, <span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Elapsed time : 14.7163779735565 s -  forloop"</code></pre>
+<pre><code>[1] "Elapsed time : 6.79270911216736 s -  forloop"</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Elapsed time : 0.456242084503174 s -  noforloop"</code></pre>
+<pre><code>[1] "Elapsed time : 0.362581968307495 s -  noforloop"</code></pre>
 </div>
 </div>
 <p>Avoiding loops should therefore be sought for when possible. R helps us in this way through the base functions <code class="sourceCode r"><span class="fu">apply</span>()</code>, <code class="sourceCode r"><span class="fu">sapply</span>()</code> and <code class="sourceCode r"><span class="fu">lapply</span>()</code>. <a href="07-dataframes.html#operations-in-the-tidyverse">Operations in the <code class="sourceCode r">tidyverse</code></a> are also a very good way of avoiding loops.</p>
@@ -469,18 +475,18 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,000 × 2
-         x y    
-     &lt;dbl&gt; &lt;chr&gt;
- 1 -0.746  x&lt;=0 
- 2  0.402  x&gt;0  
- 3  0.441  x&gt;0  
- 4 -0.563  x&lt;=0 
- 5 -0.0269 x&lt;=0 
- 6  0.500  x&gt;0  
- 7 -0.422  x&lt;=0 
- 8 -0.0438 x&lt;=0 
- 9 -0.330  x&lt;=0 
-10  0.536  x&gt;0  
+        x y    
+    &lt;dbl&gt; &lt;chr&gt;
+ 1  0.764 x&gt;0  
+ 2  0.294 x&gt;0  
+ 3  0.353 x&gt;0  
+ 4  0.721 x&gt;0  
+ 5  0.841 x&gt;0  
+ 6 -0.263 x&lt;=0 
+ 7  0.997 x&gt;0  
+ 8 -0.840 x&lt;=0 
+ 9  0.775 x&gt;0  
+10  0.963 x&gt;0  
 # … with 990 more rows</code></pre>
 </div>
 </div>
@@ -501,22 +507,22 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$A
-[1] 51.50247
+[1] 47.6351
 
 $B
-[1] -27.1821
+[1] 29.60892
 
 $C
-[1] 95.68036</code></pre>
+[1] 94.9568</code></pre>
 </div>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        A         B         C 
- 51.50247 -27.18210  95.68036 </code></pre>
+<pre><code>       A        B        C 
+47.63510 29.60892 94.95680 </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>        A         B         C 
- 51.50247 -27.18210  95.68036 </code></pre>
+<pre><code>       A        B        C 
+47.63510 29.60892 94.95680 </code></pre>
 </div>
 </div>
 </details></details><details><summary><strong>Exercise 3</strong>
@@ -550,20 +556,16 @@ Solution
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># A tidy-compatible version </span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.1 ──</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>✔ ggplot2 3.3.6     ✔ dplyr   1.0.9
-✔ tidyr   1.2.0     ✔ stringr 1.4.0
-✔ readr   2.1.2     ✔ forcats 0.5.1
-✔ purrr   0.3.4     </code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
+✔ ggplot2 3.4.0      ✔ dplyr   1.0.10
+✔ tidyr   1.2.1      ✔ stringr 1.5.0 
+✔ readr   2.1.3      ✔ forcats 0.5.2 
+✔ purrr   1.0.0      
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()</code></pre>
 </div>
-<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">popul</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="va">df</span>, cols<span class="op">=</span><span class="op">-</span><span class="va">year</span>, names_to<span class="op">=</span><span class="st">"city"</span>, values_to<span class="op">=</span><span class="st">"pop"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">popul</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="va">df</span>, cols<span class="op">=</span><span class="op">-</span><span class="va">year</span>, names_to<span class="op">=</span><span class="st">"city"</span>, values_to<span class="op">=</span><span class="st">"pop"</span><span class="op">)</span></span>
 <span><span class="va">popul</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>totpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -580,7 +582,7 @@ Solution
 7  2007 7235114
 8  2012 7334805</code></pre>
 </div>
-<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># or equivalently</span></span>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># or equivalently</span></span>
 <span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">popul</span>, <span class="va">year</span><span class="op">)</span>, totpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 2
@@ -595,7 +597,7 @@ Solution
 7  2007 7235114
 8  2012 7334805</code></pre>
 </div>
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># What is the mean population for each city?</span></span>
+<div class="sourceCode" id="cb49"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># What is the mean population for each city?</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/apply.html">apply</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>,<span class="op">-</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">2</span>, <span class="va">mean</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       Angers      Bordeaux         Brest         Dijon      Grenoble 
@@ -607,7 +609,7 @@ Solution
        Rennes Saint.Etienne    Strasbourg        Toulon      Toulouse 
      193424.9      198134.6      255429.1      169682.6      382264.9 </code></pre>
 </div>
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">popul</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">popul</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">city</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>avepop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -655,7 +657,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   const toggleBodyColorPrimary = () => {
-    toggleBodyColorMode(window.document.querySelector("link#quarto-bootstrap"));
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
   }
   toggleBodyColorPrimary();  
   const icon = "";
@@ -679,7 +684,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -758,31 +780,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
@@ -796,200 +837,200 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb55" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conditional actions and loops</span></span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conditional actions</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>Conditional actions in R can be determined through the usual <span class="in">`if then else`</span>{.R} statements:</span>
-<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span>; y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(x<span class="sc">&gt;</span>y){</span>
-<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"x is larger than y"</span>)</span>
-<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span> <span class="cf">if</span>(x<span class="sc">&lt;</span>y){</span>
-<span id="cb55-14"><a href="#cb55-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"x is smaller than y"</span>)</span>
-<span id="cb55-15"><a href="#cb55-15" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
-<span id="cb55-16"><a href="#cb55-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"x is equal to y"</span>)</span>
-<span id="cb55-17"><a href="#cb55-17" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb55-18"><a href="#cb55-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-19"><a href="#cb55-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-20"><a href="#cb55-20" aria-hidden="true" tabindex="-1"></a>Sometimes, it's usefull to be able to do this in one line using <span class="in">`ifesle(test, yes, no)`</span>{.R}:</span>
-<span id="cb55-23"><a href="#cb55-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb55-24"><a href="#cb55-24" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">7</span></span>
-<span id="cb55-25"><a href="#cb55-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(x<span class="sc">&gt;</span><span class="dv">5</span>, <span class="st">"larger than 5"</span>, <span class="st">"lower than 5"</span>) </span>
-<span id="cb55-26"><a href="#cb55-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-27"><a href="#cb55-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-28"><a href="#cb55-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-29"><a href="#cb55-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loops...</span></span>
-<span id="cb55-30"><a href="#cb55-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-31"><a href="#cb55-31" aria-hidden="true" tabindex="-1"></a>Loops in R are provided through the usual <span class="in">`for`</span>{.R} and <span class="in">`while`</span>{.R} keywords:</span>
-<span id="cb55-32"><a href="#cb55-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-35"><a href="#cb55-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb55-36"><a href="#cb55-36" aria-hidden="true" tabindex="-1"></a><span class="co"># For loop</span></span>
-<span id="cb55-37"><a href="#cb55-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>){</span>
-<span id="cb55-38"><a href="#cb55-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># pass to next index directly</span></span>
-<span id="cb55-39"><a href="#cb55-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(i <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">5</span>)) <span class="cf">next</span> </span>
-<span id="cb55-40"><a href="#cb55-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># break loop</span></span>
-<span id="cb55-41"><a href="#cb55-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(i<span class="sc">==</span><span class="dv">10</span>) <span class="cf">break</span></span>
-<span id="cb55-42"><a href="#cb55-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(i)</span>
-<span id="cb55-43"><a href="#cb55-43" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb55-44"><a href="#cb55-44" aria-hidden="true" tabindex="-1"></a>phrase <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"hello"</span>, <span class="st">"world"</span>)</span>
-<span id="cb55-45"><a href="#cb55-45" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(word <span class="cf">in</span> phrase){</span>
-<span id="cb55-46"><a href="#cb55-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(word)</span>
-<span id="cb55-47"><a href="#cb55-47" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb55-48"><a href="#cb55-48" aria-hidden="true" tabindex="-1"></a><span class="co"># While loop</span></span>
-<span id="cb55-49"><a href="#cb55-49" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb55-50"><a href="#cb55-50" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(i<span class="sc">&lt;</span><span class="dv">8</span>){</span>
-<span id="cb55-51"><a href="#cb55-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(i)</span>
-<span id="cb55-52"><a href="#cb55-52" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> i<span class="sc">+</span><span class="dv">2</span></span>
-<span id="cb55-53"><a href="#cb55-53" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb55-54"><a href="#cb55-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-55"><a href="#cb55-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-56"><a href="#cb55-56" aria-hidden="true" tabindex="-1"></a><span class="fu">## ... and how to avoid them</span></span>
-<span id="cb55-57"><a href="#cb55-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-58"><a href="#cb55-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-59"><a href="#cb55-59" aria-hidden="true" tabindex="-1"></a>However, since R is a vectorized language, it means that loops are to be avoided when possible because they are very inefficient:</span>
-<span id="cb55-60"><a href="#cb55-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-63"><a href="#cb55-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb55-64"><a href="#cb55-64" aria-hidden="true" tabindex="-1"></a>test_time <span class="ot">&lt;-</span> <span class="cf">function</span>(FUN,...) {</span>
-<span id="cb55-65"><a href="#cb55-65" aria-hidden="true" tabindex="-1"></a>    start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
-<span id="cb55-66"><a href="#cb55-66" aria-hidden="true" tabindex="-1"></a>    <span class="fu">FUN</span>(...)</span>
-<span id="cb55-67"><a href="#cb55-67" aria-hidden="true" tabindex="-1"></a>    elapsed_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()<span class="sc">-</span>start_time</span>
-<span id="cb55-68"><a href="#cb55-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Elapsed time :"</span>, elapsed_time, <span class="st">"s - "</span>,</span>
-<span id="cb55-69"><a href="#cb55-69" aria-hidden="true" tabindex="-1"></a>                <span class="fu">as.character</span>(<span class="fu">substitute</span>(FUN)))</span>
-<span id="cb55-70"><a href="#cb55-70" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="cb55-71"><a href="#cb55-71" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb55-72"><a href="#cb55-72" aria-hidden="true" tabindex="-1"></a>forloop <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb55-73"><a href="#cb55-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(x)){</span>
-<span id="cb55-74"><a href="#cb55-74" aria-hidden="true" tabindex="-1"></a>        x[i] <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>x[i]</span>
-<span id="cb55-75"><a href="#cb55-75" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb55-76"><a href="#cb55-76" aria-hidden="true" tabindex="-1"></a>    x</span>
-<span id="cb55-77"><a href="#cb55-77" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb55-78"><a href="#cb55-78" aria-hidden="true" tabindex="-1"></a>noforloop <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
-<span id="cb55-79"><a href="#cb55-79" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span><span class="sc">*</span>x</span>
-<span id="cb55-80"><a href="#cb55-80" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb55-81"><a href="#cb55-81" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="fl">1e8</span>)</span>
-<span id="cb55-82"><a href="#cb55-82" aria-hidden="true" tabindex="-1"></a><span class="fu">test_time</span>(forloop, x); <span class="fu">test_time</span>(noforloop, x)</span>
-<span id="cb55-83"><a href="#cb55-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-84"><a href="#cb55-84" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-85"><a href="#cb55-85" aria-hidden="true" tabindex="-1"></a>Avoiding loops should therefore be sought for when possible. R helps us in this way through the base functions <span class="in">`apply()`</span>{.R}, <span class="in">`sapply()`</span>{.R} and <span class="in">`lapply()`</span>{.R}. <span class="co">[</span><span class="ot">Operations in the `tidyverse`{.R}</span><span class="co">](#operations-in-the-tidyverse)</span> are also a very good way of avoiding loops. </span>
-<span id="cb55-86"><a href="#cb55-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-87"><a href="#cb55-87" aria-hidden="true" tabindex="-1"></a>Take a look at the help on these functions, but the summary is that <span class="in">`apply(df, direction, function)`</span>{.R} applies a function in the wanted direction (1 for rows, 2 for columns) of the given <span class="in">`data.frame`</span>{.R} (or vector). Example:</span>
-<span id="cb55-88"><a href="#cb55-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-89"><a href="#cb55-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE}</span></span>
-<span id="cb55-90"><a href="#cb55-90" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb55-91"><a href="#cb55-91" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">y=</span>x<span class="sc">^</span><span class="dv">2</span>, <span class="at">z=</span>x<span class="sc">^</span><span class="dv">3</span>);dt</span>
-<span id="cb55-92"><a href="#cb55-92" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(dt, <span class="dv">1</span>, mean) <span class="co"># mean of the rows</span></span>
-<span id="cb55-93"><a href="#cb55-93" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(dt, <span class="dv">2</span>, mean) <span class="co"># mean of the columns</span></span>
-<span id="cb55-94"><a href="#cb55-94" aria-hidden="true" tabindex="-1"></a><span class="co"># row/column means</span></span>
-<span id="cb55-95"><a href="#cb55-95" aria-hidden="true" tabindex="-1"></a><span class="fu">rowMeans</span>(dt)</span>
-<span id="cb55-96"><a href="#cb55-96" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(dt)</span>
-<span id="cb55-97"><a href="#cb55-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-98"><a href="#cb55-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-99"><a href="#cb55-99" aria-hidden="true" tabindex="-1"></a><span class="in">`lapply()`</span>{.R} (and equivalently, <span class="in">`sapply()`</span>{.R}) is basically the same thing but applied to lists and it returns a list (a vector):</span>
-<span id="cb55-102"><a href="#cb55-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb55-103"><a href="#cb55-103" aria-hidden="true" tabindex="-1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">list</span>(dt<span class="sc">/</span><span class="dv">3</span>, dt<span class="sc">/</span><span class="dv">5</span>);my_list</span>
-<span id="cb55-104"><a href="#cb55-104" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(my_list, <span class="st">"["</span>, <span class="dv">1</span>, )  <span class="co"># print first row</span></span>
-<span id="cb55-105"><a href="#cb55-105" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(my_list, rowSums)   <span class="co"># sum on rows</span></span>
-<span id="cb55-106"><a href="#cb55-106" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(my_list, round, <span class="dv">1</span>)  <span class="co"># round to first decimal</span></span>
-<span id="cb55-107"><a href="#cb55-107" aria-hidden="true" tabindex="-1"></a><span class="co"># For more complex operations, use it this way:</span></span>
-<span id="cb55-108"><a href="#cb55-108" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dt), <span class="cf">function</span>(i){</span>
-<span id="cb55-109"><a href="#cb55-109" aria-hidden="true" tabindex="-1"></a>    dt<span class="sc">$</span>x[i] <span class="sc">+</span> dt<span class="sc">$</span>y[(i<span class="sc">+</span><span class="dv">2</span>)<span class="sc">%%</span><span class="fu">nrow</span>(dt)<span class="sc">+</span><span class="dv">1</span>] <span class="sc">-</span> dt<span class="sc">$</span>z[(i<span class="sc">+</span><span class="dv">4</span>)<span class="sc">%%</span><span class="fu">nrow</span>(dt)<span class="sc">+</span><span class="dv">1</span>]</span>
-<span id="cb55-110"><a href="#cb55-110" aria-hidden="true" tabindex="-1"></a>})</span>
-<span id="cb55-111"><a href="#cb55-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-112"><a href="#cb55-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-113"><a href="#cb55-113" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-114"><a href="#cb55-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-115"><a href="#cb55-115" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-116"><a href="#cb55-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-117"><a href="#cb55-117" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises {#exo-loops}</span></span>
-<span id="cb55-118"><a href="#cb55-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-119"><a href="#cb55-119" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb55-120"><a href="#cb55-120" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 1**<span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb55-121"><a href="#cb55-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-122"><a href="#cb55-122" aria-hidden="true" tabindex="-1"></a>Given <span class="in">`x &lt;- runif(1e3, min=-1, max=1)`</span>{.R}, create a <span class="in">`tibble`</span>{.R} like this one:</span>
-<span id="cb55-123"><a href="#cb55-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-124"><a href="#cb55-124" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE}</span></span>
-<span id="cb55-125"><a href="#cb55-125" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">runif</span>(<span class="fl">1e3</span>, <span class="at">min=</span><span class="sc">-</span><span class="dv">1</span>, <span class="at">max=</span><span class="dv">1</span>), </span>
-<span id="cb55-126"><a href="#cb55-126" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">ifelse</span>(x<span class="sc">&gt;</span><span class="dv">0</span>, <span class="st">"x&gt;0"</span>, <span class="st">"x&lt;=0"</span>))</span>
-<span id="cb55-127"><a href="#cb55-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-128"><a href="#cb55-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-129"><a href="#cb55-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-130"><a href="#cb55-130" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
-<span id="cb55-131"><a href="#cb55-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-132"><a href="#cb55-132" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb55-133"><a href="#cb55-133" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 2**<span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb55-134"><a href="#cb55-134" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-135"><a href="#cb55-135" aria-hidden="true" tabindex="-1"></a>Given:</span>
-<span id="cb55-136"><a href="#cb55-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-137"><a href="#cb55-137" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb55-138"><a href="#cb55-138" aria-hidden="true" tabindex="-1"></a>LL <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="fu">runif</span>(<span class="fl">1e2</span>),</span>
-<span id="cb55-139"><a href="#cb55-139" aria-hidden="true" tabindex="-1"></a>           <span class="at">B =</span> <span class="fu">rnorm</span>(<span class="fl">1e3</span>),</span>
-<span id="cb55-140"><a href="#cb55-140" aria-hidden="true" tabindex="-1"></a>           <span class="at">C =</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">runif</span>(<span class="fl">1e2</span>), <span class="at">y=</span><span class="fu">runif</span>(<span class="fl">1e2</span>))</span>
-<span id="cb55-141"><a href="#cb55-141" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb55-142"><a href="#cb55-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-143"><a href="#cb55-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-144"><a href="#cb55-144" aria-hidden="true" tabindex="-1"></a>Print the sum of each element of <span class="in">`LL`</span> in a list, in a vector.</span>
-<span id="cb55-145"><a href="#cb55-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-146"><a href="#cb55-146" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb55-147"><a href="#cb55-147" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb55-148"><a href="#cb55-148" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-149"><a href="#cb55-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb55-150"><a href="#cb55-150" aria-hidden="true" tabindex="-1"></a>LL <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="fu">runif</span>(<span class="fl">1e2</span>),</span>
-<span id="cb55-151"><a href="#cb55-151" aria-hidden="true" tabindex="-1"></a>           <span class="at">B =</span> <span class="fu">rnorm</span>(<span class="fl">1e3</span>),</span>
-<span id="cb55-152"><a href="#cb55-152" aria-hidden="true" tabindex="-1"></a>           <span class="at">C =</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">runif</span>(<span class="fl">1e2</span>), <span class="at">y=</span><span class="fu">runif</span>(<span class="fl">1e2</span>))</span>
-<span id="cb55-153"><a href="#cb55-153" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb55-154"><a href="#cb55-154" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(LL, sum)</span>
-<span id="cb55-155"><a href="#cb55-155" aria-hidden="true" tabindex="-1"></a><span class="fu">unlist</span>(<span class="fu">lapply</span>(LL, sum)); <span class="fu">sapply</span>(LL, sum)</span>
-<span id="cb55-156"><a href="#cb55-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-157"><a href="#cb55-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-158"><a href="#cb55-158" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
-<span id="cb55-159"><a href="#cb55-159" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
-<span id="cb55-160"><a href="#cb55-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-161"><a href="#cb55-161" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb55-162"><a href="#cb55-162" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 3**<span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb55-163"><a href="#cb55-163" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-164"><a href="#cb55-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Download <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/population.csv"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>population.csv<span class="kw">&lt;/a&gt;</span> and load it into a <span class="in">`data.frame`</span>{.R}</span>
-<span id="cb55-165"><a href="#cb55-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the total population over the years?</span>
-<span id="cb55-166"><a href="#cb55-166" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the mean population for each city?</span>
-<span id="cb55-167"><a href="#cb55-167" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-168"><a href="#cb55-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-169"><a href="#cb55-169" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb55-170"><a href="#cb55-170" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb55-171"><a href="#cb55-171" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-174"><a href="#cb55-174" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb55-175"><a href="#cb55-175" aria-hidden="true" tabindex="-1"></a><span class="co"># Download population.csv and load it into a `data.frame`</span></span>
-<span id="cb55-176"><a href="#cb55-176" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Data/population.csv"</span>)</span>
-<span id="cb55-177"><a href="#cb55-177" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the total population over the years?</span></span>
-<span id="cb55-178"><a href="#cb55-178" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">year=</span>df[,<span class="st">"year"</span>],</span>
-<span id="cb55-179"><a href="#cb55-179" aria-hidden="true" tabindex="-1"></a>           <span class="at">pop =</span><span class="fu">rowSums</span>(df[,<span class="sc">-</span><span class="dv">1</span>]),     <span class="co"># a first way</span></span>
-<span id="cb55-180"><a href="#cb55-180" aria-hidden="true" tabindex="-1"></a>           <span class="at">pop2=</span><span class="fu">apply</span>(df[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">1</span>, sum)<span class="co"># another way</span></span>
-<span id="cb55-181"><a href="#cb55-181" aria-hidden="true" tabindex="-1"></a>          )</span>
-<span id="cb55-182"><a href="#cb55-182" aria-hidden="true" tabindex="-1"></a><span class="co"># A tidy-compatible version </span></span>
-<span id="cb55-183"><a href="#cb55-183" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb55-184"><a href="#cb55-184" aria-hidden="true" tabindex="-1"></a>popul <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(df, <span class="at">cols=</span><span class="sc">-</span>year, <span class="at">names_to=</span><span class="st">"city"</span>, <span class="at">values_to=</span><span class="st">"pop"</span>)</span>
-<span id="cb55-185"><a href="#cb55-185" aria-hidden="true" tabindex="-1"></a>popul <span class="sc">%&gt;%</span></span>
-<span id="cb55-186"><a href="#cb55-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
-<span id="cb55-187"><a href="#cb55-187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totpop =</span> <span class="fu">sum</span>(pop))</span>
-<span id="cb55-188"><a href="#cb55-188" aria-hidden="true" tabindex="-1"></a><span class="co"># or equivalently</span></span>
-<span id="cb55-189"><a href="#cb55-189" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(<span class="fu">group_by</span>(popul, year), <span class="at">totpop =</span> <span class="fu">sum</span>(pop))</span>
-<span id="cb55-190"><a href="#cb55-190" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the mean population for each city?</span></span>
-<span id="cb55-191"><a href="#cb55-191" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(df[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>, mean)</span>
-<span id="cb55-192"><a href="#cb55-192" aria-hidden="true" tabindex="-1"></a>popul <span class="sc">%&gt;%</span></span>
-<span id="cb55-193"><a href="#cb55-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">%&gt;%</span></span>
-<span id="cb55-194"><a href="#cb55-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avepop =</span> <span class="fu">mean</span>(pop))</span>
-<span id="cb55-195"><a href="#cb55-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb55-196"><a href="#cb55-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-197"><a href="#cb55-197" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
-<span id="cb55-198"><a href="#cb55-198" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
-<span id="cb55-199"><a href="#cb55-199" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-200"><a href="#cb55-200" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-201"><a href="#cb55-201" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb55-202"><a href="#cb55-202" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb55-203"><a href="#cb55-203" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb55-204"><a href="#cb55-204" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb55-205"><a href="#cb55-205" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb55-206"><a href="#cb55-206" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb53" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Conditional actions and loops</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## Conditional actions</span></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>Conditional actions in R can be determined through the usual <span class="in">`if then else`</span>{.R} statements:</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span>; y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(x<span class="sc">&gt;</span>y){</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"x is larger than y"</span>)</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span> <span class="cf">if</span>(x<span class="sc">&lt;</span>y){</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"x is smaller than y"</span>)</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>}<span class="cf">else</span>{</span>
+<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="st">"x is equal to y"</span>)</span>
+<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a>Sometimes, it's usefull to be able to do this in one line using <span class="in">`ifesle(test, yes, no)`</span>{.R}:</span>
+<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">7</span></span>
+<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(x<span class="sc">&gt;</span><span class="dv">5</span>, <span class="st">"larger than 5"</span>, <span class="st">"lower than 5"</span>) </span>
+<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb53-27"><a href="#cb53-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-28"><a href="#cb53-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-29"><a href="#cb53-29" aria-hidden="true" tabindex="-1"></a><span class="fu">## Loops...</span></span>
+<span id="cb53-30"><a href="#cb53-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-31"><a href="#cb53-31" aria-hidden="true" tabindex="-1"></a>Loops in R are provided through the usual <span class="in">`for`</span>{.R} and <span class="in">`while`</span>{.R} keywords:</span>
+<span id="cb53-32"><a href="#cb53-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-35"><a href="#cb53-35" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb53-36"><a href="#cb53-36" aria-hidden="true" tabindex="-1"></a><span class="co"># For loop</span></span>
+<span id="cb53-37"><a href="#cb53-37" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>){</span>
+<span id="cb53-38"><a href="#cb53-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># pass to next index directly</span></span>
+<span id="cb53-39"><a href="#cb53-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(i <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">8</span>,<span class="dv">5</span>)) <span class="cf">next</span> </span>
+<span id="cb53-40"><a href="#cb53-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># break loop</span></span>
+<span id="cb53-41"><a href="#cb53-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(i<span class="sc">==</span><span class="dv">10</span>) <span class="cf">break</span></span>
+<span id="cb53-42"><a href="#cb53-42" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(i)</span>
+<span id="cb53-43"><a href="#cb53-43" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-44"><a href="#cb53-44" aria-hidden="true" tabindex="-1"></a>phrase <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"hello"</span>, <span class="st">"world"</span>)</span>
+<span id="cb53-45"><a href="#cb53-45" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(word <span class="cf">in</span> phrase){</span>
+<span id="cb53-46"><a href="#cb53-46" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(word)</span>
+<span id="cb53-47"><a href="#cb53-47" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-48"><a href="#cb53-48" aria-hidden="true" tabindex="-1"></a><span class="co"># While loop</span></span>
+<span id="cb53-49"><a href="#cb53-49" aria-hidden="true" tabindex="-1"></a>i <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb53-50"><a href="#cb53-50" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span>(i<span class="sc">&lt;</span><span class="dv">8</span>){</span>
+<span id="cb53-51"><a href="#cb53-51" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(i)</span>
+<span id="cb53-52"><a href="#cb53-52" aria-hidden="true" tabindex="-1"></a>    i <span class="ot">&lt;-</span> i<span class="sc">+</span><span class="dv">2</span></span>
+<span id="cb53-53"><a href="#cb53-53" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-54"><a href="#cb53-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb53-55"><a href="#cb53-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-56"><a href="#cb53-56" aria-hidden="true" tabindex="-1"></a><span class="fu">## ... and how to avoid them</span></span>
+<span id="cb53-57"><a href="#cb53-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-58"><a href="#cb53-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-59"><a href="#cb53-59" aria-hidden="true" tabindex="-1"></a>However, since R is a vectorized language, it means that loops are to be avoided when possible because they are very inefficient:</span>
+<span id="cb53-60"><a href="#cb53-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-63"><a href="#cb53-63" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb53-64"><a href="#cb53-64" aria-hidden="true" tabindex="-1"></a>test_time <span class="ot">&lt;-</span> <span class="cf">function</span>(FUN,...) {</span>
+<span id="cb53-65"><a href="#cb53-65" aria-hidden="true" tabindex="-1"></a>    start_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()</span>
+<span id="cb53-66"><a href="#cb53-66" aria-hidden="true" tabindex="-1"></a>    <span class="fu">FUN</span>(...)</span>
+<span id="cb53-67"><a href="#cb53-67" aria-hidden="true" tabindex="-1"></a>    elapsed_time <span class="ot">&lt;-</span> <span class="fu">Sys.time</span>()<span class="sc">-</span>start_time</span>
+<span id="cb53-68"><a href="#cb53-68" aria-hidden="true" tabindex="-1"></a>    <span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"Elapsed time :"</span>, elapsed_time, <span class="st">"s - "</span>,</span>
+<span id="cb53-69"><a href="#cb53-69" aria-hidden="true" tabindex="-1"></a>                <span class="fu">as.character</span>(<span class="fu">substitute</span>(FUN)))</span>
+<span id="cb53-70"><a href="#cb53-70" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb53-71"><a href="#cb53-71" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-72"><a href="#cb53-72" aria-hidden="true" tabindex="-1"></a>forloop <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb53-73"><a href="#cb53-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span>(i <span class="cf">in</span> <span class="fu">seq_along</span>(x)){</span>
+<span id="cb53-74"><a href="#cb53-74" aria-hidden="true" tabindex="-1"></a>        x[i] <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>x[i]</span>
+<span id="cb53-75"><a href="#cb53-75" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb53-76"><a href="#cb53-76" aria-hidden="true" tabindex="-1"></a>    x</span>
+<span id="cb53-77"><a href="#cb53-77" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-78"><a href="#cb53-78" aria-hidden="true" tabindex="-1"></a>noforloop <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb53-79"><a href="#cb53-79" aria-hidden="true" tabindex="-1"></a>    <span class="dv">2</span><span class="sc">*</span>x</span>
+<span id="cb53-80"><a href="#cb53-80" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb53-81"><a href="#cb53-81" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="fl">1e8</span>)</span>
+<span id="cb53-82"><a href="#cb53-82" aria-hidden="true" tabindex="-1"></a><span class="fu">test_time</span>(forloop, x); <span class="fu">test_time</span>(noforloop, x)</span>
+<span id="cb53-83"><a href="#cb53-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb53-84"><a href="#cb53-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-85"><a href="#cb53-85" aria-hidden="true" tabindex="-1"></a>Avoiding loops should therefore be sought for when possible. R helps us in this way through the base functions <span class="in">`apply()`</span>{.R}, <span class="in">`sapply()`</span>{.R} and <span class="in">`lapply()`</span>{.R}. <span class="co">[</span><span class="ot">Operations in the `tidyverse`{.R}</span><span class="co">](#operations-in-the-tidyverse)</span> are also a very good way of avoiding loops. </span>
+<span id="cb53-86"><a href="#cb53-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-87"><a href="#cb53-87" aria-hidden="true" tabindex="-1"></a>Take a look at the help on these functions, but the summary is that <span class="in">`apply(df, direction, function)`</span>{.R} applies a function in the wanted direction (1 for rows, 2 for columns) of the given <span class="in">`data.frame`</span>{.R} (or vector). Example:</span>
+<span id="cb53-88"><a href="#cb53-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-89"><a href="#cb53-89" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, message=FALSE}</span></span>
+<span id="cb53-90"><a href="#cb53-90" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb53-91"><a href="#cb53-91" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">y=</span>x<span class="sc">^</span><span class="dv">2</span>, <span class="at">z=</span>x<span class="sc">^</span><span class="dv">3</span>);dt</span>
+<span id="cb53-92"><a href="#cb53-92" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(dt, <span class="dv">1</span>, mean) <span class="co"># mean of the rows</span></span>
+<span id="cb53-93"><a href="#cb53-93" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(dt, <span class="dv">2</span>, mean) <span class="co"># mean of the columns</span></span>
+<span id="cb53-94"><a href="#cb53-94" aria-hidden="true" tabindex="-1"></a><span class="co"># row/column means</span></span>
+<span id="cb53-95"><a href="#cb53-95" aria-hidden="true" tabindex="-1"></a><span class="fu">rowMeans</span>(dt)</span>
+<span id="cb53-96"><a href="#cb53-96" aria-hidden="true" tabindex="-1"></a><span class="fu">colMeans</span>(dt)</span>
+<span id="cb53-97"><a href="#cb53-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb53-98"><a href="#cb53-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-99"><a href="#cb53-99" aria-hidden="true" tabindex="-1"></a><span class="in">`lapply()`</span>{.R} (and equivalently, <span class="in">`sapply()`</span>{.R}) is basically the same thing but applied to lists and it returns a list (a vector):</span>
+<span id="cb53-102"><a href="#cb53-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb53-103"><a href="#cb53-103" aria-hidden="true" tabindex="-1"></a>my_list <span class="ot">&lt;-</span> <span class="fu">list</span>(dt<span class="sc">/</span><span class="dv">3</span>, dt<span class="sc">/</span><span class="dv">5</span>);my_list</span>
+<span id="cb53-104"><a href="#cb53-104" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(my_list, <span class="st">"["</span>, <span class="dv">1</span>, )  <span class="co"># print first row</span></span>
+<span id="cb53-105"><a href="#cb53-105" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(my_list, rowSums)   <span class="co"># sum on rows</span></span>
+<span id="cb53-106"><a href="#cb53-106" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(my_list, round, <span class="dv">1</span>)  <span class="co"># round to first decimal</span></span>
+<span id="cb53-107"><a href="#cb53-107" aria-hidden="true" tabindex="-1"></a><span class="co"># For more complex operations, use it this way:</span></span>
+<span id="cb53-108"><a href="#cb53-108" aria-hidden="true" tabindex="-1"></a><span class="fu">sapply</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(dt), <span class="cf">function</span>(i){</span>
+<span id="cb53-109"><a href="#cb53-109" aria-hidden="true" tabindex="-1"></a>    dt<span class="sc">$</span>x[i] <span class="sc">+</span> dt<span class="sc">$</span>y[(i<span class="sc">+</span><span class="dv">2</span>)<span class="sc">%%</span><span class="fu">nrow</span>(dt)<span class="sc">+</span><span class="dv">1</span>] <span class="sc">-</span> dt<span class="sc">$</span>z[(i<span class="sc">+</span><span class="dv">4</span>)<span class="sc">%%</span><span class="fu">nrow</span>(dt)<span class="sc">+</span><span class="dv">1</span>]</span>
+<span id="cb53-110"><a href="#cb53-110" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb53-111"><a href="#cb53-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb53-112"><a href="#cb53-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-113"><a href="#cb53-113" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-114"><a href="#cb53-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-115"><a href="#cb53-115" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-116"><a href="#cb53-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-117"><a href="#cb53-117" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises {#exo-loops}</span></span>
+<span id="cb53-118"><a href="#cb53-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-119"><a href="#cb53-119" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb53-120"><a href="#cb53-120" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 1**<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb53-121"><a href="#cb53-121" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-122"><a href="#cb53-122" aria-hidden="true" tabindex="-1"></a>Given <span class="in">`x &lt;- runif(1e3, min=-1, max=1)`</span>{.R}, create a <span class="in">`tibble`</span>{.R} like this one:</span>
+<span id="cb53-123"><a href="#cb53-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-124"><a href="#cb53-124" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE}</span></span>
+<span id="cb53-125"><a href="#cb53-125" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">runif</span>(<span class="fl">1e3</span>, <span class="at">min=</span><span class="sc">-</span><span class="dv">1</span>, <span class="at">max=</span><span class="dv">1</span>), </span>
+<span id="cb53-126"><a href="#cb53-126" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">ifelse</span>(x<span class="sc">&gt;</span><span class="dv">0</span>, <span class="st">"x&gt;0"</span>, <span class="st">"x&lt;=0"</span>))</span>
+<span id="cb53-127"><a href="#cb53-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb53-128"><a href="#cb53-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-129"><a href="#cb53-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-130"><a href="#cb53-130" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb53-131"><a href="#cb53-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-132"><a href="#cb53-132" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb53-133"><a href="#cb53-133" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 2**<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb53-134"><a href="#cb53-134" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-135"><a href="#cb53-135" aria-hidden="true" tabindex="-1"></a>Given:</span>
+<span id="cb53-136"><a href="#cb53-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-137"><a href="#cb53-137" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb53-138"><a href="#cb53-138" aria-hidden="true" tabindex="-1"></a>LL <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="fu">runif</span>(<span class="fl">1e2</span>),</span>
+<span id="cb53-139"><a href="#cb53-139" aria-hidden="true" tabindex="-1"></a>           <span class="at">B =</span> <span class="fu">rnorm</span>(<span class="fl">1e3</span>),</span>
+<span id="cb53-140"><a href="#cb53-140" aria-hidden="true" tabindex="-1"></a>           <span class="at">C =</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">runif</span>(<span class="fl">1e2</span>), <span class="at">y=</span><span class="fu">runif</span>(<span class="fl">1e2</span>))</span>
+<span id="cb53-141"><a href="#cb53-141" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb53-142"><a href="#cb53-142" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb53-143"><a href="#cb53-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-144"><a href="#cb53-144" aria-hidden="true" tabindex="-1"></a>Print the sum of each element of <span class="in">`LL`</span> in a list, in a vector.</span>
+<span id="cb53-145"><a href="#cb53-145" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-146"><a href="#cb53-146" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb53-147"><a href="#cb53-147" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb53-148"><a href="#cb53-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-149"><a href="#cb53-149" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb53-150"><a href="#cb53-150" aria-hidden="true" tabindex="-1"></a>LL <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">A =</span> <span class="fu">runif</span>(<span class="fl">1e2</span>),</span>
+<span id="cb53-151"><a href="#cb53-151" aria-hidden="true" tabindex="-1"></a>           <span class="at">B =</span> <span class="fu">rnorm</span>(<span class="fl">1e3</span>),</span>
+<span id="cb53-152"><a href="#cb53-152" aria-hidden="true" tabindex="-1"></a>           <span class="at">C =</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="fu">runif</span>(<span class="fl">1e2</span>), <span class="at">y=</span><span class="fu">runif</span>(<span class="fl">1e2</span>))</span>
+<span id="cb53-153"><a href="#cb53-153" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb53-154"><a href="#cb53-154" aria-hidden="true" tabindex="-1"></a><span class="fu">lapply</span>(LL, sum)</span>
+<span id="cb53-155"><a href="#cb53-155" aria-hidden="true" tabindex="-1"></a><span class="fu">unlist</span>(<span class="fu">lapply</span>(LL, sum)); <span class="fu">sapply</span>(LL, sum)</span>
+<span id="cb53-156"><a href="#cb53-156" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb53-157"><a href="#cb53-157" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-158"><a href="#cb53-158" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb53-159"><a href="#cb53-159" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb53-160"><a href="#cb53-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-161"><a href="#cb53-161" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb53-162"><a href="#cb53-162" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 3**<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb53-163"><a href="#cb53-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-164"><a href="#cb53-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Download <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/population.csv"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>population.csv<span class="kw">&lt;/a&gt;</span> and load it into a <span class="in">`data.frame`</span>{.R}</span>
+<span id="cb53-165"><a href="#cb53-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the total population over the years?</span>
+<span id="cb53-166"><a href="#cb53-166" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the mean population for each city?</span>
+<span id="cb53-167"><a href="#cb53-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-168"><a href="#cb53-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-169"><a href="#cb53-169" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb53-170"><a href="#cb53-170" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb53-171"><a href="#cb53-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-174"><a href="#cb53-174" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb53-175"><a href="#cb53-175" aria-hidden="true" tabindex="-1"></a><span class="co"># Download population.csv and load it into a `data.frame`</span></span>
+<span id="cb53-176"><a href="#cb53-176" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"Data/population.csv"</span>)</span>
+<span id="cb53-177"><a href="#cb53-177" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the total population over the years?</span></span>
+<span id="cb53-178"><a href="#cb53-178" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">year=</span>df[,<span class="st">"year"</span>],</span>
+<span id="cb53-179"><a href="#cb53-179" aria-hidden="true" tabindex="-1"></a>           <span class="at">pop =</span><span class="fu">rowSums</span>(df[,<span class="sc">-</span><span class="dv">1</span>]),     <span class="co"># a first way</span></span>
+<span id="cb53-180"><a href="#cb53-180" aria-hidden="true" tabindex="-1"></a>           <span class="at">pop2=</span><span class="fu">apply</span>(df[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">1</span>, sum)<span class="co"># another way</span></span>
+<span id="cb53-181"><a href="#cb53-181" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb53-182"><a href="#cb53-182" aria-hidden="true" tabindex="-1"></a><span class="co"># A tidy-compatible version </span></span>
+<span id="cb53-183"><a href="#cb53-183" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb53-184"><a href="#cb53-184" aria-hidden="true" tabindex="-1"></a>popul <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(df, <span class="at">cols=</span><span class="sc">-</span>year, <span class="at">names_to=</span><span class="st">"city"</span>, <span class="at">values_to=</span><span class="st">"pop"</span>)</span>
+<span id="cb53-185"><a href="#cb53-185" aria-hidden="true" tabindex="-1"></a>popul <span class="sc">%&gt;%</span></span>
+<span id="cb53-186"><a href="#cb53-186" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
+<span id="cb53-187"><a href="#cb53-187" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">totpop =</span> <span class="fu">sum</span>(pop))</span>
+<span id="cb53-188"><a href="#cb53-188" aria-hidden="true" tabindex="-1"></a><span class="co"># or equivalently</span></span>
+<span id="cb53-189"><a href="#cb53-189" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(<span class="fu">group_by</span>(popul, year), <span class="at">totpop =</span> <span class="fu">sum</span>(pop))</span>
+<span id="cb53-190"><a href="#cb53-190" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the mean population for each city?</span></span>
+<span id="cb53-191"><a href="#cb53-191" aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(df[,<span class="sc">-</span><span class="dv">1</span>], <span class="dv">2</span>, mean)</span>
+<span id="cb53-192"><a href="#cb53-192" aria-hidden="true" tabindex="-1"></a>popul <span class="sc">%&gt;%</span></span>
+<span id="cb53-193"><a href="#cb53-193" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(city) <span class="sc">%&gt;%</span></span>
+<span id="cb53-194"><a href="#cb53-194" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">avepop =</span> <span class="fu">mean</span>(pop))</span>
+<span id="cb53-195"><a href="#cb53-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb53-196"><a href="#cb53-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-197"><a href="#cb53-197" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb53-198"><a href="#cb53-198" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb53-199"><a href="#cb53-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-200"><a href="#cb53-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-201"><a href="#cb53-201" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb53-202"><a href="#cb53-202" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb53-203"><a href="#cb53-203" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb53-204"><a href="#cb53-204" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb53-205"><a href="#cb53-205" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb53-206"><a href="#cb53-206" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

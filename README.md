@@ -2,7 +2,7 @@
 
 This is the repository for the ["Reproducible data treatment with R"](http://lmi.cnrs.fr/r/) class.
 
-Interactive exercises can be found in the associated [`tutor`](https://lmi.cnrs.fr/r/tutor/) package.
+Interactive exercises can be found in the associated [`tutor`](https://colinbousige.github.io/tutor/) package.
 
 ## Author
 

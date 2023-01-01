@@ -2,16 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.16">
+<meta name="generator" content="quarto-1.2.269">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 16&nbsp; Working with units and experimental errors</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -50,7 +55,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -63,7 +68,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -241,11 +246,11 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
     </ul>
 </div>
 </nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-<li><a href="#working-with-units" id="toc-working-with-units" class="nav-link active" data-scroll-target="#working-with-units"> <span class="header-section-number">16.1</span> Working with units</a></li>
-  <li><a href="#working-with-experimental-errors" id="toc-working-with-experimental-errors" class="nav-link" data-scroll-target="#working-with-experimental-errors"> <span class="header-section-number">16.2</span> Working with experimental errors</a></li>
+<li><a href="#working-with-units" id="toc-working-with-units" class="nav-link active" data-scroll-target="#working-with-units"><span class="toc-section-number">16.1</span>  Working with units</a></li>
+  <li><a href="#working-with-experimental-errors" id="toc-working-with-experimental-errors" class="nav-link" data-scroll-target="#working-with-experimental-errors"><span class="toc-section-number">16.2</span>  Working with experimental errors</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/Rclass/blob/main/17-units.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/Rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -260,6 +265,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -271,7 +277,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <p>Here is the gist of it:</p>
 <div class="cell">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load the 'units' library</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/units/">units</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/units">units</a></span><span class="op">)</span></span>
 <span><span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>,<span class="fl">1</span>,length<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
 <span><span class="co"># attribute a unit, here 'seconds':</span></span>
 <span><span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">t</span>, <span class="st">"s"</span><span class="op">)</span> </span>
@@ -348,59 +354,61 @@ Prefixes will automatically work with any user-defined unit.</code></pre>
 <span><span class="va">starwars</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 87 × 14
-   name     height  mass hair_color skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
- 2 C-3PO       167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
- 3 R2-D2        96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
- 4 Darth V…    202   136 none       white      yellow          41.9 male  mascu…
- 5 Leia Or…    150    49 brown      light      brown           19   fema… femin…
- 6 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…
- 7 Beru Wh…    165    75 brown      light      blue            47   fema… femin…
- 8 R5-D4        97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
- 9 Biggs D…    183    84 black      light      brown           24   male  mascu…
-10 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
-# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+   name        height  mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
+   &lt;chr&gt;        &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
+ 1 Luke Skywa…    172    77 blond   fair    blue       19   male  mascu… Tatooi…
+ 2 C-3PO          167    75 &lt;NA&gt;    gold    yellow    112   none  mascu… Tatooi…
+ 3 R2-D2           96    32 &lt;NA&gt;    white,… red        33   none  mascu… Naboo  
+ 4 Darth Vader    202   136 none    white   yellow     41.9 male  mascu… Tatooi…
+ 5 Leia Organa    150    49 brown   light   brown      19   fema… femin… Aldera…
+ 6 Owen Lars      178   120 brown,… light   blue       52   male  mascu… Tatooi…
+ 7 Beru White…    165    75 brown   light   blue       47   fema… femin… Tatooi…
+ 8 R5-D4           97    32 &lt;NA&gt;    white,… red        NA   none  mascu… Tatooi…
+ 9 Biggs Dark…    183    84 black   light   brown      24   male  mascu… Tatooi…
+10 Obi-Wan Ke…    182    77 auburn… fair    blue-g…    57   male  mascu… Stewjon
+# … with 77 more rows, 4 more variables: species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;, and abbreviated variable names
+#   ¹​hair_color, ²​skin_color, ³​eye_color, ⁴​birth_year, ⁵​homeworld</code></pre>
 </div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span><span class="op">)</span>,</span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span><span class="op">)</span>,</span>
 <span>           mass   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 87 × 14
-   name     height mass hair_color  skin_color eye_color birth_year sex   gender
-   &lt;chr&gt;      [cm] [kg] &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
- 1 Luke Sk…    172   77 blond       fair       blue            19   male  mascu…
- 2 C-3PO       167   75 &lt;NA&gt;        gold       yellow         112   none  mascu…
- 3 R2-D2        96   32 &lt;NA&gt;        white, bl… red             33   none  mascu…
- 4 Darth V…    202  136 none        white      yellow          41.9 male  mascu…
- 5 Leia Or…    150   49 brown       light      brown           19   fema… femin…
- 6 Owen La…    178  120 brown, grey light      blue            52   male  mascu…
- 7 Beru Wh…    165   75 brown       light      blue            47   fema… femin…
- 8 R5-D4        97   32 &lt;NA&gt;        white, red red             NA   none  mascu…
- 9 Biggs D…    183   84 black       light      brown           24   male  mascu…
-10 Obi-Wan…    182   77 auburn, wh… fair       blue-gray       57   male  mascu…
-# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
-#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+   name        height mass hair_c…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
+   &lt;chr&gt;         [cm] [kg] &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
+ 1 Luke Skywa…    172   77 blond    fair    blue       19   male  mascu… Tatooi…
+ 2 C-3PO          167   75 &lt;NA&gt;     gold    yellow    112   none  mascu… Tatooi…
+ 3 R2-D2           96   32 &lt;NA&gt;     white,… red        33   none  mascu… Naboo  
+ 4 Darth Vader    202  136 none     white   yellow     41.9 male  mascu… Tatooi…
+ 5 Leia Organa    150   49 brown    light   brown      19   fema… femin… Aldera…
+ 6 Owen Lars      178  120 brown, … light   blue       52   male  mascu… Tatooi…
+ 7 Beru White…    165   75 brown    light   blue       47   fema… femin… Tatooi…
+ 8 R5-D4           97   32 &lt;NA&gt;     white,… red        NA   none  mascu… Tatooi…
+ 9 Biggs Dark…    183   84 black    light   brown      24   male  mascu… Tatooi…
+10 Obi-Wan Ke…    182   77 auburn,… fair    blue-g…    57   male  mascu… Stewjon
+# … with 77 more rows, 4 more variables: species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;, and abbreviated variable names
+#   ¹​hair_color, ²​skin_color, ³​eye_color, ⁴​birth_year, ⁵​homeworld</code></pre>
 </div>
 </div>
 <ul>
 <li>You can plot using units and easily convert between units while plotting:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">starwars</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span><span class="op">)</span>,</span>
-<span>           mass   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">!=</span> <span class="st">"hermaphroditic"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">height</span>, y<span class="op">=</span><span class="va">mass</span>, color<span class="op">=</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_point.html">geom_point</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Height"</span>, y<span class="op">=</span><span class="st">"Mass"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>           mass   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">!=</span> <span class="st">"hermaphroditic"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">height</span>, y<span class="op">=</span><span class="va">mass</span>, color<span class="op">=</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Height"</span>, y<span class="op">=</span><span class="st">"Mass"</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="17-units_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span> <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggforce/man/scale_unit.html">scale_x_unit</a></span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>    <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggforce/man/scale_unit.html">scale_y_unit</a></span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"pounds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span> <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://ggforce.data-imaginist.com/reference/scale_unit.html">scale_x_unit</a></span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://ggforce.data-imaginist.com/reference/scale_unit.html">scale_y_unit</a></span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"pounds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="17-units_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
 </div>
@@ -443,38 +451,39 @@ Prefixes will automatically work with any user-defined unit.</code></pre>
 <div class="cell">
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com">ggforce</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>errors.notation<span class="op">=</span><span class="st">"parenthesis"</span>, errors.digits<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">starwars</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>height<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span>,<span class="va">height</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span>,</span>
+<span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>height<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span>,<span class="va">height</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span>,</span>
 <span>           mass<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span>,<span class="va">mass</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span></span>
 <span>           <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 87 × 14
-   name         height     mass hair_color skin_color eye_color birth_year sex  
-   &lt;chr&gt;      (err) [… (err) [… &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;
- 1 Luke Skyw…   172(9)    77(4) blond      fair       blue            19   male 
- 2 C-3PO        167(8)    75(4) &lt;NA&gt;       gold       yellow         112   none 
- 3 R2-D2         96(5)    32(2) &lt;NA&gt;       white, bl… red             33   none 
- 4 Darth Vad…  200(10)   136(7) none       white      yellow          41.9 male 
- 5 Leia Orga…   150(8)    49(2) brown      light      brown           19   fema…
- 6 Owen Lars    178(9)   120(6) brown, gr… light      blue            52   male 
- 7 Beru Whit…   165(8)    75(4) brown      light      blue            47   fema…
- 8 R5-D4         97(5)    32(2) &lt;NA&gt;       white, red red             NA   none 
- 9 Biggs Dar…   183(9)    84(4) black      light      brown           24   male 
-10 Obi-Wan K…   182(9)    77(4) auburn, w… fair       blue-gray       57   male 
-# … with 77 more rows, and 6 more variables: gender &lt;chr&gt;, homeworld &lt;chr&gt;,
-#   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+   name     height     mass hair_…¹ skin_…² eye_c…³ birth…⁴ sex   gender homew…⁵
+   &lt;chr&gt;  (err) [… (err) [… &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;  
+ 1 Luke …   172(9)    77(4) blond   fair    blue       19   male  mascu… Tatooi…
+ 2 C-3PO    167(8)    75(4) &lt;NA&gt;    gold    yellow    112   none  mascu… Tatooi…
+ 3 R2-D2     96(5)    32(2) &lt;NA&gt;    white,… red        33   none  mascu… Naboo  
+ 4 Darth…  200(10)   136(7) none    white   yellow     41.9 male  mascu… Tatooi…
+ 5 Leia …   150(8)    49(2) brown   light   brown      19   fema… femin… Aldera…
+ 6 Owen …   178(9)   120(6) brown,… light   blue       52   male  mascu… Tatooi…
+ 7 Beru …   165(8)    75(4) brown   light   blue       47   fema… femin… Tatooi…
+ 8 R5-D4     97(5)    32(2) &lt;NA&gt;    white,… red        NA   none  mascu… Tatooi…
+ 9 Biggs…   183(9)    84(4) black   light   brown      24   male  mascu… Tatooi…
+10 Obi-W…   182(9)    77(4) auburn… fair    blue-g…    57   male  mascu… Stewjon
+# … with 77 more rows, 4 more variables: species &lt;chr&gt;, films &lt;list&gt;,
+#   vehicles &lt;list&gt;, starships &lt;list&gt;, and abbreviated variable names
+#   ¹​hair_color, ²​skin_color, ³​eye_color, ⁴​birth_year, ⁵​homeworld</code></pre>
 </div>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>height<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span>,<span class="va">height</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span>,</span>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>height<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span>,<span class="va">height</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span>,</span>
 <span>           mass<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span>,<span class="va">mass</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span></span>
-<span>           <span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="va">sex</span><span class="op">!=</span><span class="st">"hermaphroditic"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">height</span>, y<span class="op">=</span><span class="va">mass</span>, color<span class="op">=</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_point.html">geom_point</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Height"</span>, y<span class="op">=</span><span class="st">"Mass"</span><span class="op">)</span><span class="op">+</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_linerange.html">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>ymin<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_min</a></span><span class="op">(</span><span class="va">mass</span><span class="op">)</span>,</span>
+<span>           <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sex</span><span class="op">!=</span><span class="st">"hermaphroditic"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">height</span>, y<span class="op">=</span><span class="va">mass</span>, color<span class="op">=</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Height"</span>, y<span class="op">=</span><span class="st">"Mass"</span><span class="op">)</span><span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_linerange.html">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>ymin<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_min</a></span><span class="op">(</span><span class="va">mass</span><span class="op">)</span>,</span>
 <span>                          ymax<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_max</a></span><span class="op">(</span><span class="va">mass</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_errorbarh.html">geom_errorbarh</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>xmin<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_min</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_errorbarh.html">geom_errorbarh</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xmin<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_min</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span>,</span>
 <span>                           xmax<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_max</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="17-units_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
@@ -498,7 +507,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   const toggleBodyColorPrimary = () => {
-    toggleBodyColorMode(window.document.querySelector("link#quarto-bootstrap"));
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
   }
   toggleBodyColorPrimary();  
   const icon = "";
@@ -522,7 +534,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -601,31 +630,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">

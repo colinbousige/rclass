@@ -2,16 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.0.16">
+<meta name="generator" content="quarto-1.2.269">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 15&nbsp; Graphical interfaces with Shiny</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
-span.underline{text-decoration: underline;}
-div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
 div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -50,7 +55,7 @@ code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -63,7 +68,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -241,30 +246,30 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
     </ul>
 </div>
 </nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
 <li>
-<a href="#stand-alone-shiny-application" id="toc-stand-alone-shiny-application" class="nav-link active" data-scroll-target="#stand-alone-shiny-application"> <span class="header-section-number">15.1</span> Stand-alone shiny application</a>
+<a href="#stand-alone-shiny-application" id="toc-stand-alone-shiny-application" class="nav-link active" data-scroll-target="#stand-alone-shiny-application"><span class="toc-section-number">15.1</span>  Stand-alone shiny application</a>
   <ul class="collapse">
-<li><a href="#the-layout" id="toc-the-layout" class="nav-link" data-scroll-target="#the-layout"> <span class="header-section-number">15.1.1</span> The layout</a></li>
-  <li><a href="#the-server" id="toc-the-server" class="nav-link" data-scroll-target="#the-server"> <span class="header-section-number">15.1.2</span> The server</a></li>
-  <li><a href="#various-useful-functions" id="toc-various-useful-functions" class="nav-link" data-scroll-target="#various-useful-functions"> <span class="header-section-number">15.1.3</span> Various useful functions</a></li>
-  <li><a href="#example-shiny" id="toc-example-shiny" class="nav-link" data-scroll-target="#example-shiny"> <span class="header-section-number">15.1.4</span> Example</a></li>
+<li><a href="#the-layout" id="toc-the-layout" class="nav-link" data-scroll-target="#the-layout"><span class="toc-section-number">15.1.1</span>  The layout</a></li>
+  <li><a href="#the-server" id="toc-the-server" class="nav-link" data-scroll-target="#the-server"><span class="toc-section-number">15.1.2</span>  The server</a></li>
+  <li><a href="#various-useful-functions" id="toc-various-useful-functions" class="nav-link" data-scroll-target="#various-useful-functions"><span class="toc-section-number">15.1.3</span>  Various useful functions</a></li>
+  <li><a href="#example-shiny" id="toc-example-shiny" class="nav-link" data-scroll-target="#example-shiny"><span class="toc-section-number">15.1.4</span>  Example</a></li>
   </ul>
 </li>
-  <li><a href="#rmarkdown-embedded-shiny-application" id="toc-rmarkdown-embedded-shiny-application" class="nav-link" data-scroll-target="#rmarkdown-embedded-shiny-application"> <span class="header-section-number">15.2</span> Rmarkdown-embedded shiny application</a></li>
+  <li><a href="#rmarkdown-embedded-shiny-application" id="toc-rmarkdown-embedded-shiny-application" class="nav-link" data-scroll-target="#rmarkdown-embedded-shiny-application"><span class="toc-section-number">15.2</span>  Rmarkdown-embedded shiny application</a></li>
   <li>
-<a href="#deploying-your-shiny-app" id="toc-deploying-your-shiny-app" class="nav-link" data-scroll-target="#deploying-your-shiny-app"> <span class="header-section-number">15.3</span> Deploying your shiny app</a>
+<a href="#deploying-your-shiny-app" id="toc-deploying-your-shiny-app" class="nav-link" data-scroll-target="#deploying-your-shiny-app"><span class="toc-section-number">15.3</span>  Deploying your shiny app</a>
   <ul class="collapse">
-<li><a href="#passing-the-app.r-file-to-your-users" id="toc-passing-the-app.r-file-to-your-users" class="nav-link" data-scroll-target="#passing-the-app.r-file-to-your-users"> <span class="header-section-number">15.3.1</span> Passing the app.R file to your users</a></li>
-  <li><a href="#deploying-to-shinyapps.io" id="toc-deploying-to-shinyapps.io" class="nav-link" data-scroll-target="#deploying-to-shinyapps.io"> <span class="header-section-number">15.3.2</span> Deploying to shinyapps.io</a></li>
-  <li><a href="#deploying-on-your-own-linux-server" id="toc-deploying-on-your-own-linux-server" class="nav-link" data-scroll-target="#deploying-on-your-own-linux-server"> <span class="header-section-number">15.3.3</span> Deploying on your own Linux server</a></li>
-  <li><a href="#building-an-executable" id="toc-building-an-executable" class="nav-link" data-scroll-target="#building-an-executable"> <span class="header-section-number">15.3.4</span> Building an executable</a></li>
+<li><a href="#passing-the-app.r-file-to-your-users" id="toc-passing-the-app.r-file-to-your-users" class="nav-link" data-scroll-target="#passing-the-app.r-file-to-your-users"><span class="toc-section-number">15.3.1</span>  Passing the app.R file to your users</a></li>
+  <li><a href="#deploying-to-shinyapps.io" id="toc-deploying-to-shinyapps.io" class="nav-link" data-scroll-target="#deploying-to-shinyapps.io"><span class="toc-section-number">15.3.2</span>  Deploying to shinyapps.io</a></li>
+  <li><a href="#deploying-on-your-own-linux-server" id="toc-deploying-on-your-own-linux-server" class="nav-link" data-scroll-target="#deploying-on-your-own-linux-server"><span class="toc-section-number">15.3.3</span>  Deploying on your own Linux server</a></li>
+  <li><a href="#building-an-executable" id="toc-building-an-executable" class="nav-link" data-scroll-target="#building-an-executable"><span class="toc-section-number">15.3.4</span>  Building an executable</a></li>
   </ul>
 </li>
-  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"> <span class="header-section-number">15.4</span> Further reading</a></li>
-  <li><a href="#exo-shiny" id="toc-exo-shiny" class="nav-link" data-scroll-target="#exo-shiny"> <span class="header-section-number">15.5</span> Exercises</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="toc-section-number">15.4</span>  Further reading</a></li>
+  <li><a href="#exo-shiny" id="toc-exo-shiny" class="nav-link" data-scroll-target="#exo-shiny"><span class="toc-section-number">15.5</span>  Exercises</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/Rclass/blob/main/16-shiny.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/Rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -279,6 +284,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -299,27 +305,27 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <p>In Rstudio, create a new “Shiny web app”. It will create an <code>app.R</code> file containing this:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span></span>
 <span><span class="co"># Define UI for application that draws a histogram</span></span>
-<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
 <span>    <span class="co"># Application title</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span><span class="op">(</span><span class="st">"Old Faithful Geyser Data"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/titlePanel.html">titlePanel</a></span><span class="op">(</span><span class="st">"Old Faithful Geyser Data"</span><span class="op">)</span>,</span>
 <span>    <span class="co"># Sidebar with a slider input for number of bins </span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span></span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"bins"</span>,</span>
+<span>    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span></span>
+<span>            <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"bins"</span>,</span>
 <span>                        <span class="st">"Number of bins:"</span>,</span>
 <span>                        min <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                        max <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>                        value <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
 <span>        <span class="op">)</span>,</span>
 <span>        <span class="co"># Show a plot of the generated distribution</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span></span>
-<span>           <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">"distPlot"</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">mainPanel</a></span><span class="op">(</span></span>
+<span>           <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">"distPlot"</span><span class="op">)</span></span>
 <span>        <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="co"># Define server logic required to draw a histogram</span></span>
 <span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">output</span><span class="op">$</span><span class="va">distPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">output</span><span class="op">$</span><span class="va">distPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>        <span class="co"># generate bins based on input$bins from ui.R</span></span>
 <span>        <span class="va">x</span>    <span class="op">&lt;-</span> <span class="va">faithful</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span></span>
 <span>        <span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">bins</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
@@ -329,7 +335,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span>    <span class="op">}</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="co"># Run the application </span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Run it by clicking “Run App”: a window opens and you can pan the slider and see the resulting output.</p>
 <p>In case you want to clean up the code, you can separate <code>app.R</code> into <code>ui.R</code> and <code>server.R</code>. No need to add the <code class="sourceCode r"><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</code> line in that case.</p>
 <p>All user-defined functions and variable definitions can be defined in a <code>global.R</code> file that will be sourced by default when launching the app.</p>
@@ -385,21 +391,21 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span class="header-section-number">15.1.3.1.1</span> Buttons</h5>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In ui:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span><span class="op">(</span><span class="st">"button_name"</span>, <span class="st">"Text to display"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/actionButton.html">actionButton</a></span><span class="op">(</span><span class="st">"button_name"</span>, <span class="st">"Text to display"</span><span class="op">)</span></span>
 <span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In server:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">button_name</span>, <span class="op">{</span></span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">button_name</span>, <span class="op">{</span></span>
 <span>    <span class="co"># do something</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span><span class="co"># or</span></span>
-<span><span class="va">some_function</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">eventReactive</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">button_name</span>, <span class="op">{</span></span>
+<span><span class="va">some_function</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/observeEvent.html">eventReactive</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">button_name</span>, <span class="op">{</span></span>
 <span>                               <span class="co"># do something</span></span>
 <span>                               <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section><section id="checkbox" class="level5" data-number="15.1.3.1.2"><h5 data-number="15.1.3.1.2" class="anchored" data-anchor-id="checkbox">
 <span class="header-section-number">15.1.3.1.2</span> Checkbox</h5>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In ui:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/checkboxInput.html">checkboxInput</a></span><span class="op">(</span><span class="st">"checkbox_name"</span>, <span class="st">"Text to display"</span>, value<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/checkboxInput.html">checkboxInput</a></span><span class="op">(</span><span class="st">"checkbox_name"</span>, <span class="st">"Text to display"</span>, value<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In server:</span></span>
 <span><span class="va">input</span><span class="op">$</span><span class="va">checkbox_name</span> <span class="co">#TRUE or FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -408,18 +414,18 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span class="header-section-number">15.1.3.1.3</span> Text/numeric</h5>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In ui:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textInput.html">textInput</a></span><span class="op">(</span><span class="st">"text_name"</span>, </span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/textInput.html">textInput</a></span><span class="op">(</span><span class="st">"text_name"</span>, </span>
 <span>            label <span class="op">=</span> <span class="st">"Text to display"</span>, </span>
 <span>            value <span class="op">=</span> <span class="st">"initial value"</span>, </span>
 <span>            width <span class="op">=</span> <span class="st">'100%'</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textAreaInput.html">textAreaInput</a></span><span class="op">(</span><span class="st">"text_name"</span>, </span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/textAreaInput.html">textAreaInput</a></span><span class="op">(</span><span class="st">"text_name"</span>, </span>
 <span>            label<span class="op">=</span><span class="st">"Text to display"</span>, </span>
 <span>            value <span class="op">=</span> <span class="st">"initial_value"</span>, </span>
 <span>            rows <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
-<span>            <span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/tagAppendAttributes.html">tagAppendAttributes</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">'width: 100%;'</span><span class="op">)</span></span>
+<span>            <span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/htmltools/reference/tagAppendAttributes.html">tagAppendAttributes</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">'width: 100%;'</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/numericInput.html">numericInput</a></span><span class="op">(</span><span class="st">"value_name"</span>, <span class="st">'Text to display'</span>, value<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/numericInput.html">numericInput</a></span><span class="op">(</span><span class="st">"value_name"</span>, <span class="st">'Text to display'</span>, value<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
 <span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In server, retrieve it as:</span></span>
 <span><span class="va">input</span><span class="op">$</span><span class="va">text_name</span></span>
@@ -429,7 +435,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span class="header-section-number">15.1.3.1.4</span> Slider</h5>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In ui:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"slider_name"</span>, <span class="st">"Text to display"</span>,</span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"slider_name"</span>, <span class="st">"Text to display"</span>,</span>
 <span>            min <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>            max <span class="op">=</span> <span class="fl">50</span>,</span>
 <span>            step<span class="op">=</span> <span class="fl">1</span>,</span>
@@ -442,14 +448,14 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span class="header-section-number">15.1.3.1.5</span> File</h5>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In ui:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fileInput.html">fileInput</a></span><span class="op">(</span><span class="st">"file_in"</span>, </span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fileInput.html">fileInput</a></span><span class="op">(</span><span class="st">"file_in"</span>, </span>
 <span>          <span class="st">"Choose input file:"</span>, accept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">".txt"</span><span class="op">)</span> </span>
 <span>          <span class="op">)</span></span>
 <span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In server, retrieve it as:</span></span>
 <span><span class="va">input</span><span class="op">$</span><span class="va">file_in</span><span class="op">$</span><span class="va">datapath</span></span>
 <span><span class="co"># For example, read it as a data.frame with myData():</span></span>
-<span><span class="va">myData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
+<span><span class="va">myData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>        <span class="va">inFile</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">file_in</span></span>
 <span>        <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">inFile</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>            <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
@@ -462,7 +468,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span class="header-section-number">15.1.3.1.6</span> Dropdown menu</h5>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In ui:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/selectInput.html">selectInput</a></span><span class="op">(</span><span class="st">"menu_name"</span>, <span class="st">"Text to display"</span>, </span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/selectInput.html">selectInput</a></span><span class="op">(</span><span class="st">"menu_name"</span>, <span class="st">"Text to display"</span>, </span>
 <span>            choices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"choice 1"</span>, <span class="st">"choice 2"</span><span class="op">)</span>, </span>
 <span>            multiple <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># multiple selection possible</span></span>
 <span>            <span class="op">)</span></span>
@@ -477,7 +483,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span class="header-section-number">15.1.3.2.1</span> Display a plot</h5>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In ui:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">"plot_name"</span>, height <span class="op">=</span> <span class="fl">600</span>,</span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">"plot_name"</span>, height <span class="op">=</span> <span class="fl">600</span>,</span>
 <span>           click <span class="op">=</span> <span class="st">"plot_click"</span>, <span class="co"># to retrieve the click position</span></span>
 <span>           dblclick <span class="op">=</span> <span class="st">"plot_dblclick"</span>, <span class="co"># to retrieve the double click position</span></span>
 <span>           hover <span class="op">=</span> <span class="st">"plot_hover"</span>, <span class="co"># to retrieve the mouse position</span></span>
@@ -485,7 +491,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span>           <span class="op">)</span></span>
 <span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In server:</span></span>
-<span><span class="va">output</span><span class="op">$</span><span class="va">plot_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span></span>
+<span><span class="va">output</span><span class="op">$</span><span class="va">plot_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>        <span class="co"># do plot:</span></span>
 <span>        <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
 <span>        <span class="co"># or</span></span>
@@ -497,22 +503,22 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span class="header-section-number">15.1.3.2.2</span> Display text</h5>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In ui:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html">textOutput</a></span><span class="op">(</span><span class="st">"text_to_display"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/textOutput.html">textOutput</a></span><span class="op">(</span><span class="st">"text_to_display"</span><span class="op">)</span></span>
 <span><span class="co"># Verbatim text (fixed width characters):</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"text_to_display"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/textOutput.html">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"text_to_display"</span><span class="op">)</span></span>
 <span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In server:</span></span>
-<span><span class="va">output</span><span class="op">$</span><span class="va">text_to_display</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html">renderText</a></span><span class="op">(</span><span class="op">{</span> <span class="st">"some text"</span> <span class="op">}</span><span class="op">)</span></span>
-<span><span class="va">output</span><span class="op">$</span><span class="va">text_to_display</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html">renderPrint</a></span><span class="op">(</span><span class="op">{</span> <span class="st">"some text"</span> <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">output</span><span class="op">$</span><span class="va">text_to_display</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html">renderText</a></span><span class="op">(</span><span class="op">{</span> <span class="st">"some text"</span> <span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">output</span><span class="op">$</span><span class="va">text_to_display</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderPrint.html">renderPrint</a></span><span class="op">(</span><span class="op">{</span> <span class="st">"some text"</span> <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><a id="display-a-table"></a></p>
 </section><section id="display-a-table" class="level5" data-number="15.1.3.2.3"><h5 data-number="15.1.3.2.3" class="anchored" data-anchor-id="display-a-table">
 <span class="header-section-number">15.1.3.2.3</span> Display a table</h5>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In ui:</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderTable.html">tableOutput</a></span><span class="op">(</span><span class="st">"table_to_display"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderTable.html">tableOutput</a></span><span class="op">(</span><span class="st">"table_to_display"</span><span class="op">)</span></span>
 <span><span class="co"># # # # # # # # # </span></span>
 <span><span class="co"># In server:</span></span>
-<span><span class="va">output</span><span class="op">$</span><span class="va">table_to_display</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderTable.html">renderTable</a></span><span class="op">(</span><span class="op">{</span> <span class="va">df</span> <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">output</span><span class="op">$</span><span class="va">table_to_display</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderTable.html">renderTable</a></span><span class="op">(</span><span class="op">{</span> <span class="va">df</span> <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Or in case you want interactive tables, use the package <a href="https://shiny.rstudio.com/articles/datatables.html">datatable</a>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/DT">DT</a></span><span class="op">)</span></span>
 <span><span class="co"># # # # # # # # # </span></span>
@@ -549,11 +555,11 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>table <span class="ot">&lt;-</span> <span class="fu">renderTable</span>( <span class="fu">myData</span>()[,<span class="fu">sort</span>(<span class="fu">as.numeric</span>(input<span class="sc">$</span>menu))] )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The various input default values can be updated using the following functions on the server side:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Dropdown menu</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/updateSelectInput.html">updateSelectInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"menu_name"</span>, choices<span class="op">=</span><span class="va">new_choices</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/updateSelectInput.html">updateSelectInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"menu_name"</span>, choices<span class="op">=</span><span class="va">new_choices</span><span class="op">)</span></span>
 <span><span class="co"># Text</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/updateTextInput.html">updateTextInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"text_name"</span>, value <span class="op">=</span> <span class="va">new_value</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/updateTextInput.html">updateTextInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"text_name"</span>, value <span class="op">=</span> <span class="va">new_value</span><span class="op">)</span></span>
 <span><span class="co"># Numeric</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/updateNumericInput.html">updateNumericInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"value_name"</span>, value <span class="op">=</span> <span class="va">new_value</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/updateNumericInput.html">updateNumericInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"value_name"</span>, value <span class="op">=</span> <span class="va">new_value</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><a id="writing-a-file"></a></p>
 </section><section id="writing-a-file" class="level5" data-number="15.1.3.2.5"><h5 data-number="15.1.3.2.5" class="anchored" data-anchor-id="writing-a-file">
 <span class="header-section-number">15.1.3.2.5</span> Writing a file</h5>
@@ -566,7 +572,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span><span class="fu"><a href="https://rdrr.io/r/base/write.html">write</a></span><span class="op">(</span><span class="va">toprint</span>, file<span class="op">=</span><span class="va">outfile</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/connections.html">close</a></span><span class="op">(</span><span class="va">outfile</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>You can for example write a Rmd file that you will render (as pdf, etc…) using <a href="https://www.rdocumentation.org/packages/rmarkdown/versions/1.13/topics/render"><code class="sourceCode r"><span class="fu">render</span>()</code></a>:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rmarkdown/man/render.html">render</a></span><span class="op">(</span><span class="st">"file_name.Rmd"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render</a></span><span class="op">(</span><span class="st">"file_name.Rmd"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><a id="example"></a></p>
 </section></section></section><section id="example-shiny" class="level3" data-number="15.1.4"><h3 data-number="15.1.4" class="anchored" data-anchor-id="example-shiny">
 <span class="header-section-number">15.1.4</span> Example</h3>
@@ -576,18 +582,18 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://plotly-r.com">plotly</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/DT">DT</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span><span class="op">(</span><span class="st">"City population in France"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span></span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fileInput.html">fileInput</a></span><span class="op">(</span><span class="st">"file_in"</span>, <span class="st">"Choose input file:"</span>,</span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/titlePanel.html">titlePanel</a></span><span class="op">(</span><span class="st">"City population in France"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span></span>
+<span>            <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fileInput.html">fileInput</a></span><span class="op">(</span><span class="st">"file_in"</span>, <span class="st">"Choose input file:"</span>,</span>
 <span>                      accept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">".txt"</span><span class="op">)</span> <span class="op">)</span>,</span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/selectInput.html">selectInput</a></span><span class="op">(</span><span class="st">"sel_city"</span>, <span class="st">"City:"</span>, choices <span class="op">=</span> <span class="st">""</span>, multiple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>            <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/selectInput.html">selectInput</a></span><span class="op">(</span><span class="st">"sel_city"</span>, <span class="st">"City:"</span>, choices <span class="op">=</span> <span class="st">""</span>, multiple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>        <span class="op">)</span>,</span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span></span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabsetPanel.html">tabsetPanel</a></span><span class="op">(</span></span>
-<span>                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"Plot"</span>, <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/plotly-shiny.html">plotlyOutput</a></span><span class="op">(</span><span class="st">"cityplot"</span>, height <span class="op">=</span> <span class="st">"400px"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"Table"</span>, <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderDataTable.html">dataTableOutput</a></span><span class="op">(</span><span class="st">"table"</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">mainPanel</a></span><span class="op">(</span></span>
+<span>            <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/tabsetPanel.html">tabsetPanel</a></span><span class="op">(</span></span>
+<span>                <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"Plot"</span>, <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/plotly-shiny.html">plotlyOutput</a></span><span class="op">(</span><span class="st">"cityplot"</span>, height <span class="op">=</span> <span class="st">"400px"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"Table"</span>, <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderDataTable.html">dataTableOutput</a></span><span class="op">(</span><span class="st">"table"</span><span class="op">)</span><span class="op">)</span></span>
 <span>            <span class="op">)</span></span>
 <span>        <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
@@ -596,7 +602,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
 <span></span>
 <span>    <span class="co"># myData() returns the data if a file is provided</span></span>
-<span>    <span class="va">myData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">myData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>        <span class="va">inFile</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">file_in</span></span>
 <span>        <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">inFile</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>            <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
@@ -604,7 +610,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span>            <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="va">inFile</span><span class="op">$</span><span class="va">datapath</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
 <span>            <span class="co"># in case something changes,</span></span>
 <span>            <span class="co"># update the city input selection list</span></span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/updateSelectInput.html">updateSelectInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"sel_city"</span>,</span>
+<span>            <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/updateSelectInput.html">updateSelectInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"sel_city"</span>,</span>
 <span>                              choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">city</span><span class="op">)</span>,</span>
 <span>                              selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">city</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
 <span>            <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
@@ -615,32 +621,32 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span>    <span class="va">output</span><span class="op">$</span><span class="va">cityplot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/plotly-shiny.html">renderPlotly</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>        <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">myData</span><span class="op">(</span><span class="op">)</span></span>
 <span>        <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
-<span>        <span class="va">p</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">input</span><span class="op">$</span><span class="va">sel_city</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">year</span>, y<span class="op">=</span><span class="va">pop</span>, size<span class="op">=</span><span class="va">pop</span>, color<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>                <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
-<span>                <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method<span class="op">=</span><span class="st">"lm"</span>, alpha<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span>        <span class="va">p</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>            <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">input</span><span class="op">$</span><span class="va">sel_city</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">year</span>, y<span class="op">=</span><span class="va">pop</span>, size<span class="op">=</span><span class="va">pop</span>, color<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method<span class="op">=</span><span class="st">"lm"</span>, alpha<span class="op">=</span><span class="fl">0.1</span>,</span>
 <span>                            show.legend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>                            <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>fill<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>                <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">ggtitle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Population in "</span>,</span>
+<span>                            <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Population in "</span>,</span>
 <span>                               <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">sel_city</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span></span>
 <span>                               <span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
-<span>                <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Year"</span>, y<span class="op">=</span><span class="st">"Population"</span><span class="op">)</span><span class="op">+</span></span>
-<span>                <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Year"</span>, y<span class="op">=</span><span class="st">"Population"</span><span class="op">)</span><span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span>
 <span>        <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly</a></span><span class="op">(</span><span class="va">p</span>, dynamicTicks <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span>    <span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span>    <span class="co"># show data as a table</span></span>
-<span>    <span class="va">output</span><span class="op">$</span><span class="va">table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderDataTable.html">renderDataTable</a></span><span class="op">(</span><span class="op">{</span></span>
-<span>        <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">myData</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">input</span><span class="op">$</span><span class="va">sel_city</span><span class="op">)</span></span>
+<span>    <span class="va">output</span><span class="op">$</span><span class="va">table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderDataTable.html">renderDataTable</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>        <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">myData</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">input</span><span class="op">$</span><span class="va">sel_city</span><span class="op">)</span></span>
 <span>        <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
-<span>        <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyr/man/pivot_wider.html">pivot_wider</a></span><span class="op">(</span><span class="va">df</span>, names_from<span class="op">=</span><span class="va">year</span>, values_from<span class="op">=</span><span class="va">pop</span><span class="op">)</span></span>
+<span>        <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_wider.html">pivot_wider</a></span><span class="op">(</span><span class="va">df</span>, names_from<span class="op">=</span><span class="va">year</span>, values_from<span class="op">=</span><span class="va">pop</span><span class="op">)</span></span>
 <span>        <span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">df</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span>    <span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>This will render <a href="https://cbousige.shinyapps.io/shiny_example/">like this</a>.</p>
 <p><a id="rmarkdown-embedded-shiny-application"></a></p>
 </section></section><section id="rmarkdown-embedded-shiny-application" class="level2" data-number="15.2"><h2 data-number="15.2" class="anchored" data-anchor-id="rmarkdown-embedded-shiny-application">
@@ -761,28 +767,28 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 Solution
 </summary><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span><span class="op">(</span><span class="st">"Some title"</span><span class="op">)</span>,</span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span></span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span></span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/numericInput.html">numericInput</a></span><span class="op">(</span><span class="st">"bw"</span>, <span class="st">"Enter bandwidth:"</span>, <span class="fl">1</span>, step<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span>,</span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"N_val"</span>, <span class="st">"Number of points:"</span>, </span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/titlePanel.html">titlePanel</a></span><span class="op">(</span><span class="st">"Some title"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span></span>
+<span>            <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/numericInput.html">numericInput</a></span><span class="op">(</span><span class="st">"bw"</span>, <span class="st">"Enter bandwidth:"</span>, <span class="fl">1</span>, step<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"N_val"</span>, <span class="st">"Number of points:"</span>, </span>
 <span>                        min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1e4</span>, step<span class="op">=</span> <span class="fl">1e2</span>, value <span class="op">=</span> <span class="fl">5e2</span><span class="op">)</span></span>
 <span>        <span class="op">)</span>,</span>
-<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span></span>
-<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">"plot"</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/sidebarLayout.html">mainPanel</a></span><span class="op">(</span></span>
+<span>            <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">"plot"</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span></span>
 <span>        <span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="va">output</span><span class="op">$</span><span class="va">plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="va">output</span><span class="op">$</span><span class="va">plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span></span>
 <span>                        <span class="kw">if</span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">bw</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
 <span>                        <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/density.html">density</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">N_val</span><span class="op">)</span>, bw<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">bw</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span>                    <span class="op">}</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://shiny.rstudio.com/reference/shiny/latest/shinyApp.html">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details></details><details><summary><strong>Exercise 2</strong>
 </summary><p>Create a shiny application that will:</p>
 <ul>
@@ -816,7 +822,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   const toggleBodyColorPrimary = () => {
-    toggleBodyColorMode(window.document.querySelector("link#quarto-bootstrap"));
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
   }
   toggleBodyColorPrimary();  
   const icon = "";
@@ -840,7 +849,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -919,31 +945,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   for (var i=0; i<noterefs.length; i++) {
     const ref = noterefs[i];
     tippyHover(ref, function() {
-      let href = ref.getAttribute('href');
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script><nav class="page-navigation"><div class="nav-page nav-page-previous">
