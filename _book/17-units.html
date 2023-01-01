@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.16">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Reproducible data treatment with R - 16&nbsp; Working with units and experimental errors</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./18-exercises.html" rel="next">
+<link href="./16-shiny.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=google_analytics.html"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
+</script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Working with units and experimental errors</span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Reproducible data treatment with R</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/colinbousige/Rclass" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-about.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">About the class</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-stats.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A little reminder on Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-getting_ready.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting ready</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-variables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Variables, booleans and strings</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-vectors.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Vectors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-dataframes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data frames</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-reading_files.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reading/writing all kinds of files</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-lists.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lists</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Functions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-conditions_loops.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conditional actions and loops</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-plotting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Plotting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-3d_plots.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">3D color plots</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-fitting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Fitting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-rmarkdown.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Rmarkdown</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-shiny.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Graphical interfaces with Shiny</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-units.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Working with units and experimental errors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-exercises.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">List of exercises</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#working-with-units" id="toc-working-with-units" class="nav-link active" data-scroll-target="#working-with-units"> <span class="header-section-number">16.1</span> Working with units</a></li>
+  <li><a href="#working-with-experimental-errors" id="toc-working-with-experimental-errors" class="nav-link" data-scroll-target="#working-with-experimental-errors"> <span class="header-section-number">16.2</span> Working with experimental errors</a></li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/Rclass/blob/main/17-units.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/Rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title d-none d-lg-block">
+<span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Working with units and experimental errors</span>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header><section id="working-with-units" class="level2" data-number="16.1"><h2 data-number="16.1" class="anchored" data-anchor-id="working-with-units">
+<span class="header-section-number">16.1</span> Working with units</h2>
+<p>It is easy to work with units in <em>R</em> thanks to the package <code>units</code> (see <a href="https://r-quantities.github.io/units/articles/measurement_units_in_R.html#handling-data-with-units-in-r-the-units-package-1">vignette</a>).</p>
+<p>Working with the <code>units</code> package can prove a <em>very</em> good idea to avoid conversion errors in your data treatment…</p>
+<p>Here is the gist of it:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Load the 'units' library</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/units/">units</a></span><span class="op">)</span></span>
+<span><span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>,<span class="fl">1</span>,length<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co"># attribute a unit, here 'seconds':</span></span>
+<span><span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">t</span>, <span class="st">"s"</span><span class="op">)</span> </span>
+<span><span class="va">t</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Units: [s]
+[1] 0.10 0.55 1.00</code></pre>
+</div>
+</div>
+<ul>
+<li>When possible, automatic units conversion is performed. Also, it is possible to attribute units to columns of <code>tibble</code>s and <code>data.frame</code>s:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d1</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,length<span class="op">=</span><span class="fl">3</span><span class="op">)</span>, <span class="st">"m"</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">tib1</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>t<span class="op">=</span><span class="va">t</span>, d<span class="op">=</span><span class="va">d1</span>, speed<span class="op">=</span><span class="va">d1</span><span class="op">/</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in tibble(t = t, d = d1, speed = d1/t): could not find function "tibble"</code></pre>
+</div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d2</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">.3</span>, length<span class="op">=</span><span class="fl">3</span><span class="op">)</span>, <span class="st">"cm"</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">tib2</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>t<span class="op">=</span><span class="va">t</span>, d<span class="op">=</span><span class="va">d2</span>, speed<span class="op">=</span><span class="va">d2</span><span class="op">/</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in tibble(t = t, d = d2, speed = d2/t): could not find function "tibble"</code></pre>
+</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">bind_rows</span><span class="op">(</span><span class="va">tib1</span>,<span class="va">tib2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in bind_rows(tib1, tib2): could not find function "bind_rows"</code></pre>
+</div>
+</div>
+<ul>
+<li>You can moreover convert between units systems using <code class="sourceCode r"><span class="fu">set_units</span>(vector, <span class="st">"unit"</span>)</code> or <code class="sourceCode r"><span class="fu">units</span>(vector) <span class="ot">&lt;-</span> <span class="st">"unit"</span></code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"fs"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="cn">T</span>, <span class="st">"THz"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1000 [THz]</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html">units</a></span><span class="op">(</span><span class="cn">T</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"ns"</span>; <span class="cn">T</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1e-06 [ns]</code></pre>
+</div>
+</div>
+<ul>
+<li>Sometimes, you may define the unit outside of the <code class="sourceCode r"><span class="fu">set_units</span>()</code> call and want to retrieve it, or use a unit from another variable in a new variable. For this, use the <code>mode="standard"</code> option:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">UNIT</span> <span class="op">&lt;-</span> <span class="st">"m"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="va">UNIT</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error: In 'UNIT', 'UNIT' is not recognized by udunits.
+
+See a table of valid unit symbols and names with valid_udunits().
+Custom user-defined units can be added with install_unit().
+
+See a table of valid unit prefixes with valid_udunits_prefixes().
+Prefixes will automatically work with any user-defined unit.</code></pre>
+</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="va">UNIT</span>, mode<span class="op">=</span><span class="st">"standard"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Units: [m]
+ [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+</div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/difftime.html">units</a></span><span class="op">(</span><span class="cn">T</span><span class="op">)</span>, mode<span class="op">=</span><span class="st">"standard"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Units: [ns]
+ [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+</div>
+</div>
+<ul>
+<li>You can give units to table columns:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="va">starwars</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 × 14
+   name     height  mass hair_color skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Luke Sk…    172    77 blond      fair       blue            19   male  mascu…
+ 2 C-3PO       167    75 &lt;NA&gt;       gold       yellow         112   none  mascu…
+ 3 R2-D2        96    32 &lt;NA&gt;       white, bl… red             33   none  mascu…
+ 4 Darth V…    202   136 none       white      yellow          41.9 male  mascu…
+ 5 Leia Or…    150    49 brown      light      brown           19   fema… femin…
+ 6 Owen La…    178   120 brown, gr… light      blue            52   male  mascu…
+ 7 Beru Wh…    165    75 brown      light      blue            47   fema… femin…
+ 8 R5-D4        97    32 &lt;NA&gt;       white, red red             NA   none  mascu…
+ 9 Biggs D…    183    84 black      light      brown           24   male  mascu…
+10 Obi-Wan…    182    77 auburn, w… fair       blue-gray       57   male  mascu…
+# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+</div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>           mass   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 × 14
+   name     height mass hair_color  skin_color eye_color birth_year sex   gender
+   &lt;chr&gt;      [cm] [kg] &lt;chr&gt;       &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt; 
+ 1 Luke Sk…    172   77 blond       fair       blue            19   male  mascu…
+ 2 C-3PO       167   75 &lt;NA&gt;        gold       yellow         112   none  mascu…
+ 3 R2-D2        96   32 &lt;NA&gt;        white, bl… red             33   none  mascu…
+ 4 Darth V…    202  136 none        white      yellow          41.9 male  mascu…
+ 5 Leia Or…    150   49 brown       light      brown           19   fema… femin…
+ 6 Owen La…    178  120 brown, grey light      blue            52   male  mascu…
+ 7 Beru Wh…    165   75 brown       light      blue            47   fema… femin…
+ 8 R5-D4        97   32 &lt;NA&gt;        white, red red             NA   none  mascu…
+ 9 Biggs D…    183   84 black       light      brown           24   male  mascu…
+10 Obi-Wan…    182   77 auburn, wh… fair       blue-gray       57   male  mascu…
+# … with 77 more rows, and 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;,
+#   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+</div>
+</div>
+<ul>
+<li>You can plot using units and easily convert between units while plotting:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">starwars</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span><span class="op">)</span>,</span>
+<span>           mass   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">!=</span> <span class="st">"hermaphroditic"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">height</span>, y<span class="op">=</span><span class="va">mass</span>, color<span class="op">=</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_point.html">geom_point</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Height"</span>, y<span class="op">=</span><span class="st">"Mass"</span><span class="op">)</span></span>
+<span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-units_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span> <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggforce/man/scale_unit.html">scale_x_unit</a></span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ggforce/man/scale_unit.html">scale_y_unit</a></span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"pounds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-units_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="working-with-experimental-errors" class="level2" data-number="16.2"><h2 data-number="16.2" class="anchored" data-anchor-id="working-with-experimental-errors">
+<span class="header-section-number">16.2</span> Working with experimental errors</h2>
+<p>When working in experimental science, you have to account for measurement errors and error propagation all along your data treatment. This is made really easy thanks to the <a href="https://github.com/r-quantities/quantities"><code>quantities</code> package</a> that gathers the <code>error</code> and <code>units</code> packages. Most importantly, this allows you <strong>propagating</strong> the errors in the proper way. So, you input your experimental error once, and you don’t have to think about it anymore. Neat, isn’t it?</p>
+<p>Here is the gist of it:</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/quantities">quantities</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>errors.notation<span class="op">=</span><span class="st">"plus-minus"</span>, errors.digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">set_errors</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.1</span><span class="op">)</span></span>
+<span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">set_errors</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.2</span><span class="op">)</span></span>
+<span><span class="va">a</span><span class="op">+</span><span class="va">b</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>3.0000 ± 0.2236</code></pre>
+</div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span><span class="op">*</span><span class="va">b</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2.0000 ± 0.2828</code></pre>
+</div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span><span class="op">^</span><span class="fl">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.0000 ± 0.3000</code></pre>
+</div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.1</code></pre>
+</div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_min</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9</code></pre>
+</div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_max</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.1</code></pre>
+</div>
+</div>
+<p>It thus becomes easy to plot the error bars from your experimental data. I recommend using the <code>ggforce</code> library to make <code>ggplot2</code> work better with <code>quantities</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com">ggforce</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>errors.notation<span class="op">=</span><span class="st">"parenthesis"</span>, errors.digits<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">starwars</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>height<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span>,<span class="va">height</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span>,</span>
+<span>           mass<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span>,<span class="va">mass</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span></span>
+<span>           <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 87 × 14
+   name         height     mass hair_color skin_color eye_color birth_year sex  
+   &lt;chr&gt;      (err) [… (err) [… &lt;chr&gt;      &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt; &lt;chr&gt;
+ 1 Luke Skyw…   172(9)    77(4) blond      fair       blue            19   male 
+ 2 C-3PO        167(8)    75(4) &lt;NA&gt;       gold       yellow         112   none 
+ 3 R2-D2         96(5)    32(2) &lt;NA&gt;       white, bl… red             33   none 
+ 4 Darth Vad…  200(10)   136(7) none       white      yellow          41.9 male 
+ 5 Leia Orga…   150(8)    49(2) brown      light      brown           19   fema…
+ 6 Owen Lars    178(9)   120(6) brown, gr… light      blue            52   male 
+ 7 Beru Whit…   165(8)    75(4) brown      light      blue            47   fema…
+ 8 R5-D4         97(5)    32(2) &lt;NA&gt;       white, red red             NA   none 
+ 9 Biggs Dar…   183(9)    84(4) black      light      brown           24   male 
+10 Obi-Wan K…   182(9)    77(4) auburn, w… fair       blue-gray       57   male 
+# … with 77 more rows, and 6 more variables: gender &lt;chr&gt;, homeworld &lt;chr&gt;,
+#   species &lt;chr&gt;, films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
+</div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/mutate.html">mutate</a></span><span class="op">(</span>height<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span>,<span class="va">height</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span>,</span>
+<span>           mass<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span>,<span class="va">mass</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span></span>
+<span>           <span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="va">sex</span><span class="op">!=</span><span class="st">"hermaphroditic"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">height</span>, y<span class="op">=</span><span class="va">mass</span>, color<span class="op">=</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_point.html">geom_point</a></span><span class="op">(</span>size<span class="op">=</span><span class="fl">2</span><span class="op">)</span><span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Height"</span>, y<span class="op">=</span><span class="st">"Mass"</span><span class="op">)</span><span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_linerange.html">geom_errorbar</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>ymin<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_min</a></span><span class="op">(</span><span class="va">mass</span><span class="op">)</span>,</span>
+<span>                          ymax<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_max</a></span><span class="op">(</span><span class="va">mass</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_errorbarh.html">geom_errorbarh</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>xmin<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_min</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span>,</span>
+<span>                           xmax<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_max</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="17-units_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+
+
+<!-- -->
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    toggleBodyColorMode(window.document.querySelector("link#quarto-bootstrap"));
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./16-shiny.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Graphical interfaces with Shiny</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./18-exercises.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">List of exercises</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<pre class="markdown" data-shortcodes="false"><code># Working with units and experimental errors
+
+
+
+## Working with units
+
+It is easy to work with units in *R* thanks to the package `units` (see [vignette](https://r-quantities.github.io/units/articles/measurement_units_in_R.html#handling-data-with-units-in-r-the-units-package-1)).
+
+Working with the `units` package can prove a *very* good idea to avoid conversion errors in your data treatment...
+
+Here is the gist of it:
+
+```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
+# Load the 'units' library
+library(units)
+t &lt;- seq(0.1,1,length=3)
+# attribute a unit, here 'seconds':
+t &lt;- set_units(t, "s") 
+t
+```
+
+- When possible, automatic units conversion is performed. Also, it is possible to attribute units to columns of `tibble`s and `data.frame`s:
+```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
+d1    &lt;- set_units(seq(1,2,length=3), "m")
+(tib1 &lt;- tibble(t=t, d=d1, speed=d1/t))
+d2    &lt;- set_units(seq(0.1, .3, length=3), "cm")
+(tib2 &lt;- tibble(t=t, d=d2, speed=d2/t))
+bind_rows(tib1,tib2)
+```
+- You can moreover convert between units systems using `set_units(vector, "unit")`{.R} or `units(vector) &lt;- "unit"`{.R}:
+```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
+T &lt;- set_units(1, "fs")
+set_units(1/T, "THz")
+units(T) &lt;- "ns"; T
+```
+- Sometimes, you may define the unit outside of the `set_units()`{.R} call and want to retrieve it, or use a unit from another variable in a new variable. For this, use the `mode="standard"` option:
+```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
+UNIT &lt;- "m"
+set_units(1:10, UNIT)
+set_units(1:10, UNIT, mode="standard")
+set_units(1:10, units(T), mode="standard")
+```
+
+- You can give units to table columns:
+quarto-executable-code-5450563D
+
+```r
+#| message: false
+library(tidyverse)
+starwars
+starwars %&gt;% 
+    mutate(height = set_units(height,"cm"),
+           mass   = set_units(mass,"kg"))
+```
+
+- You can plot using units and easily convert between units while plotting:
+```{r, error=TRUE, warning=FALSE, message=FALSE}
+p &lt;- starwars %&gt;% 
+    mutate(height = set_units(height,"cm"),
+           mass   = set_units(mass,"kg")) %&gt;% 
+    filter(sex != "hermaphroditic") %&gt;%
+    ggplot(aes(x=height, y=mass, color=sex))+
+        geom_point(size=2)+
+        labs(x="Height", y="Mass")
+p
+p + ggforce::scale_x_unit(unit = "inches") +
+    ggforce::scale_y_unit(unit = "pounds")
+```
+
+
+## Working with experimental errors
+
+When working in experimental science, you have to account for measurement errors and error propagation all along your data treatment.
+This is made really easy thanks to the [`quantities` package](https://github.com/r-quantities/quantities) that gathers the `error` and `units` packages. Most importantly, this allows you **propagating** the errors in the proper way. So, you input your experimental error once, and you don't have to think about it anymore. Neat, isn't it?
+
+Here is the gist of it:
+
+```{r warning=FALSE, message=FALSE, error=TRUE}
+library(quantities)
+options(errors.notation="plus-minus", errors.digits=4)
+a &lt;- set_errors(1, 0.1)
+b &lt;- set_errors(2, 0.2)
+a+b
+a*b
+a^3
+errors(a)
+errors_min(a)
+errors_max(a)
+```
+
+It thus becomes easy to plot the error bars from your experimental data. I recommend using the `ggforce` library to make `ggplot2` work better with `quantities`:
+
+```{r warning=FALSE, message=FALSE, error=TRUE}
+library(ggforce)
+options(errors.notation="parenthesis", errors.digits=1)
+starwars %&gt;% 
+    mutate(height=set_quantities(height,"cm",height*.05),
+           mass=set_quantities(mass,"kg",mass*.05)
+           )
+starwars %&gt;% 
+    mutate(height=set_quantities(height,"cm",height*.05),
+           mass=set_quantities(mass,"kg",mass*.05)
+           ) %&gt;% 
+    filter(sex!="hermaphroditic") %&gt;% 
+    ggplot(aes(x=height, y=mass, color=sex))+
+        geom_point(size=2)+
+        labs(x="Height", y="Mass")+
+        geom_errorbar(aes(ymin=errors_min(mass),
+                          ymax=errors_max(mass)))+
+        geom_errorbarh(aes(xmin=errors_min(height),
+                           xmax=errors_max(height)))
+```</code></pre>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>

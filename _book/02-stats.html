@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.16">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Reproducible data treatment with R - 2&nbsp; A little reminder on Statistics</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03-getting_ready.html" rel="next">
+<link href="./01-about.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=google_analytics.html"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
+</script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A little reminder on Statistics</span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Reproducible data treatment with R</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/colinbousige/Rclass" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-about.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">About the class</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-stats.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A little reminder on Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-getting_ready.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting ready</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-variables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Variables, booleans and strings</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-vectors.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Vectors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-dataframes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data frames</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-reading_files.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reading/writing all kinds of files</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-lists.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lists</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Functions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-conditions_loops.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conditional actions and loops</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-plotting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Plotting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-3d_plots.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">3D color plots</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-fitting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Fitting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-rmarkdown.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Rmarkdown</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-shiny.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Graphical interfaces with Shiny</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-units.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Working with units and experimental errors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-exercises.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">List of exercises</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#why-are-statistical-tools-necessary-in-physical-science" id="toc-why-are-statistical-tools-necessary-in-physical-science" class="nav-link active" data-scroll-target="#why-are-statistical-tools-necessary-in-physical-science"> <span class="header-section-number">2.1</span> Why are statistical tools necessary in physical science?</a>
+  <ul class="collapse">
+<li><a href="#a-practical-example" id="toc-a-practical-example" class="nav-link" data-scroll-target="#a-practical-example"> <span class="header-section-number">2.1.1</span> A practical example</a></li>
+  <li><a href="#probabilistic-description-of-physical-systems" id="toc-probabilistic-description-of-physical-systems" class="nav-link" data-scroll-target="#probabilistic-description-of-physical-systems"> <span class="header-section-number">2.1.2</span> Probabilistic description of physical systems</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#quantifying-the-properties-of-data" id="toc-quantifying-the-properties-of-data" class="nav-link" data-scroll-target="#quantifying-the-properties-of-data"> <span class="header-section-number">2.2</span> Quantifying the properties of data</a>
+  <ul class="collapse">
+<li><a href="#data-representation-presenting-a-measurement" id="toc-data-representation-presenting-a-measurement" class="nav-link" data-scroll-target="#data-representation-presenting-a-measurement"> <span class="header-section-number">2.2.1</span> Data representation – presenting a measurement</a></li>
+  <li><a href="#characterizing-an-ensemble-of-measurements" id="toc-characterizing-an-ensemble-of-measurements" class="nav-link" data-scroll-target="#characterizing-an-ensemble-of-measurements"> <span class="header-section-number">2.2.2</span> Characterizing an ensemble of measurements</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#useful-distributions" id="toc-useful-distributions" class="nav-link" data-scroll-target="#useful-distributions"> <span class="header-section-number">2.3</span> Useful distributions</a>
+  <ul class="collapse">
+<li><a href="#probability-density-functions" id="toc-probability-density-functions" class="nav-link" data-scroll-target="#probability-density-functions"> <span class="header-section-number">2.3.1</span> Probability Density Functions</a></li>
+  <li><a href="#pdfs-mean-and-variance" id="toc-pdfs-mean-and-variance" class="nav-link" data-scroll-target="#pdfs-mean-and-variance"> <span class="header-section-number">2.3.2</span> PDFs, mean and variance</a></li>
+  <li><a href="#the-poisson-distribution" id="toc-the-poisson-distribution" class="nav-link" data-scroll-target="#the-poisson-distribution"> <span class="header-section-number">2.3.3</span> The Poisson distribution</a></li>
+  <li><a href="#the-gaussian-distribution" id="toc-the-gaussian-distribution" class="nav-link" data-scroll-target="#the-gaussian-distribution"> <span class="header-section-number">2.3.4</span> The Gaussian distribution</a></li>
+  </ul>
+</li>
+  <li>
+<a href="#uncertainty-and-errors" id="toc-uncertainty-and-errors" class="nav-link" data-scroll-target="#uncertainty-and-errors"> <span class="header-section-number">2.4</span> Uncertainty and errors</a>
+  <ul class="collapse">
+<li><a href="#central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty" id="toc-central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty" class="nav-link" data-scroll-target="#central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty"> <span class="header-section-number">2.4.1</span> Central limit theorem: on the Gaussian nature of statistical uncertainty</a></li>
+  <li><a href="#combination-of-errors" id="toc-combination-of-errors" class="nav-link" data-scroll-target="#combination-of-errors"> <span class="header-section-number">2.4.2</span> Combination of errors</a></li>
+  </ul>
+</li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"> <span class="header-section-number">2.5</span> Further reading</a></li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/Rclass/blob/main/02-stats.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/Rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title d-none d-lg-block">
+<span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A little reminder on Statistics</span>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header><section id="why-are-statistical-tools-necessary-in-physical-science" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="why-are-statistical-tools-necessary-in-physical-science">
+<span class="header-section-number">2.1</span> Why are statistical tools necessary in physical science?</h2>
+<p>When doing Science, one has to fully grasp the concept of <em>physical measurement</em>. Let’s take an example to visualize the importance of this concept.</p>
+<section id="a-practical-example" class="level3" data-number="2.1.1"><h3 data-number="2.1.1" class="anchored" data-anchor-id="a-practical-example">
+<span class="header-section-number">2.1.1</span> A practical example</h3>
+<p>Let’s say you want to communicate to someone a temperature, and tell this person that the temperature is “38”. If this is a random person in the street, they might think: “nice, let’s go to the beach today!”. If this random person is from the USA, they’re gonna think: “damn, where did I put my coat?”. If that person happens to be a physician, they might think: “that kid’s got a slight fever”. If they are a physicist doing a cryostat experiment, they might think “let’s check the He tank level”… you see that one of the most important part of the measurement is missing: its unit. Units are there so that people understand each other when exchanging data, and you see here that 38 Celsius, 38 Fahrenheit or 38 Kelvin are quite different, and this quantity will mean different things in different contexts. A physical quantity given without its unit would be absolutely meaningless (unless, of course, you are looking at a unit-less quantity, like a count).</p>
+<p>Now let’s consider the body temperature of 38 °C given to a physician. How did you measure this temperature? With a mercury graduated thermometer or with a thermocouple? In the first case, you can probably assume that this value is given with a measurement error of at least 1 °C, meaning that the temperature you give to the physician is (38±1) °C, <em>i.e.</em> the physician won’t be able to decide whether they should be concerned or not. In the second case, the temperature is often given with a 0.1 °C precision, so the physician, seeing that the body temperature is (38±0.1) °C, will probably tell you to take an aspirin and rest instead of giving you something stronger to treat a possible infection. Given that the uncertainty on the given value is of 0.1 °C, one should in fact give the temperature with matching decimal precision, <em>i.e.</em> (38.0±0.1) °C. Writing (38±0.1) °C, (38.00001±0.1) °C or (38.00±0.10000) °C would be meaningless too.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>With this, we see that a physical measurement should be given with four parts: its actual <strong>value</strong>, its <strong>decimal precision</strong>, its <strong>uncertainty</strong>, and its <strong>unit</strong>. Should any of these four parts be missing in a physical quantity that you wanted to share, it would at best be imprecise, and at worst be utterly meaningless.</p>
+</div>
+</div>
+</section><section id="probabilistic-description-of-physical-systems" class="level3" data-number="2.1.2"><h3 data-number="2.1.2" class="anchored" data-anchor-id="probabilistic-description-of-physical-systems">
+<span class="header-section-number">2.1.2</span> Probabilistic description of physical systems</h3>
+<p>Let’s continue with our example of the body temperature measured with a thermocouple or a laser thermometer with a 0.1 °C precision. Our first measurement of the body temperature yielded (38.0±0.1) °C. Now let’s repeat this measurement a number of times in various area of the body (which are left to your imagination). Let’s say it then shows (38.1±0.1) °C, (38.0±0.1) °C, (38.3±0.1) °C, (37.9±0.1) °C, (38.2±0.1) °C, (38.1±0.1) °C, (38.1±0.1) °C, (39.8±0.1) °C. What is the actual body temperature then? Should we stick to a single measurement? Of course not. We have to make an histogram of the measured values, and study the distribution of the measurements (<a href="#fig-histogramT">Figure&nbsp;<span>2.1</span></a>). We can then see that one of the values is clearly an outlier – something might have gone wrong there. What if we had done the measurement only once and only measured that value? We might have jumped to a very wrong conclusion, with possibly a very serious consequence like giving the wrong medicine.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-histogramT" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-histogramT-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 2.1: Histogram of the body temperature measurements. The red line is the mean value, the orange one is the mode and the blue one is the median.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>With this example, we see that <strong>a physical measurement is not absolute</strong>. In fact, a physical measurement is an assessment of the <strong>probability</strong> that the physical value is within a certain range. In the case of our example, after removing the outlier for which we are certain that the measurement is wrong, it means that the measured body temperature has a high probability to be somewhere between 38.0 °C and 38.2 °C. In other (more general) terms, one could consider a measurement of a quantity <span class="math inline">\(X\)</span> as a probability <span class="math inline">\(P(x - \sigma &lt; X &lt; x + \sigma )\)</span> that the quantity <span class="math inline">\(X\)</span> has a value between <span class="math inline">\(x-\sigma\)</span> and <span class="math inline">\(x+\sigma\)</span>. The <strong>uncertainty</strong> <span class="math inline">\(\sigma\)</span> around the <strong>mean value</strong> <span class="math inline">\(x\)</span> is usually given as the <strong>standard deviation</strong> of the distribution of measurements around the mean.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Since physical measurements are in fact <strong>probabilities</strong>, we <strong>can</strong> – and <strong>must</strong> – use <strong>statistical tools</strong> to characterize them.</p>
+</div>
+</div>
+</section></section><section id="quantifying-the-properties-of-data" class="level2" data-number="2.2"><h2 data-number="2.2" class="anchored" data-anchor-id="quantifying-the-properties-of-data">
+<span class="header-section-number">2.2</span> Quantifying the properties of data</h2>
+<section id="data-representation-presenting-a-measurement" class="level3" data-number="2.2.1"><h3 data-number="2.2.1" class="anchored" data-anchor-id="data-representation-presenting-a-measurement">
+<span class="header-section-number">2.2.1</span> Data representation – presenting a measurement</h3>
+<p>Depending on the data you are looking at, various ways of representing them are possible. I can’t stress enough the importance of picking the right representation for your data, it is the expression of your physical sense. A good representation will help you make sense of your data and communicate your results. A bad representation, well…</p>
+<section id="histograms" class="level4" data-number="2.2.1.1"><h4 data-number="2.2.1.1" class="anchored" data-anchor-id="histograms">
+<span class="header-section-number">2.2.1.1</span> Histograms</h4>
+<p>When looking at discrete values or when you want to characterize the distribution of a measurement, it is often a good idea to use the histogram representation, which represents the frequency at which a measurement is made within a certain range, called bin. Let’s take <a href="#fig-histogramT">Figure&nbsp;<span>2.1</span></a> and plot it with various bin sizes. One can see that the choice of bin size is important, as it determines whether your data are noisy or lack fine information.</p>
+<div id="fig-histograms" class="cell quarto-layout-panel">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histograms-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-histograms-1.png" class="img-fluid figure-img" data-ref-parent="fig-histograms" width="672"></p>
+<p></p><figcaption class="figure-caption">(a) Bin width = 0.1 °C</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histograms-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-histograms-2.png" class="img-fluid figure-img" data-ref-parent="fig-histograms" width="672"></p>
+<p></p><figcaption class="figure-caption">(b) Bin width = 0.2 °C</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histograms-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-histograms-3.png" class="img-fluid figure-img" data-ref-parent="fig-histograms" width="672"></p>
+<p></p><figcaption class="figure-caption">(c) Bin width = 1 °C</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure 2.2: Histogram of the body temperature measurements with different bin widths.</figcaption><p></p>
+</figure>
+</div>
+</section><section id="graphs" class="level4" data-number="2.2.1.2"><h4 data-number="2.2.1.2" class="anchored" data-anchor-id="graphs">
+<span class="header-section-number">2.2.1.2</span> Graphs</h4>
+<p>In case you want to represent continuous data, say the evolution of a quantity <span class="math inline">\(y\)</span> with respect to a quantity <span class="math inline">\(x\)</span>, you should then use the graph representation. As we saw before, any physical quantity should be given with its uncertainty and unit. <strong>The same applies to a graph</strong>: it <strong>must</strong> clearly display the <strong>units</strong> of the quantities <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and <strong>error bars</strong> that are usually taken as the standard deviation of each individual measurement (that should thus be performed a number of times, depending on what you are looking at).</p>
+<div id="fig-graphs" class="cell quarto-layout-panel">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-graphs-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-graphs-1.png" class="img-fluid figure-img" data-ref-parent="fig-graphs" width="672"></p>
+<p></p><figcaption class="figure-caption">(a) Meaningless graph</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-graphs-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-graphs-2.png" class="img-fluid figure-img" data-ref-parent="fig-graphs" width="672"></p>
+<p></p><figcaption class="figure-caption">(b) Noise</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-graphs-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-graphs-3.png" class="img-fluid figure-img" data-ref-parent="fig-graphs" width="672"></p>
+<p></p><figcaption class="figure-caption">(c) Meaningful graph</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure 2.3: Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data.</figcaption><p></p>
+</figure>
+</div>
+<p>You can think of each set of {datapoint + error bar} as an histogram: the displayed point is the mean value of the histogram, and the error bar is its standard deviation. <strong>Therefore, plotting a straight line between points is usually pointless</strong>. Plotting a line going through the data points only has meaning if this line results from a physical model explaining the variation of the quantity <span class="math inline">\(y\)</span> with the evolution of the quantity <span class="math inline">\(x\)</span> – this is called a <strong>fit</strong>, and we will see more about it in the <a href="#fitting">R class later</a>.</p>
+</section></section><section id="characterizing-an-ensemble-of-measurements" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="characterizing-an-ensemble-of-measurements">
+<span class="header-section-number">2.2.2</span> Characterizing an ensemble of measurements</h3>
+<p>If we take <span class="math inline">\(N\)</span> repeated measurements of an observable <span class="math inline">\(x\)</span>, it is then natural to try to assess our knowledge of the ensemble of measures through (1) a single number representing the measured quantity, and (2) a second number representing the spread of measurements. As we saw before, the observable <span class="math inline">\(x\)</span> is thus generally defined by its central (mean) value <span class="math inline">\(\left&lt; x \right&gt;\)</span>, its spread <span class="math inline">\(\sigma_x\)</span> (standard deviation or uncertainty), and its unit.</p>
+<section id="central-value-mode-median-and-mean" class="level4" data-number="2.2.2.1"><h4 data-number="2.2.2.1" class="anchored" data-anchor-id="central-value-mode-median-and-mean">
+<span class="header-section-number">2.2.2.1</span> Central value: mode, median and mean</h4>
+<p>The <strong>mode</strong> of an ensemble of measurements is its <em>most frequent value</em>. If the measurement in question is of a continuous variable, one has to bin the data in terms of a histogram in order to quantify the modal value of that distribution: the mode will be the position of the maximum of the histogram.</p>
+<p>The <strong>median</strong> value of the ensemble is the value of <span class="math inline">\(x\)</span> for which there are an equal number of measurements above and below that point. If there is an even number of measurements, then the median value is taken as the midpoint between the two most central values.</p>
+<p>The <strong>mean</strong> (or arithmetic average) is more often used than the two previous quantities, as it usually provides a better way to quantify the “typical” value measured. The mean value is denoted either by <span class="math inline">\(\overline{x}\)</span> or <span class="math inline">\(\left&lt; x \right&gt;\)</span>, and is given by:</p>
+<p><span class="math display">\[
+\overline{x}=\left&lt; x \right&gt;=\frac{1}{N}\sum_{i=1}^Nx_i,
+\]</span></p>
+<p>where <span class="math inline">\(x_i\)</span> is the <span class="math inline">\(i\)</span>-th measurement of <span class="math inline">\(x\)</span>.</p>
+<p><a href="#fig-histogramT">Figure&nbsp;<span>2.1</span></a> shows the representation of a sample of data plotted in a histogram. This figure shows the mode, mean and median. For this particular sample of data, the mean is 38.3 °C, the median is 38.1 °C, and the mode is 38.0 °C. The fact that the mode is smaller than the mean is an indication that the data are asymmetric about the mean. We usually refer to such a distribution as being skewed, and in this case the data are skewed to the right.</p>
+</section><section id="quantifying-the-spread-of-data-variance-and-standard-deviation" class="level4" data-number="2.2.2.2"><h4 data-number="2.2.2.2" class="anchored" data-anchor-id="quantifying-the-spread-of-data-variance-and-standard-deviation">
+<span class="header-section-number">2.2.2.2</span> Quantifying the spread of data: variance and standard deviation</h4>
+<p>The mean of an ensemble of data doesn’t provide any information as to how the data are distributed. So any description of a set of data just quoting a mean value is incomplete. We need a second number in order to quantify the dispersion of data around the mean value. The average deviations from the mean, <span class="math inline">\(\left&lt; x-\overline{x} \right&gt;\)</span>, is not a useful quantity as, by definition, this will be zero for a symmetrically distributed sample of data (which is always the case for randomly distributed data – a consequence of the central limit theorem, as we will see later). We should rather consider the average value of the squared deviations from the mean as a measure of the spread of our ensemble of measurements. This is called the <strong>variance</strong> <span class="math inline">\(V(x)\)</span>, which is given by:</p>
+<p><span id="eq-variance"><span class="math display">\[
+\begin{aligned}
+V(x)&amp;=\left&lt; (x-\overline{x})^2 \right&gt;\\
+    &amp;=\frac{1}{N}\sum_{i=1}^N(x_i-\overline{x})^2\\
+    &amp;=\overline{x^2}-\overline{x}^2
+\end{aligned}
+\tag{2.1}\]</span></span></p>
+<p>The square root of the mean-squared (root-mean-squared or RMS) deviation is called the <strong>standard deviation</strong>, and this is given by:</p>
+<p><span id="eq-sd"><span class="math display">\[
+\begin{aligned}
+\sigma(x)&amp;=\sqrt{V(x)}\\
+         &amp;=\sqrt{\overline{x^2}-\overline{x}^2}
+\end{aligned}
+\tag{2.2}\]</span></span></p>
+<p>The standard deviation quantifies the amount by which it is reasonable for a measurement of <span class="math inline">\(x\)</span> to differ from the mean value <span class="math inline">\(\overline{x}\)</span>. Considering a Gaussian distribution, we would expect to have 31.7% of measurements deviating from the mean value by more than 1<span class="math inline">\(\sigma\)</span>, and this goes down to 4.5% of measurements to deviate by more than 2<span class="math inline">\(\sigma\)</span>, and 0.3% of measurements to deviate by more than 3<span class="math inline">\(\sigma\)</span>. Thus, if we perform a measurement that deviates by a significant margin from the expected value of <span class="math inline">\(\left&lt; x \right&gt;\pm\sigma\)</span>, we need to ask ourselves about the significance of our measurement.</p>
+<p>In general, scientists often prefer using the standard deviation rather than the variance when describing data, since as the former has the same units as the observable being measured.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A measurement of a quantity <span class="math inline">\(x\)</span> is therefore usually presented under the form <span class="math inline">\(\left&lt; x \right&gt;\pm\sigma_x\)</span>, where <span class="math inline">\(\left&lt; x \right&gt;\)</span> is the arithmetic average and <span class="math inline">\(\sigma_x\)</span> is the standard deviation of the data.</p>
+</div>
+</div>
+</section><section id="caveats" class="level4" data-number="2.2.2.3"><h4 data-number="2.2.2.3" class="anchored" data-anchor-id="caveats">
+<span class="header-section-number">2.2.2.3</span> Caveats</h4>
+<p>The above considerations all assume that the distribution of measured values is mono-modal, <em>i.e.</em> the histogram of the measured values is centered around a single value. In the case of a multimodal distribution such as shown in <a href="#fig-multimodal">Figure&nbsp;<span>2.4</span></a>, it would be meaningless to use such tools as the fine information on the distribution would be lost.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-multimodal" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-multimodal-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 2.4: A trimodal distribution of measurements. The red line shows the mean value of the distribution: it fails to grasp the reality of the distribution.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>In this case, one should try to deconvolute the distribution in terms of individual peaks, and gather their positions, widths and intensities.</p>
+</section></section></section><section id="useful-distributions" class="level2" data-number="2.3"><h2 data-number="2.3" class="anchored" data-anchor-id="useful-distributions">
+<span class="header-section-number">2.3</span> Useful distributions</h2>
+<section id="probability-density-functions" class="level3" data-number="2.3.1"><h3 data-number="2.3.1" class="anchored" data-anchor-id="probability-density-functions">
+<span class="header-section-number">2.3.1</span> Probability Density Functions</h3>
+<p>We should now introduce the notion of <strong>Probability Density Function</strong> (PDF). <em>By definition</em>, a PDF is a distribution where the <strong>total area is unity</strong>. The variation of the PDF is represents the probability of something occurring at that point in the parameter space. In general, a PDF will be described by some function <span class="math inline">\(P(x)\)</span>, where</p>
+<p><span id="eq-PDFnorm"><span class="math display">\[
+\int_a^b P(x)dx=1,
+\tag{2.3}\]</span></span></p>
+<p>where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are the limits of the valid domain for the <span class="math inline">\(P(x)\)</span> function. The probability of obtaining a result between <span class="math inline">\(x\)</span> and <span class="math inline">\(x + dx\)</span> is thus <span class="math inline">\(P(x)dx\)</span>. Usual PDFs encountered in physics are the Poisson distribution as well as the Gaussian distribution, that we will describe in a bit.</p>
+</section><section id="pdfs-mean-and-variance" class="level3" data-number="2.3.2"><h3 data-number="2.3.2" class="anchored" data-anchor-id="pdfs-mean-and-variance">
+<span class="header-section-number">2.3.2</span> PDFs, mean and variance</h3>
+<p>Let us define a PDF <span class="math inline">\(P(x)\)</span> describing a continuous distribution. We can compute the average value of some quantity by computing the integral over this quantity multiplied by the PDF.</p>
+<p>For example, the <strong>average value</strong> of the variable <span class="math inline">\(x\)</span>, distributed according to the PDF <span class="math inline">\(P(x)\)</span> in the domain <span class="math inline">\(-\infty &lt; x &lt;\infty\)</span>, is given by:</p>
+<p><span id="eq-firstmoment"><span class="math display">\[
+\begin{aligned}
+\left&lt; x \right&gt;&amp;=\int_{-\infty}^{\infty}xP(x)dx\\
+\text{or } \left&lt; x \right&gt;&amp;=\sum_{i}x_iP(x_i) \text{ in the case of a discrete distribution}
+\end{aligned}
+\tag{2.4}\]</span></span></p>
+<p>This is called the <em>first moment</em> of the PDF.</p>
+<p>This method can be used to compute average values of more complicated expressions. The mean value of <span class="math inline">\((x - \overline{x})^2\)</span>, <em>i.e.</em> the variance <span class="math inline">\(V\)</span>, is thus given by the <span class="math inline">\(\overline{x}\)</span>-centered second moment of the PDF, such as:</p>
+<p><span id="eq-secondmoment"><span class="math display">\[
+\begin{aligned}
+V&amp;=\int_{-\infty}^{\infty}(x - \overline{x})^2P(x)dx\\
+\text{or } V&amp;=\sum_{i}(x_i - \overline{x})^2P(x_i) \text{ in the case of a discrete distribution}
+\end{aligned}
+\tag{2.5}\]</span></span></p>
+</section><section id="the-poisson-distribution" class="level3" data-number="2.3.3"><h3 data-number="2.3.3" class="anchored" data-anchor-id="the-poisson-distribution">
+<span class="header-section-number">2.3.3</span> The Poisson distribution</h3>
+<section id="definition" class="level4" data-number="2.3.3.1"><h4 data-number="2.3.3.1" class="anchored" data-anchor-id="definition">
+<span class="header-section-number">2.3.3.1</span> Definition</h4>
+<p>When a certain reaction happens randomly in time with an average frequency <span class="math inline">\(\lambda\)</span> in a given time interval, then the number <span class="math inline">\(k\)</span> of reactions in that time interval will follow a Poisson distribution:</p>
+<p><span id="eq-poisson"><span class="math display">\[
+P_\lambda(k) = \frac{\lambda^ke^{-\lambda}}{k!}
+\tag{2.6}\]</span></span></p>
+<p>Examples of encounters of Poisson distributions could be as various as the number of calls received per hours in a call center, the yearly number of Prussian soldiers killed by horse kicks… or the number of particles (photons, neutrons, neutrinos…) hitting a detector every second.</p>
+<div id="fig-poissondistrib" class="cell quarto-layout-panel">
+<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-poissondistrib-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-poissondistrib-1.png" class="img-fluid figure-img" data-ref-parent="fig-poissondistrib" width="672"></p>
+<p></p><figcaption class="figure-caption">(a)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-poissondistrib-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-poissondistrib-2.png" class="img-fluid figure-img" data-ref-parent="fig-poissondistrib" width="672"></p>
+<p></p><figcaption class="figure-caption">(b)</figcaption><p></p>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-poissondistrib-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-poissondistrib-3.png" class="img-fluid figure-img" data-ref-parent="fig-poissondistrib" width="672"></p>
+<p></p><figcaption class="figure-caption">(c)</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p></p><figcaption class="figure-caption">Figure 2.5: Poisson distribution for various parameters. While asymmetric for small values of <span class="math inline">\(k\)</span> and <span class="math inline">\(\lambda\)</span>, it tends towards a Gaussian lineshape at larger values.</figcaption><p></p>
+</figure>
+</div>
+</section><section id="characteristics" class="level4" data-number="2.3.3.2"><h4 data-number="2.3.3.2" class="anchored" data-anchor-id="characteristics">
+<span class="header-section-number">2.3.3.2</span> Characteristics</h4>
+<p>As shown on <a href="#fig-poissondistrib">Figure&nbsp;<span>2.5</span></a>, for small <span class="math inline">\(\lambda\)</span> the distribution is asymmetric and skewed to the right. As <span class="math inline">\(\lambda\)</span> increases the Poisson distribution becomes more symmetric.</p>
+<p>Following <a href="#eq-firstmoment">Equation&nbsp;<span>2.4</span></a>, the average number of observed events, <span class="math inline">\(\left&lt; k \right&gt;\)</span>, is given by:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\left&lt; k \right&gt; &amp;= \sum_{k=0}^\infty kP_\lambda(k) = \sum_{k=1}^\infty k\frac{\lambda^ke^{-\lambda}}{k!}\\
+        &amp;= \lambda e^{-\lambda} \sum_{k=1}^\infty \frac{\lambda^{k-1}}{(k-1)!}= \lambda e^{-\lambda} \sum_{k=0}^\infty \frac{\lambda^{k}}{k!}\\
+        &amp;= \lambda
+\end{aligned}
+\]</span></p>
+<p>In the same manner and by using the “trick” <span class="math inline">\(x^2=x(x-1)+x\)</span>, the variance <span class="math inline">\(\sigma^2(k)\)</span> of the distribution is given by:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sigma^2(k) &amp;= \sum_{k=1}^\infty (k-\lambda)^2\frac{\lambda^k e^{-\lambda}}{k!}\\
+        &amp;= \lambda e^{-\lambda} \left[\sum_{k=1}^\infty k^2\frac{\lambda^{k-1}}{k!} \underbrace{-2\lambda\sum_{k=1}^\infty \frac{\lambda^{k-1}}{(k-1)!}}_{-2\lambda e^\lambda}+\underbrace{\sum_{k=1}^\infty \lambda^2\frac{\lambda^{k-1}}{k!}}_{\lambda e^\lambda}\right]\\
+        &amp;= \lambda e^{-\lambda} \left[ \underbrace{\sum_{k=2}^\infty k(k-1)\frac{\lambda^{k-1}}{k!}}_{\lambda e^\lambda} + \underbrace{\sum_{k=1}^\infty k\frac{\lambda^{k-1}}{k!}}_{e^\lambda} - \lambda e^\lambda\right]\\
+        &amp;=\lambda = \left&lt; k \right&gt;
+\end{aligned}
+\]</span></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The important result here is that, <strong>when counting random events with an average of</strong> <span class="math inline">\(\left&lt; N \right&gt;\)</span>, <strong>the standard deviation is</strong> <span class="math inline">\(\sigma=\sqrt{\left&lt; N \right&gt;}\)</span>. This is typically what happens when performing a diffraction or spectroscopic measurement, such as X-ray diffraction, Raman, IR or neutron spectroscopy, etc.: the longer we acquire data, the higher the number of detected “events” <span class="math inline">\(N\)</span> (particle hits detector), and the “better is the statistics”. Indeed, the relative error is thus <span class="math inline">\(\sqrt{N}/N=1/\sqrt{N}\)</span>.</p>
+<p>The consequence of this is that to make a factor 10 improvement on the relative error, one has to increase by 100 the number of events. This is usually done by increasing the acquisition time, which is fine as long as it is short enough. If irrealistic acquisition times start to become necessary, one should maybe try to find another way to increase <span class="math inline">\(N\)</span>: this can be done by improving the detector efficiency, increasing the probe (laser, neutron/x-ray) brightness, changing the experimental geometry, etc.</p>
+<p>Finally, for “large” numbers (<span class="math inline">\(\lambda\gtrsim 100\)</span>) the Poisson distribution tends towards a symmetric Gaussian distribution that we will describe just after.</p>
+</div>
+</div>
+</section></section><section id="the-gaussian-distribution" class="level3" data-number="2.3.4"><h3 data-number="2.3.4" class="anchored" data-anchor-id="the-gaussian-distribution">
+<span class="header-section-number">2.3.4</span> The Gaussian distribution</h3>
+<section id="definition-1" class="level4" data-number="2.3.4.1"><h4 data-number="2.3.4.1" class="anchored" data-anchor-id="definition-1">
+<span class="header-section-number">2.3.4.1</span> Definition</h4>
+<p>The Gaussian distribution, also known as the <em>normal distribution</em>, with a mean value <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span> as a function of some variable <span class="math inline">\(x\)</span> is given by:</p>
+<p><span class="math display">\[
+P(x, \mu, \sigma)=\frac{1}{\sigma\sqrt{2\pi}}e^{-(x-\mu)^2/2\sigma^2}
+\]</span></p>
+<p>It is useful to transform data from the <span class="math inline">\(x\)</span> space to a corresponding <span class="math inline">\(z\)</span> space which has a mean value of zero, and a standard deviation of one. This transformation is given by the mapping <span class="math inline">\(z=\frac{x-\mu}{\sigma}\)</span>, and the Gaussian distribution in terms of <span class="math inline">\(z\)</span> is thus:</p>
+<p><span class="math display">\[
+P(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2}
+\]</span></p>
+</section><section id="characteristics-1" class="level4" data-number="2.3.4.2"><h4 data-number="2.3.4.2" class="anchored" data-anchor-id="characteristics-1">
+<span class="header-section-number">2.3.4.2</span> Characteristics</h4>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-gaussian" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure"><p><img src="02-stats_files/figure-html/fig-gaussian-1.png" class="img-fluid figure-img" width="672"></p>
+<p></p><figcaption class="figure-caption">Figure 2.6: A zero-centered Gaussian distribution with standard deviation of 1, <span class="math inline">\(P(z)\)</span>. The red line marks the half maximum, <span class="math inline">\(P(z_{HM})=1/2\sqrt{2\pi}\)</span>, and the blue lines the values of <span class="math inline">\(z\)</span> for which the half maximum is obtained, <span class="math inline">\(z_{HM}=\pm\sqrt{2\ln{2}}\)</span>.</figcaption><p></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Sometimes instead of quantifying a Gaussian distribution (or any monomodal distribution, for that matter) using the variance or standard deviation, scientists will speak about the full width at half maximum (<strong>FWHM</strong>). This has the advantage that any extreme outliers of the distribution do not contribute to the quantification of the spread of data. As the name suggests, the FWHM is the width of the distribution (the spread above and below the mean) at the points where the distribution reaches half of its maximum.</p>
+<p>For a Gaussian distribution <span class="math inline">\(P(z)\)</span>, the half maximum is attained when <span class="math inline">\(z_{HM}\)</span> is so that:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\frac{1}{\sqrt{2\pi}}e^{-z_{HM}^2/2}&amp;= \frac{1}{2}\frac{1}{\sqrt{2\pi}}\\
+\Rightarrow z_{HM}&amp;=\pm\sqrt{2\ln{2}}
+\end{aligned}
+\]</span></p>
+<p>The FWHM of <span class="math inline">\(P(z)\)</span> is therefore <span class="math inline">\(FWHM=2\sqrt{2\ln{2}}\simeq2.355\)</span>. Using the relation between <span class="math inline">\(z\)</span> and <span class="math inline">\(\sigma\)</span>, we get the relation between the FWHM and the standard deviation:</p>
+<p><span class="math display">\[
+FWHM=2\sqrt{2\ln{2}}\times\sigma
+\]</span></p>
+<p>As can be seen on <a href="#tbl-tablevalues">Table&nbsp;<span>2.1</span></a>, using the FWHM ensures that roughly 76% of the data are comprised between <span class="math inline">\(\mu-\sigma\)</span> and <span class="math inline">\(\mu+\sigma\)</span>, and this goes up to <span class="math inline">\(\sim95\)</span>% for <span class="math inline">\(\mu-2\sigma\)</span> and <span class="math inline">\(\mu+2\sigma\)</span>.</p>
+<div id="tbl-tablevalues" class="anchored">
+<table class="table">
+<caption>Table 2.1: Integral values for various values of <span class="math inline">\(a\)</span> in <span class="math inline">\(\int_{-a}^aP(z)dz\)</span>.</caption>
+<thead><tr class="header">
+<th style="text-align: left;">Integration range <span class="math inline">\(a\)</span>
+</th>
+<th style="text-align: left;"><span class="math inline">\(\int_{-a}^aP(z)dz\)</span></th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(\sigma\)</span></td>
+<td style="text-align: left;">0.68293</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(\sqrt{2\ln{2}}\sigma\)</span></td>
+<td style="text-align: left;">0.76100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(2\sigma\)</span></td>
+<td style="text-align: left;">0.95455</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(3\sigma\)</span></td>
+<td style="text-align: left;">0.99730</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(4\sigma\)</span></td>
+<td style="text-align: left;">0.99994</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<!-- ```{r}
+#| label: tbl-tablevalues
+#| tbl-cap: "Integral values for various values of $a$ in $\\int_{-a}^aP(z)dz$."
+#| warning: false
+#| message: false
+#| echo: false
+x <- seq(-10,10,.001)
+y <- dnorm(x,0,1)
+integral <- function(x,a=1) {
+    sprintf("%.5f", sum(y[abs(x) <= a] * (x[2] - x[1])))
+}
+dat <- tibble(`Integration range $a$` = c("$\\sigma$", "$\\sqrt{2\\ln{2}}\\sigma$", "$2\\sigma$", "$3\\sigma$", "$4\\sigma$"),
+       `$\\int_{-a}^aP(z)dz$` = c(integral(x, a = 1), integral(x, a = sqrt(2 * log(2))), integral(x, a = 2), integral(x, a = 3), integral(x, a = 4))
+      )
+knitr::kable(dat)
+``` -->
+</section></section></section><section id="uncertainty-and-errors" class="level2" data-number="2.4"><h2 data-number="2.4" class="anchored" data-anchor-id="uncertainty-and-errors">
+<span class="header-section-number">2.4</span> Uncertainty and errors</h2>
+<section id="central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty" class="level3" data-number="2.4.1"><h3 data-number="2.4.1" class="anchored" data-anchor-id="central-limit-theorem-on-the-gaussian-nature-of-statistical-uncertainty">
+<span class="header-section-number">2.4.1</span> Central limit theorem: on the Gaussian nature of statistical uncertainty</h3>
+<p>The <strong>central limit theorem</strong> states that if one takes <span class="math inline">\(N\)</span> random independent samples of a distribution of data that describes some variable <span class="math inline">\(x\)</span>, then as <span class="math inline">\(N\)</span> tends to infinity, the distribution of the sum of the samples tends to a Gaussian distribution.</p>
+<p>In other terms: the mean value of a large number <span class="math inline">\(N\)</span> of independent random variables (that can be distributed following any distribution with finite variance), obeying the same distribution with variance <span class="math inline">\(\sigma_0^2\)</span>, approaches a normal distribution with variance <span class="math inline">\(\sigma^2 = \sigma _0^2/N\)</span>.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>This result is fundamental</strong> as it implies that <strong>independent measurements of any observable will show values that will be spread following a Gaussian distribution</strong>, and thus statistical uncertainties that are Gaussian in nature.</p>
+<p>Moreover, we see here the typical property of statistical errors, which is that <strong>the relative error is proportional to</strong> <span class="math inline">\(1/\sqrt{N}\)</span>. Increasing the number of observations thus decreases the error, <em>i.e.</em> increases the precision.</p>
+</div>
+</div>
+</section><section id="combination-of-errors" class="level3" data-number="2.4.2"><h3 data-number="2.4.2" class="anchored" data-anchor-id="combination-of-errors">
+<span class="header-section-number">2.4.2</span> Combination of errors</h3>
+<p>Let us consider a function of <span class="math inline">\(n\)</span> variables, <span class="math inline">\(f(u_1, u_2, ..., u_n)\)</span>. We can Taylor expand this function about the various mean values <span class="math inline">\(u_i=\overline{u_i}\)</span>, so that, at the first order:</p>
+<p><span class="math display">\[
+f(u_1, ..., u_n) = f(\overline{u_1}, ..., \overline{u_n}) + \sum_{i=1}^n (u_i-\overline{u_i})\frac{\partial f}{\partial u_i}
+\]</span></p>
+<p>Considering that the variance of a quantity <span class="math inline">\(f\)</span> is given by <span class="math inline">\(\sigma^2(f) = (f - \overline{f} )^2\)</span>, it follows that the variance of our multivariable function is given by:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sigma^2(f) &amp;= \left(\sum_{i=1}^n (u_i-\overline{u_i})\frac{\partial f}{\partial u_i}\right)^2\\
+         &amp;= \sum_{i=1}^n \left(\frac{\partial f}{\partial u_i}\right)^2\sigma_{u_i}^2 + 2\sum_{i\ne j}\frac{\partial f}{\partial u_i}\frac{\partial f}{\partial u_j}\sigma_{u_iu_j}\\
+\end{aligned}
+\]</span></p>
+<p>where we have replaced <span class="math inline">\((u_i-\overline{u_i})^2\)</span> by the variance <span class="math inline">\(\sigma_{u_i}^2\)</span> and <span class="math inline">\((u_i-\overline{u_i})(u_j-\overline{u_j})\)</span> by the covariance <span class="math inline">\(\sigma_{u_iu_j}\)</span>.<br></p>
+<p>If the variables <span class="math inline">\(u_i\)</span> are independent then the covariance <span class="math inline">\(\sigma_{u_iu_j}\)</span> is null, and it follows the general expression of the standard error that can be applied to <strong>any function of independent variables</strong>:</p>
+<div class="callout-note callout callout-style-simple no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><span id="eq-uncertainty"><span class="math display">\[
+\sigma(f) = \sqrt{\sum_{i=1}^n \left(\frac{\partial f}{\partial u_i}\right)^2\sigma_{u_i}^2}
+\tag{2.7}\]</span></span></p>
+</div>
+</div>
+</div>
+<section id="functions-of-one-variable" class="level4" data-number="2.4.2.1"><h4 data-number="2.4.2.1" class="anchored" data-anchor-id="functions-of-one-variable">
+<span class="header-section-number">2.4.2.1</span> Functions of one variable</h4>
+<p>Let us consider a function <span class="math inline">\(f\)</span> having a form that depends only on one observable <span class="math inline">\(x\)</span>, for example:</p>
+<p><span class="math display">\[
+f = Ax + B
+\]</span></p>
+<p>Then, following <a href="#eq-uncertainty">Equation&nbsp;<span>2.7</span></a>, the standard error on that function is given by:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2}\\
+         &amp;= A\sigma_x
+\end{aligned}
+\]</span></p>
+<p>So, <strong>independently of any offset of the measured observable</strong>, the resulting error must be corrected by the same factor as the intensity.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>In practice</strong>, let’s say we measure a Raman spectrum. As we saw above, the error on each intensity count is given by the square root of this intensity count.</p>
+<ul>
+<li>It is possible to shift vertically this spectrum without having to recompute the error bars.</li>
+<li>But if you want to normalize (say, to 1) this spectrum, you have to multiply all the errors by the renormalization constant.</li>
+</ul>
+</div>
+</div>
+</section><section id="functions-of-two-variables" class="level4" data-number="2.4.2.2"><h4 data-number="2.4.2.2" class="anchored" data-anchor-id="functions-of-two-variables">
+<span class="header-section-number">2.4.2.2</span> Functions of two variables</h4>
+<p>Now consider the function <span class="math inline">\(f = Ax + By\)</span>, where we have measured the mean and standard deviation of both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and want to compute the standard deviation on their sum/subtraction. We can use the general formula of <a href="#eq-uncertainty">Equation&nbsp;<span>2.7</span></a> to determine how to do this, hence:</p>
+<p><span class="math display">\[
+\begin{aligned}
+\sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2 + \left(\frac{\partial f}{\partial y}\right)^2\sigma_y^2}\\
+         &amp;= \sqrt{A^2\sigma_x^2 + B^2\sigma_y^2}
+\end{aligned}
+\]</span></p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Important
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>In practice</strong>, let’s say we measure an UV spectrum of a solution (a molecule in a solvent), and a reference spectrum of this solvent. As we saw above, the error on each intensity count is given by the square root of this intensity count. We want to subtract the signal of the solvent to get only the signal of the molecule.</p>
+<p>We thus have to perform the above operation on the errors, <span class="math inline">\(\sigma_{result}=\sqrt{\sigma^2_{solution}+\sigma^2_{reference}}\)</span>. It means that in order to have a statistically sound resulting spectrum, the reference needs to be measured with a very good statistics in order to not dominate the resulting error.</p>
+</div>
+</div>
+<p>It is a good thing to think about error propagation and where it comes from… but you don’t have to bother computing it by hand, as <a href="17-units.html#working-with-experimental-errors">packages are here to do it for you</a>, as we will see later in the class.</p>
+</section></section></section><section id="further-reading" class="level2" data-number="2.5"><h2 data-number="2.5" class="anchored" data-anchor-id="further-reading">
+<span class="header-section-number">2.5</span> Further reading</h2>
+<ul>
+<li>A. Bevan, <em><a href="https://www.cambridge.org/core/books/statistical-data-analysis-for-the-physical-sciences/2E3D132870E72277EE5FB96FE616B9F1">Statistical Data Analysis for the Physical Sciences</a></em>, Cambridge University Press (2013)</li>
+<li>G. Bohm, <em><a href="http://www-library.desy.de/preparch/books/vstatmp_engl.pdf">Introduction to Statistics and Data Analysis for Physicists</a></em>, Hamburg: Verl. Dt. Elektronen-Synchrotron (2010).</li>
+<li>J. Watkins, <em><a href="https://www.math.arizona.edu/~jwatkins/statbook.pdf">An Introduction to the Science of Statistics</a></em>
+</li>
+</ul>
+
+
+<!-- -->
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    toggleBodyColorMode(window.document.querySelector("link#quarto-bootstrap"));
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./01-about.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">About the class</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-getting_ready.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting ready</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb1" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># A little reminder on Statistics</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in">```{r include=FALSE, warning = FALSE, cache=FALSE}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pracma)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quantities)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">fig.align =</span> <span class="st">"center"</span>)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>()<span class="sc">+</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.background =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">size=</span><span class="dv">1</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>         )</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"black"</span>,<span class="st">"royalblue"</span>,<span class="st">"seagreen"</span>,<span class="st">"orange"</span>,<span class="st">"red"</span>))</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">## Why are statistical tools necessary in physical science?</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>When doing Science, one has to fully grasp the concept of *physical measurement*. Let's take an example to visualize the importance of this concept.</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="fu">### A practical example</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>Let's say you want to communicate to someone a temperature, and tell this person that the temperature is "38". If this is a random person in the street, they might think: "nice, let's go to the beach today!". If this random person is from the USA, they're gonna think: "damn, where did I put my coat?". If that person happens to be a physician, they might think: "that kid's got a slight fever". If they are a physicist doing a cryostat experiment, they might think "let's check the He tank level"... you see that one of the most important part of the measurement is missing: its unit. Units are there so that people understand each other when exchanging data, and you see here that 38 Celsius, 38 Fahrenheit or 38 Kelvin are quite different, and this quantity will mean different things in different contexts. A physical quantity given without its unit would be absolutely meaningless (unless, of course, you are looking at a unit-less quantity, like a count).</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>Now let's consider the body temperature of 38 °C given to a physician. How did you measure this temperature? With a mercury graduated thermometer or with a thermocouple? In the first case, you can probably assume that this value is given with a measurement error of at least 1 °C, meaning that the temperature you give to the physician is (38±1) °C, *i.e.* the physician won't be able to decide whether they should be concerned or not. In the second case, the temperature is often given with a 0.1 °C precision, so the physician, seeing that the body temperature is (38±0.1) °C, will probably tell you to take an aspirin and rest instead of giving you something stronger to treat a possible infection. Given that the uncertainty on the given value is of 0.1 °C, one should in fact give the temperature with matching decimal precision, *i.e.* (38.0±0.1) °C. Writing (38±0.1) °C, (38.00001±0.1) °C or (38.00±0.10000) °C would be meaningless too.</span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a>With this, we see that a physical measurement should be given with four parts: its actual **value**, its **decimal precision**, its **uncertainty**, and its **unit**. Should any of these four parts be missing in a physical quantity that you wanted to share, it would at best be imprecise, and at worst be utterly meaningless.</span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a><span class="fu">### Probabilistic description of physical systems</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>Let's continue with our example of the body temperature measured with a thermocouple or a laser thermometer with a 0.1 °C precision.</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a>Our first measurement of the body temperature yielded (38.0±0.1) °C. Now let's repeat this measurement a number of times in various area of the body (which are left to your imagination). Let's say it then shows (38.1±0.1) °C, (38.0±0.1) °C, (38.3±0.1) °C, (37.9±0.1) °C, (38.2±0.1) °C, (38.1±0.1) °C, (38.1±0.1) °C, (39.8±0.1) °C. What is the actual body temperature then? Should we stick to a single measurement? Of course not. We have to make an histogram of the measured values, and study the distribution of the measurements (@fig-histogramT). We can then see that one of the values is clearly an outlier -- something might have gone wrong there. What if we had done the measurement only once and only measured that value? We might have jumped to a very wrong conclusion, with possibly a very serious consequence like giving the wrong medicine.</span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-histogramT</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: Histogram of the body temperature measurements. The red line is the mean value, the orange one is the mode and the blue one is the median.</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">T=</span><span class="fu">c</span>(<span class="dv">38</span>, <span class="fl">38.1</span>, <span class="fl">38.0</span>, <span class="fl">38.0</span>, <span class="fl">38.3</span>, <span class="fl">37.9</span>, <span class="fl">38.1</span>, <span class="fl">38.2</span>, <span class="fl">39.8</span>))</span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&gt;%</span> </span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> T)) <span class="sc">+</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_histogram</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">color=</span><span class="st">"black"</span>)<span class="sc">+</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">38</span>, <span class="at">color=</span><span class="st">"orange"</span>)<span class="sc">+</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">median</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"T [°C]"</span>)</span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true" tabindex="-1"></a>With this example, we see that **a physical measurement is not absolute**. In fact, a physical measurement is an assessment of the **probability** that the physical value is within a certain range. In the case of our example, after removing the outlier for which we are certain that the measurement is wrong, it means that the measured body temperature has a high probability to be somewhere between 38.0 °C and 38.2 °C.</span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true" tabindex="-1"></a>In other (more general) terms, one could consider a measurement of a quantity $X$ as a probability $P(x - \sigma &lt; X &lt; x + \sigma )$ that the quantity $X$ has a value between $x-\sigma$ and $x+\sigma$. The **uncertainty** $\sigma$ around the **mean value** $x$ is usually given as the **standard deviation** of the distribution of measurements around the mean.</span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true" tabindex="-1"></a>Since physical measurements are in fact **probabilities**, we **can** -- and **must** -- use **statistical tools** to characterize them.</span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true" tabindex="-1"></a><span class="fu">## Quantifying the properties of data</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true" tabindex="-1"></a><span class="fu">### Data representation -- presenting a measurement</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true" tabindex="-1"></a>Depending on the data you are looking at, various ways of representing them are possible. I can't stress enough the importance of picking the right representation for your data, it is the expression of your physical sense. A good representation will help you make sense of your data and communicate your results. A bad representation, well...</span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Histograms</span></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true" tabindex="-1"></a>When looking at discrete values or when you want to characterize the distribution of a measurement, it is often a good idea to use the histogram representation, which represents the frequency at which a measurement is made within a certain range, called bin. Let's take @fig-histogramT and plot it with various bin sizes. One can see that the choice of bin size is important, as it determines whether your data are noisy or lack fine information.</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-histograms</span></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 3</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: Histogram of the body temperature measurements with different bin widths.</span></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-subcap: </span></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Bin width = 0.1 °C"</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Bin width = 0.2 °C"</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Bin width = 1 °C"</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">T=</span><span class="fu">c</span>(<span class="dv">38</span>, <span class="fl">38.1</span>, <span class="fl">38.0</span>, <span class="fl">38.0</span>, <span class="fl">38.3</span>, <span class="fl">37.9</span>, <span class="fl">38.1</span>, <span class="fl">38.2</span>, <span class="fl">39.8</span>))</span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&gt;%</span> </span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> T)) <span class="sc">+</span></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_histogram</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">color=</span><span class="st">"black"</span>, <span class="at">binwidth =</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">xintercept =</span> <span class="fu">mean</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">xintercept =</span> <span class="fu">median</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>))<span class="sc">+</span></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"T [°C]"</span>)</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&gt;%</span> </span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> T)) <span class="sc">+</span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_histogram</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">color=</span><span class="st">"black"</span>, <span class="at">binwidth =</span> <span class="fl">0.2</span>)<span class="sc">+</span></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">xintercept =</span> <span class="fu">mean</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">xintercept =</span> <span class="fu">median</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>))<span class="sc">+</span></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"T [°C]"</span>)</span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&gt;%</span> </span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> T)) <span class="sc">+</span></span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_histogram</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">color=</span><span class="st">"black"</span>, <span class="at">binwidth =</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span></span>
+<span id="cb1-116"><a href="#cb1-116" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">median</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb1-117"><a href="#cb1-117" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>))<span class="sc">+</span></span>
+<span id="cb1-118"><a href="#cb1-118" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"T [°C]"</span>)</span>
+<span id="cb1-119"><a href="#cb1-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-120"><a href="#cb1-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-121"><a href="#cb1-121" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Graphs</span></span>
+<span id="cb1-122"><a href="#cb1-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-123"><a href="#cb1-123" aria-hidden="true" tabindex="-1"></a>In case you want to represent continuous data, say the evolution of a quantity $y$ with respect to a quantity $x$, you should then use the graph representation. As we saw before, any physical quantity should be given with its uncertainty and unit. **The same applies to a graph**: it **must** clearly display the **units** of the quantities $x$ and $y$, and **error bars** that are usually taken as the standard deviation of each individual measurement (that should thus be performed a number of times, depending on what you are looking at). </span>
+<span id="cb1-124"><a href="#cb1-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-127"><a href="#cb1-127" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-128"><a href="#cb1-128" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-graphs</span></span>
+<span id="cb1-129"><a href="#cb1-129" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 3</span></span>
+<span id="cb1-130"><a href="#cb1-130" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data."</span></span>
+<span id="cb1-131"><a href="#cb1-131" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-subcap: </span></span>
+<span id="cb1-132"><a href="#cb1-132" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Meaningless graph"</span></span>
+<span id="cb1-133"><a href="#cb1-133" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Noise"</span></span>
+<span id="cb1-134"><a href="#cb1-134" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Meaningful graph"</span></span>
+<span id="cb1-135"><a href="#cb1-135" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-136"><a href="#cb1-136" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-137"><a href="#cb1-137" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-138"><a href="#cb1-138" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">100</span>,<span class="dv">1</span>), </span>
+<span id="cb1-139"><a href="#cb1-139" aria-hidden="true" tabindex="-1"></a>              <span class="at">y=</span><span class="dv">1</span><span class="sc">+</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">10</span>,<span class="at">sd=</span><span class="dv">5</span>)<span class="sc">+</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">58</span>,<span class="at">sd=</span><span class="dv">10</span>)<span class="sc">+</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">75</span>,<span class="at">sd=</span><span class="dv">15</span>)<span class="sc">+</span>.<span class="dv">01</span><span class="sc">*</span><span class="fu">runif</span>(<span class="fu">length</span>(x)),</span>
+<span id="cb1-140"><a href="#cb1-140" aria-hidden="true" tabindex="-1"></a>              <span class="at">dy1=</span>.<span class="dv">1</span><span class="sc">/</span>y,</span>
+<span id="cb1-141"><a href="#cb1-141" aria-hidden="true" tabindex="-1"></a>              <span class="at">dy2=</span>.<span class="dv">1</span><span class="sc">*</span>(y<span class="dv">-1</span>)</span>
+<span id="cb1-142"><a href="#cb1-142" aria-hidden="true" tabindex="-1"></a>              )</span>
+<span id="cb1-143"><a href="#cb1-143" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb1-144"><a href="#cb1-144" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb1-145"><a href="#cb1-145" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb1-146"><a href="#cb1-146" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">25</span>))<span class="sc">+</span></span>
+<span id="cb1-147"><a href="#cb1-147" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"x"</span>, <span class="at">y=</span><span class="st">"y"</span>)</span>
+<span id="cb1-148"><a href="#cb1-148" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb1-149"><a href="#cb1-149" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb1-150"><a href="#cb1-150" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb1-151"><a href="#cb1-151" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>y<span class="sc">-</span>dy1,<span class="at">ymax=</span>y<span class="sc">+</span>dy1))<span class="sc">+</span></span>
+<span id="cb1-152"><a href="#cb1-152" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">25</span>))<span class="sc">+</span></span>
+<span id="cb1-153"><a href="#cb1-153" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"x [unit]"</span>, <span class="at">y=</span><span class="st">"y [unit]"</span>)</span>
+<span id="cb1-154"><a href="#cb1-154" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb1-155"><a href="#cb1-155" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb1-156"><a href="#cb1-156" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
+<span id="cb1-157"><a href="#cb1-157" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>y<span class="sc">-</span>dy2,<span class="at">ymax=</span>y<span class="sc">+</span>dy2))<span class="sc">+</span></span>
+<span id="cb1-158"><a href="#cb1-158" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">25</span>))<span class="sc">+</span></span>
+<span id="cb1-159"><a href="#cb1-159" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"x [unit]"</span>, <span class="at">y=</span><span class="st">"y [unit]"</span>)</span>
+<span id="cb1-160"><a href="#cb1-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-161"><a href="#cb1-161" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-162"><a href="#cb1-162" aria-hidden="true" tabindex="-1"></a>You can think of each set of {datapoint + error bar} as an histogram: the displayed point is the mean value of the histogram, and the error bar is its standard deviation. **Therefore, plotting a straight line between points is usually pointless**. Plotting a line going through the data points only has meaning if this line results from a physical model explaining the variation of the quantity $y$ with the evolution of the quantity $x$ -- this is called a **fit**, and we will see more about it in the <span class="co">[</span><span class="ot">R class later</span><span class="co">](#fitting)</span>.</span>
+<span id="cb1-163"><a href="#cb1-163" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-164"><a href="#cb1-164" aria-hidden="true" tabindex="-1"></a><span class="fu">### Characterizing an ensemble of measurements</span></span>
+<span id="cb1-165"><a href="#cb1-165" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-166"><a href="#cb1-166" aria-hidden="true" tabindex="-1"></a>If we take $N$ repeated measurements of an observable $x$, it is then natural to try to assess our knowledge of the ensemble of measures through (1) a single number representing the measured quantity, and (2) a second number representing the spread of measurements. As we saw before, the observable $x$ is thus generally defined by its central (mean) value $\left&lt; x \right&gt;$, its spread $\sigma_x$ (standard deviation or uncertainty), and its unit. </span>
+<span id="cb1-167"><a href="#cb1-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-168"><a href="#cb1-168" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Central value: mode, median and mean</span></span>
+<span id="cb1-169"><a href="#cb1-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-170"><a href="#cb1-170" aria-hidden="true" tabindex="-1"></a>The **mode** of an ensemble of measurements is its *most frequent value*. If the measurement in question is of a continuous variable, one has to bin the data in terms of a histogram in order to quantify the modal value of that distribution: the mode will be the position of the maximum of the histogram.</span>
+<span id="cb1-171"><a href="#cb1-171" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-172"><a href="#cb1-172" aria-hidden="true" tabindex="-1"></a>The **median** value of the ensemble is the value of $x$ for which there are an equal number of measurements above and below that point. If there is an even number of measurements, then the median value is taken as the midpoint between the two most central values.</span>
+<span id="cb1-173"><a href="#cb1-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-174"><a href="#cb1-174" aria-hidden="true" tabindex="-1"></a>The **mean** (or arithmetic average) is more often used than the two previous quantities, as it usually provides a better way to quantify the "typical" value measured. The mean value is denoted either by $\overline{x}$ or $\left&lt; x \right&gt;$, and is given by:</span>
+<span id="cb1-175"><a href="#cb1-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-176"><a href="#cb1-176" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-177"><a href="#cb1-177" aria-hidden="true" tabindex="-1"></a>\overline{x}=\left&lt; x \right&gt;=\frac{1}{N}\sum_{i=1}^Nx_i,</span>
+<span id="cb1-178"><a href="#cb1-178" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-179"><a href="#cb1-179" aria-hidden="true" tabindex="-1"></a>where $x_i$ is the $i$-th measurement of $x$. </span>
+<span id="cb1-180"><a href="#cb1-180" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-181"><a href="#cb1-181" aria-hidden="true" tabindex="-1"></a>@fig-histogramT shows the representation of a sample of data plotted in a histogram. This figure shows the mode, mean and median. For this particular sample of data, the mean is <span class="in">`r round(mean(temp$T),1)`</span> °C, the median is <span class="in">`r round(median(temp$T),1)`</span> °C, and the mode is 38.0 °C. The fact that the mode is smaller than the mean is an indication that the data are asymmetric about the mean. We usually refer to such a distribution as being skewed, and in this case the data are skewed to the right.</span>
+<span id="cb1-182"><a href="#cb1-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-183"><a href="#cb1-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-184"><a href="#cb1-184" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Quantifying the spread of data: variance and standard deviation</span></span>
+<span id="cb1-185"><a href="#cb1-185" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-186"><a href="#cb1-186" aria-hidden="true" tabindex="-1"></a>The mean of an ensemble of data doesn't provide any information as to how the data are distributed. So any description of a set of data just quoting a mean value is incomplete. We need a second number in order to quantify the dispersion of data around the mean value. The average deviations from the mean, $\left&lt; x-\overline{x} \right&gt;$, is not a useful quantity as, by definition, this will be zero for a symmetrically distributed sample of data (which is always the case for randomly distributed data -- a consequence of the central limit theorem, as we will see later). We should rather consider the average value of the squared deviations from the mean as a measure of the spread of our ensemble of measurements. This is called the **variance** $V(x)$, which is given by:</span>
+<span id="cb1-187"><a href="#cb1-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-188"><a href="#cb1-188" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-189"><a href="#cb1-189" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb1-190"><a href="#cb1-190" aria-hidden="true" tabindex="-1"></a>V(x)&amp;=\left&lt; (x-\overline{x})^2 \right&gt;<span class="sc">\\</span></span>
+<span id="cb1-191"><a href="#cb1-191" aria-hidden="true" tabindex="-1"></a>    &amp;=\frac{1}{N}\sum_{i=1}^N(x_i-\overline{x})^2<span class="sc">\\</span></span>
+<span id="cb1-192"><a href="#cb1-192" aria-hidden="true" tabindex="-1"></a>    &amp;=\overline{x^2}-\overline{x}^2</span>
+<span id="cb1-193"><a href="#cb1-193" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb1-194"><a href="#cb1-194" aria-hidden="true" tabindex="-1"></a>$$ {#eq-variance}</span>
+<span id="cb1-195"><a href="#cb1-195" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-196"><a href="#cb1-196" aria-hidden="true" tabindex="-1"></a>The square root of the mean-squared (root-mean-squared or RMS) deviation is called the **standard deviation**, and this is given by:</span>
+<span id="cb1-197"><a href="#cb1-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-198"><a href="#cb1-198" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-199"><a href="#cb1-199" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb1-200"><a href="#cb1-200" aria-hidden="true" tabindex="-1"></a>\sigma(x)&amp;=\sqrt{V(x)}<span class="sc">\\</span></span>
+<span id="cb1-201"><a href="#cb1-201" aria-hidden="true" tabindex="-1"></a>         &amp;=\sqrt{\overline{x^2}-\overline{x}^2}</span>
+<span id="cb1-202"><a href="#cb1-202" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb1-203"><a href="#cb1-203" aria-hidden="true" tabindex="-1"></a>$$ {#eq-sd}</span>
+<span id="cb1-204"><a href="#cb1-204" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-205"><a href="#cb1-205" aria-hidden="true" tabindex="-1"></a>The standard deviation quantifies the amount by which it is reasonable for a measurement of $x$ to differ from the mean value $\overline{x}$. Considering a Gaussian distribution, we would expect to have 31.7% of measurements deviating from the mean value by more than 1$\sigma$, and this goes down to 4.5% of measurements to deviate by more than 2$\sigma$, and 0.3% of measurements to deviate by more than 3$\sigma$. Thus, if we perform a measurement that deviates by a significant margin from the expected value of $\left&lt; x \right&gt;\pm\sigma$, we need to ask ourselves about the significance of our measurement.</span>
+<span id="cb1-206"><a href="#cb1-206" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-207"><a href="#cb1-207" aria-hidden="true" tabindex="-1"></a>In general, scientists often prefer using the standard deviation rather than the variance when describing data, since as the former has the same units as the observable being measured.</span>
+<span id="cb1-208"><a href="#cb1-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-209"><a href="#cb1-209" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-210"><a href="#cb1-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-211"><a href="#cb1-211" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
+<span id="cb1-212"><a href="#cb1-212" aria-hidden="true" tabindex="-1"></a>A measurement of a quantity $x$ is therefore usually presented under the form $\left&lt; x \right&gt;\pm\sigma_x$, where $\left&lt; x \right&gt;$ is the arithmetic average and $\sigma_x$ is the standard deviation of the data.</span>
+<span id="cb1-213"><a href="#cb1-213" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-214"><a href="#cb1-214" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-215"><a href="#cb1-215" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Caveats</span></span>
+<span id="cb1-216"><a href="#cb1-216" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-217"><a href="#cb1-217" aria-hidden="true" tabindex="-1"></a>The above considerations all assume that the distribution of measured values is mono-modal, *i.e.* the histogram of the measured values is centered around a single value. In the case of a multimodal distribution such as shown in @fig-multimodal, it would be meaningless to use such tools as the fine information on the distribution would be lost. </span>
+<span id="cb1-218"><a href="#cb1-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-221"><a href="#cb1-221" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-222"><a href="#cb1-222" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-multimodal</span></span>
+<span id="cb1-223"><a href="#cb1-223" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "A trimodal distribution of measurements. The red line shows the mean value of the distribution: it fails to grasp the reality of the distribution."</span></span>
+<span id="cb1-224"><a href="#cb1-224" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-225"><a href="#cb1-225" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-226"><a href="#cb1-226" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-227"><a href="#cb1-227" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">130</span>,.<span class="dv">1</span>), </span>
+<span id="cb1-228"><a href="#cb1-228" aria-hidden="true" tabindex="-1"></a>              <span class="at">y=</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">12</span>,<span class="at">sd=</span><span class="dv">2</span>)<span class="sc">+</span><span class="fl">1.5</span><span class="sc">*</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">54</span>,<span class="at">sd=</span><span class="dv">10</span>)<span class="sc">+</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">80</span>,<span class="at">sd=</span><span class="dv">12</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-229"><a href="#cb1-229" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">y =</span> y<span class="sc">/</span>(<span class="fu">sum</span>(y)<span class="sc">*</span>.<span class="dv">1</span>))</span>
+<span id="cb1-230"><a href="#cb1-230" aria-hidden="true" tabindex="-1"></a>MM <span class="ot">&lt;-</span> <span class="fu">sum</span>(dat<span class="sc">$</span>x<span class="sc">*</span>dat<span class="sc">$</span>y)<span class="sc">*</span>.<span class="dv">1</span></span>
+<span id="cb1-231"><a href="#cb1-231" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb1-232"><a href="#cb1-232" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb1-233"><a href="#cb1-233" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb1-234"><a href="#cb1-234" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> MM, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb1-235"><a href="#cb1-235" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"x [unit]"</span>, <span class="at">y =</span> <span class="st">"Density"</span>)</span>
+<span id="cb1-236"><a href="#cb1-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-237"><a href="#cb1-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-238"><a href="#cb1-238" aria-hidden="true" tabindex="-1"></a>In this case, one should try to deconvolute the distribution in terms of individual peaks, and gather their positions, widths and intensities.</span>
+<span id="cb1-239"><a href="#cb1-239" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-240"><a href="#cb1-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-241"><a href="#cb1-241" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-242"><a href="#cb1-242" aria-hidden="true" tabindex="-1"></a><span class="fu">## Useful distributions</span></span>
+<span id="cb1-243"><a href="#cb1-243" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-244"><a href="#cb1-244" aria-hidden="true" tabindex="-1"></a><span class="fu">### Probability Density Functions</span></span>
+<span id="cb1-245"><a href="#cb1-245" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-246"><a href="#cb1-246" aria-hidden="true" tabindex="-1"></a>We should now introduce the notion of **Probability Density Function** (PDF). </span>
+<span id="cb1-247"><a href="#cb1-247" aria-hidden="true" tabindex="-1"></a>*By definition*, a PDF is a distribution where the **total area is unity**. The variation of the PDF is represents the probability of something occurring at that point in the parameter space.</span>
+<span id="cb1-248"><a href="#cb1-248" aria-hidden="true" tabindex="-1"></a>In general, a PDF will be described by some function $P(x)$, where</span>
+<span id="cb1-249"><a href="#cb1-249" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-250"><a href="#cb1-250" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-251"><a href="#cb1-251" aria-hidden="true" tabindex="-1"></a>\int_a^b P(x)dx=1,</span>
+<span id="cb1-252"><a href="#cb1-252" aria-hidden="true" tabindex="-1"></a>$$ {#eq-PDFnorm}</span>
+<span id="cb1-253"><a href="#cb1-253" aria-hidden="true" tabindex="-1"></a>where $a$ and $b$ are the limits of the valid domain for the $P(x)$ function. The probability of obtaining a result between $x$ and $x + dx$ is thus $P(x)dx$. Usual PDFs encountered in physics are the Poisson distribution as well as the Gaussian distribution, that we will describe in a bit.</span>
+<span id="cb1-254"><a href="#cb1-254" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-255"><a href="#cb1-255" aria-hidden="true" tabindex="-1"></a><span class="fu">### PDFs, mean and variance</span></span>
+<span id="cb1-256"><a href="#cb1-256" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-257"><a href="#cb1-257" aria-hidden="true" tabindex="-1"></a>Let us define a PDF $P(x)$ describing a continuous distribution.</span>
+<span id="cb1-258"><a href="#cb1-258" aria-hidden="true" tabindex="-1"></a>We can compute the average value of some quantity by computing the integral over this quantity multiplied by the PDF. </span>
+<span id="cb1-259"><a href="#cb1-259" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-260"><a href="#cb1-260" aria-hidden="true" tabindex="-1"></a>For example, the **average value** of the variable $x$, distributed according to the PDF $P(x)$ in the domain $-\infty &lt; x &lt;\infty$, is given by:</span>
+<span id="cb1-261"><a href="#cb1-261" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-262"><a href="#cb1-262" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-263"><a href="#cb1-263" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb1-264"><a href="#cb1-264" aria-hidden="true" tabindex="-1"></a>\left&lt; x \right&gt;&amp;=\int_{-\infty}^{\infty}xP(x)dx<span class="sc">\\</span></span>
+<span id="cb1-265"><a href="#cb1-265" aria-hidden="true" tabindex="-1"></a>\text{or } \left&lt; x \right&gt;&amp;=\sum_{i}x_iP(x_i) \text{ in the case of a discrete distribution}</span>
+<span id="cb1-266"><a href="#cb1-266" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb1-267"><a href="#cb1-267" aria-hidden="true" tabindex="-1"></a>$$ {#eq-firstmoment}</span>
+<span id="cb1-268"><a href="#cb1-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-269"><a href="#cb1-269" aria-hidden="true" tabindex="-1"></a>This is called the *first moment* of the PDF.</span>
+<span id="cb1-270"><a href="#cb1-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-271"><a href="#cb1-271" aria-hidden="true" tabindex="-1"></a>This method can be used to compute average values of more complicated expressions. The mean value of $(x - \overline{x})^2$, *i.e.* the variance $V$, is thus given by the $\overline{x}$-centered second moment of the PDF, such as:</span>
+<span id="cb1-272"><a href="#cb1-272" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-273"><a href="#cb1-273" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-274"><a href="#cb1-274" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb1-275"><a href="#cb1-275" aria-hidden="true" tabindex="-1"></a>V&amp;=\int_{-\infty}^{\infty}(x - \overline{x})^2P(x)dx<span class="sc">\\</span></span>
+<span id="cb1-276"><a href="#cb1-276" aria-hidden="true" tabindex="-1"></a>\text{or } V&amp;=\sum_{i}(x_i - \overline{x})^2P(x_i) \text{ in the case of a discrete distribution}</span>
+<span id="cb1-277"><a href="#cb1-277" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb1-278"><a href="#cb1-278" aria-hidden="true" tabindex="-1"></a>$$ {#eq-secondmoment}</span>
+<span id="cb1-279"><a href="#cb1-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-280"><a href="#cb1-280" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-281"><a href="#cb1-281" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Poisson distribution</span></span>
+<span id="cb1-282"><a href="#cb1-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-283"><a href="#cb1-283" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Definition</span></span>
+<span id="cb1-284"><a href="#cb1-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-285"><a href="#cb1-285" aria-hidden="true" tabindex="-1"></a>When a certain reaction happens randomly in time with an average frequency $\lambda$ in a given time interval, then the number $k$ of reactions in that time interval will follow a Poisson distribution:</span>
+<span id="cb1-286"><a href="#cb1-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-287"><a href="#cb1-287" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-288"><a href="#cb1-288" aria-hidden="true" tabindex="-1"></a>P_\lambda(k) = \frac{\lambda^ke^{-\lambda}}{k!}</span>
+<span id="cb1-289"><a href="#cb1-289" aria-hidden="true" tabindex="-1"></a>$$ {#eq-poisson}</span>
+<span id="cb1-290"><a href="#cb1-290" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-291"><a href="#cb1-291" aria-hidden="true" tabindex="-1"></a>Examples of encounters of Poisson distributions could be as various as the number of calls received per hours in a call center, the yearly number of Prussian soldiers killed by horse kicks... or the number of particles (photons, neutrons, neutrinos...) hitting a detector every second.</span>
+<span id="cb1-292"><a href="#cb1-292" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-293"><a href="#cb1-293" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-296"><a href="#cb1-296" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-297"><a href="#cb1-297" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-poissondistrib</span></span>
+<span id="cb1-298"><a href="#cb1-298" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "Poisson distribution for various parameters. While asymmetric for small values of $k$ and $\\lambda$, it tends towards a Gaussian lineshape at larger values."</span></span>
+<span id="cb1-299"><a href="#cb1-299" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-subcap: </span></span>
+<span id="cb1-300"><a href="#cb1-300" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - " "</span></span>
+<span id="cb1-301"><a href="#cb1-301" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - " "</span></span>
+<span id="cb1-302"><a href="#cb1-302" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - " "</span></span>
+<span id="cb1-303"><a href="#cb1-303" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-304"><a href="#cb1-304" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-305"><a href="#cb1-305" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-306"><a href="#cb1-306" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 3</span></span>
+<span id="cb1-307"><a href="#cb1-307" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="cf">function</span>(lam, k) {</span>
+<span id="cb1-308"><a href="#cb1-308" aria-hidden="true" tabindex="-1"></a>    lam<span class="sc">^</span>k<span class="sc">*</span><span class="fu">exp</span>(<span class="sc">-</span>lam)<span class="sc">/</span><span class="fu">factorial</span>(k)</span>
+<span id="cb1-309"><a href="#cb1-309" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-310"><a href="#cb1-310" aria-hidden="true" tabindex="-1"></a>P2 <span class="ot">&lt;-</span> <span class="cf">function</span>(lambda, k) {</span>
+<span id="cb1-311"><a href="#cb1-311" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">lam =</span> lambda, <span class="at">poisson =</span> lambda<span class="sc">^</span>k <span class="sc">*</span> <span class="fu">exp</span>(<span class="sc">-</span>lam) <span class="sc">/</span> <span class="fu">factorial</span>(k))</span>
+<span id="cb1-312"><a href="#cb1-312" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-313"><a href="#cb1-313" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">k=</span><span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">4</span>), </span>
+<span id="cb1-314"><a href="#cb1-314" aria-hidden="true" tabindex="-1"></a>              <span class="at">lam=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">8</span>), <span class="at">each=</span><span class="dv">11</span>),</span>
+<span id="cb1-315"><a href="#cb1-315" aria-hidden="true" tabindex="-1"></a>              <span class="at">poisson=</span><span class="fu">P</span>(lam,k))</span>
+<span id="cb1-316"><a href="#cb1-316" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">k=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">%&gt;%</span>  </span>
+<span id="cb1-317"><a href="#cb1-317" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">poisson=</span><span class="fu">map</span>(k, <span class="sc">~</span><span class="fu">P2</span>(<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">15</span>,.<span class="dv">1</span>), .))) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-318"><a href="#cb1-318" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unnest</span>(poisson)</span>
+<span id="cb1-319"><a href="#cb1-319" aria-hidden="true" tabindex="-1"></a>dat3 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">k =</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-320"><a href="#cb1-320" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">poisson =</span> <span class="fu">map</span>(k, <span class="sc">~</span> <span class="fu">P2</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">200</span>, .<span class="dv">1</span>), .))) <span class="sc">%&gt;%</span></span>
+<span id="cb1-321"><a href="#cb1-321" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(poisson)</span>
+<span id="cb1-322"><a href="#cb1-322" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb1-323"><a href="#cb1-323" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> k, <span class="at">y =</span> poisson, <span class="at">color=</span><span class="fu">factor</span>(lam))) <span class="sc">+</span></span>
+<span id="cb1-324"><a href="#cb1-324" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb1-325"><a href="#cb1-325" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">color=</span><span class="fu">expression</span>(lambda), </span>
+<span id="cb1-326"><a href="#cb1-326" aria-hidden="true" tabindex="-1"></a>            <span class="at">x=</span><span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"k"</span>)), </span>
+<span id="cb1-327"><a href="#cb1-327" aria-hidden="true" tabindex="-1"></a>            <span class="at">y=</span><span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"P"</span>)[lambda]<span class="sc">*</span>(<span class="fu">italic</span>(<span class="st">"k"</span>))))<span class="sc">+</span></span>
+<span id="cb1-328"><a href="#cb1-328" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>))</span>
+<span id="cb1-329"><a href="#cb1-329" aria-hidden="true" tabindex="-1"></a>dat2 <span class="sc">%&gt;%</span> </span>
+<span id="cb1-330"><a href="#cb1-330" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> lam, <span class="at">y =</span> poisson, <span class="at">color=</span><span class="fu">factor</span>(k))) <span class="sc">+</span></span>
+<span id="cb1-331"><a href="#cb1-331" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb1-332"><a href="#cb1-332" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">color =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"k"</span>)), </span>
+<span id="cb1-333"><a href="#cb1-333" aria-hidden="true" tabindex="-1"></a>            <span class="at">x =</span> <span class="fu">expression</span>(lambda), </span>
+<span id="cb1-334"><a href="#cb1-334" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"P"</span>)[lambda] <span class="sc">*</span> (<span class="fu">italic</span>(<span class="st">"k"</span>))))<span class="sc">+</span></span>
+<span id="cb1-335"><a href="#cb1-335" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>))</span>
+<span id="cb1-336"><a href="#cb1-336" aria-hidden="true" tabindex="-1"></a>dat3 <span class="sc">%&gt;%</span> </span>
+<span id="cb1-337"><a href="#cb1-337" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> lam, <span class="at">y =</span> poisson, <span class="at">color=</span><span class="fu">factor</span>(k))) <span class="sc">+</span></span>
+<span id="cb1-338"><a href="#cb1-338" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb1-339"><a href="#cb1-339" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">color =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"k"</span>)), </span>
+<span id="cb1-340"><a href="#cb1-340" aria-hidden="true" tabindex="-1"></a>            <span class="at">x =</span> <span class="fu">expression</span>(lambda), </span>
+<span id="cb1-341"><a href="#cb1-341" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"P"</span>)[lambda] <span class="sc">*</span> (<span class="fu">italic</span>(<span class="st">"k"</span>))))<span class="sc">+</span></span>
+<span id="cb1-342"><a href="#cb1-342" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>))</span>
+<span id="cb1-343"><a href="#cb1-343" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-344"><a href="#cb1-344" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-345"><a href="#cb1-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-346"><a href="#cb1-346" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Characteristics</span></span>
+<span id="cb1-347"><a href="#cb1-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-348"><a href="#cb1-348" aria-hidden="true" tabindex="-1"></a>As shown on @fig-poissondistrib, for small $\lambda$ the distribution is asymmetric and skewed to the right. As $\lambda$ increases the Poisson distribution becomes more symmetric.</span>
+<span id="cb1-349"><a href="#cb1-349" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-350"><a href="#cb1-350" aria-hidden="true" tabindex="-1"></a>Following @eq-firstmoment, the average number of observed events, $\left&lt; k \right&gt;$, is given by:</span>
+<span id="cb1-351"><a href="#cb1-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-352"><a href="#cb1-352" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-353"><a href="#cb1-353" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb1-354"><a href="#cb1-354" aria-hidden="true" tabindex="-1"></a>\left&lt; k \right&gt; &amp;= \sum_{k=0}^\infty kP_\lambda(k) = \sum_{k=1}^\infty k\frac{\lambda^ke^{-\lambda}}{k!}<span class="sc">\\</span></span>
+<span id="cb1-355"><a href="#cb1-355" aria-hidden="true" tabindex="-1"></a>        &amp;= \lambda e^{-\lambda} \sum_{k=1}^\infty \frac{\lambda^{k-1}}{(k-1)!}= \lambda e^{-\lambda} \sum_{k=0}^\infty \frac{\lambda^{k}}{k!}<span class="sc">\\</span></span>
+<span id="cb1-356"><a href="#cb1-356" aria-hidden="true" tabindex="-1"></a>        &amp;= \lambda</span>
+<span id="cb1-357"><a href="#cb1-357" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb1-358"><a href="#cb1-358" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-359"><a href="#cb1-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-360"><a href="#cb1-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-361"><a href="#cb1-361" aria-hidden="true" tabindex="-1"></a>In the same manner and by using the "trick" $x^2=x(x-1)+x$, the variance $\sigma^2(k)$ of the distribution is given by:</span>
+<span id="cb1-362"><a href="#cb1-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-363"><a href="#cb1-363" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-364"><a href="#cb1-364" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb1-365"><a href="#cb1-365" aria-hidden="true" tabindex="-1"></a>\sigma^2(k) &amp;= \sum_{k=1}^\infty (k-\lambda)^2\frac{\lambda^k e^{-\lambda}}{k!}<span class="sc">\\</span></span>
+<span id="cb1-366"><a href="#cb1-366" aria-hidden="true" tabindex="-1"></a>        &amp;= \lambda e^{-\lambda} \left<span class="co">[</span><span class="ot">\sum_{k=1}^\infty k^2\frac{\lambda^{k-1}}{k!} \underbrace{-2\lambda\sum_{k=1}^\infty \frac{\lambda^{k-1}}{(k-1)!}}_{-2\lambda e^\lambda}+\underbrace{\sum_{k=1}^\infty \lambda^2\frac{\lambda^{k-1}}{k!}}_{\lambda e^\lambda}\right</span><span class="co">]</span><span class="sc">\\</span></span>
+<span id="cb1-367"><a href="#cb1-367" aria-hidden="true" tabindex="-1"></a>        &amp;= \lambda e^{-\lambda} \left<span class="co">[</span><span class="ot"> \underbrace{\sum_{k=2}^\infty k(k-1)\frac{\lambda^{k-1}}{k!}}_{\lambda e^\lambda} + \underbrace{\sum_{k=1}^\infty k\frac{\lambda^{k-1}}{k!}}_{e^\lambda} - \lambda e^\lambda\right</span><span class="co">]</span><span class="sc">\\</span></span>
+<span id="cb1-368"><a href="#cb1-368" aria-hidden="true" tabindex="-1"></a>        &amp;=\lambda = \left&lt; k \right&gt;</span>
+<span id="cb1-369"><a href="#cb1-369" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb1-370"><a href="#cb1-370" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-371"><a href="#cb1-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-372"><a href="#cb1-372" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-373"><a href="#cb1-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-374"><a href="#cb1-374" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
+<span id="cb1-375"><a href="#cb1-375" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-376"><a href="#cb1-376" aria-hidden="true" tabindex="-1"></a>The important result here is that, **when counting random events with an average of** $\left&lt; N \right&gt;$, **the standard deviation is** $\sigma=\sqrt{\left&lt; N \right&gt;}$. This is typically what happens when performing a diffraction or spectroscopic measurement, such as X-ray diffraction, Raman, IR or neutron spectroscopy, etc.: the longer we acquire data, the higher the number of detected "events" $N$ (particle hits detector), and the "better is the statistics". Indeed, the relative error is thus $\sqrt{N}/N=1/\sqrt{N}$. </span>
+<span id="cb1-377"><a href="#cb1-377" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-378"><a href="#cb1-378" aria-hidden="true" tabindex="-1"></a>The consequence of this is that to make a factor 10 improvement on the relative error, one has to increase by 100 the number of events. This is usually done by increasing the acquisition time, which is fine as long as it is short enough. If irrealistic acquisition times start to become necessary, one should maybe try to find another way to increase $N$: this can be done by improving the detector efficiency, increasing the probe (laser, neutron/x-ray) brightness, changing the experimental geometry, etc.</span>
+<span id="cb1-379"><a href="#cb1-379" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-380"><a href="#cb1-380" aria-hidden="true" tabindex="-1"></a>Finally, for "large" numbers ($\lambda\gtrsim 100$) the Poisson distribution tends towards a symmetric Gaussian distribution that we will describe just after. </span>
+<span id="cb1-381"><a href="#cb1-381" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-382"><a href="#cb1-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-383"><a href="#cb1-383" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-384"><a href="#cb1-384" aria-hidden="true" tabindex="-1"></a><span class="fu">### The Gaussian distribution</span></span>
+<span id="cb1-385"><a href="#cb1-385" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-386"><a href="#cb1-386" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Definition</span></span>
+<span id="cb1-387"><a href="#cb1-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-388"><a href="#cb1-388" aria-hidden="true" tabindex="-1"></a>The Gaussian distribution, also known as the *normal distribution*, with a mean value $\mu$ and standard deviation $\sigma$ as a function of some variable $x$ is given by:</span>
+<span id="cb1-389"><a href="#cb1-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-390"><a href="#cb1-390" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-391"><a href="#cb1-391" aria-hidden="true" tabindex="-1"></a>P(x, \mu, \sigma)=\frac{1}{\sigma\sqrt{2\pi}}e^{-(x-\mu)^2/2\sigma^2}</span>
+<span id="cb1-392"><a href="#cb1-392" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-393"><a href="#cb1-393" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-394"><a href="#cb1-394" aria-hidden="true" tabindex="-1"></a>It is useful to transform data from the $x$ space to a corresponding $z$ space which has a mean value of zero, and a standard deviation of one. This transformation is given by the mapping $z=\frac{x-\mu}{\sigma}$, and the Gaussian distribution in terms of $z$ is thus:</span>
+<span id="cb1-395"><a href="#cb1-395" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-396"><a href="#cb1-396" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-397"><a href="#cb1-397" aria-hidden="true" tabindex="-1"></a>P(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2}</span>
+<span id="cb1-398"><a href="#cb1-398" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-399"><a href="#cb1-399" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-400"><a href="#cb1-400" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Characteristics</span></span>
+<span id="cb1-401"><a href="#cb1-401" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-404"><a href="#cb1-404" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-405"><a href="#cb1-405" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-gaussian</span></span>
+<span id="cb1-406"><a href="#cb1-406" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: "A zero-centered Gaussian distribution with standard deviation of 1, $P(z)$. The red line marks the half maximum, $P(z_{HM})=1/2\\sqrt{2\\pi}$, and the blue lines the values of $z$ for which the half maximum is obtained, $z_{HM}=\\pm\\sqrt{2\\ln{2}}$."</span></span>
+<span id="cb1-407"><a href="#cb1-407" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-408"><a href="#cb1-408" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-409"><a href="#cb1-409" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-410"><a href="#cb1-410" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,.<span class="dv">1</span>), <span class="at">y=</span><span class="fu">exp</span>(<span class="sc">-</span>x<span class="sc">^</span><span class="dv">2</span><span class="sc">/</span><span class="dv">2</span>)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi))</span>
+<span id="cb1-411"><a href="#cb1-411" aria-hidden="true" tabindex="-1"></a>seg1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">c</span>(<span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(<span class="dv">2</span>)),<span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(<span class="dv">2</span>))),</span>
+<span id="cb1-412"><a href="#cb1-412" aria-hidden="true" tabindex="-1"></a>               <span class="at">y=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi)))</span>
+<span id="cb1-413"><a href="#cb1-413" aria-hidden="true" tabindex="-1"></a>seg2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span><span class="sc">-</span><span class="fu">c</span>(<span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(<span class="dv">2</span>)),<span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(<span class="dv">2</span>))),</span>
+<span id="cb1-414"><a href="#cb1-414" aria-hidden="true" tabindex="-1"></a>               <span class="at">y=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi)))</span>
+<span id="cb1-415"><a href="#cb1-415" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb1-416"><a href="#cb1-416" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb1-417"><a href="#cb1-417" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb1-418"><a href="#cb1-418" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"z"</span>, <span class="at">y=</span><span class="st">"P(z)"</span>)<span class="sc">+</span></span>
+<span id="cb1-419"><a href="#cb1-419" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi), <span class="at">col=</span><span class="st">"red"</span>)<span class="sc">+</span></span>
+<span id="cb1-420"><a href="#cb1-420" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_line</span>(<span class="at">data=</span>seg2, <span class="at">col=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb1-421"><a href="#cb1-421" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_line</span>(<span class="at">data=</span>seg1, <span class="at">col=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb1-422"><a href="#cb1-422" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_segment</span>(<span class="fu">aes</span>(<span class="at">x =</span> <span class="sc">-</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(<span class="dv">2</span>)), <span class="at">y =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi)<span class="sc">/</span><span class="dv">2</span>, </span>
+<span id="cb1-423"><a href="#cb1-423" aria-hidden="true" tabindex="-1"></a>                         <span class="at">xend =</span> <span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(<span class="dv">2</span>)), <span class="at">yend =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi)<span class="sc">/</span><span class="dv">2</span>),</span>
+<span id="cb1-424"><a href="#cb1-424" aria-hidden="true" tabindex="-1"></a>            <span class="at">arrow =</span> <span class="fu">arrow</span>(<span class="at">ends =</span> <span class="st">"both"</span>, <span class="at">length =</span> <span class="fu">unit</span>(<span class="fl">0.25</span>, <span class="st">"cm"</span>)))<span class="sc">+</span></span>
+<span id="cb1-425"><a href="#cb1-425" aria-hidden="true" tabindex="-1"></a>        <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> .<span class="dv">12</span>, <span class="at">label=</span><span class="st">"FWHM"</span>)</span>
+<span id="cb1-426"><a href="#cb1-426" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb1-427"><a href="#cb1-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-428"><a href="#cb1-428" aria-hidden="true" tabindex="-1"></a>Sometimes instead of quantifying a Gaussian distribution (or any monomodal distribution, for that matter) using the variance or standard deviation, scientists will speak about the full width at half maximum (**FWHM**). </span>
+<span id="cb1-429"><a href="#cb1-429" aria-hidden="true" tabindex="-1"></a>This has the advantage that any extreme outliers of the distribution do not contribute to the quantification of the spread of data. As the name suggests, the FWHM is the width of the distribution (the spread above and below the mean) at the points where the distribution reaches half of its maximum. </span>
+<span id="cb1-430"><a href="#cb1-430" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-431"><a href="#cb1-431" aria-hidden="true" tabindex="-1"></a>For a Gaussian distribution $P(z)$, the half maximum is attained when $z_{HM}$ is so that:</span>
+<span id="cb1-432"><a href="#cb1-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-433"><a href="#cb1-433" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-434"><a href="#cb1-434" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb1-435"><a href="#cb1-435" aria-hidden="true" tabindex="-1"></a>\frac{1}{\sqrt{2\pi}}e^{-z_{HM}^2/2}&amp;= \frac{1}{2}\frac{1}{\sqrt{2\pi}}<span class="sc">\\</span></span>
+<span id="cb1-436"><a href="#cb1-436" aria-hidden="true" tabindex="-1"></a>\Rightarrow z_{HM}&amp;=\pm\sqrt{2\ln{2}}</span>
+<span id="cb1-437"><a href="#cb1-437" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb1-438"><a href="#cb1-438" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-439"><a href="#cb1-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-440"><a href="#cb1-440" aria-hidden="true" tabindex="-1"></a>The FWHM of $P(z)$ is therefore $FWHM=2\sqrt{2\ln{2}}\simeq2.355$. Using the relation between $z$ and $\sigma$, we get the relation between the FWHM and the standard deviation:</span>
+<span id="cb1-441"><a href="#cb1-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-442"><a href="#cb1-442" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-443"><a href="#cb1-443" aria-hidden="true" tabindex="-1"></a>FWHM=2\sqrt{2\ln{2}}\times\sigma</span>
+<span id="cb1-444"><a href="#cb1-444" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-445"><a href="#cb1-445" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-446"><a href="#cb1-446" aria-hidden="true" tabindex="-1"></a>As can be seen on @tbl-tablevalues, using the FWHM ensures that roughly 76% of the data are comprised between $\mu-\sigma$ and $\mu+\sigma$, and this goes up to $\sim95$% for $\mu-2\sigma$ and $\mu+2\sigma$.</span>
+<span id="cb1-447"><a href="#cb1-447" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-448"><a href="#cb1-448" aria-hidden="true" tabindex="-1"></a>|Integration range $a$  |$\int_{-a}^aP(z)dz$ |</span>
+<span id="cb1-449"><a href="#cb1-449" aria-hidden="true" tabindex="-1"></a>|:----------------------|:-------------------|</span>
+<span id="cb1-450"><a href="#cb1-450" aria-hidden="true" tabindex="-1"></a>|$\sigma$               |0.68293             |</span>
+<span id="cb1-451"><a href="#cb1-451" aria-hidden="true" tabindex="-1"></a>|$\sqrt{2\ln{2}}\sigma$ |0.76100             |</span>
+<span id="cb1-452"><a href="#cb1-452" aria-hidden="true" tabindex="-1"></a>|$2\sigma$              |0.95455             |</span>
+<span id="cb1-453"><a href="#cb1-453" aria-hidden="true" tabindex="-1"></a>|$3\sigma$              |0.99730             |</span>
+<span id="cb1-454"><a href="#cb1-454" aria-hidden="true" tabindex="-1"></a>|$4\sigma$              |0.99994             |</span>
+<span id="cb1-455"><a href="#cb1-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-456"><a href="#cb1-456" aria-hidden="true" tabindex="-1"></a>: Integral values for various values of $a$ in $\int_{-a}^aP(z)dz$. {#tbl-tablevalues}</span>
+<span id="cb1-457"><a href="#cb1-457" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-458"><a href="#cb1-458" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- ```{r}</span></span>
+<span id="cb1-459"><a href="#cb1-459" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-tablevalues</span></span>
+<span id="cb1-460"><a href="#cb1-460" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Integral values for various values of $a$ in $\\int_{-a}^aP(z)dz$."</span></span>
+<span id="cb1-461"><a href="#cb1-461" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb1-462"><a href="#cb1-462" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb1-463"><a href="#cb1-463" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb1-464"><a href="#cb1-464" aria-hidden="true" tabindex="-1"></a><span class="co">x &lt;- seq(-10,10,.001)</span></span>
+<span id="cb1-465"><a href="#cb1-465" aria-hidden="true" tabindex="-1"></a><span class="co">y &lt;- dnorm(x,0,1)</span></span>
+<span id="cb1-466"><a href="#cb1-466" aria-hidden="true" tabindex="-1"></a><span class="co">integral &lt;- function(x,a=1) {</span></span>
+<span id="cb1-467"><a href="#cb1-467" aria-hidden="true" tabindex="-1"></a><span class="co">    sprintf("%.5f", sum(y[abs(x) &lt;= a] * (x[2] - x[1])))</span></span>
+<span id="cb1-468"><a href="#cb1-468" aria-hidden="true" tabindex="-1"></a><span class="co">}</span></span>
+<span id="cb1-469"><a href="#cb1-469" aria-hidden="true" tabindex="-1"></a><span class="co">dat &lt;- tibble(`Integration range $a$` = c("$\\sigma$", "$\\sqrt{2\\ln{2}}\\sigma$", "$2\\sigma$", "$3\\sigma$", "$4\\sigma$"),</span></span>
+<span id="cb1-470"><a href="#cb1-470" aria-hidden="true" tabindex="-1"></a><span class="co">       `$\\int_{-a}^aP(z)dz$` = c(integral(x, a = 1), integral(x, a = sqrt(2 * log(2))), integral(x, a = 2), integral(x, a = 3), integral(x, a = 4))</span></span>
+<span id="cb1-471"><a href="#cb1-471" aria-hidden="true" tabindex="-1"></a><span class="co">      )</span></span>
+<span id="cb1-472"><a href="#cb1-472" aria-hidden="true" tabindex="-1"></a><span class="co">knitr::kable(dat)</span></span>
+<span id="cb1-473"><a href="#cb1-473" aria-hidden="true" tabindex="-1"></a><span class="co">``` --&gt;</span></span>
+<span id="cb1-474"><a href="#cb1-474" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-475"><a href="#cb1-475" aria-hidden="true" tabindex="-1"></a><span class="fu">## Uncertainty and errors</span></span>
+<span id="cb1-476"><a href="#cb1-476" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-477"><a href="#cb1-477" aria-hidden="true" tabindex="-1"></a><span class="fu">### Central limit theorem: on the Gaussian nature of statistical uncertainty</span></span>
+<span id="cb1-478"><a href="#cb1-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-479"><a href="#cb1-479" aria-hidden="true" tabindex="-1"></a>The **central limit theorem** states that if one takes $N$ random independent samples of a distribution of data that describes some variable $x$, then as $N$ tends to infinity, the distribution of the sum of the samples tends to a Gaussian distribution. </span>
+<span id="cb1-480"><a href="#cb1-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-481"><a href="#cb1-481" aria-hidden="true" tabindex="-1"></a>In other terms: the mean value of a large number $N$ of independent random variables (that can be distributed following any distribution with finite variance), obeying the same distribution with variance $\sigma_0^2$, approaches a normal distribution with variance $\sigma^2 = \sigma _0^2/N$.</span>
+<span id="cb1-482"><a href="#cb1-482" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-483"><a href="#cb1-483" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-484"><a href="#cb1-484" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-485"><a href="#cb1-485" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
+<span id="cb1-486"><a href="#cb1-486" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-487"><a href="#cb1-487" aria-hidden="true" tabindex="-1"></a>**This result is fundamental** as it implies that **independent measurements of any observable will show values that will be spread following a Gaussian distribution**, and thus statistical uncertainties that are Gaussian in nature.</span>
+<span id="cb1-488"><a href="#cb1-488" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-489"><a href="#cb1-489" aria-hidden="true" tabindex="-1"></a>Moreover, we see here the typical property of statistical errors, which is that **the relative error is proportional to** $1/\sqrt{N}$. Increasing the number of observations thus decreases the error, *i.e.* increases the precision.</span>
+<span id="cb1-490"><a href="#cb1-490" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-491"><a href="#cb1-491" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-492"><a href="#cb1-492" aria-hidden="true" tabindex="-1"></a><span class="fu">### Combination of errors</span></span>
+<span id="cb1-493"><a href="#cb1-493" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-494"><a href="#cb1-494" aria-hidden="true" tabindex="-1"></a>Let us consider a function of $n$ variables, $f(u_1, u_2, ..., u_n)$. We can Taylor expand this function about the various mean values $u_i=\overline{u_i}$, so that, at the first order:</span>
+<span id="cb1-495"><a href="#cb1-495" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-496"><a href="#cb1-496" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-497"><a href="#cb1-497" aria-hidden="true" tabindex="-1"></a>f(u_1, ..., u_n) = f(\overline{u_1}, ..., \overline{u_n}) + \sum_{i=1}^n (u_i-\overline{u_i})\frac{\partial f}{\partial u_i}</span>
+<span id="cb1-498"><a href="#cb1-498" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-499"><a href="#cb1-499" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-500"><a href="#cb1-500" aria-hidden="true" tabindex="-1"></a>Considering that the variance of a quantity $f$ is given by $\sigma^2(f) = (f - \overline{f} )^2$, it follows that the variance of our multivariable function is given by:</span>
+<span id="cb1-501"><a href="#cb1-501" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-502"><a href="#cb1-502" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-503"><a href="#cb1-503" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb1-504"><a href="#cb1-504" aria-hidden="true" tabindex="-1"></a>\sigma^2(f) &amp;= \left(\sum_{i=1}^n (u_i-\overline{u_i})\frac{\partial f}{\partial u_i}\right)^2<span class="sc">\\</span></span>
+<span id="cb1-505"><a href="#cb1-505" aria-hidden="true" tabindex="-1"></a>         &amp;= \sum_{i=1}^n \left(\frac{\partial f}{\partial u_i}\right)^2\sigma_{u_i}^2 + 2\sum_{i\ne j}\frac{\partial f}{\partial u_i}\frac{\partial f}{\partial u_j}\sigma_{u_iu_j}<span class="sc">\\</span></span>
+<span id="cb1-506"><a href="#cb1-506" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb1-507"><a href="#cb1-507" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-508"><a href="#cb1-508" aria-hidden="true" tabindex="-1"></a>where we have replaced $(u_i-\overline{u_i})^2$ by the variance $\sigma_{u_i}^2$ and $(u_i-\overline{u_i})(u_j-\overline{u_j})$ by the covariance $\sigma_{u_iu_j}$.</span>
+<span id="cb1-509"><a href="#cb1-509" aria-hidden="true" tabindex="-1"></a>\</span>
+<span id="cb1-510"><a href="#cb1-510" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-511"><a href="#cb1-511" aria-hidden="true" tabindex="-1"></a>If the variables $u_i$ are independent then the covariance $\sigma_{u_iu_j}$ is null, and it follows the general expression of the standard error that can be applied to **any function of independent variables**:</span>
+<span id="cb1-512"><a href="#cb1-512" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-513"><a href="#cb1-513" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal"}</span>
+<span id="cb1-514"><a href="#cb1-514" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-515"><a href="#cb1-515" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-516"><a href="#cb1-516" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-517"><a href="#cb1-517" aria-hidden="true" tabindex="-1"></a>\sigma(f) = \sqrt{\sum_{i=1}^n \left(\frac{\partial f}{\partial u_i}\right)^2\sigma_{u_i}^2}</span>
+<span id="cb1-518"><a href="#cb1-518" aria-hidden="true" tabindex="-1"></a>$$ {#eq-uncertainty}</span>
+<span id="cb1-519"><a href="#cb1-519" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-520"><a href="#cb1-520" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-521"><a href="#cb1-521" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-522"><a href="#cb1-522" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Functions of one variable</span></span>
+<span id="cb1-523"><a href="#cb1-523" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-524"><a href="#cb1-524" aria-hidden="true" tabindex="-1"></a>Let us consider a function $f$ having a form that depends only on one observable $x$, for example:</span>
+<span id="cb1-525"><a href="#cb1-525" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-526"><a href="#cb1-526" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-527"><a href="#cb1-527" aria-hidden="true" tabindex="-1"></a>f = Ax + B</span>
+<span id="cb1-528"><a href="#cb1-528" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-529"><a href="#cb1-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-530"><a href="#cb1-530" aria-hidden="true" tabindex="-1"></a>Then, following @eq-uncertainty, the standard error on that function is given by:</span>
+<span id="cb1-531"><a href="#cb1-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-532"><a href="#cb1-532" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-533"><a href="#cb1-533" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb1-534"><a href="#cb1-534" aria-hidden="true" tabindex="-1"></a>\sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2}<span class="sc">\\</span></span>
+<span id="cb1-535"><a href="#cb1-535" aria-hidden="true" tabindex="-1"></a>         &amp;= A\sigma_x</span>
+<span id="cb1-536"><a href="#cb1-536" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb1-537"><a href="#cb1-537" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-538"><a href="#cb1-538" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-539"><a href="#cb1-539" aria-hidden="true" tabindex="-1"></a>So, **independently of any offset of the measured observable**, the resulting error must be corrected by the same factor as the intensity.</span>
+<span id="cb1-540"><a href="#cb1-540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-541"><a href="#cb1-541" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-542"><a href="#cb1-542" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-543"><a href="#cb1-543" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
+<span id="cb1-544"><a href="#cb1-544" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-545"><a href="#cb1-545" aria-hidden="true" tabindex="-1"></a>**In practice**, let's say we measure a Raman spectrum. As we saw above, the error on each intensity count is given by the square root of this intensity count. </span>
+<span id="cb1-546"><a href="#cb1-546" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-547"><a href="#cb1-547" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It is possible to shift vertically this spectrum without having to recompute the error bars.</span>
+<span id="cb1-548"><a href="#cb1-548" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>But if you want to normalize (say, to 1) this spectrum, you have to multiply all the errors by the renormalization constant.</span>
+<span id="cb1-549"><a href="#cb1-549" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-550"><a href="#cb1-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-551"><a href="#cb1-551" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Functions of two variables</span></span>
+<span id="cb1-552"><a href="#cb1-552" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-553"><a href="#cb1-553" aria-hidden="true" tabindex="-1"></a>Now consider the function $f = Ax + By$, where we have measured the mean and standard deviation of both $x$ and $y$, and want to compute the standard deviation on their sum/subtraction. We can use the general formula of @eq-uncertainty to determine how to do this, hence:</span>
+<span id="cb1-554"><a href="#cb1-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-555"><a href="#cb1-555" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-556"><a href="#cb1-556" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb1-557"><a href="#cb1-557" aria-hidden="true" tabindex="-1"></a>\sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2 + \left(\frac{\partial f}{\partial y}\right)^2\sigma_y^2}<span class="sc">\\</span></span>
+<span id="cb1-558"><a href="#cb1-558" aria-hidden="true" tabindex="-1"></a>         &amp;= \sqrt{A^2\sigma_x^2 + B^2\sigma_y^2}</span>
+<span id="cb1-559"><a href="#cb1-559" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb1-560"><a href="#cb1-560" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb1-561"><a href="#cb1-561" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-562"><a href="#cb1-562" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb1-563"><a href="#cb1-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-564"><a href="#cb1-564" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
+<span id="cb1-565"><a href="#cb1-565" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-566"><a href="#cb1-566" aria-hidden="true" tabindex="-1"></a>**In practice**, let's say we measure an UV spectrum of a solution (a molecule in a solvent), and a reference spectrum of this solvent. As we saw above, the error on each intensity count is given by the square root of this intensity count. We want to subtract the signal of the solvent to get only the signal of the molecule.</span>
+<span id="cb1-567"><a href="#cb1-567" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-568"><a href="#cb1-568" aria-hidden="true" tabindex="-1"></a>We thus have to perform the above operation on the errors, $\sigma_{result}=\sqrt{\sigma^2_{solution}+\sigma^2_{reference}}$. It means that in order to have a statistically sound resulting spectrum, the reference needs to be measured with a very good statistics in order to not dominate the resulting error.</span>
+<span id="cb1-569"><a href="#cb1-569" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb1-570"><a href="#cb1-570" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-571"><a href="#cb1-571" aria-hidden="true" tabindex="-1"></a>It is a good thing to think about error propagation and where it comes from... but you don't have to bother computing it by hand, as <span class="co">[</span><span class="ot">packages are here to do it for you</span><span class="co">](#working-with-experimental-errors)</span>, as we will see later in the class.</span>
+<span id="cb1-572"><a href="#cb1-572" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-573"><a href="#cb1-573" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-574"><a href="#cb1-574" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
+<span id="cb1-575"><a href="#cb1-575" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-576"><a href="#cb1-576" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A. Bevan, *[Statistical Data Analysis for the Physical Sciences](https://www.cambridge.org/core/books/statistical-data-analysis-for-the-physical-sciences/2E3D132870E72277EE5FB96FE616B9F1)*, Cambridge University Press (2013)</span>
+<span id="cb1-577"><a href="#cb1-577" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>G. Bohm, *[Introduction to Statistics and Data Analysis for Physicists](http://www-library.desy.de/preparch/books/vstatmp_engl.pdf)*, Hamburg: Verl. Dt. Elektronen-Synchrotron (2010).</span>
+<span id="cb1-578"><a href="#cb1-578" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>J. Watkins, *[An Introduction to the Science of Statistics](https://www.math.arizona.edu/~jwatkins/statbook.pdf)*</span>
+</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>

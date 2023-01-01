@@ -1,0 +1,1588 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.16">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Reproducible data treatment with R - 5&nbsp; Vectors</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07-dataframes.html" rel="next">
+<link href="./05-variables.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=google_analytics.html"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
+</script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Vectors</span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Reproducible data treatment with R</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/colinbousige/Rclass" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-about.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">About the class</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-stats.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A little reminder on Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-getting_ready.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting ready</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-variables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Variables, booleans and strings</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-vectors.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Vectors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-dataframes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data frames</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-reading_files.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reading/writing all kinds of files</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-lists.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lists</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Functions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-conditions_loops.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conditional actions and loops</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-plotting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Plotting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-3d_plots.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">3D color plots</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-fitting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Fitting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-rmarkdown.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Rmarkdown</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-shiny.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Graphical interfaces with Shiny</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-units.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Working with units and experimental errors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-exercises.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">List of exercises</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li><a href="#different-ways-of-defining-a-vector" id="toc-different-ways-of-defining-a-vector" class="nav-link active" data-scroll-target="#different-ways-of-defining-a-vector"> <span class="header-section-number">5.1</span> Different ways of defining a vector</a></li>
+  <li><a href="#numerical-and-categorical-data-types" id="toc-numerical-and-categorical-data-types" class="nav-link" data-scroll-target="#numerical-and-categorical-data-types"> <span class="header-section-number">5.2</span> Numerical and categorical data types</a></li>
+  <li>
+<a href="#principal-operations-on-vectors" id="toc-principal-operations-on-vectors" class="nav-link" data-scroll-target="#principal-operations-on-vectors"> <span class="header-section-number">5.3</span> Principal operations on vectors</a>
+  <ul class="collapse">
+<li><a href="#mathematical-operations" id="toc-mathematical-operations" class="nav-link" data-scroll-target="#mathematical-operations"> <span class="header-section-number">5.3.1</span> Mathematical operations</a></li>
+  <li><a href="#accessing-values" id="toc-accessing-values" class="nav-link" data-scroll-target="#accessing-values"> <span class="header-section-number">5.3.2</span> Accessing values</a></li>
+  <li><a href="#sorting-removing-duplicates-sampling" id="toc-sorting-removing-duplicates-sampling" class="nav-link" data-scroll-target="#sorting-removing-duplicates-sampling"> <span class="header-section-number">5.3.3</span> Sorting, removing duplicates, sampling</a></li>
+  <li><a href="#maximum-and-minimum" id="toc-maximum-and-minimum" class="nav-link" data-scroll-target="#maximum-and-minimum"> <span class="header-section-number">5.3.4</span> Maximum and minimum</a></li>
+  <li><a href="#characteristics-of-vectors" id="toc-characteristics-of-vectors" class="nav-link" data-scroll-target="#characteristics-of-vectors"> <span class="header-section-number">5.3.5</span> Characteristics of vectors</a></li>
+  <li><a href="#concatenation-of-vectors" id="toc-concatenation-of-vectors" class="nav-link" data-scroll-target="#concatenation-of-vectors"> <span class="header-section-number">5.3.6</span> Concatenation of vectors</a></li>
+  </ul>
+</li>
+  <li><a href="#exo-vectors" id="toc-exo-vectors" class="nav-link" data-scroll-target="#exo-vectors"> <span class="header-section-number">5.4</span> Exercises</a></li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/Rclass/blob/main/06-vectors.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/Rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title d-none d-lg-block">
+<span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Vectors</span>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header><p><strong>R is a vectorized language</strong> with built-in arithmetic and relational operators, mathematical functions and types of number. It means that each mathematical function and operator works on a set of data rather than a single scalar value as traditional computer language do, and thus <strong>formal looping can <em>usually</em> be avoided</strong>.</p>
+<section id="different-ways-of-defining-a-vector" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="different-ways-of-defining-a-vector">
+<span class="header-section-number">5.1</span> Different ways of defining a vector</h2>
+<p>If you want to define a vector by specifying the values, use the function <code class="sourceCode r"><span class="fu">c</span>()</code>, like so:</p>
+<ul>
+<li>Here, <code>x</code> is a vector of doubles:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">12</span>, <span class="fl">4.2</span><span class="op">)</span></span>
+<span><span class="va">x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1.0  5.0  3.0 12.0  4.2</code></pre>
+</div>
+</div>
+<ul>
+<li>But here, <code>x</code> is converted to a vector of strings because it contains a string:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">3</span>, <span class="st">"hello"</span><span class="op">)</span></span>
+<span><span class="va">x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "1"     "5"     "3"     "hello"</code></pre>
+</div>
+</div>
+<ul>
+<li>To define a sequence of increasing numbers, either use the notation <code>start:end</code> for a sequence going from <code>start</code> to <code>end</code> by step of 1, or use the <code class="sourceCode r"><span class="fu">seq</span>()</code> function that is more versatile:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span>, by <span class="op">=</span> <span class="fl">.5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] -10.0  -9.5  -9.0  -8.5  -8.0  -7.5  -7.0  -6.5  -6.0  -5.5  -5.0  -4.5
+[13]  -4.0  -3.5  -3.0  -2.5  -2.0  -1.5  -1.0  -0.5   0.0   0.5   1.0   1.5
+[25]   2.0   2.5   3.0   3.5   4.0   4.5   5.0   5.5   6.0   6.5   7.0   7.5
+[37]   8.0   8.5   9.0   9.5  10.0</code></pre>
+</div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span>, length <span class="op">=</span> <span class="fl">6</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -10  -6  -2   2   6  10</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span>, along <span class="op">=</span> <span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -10.000000  -3.333333   3.333333  10.000000</code></pre>
+</div>
+</div>
+<ul>
+<li>To repeat values, use the <code class="sourceCode r"><span class="fu">rep</span>()</code> function:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">10</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0 0 0 0 0 0 0 0 0 0</code></pre>
+</div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0 2 0 2 0 2 0 2 0 2</code></pre>
+</div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">2</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0 0 0 0 0 2 2 2 2 2</code></pre>
+</div>
+</div>
+<ul>
+<li>To create vectors of random numbers, use <code class="sourceCode r"><span class="fu">rnorm</span>()</code> or <code class="sourceCode r"><span class="fu">runif</span>()</code> for normally or uniformly distributed numbers, respectively:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># vector with 10 random values normally distributed around mean </span></span>
+<span><span class="co"># with given standard deviation `sd`</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean<span class="op">=</span><span class="fl">3</span>, sd<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 3.736801 3.796741 6.038206 2.995731 3.016096 4.444867 2.272907 1.396277
+ [9] 3.265355 2.488268</code></pre>
+</div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># vector with 10 random values uniformly distributed between min and max</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">10</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 0.03608210 0.14540731 0.45339443 0.53603531 0.62392660 0.97362035
+ [7] 0.16878635 0.85619323 0.20399526 0.02076421</code></pre>
+</div>
+</div>
+</section><section id="numerical-and-categorical-data-types" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="numerical-and-categorical-data-types">
+<span class="header-section-number">5.2</span> Numerical and categorical data types</h2>
+<p>Data can be of two different types: numerical, or categorical. Let’s say you are measuring a the temperature in a room and recording its value over time:</p>
+<div class="cell">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">T1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">22.3</span>, <span class="fl">23.5</span>, <span class="fl">26.0</span>, <span class="fl">30.2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>T1</code> is a vector containing <strong>numerical</strong> data.</p>
+<p>Let’s say that now you are recording the temperature level, which can be <code>low</code>, <code>high</code> or <code>medium</code></p>
+<div class="cell">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">T2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"low"</span>, <span class="st">"low"</span>, <span class="st">"medium"</span>, <span class="st">"high"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><code>T2</code> is a vector containing <strong>categorical</strong> data, <em>i.e.</em> the data in this example can fall into either of 3 categories. For now, <code>T2</code> is however a vector of strings, and we need to tell R that it contains categorical data by using the function <code class="sourceCode r"><span class="fu">factor</span>()</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">T2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">T2</span><span class="op">)</span></span>
+<span><span class="va">T2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] low    low    medium high  
+Levels: high low medium</code></pre>
+</div>
+</div>
+<p>We see here that we now have 3 levels, and a numerization of <code>T2</code> leads to obtaining the numbers 1, 2 and 3 according to the levels in <code>T2</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">T2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 2 3 1</code></pre>
+</div>
+</div>
+<p>Numerical data can be converted to factors in the same way – this can be useful sometimes, <em>e.g.</em> when plotting with <code>ggplot</code> as we will see later:</p>
+<div class="cell">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">T1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 22.3 23.5 26   30.2
+Levels: 22.3 23.5 26 30.2</code></pre>
+</div>
+</div>
+</section><section id="principal-operations-on-vectors" class="level2" data-number="5.3"><h2 data-number="5.3" class="anchored" data-anchor-id="principal-operations-on-vectors">
+<span class="header-section-number">5.3</span> Principal operations on vectors</h2>
+<section id="mathematical-operations" class="level3" data-number="5.3.1"><h3 data-number="5.3.1" class="anchored" data-anchor-id="mathematical-operations">
+<span class="header-section-number">5.3.1</span> Mathematical operations</h3>
+<p>Because R is a vectorized language, you don’t need to loop on all elements of a vector to perform element-wise operations on it. Let’s say that <code class="sourceCode r">x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></code>, then:</p>
+<ul>
+<li>Addition of a value to all elements:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">+</span> <span class="fl">2.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3.5 4.5 5.5 6.5 7.5 8.5</code></pre>
+</div>
+</div>
+<ul>
+<li>Multiplication / division of all elements:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span><span class="op">*</span><span class="fl">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  2  4  6  8 10 12</code></pre>
+</div>
+</div>
+<ul>
+<li>Integer division:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%/%</a></span> <span class="fl">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0 0 1 1 1 2</code></pre>
+</div>
+</div>
+<ul>
+<li>Math functions apply on all elements:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.7350526 0.6450944 0.9949837 0.8084823 0.5325995 0.9798828</code></pre>
+</div>
+</div>
+<ul>
+<li>Power:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span><span class="op">^</span><span class="fl">2.5</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1.000000  5.656854 15.588457 32.000000 55.901699 88.181631</code></pre>
+</div>
+</div>
+<ul>
+<li>Multiplication of vectors of the same size is performed element by element:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2.3</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">12</span>, <span class="fl">20</span><span class="op">)</span></span>
+<span><span class="va">x</span><span class="op">*</span><span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]   2.3  10.0  21.0  40.0  60.0 120.0</code></pre>
+</div>
+</div>
+<ul>
+<li>Multiplication of vectors of different sizes: the smaller vector is automatically repeated the number of times needed to get a vector of the size of the larger one. It will work also if the longer object length is not a multiple of shorter object length, but the shorter object will be truncated and you’ll get an error:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1  4  3  8  5 12</code></pre>
+</div>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span><span class="op">*</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in x * 1:4: longer object length is not a multiple of shorter object
+length</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1  4  9 16  5 12</code></pre>
+</div>
+</div>
+<ul>
+<li>Modulo:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/Arithmetic.html">%%</a></span> <span class="fl">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1 0 1 0 1 0</code></pre>
+</div>
+</div>
+<ul>
+<li>Outer product of vectors (the result is a matrix):</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op"><a href="https://rdrr.io/r/base/outer.html">%o%</a></span> <span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4] [,5] [,6]
+[1,]  2.3    5    7   10   12   20
+[2,]  4.6   10   14   20   24   40
+[3,]  6.9   15   21   30   36   60
+[4,]  9.2   20   28   40   48   80
+[5,] 11.5   25   35   50   60  100
+[6,] 13.8   30   42   60   72  120</code></pre>
+</div>
+</div>
+</section><section id="accessing-values" class="level3" data-number="5.3.2"><h3 data-number="5.3.2" class="anchored" data-anchor-id="accessing-values">
+<span class="header-section-number">5.3.2</span> Accessing values</h3>
+<p>Let’s work on this vector <code>x</code>:</p>
+<div class="cell">
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">9</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="accessing-values-by-index" class="level4" data-number="5.3.2.1"><h4 data-number="5.3.2.1" class="anchored" data-anchor-id="accessing-values-by-index">
+<span class="header-section-number">5.3.2.1</span> Accessing values by index</h4>
+<ul>
+<li>To access values of a vector <code>x</code>, use the <code>x[i]</code> notation, where <code>i</code> is the index you want to access. <code>i</code> can be (and in fact, is always) a vector.</li>
+</ul>
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Attention
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In R, indexes numbering start at <strong>1</strong> !!!</p>
+</div>
+</div>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># accessing by indexes</span></span>
+<span><span class="va">x</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># access index 1, 5 and 2</span></span>
+<span><span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">5</span>,<span class="fl">2</span><span class="op">)</span><span class="op">]</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 3 3</code></pre>
+</div>
+</div>
+<ul>
+<li>To remove elements <code>j</code> from a vector <code>x</code>, use the notation <code class="sourceCode r">x[<span class="sc">-</span>j]</code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb57"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># remove elements 1 and 3</span></span>
+<span><span class="va">x</span><span class="op">[</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">3</span><span class="op">)</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 9 3</code></pre>
+</div>
+</div>
+<blockquote class="blockquote">
+<p>Writing <code class="sourceCode r">x[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</code> will <strong>just print</strong> the result of <code class="sourceCode r">x[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</code>, but not actually modify <code>x</code>. To really modify <code>x</code>, you’d need to write <code class="sourceCode r">x <span class="ot">&lt;-</span> x[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</code>.</p>
+</blockquote>
+</section><section id="filtering-values-with-tests" class="level4" data-number="5.3.2.2"><h4 data-number="5.3.2.2" class="anchored" data-anchor-id="filtering-values-with-tests">
+<span class="header-section-number">5.3.2.2</span> Filtering values with tests</h4>
+<p>You can access values with booleans. Values getting a <code class="sourceCode r"><span class="cn">TRUE</span></code> will be kept, while values with a <code class="sourceCode r"><span class="cn">FALSE</span></code> will be discarded:</p>
+<div class="cell">
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="cn">TRUE</span>,<span class="cn">TRUE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">TRUE</span><span class="op">)</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  5  3  4  3 NA</code></pre>
+</div>
+</div>
+<p>Therefore, you can apply tests on your values and filter them very easily:</p>
+<div class="cell">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">4</span> <span class="co"># is a vector of booleans</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  TRUE FALSE FALSE  TRUE FALSE</code></pre>
+</div>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span><span class="op">[</span><span class="va">x</span> <span class="op">&gt;</span> <span class="fl">4</span><span class="op">]</span> <span class="co"># is a filtered vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 9</code></pre>
+</div>
+</div>
+</section><section id="accessing-values-by-name" class="level4" data-number="5.3.2.3"><h4 data-number="5.3.2.3" class="anchored" data-anchor-id="accessing-values-by-name">
+<span class="header-section-number">5.3.2.3</span> Accessing values by name</h4>
+<p>Finally, values in vectors can be <strong>named</strong>, and thus can be accessed by their name:</p>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>age<span class="op">=</span><span class="fl">32</span>, name<span class="op">=</span><span class="st">"John"</span>, pet<span class="op">=</span><span class="st">"Cat"</span><span class="op">)</span></span>
+<span><span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   age   name    pet 
+  "32" "John"  "Cat" </code></pre>
+</div>
+<div class="sourceCode" id="cb67"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">'age'</span>,<span class="st">'pet'</span><span class="op">)</span><span class="op">]</span> <span class="co"># prints a named vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  age   pet 
+ "32" "Cat" </code></pre>
+</div>
+<div class="sourceCode" id="cb69"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">y</span><span class="op">[[</span><span class="st">'name'</span><span class="op">]</span><span class="op">]</span> <span class="co"># prints an un-named vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "John"</code></pre>
+</div>
+</div>
+<p>And you can access the names of the vector using <code class="sourceCode r"><span class="fu">names</span>()</code>:</p>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb71"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "age"  "name" "pet" </code></pre>
+</div>
+</div>
+</section></section><section id="sorting-removing-duplicates-sampling" class="level3" data-number="5.3.3"><h3 data-number="5.3.3" class="anchored" data-anchor-id="sorting-removing-duplicates-sampling">
+<span class="header-section-number">5.3.3</span> Sorting, removing duplicates, sampling</h3>
+<ul>
+<li>Sorting by ascending number:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb73"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 3 4 5 9</code></pre>
+</div>
+</div>
+<ul>
+<li>It works with strings too, but <code class="sourceCode r">gtools<span class="sc">::</span><span class="fu">mixedsort</span>()</code> might be needed for strings mixing letters and numbers:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb75"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>,<span class="st">"a"</span>,<span class="st">"d"</span>,<span class="st">"ab"</span><span class="op">)</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a"  "ab" "c"  "d" </code></pre>
+</div>
+<div class="sourceCode" id="cb77"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"a10"</span>, <span class="st">"a2"</span>, <span class="st">"d"</span>, <span class="st">"ab"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a10" "a2"  "ab"  "c"   "d"  </code></pre>
+</div>
+<div class="sourceCode" id="cb79"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">gtools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/gtools/man/mixedsort.html">mixedsort</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"c"</span>, <span class="st">"a10"</span>, <span class="st">"a2"</span>, <span class="st">"d"</span>, <span class="st">"ab"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "a2"  "a10" "ab"  "c"   "d"  </code></pre>
+</div>
+</div>
+<ul>
+<li>Sorting by descending number:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb81"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">x</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9 5 4 3 3</code></pre>
+</div>
+</div>
+<ul>
+<li>Inverting the order of the vector:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rev.html">rev</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 9 4 3 5</code></pre>
+</div>
+</div>
+<ul>
+<li>Find the order of the indexes of the sorting:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2 5 3 1 4</code></pre>
+</div>
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">]</span> <span class="co"># is thus equivalent to `sort(x)`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 3 4 5 9</code></pre>
+</div>
+</div>
+<ul>
+<li>Find duplicates:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/duplicated.html">duplicated</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] FALSE FALSE FALSE FALSE  TRUE</code></pre>
+</div>
+</div>
+<ul>
+<li>Remove duplicates:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 3 4 9</code></pre>
+</div>
+</div>
+<ul>
+<li>Choose 3 random values:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9 4 3</code></pre>
+</div>
+</div>
+</section><section id="maximum-and-minimum" class="level3" data-number="5.3.4"><h3 data-number="5.3.4" class="anchored" data-anchor-id="maximum-and-minimum">
+<span class="header-section-number">5.3.4</span> Maximum and minimum</h3>
+<p>This is quite straightforward:</p>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># maximum of x and its index</span></span>
+<span><span class="va">x</span>; <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 3 4 9 3</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># minimum of x and its index</span></span>
+<span><span class="va">x</span>; <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 3 4 9 3</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2</code></pre>
+</div>
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># range of a vector</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/range.html">range</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3 9</code></pre>
+</div>
+</div>
+</section><section id="characteristics-of-vectors" class="level3" data-number="5.3.5"><h3 data-number="5.3.5" class="anchored" data-anchor-id="characteristics-of-vectors">
+<span class="header-section-number">5.3.5</span> Characteristics of vectors</h3>
+<ul>
+<li>Size of a vector:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+</div>
+<ul>
+<li>Statistics on vector:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+    3.0     3.0     4.0     4.8     5.0     9.0 </code></pre>
+</div>
+</div>
+<ul>
+<li>Sum of all terms:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 24</code></pre>
+</div>
+</div>
+<ul>
+<li>Average value:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.8</code></pre>
+</div>
+</div>
+<ul>
+<li>Median value:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4</code></pre>
+</div>
+</div>
+<ul>
+<li>Standard deviation:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.48998</code></pre>
+</div>
+</div>
+<ul>
+<li>Count occurrence of values:</li>
+</ul>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/table.html">table</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>x
+3 4 5 9 
+2 1 1 1 </code></pre>
+</div>
+</div>
+<ul>
+<li>Cumulative sum:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  5  8 12 21 24</code></pre>
+</div>
+</div>
+<ul>
+<li>Term-by-term difference</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/diff.html">diff</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -2  1  5 -6</code></pre>
+</div>
+</div>
+</section><section id="concatenation-of-vectors" class="level3" data-number="5.3.6"><h3 data-number="5.3.6" class="anchored" data-anchor-id="concatenation-of-vectors">
+<span class="header-section-number">5.3.6</span> Concatenation of vectors</h3>
+<p>This is done using the <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> notation: you basically create a vector of vectors, the result being a new vector:</p>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># concatenate vectors</span></span>
+<span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="cn">NA</span>, <span class="op">-</span><span class="va">x</span><span class="op">)</span>; <span class="va">z</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] -1  0  1  2  3  4 NA -5 -3 -4 -9 -3</code></pre>
+</div>
+</div>
+<p>Another option is to use the <code class="sourceCode r"><span class="fu">append</span>()</code> function that allows for more options:</p>
+<div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb125"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># append values</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">4</span><span class="op">)</span>    <span class="co"># at the end</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 3 4 9 3 4</code></pre>
+</div>
+<div class="sourceCode" id="cb127"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">4</span><span class="op">:</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span> <span class="co"># or after a given index</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5 3 4 4 3 2 1 9 3</code></pre>
+</div>
+</div>
+</section></section><section id="exo-vectors" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="exo-vectors">
+<span class="header-section-number">5.4</span> Exercises</h2>
+<p>Interactive exercises can be found in the <a href="https://lmi.cnrs.fr/r/tutor/"><code>tutor</code></a> package. For this, simply run:</p>
+<div class="sourceCode" id="cb129"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tutor</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/tutor/man/tuto.html">tuto</a></span><span class="op">(</span><span class="st">"vectors"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Alternatively, you can just <a href="Data/exo-in-class.zip" download="" target="_blank">download the archive with all the exercises files</a>, unzip it in your <code>R class</code> RStudio project, and edit the R files.</p>
+<hr>
+<details><summary><strong>Exercise 1</strong>
+</summary><p>Let’s create a named vector containing age of the students in the class, the names of each value being the first name of the students. Then:</p>
+<ul>
+<li>Compute the average age and its standard deviation</li>
+<li>Compute the median age</li>
+<li>What is the maximum, minimum and range of the ages in the class?</li>
+<li>What are all the student names in the class?</li>
+<li>Print the sorted ages by increasing and decreasing order</li>
+<li>Print the ages sorted by alphabetically ordered names (increasing and decreasing)</li>
+<li>Show a histogram of the ages distribution using <code class="sourceCode r"><span class="fu">hist</span>()</code> and play with the parameter <code>breaks</code> to modify the histogram</li>
+<li>Show a boxplot of the ages distribution using <code class="sourceCode r"><span class="fu">boxplot</span>()</code>
+</li>
+</ul></details><details><summary><strong>Exercise 2</strong>
+</summary><p>This exercise is adapted from <a href="https://perso.esiee.fr/~courivad/R/05-vectors.html#application-population-in-french-cities-1962-2012">here</a>.</p>
+<p>Open Rstudio and create a new R script, save it as <code>population.R</code> in your wanted directory, say <code>Rcourse/</code>.</p>
+<p><a href="Data/population.csv" download="" target="_blank">Download</a> the <code>population.csv</code> file and save it in your working directory.</p>
+<p>A csv file contains raw data stored as plain text and separated by a comma (Comma Separated Values). Open it with Rstudio.</p>
+<p>We can of course directly load such file with R and store its data in an appropriate format (<em>i.e.</em> a <code>data.frame</code>), but this is for the next chapter. For now, just copy-paste the text in the Rstudio script area to:</p>
+<ul>
+<li>Create a <code>cities</code> vector containing all the cities listed in <code>population.csv</code>
+</li>
+<li>Create a <code>pop_1962</code> and <code>pop_2012</code> vectors containing the populations of each city at these years. Print the 2 vectors.</li>
+<li>Use <code class="sourceCode r"><span class="fu">names</span>()</code> to name values of <code>pop_1962</code> and <code>pop_2012</code>. Print the 2 vectors again. Are there any change?</li>
+<li>What are the cities with more than 200000 people in 1962? For these, how many residents in 2012?</li>
+<li>What is the population evolution of Montpellier and Nantes?</li>
+<li>Create a <code>pop_diff</code> vector to store population change between 1962 and 2012</li>
+<li>Print cities with a negative change</li>
+<li>Print cities which broke the 300000 people barrier between 1962 and 2012</li>
+<li>Compute the total change in population of the 10 largest cities (as of 1962) between 1962 and 2012.</li>
+<li>Compute the population mean for year 1962</li>
+<li>Compute the population mean of Paris over these two years</li>
+<li>Sort the cities by decreasing order of population for 1962</li>
+</ul>
+<details><summary>
+Solution
+</summary><div class="cell" data-warnings="false">
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a `cities` vector containing all the cities listed in `population.csv`</span></span>
+<span><span class="va">cities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Angers"</span>, <span class="st">"Bordeaux"</span>, <span class="st">"Brest"</span>, <span class="st">"Dijon"</span>, <span class="st">"Grenoble"</span>, <span class="st">"Le Havre"</span>, </span>
+<span>            <span class="st">"Le Mans"</span>, <span class="st">"Lille"</span>, <span class="st">"Lyon"</span>, <span class="st">"Marseille"</span>, <span class="st">"Montpellier"</span>, <span class="st">"Nantes"</span>, </span>
+<span>            <span class="st">"Nice"</span>, <span class="st">"Paris"</span>, <span class="st">"Reims"</span>, <span class="st">"Rennes"</span>, <span class="st">"Saint-Etienne"</span>, <span class="st">"Strasbourg"</span>, </span>
+<span>            <span class="st">"Toulon"</span>, <span class="st">"Toulouse"</span><span class="op">)</span></span>
+<span><span class="co"># Create a `pop_1962` and `pop_2012` vectors containing the populations </span></span>
+<span><span class="co"># of each city at these years. Print the 2 vectors. </span></span>
+<span><span class="va">pop_1962</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">115273</span>,<span class="fl">278403</span>,<span class="fl">136104</span>,<span class="fl">135694</span>,<span class="fl">156707</span>,<span class="fl">187845</span>,<span class="fl">132181</span>,<span class="fl">239955</span>,</span>
+<span>              <span class="fl">535746</span>,<span class="fl">778071</span>,<span class="fl">118864</span>,<span class="fl">240048</span>,<span class="fl">292958</span>,<span class="fl">2790091</span>,<span class="fl">134856</span>,<span class="fl">151948</span>,</span>
+<span>              <span class="fl">210311</span>,<span class="fl">228971</span>,<span class="fl">161797</span>,<span class="fl">323724</span><span class="op">)</span></span>
+<span><span class="va">pop_2012</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">149017</span>,<span class="fl">241287</span>,<span class="fl">139676</span>,<span class="fl">152071</span>,<span class="fl">158346</span>,<span class="fl">173142</span>,<span class="fl">143599</span>,<span class="fl">228652</span>,</span>
+<span>              <span class="fl">496343</span>,<span class="fl">852516</span>,<span class="fl">268456</span>,<span class="fl">291604</span>,<span class="fl">343629</span>,<span class="fl">2240621</span>,<span class="fl">181893</span>,<span class="fl">209860</span>,</span>
+<span>              <span class="fl">171483</span>,<span class="fl">274394</span>,<span class="fl">164899</span>,<span class="fl">453317</span><span class="op">)</span></span>
+<span><span class="va">pop_1962</span>; <span class="va">pop_2012</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  115273  278403  136104  135694  156707  187845  132181  239955  535746
+[10]  778071  118864  240048  292958 2790091  134856  151948  210311  228971
+[19]  161797  323724</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1]  149017  241287  139676  152071  158346  173142  143599  228652  496343
+[10]  852516  268456  291604  343629 2240621  181893  209860  171483  274394
+[19]  164899  453317</code></pre>
+</div>
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Use names() to name values of `pop_1962` and `pop_2012`. </span></span>
+<span><span class="co"># Print the 2 vectors again. Are there any change?</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">pop_2012</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">pop_1962</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">cities</span></span>
+<span><span class="va">pop_1962</span>; <span class="va">pop_2012</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Angers      Bordeaux         Brest         Dijon      Grenoble 
+       115273        278403        136104        135694        156707 
+     Le Havre       Le Mans         Lille          Lyon     Marseille 
+       187845        132181        239955        535746        778071 
+  Montpellier        Nantes          Nice         Paris         Reims 
+       118864        240048        292958       2790091        134856 
+       Rennes Saint-Etienne    Strasbourg        Toulon      Toulouse 
+       151948        210311        228971        161797        323724 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       Angers      Bordeaux         Brest         Dijon      Grenoble 
+       149017        241287        139676        152071        158346 
+     Le Havre       Le Mans         Lille          Lyon     Marseille 
+       173142        143599        228652        496343        852516 
+  Montpellier        Nantes          Nice         Paris         Reims 
+       268456        291604        343629       2240621        181893 
+       Rennes Saint-Etienne    Strasbourg        Toulon      Toulouse 
+       209860        171483        274394        164899        453317 </code></pre>
+</div>
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># What are the cities with more than 200000 people in 1962? </span></span>
+<span><span class="co"># For these, how many residents in 2012?</span></span>
+<span><span class="va">cities200k</span> <span class="op">&lt;-</span> <span class="va">cities</span><span class="op">[</span><span class="va">pop_1962</span><span class="op">&gt;</span><span class="fl">200000</span><span class="op">]</span></span>
+<span><span class="va">cities200k</span>; <span class="va">pop_2012</span><span class="op">[</span><span class="va">cities200k</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Bordeaux"      "Lille"         "Lyon"          "Marseille"    
+ [5] "Nantes"        "Nice"          "Paris"         "Saint-Etienne"
+ [9] "Strasbourg"    "Toulouse"     </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Bordeaux         Lille          Lyon     Marseille        Nantes 
+       241287        228652        496343        852516        291604 
+         Nice         Paris Saint-Etienne    Strasbourg      Toulouse 
+       343629       2240621        171483        274394        453317 </code></pre>
+</div>
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># What is the population evolution of Montpellier and Nantes?</span></span>
+<span><span class="va">pop_2012</span><span class="op">[</span><span class="st">'Montpellier'</span><span class="op">]</span> <span class="op">-</span> <span class="va">pop_1962</span><span class="op">[</span><span class="st">'Montpellier'</span><span class="op">]</span>; <span class="va">pop_2012</span><span class="op">[</span><span class="st">'Nantes'</span><span class="op">]</span> <span class="op">-</span> <span class="va">pop_1962</span><span class="op">[</span><span class="st">'Nantes'</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Montpellier 
+     149592 </code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Nantes 
+ 51556 </code></pre>
+</div>
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a `pop_diff` vector to store population change between 1962 and 2012</span></span>
+<span><span class="va">pop_diff</span> <span class="op">&lt;-</span> <span class="va">pop_2012</span> <span class="op">-</span> <span class="va">pop_1962</span></span>
+<span><span class="co"># Print cities with a negative change</span></span>
+<span><span class="va">cities</span><span class="op">[</span><span class="va">pop_diff</span><span class="op">&lt;</span><span class="fl">0</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Bordeaux"      "Le Havre"      "Lille"         "Lyon"         
+[5] "Paris"         "Saint-Etienne"</code></pre>
+</div>
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Print cities which broke the 300000 people barrier between 1962 and 2012</span></span>
+<span><span class="va">cities</span><span class="op">[</span><span class="va">pop_2012</span><span class="op">&gt;</span><span class="fl">300000</span> <span class="op">&amp;</span> <span class="va">pop_1962</span><span class="op">&lt;</span><span class="fl">300000</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Nice"</code></pre>
+</div>
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute the total change in population of the 10 largest cities</span></span>
+<span><span class="co"># (as of 1962) between 1962 and 2012.</span></span>
+<span><span class="va">ten_largest</span> <span class="op">&lt;-</span> <span class="va">cities</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">pop_1962</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">]</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop_2012</span><span class="op">[</span><span class="va">ten_largest</span><span class="op">]</span> <span class="op">-</span> <span class="va">pop_1962</span><span class="op">[</span><span class="va">ten_largest</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -324432</code></pre>
+</div>
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute the population mean for year 1962</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pop_1962</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 367477.3</code></pre>
+</div>
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute the population mean of Paris</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">pop_1962</span><span class="op">[</span><span class="st">'Paris'</span><span class="op">]</span>, <span class="va">pop_2012</span><span class="op">[</span><span class="st">'Paris'</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2515356</code></pre>
+</div>
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Sort the cities by decreasing order of population for 1962</span></span>
+<span><span class="op">(</span><span class="va">pop_1962_sorted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">pop_1962</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        Paris     Marseille          Lyon      Toulouse          Nice 
+      2790091        778071        535746        323724        292958 
+     Bordeaux        Nantes         Lille    Strasbourg Saint-Etienne 
+       278403        240048        239955        228971        210311 
+     Le Havre        Toulon      Grenoble        Rennes         Brest 
+       187845        161797        156707        151948        136104 
+        Dijon         Reims       Le Mans   Montpellier        Angers 
+       135694        134856        132181        118864        115273 </code></pre>
+</div>
+</div>
+</details></details><p><br><br><br><br><br></p>
+
+
+<!-- -->
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    toggleBodyColorMode(window.document.querySelector("link#quarto-bootstrap"));
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./05-variables.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Variables, booleans and strings</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07-dataframes.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data frames</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<pre class="markdown" data-shortcodes="false"><code># Vectors
+
+**R is a vectorized language** with built-in arithmetic and relational operators, mathematical functions and types of number. It means that each mathematical function and operator works on a set of data rather than a single scalar value as traditional computer language do, and thus __formal looping can _usually_ be avoided__.
+
+## Different ways of defining a vector
+
+If you want to define a vector by specifying the values, use the function `c()`{.R}, like so:
+
+- Here, `x` is a vector of doubles:
+```{r, warnings=FALSE}
+x &lt;- c(1, 5, 3, 12, 4.2)
+x
+```
+- But here, `x` is converted to a vector of strings because it contains a string:
+```{r, warnings=FALSE}
+x &lt;- c(1, 5, 3, "hello")
+x
+```
+
+- To define a sequence of increasing numbers, either use the notation `start:end` for a sequence going from `start` to `end` by step of 1, or use the `seq()`{.R} function that is more versatile:
+```{r, warnings=FALSE}
+1:10
+seq(-10, 10, by = .5)
+seq(-10, 10, length = 6)
+seq(-10, 10, along = x)
+```
+- To repeat values, use the `rep()`{.R} function:
+```{r, warnings=FALSE}
+rep(0, 10)
+rep(c(0, 2), 5)
+rep(c(0, 2), each = 5)
+```
+- To create vectors of random numbers, use `rnorm()`{.R} or `runif()`{.R} for normally or uniformly distributed numbers, respectively:
+```{r, warnings=FALSE}
+# vector with 10 random values normally distributed around mean 
+# with given standard deviation `sd`
+rnorm(10, mean=3, sd=1)
+# vector with 10 random values uniformly distributed between min and max
+runif(10, min = 0, max = 1)
+```
+
+## Numerical and categorical data types
+
+Data can be of two different types: numerical, or categorical. Let's say you are measuring a the temperature in a room and recording its value over time: 
+
+quarto-executable-code-5450563D
+
+```r
+T1 &lt;- c(22.3, 23.5, 26.0, 30.2)
+```
+
+`T1` is a vector containing **numerical** data.
+
+Let's say that now you are recording the temperature level, which can be `low`, `high` or `medium`
+
+quarto-executable-code-5450563D
+
+```r
+T2 &lt;- c("low", "low", "medium", "high")
+```
+
+`T2` is a vector containing **categorical** data, _i.e._ the data in this example can fall into either of 3 categories. For now, `T2` is however a vector of strings, and we need to tell R that it contains categorical data by using the function `factor()`{.R}:
+
+quarto-executable-code-5450563D
+
+```r
+T2 &lt;- factor(T2)
+T2
+```
+
+We see here that we now have 3 levels, and a numerization of `T2` leads to obtaining the numbers 1, 2 and 3 according to the levels in `T2`:
+
+quarto-executable-code-5450563D
+
+```r
+as.numeric(T2)
+```
+
+Numerical data can be converted to factors in the same way -- this can be useful sometimes, _e.g._ when plotting with `ggplot` as we will see later:
+
+quarto-executable-code-5450563D
+
+```r
+factor(T1)
+```
+
+## Principal operations on vectors
+
+### Mathematical operations
+Because R is a vectorized language, you don't need to loop on all elements of a vector to perform element-wise operations on it. Let's say that `x &lt;- 1:6`{.R}, then:
+```{r, include=FALSE}
+x &lt;- 1:6
+```
+
+- Addition of a value to all elements:
+quarto-executable-code-5450563D
+
+```r
+x + 2.5
+```
+- Multiplication / division of all elements:
+quarto-executable-code-5450563D
+
+```r
+x*2
+```
+- Integer division:
+quarto-executable-code-5450563D
+
+```r
+x %/% 3
+```
+- Math functions apply on all elements:
+quarto-executable-code-5450563D
+
+```r
+sqrt(abs(cos(x)))
+```
+- Power:
+quarto-executable-code-5450563D
+
+```r
+x^2.5
+```
+- Multiplication of vectors of the same size is performed element by element:
+quarto-executable-code-5450563D
+
+```r
+y &lt;- c(2.3, 5, 7, 10, 12, 20)
+x*y
+```
+- Multiplication of vectors of different sizes: the smaller vector is automatically repeated the number of times needed to get a vector of the size of the larger one. It will work also if the longer object length is not a multiple of shorter object length, but the shorter object will be truncated and you'll get an error:
+quarto-executable-code-5450563D
+
+```r
+x*1:2
+x*1:4
+```
+- Modulo:
+quarto-executable-code-5450563D
+
+```r
+x %% 2
+```
+- Outer product of vectors (the result is a matrix):
+quarto-executable-code-5450563D
+
+```r
+x %o% y
+```
+
+
+### Accessing values
+Let's work on this vector `x`:
+quarto-executable-code-5450563D
+
+```r
+x &lt;- c(5, 3, 4, 9, 3)
+```
+
+#### Accessing values by index
+
+- To access values of a vector `x`, use the `x[i]` notation, where `i` is the index you want to access. `i` can be (and in fact, is always) a vector.
+
+:::{.callout-warning}
+## Attention
+In R, indexes numbering start at **1** !!!
+:::
+
+```{r, warnings=FALSE}
+# accessing by indexes
+x[3]
+# access index 1, 5 and 2
+x[c(1,5,2)] 
+```
+
+- To remove elements `j` from a vector `x`, use the notation `x[-j]`{.R}:
+quarto-executable-code-5450563D
+
+```r
+# remove elements 1 and 3
+x[-c(1,3)]
+```
+
+&gt; Writing `x[-c(1,3)]`{.R} will **just print** the result of `x[-c(1,3)]`{.R}, but not actually modify `x`. To really modify `x`, you'd need to write `x &lt;- x[-c(1,3)]`{.R}.
+
+#### Filtering values with tests
+
+You can access values with booleans. Values getting a `TRUE`{.R} will be kept, while values with a `FALSE`{.R} will be discarded:
+quarto-executable-code-5450563D
+
+```r
+x[c(TRUE,TRUE,TRUE,FALSE,TRUE,TRUE)]
+```
+Therefore, you can apply tests on your values and filter them very easily:
+quarto-executable-code-5450563D
+
+```r
+x &gt; 4 # is a vector of booleans
+x[x &gt; 4] # is a filtered vector
+```
+
+#### Accessing values by name
+
+Finally, values in vectors can be **named**, and thus can be accessed by their name:
+```{r, warnings=FALSE}
+y &lt;- c(age=32, name="John", pet="Cat")
+y
+y[c('age','pet')] # prints a named vector
+y[['name']] # prints an un-named vector
+```
+
+And you can access the names of the vector using `names()`{.R}:
+```{r, warnings=FALSE}
+names(y)
+```
+
+
+### Sorting, removing duplicates, sampling
+
+
+- Sorting by ascending number:
+```{r, warnings=FALSE}
+sort(x)
+```
+- It works with strings too, but `gtools::mixedsort()`{.R} might be needed for strings mixing letters and numbers:
+```{r, warnings=FALSE}
+sort(c("c","a","d","ab")) 
+sort(c("c", "a10", "a2", "d", "ab"))
+gtools::mixedsort(c("c", "a10", "a2", "d", "ab"))
+```
+- Sorting by descending number:
+```{r, warnings=FALSE}
+sort(x, decreasing = TRUE) 
+```
+- Inverting the order of the vector:
+quarto-executable-code-5450563D
+
+```r
+rev(x)
+```
+
+- Find the order of the indexes of the sorting:
+```{r, warnings=FALSE}
+order(x)
+x[order(x)] # is thus equivalent to `sort(x)`
+```
+- Find duplicates:
+```{r, warnings=FALSE}
+duplicated(x)
+```
+- Remove duplicates:
+```{r, warnings=FALSE}
+unique(x)
+```
+- Choose 3 random values:
+```{r, warnings=FALSE}
+sample(x, 3)
+```
+
+### Maximum and minimum
+This is quite straightforward:
+```{r, warnings=FALSE}
+# maximum of x and its index
+x; max(x); which.max(x) 
+# minimum of x and its index
+x; min(x); which.min(x)
+# range of a vector
+range(x)
+```
+
+### Characteristics of vectors
+
+- Size of a vector:
+```{r, warnings=FALSE}
+length(x)
+```
+- Statistics on vector:
+```{r, warnings=FALSE}
+summary(x)
+```
+- Sum of all terms:
+```{r, warnings=FALSE}
+sum(x)
+```
+- Average value:
+```{r, warnings=FALSE}
+mean(x)
+```
+- Median value:
+```{r, warnings=FALSE}
+median(x)
+```
+- Standard deviation:
+```{r, warnings=FALSE}
+sd(x)
+```
+- Count occurrence of values:
+```{r, warnings=FALSE}
+table(x)
+```
+- Cumulative sum:
+quarto-executable-code-5450563D
+
+```r
+cumsum(x)
+```
+- Term-by-term difference
+quarto-executable-code-5450563D
+
+```r
+diff(x)
+```
+
+### Concatenation of vectors
+This is done using the `c()` notation: you basically create a vector of vectors, the result being a new vector:
+```{r, warnings=FALSE}
+# concatenate vectors
+z &lt;- c(-1:4, NA, -x); z
+```
+
+Another option is to use the `append()`{.R} function that allows for more options:
+```{r, warnings=FALSE}
+# append values
+append(x, 4)    # at the end
+append(x, 4:1, 3) # or after a given index
+```
+
+
+## Exercises {#exo-vectors}
+
+
+Interactive exercises can be found in the [`tutor`](https://lmi.cnrs.fr/r/tutor/) package. For this, simply run:
+
+```r
+library(tutor)
+tuto("vectors")
+```
+
+Alternatively, you can just &lt;a href="Data/exo-in-class.zip" download target="_blank"&gt;download the archive with all the exercises files&lt;/a&gt;, unzip it in your `R class` RStudio project, and edit the R files.
+
+---
+
+&lt;details&gt;
+    &lt;summary&gt;**Exercise 1**&lt;/summary&gt;
+
+Let's create a named vector containing age of the students in the class, the names of each value being the first name of the students. Then:
+
+- Compute the average age and its standard deviation
+- Compute the median age
+- What is the maximum, minimum and range of the ages in the class?
+- What are all the student names in the class?
+- Print the sorted ages by increasing and decreasing order
+- Print the ages sorted by alphabetically ordered names (increasing and decreasing)
+- Show a histogram of the ages distribution using `hist()`{.R} and play with the parameter `breaks` to modify the histogram
+- Show a boxplot of the ages distribution using `boxplot()`{.R}
+
+
+&lt;/details&gt;
+
+&lt;details&gt;
+    &lt;summary&gt;**Exercise 2**&lt;/summary&gt;
+
+This exercise is adapted from [here](https://perso.esiee.fr/~courivad/R/05-vectors.html#application-population-in-french-cities-1962-2012).
+
+Open Rstudio and create a new R script, save it as `population.R` in your wanted directory, say `Rcourse/`.
+
+
+&lt;a href="Data/population.csv" download target="_blank"&gt;Download&lt;/a&gt; the `population.csv` file and save it in your working directory.
+
+A csv file contains raw data stored as plain text and separated by a comma (Comma Separated Values). Open it with Rstudio.
+
+We can of course directly load such file with R and store its data in an appropriate format (_i.e._ a `data.frame`), but this is for the next chapter. For now, just copy-paste the text in the Rstudio script area to:
+
+- Create a `cities` vector containing all the cities listed in `population.csv`
+- Create a `pop_1962` and `pop_2012` vectors containing the populations of each city at these years. Print the 2 vectors. 
+- Use `names()`{.R} to name values of `pop_1962` and `pop_2012`. Print the 2 vectors again. Are there any change?
+- What are the cities with more than 200000 people in 1962? For these, how many residents in 2012?
+- What is the population evolution of Montpellier and Nantes?
+- Create a `pop_diff` vector to store population change between 1962 and 2012
+- Print cities with a negative change
+- Print cities which broke the 300000 people barrier between 1962 and 2012
+- Compute the total change in population of the 10 largest cities (as of 1962) between 1962 and 2012.
+- Compute the population mean for year 1962
+- Compute the population mean of Paris over these two years
+- Sort the cities by decreasing order of population for 1962
+
+&lt;details&gt;
+&lt;summary&gt;Solution&lt;/summary&gt;
+
+```{r, warnings=FALSE}
+# Create a `cities` vector containing all the cities listed in `population.csv`
+cities &lt;- c("Angers", "Bordeaux", "Brest", "Dijon", "Grenoble", "Le Havre", 
+            "Le Mans", "Lille", "Lyon", "Marseille", "Montpellier", "Nantes", 
+            "Nice", "Paris", "Reims", "Rennes", "Saint-Etienne", "Strasbourg", 
+            "Toulon", "Toulouse")
+# Create a `pop_1962` and `pop_2012` vectors containing the populations 
+# of each city at these years. Print the 2 vectors. 
+pop_1962 &lt;- c(115273,278403,136104,135694,156707,187845,132181,239955,
+              535746,778071,118864,240048,292958,2790091,134856,151948,
+              210311,228971,161797,323724)
+pop_2012 &lt;- c(149017,241287,139676,152071,158346,173142,143599,228652,
+              496343,852516,268456,291604,343629,2240621,181893,209860,
+              171483,274394,164899,453317)
+pop_1962; pop_2012
+# Use names() to name values of `pop_1962` and `pop_2012`. 
+# Print the 2 vectors again. Are there any change?
+names(pop_2012) &lt;- names(pop_1962) &lt;- cities
+pop_1962; pop_2012
+# What are the cities with more than 200000 people in 1962? 
+# For these, how many residents in 2012?
+cities200k &lt;- cities[pop_1962&gt;200000]
+cities200k; pop_2012[cities200k]
+# What is the population evolution of Montpellier and Nantes?
+pop_2012['Montpellier'] - pop_1962['Montpellier']; pop_2012['Nantes'] - pop_1962['Nantes']
+# Create a `pop_diff` vector to store population change between 1962 and 2012
+pop_diff &lt;- pop_2012 - pop_1962
+# Print cities with a negative change
+cities[pop_diff&lt;0]
+# Print cities which broke the 300000 people barrier between 1962 and 2012
+cities[pop_2012&gt;300000 &amp; pop_1962&lt;300000]
+# Compute the total change in population of the 10 largest cities
+# (as of 1962) between 1962 and 2012.
+ten_largest &lt;- cities[order(pop_1962, decreasing = TRUE)[1:10]]
+sum(pop_2012[ten_largest] - pop_1962[ten_largest])
+# Compute the population mean for year 1962
+mean(pop_1962)
+# Compute the population mean of Paris
+mean(c(pop_1962['Paris'], pop_2012['Paris']))
+# Sort the cities by decreasing order of population for 1962
+(pop_1962_sorted &lt;- sort(pop_1962, decreasing = TRUE))
+```
+
+&lt;/details&gt;
+&lt;/details&gt;
+
+
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+&lt;br&gt;
+
+</code></pre>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>

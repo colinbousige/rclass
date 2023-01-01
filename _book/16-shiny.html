@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.0.16">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Reproducible data treatment with R - 15&nbsp; Graphical interfaces with Shiny</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./17-units.html" rel="next">
+<link href="./15-rmarkdown.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script><script async="" src="https://www.googletagmanager.com/gtag/js?id=google_analytics.html"></script><script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
+</script>
+</head>
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">
+<span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Graphical interfaces with Shiny</span>
+</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Reproducible data treatment with R</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/colinbousige/Rclass" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+</div>
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+<li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-about.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">About the class</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-stats.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A little reminder on Statistics</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-getting_ready.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting ready</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-variables.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Variables, booleans and strings</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-vectors.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Vectors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-dataframes.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data frames</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-reading_files.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reading/writing all kinds of files</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-lists.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lists</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10-functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Functions</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./11-conditions_loops.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conditional actions and loops</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12-plotting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Plotting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13-3d_plots.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">3D color plots</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14-fitting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Fitting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15-rmarkdown.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Rmarkdown</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16-shiny.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Graphical interfaces with Shiny</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17-units.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Working with units and experimental errors</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18-exercises.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">List of exercises</span></a>
+  </div>
+</li>
+    </ul>
+</div>
+</nav><!-- margin-sidebar --><div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc"><h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+<li>
+<a href="#stand-alone-shiny-application" id="toc-stand-alone-shiny-application" class="nav-link active" data-scroll-target="#stand-alone-shiny-application"> <span class="header-section-number">15.1</span> Stand-alone shiny application</a>
+  <ul class="collapse">
+<li><a href="#the-layout" id="toc-the-layout" class="nav-link" data-scroll-target="#the-layout"> <span class="header-section-number">15.1.1</span> The layout</a></li>
+  <li><a href="#the-server" id="toc-the-server" class="nav-link" data-scroll-target="#the-server"> <span class="header-section-number">15.1.2</span> The server</a></li>
+  <li><a href="#various-useful-functions" id="toc-various-useful-functions" class="nav-link" data-scroll-target="#various-useful-functions"> <span class="header-section-number">15.1.3</span> Various useful functions</a></li>
+  <li><a href="#example-shiny" id="toc-example-shiny" class="nav-link" data-scroll-target="#example-shiny"> <span class="header-section-number">15.1.4</span> Example</a></li>
+  </ul>
+</li>
+  <li><a href="#rmarkdown-embedded-shiny-application" id="toc-rmarkdown-embedded-shiny-application" class="nav-link" data-scroll-target="#rmarkdown-embedded-shiny-application"> <span class="header-section-number">15.2</span> Rmarkdown-embedded shiny application</a></li>
+  <li>
+<a href="#deploying-your-shiny-app" id="toc-deploying-your-shiny-app" class="nav-link" data-scroll-target="#deploying-your-shiny-app"> <span class="header-section-number">15.3</span> Deploying your shiny app</a>
+  <ul class="collapse">
+<li><a href="#passing-the-app.r-file-to-your-users" id="toc-passing-the-app.r-file-to-your-users" class="nav-link" data-scroll-target="#passing-the-app.r-file-to-your-users"> <span class="header-section-number">15.3.1</span> Passing the app.R file to your users</a></li>
+  <li><a href="#deploying-to-shinyapps.io" id="toc-deploying-to-shinyapps.io" class="nav-link" data-scroll-target="#deploying-to-shinyapps.io"> <span class="header-section-number">15.3.2</span> Deploying to shinyapps.io</a></li>
+  <li><a href="#deploying-on-your-own-linux-server" id="toc-deploying-on-your-own-linux-server" class="nav-link" data-scroll-target="#deploying-on-your-own-linux-server"> <span class="header-section-number">15.3.3</span> Deploying on your own Linux server</a></li>
+  <li><a href="#building-an-executable" id="toc-building-an-executable" class="nav-link" data-scroll-target="#building-an-executable"> <span class="header-section-number">15.3.4</span> Building an executable</a></li>
+  </ul>
+</li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"> <span class="header-section-number">15.4</span> Further reading</a></li>
+  <li><a href="#exo-shiny" id="toc-exo-shiny" class="nav-link" data-scroll-target="#exo-shiny"> <span class="header-section-number">15.5</span> Exercises</a></li>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/Rclass/blob/main/16-shiny.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/Rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title d-none d-lg-block">
+<span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Graphical interfaces with Shiny</span>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    
+  </div>
+  
+
+</header><p>You have had a preview of a <code>shiny</code> interface in the previous section with the interactive parameter input in a Rmarkdown file.</p>
+<p>Using the <code>shiny</code> package, you can actually easily build an interactive graphical user interface (GUI) in which you will be able to set parameters (values, files…), visualize the outputs (plots, images, tables…), and write files as output. This is very useful when you have to always repeat the same task with a varying input parameter, for example.</p>
+<section id="stand-alone-shiny-application" class="level2" data-number="15.1"><h2 data-number="15.1" class="anchored" data-anchor-id="stand-alone-shiny-application">
+<span class="header-section-number">15.1</span> Stand-alone shiny application</h2>
+<p>A shiny application is an <code>app.R</code> file (it must be named like that) containing 3 elements:</p>
+<ol type="1">
+<li>
+<code>ui</code>: definition of the interface layout (where are the buttons, text input, plot output, etc.) and the input parameters</li>
+<li>
+<code>server</code>: definition of the various actions to perform with the input parameters</li>
+<li>
+<code class="sourceCode r"><span class="fu">shinyApp</span>(ui, server)</code>: launches the shiny app with the above defined parameters</li>
+</ol>
+<p>In Rstudio, create a new “Shiny web app”. It will create an <code>app.R</code> file containing this:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span></span>
+<span><span class="co"># Define UI for application that draws a histogram</span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
+<span>    <span class="co"># Application title</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span><span class="op">(</span><span class="st">"Old Faithful Geyser Data"</span><span class="op">)</span>,</span>
+<span>    <span class="co"># Sidebar with a slider input for number of bins </span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"bins"</span>,</span>
+<span>                        <span class="st">"Number of bins:"</span>,</span>
+<span>                        min <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                        max <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>                        value <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="co"># Show a plot of the generated distribution</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span></span>
+<span>           <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">"distPlot"</span><span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co"># Define server logic required to draw a histogram</span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">output</span><span class="op">$</span><span class="va">distPlot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>        <span class="co"># generate bins based on input$bins from ui.R</span></span>
+<span>        <span class="va">x</span>    <span class="op">&lt;-</span> <span class="va">faithful</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span></span>
+<span>        <span class="va">bins</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, length.out <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">bins</span> <span class="op">+</span> <span class="fl">1</span><span class="op">)</span></span>
+<span></span>
+<span>        <span class="co"># draw the histogram with the specified number of bins</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/graphics/hist.html">hist</a></span><span class="op">(</span><span class="va">x</span>, breaks <span class="op">=</span> <span class="va">bins</span>, col <span class="op">=</span> <span class="st">'darkgray'</span>, border <span class="op">=</span> <span class="st">'white'</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co"># Run the application </span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Run it by clicking “Run App”: a window opens and you can pan the slider and see the resulting output.</p>
+<p>In case you want to clean up the code, you can separate <code>app.R</code> into <code>ui.R</code> and <code>server.R</code>. No need to add the <code class="sourceCode r"><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</code> line in that case.</p>
+<p>All user-defined functions and variable definitions can be defined in a <code>global.R</code> file that will be sourced by default when launching the app.</p>
+<section id="the-layout" class="level3" data-number="15.1.1"><h3 data-number="15.1.1" class="anchored" data-anchor-id="the-layout">
+<span class="header-section-number">15.1.1</span> The layout</h3>
+<p>In the <code class="sourceCode r">ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(...)</code> item, you define the layout of your application. In the above example:</p>
+<ul>
+<li>
+<code class="sourceCode r"><span class="fu">titlePanel</span>(<span class="st">"Title"</span>)</code> creates a title</li>
+<li>
+<code class="sourceCode r"><span class="fu">sidebarLayout</span>()</code> separates the layout in a short one on the left (<code class="sourceCode r"><span class="fu">sidebarPanel</span>()</code>) and a main one on the right (<code class="sourceCode r"><span class="fu">mainPanel</span>()</code>)</li>
+<li>
+<code class="sourceCode r"><span class="fu">sliderInput</span>(<span class="st">"name_of_slider"</span>, <span class="st">"text to display"</span>, <span class="at">min=</span>min_value, <span class="at">max=</span>max_value,</code> <code>value=current_value, step=step_value)</code> creates a slider to input a value. This value will be retrieved by <code class="sourceCode r">input<span class="sc">$</span>name_of_slider</code> in the <code class="sourceCode r"><span class="fu">server</span>()</code> function.</li>
+<li>
+<code class="sourceCode r"><span class="fu">plotOutput</span>(<span class="st">"name_of_plot"</span>)</code> plots the result of <code class="sourceCode r">output<span class="sc">$</span>name_of_plot</code> defined in the <code class="sourceCode r"><span class="fu">server</span>()</code> function.</li>
+</ul>
+<p>See the <a href="https://shiny.rstudio.com/articles/layout-guide.html">guide to application layout</a> for more layout options. I also recommend taking a look at the packages <a href="https://rstudio.github.io/shinydashboard/get_started.html"><code>shinydashboard</code></a> and <a href="https://github.com/ericrayanderson/shinymaterial"><code>shinymaterial</code></a>.</p>
+</section><section id="the-server" class="level3" data-number="15.1.2"><h3 data-number="15.1.2" class="anchored" data-anchor-id="the-server">
+<span class="header-section-number">15.1.2</span> The server</h3>
+<p>In the <code class="sourceCode r">server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output){...}</code> function, you define the various actions and outputs in reaction to an input change.</p>
+<p>In the above example, we define <code class="sourceCode r">output<span class="sc">$</span>distPlot</code> as a <code class="sourceCode r"><span class="fu">renderPlot</span>()</code> function whose results depends on <code class="sourceCode r">input<span class="sc">$</span>bins</code>. The plot is rendered in the <code>ui</code> by <code class="sourceCode r"><span class="fu">plotOutput</span>(<span class="st">"distPlot"</span>)</code>.</p>
+</section><section id="various-useful-functions" class="level3" data-number="15.1.3"><h3 data-number="15.1.3" class="anchored" data-anchor-id="various-useful-functions">
+<span class="header-section-number">15.1.3</span> Various useful functions</h3>
+<!-- MarkdownTOC -->
+<ul>
+<li>
+<a href="#input">Input</a>
+<ul>
+<li><a href="#buttons">Buttons</a></li>
+<li><a href="#checkbox">Checkbox</a></li>
+<li><a href="#textnumeric">Text/numeric</a></li>
+<li><a href="#slider">Slider</a></li>
+<li><a href="#file">File</a></li>
+<li><a href="#dropdown-menu">Dropdown menu</a></li>
+</ul>
+</li>
+<li>
+<a href="#output">Output</a>
+<ul>
+<li><a href="#display-a-plot">Display a plot</a></li>
+<li><a href="#display-text">Display text</a></li>
+<li><a href="#display-a-table">Display a table</a></li>
+<li><a href="#reactive-events">Reactive events</a></li>
+<li><a href="#writing-a-file">Writing a file</a></li>
+</ul>
+</li>
+</ul>
+<!-- /MarkdownTOC --><p><a id="input"></a></p>
+<section id="input" class="level4" data-number="15.1.3.1"><h4 data-number="15.1.3.1" class="anchored" data-anchor-id="input">
+<span class="header-section-number">15.1.3.1</span> Input</h4>
+<p><a id="buttons"></a></p>
+<section id="buttons" class="level5" data-number="15.1.3.1.1"><h5 data-number="15.1.3.1.1" class="anchored" data-anchor-id="buttons">
+<span class="header-section-number">15.1.3.1.1</span> Buttons</h5>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In ui:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/actionButton.html">actionButton</a></span><span class="op">(</span><span class="st">"button_name"</span>, <span class="st">"Text to display"</span><span class="op">)</span></span>
+<span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In server:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">observeEvent</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">button_name</span>, <span class="op">{</span></span>
+<span>    <span class="co"># do something</span></span>
+<span><span class="op">}</span><span class="op">)</span></span>
+<span><span class="co"># or</span></span>
+<span><span class="va">some_function</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observeEvent.html">eventReactive</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">button_name</span>, <span class="op">{</span></span>
+<span>                               <span class="co"># do something</span></span>
+<span>                               <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="checkbox" class="level5" data-number="15.1.3.1.2"><h5 data-number="15.1.3.1.2" class="anchored" data-anchor-id="checkbox">
+<span class="header-section-number">15.1.3.1.2</span> Checkbox</h5>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In ui:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/checkboxInput.html">checkboxInput</a></span><span class="op">(</span><span class="st">"checkbox_name"</span>, <span class="st">"Text to display"</span>, value<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In server:</span></span>
+<span><span class="va">input</span><span class="op">$</span><span class="va">checkbox_name</span> <span class="co">#TRUE or FALSE</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a id="textnumeric"></a></p>
+</section><section id="textnumeric" class="level5" data-number="15.1.3.1.3"><h5 data-number="15.1.3.1.3" class="anchored" data-anchor-id="textnumeric">
+<span class="header-section-number">15.1.3.1.3</span> Text/numeric</h5>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In ui:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textInput.html">textInput</a></span><span class="op">(</span><span class="st">"text_name"</span>, </span>
+<span>            label <span class="op">=</span> <span class="st">"Text to display"</span>, </span>
+<span>            value <span class="op">=</span> <span class="st">"initial value"</span>, </span>
+<span>            width <span class="op">=</span> <span class="st">'100%'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textAreaInput.html">textAreaInput</a></span><span class="op">(</span><span class="st">"text_name"</span>, </span>
+<span>            label<span class="op">=</span><span class="st">"Text to display"</span>, </span>
+<span>            value <span class="op">=</span> <span class="st">"initial_value"</span>, </span>
+<span>            rows <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span></span>
+<span>            <span class="fu">shiny</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/tagAppendAttributes.html">tagAppendAttributes</a></span><span class="op">(</span>style <span class="op">=</span> <span class="st">'width: 100%;'</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/numericInput.html">numericInput</a></span><span class="op">(</span><span class="st">"value_name"</span>, <span class="st">'Text to display'</span>, value<span class="op">=</span><span class="fl">0</span><span class="op">)</span></span>
+<span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In server, retrieve it as:</span></span>
+<span><span class="va">input</span><span class="op">$</span><span class="va">text_name</span></span>
+<span><span class="va">input</span><span class="op">$</span><span class="va">value_name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a id="slider"></a></p>
+</section><section id="slider" class="level5" data-number="15.1.3.1.4"><h5 data-number="15.1.3.1.4" class="anchored" data-anchor-id="slider">
+<span class="header-section-number">15.1.3.1.4</span> Slider</h5>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In ui:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"slider_name"</span>, <span class="st">"Text to display"</span>,</span>
+<span>            min <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>            max <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>            step<span class="op">=</span> <span class="fl">1</span>,</span>
+<span>            value <span class="op">=</span> <span class="fl">30</span><span class="op">)</span></span>
+<span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In server, retrieve it as:</span></span>
+<span><span class="va">input</span><span class="op">$</span><span class="va">slider_name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a id="file"></a></p>
+</section><section id="file" class="level5" data-number="15.1.3.1.5"><h5 data-number="15.1.3.1.5" class="anchored" data-anchor-id="file">
+<span class="header-section-number">15.1.3.1.5</span> File</h5>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In ui:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fileInput.html">fileInput</a></span><span class="op">(</span><span class="st">"file_in"</span>, </span>
+<span>          <span class="st">"Choose input file:"</span>, accept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">".txt"</span><span class="op">)</span> </span>
+<span>          <span class="op">)</span></span>
+<span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In server, retrieve it as:</span></span>
+<span><span class="va">input</span><span class="op">$</span><span class="va">file_in</span><span class="op">$</span><span class="va">datapath</span></span>
+<span><span class="co"># For example, read it as a data.frame with myData():</span></span>
+<span><span class="va">myData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>        <span class="va">inFile</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">file_in</span></span>
+<span>        <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">inFile</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>            <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>        <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>            <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="va">inFile</span><span class="op">$</span><span class="va">datapath</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="op">}</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a id="dropdown-menu"></a></p>
+</section><section id="dropdown-menu" class="level5" data-number="15.1.3.1.6"><h5 data-number="15.1.3.1.6" class="anchored" data-anchor-id="dropdown-menu">
+<span class="header-section-number">15.1.3.1.6</span> Dropdown menu</h5>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In ui:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/selectInput.html">selectInput</a></span><span class="op">(</span><span class="st">"menu_name"</span>, <span class="st">"Text to display"</span>, </span>
+<span>            choices<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"choice 1"</span>, <span class="st">"choice 2"</span><span class="op">)</span>, </span>
+<span>            multiple <span class="op">=</span> <span class="cn">FALSE</span> <span class="co"># multiple selection possible</span></span>
+<span>            <span class="op">)</span></span>
+<span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In server, retrieve it as:</span></span>
+<span><span class="va">input</span><span class="op">$</span><span class="va">menu_name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a id="output"></a></p>
+</section></section><section id="output" class="level4" data-number="15.1.3.2"><h4 data-number="15.1.3.2" class="anchored" data-anchor-id="output">
+<span class="header-section-number">15.1.3.2</span> Output</h4>
+<p><a id="display-a-plot"></a></p>
+<section id="display-a-plot" class="level5" data-number="15.1.3.2.1"><h5 data-number="15.1.3.2.1" class="anchored" data-anchor-id="display-a-plot">
+<span class="header-section-number">15.1.3.2.1</span> Display a plot</h5>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In ui:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">"plot_name"</span>, height <span class="op">=</span> <span class="fl">600</span>,</span>
+<span>           click <span class="op">=</span> <span class="st">"plot_click"</span>, <span class="co"># to retrieve the click position</span></span>
+<span>           dblclick <span class="op">=</span> <span class="st">"plot_dblclick"</span>, <span class="co"># to retrieve the double click position</span></span>
+<span>           hover <span class="op">=</span> <span class="st">"plot_hover"</span>, <span class="co"># to retrieve the mouse position</span></span>
+<span>           brush <span class="op">=</span> <span class="st">"plot_brush"</span> <span class="co"># to retrieve the rectangle coordinates</span></span>
+<span>           <span class="op">)</span></span>
+<span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In server:</span></span>
+<span><span class="va">output</span><span class="op">$</span><span class="va">plot_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>        <span class="co"># do plot:</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span>        <span class="co"># or</span></span>
+<span>        <span class="fu">ggplot</span><span class="op">(</span><span class="va">...</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>If you want an interactive plot, use <code class="sourceCode r"><span class="fu">plotlyOutput</span>()</code> and <code class="sourceCode r"><span class="fu">renderPlotly</span>()</code> instead.</p>
+<p><a id="display-text"></a></p>
+</section><section id="display-text" class="level5" data-number="15.1.3.2.2"><h5 data-number="15.1.3.2.2" class="anchored" data-anchor-id="display-text">
+<span class="header-section-number">15.1.3.2.2</span> Display text</h5>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In ui:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html">textOutput</a></span><span class="op">(</span><span class="st">"text_to_display"</span><span class="op">)</span></span>
+<span><span class="co"># Verbatim text (fixed width characters):</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"text_to_display"</span><span class="op">)</span></span>
+<span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In server:</span></span>
+<span><span class="va">output</span><span class="op">$</span><span class="va">text_to_display</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html">renderText</a></span><span class="op">(</span><span class="op">{</span> <span class="st">"some text"</span> <span class="op">}</span><span class="op">)</span></span>
+<span><span class="va">output</span><span class="op">$</span><span class="va">text_to_display</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html">renderPrint</a></span><span class="op">(</span><span class="op">{</span> <span class="st">"some text"</span> <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a id="display-a-table"></a></p>
+</section><section id="display-a-table" class="level5" data-number="15.1.3.2.3"><h5 data-number="15.1.3.2.3" class="anchored" data-anchor-id="display-a-table">
+<span class="header-section-number">15.1.3.2.3</span> Display a table</h5>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In ui:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderTable.html">tableOutput</a></span><span class="op">(</span><span class="st">"table_to_display"</span><span class="op">)</span></span>
+<span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In server:</span></span>
+<span><span class="va">output</span><span class="op">$</span><span class="va">table_to_display</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderTable.html">renderTable</a></span><span class="op">(</span><span class="op">{</span> <span class="va">df</span> <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Or in case you want interactive tables, use the package <a href="https://shiny.rstudio.com/articles/datatables.html">datatable</a>:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/DT">DT</a></span><span class="op">)</span></span>
+<span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In ui:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/DT/man/dataTableOutput.html">dataTableOutput</a></span><span class="op">(</span><span class="st">"table_to_display"</span><span class="op">)</span></span>
+<span><span class="co"># # # # # # # # # </span></span>
+<span><span class="co"># In server:</span></span>
+<span><span class="va">output</span><span class="op">$</span><span class="va">table_to_display</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/DT/man/dataTableOutput.html">renderDataTable</a></span><span class="op">(</span><span class="op">{</span> <span class="va">df</span> <span class="op">}</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a id="reactive-events"></a></p>
+</section><section id="reactive-events" class="level5" data-number="15.1.3.2.4"><h5 data-number="15.1.3.2.4" class="anchored" data-anchor-id="reactive-events">
+<span class="header-section-number">15.1.3.2.4</span> Reactive events</h5>
+<p>In case you want the plots or text display to react to a change in input value, you can wrap the corresponding code in the <code class="sourceCode r"><span class="fu">reactive</span>()</code> function on the server side:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">fileInput</span>(<span class="st">"file_in"</span>, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Choose input file:"</span>, <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".txt"</span>) </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>          ),</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">checkboxInput</span>(<span class="st">"header"</span>, <span class="st">"Header?"</span>, <span class="at">value=</span><span class="cn">TRUE</span>),</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">selectInput</span>(<span class="st">"menu"</span>, <span class="st">"Columns to display"</span>, </span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">choices=</span><span class="dv">1</span>, <span class="at">selected =</span> <span class="dv">1</span>, <span class="at">multiple =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">tableOutput</span>(<span class="st">"table"</span>)</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="co"># In server:</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>myData <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        inFile <span class="ot">&lt;-</span> input<span class="sc">$</span>file_in</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">is.null</span>(inFile)) {</span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>            df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(inFile<span class="sc">$</span>datapath, <span class="at">header=</span>input<span class="sc">$</span>header)</span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>            <span class="fu">updateSelectInput</span>(session, <span class="st">"menu"</span>, <span class="at">choices=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(df), <span class="at">selected=</span>input<span class="sc">$</span>menu)</span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(df)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>table <span class="ot">&lt;-</span> <span class="fu">renderTable</span>( <span class="fu">myData</span>()[,<span class="fu">sort</span>(<span class="fu">as.numeric</span>(input<span class="sc">$</span>menu))] )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The various input default values can be updated using the following functions on the server side:</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Dropdown menu</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/updateSelectInput.html">updateSelectInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"menu_name"</span>, choices<span class="op">=</span><span class="va">new_choices</span><span class="op">)</span></span>
+<span><span class="co"># Text</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/updateTextInput.html">updateTextInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"text_name"</span>, value <span class="op">=</span> <span class="va">new_value</span><span class="op">)</span></span>
+<span><span class="co"># Numeric</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/updateNumericInput.html">updateNumericInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"value_name"</span>, value <span class="op">=</span> <span class="va">new_value</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a id="writing-a-file"></a></p>
+</section><section id="writing-a-file" class="level5" data-number="15.1.3.2.5"><h5 data-number="15.1.3.2.5" class="anchored" data-anchor-id="writing-a-file">
+<span class="header-section-number">15.1.3.2.5</span> Writing a file</h5>
+<p>This is not a function of shiny, but you may want to write a text file. If this comes from a <code class="sourceCode r">data.frame</code>, you can use the function <code class="sourceCode r"><span class="fu">write.table</span>()</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,y<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="va">df</span>, <span class="st">"test.dat"</span>, quote<span class="op">=</span><span class="cn">FALSE</span>, row.names<span class="op">=</span><span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>For other forms of printing, look into the <code class="sourceCode r"><span class="fu">write</span>()</code> function:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">toprint</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"hello"</span>, <span class="st">"world"</span><span class="op">)</span></span>
+<span><span class="va">outfile</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/connections.html">file</a></span><span class="op">(</span><span class="st">"file_name.txt"</span>, encoding<span class="op">=</span><span class="st">"UTF-8"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/write.html">write</a></span><span class="op">(</span><span class="va">toprint</span>, file<span class="op">=</span><span class="va">outfile</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/connections.html">close</a></span><span class="op">(</span><span class="va">outfile</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>You can for example write a Rmd file that you will render (as pdf, etc…) using <a href="https://www.rdocumentation.org/packages/rmarkdown/versions/1.13/topics/render"><code class="sourceCode r"><span class="fu">render</span>()</code></a>:</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/rmarkdown/man/render.html">render</a></span><span class="op">(</span><span class="st">"file_name.Rmd"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a id="example"></a></p>
+</section></section></section><section id="example-shiny" class="level3" data-number="15.1.4"><h3 data-number="15.1.4" class="anchored" data-anchor-id="example-shiny">
+<span class="header-section-number">15.1.4</span> Example</h3>
+<p>Create a new shiny app with the following code, and play around with it. The input file should be the tidy <a href="Data/population.txt" download="" target="_blank">population.txt</a>.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://plotly-r.com">plotly</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/DT">DT</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span><span class="op">(</span><span class="st">"City population in France"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fileInput.html">fileInput</a></span><span class="op">(</span><span class="st">"file_in"</span>, <span class="st">"Choose input file:"</span>,</span>
+<span>                      accept <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">".txt"</span><span class="op">)</span> <span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/selectInput.html">selectInput</a></span><span class="op">(</span><span class="st">"sel_city"</span>, <span class="st">"City:"</span>, choices <span class="op">=</span> <span class="st">""</span>, multiple <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabsetPanel.html">tabsetPanel</a></span><span class="op">(</span></span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"Plot"</span>, <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/plotly-shiny.html">plotlyOutput</a></span><span class="op">(</span><span class="st">"cityplot"</span>, height <span class="op">=</span> <span class="st">"400px"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/tabPanel.html">tabPanel</a></span><span class="op">(</span><span class="st">"Table"</span>, <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderDataTable.html">dataTableOutput</a></span><span class="op">(</span><span class="st">"table"</span><span class="op">)</span><span class="op">)</span></span>
+<span>            <span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span></span>
+<span>    <span class="co"># myData() returns the data if a file is provided</span></span>
+<span>    <span class="va">myData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/reactive.html">reactive</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>        <span class="va">inFile</span> <span class="op">&lt;-</span> <span class="va">input</span><span class="op">$</span><span class="va">file_in</span></span>
+<span>        <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">inFile</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>            <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>        <span class="op">}</span> <span class="kw">else</span> <span class="op">{</span></span>
+<span>            <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/utils/read.table.html">read.table</a></span><span class="op">(</span><span class="va">inFile</span><span class="op">$</span><span class="va">datapath</span>, header<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span>            <span class="co"># in case something changes,</span></span>
+<span>            <span class="co"># update the city input selection list</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/updateSelectInput.html">updateSelectInput</a></span><span class="op">(</span><span class="va">session</span>, <span class="st">"sel_city"</span>,</span>
+<span>                              choices <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">city</span><span class="op">)</span>,</span>
+<span>                              selected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">city</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span></span>
+<span>            <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span>        <span class="op">}</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="co"># plot the pop vs year for the selected cities</span></span>
+<span>    <span class="va">output</span><span class="op">$</span><span class="va">cityplot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/plotly-shiny.html">renderPlotly</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>        <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">myData</span><span class="op">(</span><span class="op">)</span></span>
+<span>        <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>        <span class="va">p</span> <span class="op">&lt;-</span> <span class="va">df</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> </span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">input</span><span class="op">$</span><span class="va">sel_city</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>x<span class="op">=</span><span class="va">year</span>, y<span class="op">=</span><span class="va">pop</span>, size<span class="op">=</span><span class="va">pop</span>, color<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>method<span class="op">=</span><span class="st">"lm"</span>, alpha<span class="op">=</span><span class="fl">0.1</span>,</span>
+<span>                            show.legend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                            <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/aes.html">aes</a></span><span class="op">(</span>fill<span class="op">=</span><span class="va">city</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">ggtitle</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"Population in "</span>,</span>
+<span>                               <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">sel_city</span>, collapse <span class="op">=</span> <span class="st">", "</span><span class="op">)</span></span>
+<span>                               <span class="op">)</span><span class="op">)</span><span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Year"</span>, y<span class="op">=</span><span class="st">"Population"</span><span class="op">)</span><span class="op">+</span></span>
+<span>                <span class="fu"><a href="https://rdrr.io/pkg/ggplot2/man/ggtheme.html">theme_light</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/plotly/man/ggplotly.html">ggplotly</a></span><span class="op">(</span><span class="va">p</span>, dynamicTicks <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="co"># show data as a table</span></span>
+<span>    <span class="va">output</span><span class="op">$</span><span class="va">table</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderDataTable.html">renderDataTable</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>        <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">myData</span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/magrittr/man/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/filter.html">filter</a></span><span class="op">(</span><span class="va">city</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="va">input</span><span class="op">$</span><span class="va">sel_city</span><span class="op">)</span></span>
+<span>        <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html">is.null</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>        <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyr/man/pivot_wider.html">pivot_wider</a></span><span class="op">(</span><span class="va">df</span>, names_from<span class="op">=</span><span class="va">year</span>, values_from<span class="op">=</span><span class="va">pop</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/DT/man/datatable.html">datatable</a></span><span class="op">(</span><span class="va">df</span>, rownames <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>    <span class="op">}</span><span class="op">)</span></span>
+<span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This will render <a href="https://cbousige.shinyapps.io/shiny_example/">like this</a>.</p>
+<p><a id="rmarkdown-embedded-shiny-application"></a></p>
+</section></section><section id="rmarkdown-embedded-shiny-application" class="level2" data-number="15.2"><h2 data-number="15.2" class="anchored" data-anchor-id="rmarkdown-embedded-shiny-application">
+<span class="header-section-number">15.2</span> Rmarkdown-embedded shiny application</h2>
+<p>A shiny application can even be embedded inside a Rmarkdown document by providing <code>runtime: shiny</code> in the YAML header. A short example here, try to compile it:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="an">title:</span><span class="co"> "Test"</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="an">output:</span><span class="co"> html_document</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="an">runtime:</span><span class="co"> shiny</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="co">---</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>This is a test Rmarkdown document.</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE, message=FALSE}</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(<span class="st">"Data/population.txt"</span>, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">ui =</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>    <span class="fu">selectInput</span>(<span class="st">"city"</span>, <span class="st">"City:"</span>, <span class="at">choices =</span> <span class="fu">unique</span>(df<span class="sc">$</span>city)),</span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plotlyOutput</span>(<span class="st">"cityplot"</span>, <span class="at">height =</span> <span class="dv">600</span>)</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="at">server =</span> <span class="cf">function</span>(input, output) {</span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>cityplot <span class="ot">=</span> <span class="fu">renderPlotly</span>({</span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>      p <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">subset</span>(df,city<span class="sc">==</span>input<span class="sc">$</span>city), </span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>                <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>pop, <span class="at">size=</span>pop)) <span class="sc">+</span></span>
+<span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">alpha=</span><span class="fl">0.1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span> </span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggtitle</span>(<span class="fu">paste</span>(<span class="st">"Population in "</span>,input<span class="sc">$</span>city,<span class="at">sep=</span><span class="st">""</span>))<span class="sc">+</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>, <span class="at">y=</span><span class="st">"Population"</span>)<span class="sc">+</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_light</span>()</span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>      <span class="fu">ggplotly</span>(p)</span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The only “problem” with this solution is that the html file that is produced will not run the shiny app by itself, you have to open the Rmd file in Rstudio and hit “Run Document”.</p>
+<p>Another solution consists in deploying your app on <a href="https://www.shinyapps.io/">shinyapps.io</a> and embedding the page in your document with:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="st">```</span><span class="at">{r, echo=FALSE}</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="at">knitr::include_app("https://cbousige.shinyapps.io/shiny_example/", </span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="at">                    height = "800px")</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a id="deploying-your-shiny-app"></a></p>
+</section><section id="deploying-your-shiny-app" class="level2" data-number="15.3"><h2 data-number="15.3" class="anchored" data-anchor-id="deploying-your-shiny-app">
+<span class="header-section-number">15.3</span> Deploying your shiny app</h2>
+<p>There are 4 ways to deploy your app: passing the <code>app.R</code> file to your users, deploying to <a href="https://www.shinyapps.io/">shinyapps.io</a>, deploying on your own server, or building an executable with Electron.</p>
+<p><a id="passing-the-appr-file-to-your-users"></a></p>
+<section id="passing-the-app.r-file-to-your-users" class="level3" data-number="15.3.1"><h3 data-number="15.3.1" class="anchored" data-anchor-id="passing-the-app.r-file-to-your-users">
+<span class="header-section-number">15.3.1</span> Passing the app.R file to your users</h3>
+<p>This option is certainly easy: just send your <code>app.R</code> file (or Rmd file with shiny embedded app) as well as any other files needed (<em>e.g.</em> <code>global.R</code>) to your users, explain to them how to run it, and <em>voilà</em>.</p>
+<p>However, this needs a little bit of know-how from the users: they need to install R and Rstudio, install the needed packages, and run the app.</p>
+<p>A good option to remove the “package-installing” step is to define a function <code class="sourceCode r"><span class="fu">check.package</span>()</code> that will check if the package is installed, install it if needed, and load it:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">check.packages</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">pkg</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">new.pkg</span> <span class="op">&lt;-</span> <span class="va">pkg</span><span class="op">[</span><span class="op">!</span><span class="op">(</span><span class="va">pkg</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">[</span>, <span class="st">"Package"</span><span class="op">]</span><span class="op">)</span><span class="op">]</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">new.pkg</span><span class="op">)</span><span class="op">)</span> </span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="va">new.pkg</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">pkg</span>, <span class="va">require</span>, character.only <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="co"># Usage:</span></span>
+<span><span class="fu">check.packages</span><span class="op">(</span><span class="st">"ggplot2"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a id="deploying-to-shinyappsio"></a></p>
+</section><section id="deploying-to-shinyapps.io" class="level3" data-number="15.3.2"><h3 data-number="15.3.2" class="anchored" data-anchor-id="deploying-to-shinyapps.io">
+<span class="header-section-number">15.3.2</span> Deploying to shinyapps.io</h3>
+<p>Applications deployed on shinyapps.io will be accessible from anywhere through a weblink. See for example <a href="https://cbousige.shinyapps.io/rubypressure/">my application</a> to determine the pressure from a ruby Raman spectrum or the expected Raman shift for a given pressure and laser wavelength. Your application will however be public and you will have some limitations in the number of online applications and time of use (if you don’t pay a fee, see <a href="https://www.shinyapps.io/">here</a> for the various plans).</p>
+<ul>
+<li>First, create an account on <a href="https://www.shinyapps.io/admin/#/signup">shinyapps.io</a>
+</li>
+<li>Follow the steps described <a href="https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-applications">here</a> to:
+<ul>
+<li>
+<em>Configure RSconnect</em>: in your shinyapps.io dashboard, click your name, then Tokens, and create a token for a new app. Copy the text in the popup window.</li>
+<li>
+<em>Deploy the app</em> from the Rstudio window by clicking on the “Publish” button in the top right corner of the interface. Follow the steps along the <em>shinyapps.io</em> way.</li>
+</ul>
+</li>
+</ul>
+<p>Note that in that case, you should not have any <code class="sourceCode r"><span class="fu">install.package</span>()</code> command in your code. Most packages are supported by shinyapps.io.</p>
+<p><a id="deploying-on-your-own-linux-server"></a></p>
+</section><section id="deploying-on-your-own-linux-server" class="level3" data-number="15.3.3"><h3 data-number="15.3.3" class="anchored" data-anchor-id="deploying-on-your-own-linux-server">
+<span class="header-section-number">15.3.3</span> Deploying on your own Linux server</h3>
+<p>This option is more advanced and I’m not going into details for that, but you have a number of tutorials online. See <em>e.g.</em> <a href="https://shiny.rstudio.com/articles/shiny-server.html">here</a>, <a href="https://docs.rstudio.com/shiny-server/">here</a> or <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-shiny-server-on-ubuntu-16-04">here</a>.</p>
+<p>You might consider this option if you work in a company that want to handle privately its data (which sounds plausible) and not pay the shinyapps.io fee to password protect the app. In that case, just work with the IT department to get it running.</p>
+<p><a id="building-an-executable"></a></p>
+</section><section id="building-an-executable" class="level3" data-number="15.3.4"><h3 data-number="15.3.4" class="anchored" data-anchor-id="building-an-executable">
+<span class="header-section-number">15.3.4</span> Building an executable</h3>
+<p>On <strong>Windows</strong>, there is this possibility that looks nice but that I never tried because I don’t have Windows: <a href="https://ficonsulting.github.io/RInno/">RInno</a>.</p>
+<p>On <strong>any platform</strong>: there is the possibility described <a href="https://www.youtube.com/watch?v=ARrbbviGvjc">here</a> with the corresponding <a href="https://github.com/ColumbusCollaboratory/electron-quick-start">github page</a>. This option is actually awesome and a quite recent possibility. However, since the produced application will contain R and the needed packages, the executable file is quite heavy.</p>
+<p><a id="further-reading"></a></p>
+</section></section><section id="further-reading" class="level2" data-number="15.4"><h2 data-number="15.4" class="anchored" data-anchor-id="further-reading">
+<span class="header-section-number">15.4</span> Further reading</h2>
+<ul>
+<li>The Shiny <a href="https://shiny.rstudio.com/images/shiny-cheatsheet.pdf">cheatsheet</a>
+</li>
+<li>Help on <a href="https://shiny.rstudio.com/tutorial/written-tutorial/lesson7/">deploying your shiny app</a>
+</li>
+<li><a href="https://shiny.rstudio.com/articles/layout-guide.html">Guide to application layout</a></li>
+<li>The <a href="https://shiny.rstudio.com/gallery/">Shiny Gallery</a>: find what you want to do and adapt it to your needs</li>
+<li>The official <a href="https://shiny.rstudio.com/tutorial/">Shiny video tutorial</a>
+</li>
+</ul>
+<p><a id="exercises"></a></p>
+</section><section id="exo-shiny" class="level2" data-number="15.5"><h2 data-number="15.5" class="anchored" data-anchor-id="exo-shiny">
+<span class="header-section-number">15.5</span> Exercises</h2>
+<details><summary><strong>Exercise 1</strong>
+</summary><ul>
+<li>Create a new empty app with a blank user-interface and run it.</li>
+<li>Add a title, a left panel and a main panel</li>
+<li>Add an input numerical value defaulting to 1 and with a step of 0.05, name it “bw”</li>
+<li>Add a slider input from 0 to 1e3 by steps of 1e2 defaulting to 5e2, name it “N_val”</li>
+<li>Add a plot of the <code>density</code> of <code class="sourceCode r"><span class="fu">rnorm</span>(N_val)</code> with bandwidth <code>bw</code>
+</li>
+<li>Make sure <code>bw&gt;0</code>, otherwise don’t produce the plot</li>
+</ul>
+<details><summary>
+Solution
+</summary><div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html">fluidPage</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/titlePanel.html">titlePanel</a></span><span class="op">(</span><span class="st">"Some title"</span><span class="op">)</span>,</span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarLayout</a></span><span class="op">(</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">sidebarPanel</a></span><span class="op">(</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/numericInput.html">numericInput</a></span><span class="op">(</span><span class="st">"bw"</span>, <span class="st">"Enter bandwidth:"</span>, <span class="fl">1</span>, step<span class="op">=</span><span class="fl">0.05</span><span class="op">)</span>,</span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html">sliderInput</a></span><span class="op">(</span><span class="st">"N_val"</span>, <span class="st">"Number of points:"</span>, </span>
+<span>                        min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1e4</span>, step<span class="op">=</span> <span class="fl">1e2</span>, value <span class="op">=</span> <span class="fl">5e2</span><span class="op">)</span></span>
+<span>        <span class="op">)</span>,</span>
+<span>        <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sidebarLayout.html">mainPanel</a></span><span class="op">(</span></span>
+<span>            <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/plotOutput.html">plotOutput</a></span><span class="op">(</span><span class="st">"plot"</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span></span>
+<span>        <span class="op">)</span></span>
+<span>    <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">output</span><span class="op">$</span><span class="va">plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPlot.html">renderPlot</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>                        <span class="kw">if</span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">bw</span><span class="op">==</span><span class="fl">0</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="cn">NULL</span><span class="op">)</span></span>
+<span>                        <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/density.html">density</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">N_val</span><span class="op">)</span>, bw<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">bw</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span>                    <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html">shinyApp</a></span><span class="op">(</span>ui <span class="op">=</span> <span class="va">ui</span>, server <span class="op">=</span> <span class="va">server</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details></details><details><summary><strong>Exercise 2</strong>
+</summary><p>Create a shiny application that will:</p>
+<ul>
+<li>read an input (through a file dialog) Raman spectrum from a ruby (<a href="Data/data_xp/xpdata.zip" download="" target="_blank">XPdata.zip</a>)</li>
+<li>fit the data by two Lorentzians</li>
+<li>plot the data interactively</li>
+<li>ask for the laser wavelength as an input and give 568.189 nm as default</li>
+<li>write the corresponding pressure on the page using the <code class="sourceCode r"><span class="fu">Pruby</span>()</code> function defined in <code>myfunc.R</code> found in <a href="Data/XPdata.zip" download="" target="_blank">XPdata.zip</a>.</li>
+<li>insert a button that will, when pressed, render a pdf report displaying the laser wavelength, the plot, the fit and the pressure found:
+<ul>
+<li>write a separate Rmd file with the proper parameters</li>
+<li>render the Rmd file as a pdf (see the <code class="sourceCode r"><span class="fu">render</span>()</code> function and <a href="https://shiny.rstudio.com/articles/generating-reports.html">this help</a>)</li>
+</ul>
+</li>
+</ul></details><p><br><br><br><br><br></p>
+
+
+<!-- -->
+
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    toggleBodyColorMode(window.document.querySelector("link#quarto-bootstrap"));
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    setTimeout(function() {
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      let href = ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
+      });
+      return popup.innerHTML;
+    });
+  }
+});
+</script><nav class="page-navigation"><div class="nav-page nav-page-previous">
+      <a href="./15-rmarkdown.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Rmarkdown</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./17-units.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Working with units and experimental errors</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
+<div class="sourceCode" id="cb22" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Graphical interfaces with Shiny</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>You have had a preview of a <span class="in">`shiny`</span> interface in the previous section with the interactive parameter input in a Rmarkdown file.</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>Using the <span class="in">`shiny`</span> package, you can actually easily build an interactive graphical user interface (GUI) in which you will be able to set parameters (values, files...), visualize the outputs (plots, images, tables...), and write files as output. This is very useful when you have to always repeat the same task with a varying input parameter, for example.</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="fu">## Stand-alone shiny application</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>A shiny application is an <span class="in">`app.R`</span> file (it must be named like that) containing 3 elements:</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="ss">1. </span><span class="in">`ui`</span>: definition of the interface layout (where are the buttons, text input, plot output, etc.) and the input parameters</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a><span class="ss">2. </span><span class="in">`server`</span>: definition of the various actions to perform with the input parameters</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a><span class="ss">3. </span><span class="in">`shinyApp(ui, server)`</span>{.R}: launches the shiny app with the above defined parameters</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>In Rstudio, create a new "Shiny web app". It will create an <span class="in">`app.R`</span> file containing this:</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Define UI for application that draws a histogram</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Application title</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">titlePanel</span>(<span class="st">"Old Faithful Geyser Data"</span>),</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sidebar with a slider input for number of bins </span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarLayout</span>(</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sidebarPanel</span>(</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sliderInput</span>(<span class="st">"bins"</span>,</span>
+<span id="cb22-27"><a href="#cb22-27" aria-hidden="true" tabindex="-1"></a>                        <span class="st">"Number of bins:"</span>,</span>
+<span id="cb22-28"><a href="#cb22-28" aria-hidden="true" tabindex="-1"></a>                        <span class="at">min =</span> <span class="dv">1</span>,</span>
+<span id="cb22-29"><a href="#cb22-29" aria-hidden="true" tabindex="-1"></a>                        <span class="at">max =</span> <span class="dv">50</span>,</span>
+<span id="cb22-30"><a href="#cb22-30" aria-hidden="true" tabindex="-1"></a>                        <span class="at">value =</span> <span class="dv">30</span>)</span>
+<span id="cb22-31"><a href="#cb22-31" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb22-32"><a href="#cb22-32" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Show a plot of the generated distribution</span></span>
+<span id="cb22-33"><a href="#cb22-33" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mainPanel</span>(</span>
+<span id="cb22-34"><a href="#cb22-34" aria-hidden="true" tabindex="-1"></a>           <span class="fu">plotOutput</span>(<span class="st">"distPlot"</span>)</span>
+<span id="cb22-35"><a href="#cb22-35" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb22-36"><a href="#cb22-36" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-37"><a href="#cb22-37" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-38"><a href="#cb22-38" aria-hidden="true" tabindex="-1"></a><span class="co"># Define server logic required to draw a histogram</span></span>
+<span id="cb22-39"><a href="#cb22-39" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb22-40"><a href="#cb22-40" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>distPlot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb22-41"><a href="#cb22-41" aria-hidden="true" tabindex="-1"></a>        <span class="co"># generate bins based on input$bins from ui.R</span></span>
+<span id="cb22-42"><a href="#cb22-42" aria-hidden="true" tabindex="-1"></a>        x    <span class="ot">&lt;-</span> faithful[, <span class="dv">2</span>]</span>
+<span id="cb22-43"><a href="#cb22-43" aria-hidden="true" tabindex="-1"></a>        bins <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(x), <span class="fu">max</span>(x), <span class="at">length.out =</span> input<span class="sc">$</span>bins <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb22-44"><a href="#cb22-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-45"><a href="#cb22-45" aria-hidden="true" tabindex="-1"></a>        <span class="co"># draw the histogram with the specified number of bins</span></span>
+<span id="cb22-46"><a href="#cb22-46" aria-hidden="true" tabindex="-1"></a>        <span class="fu">hist</span>(x, <span class="at">breaks =</span> bins, <span class="at">col =</span> <span class="st">'darkgray'</span>, <span class="at">border =</span> <span class="st">'white'</span>)</span>
+<span id="cb22-47"><a href="#cb22-47" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb22-48"><a href="#cb22-48" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-49"><a href="#cb22-49" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the application </span></span>
+<span id="cb22-50"><a href="#cb22-50" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span>
+<span id="cb22-51"><a href="#cb22-51" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-52"><a href="#cb22-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-53"><a href="#cb22-53" aria-hidden="true" tabindex="-1"></a>Run it by clicking "Run App": a window opens and you can pan the slider and see the resulting output.</span>
+<span id="cb22-54"><a href="#cb22-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-55"><a href="#cb22-55" aria-hidden="true" tabindex="-1"></a>In case you want to clean up the code, you can separate <span class="in">`app.R`</span> into <span class="in">`ui.R`</span> and <span class="in">`server.R`</span>. No need to add the <span class="in">`shinyApp(ui = ui, server = server)`</span>{.R} line in that case.</span>
+<span id="cb22-56"><a href="#cb22-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-57"><a href="#cb22-57" aria-hidden="true" tabindex="-1"></a>All user-defined functions and variable definitions can be defined in a <span class="in">`global.R`</span> file that will be sourced by default when launching the app.</span>
+<span id="cb22-58"><a href="#cb22-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-59"><a href="#cb22-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-60"><a href="#cb22-60" aria-hidden="true" tabindex="-1"></a><span class="fu">### The layout</span></span>
+<span id="cb22-61"><a href="#cb22-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-62"><a href="#cb22-62" aria-hidden="true" tabindex="-1"></a>In the <span class="in">`ui &lt;- fluidPage(...)`</span>{.R} item, you define the layout of your application. In the above example:</span>
+<span id="cb22-63"><a href="#cb22-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-64"><a href="#cb22-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`titlePanel("Title")`</span>{.R} creates a title</span>
+<span id="cb22-65"><a href="#cb22-65" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`sidebarLayout()`</span>{.R} separates the layout in a short one on the left (<span class="in">`sidebarPanel()`</span>{.R}) and a main one on the right (<span class="in">`mainPanel()`</span>{.R})</span>
+<span id="cb22-66"><a href="#cb22-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`sliderInput("name_of_slider", "text to display", min=min_value, max=max_value,`</span>{.R} <span class="in">`value=current_value, step=step_value)`</span> creates a slider to input a value. This value will be retrieved by <span class="in">`input$name_of_slider`</span>{.R} in the <span class="in">`server()`</span>{.R} function.</span>
+<span id="cb22-67"><a href="#cb22-67" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`plotOutput("name_of_plot")`</span>{.R} plots the result of <span class="in">`output$name_of_plot`</span>{.R} defined in the <span class="in">`server()`</span>{.R} function.</span>
+<span id="cb22-68"><a href="#cb22-68" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-69"><a href="#cb22-69" aria-hidden="true" tabindex="-1"></a>See the <span class="co">[</span><span class="ot">guide to application layout</span><span class="co">](https://shiny.rstudio.com/articles/layout-guide.html)</span> for more layout options. I also recommend taking a look at the packages <span class="co">[</span><span class="ot">`shinydashboard`</span><span class="co">](https://rstudio.github.io/shinydashboard/get_started.html)</span> and <span class="co">[</span><span class="ot">`shinymaterial`</span><span class="co">](https://github.com/ericrayanderson/shinymaterial)</span>.</span>
+<span id="cb22-70"><a href="#cb22-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-71"><a href="#cb22-71" aria-hidden="true" tabindex="-1"></a><span class="fu">### The server</span></span>
+<span id="cb22-72"><a href="#cb22-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-73"><a href="#cb22-73" aria-hidden="true" tabindex="-1"></a>In the <span class="in">`server &lt;- function(input, output){...}`</span>{.R} function, you define the various actions and outputs in reaction to an input change. </span>
+<span id="cb22-74"><a href="#cb22-74" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-75"><a href="#cb22-75" aria-hidden="true" tabindex="-1"></a>In the above example, we define <span class="in">`output$distPlot`</span>{.R} as a <span class="in">`renderPlot()`</span>{.R} function whose results depends on <span class="in">`input$bins`</span>{.R}. The plot is rendered in the <span class="in">`ui`</span> by <span class="in">`plotOutput("distPlot")`</span>{.R}.</span>
+<span id="cb22-76"><a href="#cb22-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-77"><a href="#cb22-77" aria-hidden="true" tabindex="-1"></a><span class="fu">### Various useful functions</span></span>
+<span id="cb22-78"><a href="#cb22-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-79"><a href="#cb22-79" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- MarkdownTOC --&gt;</span></span>
+<span id="cb22-80"><a href="#cb22-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-81"><a href="#cb22-81" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Input</span><span class="co">](#input)</span></span>
+<span id="cb22-82"><a href="#cb22-82" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">Buttons</span><span class="co">](#buttons)</span></span>
+<span id="cb22-83"><a href="#cb22-83" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">Checkbox</span><span class="co">](#checkbox)</span></span>
+<span id="cb22-84"><a href="#cb22-84" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">Text/numeric</span><span class="co">](#textnumeric)</span></span>
+<span id="cb22-85"><a href="#cb22-85" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">Slider</span><span class="co">](#slider)</span></span>
+<span id="cb22-86"><a href="#cb22-86" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">File</span><span class="co">](#file)</span></span>
+<span id="cb22-87"><a href="#cb22-87" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">Dropdown menu</span><span class="co">](#dropdown-menu)</span></span>
+<span id="cb22-88"><a href="#cb22-88" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Output</span><span class="co">](#output)</span></span>
+<span id="cb22-89"><a href="#cb22-89" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">Display a plot</span><span class="co">](#display-a-plot)</span></span>
+<span id="cb22-90"><a href="#cb22-90" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">Display text</span><span class="co">](#display-text)</span></span>
+<span id="cb22-91"><a href="#cb22-91" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">Display a table</span><span class="co">](#display-a-table)</span></span>
+<span id="cb22-92"><a href="#cb22-92" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">Reactive events</span><span class="co">](#reactive-events)</span></span>
+<span id="cb22-93"><a href="#cb22-93" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">Writing a file</span><span class="co">](#writing-a-file)</span></span>
+<span id="cb22-94"><a href="#cb22-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-95"><a href="#cb22-95" aria-hidden="true" tabindex="-1"></a><span class="co">&lt;!-- /MarkdownTOC --&gt;</span></span>
+<span id="cb22-96"><a href="#cb22-96" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-97"><a href="#cb22-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-98"><a href="#cb22-98" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"input"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-99"><a href="#cb22-99" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-100"><a href="#cb22-100" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Input</span></span>
+<span id="cb22-101"><a href="#cb22-101" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-102"><a href="#cb22-102" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"buttons"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-103"><a href="#cb22-103" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-104"><a href="#cb22-104" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Buttons</span></span>
+<span id="cb22-105"><a href="#cb22-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-106"><a href="#cb22-106" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-107"><a href="#cb22-107" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-108"><a href="#cb22-108" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb22-109"><a href="#cb22-109" aria-hidden="true" tabindex="-1"></a><span class="fu">actionButton</span>(<span class="st">"button_name"</span>, <span class="st">"Text to display"</span>)</span>
+<span id="cb22-110"><a href="#cb22-110" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-111"><a href="#cb22-111" aria-hidden="true" tabindex="-1"></a><span class="co"># In server:</span></span>
+<span id="cb22-112"><a href="#cb22-112" aria-hidden="true" tabindex="-1"></a><span class="fu">observeEvent</span>(input<span class="sc">$</span>button_name, {</span>
+<span id="cb22-113"><a href="#cb22-113" aria-hidden="true" tabindex="-1"></a>    <span class="co"># do something</span></span>
+<span id="cb22-114"><a href="#cb22-114" aria-hidden="true" tabindex="-1"></a>})</span>
+<span id="cb22-115"><a href="#cb22-115" aria-hidden="true" tabindex="-1"></a><span class="co"># or</span></span>
+<span id="cb22-116"><a href="#cb22-116" aria-hidden="true" tabindex="-1"></a>some_function <span class="ot">&lt;-</span> <span class="fu">eventReactive</span>(input<span class="sc">$</span>button_name, {</span>
+<span id="cb22-117"><a href="#cb22-117" aria-hidden="true" tabindex="-1"></a>                               <span class="co"># do something</span></span>
+<span id="cb22-118"><a href="#cb22-118" aria-hidden="true" tabindex="-1"></a>                               })</span>
+<span id="cb22-119"><a href="#cb22-119" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-120"><a href="#cb22-120" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-121"><a href="#cb22-121" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Checkbox</span></span>
+<span id="cb22-122"><a href="#cb22-122" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-123"><a href="#cb22-123" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-124"><a href="#cb22-124" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-125"><a href="#cb22-125" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb22-126"><a href="#cb22-126" aria-hidden="true" tabindex="-1"></a><span class="fu">checkboxInput</span>(<span class="st">"checkbox_name"</span>, <span class="st">"Text to display"</span>, <span class="at">value=</span><span class="cn">FALSE</span>)</span>
+<span id="cb22-127"><a href="#cb22-127" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-128"><a href="#cb22-128" aria-hidden="true" tabindex="-1"></a><span class="co"># In server:</span></span>
+<span id="cb22-129"><a href="#cb22-129" aria-hidden="true" tabindex="-1"></a>input<span class="sc">$</span>checkbox_name <span class="co">#TRUE or FALSE</span></span>
+<span id="cb22-130"><a href="#cb22-130" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-131"><a href="#cb22-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-132"><a href="#cb22-132" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"textnumeric"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-133"><a href="#cb22-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-134"><a href="#cb22-134" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Text/numeric</span></span>
+<span id="cb22-135"><a href="#cb22-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-136"><a href="#cb22-136" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-137"><a href="#cb22-137" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-138"><a href="#cb22-138" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb22-139"><a href="#cb22-139" aria-hidden="true" tabindex="-1"></a><span class="fu">textInput</span>(<span class="st">"text_name"</span>, </span>
+<span id="cb22-140"><a href="#cb22-140" aria-hidden="true" tabindex="-1"></a>            <span class="at">label =</span> <span class="st">"Text to display"</span>, </span>
+<span id="cb22-141"><a href="#cb22-141" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"initial value"</span>, </span>
+<span id="cb22-142"><a href="#cb22-142" aria-hidden="true" tabindex="-1"></a>            <span class="at">width =</span> <span class="st">'100%'</span>)</span>
+<span id="cb22-143"><a href="#cb22-143" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-144"><a href="#cb22-144" aria-hidden="true" tabindex="-1"></a><span class="fu">textAreaInput</span>(<span class="st">"text_name"</span>, </span>
+<span id="cb22-145"><a href="#cb22-145" aria-hidden="true" tabindex="-1"></a>            <span class="at">label=</span><span class="st">"Text to display"</span>, </span>
+<span id="cb22-146"><a href="#cb22-146" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="st">"initial_value"</span>, </span>
+<span id="cb22-147"><a href="#cb22-147" aria-hidden="true" tabindex="-1"></a>            <span class="at">rows =</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb22-148"><a href="#cb22-148" aria-hidden="true" tabindex="-1"></a>            shiny<span class="sc">::</span><span class="fu">tagAppendAttributes</span>(<span class="at">style =</span> <span class="st">'width: 100%;'</span>)</span>
+<span id="cb22-149"><a href="#cb22-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-150"><a href="#cb22-150" aria-hidden="true" tabindex="-1"></a><span class="fu">numericInput</span>(<span class="st">"value_name"</span>, <span class="st">'Text to display'</span>, <span class="at">value=</span><span class="dv">0</span>)</span>
+<span id="cb22-151"><a href="#cb22-151" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-152"><a href="#cb22-152" aria-hidden="true" tabindex="-1"></a><span class="co"># In server, retrieve it as:</span></span>
+<span id="cb22-153"><a href="#cb22-153" aria-hidden="true" tabindex="-1"></a>input<span class="sc">$</span>text_name</span>
+<span id="cb22-154"><a href="#cb22-154" aria-hidden="true" tabindex="-1"></a>input<span class="sc">$</span>value_name</span>
+<span id="cb22-155"><a href="#cb22-155" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-156"><a href="#cb22-156" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-157"><a href="#cb22-157" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"slider"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-158"><a href="#cb22-158" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-159"><a href="#cb22-159" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Slider</span></span>
+<span id="cb22-160"><a href="#cb22-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-161"><a href="#cb22-161" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-162"><a href="#cb22-162" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-163"><a href="#cb22-163" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb22-164"><a href="#cb22-164" aria-hidden="true" tabindex="-1"></a><span class="fu">sliderInput</span>(<span class="st">"slider_name"</span>, <span class="st">"Text to display"</span>,</span>
+<span id="cb22-165"><a href="#cb22-165" aria-hidden="true" tabindex="-1"></a>            <span class="at">min =</span> <span class="dv">1</span>,</span>
+<span id="cb22-166"><a href="#cb22-166" aria-hidden="true" tabindex="-1"></a>            <span class="at">max =</span> <span class="dv">50</span>,</span>
+<span id="cb22-167"><a href="#cb22-167" aria-hidden="true" tabindex="-1"></a>            <span class="at">step=</span> <span class="dv">1</span>,</span>
+<span id="cb22-168"><a href="#cb22-168" aria-hidden="true" tabindex="-1"></a>            <span class="at">value =</span> <span class="dv">30</span>)</span>
+<span id="cb22-169"><a href="#cb22-169" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-170"><a href="#cb22-170" aria-hidden="true" tabindex="-1"></a><span class="co"># In server, retrieve it as:</span></span>
+<span id="cb22-171"><a href="#cb22-171" aria-hidden="true" tabindex="-1"></a>input<span class="sc">$</span>slider_name</span>
+<span id="cb22-172"><a href="#cb22-172" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-173"><a href="#cb22-173" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-174"><a href="#cb22-174" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"file"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-175"><a href="#cb22-175" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-176"><a href="#cb22-176" aria-hidden="true" tabindex="-1"></a><span class="fu">##### File</span></span>
+<span id="cb22-177"><a href="#cb22-177" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-178"><a href="#cb22-178" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-179"><a href="#cb22-179" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-180"><a href="#cb22-180" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb22-181"><a href="#cb22-181" aria-hidden="true" tabindex="-1"></a><span class="fu">fileInput</span>(<span class="st">"file_in"</span>, </span>
+<span id="cb22-182"><a href="#cb22-182" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Choose input file:"</span>, <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".txt"</span>) </span>
+<span id="cb22-183"><a href="#cb22-183" aria-hidden="true" tabindex="-1"></a>          )</span>
+<span id="cb22-184"><a href="#cb22-184" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-185"><a href="#cb22-185" aria-hidden="true" tabindex="-1"></a><span class="co"># In server, retrieve it as:</span></span>
+<span id="cb22-186"><a href="#cb22-186" aria-hidden="true" tabindex="-1"></a>input<span class="sc">$</span>file_in<span class="sc">$</span>datapath</span>
+<span id="cb22-187"><a href="#cb22-187" aria-hidden="true" tabindex="-1"></a><span class="co"># For example, read it as a data.frame with myData():</span></span>
+<span id="cb22-188"><a href="#cb22-188" aria-hidden="true" tabindex="-1"></a>myData <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb22-189"><a href="#cb22-189" aria-hidden="true" tabindex="-1"></a>        inFile <span class="ot">&lt;-</span> input<span class="sc">$</span>file_in</span>
+<span id="cb22-190"><a href="#cb22-190" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">is.null</span>(inFile)) {</span>
+<span id="cb22-191"><a href="#cb22-191" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb22-192"><a href="#cb22-192" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb22-193"><a href="#cb22-193" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(<span class="fu">read.table</span>(inFile<span class="sc">$</span>datapath, <span class="at">header=</span><span class="cn">TRUE</span>))</span>
+<span id="cb22-194"><a href="#cb22-194" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb22-195"><a href="#cb22-195" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb22-196"><a href="#cb22-196" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-197"><a href="#cb22-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-198"><a href="#cb22-198" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"dropdown-menu"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-199"><a href="#cb22-199" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-200"><a href="#cb22-200" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Dropdown menu</span></span>
+<span id="cb22-201"><a href="#cb22-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-202"><a href="#cb22-202" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-203"><a href="#cb22-203" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-204"><a href="#cb22-204" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb22-205"><a href="#cb22-205" aria-hidden="true" tabindex="-1"></a><span class="fu">selectInput</span>(<span class="st">"menu_name"</span>, <span class="st">"Text to display"</span>, </span>
+<span id="cb22-206"><a href="#cb22-206" aria-hidden="true" tabindex="-1"></a>            <span class="at">choices=</span><span class="fu">c</span>(<span class="st">"choice 1"</span>, <span class="st">"choice 2"</span>), </span>
+<span id="cb22-207"><a href="#cb22-207" aria-hidden="true" tabindex="-1"></a>            <span class="at">multiple =</span> <span class="cn">FALSE</span> <span class="co"># multiple selection possible</span></span>
+<span id="cb22-208"><a href="#cb22-208" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb22-209"><a href="#cb22-209" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-210"><a href="#cb22-210" aria-hidden="true" tabindex="-1"></a><span class="co"># In server, retrieve it as:</span></span>
+<span id="cb22-211"><a href="#cb22-211" aria-hidden="true" tabindex="-1"></a>input<span class="sc">$</span>menu_name</span>
+<span id="cb22-212"><a href="#cb22-212" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-213"><a href="#cb22-213" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-214"><a href="#cb22-214" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"output"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-215"><a href="#cb22-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-216"><a href="#cb22-216" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Output</span></span>
+<span id="cb22-217"><a href="#cb22-217" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-218"><a href="#cb22-218" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"display-a-plot"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-219"><a href="#cb22-219" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-220"><a href="#cb22-220" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Display a plot</span></span>
+<span id="cb22-221"><a href="#cb22-221" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-222"><a href="#cb22-222" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-223"><a href="#cb22-223" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-224"><a href="#cb22-224" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb22-225"><a href="#cb22-225" aria-hidden="true" tabindex="-1"></a><span class="fu">plotOutput</span>(<span class="st">"plot_name"</span>, <span class="at">height =</span> <span class="dv">600</span>,</span>
+<span id="cb22-226"><a href="#cb22-226" aria-hidden="true" tabindex="-1"></a>           <span class="at">click =</span> <span class="st">"plot_click"</span>, <span class="co"># to retrieve the click position</span></span>
+<span id="cb22-227"><a href="#cb22-227" aria-hidden="true" tabindex="-1"></a>           <span class="at">dblclick =</span> <span class="st">"plot_dblclick"</span>, <span class="co"># to retrieve the double click position</span></span>
+<span id="cb22-228"><a href="#cb22-228" aria-hidden="true" tabindex="-1"></a>           <span class="at">hover =</span> <span class="st">"plot_hover"</span>, <span class="co"># to retrieve the mouse position</span></span>
+<span id="cb22-229"><a href="#cb22-229" aria-hidden="true" tabindex="-1"></a>           <span class="at">brush =</span> <span class="st">"plot_brush"</span> <span class="co"># to retrieve the rectangle coordinates</span></span>
+<span id="cb22-230"><a href="#cb22-230" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb22-231"><a href="#cb22-231" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-232"><a href="#cb22-232" aria-hidden="true" tabindex="-1"></a><span class="co"># In server:</span></span>
+<span id="cb22-233"><a href="#cb22-233" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>plot_name <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb22-234"><a href="#cb22-234" aria-hidden="true" tabindex="-1"></a>        <span class="co"># do plot:</span></span>
+<span id="cb22-235"><a href="#cb22-235" aria-hidden="true" tabindex="-1"></a>        <span class="fu">plot</span>(...)</span>
+<span id="cb22-236"><a href="#cb22-236" aria-hidden="true" tabindex="-1"></a>        <span class="co"># or</span></span>
+<span id="cb22-237"><a href="#cb22-237" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ggplot</span>(...)</span>
+<span id="cb22-238"><a href="#cb22-238" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb22-239"><a href="#cb22-239" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-240"><a href="#cb22-240" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-241"><a href="#cb22-241" aria-hidden="true" tabindex="-1"></a>If you want an interactive plot, use <span class="in">`plotlyOutput()`</span>{.R} and <span class="in">`renderPlotly()`</span>{.R} instead.</span>
+<span id="cb22-242"><a href="#cb22-242" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-243"><a href="#cb22-243" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"display-text"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-244"><a href="#cb22-244" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-245"><a href="#cb22-245" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Display text</span></span>
+<span id="cb22-246"><a href="#cb22-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-247"><a href="#cb22-247" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-248"><a href="#cb22-248" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-249"><a href="#cb22-249" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb22-250"><a href="#cb22-250" aria-hidden="true" tabindex="-1"></a><span class="fu">textOutput</span>(<span class="st">"text_to_display"</span>)</span>
+<span id="cb22-251"><a href="#cb22-251" aria-hidden="true" tabindex="-1"></a><span class="co"># Verbatim text (fixed width characters):</span></span>
+<span id="cb22-252"><a href="#cb22-252" aria-hidden="true" tabindex="-1"></a><span class="fu">verbatimTextOutput</span>(<span class="st">"text_to_display"</span>)</span>
+<span id="cb22-253"><a href="#cb22-253" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-254"><a href="#cb22-254" aria-hidden="true" tabindex="-1"></a><span class="co"># In server:</span></span>
+<span id="cb22-255"><a href="#cb22-255" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>text_to_display <span class="ot">&lt;-</span> <span class="fu">renderText</span>({ <span class="st">"some text"</span> })</span>
+<span id="cb22-256"><a href="#cb22-256" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>text_to_display <span class="ot">&lt;-</span> <span class="fu">renderPrint</span>({ <span class="st">"some text"</span> })</span>
+<span id="cb22-257"><a href="#cb22-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-258"><a href="#cb22-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-259"><a href="#cb22-259" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"display-a-table"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-260"><a href="#cb22-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-261"><a href="#cb22-261" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Display a table</span></span>
+<span id="cb22-262"><a href="#cb22-262" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-263"><a href="#cb22-263" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-264"><a href="#cb22-264" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-265"><a href="#cb22-265" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb22-266"><a href="#cb22-266" aria-hidden="true" tabindex="-1"></a><span class="fu">tableOutput</span>(<span class="st">"table_to_display"</span>)</span>
+<span id="cb22-267"><a href="#cb22-267" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-268"><a href="#cb22-268" aria-hidden="true" tabindex="-1"></a><span class="co"># In server:</span></span>
+<span id="cb22-269"><a href="#cb22-269" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>table_to_display <span class="ot">&lt;-</span> <span class="fu">renderTable</span>({ df })</span>
+<span id="cb22-270"><a href="#cb22-270" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-271"><a href="#cb22-271" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-272"><a href="#cb22-272" aria-hidden="true" tabindex="-1"></a>Or in case you want interactive tables, use the package <span class="co">[</span><span class="ot">datatable</span><span class="co">](https://shiny.rstudio.com/articles/datatables.html)</span>:</span>
+<span id="cb22-273"><a href="#cb22-273" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-274"><a href="#cb22-274" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb22-275"><a href="#cb22-275" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-276"><a href="#cb22-276" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb22-277"><a href="#cb22-277" aria-hidden="true" tabindex="-1"></a><span class="fu">dataTableOutput</span>(<span class="st">"table_to_display"</span>)</span>
+<span id="cb22-278"><a href="#cb22-278" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-279"><a href="#cb22-279" aria-hidden="true" tabindex="-1"></a><span class="co"># In server:</span></span>
+<span id="cb22-280"><a href="#cb22-280" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>table_to_display <span class="ot">&lt;-</span> <span class="fu">renderDataTable</span>({ df })</span>
+<span id="cb22-281"><a href="#cb22-281" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-282"><a href="#cb22-282" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-283"><a href="#cb22-283" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"reactive-events"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-284"><a href="#cb22-284" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-285"><a href="#cb22-285" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Reactive events</span></span>
+<span id="cb22-286"><a href="#cb22-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-287"><a href="#cb22-287" aria-hidden="true" tabindex="-1"></a>In case you want the plots or text display to react to a change in input value, you can wrap the corresponding code in the <span class="in">`reactive()`</span>{.R} function on the server side:</span>
+<span id="cb22-288"><a href="#cb22-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-289"><a href="#cb22-289" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-290"><a href="#cb22-290" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-291"><a href="#cb22-291" aria-hidden="true" tabindex="-1"></a><span class="co"># In ui:</span></span>
+<span id="cb22-292"><a href="#cb22-292" aria-hidden="true" tabindex="-1"></a><span class="fu">fileInput</span>(<span class="st">"file_in"</span>, </span>
+<span id="cb22-293"><a href="#cb22-293" aria-hidden="true" tabindex="-1"></a>          <span class="st">"Choose input file:"</span>, <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".txt"</span>) </span>
+<span id="cb22-294"><a href="#cb22-294" aria-hidden="true" tabindex="-1"></a>          ),</span>
+<span id="cb22-295"><a href="#cb22-295" aria-hidden="true" tabindex="-1"></a><span class="fu">checkboxInput</span>(<span class="st">"header"</span>, <span class="st">"Header?"</span>, <span class="at">value=</span><span class="cn">TRUE</span>),</span>
+<span id="cb22-296"><a href="#cb22-296" aria-hidden="true" tabindex="-1"></a><span class="fu">selectInput</span>(<span class="st">"menu"</span>, <span class="st">"Columns to display"</span>, </span>
+<span id="cb22-297"><a href="#cb22-297" aria-hidden="true" tabindex="-1"></a>            <span class="at">choices=</span><span class="dv">1</span>, <span class="at">selected =</span> <span class="dv">1</span>, <span class="at">multiple =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb22-298"><a href="#cb22-298" aria-hidden="true" tabindex="-1"></a><span class="fu">tableOutput</span>(<span class="st">"table"</span>)</span>
+<span id="cb22-299"><a href="#cb22-299" aria-hidden="true" tabindex="-1"></a><span class="co"># # # # # # # # # </span></span>
+<span id="cb22-300"><a href="#cb22-300" aria-hidden="true" tabindex="-1"></a><span class="co"># In server:</span></span>
+<span id="cb22-301"><a href="#cb22-301" aria-hidden="true" tabindex="-1"></a>myData <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb22-302"><a href="#cb22-302" aria-hidden="true" tabindex="-1"></a>        inFile <span class="ot">&lt;-</span> input<span class="sc">$</span>file_in</span>
+<span id="cb22-303"><a href="#cb22-303" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">is.null</span>(inFile)) {</span>
+<span id="cb22-304"><a href="#cb22-304" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb22-305"><a href="#cb22-305" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb22-306"><a href="#cb22-306" aria-hidden="true" tabindex="-1"></a>            df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(inFile<span class="sc">$</span>datapath, <span class="at">header=</span>input<span class="sc">$</span>header)</span>
+<span id="cb22-307"><a href="#cb22-307" aria-hidden="true" tabindex="-1"></a>            <span class="fu">updateSelectInput</span>(session, <span class="st">"menu"</span>, <span class="at">choices=</span><span class="dv">1</span><span class="sc">:</span><span class="fu">ncol</span>(df), <span class="at">selected=</span>input<span class="sc">$</span>menu)</span>
+<span id="cb22-308"><a href="#cb22-308" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(df)</span>
+<span id="cb22-309"><a href="#cb22-309" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb22-310"><a href="#cb22-310" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb22-311"><a href="#cb22-311" aria-hidden="true" tabindex="-1"></a>output<span class="sc">$</span>table <span class="ot">&lt;-</span> <span class="fu">renderTable</span>( <span class="fu">myData</span>()[,<span class="fu">sort</span>(<span class="fu">as.numeric</span>(input<span class="sc">$</span>menu))] )</span>
+<span id="cb22-312"><a href="#cb22-312" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-313"><a href="#cb22-313" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-314"><a href="#cb22-314" aria-hidden="true" tabindex="-1"></a>The various input default values can be updated using the following functions on the server side:</span>
+<span id="cb22-315"><a href="#cb22-315" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-316"><a href="#cb22-316" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-317"><a href="#cb22-317" aria-hidden="true" tabindex="-1"></a><span class="co"># Dropdown menu</span></span>
+<span id="cb22-318"><a href="#cb22-318" aria-hidden="true" tabindex="-1"></a><span class="fu">updateSelectInput</span>(session, <span class="st">"menu_name"</span>, <span class="at">choices=</span>new_choices)</span>
+<span id="cb22-319"><a href="#cb22-319" aria-hidden="true" tabindex="-1"></a><span class="co"># Text</span></span>
+<span id="cb22-320"><a href="#cb22-320" aria-hidden="true" tabindex="-1"></a><span class="fu">updateTextInput</span>(session, <span class="st">"text_name"</span>, <span class="at">value =</span> new_value)</span>
+<span id="cb22-321"><a href="#cb22-321" aria-hidden="true" tabindex="-1"></a><span class="co"># Numeric</span></span>
+<span id="cb22-322"><a href="#cb22-322" aria-hidden="true" tabindex="-1"></a><span class="fu">updateNumericInput</span>(session, <span class="st">"value_name"</span>, <span class="at">value =</span> new_value)</span>
+<span id="cb22-323"><a href="#cb22-323" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-324"><a href="#cb22-324" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-325"><a href="#cb22-325" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-326"><a href="#cb22-326" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"writing-a-file"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-327"><a href="#cb22-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-328"><a href="#cb22-328" aria-hidden="true" tabindex="-1"></a><span class="fu">##### Writing a file</span></span>
+<span id="cb22-329"><a href="#cb22-329" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-330"><a href="#cb22-330" aria-hidden="true" tabindex="-1"></a>This is not a function of shiny, but you may want to write a text file. If this comes from a <span class="in">`data.frame`</span>{.R}, you can use the function <span class="in">`write.table()`</span>{.R}:</span>
+<span id="cb22-331"><a href="#cb22-331" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-332"><a href="#cb22-332" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-333"><a href="#cb22-333" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="at">y=</span><span class="fu">sin</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))</span>
+<span id="cb22-334"><a href="#cb22-334" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(df, <span class="st">"test.dat"</span>, <span class="at">quote=</span><span class="cn">FALSE</span>, <span class="at">row.names=</span><span class="cn">FALSE</span>)</span>
+<span id="cb22-335"><a href="#cb22-335" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-336"><a href="#cb22-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-337"><a href="#cb22-337" aria-hidden="true" tabindex="-1"></a>For other forms of printing, look into the <span class="in">`write()`</span>{.R} function:</span>
+<span id="cb22-338"><a href="#cb22-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-339"><a href="#cb22-339" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-340"><a href="#cb22-340" aria-hidden="true" tabindex="-1"></a>toprint <span class="ot">&lt;-</span> <span class="fu">paste</span>(<span class="st">"hello"</span>, <span class="st">"world"</span>)</span>
+<span id="cb22-341"><a href="#cb22-341" aria-hidden="true" tabindex="-1"></a>outfile <span class="ot">&lt;-</span> <span class="fu">file</span>(<span class="st">"file_name.txt"</span>, <span class="at">encoding=</span><span class="st">"UTF-8"</span>)</span>
+<span id="cb22-342"><a href="#cb22-342" aria-hidden="true" tabindex="-1"></a><span class="fu">write</span>(toprint, <span class="at">file=</span>outfile)</span>
+<span id="cb22-343"><a href="#cb22-343" aria-hidden="true" tabindex="-1"></a><span class="fu">close</span>(outfile)</span>
+<span id="cb22-344"><a href="#cb22-344" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-345"><a href="#cb22-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-346"><a href="#cb22-346" aria-hidden="true" tabindex="-1"></a>You can for example write a Rmd file that you will render (as pdf, etc...) using <span class="co">[</span><span class="ot">`render()`{.R}</span><span class="co">](https://www.rdocumentation.org/packages/rmarkdown/versions/1.13/topics/render)</span>:</span>
+<span id="cb22-347"><a href="#cb22-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-348"><a href="#cb22-348" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-349"><a href="#cb22-349" aria-hidden="true" tabindex="-1"></a>rmarkdown<span class="sc">::</span><span class="fu">render</span>(<span class="st">"file_name.Rmd"</span>)</span>
+<span id="cb22-350"><a href="#cb22-350" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-351"><a href="#cb22-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-352"><a href="#cb22-352" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-353"><a href="#cb22-353" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-354"><a href="#cb22-354" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"example"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-355"><a href="#cb22-355" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-356"><a href="#cb22-356" aria-hidden="true" tabindex="-1"></a><span class="fu">### Example {#example-shiny}</span></span>
+<span id="cb22-357"><a href="#cb22-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-358"><a href="#cb22-358" aria-hidden="true" tabindex="-1"></a>Create a new shiny app with the following code, and play around with it. The input file should be the tidy <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/population.txt"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>population.txt<span class="kw">&lt;/a&gt;</span>.</span>
+<span id="cb22-359"><a href="#cb22-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-360"><a href="#cb22-360" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-361"><a href="#cb22-361" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb22-362"><a href="#cb22-362" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb22-363"><a href="#cb22-363" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(plotly)</span>
+<span id="cb22-364"><a href="#cb22-364" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DT)</span>
+<span id="cb22-365"><a href="#cb22-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-366"><a href="#cb22-366" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb22-367"><a href="#cb22-367" aria-hidden="true" tabindex="-1"></a>    <span class="fu">titlePanel</span>(<span class="st">"City population in France"</span>),</span>
+<span id="cb22-368"><a href="#cb22-368" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarLayout</span>(</span>
+<span id="cb22-369"><a href="#cb22-369" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sidebarPanel</span>(</span>
+<span id="cb22-370"><a href="#cb22-370" aria-hidden="true" tabindex="-1"></a>            <span class="fu">fileInput</span>(<span class="st">"file_in"</span>, <span class="st">"Choose input file:"</span>,</span>
+<span id="cb22-371"><a href="#cb22-371" aria-hidden="true" tabindex="-1"></a>                      <span class="at">accept =</span> <span class="fu">c</span>(<span class="st">".txt"</span>) ),</span>
+<span id="cb22-372"><a href="#cb22-372" aria-hidden="true" tabindex="-1"></a>            <span class="fu">selectInput</span>(<span class="st">"sel_city"</span>, <span class="st">"City:"</span>, <span class="at">choices =</span> <span class="st">""</span>, <span class="at">multiple =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-373"><a href="#cb22-373" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb22-374"><a href="#cb22-374" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mainPanel</span>(</span>
+<span id="cb22-375"><a href="#cb22-375" aria-hidden="true" tabindex="-1"></a>            <span class="fu">tabsetPanel</span>(</span>
+<span id="cb22-376"><a href="#cb22-376" aria-hidden="true" tabindex="-1"></a>                <span class="fu">tabPanel</span>(<span class="st">"Plot"</span>, <span class="fu">plotlyOutput</span>(<span class="st">"cityplot"</span>, <span class="at">height =</span> <span class="st">"400px"</span>)),</span>
+<span id="cb22-377"><a href="#cb22-377" aria-hidden="true" tabindex="-1"></a>                <span class="fu">tabPanel</span>(<span class="st">"Table"</span>, <span class="fu">dataTableOutput</span>(<span class="st">"table"</span>))</span>
+<span id="cb22-378"><a href="#cb22-378" aria-hidden="true" tabindex="-1"></a>            )</span>
+<span id="cb22-379"><a href="#cb22-379" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb22-380"><a href="#cb22-380" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-381"><a href="#cb22-381" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-382"><a href="#cb22-382" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-383"><a href="#cb22-383" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb22-384"><a href="#cb22-384" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-385"><a href="#cb22-385" aria-hidden="true" tabindex="-1"></a>    <span class="co"># myData() returns the data if a file is provided</span></span>
+<span id="cb22-386"><a href="#cb22-386" aria-hidden="true" tabindex="-1"></a>    myData <span class="ot">&lt;-</span> <span class="fu">reactive</span>({</span>
+<span id="cb22-387"><a href="#cb22-387" aria-hidden="true" tabindex="-1"></a>        inFile <span class="ot">&lt;-</span> input<span class="sc">$</span>file_in</span>
+<span id="cb22-388"><a href="#cb22-388" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> (<span class="fu">is.null</span>(inFile)) {</span>
+<span id="cb22-389"><a href="#cb22-389" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb22-390"><a href="#cb22-390" aria-hidden="true" tabindex="-1"></a>        } <span class="cf">else</span> {</span>
+<span id="cb22-391"><a href="#cb22-391" aria-hidden="true" tabindex="-1"></a>            df <span class="ot">&lt;-</span> <span class="fu">read.table</span>(inFile<span class="sc">$</span>datapath, <span class="at">header=</span><span class="cn">TRUE</span>)</span>
+<span id="cb22-392"><a href="#cb22-392" aria-hidden="true" tabindex="-1"></a>            <span class="co"># in case something changes,</span></span>
+<span id="cb22-393"><a href="#cb22-393" aria-hidden="true" tabindex="-1"></a>            <span class="co"># update the city input selection list</span></span>
+<span id="cb22-394"><a href="#cb22-394" aria-hidden="true" tabindex="-1"></a>            <span class="fu">updateSelectInput</span>(session, <span class="st">"sel_city"</span>,</span>
+<span id="cb22-395"><a href="#cb22-395" aria-hidden="true" tabindex="-1"></a>                              <span class="at">choices =</span> <span class="fu">unique</span>(df<span class="sc">$</span>city),</span>
+<span id="cb22-396"><a href="#cb22-396" aria-hidden="true" tabindex="-1"></a>                              <span class="at">selected =</span> <span class="fu">unique</span>(df<span class="sc">$</span>city)[<span class="dv">1</span>])</span>
+<span id="cb22-397"><a href="#cb22-397" aria-hidden="true" tabindex="-1"></a>            <span class="fu">return</span>(df)</span>
+<span id="cb22-398"><a href="#cb22-398" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb22-399"><a href="#cb22-399" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb22-400"><a href="#cb22-400" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-401"><a href="#cb22-401" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot the pop vs year for the selected cities</span></span>
+<span id="cb22-402"><a href="#cb22-402" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>cityplot <span class="ot">&lt;-</span> <span class="fu">renderPlotly</span>({</span>
+<span id="cb22-403"><a href="#cb22-403" aria-hidden="true" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">myData</span>()</span>
+<span id="cb22-404"><a href="#cb22-404" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="fu">is.null</span>(df)) <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb22-405"><a href="#cb22-405" aria-hidden="true" tabindex="-1"></a>        p <span class="ot">&lt;-</span> df <span class="sc">%&gt;%</span> </span>
+<span id="cb22-406"><a href="#cb22-406" aria-hidden="true" tabindex="-1"></a>            <span class="fu">filter</span>(city <span class="sc">%in%</span> input<span class="sc">$</span>sel_city) <span class="sc">%&gt;%</span></span>
+<span id="cb22-407"><a href="#cb22-407" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>pop, <span class="at">size=</span>pop, <span class="at">color=</span>city)) <span class="sc">+</span></span>
+<span id="cb22-408"><a href="#cb22-408" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb22-409"><a href="#cb22-409" aria-hidden="true" tabindex="-1"></a>                <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>, <span class="at">alpha=</span><span class="fl">0.1</span>,</span>
+<span id="cb22-410"><a href="#cb22-410" aria-hidden="true" tabindex="-1"></a>                            <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb22-411"><a href="#cb22-411" aria-hidden="true" tabindex="-1"></a>                            <span class="fu">aes</span>(<span class="at">fill=</span>city)) <span class="sc">+</span></span>
+<span id="cb22-412"><a href="#cb22-412" aria-hidden="true" tabindex="-1"></a>                <span class="fu">ggtitle</span>(<span class="fu">paste0</span>(<span class="st">"Population in "</span>,</span>
+<span id="cb22-413"><a href="#cb22-413" aria-hidden="true" tabindex="-1"></a>                               <span class="fu">paste</span>(input<span class="sc">$</span>sel_city, <span class="at">collapse =</span> <span class="st">", "</span>)</span>
+<span id="cb22-414"><a href="#cb22-414" aria-hidden="true" tabindex="-1"></a>                               ))<span class="sc">+</span></span>
+<span id="cb22-415"><a href="#cb22-415" aria-hidden="true" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Year"</span>, <span class="at">y=</span><span class="st">"Population"</span>)<span class="sc">+</span></span>
+<span id="cb22-416"><a href="#cb22-416" aria-hidden="true" tabindex="-1"></a>                <span class="fu">theme_light</span>()</span>
+<span id="cb22-417"><a href="#cb22-417" aria-hidden="true" tabindex="-1"></a>        <span class="fu">ggplotly</span>(p, <span class="at">dynamicTicks =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-418"><a href="#cb22-418" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb22-419"><a href="#cb22-419" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-420"><a href="#cb22-420" aria-hidden="true" tabindex="-1"></a>    <span class="co"># show data as a table</span></span>
+<span id="cb22-421"><a href="#cb22-421" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>table <span class="ot">&lt;-</span> <span class="fu">renderDataTable</span>({</span>
+<span id="cb22-422"><a href="#cb22-422" aria-hidden="true" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">myData</span>() <span class="sc">%&gt;%</span> <span class="fu">filter</span>(city <span class="sc">%in%</span> input<span class="sc">$</span>sel_city)</span>
+<span id="cb22-423"><a href="#cb22-423" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="fu">is.null</span>(df)) <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb22-424"><a href="#cb22-424" aria-hidden="true" tabindex="-1"></a>        df <span class="ot">&lt;-</span> <span class="fu">pivot_wider</span>(df, <span class="at">names_from=</span>year, <span class="at">values_from=</span>pop)</span>
+<span id="cb22-425"><a href="#cb22-425" aria-hidden="true" tabindex="-1"></a>        <span class="fu">datatable</span>(df, <span class="at">rownames =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb22-426"><a href="#cb22-426" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb22-427"><a href="#cb22-427" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-428"><a href="#cb22-428" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-429"><a href="#cb22-429" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-430"><a href="#cb22-430" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span>
+<span id="cb22-431"><a href="#cb22-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-432"><a href="#cb22-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-433"><a href="#cb22-433" aria-hidden="true" tabindex="-1"></a>This will render <span class="co">[</span><span class="ot">like this</span><span class="co">](https://cbousige.shinyapps.io/shiny_example/)</span>.</span>
+<span id="cb22-434"><a href="#cb22-434" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-435"><a href="#cb22-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-436"><a href="#cb22-436" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"rmarkdown-embedded-shiny-application"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-437"><a href="#cb22-437" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-438"><a href="#cb22-438" aria-hidden="true" tabindex="-1"></a><span class="fu">## Rmarkdown-embedded shiny application</span></span>
+<span id="cb22-439"><a href="#cb22-439" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-440"><a href="#cb22-440" aria-hidden="true" tabindex="-1"></a>A shiny application can even be embedded inside a Rmarkdown document by providing <span class="in">`runtime: shiny`</span> in the YAML header. A short example here, try to compile it:</span>
+<span id="cb22-441"><a href="#cb22-441" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-442"><a href="#cb22-442" aria-hidden="true" tabindex="-1"></a><span class="in">````markdown</span></span>
+<span id="cb22-443"><a href="#cb22-443" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb22-444"><a href="#cb22-444" aria-hidden="true" tabindex="-1"></a>title: "Test"</span>
+<span id="cb22-445"><a href="#cb22-445" aria-hidden="true" tabindex="-1"></a>output: html_document</span>
+<span id="cb22-446"><a href="#cb22-446" aria-hidden="true" tabindex="-1"></a>runtime: shiny</span>
+<span id="cb22-447"><a href="#cb22-447" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb22-448"><a href="#cb22-448" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-449"><a href="#cb22-449" aria-hidden="true" tabindex="-1"></a>This is a test Rmarkdown document.</span>
+<span id="cb22-450"><a href="#cb22-450" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-451"><a href="#cb22-451" aria-hidden="true" tabindex="-1"></a>`r ''````{r, echo=FALSE, message=FALSE}</span>
+<span id="cb22-452"><a href="#cb22-452" aria-hidden="true" tabindex="-1"></a>library(ggplot2)</span>
+<span id="cb22-453"><a href="#cb22-453" aria-hidden="true" tabindex="-1"></a>library(plotly)</span>
+<span id="cb22-454"><a href="#cb22-454" aria-hidden="true" tabindex="-1"></a>df &lt;- read.table("Data/population.txt", header=TRUE)</span>
+<span id="cb22-455"><a href="#cb22-455" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-456"><a href="#cb22-456" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-457"><a href="#cb22-457" aria-hidden="true" tabindex="-1"></a>shinyApp(</span>
+<span id="cb22-458"><a href="#cb22-458" aria-hidden="true" tabindex="-1"></a>  ui = fluidPage(</span>
+<span id="cb22-459"><a href="#cb22-459" aria-hidden="true" tabindex="-1"></a>    selectInput("city", "City:", choices = unique(df$city)),</span>
+<span id="cb22-460"><a href="#cb22-460" aria-hidden="true" tabindex="-1"></a>    plotlyOutput("cityplot", height = 600)</span>
+<span id="cb22-461"><a href="#cb22-461" aria-hidden="true" tabindex="-1"></a>  ),</span>
+<span id="cb22-462"><a href="#cb22-462" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-463"><a href="#cb22-463" aria-hidden="true" tabindex="-1"></a>  server = function(input, output) {</span>
+<span id="cb22-464"><a href="#cb22-464" aria-hidden="true" tabindex="-1"></a>    output$cityplot = renderPlotly({</span>
+<span id="cb22-465"><a href="#cb22-465" aria-hidden="true" tabindex="-1"></a>      p &lt;- ggplot(data=subset(df,city==input$city), </span>
+<span id="cb22-466"><a href="#cb22-466" aria-hidden="true" tabindex="-1"></a>                aes(x=year, y=pop, size=pop)) +</span>
+<span id="cb22-467"><a href="#cb22-467" aria-hidden="true" tabindex="-1"></a>            geom_point() + </span>
+<span id="cb22-468"><a href="#cb22-468" aria-hidden="true" tabindex="-1"></a>            geom_smooth(method="lm", alpha=0.1, show.legend = FALSE) + </span>
+<span id="cb22-469"><a href="#cb22-469" aria-hidden="true" tabindex="-1"></a>            ggtitle(paste("Population in ",input$city,sep=""))+</span>
+<span id="cb22-470"><a href="#cb22-470" aria-hidden="true" tabindex="-1"></a>            labs(x="Year", y="Population")+</span>
+<span id="cb22-471"><a href="#cb22-471" aria-hidden="true" tabindex="-1"></a>            theme_light()</span>
+<span id="cb22-472"><a href="#cb22-472" aria-hidden="true" tabindex="-1"></a>      ggplotly(p)</span>
+<span id="cb22-473"><a href="#cb22-473" aria-hidden="true" tabindex="-1"></a>    })</span>
+<span id="cb22-474"><a href="#cb22-474" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb22-475"><a href="#cb22-475" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-476"><a href="#cb22-476" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-477"><a href="#cb22-477" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb22-478"><a href="#cb22-478" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-479"><a href="#cb22-479" aria-hidden="true" tabindex="-1"></a>The only "problem" with this solution is that the html file that is produced will not run the shiny app by itself, you have to open the Rmd file in Rstudio and hit "Run Document".</span>
+<span id="cb22-480"><a href="#cb22-480" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-481"><a href="#cb22-481" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-482"><a href="#cb22-482" aria-hidden="true" tabindex="-1"></a>Another solution consists in deploying your app on <span class="co">[</span><span class="ot">shinyapps.io</span><span class="co">](https://www.shinyapps.io/)</span> and embedding the page in your document with:</span>
+<span id="cb22-483"><a href="#cb22-483" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-484"><a href="#cb22-484" aria-hidden="true" tabindex="-1"></a><span class="in">````r</span></span>
+<span id="cb22-485"><a href="#cb22-485" aria-hidden="true" tabindex="-1"></a><span class="st">`</span><span class="at">r ''</span><span class="st">````</span><span class="at">{r, echo=FALSE}</span></span>
+<span id="cb22-486"><a href="#cb22-486" aria-hidden="true" tabindex="-1"></a><span class="at">knitr::include_app("https://cbousige.shinyapps.io/shiny_example/", </span></span>
+<span id="cb22-487"><a href="#cb22-487" aria-hidden="true" tabindex="-1"></a><span class="at">                    height = "800px")</span></span>
+<span id="cb22-488"><a href="#cb22-488" aria-hidden="true" tabindex="-1"></a><span class="st">```</span></span>
+<span id="cb22-489"><a href="#cb22-489" aria-hidden="true" tabindex="-1"></a><span class="in">````</span></span>
+<span id="cb22-490"><a href="#cb22-490" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-491"><a href="#cb22-491" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"deploying-your-shiny-app"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-492"><a href="#cb22-492" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-493"><a href="#cb22-493" aria-hidden="true" tabindex="-1"></a><span class="fu">## Deploying your shiny app</span></span>
+<span id="cb22-494"><a href="#cb22-494" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-495"><a href="#cb22-495" aria-hidden="true" tabindex="-1"></a>There are 4 ways to deploy your app: passing the <span class="in">`app.R`</span> file to your users, deploying to <span class="co">[</span><span class="ot">shinyapps.io</span><span class="co">](https://www.shinyapps.io/)</span>, deploying on your own server, or building an executable with Electron.</span>
+<span id="cb22-496"><a href="#cb22-496" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-497"><a href="#cb22-497" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"passing-the-appr-file-to-your-users"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-498"><a href="#cb22-498" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-499"><a href="#cb22-499" aria-hidden="true" tabindex="-1"></a><span class="fu">### Passing the app.R file to your users</span></span>
+<span id="cb22-500"><a href="#cb22-500" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-501"><a href="#cb22-501" aria-hidden="true" tabindex="-1"></a>This option is certainly easy: just send your <span class="in">`app.R`</span> file (or Rmd file with shiny embedded app) as well as any other files needed (*e.g.* `global.R`) to your users, explain to them how to run it, and *voilà*.</span>
+<span id="cb22-502"><a href="#cb22-502" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-503"><a href="#cb22-503" aria-hidden="true" tabindex="-1"></a>However, this needs a little bit of know-how from the users: they need to install R and Rstudio, install the needed packages, and run the app.</span>
+<span id="cb22-504"><a href="#cb22-504" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-505"><a href="#cb22-505" aria-hidden="true" tabindex="-1"></a>A good option to remove the "package-installing" step is to define a function <span class="in">`check.package()`</span>{.R} that will check if the package is installed, install it if needed, and load it:</span>
+<span id="cb22-506"><a href="#cb22-506" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-507"><a href="#cb22-507" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-508"><a href="#cb22-508" aria-hidden="true" tabindex="-1"></a>check.packages <span class="ot">&lt;-</span> <span class="cf">function</span>(pkg){</span>
+<span id="cb22-509"><a href="#cb22-509" aria-hidden="true" tabindex="-1"></a>    new.pkg <span class="ot">&lt;-</span> pkg[<span class="sc">!</span>(pkg <span class="sc">%in%</span> <span class="fu">installed.packages</span>()[, <span class="st">"Package"</span>])]</span>
+<span id="cb22-510"><a href="#cb22-510" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">length</span>(new.pkg)) </span>
+<span id="cb22-511"><a href="#cb22-511" aria-hidden="true" tabindex="-1"></a>        <span class="fu">install.packages</span>(new.pkg, <span class="at">dependencies =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-512"><a href="#cb22-512" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sapply</span>(pkg, require, <span class="at">character.only =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb22-513"><a href="#cb22-513" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-514"><a href="#cb22-514" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage:</span></span>
+<span id="cb22-515"><a href="#cb22-515" aria-hidden="true" tabindex="-1"></a><span class="fu">check.packages</span>(<span class="st">"ggplot2"</span>)</span>
+<span id="cb22-516"><a href="#cb22-516" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-517"><a href="#cb22-517" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-518"><a href="#cb22-518" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-519"><a href="#cb22-519" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"deploying-to-shinyappsio"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-520"><a href="#cb22-520" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-521"><a href="#cb22-521" aria-hidden="true" tabindex="-1"></a><span class="fu">### Deploying to shinyapps.io</span></span>
+<span id="cb22-522"><a href="#cb22-522" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-523"><a href="#cb22-523" aria-hidden="true" tabindex="-1"></a>Applications deployed on shinyapps.io will be accessible from anywhere through a weblink. See for example <span class="co">[</span><span class="ot">my application</span><span class="co">](https://cbousige.shinyapps.io/rubypressure/)</span> to determine the pressure from a ruby Raman spectrum or the expected Raman shift for a given pressure and laser wavelength. Your application will however be public and you will have some limitations in the number of online applications and time of use (if you don't pay a fee, see <span class="co">[</span><span class="ot">here</span><span class="co">](https://www.shinyapps.io/)</span> for the various plans).</span>
+<span id="cb22-524"><a href="#cb22-524" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-525"><a href="#cb22-525" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First, create an account on <span class="co">[</span><span class="ot">shinyapps.io</span><span class="co">](https://www.shinyapps.io/admin/#/signup)</span></span>
+<span id="cb22-526"><a href="#cb22-526" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Follow the steps described <span class="co">[</span><span class="ot">here</span><span class="co">](https://docs.rstudio.com/shinyapps.io/getting-started.html#deploying-applications)</span> to:</span>
+<span id="cb22-527"><a href="#cb22-527" aria-hidden="true" tabindex="-1"></a><span class="ss">    + </span>*Configure RSconnect*: in your shinyapps.io dashboard, click your name, then Tokens, and create a token for a new app. Copy the text in the popup window.</span>
+<span id="cb22-528"><a href="#cb22-528" aria-hidden="true" tabindex="-1"></a><span class="ss">    + </span>*Deploy the app* from the Rstudio window by clicking on the "Publish" button in the top right corner of the interface. Follow the steps along the *shinyapps.io* way.</span>
+<span id="cb22-529"><a href="#cb22-529" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-530"><a href="#cb22-530" aria-hidden="true" tabindex="-1"></a>Note that in that case, you should not have any <span class="in">`install.package()`</span>{.R} command in your code. Most packages are supported by shinyapps.io.</span>
+<span id="cb22-531"><a href="#cb22-531" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-532"><a href="#cb22-532" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-533"><a href="#cb22-533" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"deploying-on-your-own-linux-server"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-534"><a href="#cb22-534" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-535"><a href="#cb22-535" aria-hidden="true" tabindex="-1"></a><span class="fu">### Deploying on your own Linux server</span></span>
+<span id="cb22-536"><a href="#cb22-536" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-537"><a href="#cb22-537" aria-hidden="true" tabindex="-1"></a>This option is more advanced and I'm not going into details for that, but you have a number of tutorials online. See *e.g.* <span class="co">[</span><span class="ot">here</span><span class="co">](https://shiny.rstudio.com/articles/shiny-server.html)</span>, <span class="co">[</span><span class="ot">here</span><span class="co">](https://docs.rstudio.com/shiny-server/)</span> or <span class="co">[</span><span class="ot">here</span><span class="co">](https://www.digitalocean.com/community/tutorials/how-to-set-up-shiny-server-on-ubuntu-16-04)</span>.</span>
+<span id="cb22-538"><a href="#cb22-538" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-539"><a href="#cb22-539" aria-hidden="true" tabindex="-1"></a>You might consider this option if you work in a company that want to handle privately its data (which sounds plausible) and not pay the shinyapps.io fee to password protect the app. In that case, just work with the IT department to get it running.</span>
+<span id="cb22-540"><a href="#cb22-540" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-541"><a href="#cb22-541" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-542"><a href="#cb22-542" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"building-an-executable"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-543"><a href="#cb22-543" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-544"><a href="#cb22-544" aria-hidden="true" tabindex="-1"></a><span class="fu">### Building an executable</span></span>
+<span id="cb22-545"><a href="#cb22-545" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-546"><a href="#cb22-546" aria-hidden="true" tabindex="-1"></a>On **Windows**, there is this possibility that looks nice but that I never tried because I don't have Windows: <span class="co">[</span><span class="ot">RInno</span><span class="co">](https://ficonsulting.github.io/RInno/)</span>.</span>
+<span id="cb22-547"><a href="#cb22-547" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-548"><a href="#cb22-548" aria-hidden="true" tabindex="-1"></a>On **any platform**: there is the possibility described <span class="co">[</span><span class="ot">here</span><span class="co">](https://www.youtube.com/watch?v=ARrbbviGvjc)</span> with the corresponding <span class="co">[</span><span class="ot">github page</span><span class="co">](https://github.com/ColumbusCollaboratory/electron-quick-start)</span>. This option is actually awesome and a quite recent possibility. However, since the produced application will contain R and the needed packages, the executable file is quite heavy.</span>
+<span id="cb22-549"><a href="#cb22-549" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-550"><a href="#cb22-550" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-551"><a href="#cb22-551" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-552"><a href="#cb22-552" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-553"><a href="#cb22-553" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"further-reading"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-554"><a href="#cb22-554" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-555"><a href="#cb22-555" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
+<span id="cb22-556"><a href="#cb22-556" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-557"><a href="#cb22-557" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The Shiny <span class="co">[</span><span class="ot">cheatsheet</span><span class="co">](https://shiny.rstudio.com/images/shiny-cheatsheet.pdf)</span></span>
+<span id="cb22-558"><a href="#cb22-558" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Help on <span class="co">[</span><span class="ot">deploying your shiny app</span><span class="co">](https://shiny.rstudio.com/tutorial/written-tutorial/lesson7/)</span></span>
+<span id="cb22-559"><a href="#cb22-559" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Guide to application layout</span><span class="co">](https://shiny.rstudio.com/articles/layout-guide.html)</span></span>
+<span id="cb22-560"><a href="#cb22-560" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The <span class="co">[</span><span class="ot">Shiny Gallery</span><span class="co">](https://shiny.rstudio.com/gallery/)</span>: find what you want to do and adapt it to your needs</span>
+<span id="cb22-561"><a href="#cb22-561" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>The official <span class="co">[</span><span class="ot">Shiny video tutorial</span><span class="co">](https://shiny.rstudio.com/tutorial/)</span></span>
+<span id="cb22-562"><a href="#cb22-562" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-563"><a href="#cb22-563" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-564"><a href="#cb22-564" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-565"><a href="#cb22-565" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">id</span><span class="ot">=</span><span class="st">"exercises"</span><span class="kw">&gt;&lt;/a&gt;</span></span>
+<span id="cb22-566"><a href="#cb22-566" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-567"><a href="#cb22-567" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises {#exo-shiny}</span></span>
+<span id="cb22-568"><a href="#cb22-568" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-569"><a href="#cb22-569" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb22-570"><a href="#cb22-570" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 1**<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb22-571"><a href="#cb22-571" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-572"><a href="#cb22-572" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a new empty app with a blank user-interface and run it.</span>
+<span id="cb22-573"><a href="#cb22-573" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Add a title, a left panel and a main panel</span>
+<span id="cb22-574"><a href="#cb22-574" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Add an input numerical value defaulting to 1 and with a step of 0.05, name it "bw"</span>
+<span id="cb22-575"><a href="#cb22-575" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Add a slider input from 0 to 1e3 by steps of 1e2 defaulting to 5e2,  name it "N_val"</span>
+<span id="cb22-576"><a href="#cb22-576" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Add a plot of the <span class="in">`density`</span> of <span class="in">`rnorm(N_val)`</span>{.R} with bandwidth <span class="in">`bw`</span></span>
+<span id="cb22-577"><a href="#cb22-577" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Make sure <span class="in">`bw&gt;0`</span>, otherwise don't produce the plot</span>
+<span id="cb22-578"><a href="#cb22-578" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-579"><a href="#cb22-579" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb22-580"><a href="#cb22-580" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb22-581"><a href="#cb22-581" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-582"><a href="#cb22-582" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb22-583"><a href="#cb22-583" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(shiny)</span>
+<span id="cb22-584"><a href="#cb22-584" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-585"><a href="#cb22-585" aria-hidden="true" tabindex="-1"></a>ui <span class="ot">&lt;-</span> <span class="fu">fluidPage</span>(</span>
+<span id="cb22-586"><a href="#cb22-586" aria-hidden="true" tabindex="-1"></a>    <span class="fu">titlePanel</span>(<span class="st">"Some title"</span>),</span>
+<span id="cb22-587"><a href="#cb22-587" aria-hidden="true" tabindex="-1"></a>    <span class="fu">sidebarLayout</span>(</span>
+<span id="cb22-588"><a href="#cb22-588" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sidebarPanel</span>(</span>
+<span id="cb22-589"><a href="#cb22-589" aria-hidden="true" tabindex="-1"></a>            <span class="fu">numericInput</span>(<span class="st">"bw"</span>, <span class="st">"Enter bandwidth:"</span>, <span class="dv">1</span>, <span class="at">step=</span><span class="fl">0.05</span>),</span>
+<span id="cb22-590"><a href="#cb22-590" aria-hidden="true" tabindex="-1"></a>            <span class="fu">sliderInput</span>(<span class="st">"N_val"</span>, <span class="st">"Number of points:"</span>, </span>
+<span id="cb22-591"><a href="#cb22-591" aria-hidden="true" tabindex="-1"></a>                        <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="fl">1e4</span>, <span class="at">step=</span> <span class="fl">1e2</span>, <span class="at">value =</span> <span class="fl">5e2</span>)</span>
+<span id="cb22-592"><a href="#cb22-592" aria-hidden="true" tabindex="-1"></a>        ),</span>
+<span id="cb22-593"><a href="#cb22-593" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mainPanel</span>(</span>
+<span id="cb22-594"><a href="#cb22-594" aria-hidden="true" tabindex="-1"></a>            <span class="fu">plotOutput</span>(<span class="st">"plot"</span>, <span class="at">height =</span> <span class="dv">600</span>)</span>
+<span id="cb22-595"><a href="#cb22-595" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb22-596"><a href="#cb22-596" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb22-597"><a href="#cb22-597" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb22-598"><a href="#cb22-598" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-599"><a href="#cb22-599" aria-hidden="true" tabindex="-1"></a>server <span class="ot">&lt;-</span> <span class="cf">function</span>(input, output, session) {</span>
+<span id="cb22-600"><a href="#cb22-600" aria-hidden="true" tabindex="-1"></a>    output<span class="sc">$</span>plot <span class="ot">&lt;-</span> <span class="fu">renderPlot</span>({</span>
+<span id="cb22-601"><a href="#cb22-601" aria-hidden="true" tabindex="-1"></a>                        <span class="cf">if</span>(input<span class="sc">$</span>bw<span class="sc">==</span><span class="dv">0</span>) <span class="fu">return</span>(<span class="cn">NULL</span>)</span>
+<span id="cb22-602"><a href="#cb22-602" aria-hidden="true" tabindex="-1"></a>                        <span class="fu">plot</span>(<span class="fu">density</span>(<span class="fu">rnorm</span>(input<span class="sc">$</span>N_val), <span class="at">bw=</span><span class="fu">abs</span>(input<span class="sc">$</span>bw)))</span>
+<span id="cb22-603"><a href="#cb22-603" aria-hidden="true" tabindex="-1"></a>                    })</span>
+<span id="cb22-604"><a href="#cb22-604" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb22-605"><a href="#cb22-605" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-606"><a href="#cb22-606" aria-hidden="true" tabindex="-1"></a><span class="fu">shinyApp</span>(<span class="at">ui =</span> ui, <span class="at">server =</span> server)</span>
+<span id="cb22-607"><a href="#cb22-607" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb22-608"><a href="#cb22-608" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-609"><a href="#cb22-609" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb22-610"><a href="#cb22-610" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb22-611"><a href="#cb22-611" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-612"><a href="#cb22-612" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb22-613"><a href="#cb22-613" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 2**<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb22-614"><a href="#cb22-614" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-615"><a href="#cb22-615" aria-hidden="true" tabindex="-1"></a>Create a shiny application that will:</span>
+<span id="cb22-616"><a href="#cb22-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-617"><a href="#cb22-617" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>read an input (through a file dialog) Raman spectrum from a ruby (<span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/data_xp/xpdata.zip"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>XPdata.zip<span class="kw">&lt;/a&gt;</span>)</span>
+<span id="cb22-618"><a href="#cb22-618" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>fit the data by two Lorentzians</span>
+<span id="cb22-619"><a href="#cb22-619" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>plot the data interactively</span>
+<span id="cb22-620"><a href="#cb22-620" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>ask for the laser wavelength as an input and give 568.189 nm as default</span>
+<span id="cb22-621"><a href="#cb22-621" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>write the corresponding pressure on the page using the <span class="in">`Pruby()`</span>{.R} function defined in <span class="in">`myfunc.R`</span> found in <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/XPdata.zip"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>XPdata.zip<span class="kw">&lt;/a&gt;</span>.</span>
+<span id="cb22-622"><a href="#cb22-622" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>insert a button that will, when pressed, render a pdf report displaying the laser wavelength, the plot, the fit and the pressure found:</span>
+<span id="cb22-623"><a href="#cb22-623" aria-hidden="true" tabindex="-1"></a><span class="ss">    + </span>write a separate Rmd file with the proper parameters</span>
+<span id="cb22-624"><a href="#cb22-624" aria-hidden="true" tabindex="-1"></a><span class="ss">    + </span>render the Rmd file as a pdf (see the <span class="in">`render()`</span>{.R} function and <span class="co">[</span><span class="ot">this help</span><span class="co">](https://shiny.rstudio.com/articles/generating-reports.html)</span>)</span>
+<span id="cb22-625"><a href="#cb22-625" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-626"><a href="#cb22-626" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-627"><a href="#cb22-627" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-628"><a href="#cb22-628" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb22-629"><a href="#cb22-629" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-630"><a href="#cb22-630" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-631"><a href="#cb22-631" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb22-632"><a href="#cb22-632" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb22-633"><a href="#cb22-633" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb22-634"><a href="#cb22-634" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb22-635"><a href="#cb22-635" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb22-636"><a href="#cb22-636" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div></div></div></div></div>
+</div> <!-- /content -->
+
+
+
+</body></html>
