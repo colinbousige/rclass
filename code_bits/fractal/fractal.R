@@ -7,6 +7,7 @@ fractal <- function(coord      = c(-.8, .2),
                     delta      = .5, 
                     resolution = 400,
                     niter      = 500, 
+                    power      = 2,
                     zmax       = 2,
                     cols       = c("black","red","orange","royalblue","white"),
                     fold       = TRUE,
@@ -24,7 +25,7 @@ fractal <- function(coord      = c(-.8, .2),
                k = 0)
     for (rep in 1:niter) { 
         index <- which(Mod(d$z) < zmax)
-        d$z[index] <- d$z[index]^2 + d$c[index]
+        d$z[index] <- d$z[index]^power + d$c[index]
         d$k[index] <- d$k[index] + 1
     }
     if(plot){
@@ -38,6 +39,13 @@ fractal <- function(coord      = c(-.8, .2),
     }
 }
 
+P <- fractal(coord      = c(0,0), 
+             delta      = 1.5, 
+             power      = 4,
+             niter      = 200, 
+             resolution = 1500, 
+             plot       = TRUE)
+ggsave("fractal.png",P)
 
 counter <- 1
 for(delta in .95^(seq(0,100,1))){
