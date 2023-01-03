@@ -1,6 +1,6 @@
 ## Description
 
-This is the repository for the ["Reproducible data treatment with R"](http://lmi.cnrs.fr/r/) class.
+This is the repository for the ["Reproducible data treatment with R"](https://colinbousige.github.io/rclass/) class.
 
 Interactive exercises can be found in the associated [`tutor`](https://colinbousige.github.io/tutor/) package.
 
