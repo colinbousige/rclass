@@ -125,7 +125,7 @@ gtag('js', new Date());
 gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 </script>
 </head>
-<body class="nav-sidebar floating">
+<body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }"><div class="container-fluid d-flex justify-content-between">
@@ -138,11 +138,11 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Reproducible data treatment with R</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/colinbousige/Rclass" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/colinbousige/rclass" title="Source Code" class="sidebar-tool px-1"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -253,7 +253,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
   <li><a href="#loops" id="toc-loops" class="nav-link" data-scroll-target="#loops"><span class="toc-section-number">10.2</span>  Loops…</a></li>
   <li><a href="#and-how-to-avoid-them" id="toc-and-how-to-avoid-them" class="nav-link" data-scroll-target="#and-how-to-avoid-them"><span class="toc-section-number">10.3</span>  … and how to avoid them</a></li>
   <li><a href="#exo-loops" id="toc-exo-loops" class="nav-link" data-scroll-target="#exo-loops"><span class="toc-section-number">10.4</span>  Exercises</a></li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/Rclass/blob/main/11-conditions_loops.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/Rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/rclass/blob/main/11-conditions_loops.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -362,10 +362,10 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e8</span><span class="op">)</span></span>
 <span><span class="fu">test_time</span><span class="op">(</span><span class="va">forloop</span>, <span class="va">x</span><span class="op">)</span>; <span class="fu">test_time</span><span class="op">(</span><span class="va">noforloop</span>, <span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Elapsed time : 6.79270911216736 s -  forloop"</code></pre>
+<pre><code>[1] "Elapsed time : 5.01145792007446 s -  forloop"</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Elapsed time : 0.362581968307495 s -  noforloop"</code></pre>
+<pre><code>[1] "Elapsed time : 0.359889984130859 s -  noforloop"</code></pre>
 </div>
 </div>
 <p>Avoiding loops should therefore be sought for when possible. R helps us in this way through the base functions <code class="sourceCode r"><span class="fu">apply</span>()</code>, <code class="sourceCode r"><span class="fu">sapply</span>()</code> and <code class="sourceCode r"><span class="fu">lapply</span>()</code>. <a href="07-dataframes.html#operations-in-the-tidyverse">Operations in the <code class="sourceCode r">tidyverse</code></a> are also a very good way of avoiding loops.</p>
@@ -475,18 +475,18 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,000 × 2
-        x y    
-    &lt;dbl&gt; &lt;chr&gt;
- 1  0.764 x&gt;0  
- 2  0.294 x&gt;0  
- 3  0.353 x&gt;0  
- 4  0.721 x&gt;0  
- 5  0.841 x&gt;0  
- 6 -0.263 x&lt;=0 
- 7  0.997 x&gt;0  
- 8 -0.840 x&lt;=0 
- 9  0.775 x&gt;0  
-10  0.963 x&gt;0  
+         x y    
+     &lt;dbl&gt; &lt;chr&gt;
+ 1  0.0789 x&gt;0  
+ 2 -0.430  x&lt;=0 
+ 3 -0.741  x&lt;=0 
+ 4 -0.992  x&lt;=0 
+ 5 -0.0869 x&lt;=0 
+ 6  0.864  x&gt;0  
+ 7  0.749  x&gt;0  
+ 8 -0.791  x&lt;=0 
+ 9 -0.978  x&lt;=0 
+10 -0.536  x&lt;=0 
 # … with 990 more rows</code></pre>
 </div>
 </div>
@@ -507,22 +507,22 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$A
-[1] 47.6351
+[1] 47.96178
 
 $B
-[1] 29.60892
+[1] 24.64968
 
 $C
-[1] 94.9568</code></pre>
+[1] 100.615</code></pre>
 </div>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       A        B        C 
-47.63510 29.60892 94.95680 </code></pre>
+<pre><code>        A         B         C 
+ 47.96178  24.64968 100.61502 </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       A        B        C 
-47.63510 29.60892 94.95680 </code></pre>
+<pre><code>        A         B         C 
+ 47.96178  24.64968 100.61502 </code></pre>
 </div>
 </div>
 </details></details><details><summary><strong>Exercise 3</strong>
