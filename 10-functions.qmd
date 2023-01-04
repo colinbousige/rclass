@@ -1,5 +1,15 @@
 # Functions
 
+Functions should become a really important part of your coding routine.
+Basically, make this your new moto:
+
+::: {.callout-tip}
+## Your new moto
+
+If you need to copy-pasting, write a function instead.
+:::
+
+
 ## Definition
 
 To get the manual on a base function, type `?function_name`{.R}.
@@ -28,7 +38,7 @@ geom_mean3 <- function(x, y){
 geom_mean1(1,2) #returns a
 ```
 
-While an explicit call to `return()`{.R} is not necessary, I think it's usually a good prectise to write it explicitly to make clearer to the reader what the function actually returns.
+While an explicit call to `return()`{.R} is not necessary, I think it's usually a good practise to write it explicitly to make clearer to the reader what the function actually returns.
 
 The result of a function can be a list, a data.frame, a vector... or nothing. And you can attribute the result of a function to a variable:
 
@@ -106,6 +116,28 @@ test(x=1:2,y=3:4)
 test(x=1:2,y=3:10)
 ```
 
+## Documenting your function
+
+It is also good practise to document your function by describing its purpose, its input parameters, its output, and some use cases. For this, the syntax is as follows:
+
+```{r}
+#' Title of the function
+#'
+#' Description of the function
+#' 
+#' @param param1 Description of param1
+#' @param param2 Description of param2
+#'
+#' @return Description of the output
+#'
+#' @examples
+#' # Some examples on how to use the function
+my_func <- function(param1, param2) {
+    # do some stuff
+}
+```
+
+RStudio simplifies this process with a tool available in *Code >  Insert Roxygen skeleton* (just place your cursor within the `{}` of the function before clicking this).
 
 
 ## Interpolation of data
