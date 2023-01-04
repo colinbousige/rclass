@@ -13,8 +13,8 @@ y <- seq(0, 4, along=x)
 
 # Consider two vectors `a` and `b` such as:
 
-a <- c(1,5,4,3,6)
-b <- c(3,5,2,1,9)
+a <- c(1, 5, 4, 3, 6)
+b <- c(3, 5, 2, 1, 9)
 
 # Without typing it into Rstudio, what is the value of: `a<=b`?
 

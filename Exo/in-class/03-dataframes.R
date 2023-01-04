@@ -1,11 +1,12 @@
+library(tidyverse)
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 ## Exercise 1
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 # Create a 3 column `data.frame` called `df` containing three columns `x`, `y` and `z` with:
 
-# - `x` a vector from $-\pi$ to $\pi$ of length 10
-# - `y` their sinus
+# - `x` a vector from -pi to pi of length 10
+# - `y` the sinus of `x`
 # - and `z` the sum of the two first columns.
 
 x <- ___
@@ -13,11 +14,22 @@ y <- ___
 z <- ___
 df <- data.frame()
 
-# Print the 4 first lines of the table.
+# /!\ 
+# With a tibble you could do all this in a single call, but NOT with a data.frame
+data.frame(x = seq(-10,10), # you define the column x
+           y = cos(x), # here to define the column y you refer to 
+                       # the vector x that was created outside the call to data.frame
+           z = x*y) # here to define the column z you refer to the vectors 
+                    # x and y that were created outside the call to data.frame)
+tibble(x = seq(-10,10),# you define the column x
+       y = cos(x),# you define the column y by referring tho the column x previously defined
+       z = x*y)   # you define the column z by referring tho the columns x and y previously defined
+
+# Print the 4 first lines of the table df.
 # Hint: Take a look at the head() function
 
 
-# Print the second (*i.e.* `y`) column with three different ways.
+# Print the second (*i.e.* `y`) column with three different methods.
 
 df[___]
 df[___]
@@ -50,7 +62,9 @@ write.table(___)
 #     - "Data/population.csv"
 #     - "Data/FTIR_rocks.xlsx"
 
-# Load them into separate `data.frames`. Look into the options of `read.table()`, `read.csv()`, `readxl::read_excel()`, to get the proper data fields. Make sure that the `rubis_01` data.frame has `w` and `intensity` as column names.
+# Load them into separate `data.frames`. 
+# Look into the options of `read.table()`, `read.csv()`, `readxl::read_excel()`, to get the proper data fields. 
+# Make sure that the `rubis_01` data.frame has `w` and `intensity` as column names.
 
 rubis_01   <- ___("Data/rubis_01.txt", ___)
 population <- ___("Data/population.csv")
@@ -82,9 +96,9 @@ population <- read_csv(___)
 
 # Load it into a `data.frame`. Look into the options of [`read.table()`](https://www.rdocumentation.org/packages/utils/versions/3.6.2/topics/read.table) to get the proper data fields.
 # Hints:
-# check how many lines you have to read
-# check how many lines you have to skip before reading
-# you need to skip the line with the unit
+# - check how many lines you have to read
+# - check how many lines you have to skip before reading
+# - you need to skip the line with the unit
 
 d <- read.table("Data/ATG.txt",
                 ___
@@ -161,7 +175,7 @@ popul.tidy %>%
 ## Exercise 5
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
-# First, load the `tidyverse` and `lubridate` package
+# First, load the `tidyverse` and `lubridate` packages
 ___
 ___
 
@@ -234,22 +248,22 @@ pp ___
 
 flist <- list.files(path="Data", pattern="sample")
 
-tib <- read_csv(___,          # what do we want to read? give the vector of file names
-               id = ___) %>%  # what is the name of the column containing the file names ?
-        mutate(___)           # modify this column so that it contains just the file
-                              # name and not the full path
+tib <- read_csv(___,           # what do we want to read? give the vector of file names
+                id = ___) %>%  # what is the name of the column containing the file names ?
+        mutate(___)            # modify this column so that it contains just the file
+                               # name and not the full path
 
 
 ### Operations on strings
 
-# We also want to get information from ou file names, such as the sample number, the temperature, the time, and the time unit. 
+# We also want to get information from our file names, such as the sample number, the temperature, the time, and the time unit. 
 # Use the function [`separate()`](https://tidyr.tidyverse.org/reference/separate.html) to split the `file` column into `sample`, `T`, `time` and `time_unit`. 
 # If applicable, make sure that the resulting columns are numeric by getting rid of the annoying characters.
 
 tib <- tib %>% 
-    separate(col = ___, 
-             into = ___, 
-             convert = ___) %>% 
+    separate(col = ___, # what is the column containing these informations
+             into = ___, # vector of strings containing new column names (NA to drop a column)
+             convert = ___) %>% # do we convert strings to numbers if applicable?
     mutate(sample = as.numeric(str_replace(___)),
            T = ___,
            time = ___,
@@ -278,8 +292,8 @@ tib %>%
 
 ### Nesting data
 
-# We want to **nest** our data to be able to perform operations on them – like fitting them. Using the `nest()` function, nest the data so that we end up with only 2 columns: `file` and `data`.
-# Hint: What are the columns to nest ? data = c(these_columns)
+# We want to **nest** our data to be able to perform operations on them – like fitting them. Using the `nest()` function, nest the data so that we end up with only 4 columns: `sample`, `temp`, `time`, and `data`.
+# Hint: What are the columns to nest ? data = c(these_columns), or data=-c(all_other_columns)
 tib <- tib %>% 
     nest(___)
 tib
@@ -288,7 +302,23 @@ tib
 ### Fitting all data
 
 # Now we can fit all our data at once with a linear model:
+library(broom)
 
 tib <- tib %>%
-    mutate(fit = map(data, ~ lm(data = ., x ~ y)))
+    mutate(fit = map(data, ~ lm(data = ., y ~ x)),
+           tidied = map(fit, tidy),
+           augmented = map(fit, augment))
 tib
+tib %>% unnest(tidied)
+tib %>% unnest(augmented)
+
+# Adding the linear model on the plot
+
+tib %>% 
+    unnest(augmented) %>% 
+    mutate(time = factor(time)) %>% 
+    ggplot(aes(x=x, y=y, color = time, group=time)) +
+        geom_point() + 
+        facet_grid(sample ~ temp)+
+        geom_line(aes(y = .fitted), color="black")
+

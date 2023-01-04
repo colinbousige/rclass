@@ -7,7 +7,7 @@ library(tidyverse)
 # Let's say we have these data in a tibble called `df` and want to fit them with a linear model:
 
 x <- 1:10
-y <- .5*x + runif(length(x))*.8
+y <- 0.5*x + runif(length(x))*0.8
 df <- tibble(x,y)
 ggplot(df, aes(x = x, y = y)) +
     expand_limits(x=0,y=0)+

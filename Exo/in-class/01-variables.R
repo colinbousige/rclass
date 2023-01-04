@@ -29,22 +29,27 @@ floor(x) - ceiling(y)
 
 x <- runif(1)
 y <- runif(1)
-
+___ # write the test here
 
 # I defined two random variables `x` and `y`. Using the `ifelse()`{.R} function, print "x is larger than y" or "x is smaller than y".
 
 x <- runif(1)
 y <- runif(1)
-ifelse(test, yes, no)
+ifelse(test, # change this code
+       what to do if TRUE?, 
+       what to do if FALSE?) 
 
 # Without running the code, what do you think will be the output of this code:
-cos(pi/2)==cos(3*pi/2)
+cos(pi/2) == cos(3*pi/2)
 
 # In fact, `.Machine$double.eps` is the smallest positive floating-point number x such that `1 + x != 1`. It depends on the machine (computer) you are running on:
 
 .Machine$double.eps
-(cos(pi / 2) - cos(3 * pi / 2)) > .Machine$double.eps
-all.equal(cos(pi/2),cos(3*pi/2))
+
+# It's often better to use a tolerance to perform this kind of tests:
+tol <- 1e-10
+abs(cos(pi / 2) - cos(3 * pi / 2)) < tol
+
 
 
 ###############
@@ -54,7 +59,8 @@ all.equal(cos(pi/2),cos(3*pi/2))
 # Save your name as a string in a variable, and print "My name is: yourname" using this variable.
 
 name <- ___
-print(___, ___)
+paste(___, ___)
+glue::glue("___{___}")
 
 # Replace all "e" by "A" in the following string:
 
@@ -73,3 +79,5 @@ x <- "aaaeebbbeebiieelakdceee"
 gregexpr(___, ___)
 library(stringr)
 str____(___, ___)
+
+
