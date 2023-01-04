@@ -11,14 +11,24 @@ geom_mean <- function(x, y){
 }
 geom_mean(1,2)
 ```
-While this will return what you want:
+
+While either of these three functions will return what you want:
 ```{r}
-geom_mean <- function(x, y){
+geom_mean1 <- function(x, y){
     a <- sqrt(x*y)
     a
 }
-geom_mean(1,2) #returns a
+geom_mean2 <- function(x, y){
+    a <- sqrt(x*y)
+    return(a)
+}
+geom_mean3 <- function(x, y){
+    sqrt(x*y)
+}
+geom_mean1(1,2) #returns a
 ```
+
+While an explicit call to `return()`{.R} is not necessary, I think it's usually a good prectise to write it explicitly to make clearer to the reader what the function actually returns.
 
 The result of a function can be a list, a data.frame, a vector... or nothing. And you can attribute the result of a function to a variable:
 
@@ -30,7 +40,9 @@ joe <- person(name="Joe", age=33)
 joe
 ```
 
-One can add default values to variables:
+## Default values
+
+One can add default values to variables by specifying them in the function definition:
 ```{r, warnings=FALSE}
 testfunc <- function(x, y=1){
     x*y
@@ -40,16 +52,21 @@ testfunc(1, y=2)
 testfunc(1:3, y=.1)
 ```
 
-And pass arguments to other functions:
+## Passing arguments to other functions
+
+One can also pass arguments to other functions within the function, without have to specify all of them:
 ```{r, warnings=FALSE}
+#| layout-ncol: 2
 testfunc2 <- function(x, ...){
-    head(x, ...)
+    y <- sin(x)
+    plot(x, y, ...)
 }
+# Here, `...` represents all the arguments you could provide to `plot()`
 testfunc2(1:100)
-testfunc2(1:100,2)
+testfunc2(1:100, type="l")
 ```
 
-Or even pass a function as argument:
+You can also pass a function as argument:
 ```{r, warnings=FALSE}
 testfunc3 <- function(FUN, ...){
     FUN(...)
@@ -57,6 +74,38 @@ testfunc3 <- function(FUN, ...){
 testfunc3(sum, 1:10)
 testfunc3(plot, 1:10, sin(1:10), type="l")
 ```
+
+## Error handling
+
+It is good practise to handle possible errors in your functions, especially if you share them with others. As a general rule of thumb, you can be sure that *someone* will **always** be able to find the one case where your function does not work or works in an unexpected way.
+
+For this, the easiest way is to use `if()`{.R} statements together with `warning("Warning message")`{.R} or `stop("Stopping message")`{.R}, to either raise a warning while continuing the function, or stop the function altogether with an explanatory message.
+
+Example:
+
+```{r, error=TRUE}
+test <- function(x, y) {
+    if(!is.numeric(x) | !is.numeric(y)){
+        stop("Both x and y should numeric vectors, buddy!")
+    }
+    if(length(x) != length(y)){
+        if(length(x) == 1 | length(y) == 1){
+            warning(glue::glue("x has length {length(x)}, while y has length {length(y)}, are you sure?"))
+        }else{
+            stop(glue::glue("Both x and y should have same length or length of 1.\n
+            Here x has length {length(x)}, while y has length {length(y)}."))
+        }
+    }
+    return(x*sqrt(y))
+}
+```
+```{r, error=TRUE}
+test(x=1:2,y=1)
+test(x=1:2,y="A")
+test(x=1:2,y=3:4)
+test(x=1:2,y=3:10)
+```
+
 
 
 ## Interpolation of data

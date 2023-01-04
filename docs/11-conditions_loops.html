@@ -362,10 +362,10 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e8</span><span class="op">)</span></span>
 <span><span class="fu">test_time</span><span class="op">(</span><span class="va">forloop</span>, <span class="va">x</span><span class="op">)</span>; <span class="fu">test_time</span><span class="op">(</span><span class="va">noforloop</span>, <span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Elapsed time : 5.19416999816895 s -  forloop"</code></pre>
+<pre><code>[1] "Elapsed time : 5.0057270526886 s -  forloop"</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "Elapsed time : 0.364299058914185 s -  noforloop"</code></pre>
+<pre><code>[1] "Elapsed time : 0.372133016586304 s -  noforloop"</code></pre>
 </div>
 </div>
 <p>Avoiding loops should therefore be sought for when possible. R helps us in this way through the base functions <code class="sourceCode r"><span class="fu">apply</span>()</code>, <code class="sourceCode r"><span class="fu">sapply</span>()</code> and <code class="sourceCode r"><span class="fu">lapply</span>()</code>. <a href="07-dataframes.html#operations-in-the-tidyverse">Operations in the <code class="sourceCode r">tidyverse</code></a> are also a very good way of avoiding loops.</p>
@@ -477,16 +477,16 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <pre><code># A tibble: 1,000 × 2
          x y    
      &lt;dbl&gt; &lt;chr&gt;
- 1  0.0463 x&gt;0  
- 2 -0.919  x&lt;=0 
- 3 -0.776  x&lt;=0 
- 4  0.619  x&gt;0  
- 5 -0.496  x&lt;=0 
- 6  0.417  x&gt;0  
- 7  0.337  x&gt;0  
- 8 -0.0324 x&lt;=0 
- 9  0.823  x&gt;0  
-10  0.320  x&gt;0  
+ 1 -0.408  x&lt;=0 
+ 2 -0.194  x&lt;=0 
+ 3 -0.764  x&lt;=0 
+ 4  0.261  x&gt;0  
+ 5 -0.0858 x&lt;=0 
+ 6 -0.193  x&lt;=0 
+ 7 -0.217  x&lt;=0 
+ 8 -0.139  x&lt;=0 
+ 9  0.123  x&gt;0  
+10  0.994  x&gt;0  
 # … with 990 more rows</code></pre>
 </div>
 </div>
@@ -507,22 +507,22 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$A
-[1] 47.90032
+[1] 53.65751
 
 $B
-[1] 12.80673
+[1] -22.10698
 
 $C
-[1] 96.23355</code></pre>
+[1] 97.72611</code></pre>
 </div>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       A        B        C 
-47.90032 12.80673 96.23355 </code></pre>
+<pre><code>        A         B         C 
+ 53.65751 -22.10698  97.72611 </code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>       A        B        C 
-47.90032 12.80673 96.23355 </code></pre>
+<pre><code>        A         B         C 
+ 53.65751 -22.10698  97.72611 </code></pre>
 </div>
 </div>
 </details></details><details><summary><strong>Exercise 3</strong>
