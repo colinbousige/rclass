@@ -120,17 +120,12 @@ microbenchmark(
 # Making a nice plot
 # # # # # # # # # # #
 
-cols <- c("#e7f0fa", "#c9e2f6", "#95cbee", "#0099dc", 
-          "#4ab04a", "#ffd73e", "#eec73a", "#e29421", 
-          "#e29421", "#f05336", "#ce472e", "black")
-colors <- colorRampPalette(cols)(200)
-
 frac <- tibble(fractalC(-.74,.18,.001,5000,200))
 
 P <- frac %>% ggplot(aes(x = x, y = y, fill = k)) +
     geom_raster(interpolate = TRUE)+
     scale_x_continuous(expand = c(0,0)) +
     scale_y_continuous(expand = c(0,0)) +
-    scale_fill_gradientn(colors = colors)
+    scale_fill_distiller(palette = "Spectral")
 
 ggsave("fractal.png", P, width=7, height=7)
