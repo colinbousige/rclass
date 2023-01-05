@@ -53,14 +53,6 @@ while(i<8){
 However, since R is a vectorized language, it means that loops are to be avoided when possible because they are very inefficient:
 
 ```{r}
-test_time <- function(FUN,...) {
-    start_time <- Sys.time()
-    FUN(...)
-    elapsed_time <- Sys.time()-start_time
-    print(paste("Elapsed time :", elapsed_time, "s - ",
-                as.character(substitute(FUN)))
-         )
-}
 forloop <- function(x){
     for(i in seq_along(x)){
         x[i] <- 2*x[i]
@@ -70,9 +62,15 @@ forloop <- function(x){
 noforloop <- function(x){
     2*x
 }
-x <- runif(1e8)
-test_time(forloop, x); test_time(noforloop, x)
+x <- runif(1e7)
+microbenchmark::microbenchmark(
+    forloop   = forloop(x),
+    noforloop = noforloop(x),
+    times = 10L
+)
 ```
+
+### The `apply` family
 
 Avoiding loops should therefore be sought for when possible. R helps us in this way through the base functions `apply()`{.R}, `sapply()`{.R} and `lapply()`{.R}. [Operations in the `tidyverse`{.R}](#operations-in-the-tidyverse) are also a very good way of avoiding loops. 
 
@@ -100,8 +98,9 @@ sapply(1:nrow(dt), function(i){
 })
 ```
 
+### The `tidyverse` way
 
-
+The package `tidyverse` offers numerous ways to avoid explicit `for` loops. To see how to do this, refer to the section on [operations in the `tidyverse`{.R}](#operations-in-the-tidyverse).
 
 
 ## Exercises {#exo-loops}
