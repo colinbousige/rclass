@@ -280,7 +280,7 @@ tib_unnested_renested$data # The `data` column is a list
 
 In the end, base R and the `tidyverse` package provide many efficient functions to perform most of the tasks you would want to perform recursively, thus allowing avoiding explicit for loops.
 
-Here are some examples, and you will find much more [here](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html). Take a look at the cheatsheets on [tidyr](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf) and on [dplyr](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf), it's really helpful. 
+Here are some examples, and you will find much more [here](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html). Take a look at the cheatsheets on [tidyr](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf) and on [dplyr](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), it's really helpful. 
 
 Let's work on this `tibble`:
 ```{r, message=FALSE}
@@ -425,7 +425,7 @@ dt5 %>% separate(file,
 
 ### Apply a function recursively on each element of a column
 
-Take a look at the [cheatsheet on the `purrr` package](https://github.com/rstudio/cheatsheets/raw/master/purrr.pdf) for more options. I show here a use of `purrr::map(vector, function)`{.R} that returns a list. `map(x, f)`{.R} applies the function `f()` to each element of the vector `x`, putting the result in a separate element of a list: `map(x, f) -> list(f(x1), f(x2), ... f(xn))`{.R}. In case `f(xi)` returns a single value, you might want to use `map_dbl()` or `map_chr()`, for example, that will return a vector of doubles or of characters, respectively.
+Take a look at the [cheatsheet on the `purrr` package](https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf) for more options and a visual help on the `map()` family. I show here a use of `purrr::map(vector, function)`{.R} that returns a list. `map(x, f)`{.R} applies the function `f()` to each element of the vector `x`, putting the result in a separate element of a list: `map(x, f) -> list(f(x1), f(x2), ... f(xn))`{.R}. In case `f(xi)` returns a single value, you might want to use `map_dbl()` or `map_chr()`, for example, that will return a vector of doubles or of characters, respectively.
 
 ```{r, message=FALSE}
 x <- c(pi, pi/3, pi/2)
