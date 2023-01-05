@@ -93,6 +93,9 @@ For this, the easiest way is to use `if()`{.R} statements together with `warning
 
 Equivalent example with `stop()`{.R} and `stopifnot()`{.R}:
 
+:::: {.columns}
+::: {.column width="49%"}
+
 ```{r, error=TRUE}
 test <- function(x, y) {
     if(!is.numeric(x) | !is.numeric(y)){
@@ -115,6 +118,12 @@ test(x=1:2,y="A")
 test(x=1:2,y=3:4)
 test(x=1:2,y=3:10)
 ```
+:::
+
+::: {.column width="2%"}
+:::
+::: {.column width="49%"}
+
 ```{r, error=TRUE}
 test <- function(x, y) {
     # the condition is the opposite from the one used in stop():
@@ -126,12 +135,20 @@ test <- function(x, y) {
     return(x*sqrt(y))
 }
 ```
+<br>
+<br>
+<br>
+<br>
 ```{r, error=TRUE}
 test(x=1:2,y=1)
 test(x=1:2,y="A")
 test(x=1:2,y=3:4)
 test(x=1:2,y=3:10)
 ```
+
+:::
+::::
+
 
 ## Documenting your function
 
