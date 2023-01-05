@@ -89,9 +89,9 @@ testfunc3(plot, 1:10, sin(1:10), type="l")
 
 It is good practise to handle possible errors in your functions, especially if you share them with others. As a general rule of thumb, you can be sure that *someone* will **always** be able to find the one case where your function does not work or works in an unexpected way.
 
-For this, the easiest way is to use `if()`{.R} statements together with `warning("Warning message")`{.R} or `stop("Stopping message")`{.R}, to either raise a warning while continuing the function, or stop the function altogether with an explanatory message.
+For this, the easiest way is to use `if()`{.R} statements together with `warning("Warning message")`{.R} or `stop("Stopping message")`{.R}, to either raise a warning while continuing the function, or stop the function altogether with an explanatory message. Alternatively and for ease of reading, the statement `if(condition) stop("Stopping message") `{.R} can be replaced by `stopifnot(condition is true)`{.R}.
 
-Example:
+Equivalent example with `stop()`{.R} and `stopifnot()`{.R}:
 
 ```{r, error=TRUE}
 test <- function(x, y) {
@@ -105,6 +105,23 @@ test <- function(x, y) {
             stop(glue::glue("Both x and y should have same length or length of 1.\n
             Here x has length {length(x)}, while y has length {length(y)}."))
         }
+    }
+    return(x*sqrt(y))
+}
+```
+```{r, error=TRUE}
+test(x=1:2,y=1)
+test(x=1:2,y="A")
+test(x=1:2,y=3:4)
+test(x=1:2,y=3:10)
+```
+```{r, error=TRUE}
+test <- function(x, y) {
+    # the condition is the opposite from the one used in stop():
+    stopifnot(is.numeric(x), is.numeric(y))
+    stopifnot(length(x) == length(y) | length(x) == 1 | length(y) == 1)
+    if(length(x) != length(y) & (length(x) == 1 | length(y) == 1)){
+        warning(glue::glue("x has length {length(x)}, while y has length {length(y)}, are you sure?"))
     }
     return(x*sqrt(y))
 }
