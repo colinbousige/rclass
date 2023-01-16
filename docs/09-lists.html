@@ -284,40 +284,40 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span>         <span class="op">)</span></span>
 <span><span class="va">L</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## $name
-## [1] "John"
-## 
-## $age
-## [1] 43
-## 
-## $kids
-## $kids$name
-## [1] "Kevin"  "Pamela"
-## 
-## $kids$age
-## [1] 4 5</code></pre>
+<pre><code>#-&gt; $name
+#-&gt; [1] "John"
+#-&gt; 
+#-&gt; $age
+#-&gt; [1] 43
+#-&gt; 
+#-&gt; $kids
+#-&gt; $kids$name
+#-&gt; [1] "Kevin"  "Pamela"
+#-&gt; 
+#-&gt; $kids$age
+#-&gt; [1] 4 5</code></pre>
 </div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># names of entries (can be changed)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [1] "name" "age"  "kids"</code></pre>
+<pre><code>#-&gt; [1] "name" "age"  "kids"</code></pre>
 </div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># statistics</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>##      Length Class  Mode     
-## name 1      -none- character
-## age  1      -none- numeric  
-## kids 2      -none- list</code></pre>
+<pre><code>#-&gt;      Length Class  Mode     
+#-&gt; name 1      -none- character
+#-&gt; age  1      -none- numeric  
+#-&gt; kids 2      -none- list</code></pre>
 </div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">L</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## List of 3
-##  $ name: chr "John"
-##  $ age : num 43
-##  $ kids:List of 2
-##   ..$ name: chr [1:2] "Kevin" "Pamela"
-##   ..$ age : num [1:2] 4 5</code></pre>
+<pre><code>#-&gt; List of 3
+#-&gt;  $ name: chr "John"
+#-&gt;  $ age : num 43
+#-&gt;  $ kids:List of 2
+#-&gt;   ..$ name: chr [1:2] "Kevin" "Pamela"
+#-&gt;   ..$ age : num [1:2] 4 5</code></pre>
 </div>
 </div>
 </section><section id="accessing-values-and-other-operations" class="level2" data-number="8.2"><h2 data-number="8.2" class="anchored" data-anchor-id="accessing-values-and-other-operations">
@@ -325,83 +325,83 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <div class="cell" data-warnings="false">
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">L</span><span class="op">$</span><span class="va">name</span> <span class="co"># is a vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [1] "John"</code></pre>
+<pre><code>#-&gt; [1] "John"</code></pre>
 </div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">L</span><span class="op">[</span><span class="st">"age"</span><span class="op">]</span>;<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">L</span><span class="op">[</span><span class="st">"age"</span><span class="op">]</span><span class="op">)</span>     <span class="co"># is a list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## $age
-## [1] 43</code></pre>
+<pre><code>#-&gt; $age
+#-&gt; [1] 43</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [1] "list"</code></pre>
+<pre><code>#-&gt; [1] "list"</code></pre>
 </div>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">L</span><span class="op">[[</span><span class="st">"age"</span><span class="op">]</span><span class="op">]</span>;<span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">L</span><span class="op">[[</span><span class="st">"age"</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># is a vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [1] 43</code></pre>
+<pre><code>#-&gt; [1] 43</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [1] "double"</code></pre>
+<pre><code>#-&gt; [1] "double"</code></pre>
 </div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">L</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>      <span class="co"># is a list (because 'kids' is a list)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## $name
-## [1] "Kevin"  "Pamela"
-## 
-## $age
-## [1] 4 5</code></pre>
+<pre><code>#-&gt; $name
+#-&gt; [1] "Kevin"  "Pamela"
+#-&gt; 
+#-&gt; $age
+#-&gt; [1] 4 5</code></pre>
 </div>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">L</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[</span><span class="st">'name'</span><span class="op">]</span>   <span class="co"># is a list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## $name
-## [1] "Kevin"  "Pamela"</code></pre>
+<pre><code>#-&gt; $name
+#-&gt; [1] "Kevin"  "Pamela"</code></pre>
 </div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">L</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="st">'name'</span><span class="op">]</span><span class="op">]</span> <span class="co"># is a vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [1] "Kevin"  "Pamela"</code></pre>
+<pre><code>#-&gt; [1] "Kevin"  "Pamela"</code></pre>
 </div>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># empty initialization</span></span>
 <span><span class="va">LL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>; <span class="va">LL</span> <span class="co"># no specific size</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## list()</code></pre>
+<pre><code>#-&gt; list()</code></pre>
 </div>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">LL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, length<span class="op">=</span><span class="fl">3</span><span class="op">)</span>; <span class="va">LL</span> <span class="co"># specific size</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [[1]]
-## NULL
-## 
-## [[2]]
-## NULL
-## 
-## [[3]]
-## NULL</code></pre>
+<pre><code>#-&gt; [[1]]
+#-&gt; NULL
+#-&gt; 
+#-&gt; [[2]]
+#-&gt; NULL
+#-&gt; 
+#-&gt; [[3]]
+#-&gt; NULL</code></pre>
 </div>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Concatenation</span></span>
 <span><span class="va">L1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>wife<span class="op">=</span><span class="st">"Kim"</span>, wife.age<span class="op">=</span><span class="fl">38</span><span class="op">)</span></span>
 <span><span class="va">L2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">L</span>, <span class="va">L1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/typeof.html">typeof</a></span><span class="op">(</span><span class="va">L2</span><span class="op">)</span>; <span class="va">L2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [1] "list"</code></pre>
+<pre><code>#-&gt; [1] "list"</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## $name
-## [1] "John"
-## 
-## $age
-## [1] 43
-## 
-## $kids
-## $kids$name
-## [1] "Kevin"  "Pamela"
-## 
-## $kids$age
-## [1] 4 5
-## 
-## 
-## $wife
-## [1] "Kim"
-## 
-## $wife.age
-## [1] 38</code></pre>
+<pre><code>#-&gt; $name
+#-&gt; [1] "John"
+#-&gt; 
+#-&gt; $age
+#-&gt; [1] 43
+#-&gt; 
+#-&gt; $kids
+#-&gt; $kids$name
+#-&gt; [1] "Kevin"  "Pamela"
+#-&gt; 
+#-&gt; $kids$age
+#-&gt; [1] 4 5
+#-&gt; 
+#-&gt; 
+#-&gt; $wife
+#-&gt; [1] "Kim"
+#-&gt; 
+#-&gt; $wife.age
+#-&gt; [1] 38</code></pre>
 </div>
 </div>
 </section><section id="exo-lists" class="level2" data-number="8.3"><h2 data-number="8.3" class="anchored" data-anchor-id="exo-lists">
@@ -436,128 +436,128 @@ Solution
 <span>                  <span class="op">)</span></span>
 <span><span class="va">first_list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## $string1
-## [1] "foo"
-## 
-## $string2
-## [1] "bar"
-## 
-## $number1
-## [1] 42
-## 
-## $number2
-## [1] 3.141593
-## 
-## $vec1
-##  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8
-## [20]   9  10
-## 
-## $vec2
-## [1] "Hello" "world"
-## 
-## $list1
-## $list1$a
-##  [1]  1  2  3  4  5  6  7  8  9 10
-## 
-## $list1$b
-##  [1] 10  9  8  7  6  5  4  3  2  1
-## 
-## 
-## $bool1
-## [1] TRUE
-## 
-## $bool2
-## [1] FALSE</code></pre>
+<pre><code>#-&gt; $string1
+#-&gt; [1] "foo"
+#-&gt; 
+#-&gt; $string2
+#-&gt; [1] "bar"
+#-&gt; 
+#-&gt; $number1
+#-&gt; [1] 42
+#-&gt; 
+#-&gt; $number2
+#-&gt; [1] 3.141593
+#-&gt; 
+#-&gt; $vec1
+#-&gt;  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8
+#-&gt; [20]   9  10
+#-&gt; 
+#-&gt; $vec2
+#-&gt; [1] "Hello" "world"
+#-&gt; 
+#-&gt; $list1
+#-&gt; $list1$a
+#-&gt;  [1]  1  2  3  4  5  6  7  8  9 10
+#-&gt; 
+#-&gt; $list1$b
+#-&gt;  [1] 10  9  8  7  6  5  4  3  2  1
+#-&gt; 
+#-&gt; 
+#-&gt; $bool1
+#-&gt; [1] TRUE
+#-&gt; 
+#-&gt; $bool2
+#-&gt; [1] FALSE</code></pre>
 </div>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Access the first and second elements of the list.</span></span>
 <span><span class="va">first_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [1] "foo"</code></pre>
+<pre><code>#-&gt; [1] "foo"</code></pre>
 </div>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">first_list</span><span class="op">[[</span><span class="st">"string2"</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [1] "bar"</code></pre>
+<pre><code>#-&gt; [1] "bar"</code></pre>
 </div>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Add a new item `g4 = "Hello"` to the list.</span></span>
 <span><span class="va">first_list</span><span class="op">$</span><span class="va">g4</span> <span class="op">&lt;-</span> <span class="st">"Hello"</span></span>
 <span><span class="va">first_list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## $string1
-## [1] "foo"
-## 
-## $string2
-## [1] "bar"
-## 
-## $number1
-## [1] 42
-## 
-## $number2
-## [1] 3.141593
-## 
-## $vec1
-##  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8
-## [20]   9  10
-## 
-## $vec2
-## [1] "Hello" "world"
-## 
-## $list1
-## $list1$a
-##  [1]  1  2  3  4  5  6  7  8  9 10
-## 
-## $list1$b
-##  [1] 10  9  8  7  6  5  4  3  2  1
-## 
-## 
-## $bool1
-## [1] TRUE
-## 
-## $bool2
-## [1] FALSE
-## 
-## $g4
-## [1] "Hello"</code></pre>
+<pre><code>#-&gt; $string1
+#-&gt; [1] "foo"
+#-&gt; 
+#-&gt; $string2
+#-&gt; [1] "bar"
+#-&gt; 
+#-&gt; $number1
+#-&gt; [1] 42
+#-&gt; 
+#-&gt; $number2
+#-&gt; [1] 3.141593
+#-&gt; 
+#-&gt; $vec1
+#-&gt;  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8
+#-&gt; [20]   9  10
+#-&gt; 
+#-&gt; $vec2
+#-&gt; [1] "Hello" "world"
+#-&gt; 
+#-&gt; $list1
+#-&gt; $list1$a
+#-&gt;  [1]  1  2  3  4  5  6  7  8  9 10
+#-&gt; 
+#-&gt; $list1$b
+#-&gt;  [1] 10  9  8  7  6  5  4  3  2  1
+#-&gt; 
+#-&gt; 
+#-&gt; $bool1
+#-&gt; [1] TRUE
+#-&gt; 
+#-&gt; $bool2
+#-&gt; [1] FALSE
+#-&gt; 
+#-&gt; $g4
+#-&gt; [1] "Hello"</code></pre>
 </div>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Select the second element of the nested list.</span></span>
 <span><span class="va">first_list</span><span class="op">[[</span><span class="st">"list1"</span><span class="op">]</span><span class="op">]</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>##  [1] 10  9  8  7  6  5  4  3  2  1</code></pre>
+<pre><code>#-&gt;  [1] 10  9  8  7  6  5  4  3  2  1</code></pre>
 </div>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Remove the second element of the list.</span></span>
 <span><span class="va">first_list</span><span class="op">[</span><span class="op">-</span><span class="fl">2</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## $string1
-## [1] "foo"
-## 
-## $number1
-## [1] 42
-## 
-## $number2
-## [1] 3.141593
-## 
-## $vec1
-##  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8
-## [20]   9  10
-## 
-## $vec2
-## [1] "Hello" "world"
-## 
-## $list1
-## $list1$a
-##  [1]  1  2  3  4  5  6  7  8  9 10
-## 
-## $list1$b
-##  [1] 10  9  8  7  6  5  4  3  2  1
-## 
-## 
-## $bool1
-## [1] TRUE
-## 
-## $bool2
-## [1] FALSE
-## 
-## $g4
-## [1] "Hello"</code></pre>
+<pre><code>#-&gt; $string1
+#-&gt; [1] "foo"
+#-&gt; 
+#-&gt; $number1
+#-&gt; [1] 42
+#-&gt; 
+#-&gt; $number2
+#-&gt; [1] 3.141593
+#-&gt; 
+#-&gt; $vec1
+#-&gt;  [1] -10  -9  -8  -7  -6  -5  -4  -3  -2  -1   0   1   2   3   4   5   6   7   8
+#-&gt; [20]   9  10
+#-&gt; 
+#-&gt; $vec2
+#-&gt; [1] "Hello" "world"
+#-&gt; 
+#-&gt; $list1
+#-&gt; $list1$a
+#-&gt;  [1]  1  2  3  4  5  6  7  8  9 10
+#-&gt; 
+#-&gt; $list1$b
+#-&gt;  [1] 10  9  8  7  6  5  4  3  2  1
+#-&gt; 
+#-&gt; 
+#-&gt; $bool1
+#-&gt; [1] TRUE
+#-&gt; 
+#-&gt; $bool2
+#-&gt; [1] FALSE
+#-&gt; 
+#-&gt; $g4
+#-&gt; [1] "Hello"</code></pre>
 </div>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a second list with whatever you want</span></span>
 <span><span class="va">second_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, b<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, c<span class="op">=</span><span class="st">"hello"</span><span class="op">)</span></span>
@@ -566,12 +566,12 @@ Solution
 <span><span class="co"># Print the number of objects in the merged list.</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">one_list</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [1] 13</code></pre>
+<pre><code>#-&gt; [1] 13</code></pre>
 </div>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Convert `list(1,2,3,4)` to a vector</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span>,<span class="fl">4</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>## [1] 1 2 3 4</code></pre>
+<pre><code>#-&gt; [1] 1 2 3 4</code></pre>
 </div>
 </div>
 </details>
