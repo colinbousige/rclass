@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.269">
+<meta name="generator" content="quarto-1.2.313">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 7&nbsp; Reading/writing all kinds of files</title>
 <style>
@@ -123,7 +123,7 @@ window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
-</script>
+</script><link rel="stylesheet" href="style.css">
 </head>
 <body class="nav-sidebar docked">
 
@@ -300,125 +300,85 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <p>Input file looks like this:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>Country Name,Country Code,Year,Value
-Arab World,ARB,1960,92490932
-Arab World,ARB,1961,95044497
-Arab World,ARB,1962,97682294
-Arab World,ARB,1963,100411076
-Arab World,ARB,1964,103239902
-Arab World,ARB,1965,106174988
-Arab World,ARB,1966,109230593
-Arab World,ARB,1967,112406932
-Arab World,ARB,1968,115680165</code></pre>
+<pre><code>## Country Name,Country Code,Year,Value
+## Arab World,ARB,1960,92490932
+## Arab World,ARB,1961,95044497
+## Arab World,ARB,1962,97682294
+## Arab World,ARB,1963,100411076
+## Arab World,ARB,1964,103239902
+## Arab World,ARB,1965,106174988
+## Arab World,ARB,1966,109230593
+## Arab World,ARB,1967,112406932
+## Arab World,ARB,1968,115680165</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-✔ ggplot2 3.4.0      ✔ purrr   1.0.0 
-✔ tibble  3.1.8      ✔ dplyr   1.0.10
-✔ tidyr   1.2.1      ✔ stringr 1.5.0 
-✔ readr   2.1.3      ✔ forcats 0.5.2 
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()</code></pre>
-</div>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"Data/tot_population.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 14885 Columns: 4
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (2): Country Name, Country Code
-dbl (2): Year, Value
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"Data/tot_population.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 14,885 × 4
-   `Country Name` `Country Code`  Year     Value
-   &lt;chr&gt;          &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;
- 1 Arab World     ARB             1960  92490932
- 2 Arab World     ARB             1961  95044497
- 3 Arab World     ARB             1962  97682294
- 4 Arab World     ARB             1963 100411076
- 5 Arab World     ARB             1964 103239902
- 6 Arab World     ARB             1965 106174988
- 7 Arab World     ARB             1966 109230593
- 8 Arab World     ARB             1967 112406932
- 9 Arab World     ARB             1968 115680165
-10 Arab World     ARB             1969 119016542
-# … with 14,875 more rows</code></pre>
+<pre><code>## # A tibble: 14,885 × 4
+##    `Country Name` `Country Code`  Year     Value
+##    &lt;chr&gt;          &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Arab World     ARB             1960  92490932
+##  2 Arab World     ARB             1961  95044497
+##  3 Arab World     ARB             1962  97682294
+##  4 Arab World     ARB             1963 100411076
+##  5 Arab World     ARB             1964 103239902
+##  6 Arab World     ARB             1965 106174988
+##  7 Arab World     ARB             1966 109230593
+##  8 Arab World     ARB             1967 112406932
+##  9 Arab World     ARB             1968 115680165
+## 10 Arab World     ARB             1969 119016542
+## # … with 14,875 more rows</code></pre>
 </div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"Data/tot_population.csv"</span>, skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 14884 Columns: 4
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (2): Arab World, ARB
-dbl (2): 1960, 92490932
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"Data/tot_population.csv"</span>, skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 14,884 × 4
-   `Arab World` ARB   `1960` `92490932`
-   &lt;chr&gt;        &lt;chr&gt;  &lt;dbl&gt;      &lt;dbl&gt;
- 1 Arab World   ARB     1961   95044497
- 2 Arab World   ARB     1962   97682294
- 3 Arab World   ARB     1963  100411076
- 4 Arab World   ARB     1964  103239902
- 5 Arab World   ARB     1965  106174988
- 6 Arab World   ARB     1966  109230593
- 7 Arab World   ARB     1967  112406932
- 8 Arab World   ARB     1968  115680165
- 9 Arab World   ARB     1969  119016542
-10 Arab World   ARB     1970  122398374
-# … with 14,874 more rows</code></pre>
+<pre><code>## # A tibble: 14,884 × 4
+##    `Arab World` ARB   `1960` `92490932`
+##    &lt;chr&gt;        &lt;chr&gt;  &lt;dbl&gt;      &lt;dbl&gt;
+##  1 Arab World   ARB     1961   95044497
+##  2 Arab World   ARB     1962   97682294
+##  3 Arab World   ARB     1963  100411076
+##  4 Arab World   ARB     1964  103239902
+##  5 Arab World   ARB     1965  106174988
+##  6 Arab World   ARB     1966  109230593
+##  7 Arab World   ARB     1967  112406932
+##  8 Arab World   ARB     1968  115680165
+##  9 Arab World   ARB     1969  119016542
+## 10 Arab World   ARB     1970  122398374
+## # … with 14,874 more rows</code></pre>
 </div>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"Data/tot_population.csv"</span>, skip <span class="op">=</span> <span class="fl">1</span>, col_names <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 14885 Columns: 4
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr (2): A, B
-dbl (2): C, D
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"Data/tot_population.csv"</span>, skip <span class="op">=</span> <span class="fl">1</span>, col_names <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 14,885 × 4
-   A          B         C         D
-   &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt;     &lt;dbl&gt;
- 1 Arab World ARB    1960  92490932
- 2 Arab World ARB    1961  95044497
- 3 Arab World ARB    1962  97682294
- 4 Arab World ARB    1963 100411076
- 5 Arab World ARB    1964 103239902
- 6 Arab World ARB    1965 106174988
- 7 Arab World ARB    1966 109230593
- 8 Arab World ARB    1967 112406932
- 9 Arab World ARB    1968 115680165
-10 Arab World ARB    1969 119016542
-# … with 14,875 more rows</code></pre>
+<pre><code>## # A tibble: 14,885 × 4
+##    A          B         C         D
+##    &lt;chr&gt;      &lt;chr&gt; &lt;dbl&gt;     &lt;dbl&gt;
+##  1 Arab World ARB    1960  92490932
+##  2 Arab World ARB    1961  95044497
+##  3 Arab World ARB    1962  97682294
+##  4 Arab World ARB    1963 100411076
+##  5 Arab World ARB    1964 103239902
+##  6 Arab World ARB    1965 106174988
+##  7 Arab World ARB    1966 109230593
+##  8 Arab World ARB    1967 112406932
+##  9 Arab World ARB    1968 115680165
+## 10 Arab World ARB    1969 119016542
+## # … with 14,875 more rows</code></pre>
 </div>
 </div>
 <p>Since version 2.0 of <code>readr</code>, <code class="sourceCode r"><span class="fu">read_csv</span>()</code> can also take a vector as argument, which will result in reading all files in the vector successively:</p>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Data/test1.csv"</span>,</span>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Data/test1.csv"</span>,</span>
 <span>           <span class="st">"Data/test2.csv"</span><span class="op">)</span>,</span>
 <span>         id <span class="op">=</span> <span class="st">"file"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 3
-  file           name  value
-  &lt;chr&gt;          &lt;chr&gt; &lt;dbl&gt;
-1 Data/test1.csv John      3
-2 Data/test1.csv Doe       2
-3 Data/test2.csv Colin     5
-4 Data/test2.csv Louis     8</code></pre>
+<pre><code>## # A tibble: 4 × 3
+##   file           name  value
+##   &lt;chr&gt;          &lt;chr&gt; &lt;dbl&gt;
+## 1 Data/test1.csv John      3
+## 2 Data/test1.csv Doe       2
+## 3 Data/test2.csv Colin     5
+## 4 Data/test2.csv Louis     8</code></pre>
 </div>
 </div>
 </section><section id="space-separated-values" class="level4" data-number="7.1.1.2"><h4 data-number="7.1.1.2" class="anchored" data-anchor-id="space-separated-values">
@@ -426,19 +386,19 @@ dbl (2): C, D
 <p>Input file looks like this:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
-<pre><code>3063.7136   43.916748
-3063.991    47.916748
-3064.2668   44.5
-3064.5442   50.5
-3064.8201   50.5
-3065.0972   44.5
-3065.373    44.916748
-3065.6504   39.916748
-3065.9263   49.5
-3066.2034   48.916748</code></pre>
+<pre><code>## 3063.7136    43.916748
+## 3063.991 47.916748
+## 3064.2668    44.5
+## 3064.5442    50.5
+## 3064.8201    50.5
+## 3065.0972    44.5
+## 3065.373 44.916748
+## 3065.6504    39.916748
+## 3065.9263    49.5
+## 3066.2034    48.916748</code></pre>
 </div>
 </div>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_table.html">read_table</a></span><span class="op">(</span><span class="st">"Data/rubis_01.txt"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_table.html">read_table</a></span><span class="op">(</span><span class="st">"Data/rubis_01.txt"</span>, col_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"w"</span>,<span class="st">"int"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section><section id="other-separators" class="level4" data-number="7.1.1.3"><h4 data-number="7.1.1.3" class="anchored" data-anchor-id="other-separators">
@@ -448,72 +408,72 @@ dbl (2): C, D
 <span class="header-section-number">7.1.2</span> Excel files</h3>
 <p>For this, use the <code>readxl</code> library and its function <code class="sourceCode r"><span class="fu">read_excel</span>()</code> returning a <code>tibble</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Data/test.xlsx"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 10 × 2
-       x      y
-   &lt;dbl&gt;  &lt;dbl&gt;
- 1     1  5.21 
- 2     2  6.55 
- 3     3  3.71 
- 4     4  0.216
- 5     5  0.205
- 6     6  4.60 
- 7     7 10.3  
- 8     8 12.9  
- 9     9 11.1  
-10    10  7.28 </code></pre>
+<pre><code>## # A tibble: 10 × 2
+##        x      y
+##    &lt;dbl&gt;  &lt;dbl&gt;
+##  1     1  5.21 
+##  2     2  6.55 
+##  3     3  3.71 
+##  4     4  0.216
+##  5     5  0.205
+##  6     6  4.60 
+##  7     7 10.3  
+##  8     8 12.9  
+##  9     9 11.1  
+## 10    10  7.28</code></pre>
 </div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Data/test.xlsx"</span>, sheet<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="co"># specify the sheet by its number or its name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Data/test.xlsx"</span>, sheet<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="co"># specify the sheet by its number or its name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 2
-  hello  world   
-  &lt;chr&gt;  &lt;chr&gt;   
-1 ac     th      
-2 asc    thh     
-3 ascsa  dthdh   
-4 ascacs dthtdhdh</code></pre>
+<pre><code>## # A tibble: 4 × 2
+##   hello  world   
+##   &lt;chr&gt;  &lt;chr&gt;   
+## 1 ac     th      
+## 2 asc    thh     
+## 3 ascsa  dthdh   
+## 4 ascacs dthtdhdh</code></pre>
 </div>
 </div>
 <p>In case your Excel file contains merged cells, <code class="sourceCode r"><span class="fu">read_excel</span>()</code> will fill the merged cells by <code>NA</code> values. If you want to avoid this behavior, use <code class="sourceCode r">openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>()</code> (which returns a <code>data.frame</code>):</p>
 <div class="cell">
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Data/test.xlsx"</span>, sheet<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Data/test.xlsx"</span>, sheet<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 3
-  a         b ...3 
-  &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
-1 &lt;NA&gt;     12 t    
-2 &lt;NA&gt;     13 h    
-3 &lt;NA&gt;     14 d    
-4 b        15 f    
-5 &lt;NA&gt;     16 g    </code></pre>
+<pre><code>## # A tibble: 5 × 3
+##   a         b ...3 
+##   &lt;chr&gt; &lt;dbl&gt; &lt;chr&gt;
+## 1 &lt;NA&gt;     12 t    
+## 2 &lt;NA&gt;     13 h    
+## 3 &lt;NA&gt;     14 d    
+## 4 b        15 f    
+## 5 &lt;NA&gt;     16 g</code></pre>
 </div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"Data/test.xlsx"</span>, fillMergedCells <span class="op">=</span> <span class="cn">TRUE</span>, sheet <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  a  b b
-1 a 12 t
-2 a 13 h
-3 a 14 d
-4 b 15 f
-5 b 16 g</code></pre>
+<pre><code>##   a  b b
+## 1 a 12 t
+## 2 a 13 h
+## 3 a 14 d
+## 4 b 15 f
+## 5 b 16 g</code></pre>
 </div>
 </div>
 </section><section id="origin-files" class="level3" data-number="7.1.3"><h3 data-number="7.1.3" class="anchored" data-anchor-id="origin-files">
 <span class="header-section-number">7.1.3</span> Origin files</h3>
 <p>If you moved to R coming from a workflow where you used <a href="https://www.originlab.com/origin">Origin</a>, chances are you have some .opj files lying around that you still want to be able to read. Lucky you, the <code>Ropj</code> library is here:</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/aitap/Ropj">Ropj</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/aitap/Ropj">Ropj</a></span><span class="op">)</span></span>
 <span><span class="fu">read.opj</span><span class="op">(</span><span class="st">"Data/opjfile.opj"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section><section id="matlab-files" class="level3" data-number="7.1.4"><h3 data-number="7.1.4" class="anchored" data-anchor-id="matlab-files">
 <span class="header-section-number">7.1.4</span> Matlab files</h3>
 <p>To read Matlab’s .mat format datasets, use the <a href="https://github.com/HenrikBengtsson/R.matlab">R.matlab package</a> and its <code class="sourceCode r"><span class="fu">readMat</span>()</code> function.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HenrikBengtsson/R.matlab">R.matlab</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HenrikBengtsson/R.matlab">R.matlab</a></span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readMat</span><span class="op">(</span><span class="st">"yourfile.mat"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section><section id="images" class="level3" data-number="7.1.5"><h3 data-number="7.1.5" class="anchored" data-anchor-id="images">
 <span class="header-section-number">7.1.5</span> Images</h3>
 <p>You can read an image as a matrix. For example:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rforge.net/png/">png</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rforge.net/png/">png</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/png/man/readPNG.html">readPNG</a></span><span class="op">(</span><span class="st">"image.png"</span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.rforge.net/tiff/">tiff</a></span><span class="op">)</span></span>
 <span><span class="fu">readTIFF</span><span class="op">(</span><span class="st">"image.tiff"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -522,7 +482,7 @@ dbl (2): C, D
 <span class="header-section-number">7.1.6</span> Spectroscopic files</h3>
 <p>In case your spectroscopic data wasn’t saved as an ASCII file but as a <code>spc</code> or another format, take a look at the <a href="https://docs.ropensci.org/lightr/"><code>lightr</code> package</a>, for example.</p>
 <p>Example of a reading function for an spc file:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/lightr/">lightr</a></span><span class="op">)</span></span>
 <span><span class="va">read_spc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">fname</span><span class="op">)</span><span class="op">{</span></span>
 <span>    <span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">lr_parse_spc</span><span class="op">(</span><span class="va">fname</span><span class="op">)</span> <span class="co"># d is a list</span></span>
@@ -537,7 +497,7 @@ dbl (2): C, D
 <span class="header-section-number">7.2</span> Reading multiple files into a tidy table</h2>
 <p>We very often encounter the situation where we need to read multiple similar files into a tidy table. For this, you can use a <code class="sourceCode r"><span class="cf">for</span></code> loop: this would work but would be un-R-ly, but in some cases you need to do this because you perform some other operations during the <code>for</code> loop.</p>
 <p>Let’s say we store the list of file names into a vector <code>file_list</code> and read these files using the function <code class="sourceCode r"><span class="fu">read_function</span>()</code>:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># empty initialization</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">file</span> <span class="kw">in</span> <span class="va">file_list</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">df_temp</span> <span class="op">&lt;-</span> <span class="fu">read_function</span><span class="op">(</span><span class="va">file</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -545,26 +505,26 @@ dbl (2): C, D
 <span>    <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">def_temp</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>An R-friendly way of doing this would be to avoid using a <code class="sourceCode r"><span class="cf">for</span></code> loop:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">file_list</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">read_function</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In case you are reading csv files, you can use the fact that since the version 2.0 of <code>readr</code>, <code class="sourceCode r"><span class="fu">read_csv</span>()</code> takes a vector as first argument. You’ll also need to use the <code>id</code> argument to get a column with the list of file names:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">file_list</span>, id <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section><section id="writing-files" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="writing-files">
 <span class="header-section-number">7.3</span> Writing files</h2>
 <section id="text-files" class="level3" data-number="7.3.1"><h3 data-number="7.3.1" class="anchored" data-anchor-id="text-files">
 <span class="header-section-number">7.3.1</span> Text files</h3>
 <p>Sometimes, you want to output your data as a csv or an Excel file to share it with others or to save your data. Use the <code class="sourceCode r"><span class="fu">write_csv</span>()</code> function to write a csv file (prefer the <code>tidyverse</code>’s <code class="sourceCode r"><span class="fu">write_csv</span>()</code> to the base R <code class="sourceCode r"><span class="fu">write.csv</span>()</code> as it is more easy to use):</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">df</span>, <span class="st">"your_file.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Note that the <code class="sourceCode r">write_<span class="sc">*</span>()</code> functions will automatically compress outputs if an appropriate extension is given. Three extensions are currently supported: .gz for gzip compression, .bz2 for bzip2 compression and .xz for lzma compression. See the examples in the help for more information.</p>
 <p>If you don’t want to use csv files, look into <code class="sourceCode r"><span class="fu">write_tsv</span>()</code> for tab-separated values or <code class="sourceCode r"><span class="fu">write_delim</span>()</code> for any delimiter. In case you want to output fixed width files, look into <a href="https://www.rdocumentation.org/packages/gdata/versions/2.18.0/topics/write.fwf"><code>gdata</code>’s <code class="sourceCode r"><span class="fu">write.fwf</span>()</code></a>.</p>
 </section><section id="excel-files-1" class="level3" data-number="7.3.2"><h3 data-number="7.3.2" class="anchored" data-anchor-id="excel-files-1">
 <span class="header-section-number">7.3.2</span> Excel files</h3>
 <p>To write Excel files, use the library <code>openxlsx</code> and its function <code class="sourceCode r"><span class="fu">write.xlsx</span>()</code> (see the help on the function for more options):</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/write.xlsx.html">write.xlsx</a></span><span class="op">(</span><span class="va">df</span>, <span class="st">"your_file.xlsx"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
@@ -764,200 +724,200 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb34" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reading/writing all kinds of files</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reading files</span></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>Working in any data-based scientific field, you will encounter many different types of files. ASCII text files are usually predominant, but you may want to read files from coming from Excel, Origin, etc.</span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>Here is a non-exhaustive reminder to help you read the kinds of files you often encounter with R. I invite you to visit the <span class="co">[</span><span class="ot">RopenSci webpage</span><span class="co">](https://ropensci.org/)</span> for more packages, and if this isn't enough for your need, well, <span class="co">[</span><span class="ot">Google is your friend</span><span class="co">](http://letmegooglethat.com/?q=r+read+my+file+type)</span>.</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">### Column text files</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>Most base R functions like <span class="in">`read.csv()`</span>{.R} or <span class="in">`read.table()`</span>{.R} have their <span class="in">`tidyverse`</span> counterpart, like <span class="in">`read_csv()`</span>{.R} and <span class="in">`read_table()`</span>{.R}. I usually prefer the <span class="in">`tidyverse`</span> version as it outputs a <span class="in">`tibble`</span> instead of a <span class="in">`data.frame`</span>. These functions can also be directly provided with an url to the text file.</span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a>If your data file is "complicated" -- in the sense that it contains lines or columns to be skipped -- look at the help on the reader function with <span class="in">`?function_name`</span>.</span>
-<span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Comma separated values</span></span>
-<span id="cb34-17"><a href="#cb34-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-18"><a href="#cb34-18" aria-hidden="true" tabindex="-1"></a>Input file looks like this:</span>
-<span id="cb34-19"><a href="#cb34-19" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash echo=FALSE}</span></span>
-<span id="cb34-20"><a href="#cb34-20" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> Data/tot_population.csv</span>
-<span id="cb34-21"><a href="#cb34-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-22"><a href="#cb34-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-25"><a href="#cb34-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-26"><a href="#cb34-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb34-27"><a href="#cb34-27" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"Data/tot_population.csv"</span>)</span>
-<span id="cb34-28"><a href="#cb34-28" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"Data/tot_population.csv"</span>, <span class="at">skip =</span> <span class="dv">1</span>)</span>
-<span id="cb34-29"><a href="#cb34-29" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"Data/tot_population.csv"</span>, <span class="at">skip =</span> <span class="dv">1</span>, <span class="at">col_names =</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span>
-<span id="cb34-30"><a href="#cb34-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-31"><a href="#cb34-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-32"><a href="#cb34-32" aria-hidden="true" tabindex="-1"></a>Since version 2.0 of <span class="in">`readr`</span>, <span class="in">`read_csv()`</span>{.R} can also take a vector as argument, which will result in reading all files in the vector successively:</span>
-<span id="cb34-33"><a href="#cb34-33" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-36"><a href="#cb34-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb34-37"><a href="#cb34-37" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="fu">c</span>(<span class="st">"Data/test1.csv"</span>,</span>
-<span id="cb34-38"><a href="#cb34-38" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Data/test2.csv"</span>),</span>
-<span id="cb34-39"><a href="#cb34-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="st">"file"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb34-40"><a href="#cb34-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-41"><a href="#cb34-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-42"><a href="#cb34-42" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Space separated values</span></span>
-<span id="cb34-43"><a href="#cb34-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-44"><a href="#cb34-44" aria-hidden="true" tabindex="-1"></a>Input file looks like this:</span>
-<span id="cb34-45"><a href="#cb34-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash echo=FALSE}</span></span>
-<span id="cb34-46"><a href="#cb34-46" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> Data/rubis_01.txt</span>
-<span id="cb34-47"><a href="#cb34-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-48"><a href="#cb34-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-49"><a href="#cb34-49" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb34-50"><a href="#cb34-50" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb34-51"><a href="#cb34-51" aria-hidden="true" tabindex="-1"></a><span class="fu">read_table</span>(<span class="st">"Data/rubis_01.txt"</span>)</span>
-<span id="cb34-52"><a href="#cb34-52" aria-hidden="true" tabindex="-1"></a><span class="fu">read_table</span>(<span class="st">"Data/rubis_01.txt"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"w"</span>,<span class="st">"int"</span>))</span>
-<span id="cb34-53"><a href="#cb34-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-54"><a href="#cb34-54" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-55"><a href="#cb34-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-56"><a href="#cb34-56" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Other separators</span></span>
-<span id="cb34-57"><a href="#cb34-57" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-58"><a href="#cb34-58" aria-hidden="true" tabindex="-1"></a>For tab-separated values, use <span class="in">`read_tsv()`</span>{.R}. For other exotic separators, look into <span class="in">`read_delim()`</span>{.R}.</span>
-<span id="cb34-59"><a href="#cb34-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-60"><a href="#cb34-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-61"><a href="#cb34-61" aria-hidden="true" tabindex="-1"></a><span class="fu">### Excel files</span></span>
-<span id="cb34-62"><a href="#cb34-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-63"><a href="#cb34-63" aria-hidden="true" tabindex="-1"></a>For this, use the <span class="in">`readxl`</span> library and its function <span class="in">`read_excel()`</span>{.R} returning a <span class="in">`tibble`</span>:</span>
-<span id="cb34-64"><a href="#cb34-64" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-65"><a href="#cb34-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE}</span></span>
-<span id="cb34-66"><a href="#cb34-66" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb34-67"><a href="#cb34-67" aria-hidden="true" tabindex="-1"></a><span class="fu">read_excel</span>(<span class="st">"Data/test.xlsx"</span>)</span>
-<span id="cb34-68"><a href="#cb34-68" aria-hidden="true" tabindex="-1"></a><span class="fu">read_excel</span>(<span class="st">"Data/test.xlsx"</span>, <span class="at">sheet=</span><span class="dv">2</span>) <span class="co"># specify the sheet by its number or its name</span></span>
-<span id="cb34-69"><a href="#cb34-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-70"><a href="#cb34-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-71"><a href="#cb34-71" aria-hidden="true" tabindex="-1"></a>In case your Excel file contains merged cells, <span class="in">`read_excel()`</span>{.R} will fill the merged cells by <span class="in">`NA`</span> values. If you want to avoid this behavior, use <span class="in">`openxlsx::read.xlsx()`</span>{.R} (which returns a <span class="in">`data.frame`</span>):</span>
-<span id="cb34-72"><a href="#cb34-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-73"><a href="#cb34-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE}</span></span>
-<span id="cb34-74"><a href="#cb34-74" aria-hidden="true" tabindex="-1"></a><span class="fu">read_excel</span>(<span class="st">"Data/test.xlsx"</span>, <span class="at">sheet=</span><span class="dv">3</span>)</span>
-<span id="cb34-75"><a href="#cb34-75" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
-<span id="cb34-76"><a href="#cb34-76" aria-hidden="true" tabindex="-1"></a><span class="fu">read.xlsx</span>(<span class="st">"Data/test.xlsx"</span>, <span class="at">fillMergedCells =</span> <span class="cn">TRUE</span>, <span class="at">sheet =</span> <span class="dv">3</span>)</span>
-<span id="cb34-77"><a href="#cb34-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-78"><a href="#cb34-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-79"><a href="#cb34-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-80"><a href="#cb34-80" aria-hidden="true" tabindex="-1"></a><span class="fu">### Origin files</span></span>
-<span id="cb34-81"><a href="#cb34-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-82"><a href="#cb34-82" aria-hidden="true" tabindex="-1"></a>If you moved to R coming from a workflow where you used <span class="co">[</span><span class="ot">Origin</span><span class="co">](https://www.originlab.com/origin)</span>, chances are you have some .opj files lying around that you still want to be able to read. Lucky you, the <span class="in">`Ropj`</span> library is here:</span>
-<span id="cb34-83"><a href="#cb34-83" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-84"><a href="#cb34-84" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb34-85"><a href="#cb34-85" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Ropj)</span>
-<span id="cb34-86"><a href="#cb34-86" aria-hidden="true" tabindex="-1"></a><span class="fu">read.opj</span>(<span class="st">"Data/opjfile.opj"</span>)</span>
-<span id="cb34-87"><a href="#cb34-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-88"><a href="#cb34-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-89"><a href="#cb34-89" aria-hidden="true" tabindex="-1"></a><span class="fu">### Matlab files</span></span>
-<span id="cb34-90"><a href="#cb34-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-91"><a href="#cb34-91" aria-hidden="true" tabindex="-1"></a>To read Matlab's .mat format datasets, use the <span class="co">[</span><span class="ot">R.matlab package</span><span class="co">](https://github.com/HenrikBengtsson/R.matlab)</span> and its <span class="in">`readMat()`</span>{.R} function.</span>
-<span id="cb34-92"><a href="#cb34-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-93"><a href="#cb34-93" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb34-94"><a href="#cb34-94" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R.matlab)</span>
-<span id="cb34-95"><a href="#cb34-95" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">readMat</span>(<span class="st">"yourfile.mat"</span>)</span>
-<span id="cb34-96"><a href="#cb34-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-97"><a href="#cb34-97" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-98"><a href="#cb34-98" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-99"><a href="#cb34-99" aria-hidden="true" tabindex="-1"></a><span class="fu">### Images</span></span>
-<span id="cb34-100"><a href="#cb34-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-101"><a href="#cb34-101" aria-hidden="true" tabindex="-1"></a>You can read an image as a matrix. For example:</span>
-<span id="cb34-102"><a href="#cb34-102" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-103"><a href="#cb34-103" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb34-104"><a href="#cb34-104" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(png)</span>
-<span id="cb34-105"><a href="#cb34-105" aria-hidden="true" tabindex="-1"></a><span class="fu">readPNG</span>(<span class="st">"image.png"</span>)</span>
-<span id="cb34-106"><a href="#cb34-106" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tiff)</span>
-<span id="cb34-107"><a href="#cb34-107" aria-hidden="true" tabindex="-1"></a><span class="fu">readTIFF</span>(<span class="st">"image.tiff"</span>)</span>
-<span id="cb34-108"><a href="#cb34-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-109"><a href="#cb34-109" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-110"><a href="#cb34-110" aria-hidden="true" tabindex="-1"></a>For more image processing (pictures or videos), I recommend the <span class="co">[</span><span class="ot">`imager` package</span><span class="co">](https://dahtah.github.io/imager/imager.html)</span>.</span>
-<span id="cb34-111"><a href="#cb34-111" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-112"><a href="#cb34-112" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-113"><a href="#cb34-113" aria-hidden="true" tabindex="-1"></a><span class="fu">### Spectroscopic files</span></span>
-<span id="cb34-114"><a href="#cb34-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-115"><a href="#cb34-115" aria-hidden="true" tabindex="-1"></a>In case your spectroscopic data wasn't saved as an ASCII file but as a <span class="in">`spc`</span> or another format, take a look at the <span class="co">[</span><span class="ot">`lightr` package</span><span class="co">](https://docs.ropensci.org/lightr/)</span>, for example.</span>
-<span id="cb34-116"><a href="#cb34-116" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-117"><a href="#cb34-117" aria-hidden="true" tabindex="-1"></a>Example of a reading function for an spc file:</span>
-<span id="cb34-118"><a href="#cb34-118" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-119"><a href="#cb34-119" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb34-120"><a href="#cb34-120" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb34-121"><a href="#cb34-121" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lightr)</span>
-<span id="cb34-122"><a href="#cb34-122" aria-hidden="true" tabindex="-1"></a>read_spc <span class="ot">&lt;-</span> <span class="cf">function</span>(fname){</span>
-<span id="cb34-123"><a href="#cb34-123" aria-hidden="true" tabindex="-1"></a>    d <span class="ot">&lt;-</span> <span class="fu">lr_parse_spc</span>(fname) <span class="co"># d is a list</span></span>
-<span id="cb34-124"><a href="#cb34-124" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">w         =</span> d[[<span class="dv">1</span>]]<span class="sc">$</span>wl, </span>
-<span id="cb34-125"><a href="#cb34-125" aria-hidden="true" tabindex="-1"></a>           <span class="at">intensity =</span> d[[<span class="dv">1</span>]]<span class="sc">$</span>processed)</span>
-<span id="cb34-126"><a href="#cb34-126" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb34-127"><a href="#cb34-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-128"><a href="#cb34-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-129"><a href="#cb34-129" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-130"><a href="#cb34-130" aria-hidden="true" tabindex="-1"></a><span class="fu">### Compressed binary data files: HDF, netCDF</span></span>
-<span id="cb34-131"><a href="#cb34-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-132"><a href="#cb34-132" aria-hidden="true" tabindex="-1"></a>**HDF**: Go to <span class="co">[</span><span class="ot">this vignette</span><span class="co">](https://www.bioconductor.org/packages/release/bioc/vignettes/rhdf5/inst/doc/rhdf5.html)</span> to see how to read Hierarchical Data Files.</span>
-<span id="cb34-133"><a href="#cb34-133" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-134"><a href="#cb34-134" aria-hidden="true" tabindex="-1"></a>**netCDF**: see <span class="co">[</span><span class="ot">here</span><span class="co">](https://www.rdocumentation.org/packages/RNetCDF/versions/2.4-2/topics/read.nc)</span>.</span>
-<span id="cb34-135"><a href="#cb34-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-136"><a href="#cb34-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-137"><a href="#cb34-137" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-138"><a href="#cb34-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reading multiple files into a tidy table</span></span>
-<span id="cb34-139"><a href="#cb34-139" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-140"><a href="#cb34-140" aria-hidden="true" tabindex="-1"></a>We very often encounter the situation where we need to read multiple similar files into a tidy table.</span>
-<span id="cb34-141"><a href="#cb34-141" aria-hidden="true" tabindex="-1"></a>For this, you can use a <span class="in">`for`</span>{.R} loop: this would work but would be un-R-ly, but in some cases you need to do this because you perform some other operations during the <span class="in">`for`</span> loop. </span>
-<span id="cb34-142"><a href="#cb34-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-143"><a href="#cb34-143" aria-hidden="true" tabindex="-1"></a>Let's say we store the list of file names into a vector <span class="in">`file_list`</span> and read these files using the function <span class="in">`read_function()`</span>{.R}:</span>
-<span id="cb34-144"><a href="#cb34-144" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-145"><a href="#cb34-145" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb34-146"><a href="#cb34-146" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb34-147"><a href="#cb34-147" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>() <span class="co"># empty initialization</span></span>
-<span id="cb34-148"><a href="#cb34-148" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (file <span class="cf">in</span> file_list) {</span>
-<span id="cb34-149"><a href="#cb34-149" aria-hidden="true" tabindex="-1"></a>    df_temp <span class="ot">&lt;-</span> <span class="fu">read_function</span>(file) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-150"><a href="#cb34-150" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">name =</span> file) <span class="co"># add the column `name` to make the tibble tidy</span></span>
-<span id="cb34-151"><a href="#cb34-151" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df, def_temp)</span>
-<span id="cb34-152"><a href="#cb34-152" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb34-153"><a href="#cb34-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-154"><a href="#cb34-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-155"><a href="#cb34-155" aria-hidden="true" tabindex="-1"></a>An R-friendly way of doing this would be to avoid using a <span class="in">`for`</span>{.R} loop:</span>
-<span id="cb34-156"><a href="#cb34-156" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb34-157"><a href="#cb34-157" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb34-158"><a href="#cb34-158" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name =</span> file_list) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-159"><a href="#cb34-159" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">data =</span> <span class="fu">map</span>(name, read_function)) <span class="sc">%&gt;%</span> </span>
-<span id="cb34-160"><a href="#cb34-160" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(data)</span>
-<span id="cb34-161"><a href="#cb34-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-162"><a href="#cb34-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-163"><a href="#cb34-163" aria-hidden="true" tabindex="-1"></a>In case you are reading csv files, you can use the fact that since the version 2.0 of <span class="in">`readr`</span>, <span class="in">`read_csv()`</span>{.R} takes a vector as first argument. You'll also need to use the <span class="in">`id`</span> argument to get a column with the list of file names:</span>
-<span id="cb34-164"><a href="#cb34-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-165"><a href="#cb34-165" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb34-166"><a href="#cb34-166" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb34-167"><a href="#cb34-167" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_list, <span class="at">id =</span> <span class="st">"name"</span>)</span>
-<span id="cb34-168"><a href="#cb34-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-169"><a href="#cb34-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-170"><a href="#cb34-170" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-171"><a href="#cb34-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Writing files</span></span>
-<span id="cb34-172"><a href="#cb34-172" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-173"><a href="#cb34-173" aria-hidden="true" tabindex="-1"></a><span class="fu">### Text files</span></span>
-<span id="cb34-174"><a href="#cb34-174" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-175"><a href="#cb34-175" aria-hidden="true" tabindex="-1"></a>Sometimes, you want to output your data as a csv or an Excel file to share it with others or to save your data. Use the <span class="in">`write_csv()`</span>{.R} function to write a csv file (prefer the <span class="in">`tidyverse`</span>'s <span class="in">`write_csv()`</span>{.R} to the base R <span class="in">`write.csv()`</span>{.R} as it is more easy to use):</span>
-<span id="cb34-176"><a href="#cb34-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-177"><a href="#cb34-177" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb34-178"><a href="#cb34-178" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb34-179"><a href="#cb34-179" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(df, <span class="st">"your_file.csv"</span>)</span>
-<span id="cb34-180"><a href="#cb34-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-181"><a href="#cb34-181" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-182"><a href="#cb34-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-183"><a href="#cb34-183" aria-hidden="true" tabindex="-1"></a>Note that the <span class="in">`write_*()`</span>{.R} functions will automatically compress outputs if an appropriate extension is given. Three extensions are currently supported: .gz for gzip compression, .bz2 for bzip2 compression and .xz for lzma compression. See the examples in the help for more information.</span>
-<span id="cb34-184"><a href="#cb34-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-185"><a href="#cb34-185" aria-hidden="true" tabindex="-1"></a>If you don't want to use csv files, look into <span class="in">`write_tsv()`</span>{.R} for tab-separated values or <span class="in">`write_delim()`</span>{.R} for any delimiter. In case you want to output fixed width files, look into <span class="co">[</span><span class="ot">`gdata`'s `write.fwf()`{.R}</span><span class="co">](https://www.rdocumentation.org/packages/gdata/versions/2.18.0/topics/write.fwf)</span>.</span>
-<span id="cb34-186"><a href="#cb34-186" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-187"><a href="#cb34-187" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-188"><a href="#cb34-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### Excel files</span></span>
-<span id="cb34-189"><a href="#cb34-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-190"><a href="#cb34-190" aria-hidden="true" tabindex="-1"></a>To write Excel files, use the library <span class="in">`openxlsx`</span> and its function <span class="in">`write.xlsx()`</span>{.R} (see the help on the function for more options):</span>
-<span id="cb34-191"><a href="#cb34-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-192"><a href="#cb34-192" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb34-193"><a href="#cb34-193" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
-<span id="cb34-194"><a href="#cb34-194" aria-hidden="true" tabindex="-1"></a><span class="fu">write.xlsx</span>(df, <span class="st">"your_file.xlsx"</span>)</span>
-<span id="cb34-195"><a href="#cb34-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb34-196"><a href="#cb34-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-197"><a href="#cb34-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-198"><a href="#cb34-198" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb29" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Reading/writing all kinds of files</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reading files</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>Working in any data-based scientific field, you will encounter many different types of files. ASCII text files are usually predominant, but you may want to read files from coming from Excel, Origin, etc.</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>Here is a non-exhaustive reminder to help you read the kinds of files you often encounter with R. I invite you to visit the <span class="co">[</span><span class="ot">RopenSci webpage</span><span class="co">](https://ropensci.org/)</span> for more packages, and if this isn't enough for your need, well, <span class="co">[</span><span class="ot">Google is your friend</span><span class="co">](http://letmegooglethat.com/?q=r+read+my+file+type)</span>.</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="fu">### Column text files</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>Most base R functions like <span class="in">`read.csv()`</span>{.R} or <span class="in">`read.table()`</span>{.R} have their <span class="in">`tidyverse`</span> counterpart, like <span class="in">`read_csv()`</span>{.R} and <span class="in">`read_table()`</span>{.R}. I usually prefer the <span class="in">`tidyverse`</span> version as it outputs a <span class="in">`tibble`</span> instead of a <span class="in">`data.frame`</span>. These functions can also be directly provided with an url to the text file.</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a>If your data file is "complicated" -- in the sense that it contains lines or columns to be skipped -- look at the help on the reader function with <span class="in">`?function_name`</span>.</span>
+<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Comma separated values</span></span>
+<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a>Input file looks like this:</span>
+<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash echo=FALSE}</span></span>
+<span id="cb29-20"><a href="#cb29-20" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> Data/tot_population.csv</span>
+<span id="cb29-21"><a href="#cb29-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-22"><a href="#cb29-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-25"><a href="#cb29-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb29-26"><a href="#cb29-26" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb29-27"><a href="#cb29-27" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"Data/tot_population.csv"</span>)</span>
+<span id="cb29-28"><a href="#cb29-28" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"Data/tot_population.csv"</span>, <span class="at">skip =</span> <span class="dv">1</span>)</span>
+<span id="cb29-29"><a href="#cb29-29" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"Data/tot_population.csv"</span>, <span class="at">skip =</span> <span class="dv">1</span>, <span class="at">col_names =</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span>
+<span id="cb29-30"><a href="#cb29-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-31"><a href="#cb29-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-32"><a href="#cb29-32" aria-hidden="true" tabindex="-1"></a>Since version 2.0 of <span class="in">`readr`</span>, <span class="in">`read_csv()`</span>{.R} can also take a vector as argument, which will result in reading all files in the vector successively:</span>
+<span id="cb29-33"><a href="#cb29-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-36"><a href="#cb29-36" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb29-37"><a href="#cb29-37" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="fu">c</span>(<span class="st">"Data/test1.csv"</span>,</span>
+<span id="cb29-38"><a href="#cb29-38" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Data/test2.csv"</span>),</span>
+<span id="cb29-39"><a href="#cb29-39" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="st">"file"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb29-40"><a href="#cb29-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-41"><a href="#cb29-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-42"><a href="#cb29-42" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Space separated values</span></span>
+<span id="cb29-43"><a href="#cb29-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-44"><a href="#cb29-44" aria-hidden="true" tabindex="-1"></a>Input file looks like this:</span>
+<span id="cb29-45"><a href="#cb29-45" aria-hidden="true" tabindex="-1"></a><span class="in">```{bash echo=FALSE}</span></span>
+<span id="cb29-46"><a href="#cb29-46" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> Data/rubis_01.txt</span>
+<span id="cb29-47"><a href="#cb29-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-48"><a href="#cb29-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-49"><a href="#cb29-49" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb29-50"><a href="#cb29-50" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb29-51"><a href="#cb29-51" aria-hidden="true" tabindex="-1"></a><span class="fu">read_table</span>(<span class="st">"Data/rubis_01.txt"</span>)</span>
+<span id="cb29-52"><a href="#cb29-52" aria-hidden="true" tabindex="-1"></a><span class="fu">read_table</span>(<span class="st">"Data/rubis_01.txt"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"w"</span>,<span class="st">"int"</span>))</span>
+<span id="cb29-53"><a href="#cb29-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-54"><a href="#cb29-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-55"><a href="#cb29-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-56"><a href="#cb29-56" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Other separators</span></span>
+<span id="cb29-57"><a href="#cb29-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-58"><a href="#cb29-58" aria-hidden="true" tabindex="-1"></a>For tab-separated values, use <span class="in">`read_tsv()`</span>{.R}. For other exotic separators, look into <span class="in">`read_delim()`</span>{.R}.</span>
+<span id="cb29-59"><a href="#cb29-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-60"><a href="#cb29-60" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-61"><a href="#cb29-61" aria-hidden="true" tabindex="-1"></a><span class="fu">### Excel files</span></span>
+<span id="cb29-62"><a href="#cb29-62" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-63"><a href="#cb29-63" aria-hidden="true" tabindex="-1"></a>For this, use the <span class="in">`readxl`</span> library and its function <span class="in">`read_excel()`</span>{.R} returning a <span class="in">`tibble`</span>:</span>
+<span id="cb29-64"><a href="#cb29-64" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-65"><a href="#cb29-65" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE}</span></span>
+<span id="cb29-66"><a href="#cb29-66" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb29-67"><a href="#cb29-67" aria-hidden="true" tabindex="-1"></a><span class="fu">read_excel</span>(<span class="st">"Data/test.xlsx"</span>)</span>
+<span id="cb29-68"><a href="#cb29-68" aria-hidden="true" tabindex="-1"></a><span class="fu">read_excel</span>(<span class="st">"Data/test.xlsx"</span>, <span class="at">sheet=</span><span class="dv">2</span>) <span class="co"># specify the sheet by its number or its name</span></span>
+<span id="cb29-69"><a href="#cb29-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-70"><a href="#cb29-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-71"><a href="#cb29-71" aria-hidden="true" tabindex="-1"></a>In case your Excel file contains merged cells, <span class="in">`read_excel()`</span>{.R} will fill the merged cells by <span class="in">`NA`</span> values. If you want to avoid this behavior, use <span class="in">`openxlsx::read.xlsx()`</span>{.R} (which returns a <span class="in">`data.frame`</span>):</span>
+<span id="cb29-72"><a href="#cb29-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-73"><a href="#cb29-73" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE}</span></span>
+<span id="cb29-74"><a href="#cb29-74" aria-hidden="true" tabindex="-1"></a><span class="fu">read_excel</span>(<span class="st">"Data/test.xlsx"</span>, <span class="at">sheet=</span><span class="dv">3</span>)</span>
+<span id="cb29-75"><a href="#cb29-75" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb29-76"><a href="#cb29-76" aria-hidden="true" tabindex="-1"></a><span class="fu">read.xlsx</span>(<span class="st">"Data/test.xlsx"</span>, <span class="at">fillMergedCells =</span> <span class="cn">TRUE</span>, <span class="at">sheet =</span> <span class="dv">3</span>)</span>
+<span id="cb29-77"><a href="#cb29-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-78"><a href="#cb29-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-79"><a href="#cb29-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-80"><a href="#cb29-80" aria-hidden="true" tabindex="-1"></a><span class="fu">### Origin files</span></span>
+<span id="cb29-81"><a href="#cb29-81" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-82"><a href="#cb29-82" aria-hidden="true" tabindex="-1"></a>If you moved to R coming from a workflow where you used <span class="co">[</span><span class="ot">Origin</span><span class="co">](https://www.originlab.com/origin)</span>, chances are you have some .opj files lying around that you still want to be able to read. Lucky you, the <span class="in">`Ropj`</span> library is here:</span>
+<span id="cb29-83"><a href="#cb29-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-84"><a href="#cb29-84" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb29-85"><a href="#cb29-85" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Ropj)</span>
+<span id="cb29-86"><a href="#cb29-86" aria-hidden="true" tabindex="-1"></a><span class="fu">read.opj</span>(<span class="st">"Data/opjfile.opj"</span>)</span>
+<span id="cb29-87"><a href="#cb29-87" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-88"><a href="#cb29-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-89"><a href="#cb29-89" aria-hidden="true" tabindex="-1"></a><span class="fu">### Matlab files</span></span>
+<span id="cb29-90"><a href="#cb29-90" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-91"><a href="#cb29-91" aria-hidden="true" tabindex="-1"></a>To read Matlab's .mat format datasets, use the <span class="co">[</span><span class="ot">R.matlab package</span><span class="co">](https://github.com/HenrikBengtsson/R.matlab)</span> and its <span class="in">`readMat()`</span>{.R} function.</span>
+<span id="cb29-92"><a href="#cb29-92" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-93"><a href="#cb29-93" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb29-94"><a href="#cb29-94" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R.matlab)</span>
+<span id="cb29-95"><a href="#cb29-95" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">readMat</span>(<span class="st">"yourfile.mat"</span>)</span>
+<span id="cb29-96"><a href="#cb29-96" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-97"><a href="#cb29-97" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-98"><a href="#cb29-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-99"><a href="#cb29-99" aria-hidden="true" tabindex="-1"></a><span class="fu">### Images</span></span>
+<span id="cb29-100"><a href="#cb29-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-101"><a href="#cb29-101" aria-hidden="true" tabindex="-1"></a>You can read an image as a matrix. For example:</span>
+<span id="cb29-102"><a href="#cb29-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-103"><a href="#cb29-103" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb29-104"><a href="#cb29-104" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(png)</span>
+<span id="cb29-105"><a href="#cb29-105" aria-hidden="true" tabindex="-1"></a><span class="fu">readPNG</span>(<span class="st">"image.png"</span>)</span>
+<span id="cb29-106"><a href="#cb29-106" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tiff)</span>
+<span id="cb29-107"><a href="#cb29-107" aria-hidden="true" tabindex="-1"></a><span class="fu">readTIFF</span>(<span class="st">"image.tiff"</span>)</span>
+<span id="cb29-108"><a href="#cb29-108" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-109"><a href="#cb29-109" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-110"><a href="#cb29-110" aria-hidden="true" tabindex="-1"></a>For more image processing (pictures or videos), I recommend the <span class="co">[</span><span class="ot">`imager` package</span><span class="co">](https://dahtah.github.io/imager/imager.html)</span>.</span>
+<span id="cb29-111"><a href="#cb29-111" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-112"><a href="#cb29-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-113"><a href="#cb29-113" aria-hidden="true" tabindex="-1"></a><span class="fu">### Spectroscopic files</span></span>
+<span id="cb29-114"><a href="#cb29-114" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-115"><a href="#cb29-115" aria-hidden="true" tabindex="-1"></a>In case your spectroscopic data wasn't saved as an ASCII file but as a <span class="in">`spc`</span> or another format, take a look at the <span class="co">[</span><span class="ot">`lightr` package</span><span class="co">](https://docs.ropensci.org/lightr/)</span>, for example.</span>
+<span id="cb29-116"><a href="#cb29-116" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-117"><a href="#cb29-117" aria-hidden="true" tabindex="-1"></a>Example of a reading function for an spc file:</span>
+<span id="cb29-118"><a href="#cb29-118" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-119"><a href="#cb29-119" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb29-120"><a href="#cb29-120" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb29-121"><a href="#cb29-121" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lightr)</span>
+<span id="cb29-122"><a href="#cb29-122" aria-hidden="true" tabindex="-1"></a>read_spc <span class="ot">&lt;-</span> <span class="cf">function</span>(fname){</span>
+<span id="cb29-123"><a href="#cb29-123" aria-hidden="true" tabindex="-1"></a>    d <span class="ot">&lt;-</span> <span class="fu">lr_parse_spc</span>(fname) <span class="co"># d is a list</span></span>
+<span id="cb29-124"><a href="#cb29-124" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">w         =</span> d[[<span class="dv">1</span>]]<span class="sc">$</span>wl, </span>
+<span id="cb29-125"><a href="#cb29-125" aria-hidden="true" tabindex="-1"></a>           <span class="at">intensity =</span> d[[<span class="dv">1</span>]]<span class="sc">$</span>processed)</span>
+<span id="cb29-126"><a href="#cb29-126" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-127"><a href="#cb29-127" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-128"><a href="#cb29-128" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-129"><a href="#cb29-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-130"><a href="#cb29-130" aria-hidden="true" tabindex="-1"></a><span class="fu">### Compressed binary data files: HDF, netCDF</span></span>
+<span id="cb29-131"><a href="#cb29-131" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-132"><a href="#cb29-132" aria-hidden="true" tabindex="-1"></a>**HDF**: Go to <span class="co">[</span><span class="ot">this vignette</span><span class="co">](https://www.bioconductor.org/packages/release/bioc/vignettes/rhdf5/inst/doc/rhdf5.html)</span> to see how to read Hierarchical Data Files.</span>
+<span id="cb29-133"><a href="#cb29-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-134"><a href="#cb29-134" aria-hidden="true" tabindex="-1"></a>**netCDF**: see <span class="co">[</span><span class="ot">here</span><span class="co">](https://www.rdocumentation.org/packages/RNetCDF/versions/2.4-2/topics/read.nc)</span>.</span>
+<span id="cb29-135"><a href="#cb29-135" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-136"><a href="#cb29-136" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-137"><a href="#cb29-137" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-138"><a href="#cb29-138" aria-hidden="true" tabindex="-1"></a><span class="fu">## Reading multiple files into a tidy table</span></span>
+<span id="cb29-139"><a href="#cb29-139" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-140"><a href="#cb29-140" aria-hidden="true" tabindex="-1"></a>We very often encounter the situation where we need to read multiple similar files into a tidy table.</span>
+<span id="cb29-141"><a href="#cb29-141" aria-hidden="true" tabindex="-1"></a>For this, you can use a <span class="in">`for`</span>{.R} loop: this would work but would be un-R-ly, but in some cases you need to do this because you perform some other operations during the <span class="in">`for`</span> loop. </span>
+<span id="cb29-142"><a href="#cb29-142" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-143"><a href="#cb29-143" aria-hidden="true" tabindex="-1"></a>Let's say we store the list of file names into a vector <span class="in">`file_list`</span> and read these files using the function <span class="in">`read_function()`</span>{.R}:</span>
+<span id="cb29-144"><a href="#cb29-144" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-145"><a href="#cb29-145" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb29-146"><a href="#cb29-146" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb29-147"><a href="#cb29-147" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>() <span class="co"># empty initialization</span></span>
+<span id="cb29-148"><a href="#cb29-148" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (file <span class="cf">in</span> file_list) {</span>
+<span id="cb29-149"><a href="#cb29-149" aria-hidden="true" tabindex="-1"></a>    df_temp <span class="ot">&lt;-</span> <span class="fu">read_function</span>(file) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-150"><a href="#cb29-150" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">name =</span> file) <span class="co"># add the column `name` to make the tibble tidy</span></span>
+<span id="cb29-151"><a href="#cb29-151" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df, def_temp)</span>
+<span id="cb29-152"><a href="#cb29-152" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb29-153"><a href="#cb29-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-154"><a href="#cb29-154" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-155"><a href="#cb29-155" aria-hidden="true" tabindex="-1"></a>An R-friendly way of doing this would be to avoid using a <span class="in">`for`</span>{.R} loop:</span>
+<span id="cb29-156"><a href="#cb29-156" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb29-157"><a href="#cb29-157" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb29-158"><a href="#cb29-158" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name =</span> file_list) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-159"><a href="#cb29-159" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">data =</span> <span class="fu">map</span>(name, read_function)) <span class="sc">%&gt;%</span> </span>
+<span id="cb29-160"><a href="#cb29-160" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(data)</span>
+<span id="cb29-161"><a href="#cb29-161" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-162"><a href="#cb29-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-163"><a href="#cb29-163" aria-hidden="true" tabindex="-1"></a>In case you are reading csv files, you can use the fact that since the version 2.0 of <span class="in">`readr`</span>, <span class="in">`read_csv()`</span>{.R} takes a vector as first argument. You'll also need to use the <span class="in">`id`</span> argument to get a column with the list of file names:</span>
+<span id="cb29-164"><a href="#cb29-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-165"><a href="#cb29-165" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb29-166"><a href="#cb29-166" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb29-167"><a href="#cb29-167" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_list, <span class="at">id =</span> <span class="st">"name"</span>)</span>
+<span id="cb29-168"><a href="#cb29-168" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-169"><a href="#cb29-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-170"><a href="#cb29-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-171"><a href="#cb29-171" aria-hidden="true" tabindex="-1"></a><span class="fu">## Writing files</span></span>
+<span id="cb29-172"><a href="#cb29-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-173"><a href="#cb29-173" aria-hidden="true" tabindex="-1"></a><span class="fu">### Text files</span></span>
+<span id="cb29-174"><a href="#cb29-174" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-175"><a href="#cb29-175" aria-hidden="true" tabindex="-1"></a>Sometimes, you want to output your data as a csv or an Excel file to share it with others or to save your data. Use the <span class="in">`write_csv()`</span>{.R} function to write a csv file (prefer the <span class="in">`tidyverse`</span>'s <span class="in">`write_csv()`</span>{.R} to the base R <span class="in">`write.csv()`</span>{.R} as it is more easy to use):</span>
+<span id="cb29-176"><a href="#cb29-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-177"><a href="#cb29-177" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb29-178"><a href="#cb29-178" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb29-179"><a href="#cb29-179" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(df, <span class="st">"your_file.csv"</span>)</span>
+<span id="cb29-180"><a href="#cb29-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-181"><a href="#cb29-181" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-182"><a href="#cb29-182" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-183"><a href="#cb29-183" aria-hidden="true" tabindex="-1"></a>Note that the <span class="in">`write_*()`</span>{.R} functions will automatically compress outputs if an appropriate extension is given. Three extensions are currently supported: .gz for gzip compression, .bz2 for bzip2 compression and .xz for lzma compression. See the examples in the help for more information.</span>
+<span id="cb29-184"><a href="#cb29-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-185"><a href="#cb29-185" aria-hidden="true" tabindex="-1"></a>If you don't want to use csv files, look into <span class="in">`write_tsv()`</span>{.R} for tab-separated values or <span class="in">`write_delim()`</span>{.R} for any delimiter. In case you want to output fixed width files, look into <span class="co">[</span><span class="ot">`gdata`'s `write.fwf()`{.R}</span><span class="co">](https://www.rdocumentation.org/packages/gdata/versions/2.18.0/topics/write.fwf)</span>.</span>
+<span id="cb29-186"><a href="#cb29-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-187"><a href="#cb29-187" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-188"><a href="#cb29-188" aria-hidden="true" tabindex="-1"></a><span class="fu">### Excel files</span></span>
+<span id="cb29-189"><a href="#cb29-189" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-190"><a href="#cb29-190" aria-hidden="true" tabindex="-1"></a>To write Excel files, use the library <span class="in">`openxlsx`</span> and its function <span class="in">`write.xlsx()`</span>{.R} (see the help on the function for more options):</span>
+<span id="cb29-191"><a href="#cb29-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-192"><a href="#cb29-192" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb29-193"><a href="#cb29-193" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
+<span id="cb29-194"><a href="#cb29-194" aria-hidden="true" tabindex="-1"></a><span class="fu">write.xlsx</span>(df, <span class="st">"your_file.xlsx"</span>)</span>
+<span id="cb29-195"><a href="#cb29-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb29-196"><a href="#cb29-196" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-197"><a href="#cb29-197" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-198"><a href="#cb29-198" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

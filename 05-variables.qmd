@@ -2,7 +2,7 @@
 
 In R, the variable attribution is done through the arrow operator `<-`{.R} instead of the `=`{.R} one – for historical reasons. The equal sign, `=`{.R}, would still work though, but you should just take up the habit of using `<-`{.R}.
 
-In reality, scalar numbers don't exist in R, they are simply 1 element vector: this is why `[1]` is printed in the following outputs.
+In reality, scalar numbers don't exist in R, they are simply 1 element vector: this is why `## [1]` is printed in the following outputs.
 
 To understand what you will encounter further down this class, inputs (what you type in the R script and hit Ctrl+⏎ (⌘+⏎)) are the shaded areas with syntax coloring, while outputs (what R returns) are the area underneath starting with `## [1]`. In case the output spans several lines, each line would start with `## [x]` where `x` is the index of the first element printed on the line.
 
@@ -10,7 +10,7 @@ To understand what you will encounter further down this class, inputs (what you 
 
 Note that different instructions are usually given on separated lines (*i.e.* one instruction per line), but several instructions can be written on a single line if separated with a `;` sign. 
 
-In R code, what is written after the "#" sign is a comment and is thus not interpreted.
+In R code, what is written after the `#` sign is a comment and is thus not interpreted.
 :::
 
 ## Scalars and booleans
@@ -29,7 +29,10 @@ y <- exp(log(sin(cos(x*pi))))
 x - y
 ```
 
-> **Attention:** typing `x + 1`{.R} will **only print** the result of `x + 1`{.R}, but not add 1 to `x` and save this as the new value of `x`. **To actually modify** `x`, type `x <- x + 1`{.R}.
+:::{.callout-warning}
+## Attention 
+Typing `x + 1`{.R} will **only print** the result of `x + 1`{.R}, but not add 1 to `x` and save this as the new value of `x`. **To actually modify** `x`, type `x <- x + 1`{.R}.
+:::
 
 ### Special values
 R handles infinity, NaN, and has $\pi$ defined. Missing numbers are handled through the `NA`{.R} keyword.
