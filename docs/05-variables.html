@@ -278,8 +278,8 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
   
 
 </header><p>In R, the variable attribution is done through the arrow operator <code class="sourceCode r"><span class="ot">&lt;-</span></code> instead of the <code class="sourceCode r"><span class="ot">=</span></code> one – for historical reasons. The equal sign, <code class="sourceCode r"><span class="ot">=</span></code>, would still work though, but you should just take up the habit of using <code class="sourceCode r"><span class="ot">&lt;-</span></code>.</p>
-<p>In reality, scalar numbers don’t exist in R, they are simply 1 element vector: this is why <code>#-&gt; [1]</code> is printed in the following outputs.</p>
-<p>To understand what you will encounter further down this class, inputs (what you type in the R script and hit Ctrl+⏎ (⌘+⏎)) are the shaded areas with syntax coloring, while outputs (what R returns) are the area underneath starting with <code>#-&gt; [1]</code>. In case the output spans several lines, each line would start with <code>#-&gt; [x]</code> where <code>x</code> is the index of the first element printed on the line.</p>
+<p>In reality, scalar numbers don’t exist in R, they are simply 1 element vector: this is why <code>#&gt; [1]</code> is printed in the following outputs.</p>
+<p>To understand what you will encounter further down this class, inputs (what you type in the R script and hit Ctrl+⏎ (⌘+⏎)) are the shaded areas with syntax coloring, while outputs (what R returns) are the area underneath starting with <code>#&gt; [1]</code>. In case the output spans several lines, each line would start with <code>#&gt; [x]</code> where <code>x</code> is the index of the first element printed on the line.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -301,20 +301,20 @@ Note
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span> <span class="co"># attribute the value '1' to the variable 'x'</span></span>
 <span><span class="va">x</span>      <span class="co"># print the value of 'x'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] 1</code></pre>
+<pre><code>#&gt; [1] 1</code></pre>
 </div>
 </div>
 <p>You can use the R console as an advanced calculator:</p>
 <div class="cell" data-warnings="false">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span> <span class="op">+</span> <span class="fl">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] 4</code></pre>
+<pre><code>#&gt; [1] 4</code></pre>
 </div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">/</span><span class="fl">2</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">cos</a></span><span class="op">(</span><span class="va">x</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">x</span> <span class="op">-</span> <span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] 0.5</code></pre>
+<pre><code>#&gt; [1] 0.5</code></pre>
 </div>
 </div>
 <div class="callout-warning callout callout-style-default callout-captioned">
@@ -336,19 +336,19 @@ Attention
 <div class="cell" data-warnings="false">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] 3.141593</code></pre>
+<pre><code>#&gt; [1] 3.141593</code></pre>
 </div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">10</span><span class="op">/</span><span class="fl">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] Inf</code></pre>
+<pre><code>#&gt; [1] Inf</code></pre>
 </div>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">0</span><span class="op">/</span><span class="fl">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] NaN</code></pre>
+<pre><code>#&gt; [1] NaN</code></pre>
 </div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] NA</code></pre>
+<pre><code>#&gt; [1] NA</code></pre>
 </div>
 </div>
 </section><section id="booleans-and-common-tests-on-values" class="level3" data-number="4.1.2"><h3 data-number="4.1.2" class="anchored" data-anchor-id="booleans-and-common-tests-on-values">
@@ -365,7 +365,7 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">==</span> <span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] FALSE</code></pre>
+<pre><code>#&gt; [1] FALSE</code></pre>
 </div>
 </div>
 <ul>
@@ -374,7 +374,7 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">!=</span> <span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] TRUE</code></pre>
+<pre><code>#&gt; [1] TRUE</code></pre>
 </div>
 </div>
 <ul>
@@ -383,7 +383,7 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;</span> <span class="va">y</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] TRUE</code></pre>
+<pre><code>#&gt; [1] TRUE</code></pre>
 </div>
 </div>
 <ul>
@@ -392,7 +392,7 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;=</span> <span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] TRUE</code></pre>
+<pre><code>#&gt; [1] TRUE</code></pre>
 </div>
 </div>
 <ul>
@@ -401,7 +401,7 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">==</span> <span class="va">y</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;</span> <span class="va">y</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] FALSE</code></pre>
+<pre><code>#&gt; [1] FALSE</code></pre>
 </div>
 </div>
 <ul>
@@ -410,7 +410,7 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">==</span> <span class="va">y</span> <span class="op">|</span> <span class="va">x</span> <span class="op">&lt;</span> <span class="va">y</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] TRUE</code></pre>
+<pre><code>#&gt; [1] TRUE</code></pre>
 </div>
 </div>
 <ul>
@@ -419,7 +419,7 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.nan</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] FALSE</code></pre>
+<pre><code>#&gt; [1] FALSE</code></pre>
 </div>
 </div>
 <ul>
@@ -428,7 +428,7 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] FALSE</code></pre>
+<pre><code>#&gt; [1] FALSE</code></pre>
 </div>
 </div>
 <ul>
@@ -437,18 +437,18 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] TRUE</code></pre>
+<pre><code>#&gt; [1] TRUE</code></pre>
 </div>
 </div>
 <p>A number can by converted to a boolean using <code class="sourceCode r"><span class="fu">as.logical</span>()</code>: any number non 0 is equivalent to <code>TRUE</code>, and 0 is <code>FALSE</code>.</p>
 <div class="cell" data-warnings="false">
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] TRUE</code></pre>
+<pre><code>#&gt; [1] TRUE</code></pre>
 </div>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] FALSE</code></pre>
+<pre><code>#&gt; [1] FALSE</code></pre>
 </div>
 </div>
 <div class="callout-note callout callout-style-default callout-captioned">
@@ -467,27 +467,27 @@ Complex values
 <div class="cell" data-warnings="false">
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">+</span><span class="va">i</span>   <span class="co"># not a valid complex value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>#-&gt; Error in eval(expr, envir, enclos): object 'i' not found</code></pre>
+<pre><code>#&gt; Error in eval(expr, envir, enclos): object 'i' not found</code></pre>
 </div>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">+</span><span class="fl">1i</span>  <span class="co"># valid complex value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] 1+1i</code></pre>
+<pre><code>#&gt; [1] 1+1i</code></pre>
 </div>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">1i</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] -1+0i</code></pre>
+<pre><code>#&gt; [1] -1+0i</code></pre>
 </div>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] NaN</code></pre>
+<pre><code>#&gt; [1] NaN</code></pre>
 </div>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">0i</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] 0+1i</code></pre>
+<pre><code>#&gt; [1] 0+1i</code></pre>
 </div>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/complex.html">Im</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">1i</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] 1.224647e-16</code></pre>
+<pre><code>#&gt; [1] 1.224647e-16</code></pre>
 </div>
 </div>
 </div>
@@ -508,7 +508,7 @@ Complex values
 <div class="cell">
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"phrase"</span>, <span class="va">phrase</span>, sep<span class="op">=</span><span class="st">" = "</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] "phrase = Hello World "</code></pre>
+<pre><code>#&gt; [1] "phrase = Hello World "</code></pre>
 </div>
 </div>
 <ul>
@@ -517,7 +517,7 @@ Complex values
 <div class="cell">
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] "Hell"</code></pre>
+<pre><code>#&gt; [1] "Hell"</code></pre>
 </div>
 </div>
 <ul>
@@ -526,10 +526,10 @@ Complex values
 <div class="cell">
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">toupper</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] "hello world "</code></pre>
+<pre><code>#&gt; [1] "hello world "</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] "HELLO WORLD "</code></pre>
+<pre><code>#&gt; [1] "HELLO WORLD "</code></pre>
 </div>
 </div>
 <ul>
@@ -538,7 +538,7 @@ Complex values
 <div class="cell">
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"o"</span>, <span class="st">"a"</span>, <span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] "Hella World "</code></pre>
+<pre><code>#&gt; [1] "Hella World "</code></pre>
 </div>
 </div>
 <ul>
@@ -547,7 +547,7 @@ Complex values
 <div class="cell">
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"o"</span>, <span class="st">"a"</span>, <span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] "Hella Warld "</code></pre>
+<pre><code>#&gt; [1] "Hella Warld "</code></pre>
 </div>
 </div>
 <ul>
@@ -556,7 +556,7 @@ Complex values
 <div class="cell">
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/trimws.html">trimws</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] "Hello World"</code></pre>
+<pre><code>#&gt; [1] "Hello World"</code></pre>
 </div>
 </div>
 <ul>
@@ -565,12 +565,12 @@ Complex values
 <div class="cell">
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="st">" "</span><span class="op">)</span>         <span class="co"># returns a list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [[1]]
-#-&gt; [1] "Hello" "World"</code></pre>
+<pre><code>#&gt; [[1]]
+#&gt; [1] "Hello" "World"</code></pre>
 </div>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span> <span class="co"># returns a vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] "Hello" "World"</code></pre>
+<pre><code>#&gt; [1] "Hello" "World"</code></pre>
 </div>
 </div>
 <div class="callout-warning callout callout-style-default callout-captioned">
@@ -587,11 +587,11 @@ Attention!!
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">phrase2</span> <span class="op">&lt;-</span> <span class="st">"1234"</span></span>
 <span><span class="va">phrase2</span> <span class="op">-</span> <span class="fl">4321</span>             <span class="co"># won't work: string - double</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>#-&gt; Error in phrase2 - 4321: non-numeric argument to binary operator</code></pre>
+<pre><code>#&gt; Error in phrase2 - 4321: non-numeric argument to binary operator</code></pre>
 </div>
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">phrase2</span><span class="op">)</span> <span class="op">-</span> <span class="fl">4321</span> <span class="co"># conversion of string to double</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#-&gt; [1] -3087</code></pre>
+<pre><code>#&gt; [1] -3087</code></pre>
 </div>
 </div>
 </div>
@@ -806,9 +806,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>In R, the variable attribution is done through the arrow operator <span class="in">`&lt;-`</span>{.R} instead of the <span class="in">`=`</span>{.R} one – for historical reasons. The equal sign, <span class="in">`=`</span>{.R}, would still work though, but you should just take up the habit of using <span class="in">`&lt;-`</span>{.R}.</span>
 <span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>In reality, scalar numbers don't exist in R, they are simply 1 element vector: this is why <span class="in">`#-&gt; [1]`</span> is printed in the following outputs.</span>
+<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>In reality, scalar numbers don't exist in R, they are simply 1 element vector: this is why <span class="in">`#&gt; [1]`</span> is printed in the following outputs.</span>
 <span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>To understand what you will encounter further down this class, inputs (what you type in the R script and hit Ctrl+⏎ (⌘+⏎)) are the shaded areas with syntax coloring, while outputs (what R returns) are the area underneath starting with <span class="in">`#-&gt; [1]`</span>. In case the output spans several lines, each line would start with <span class="in">`#-&gt; [x]`</span> where <span class="in">`x`</span> is the index of the first element printed on the line.</span>
+<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>To understand what you will encounter further down this class, inputs (what you type in the R script and hit Ctrl+⏎ (⌘+⏎)) are the shaded areas with syntax coloring, while outputs (what R returns) are the area underneath starting with <span class="in">`#&gt; [1]`</span>. In case the output spans several lines, each line would start with <span class="in">`#&gt; [x]`</span> where <span class="in">`x`</span> is the index of the first element printed on the line.</span>
 <span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>:::{.callout-note} </span>
 <span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a></span>
