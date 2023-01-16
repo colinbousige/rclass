@@ -355,14 +355,14 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span><span class="co"># with given standard deviation `sd`</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean<span class="op">=</span><span class="fl">3</span>, sd<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 3.1170991 5.0197228 2.8287357 2.8524285 2.4533678 3.9232895 0.4545967
- [8] 1.9184453 3.5307521 3.1322481</code></pre>
+<pre><code> [1]  3.9188071  3.4372623  3.1924309  4.1388928  3.6096258  3.7550475
+ [7] -0.7048739  3.4006564  3.6092614  3.8424653</code></pre>
 </div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># vector with 10 random values uniformly distributed between min and max</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">10</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.99154166 0.49394048 0.63061281 0.06701577 0.68960046 0.21335357
- [7] 0.94695636 0.76706621 0.12266279 0.40430574</code></pre>
+<pre><code> [1] 0.1041505 0.3564318 0.9117968 0.2948042 0.8275635 0.8228375 0.5261695
+ [8] 0.9307302 0.6571776 0.4100000</code></pre>
 </div>
 </div>
 </section><section id="numerical-and-categorical-data-types" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="numerical-and-categorical-data-types">
@@ -547,9 +547,19 @@ Attention
 <pre><code>[1] 3 9 3</code></pre>
 </div>
 </div>
-<blockquote class="blockquote">
+<div class="callout-warning callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Writing <code class="sourceCode r">x[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</code> will <strong>just print</strong> the result of <code class="sourceCode r">x[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</code>, but not actually modify <code>x</code>. To really modify <code>x</code>, you’d need to write <code class="sourceCode r">x <span class="ot">&lt;-</span> x[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</code>.</p>
-</blockquote>
+</div>
+</div>
 </section><section id="filtering-values-with-tests" class="level4" data-number="5.3.2.2"><h4 data-number="5.3.2.2" class="anchored" data-anchor-id="filtering-values-with-tests">
 <span class="header-section-number">5.3.2.2</span> Filtering values with tests</h4>
 <p>You can access values with booleans. Values getting a <code class="sourceCode r"><span class="cn">TRUE</span></code> will be kept, while values with a <code class="sourceCode r"><span class="cn">FALSE</span></code> will be discarded:</p>
@@ -680,7 +690,7 @@ Attention
 <div class="cell" data-warnings="false">
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 4 9 5</code></pre>
+<pre><code>[1] 3 3 4</code></pre>
 </div>
 </div>
 </section><section id="maximum-and-minimum" class="level3" data-number="5.3.4"><h3 data-number="5.3.4" class="anchored" data-anchor-id="maximum-and-minimum">
@@ -1365,7 +1375,9 @@ quarto-executable-code-5450563D
 x[-c(1,3)]
 ```
 
-&gt; Writing `x[-c(1,3)]`{.R} will **just print** the result of `x[-c(1,3)]`{.R}, but not actually modify `x`. To really modify `x`, you'd need to write `x &lt;- x[-c(1,3)]`{.R}.
+:::{.callout-warning}
+Writing `x[-c(1,3)]`{.R} will **just print** the result of `x[-c(1,3)]`{.R}, but not actually modify `x`. To really modify `x`, you'd need to write `x &lt;- x[-c(1,3)]`{.R}.
+:::
 
 #### Filtering values with tests
 
