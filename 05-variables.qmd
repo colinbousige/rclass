@@ -31,11 +31,13 @@ x - y
 
 :::{.callout-warning}
 ## Attention 
-Typing `x + 1`{.R} will **only print** the result of `x + 1`{.R}, but not add 1 to `x` and save this as the new value of `x`. **To actually modify** `x`, type `x <- x + 1`{.R}.
+Typing `x + 1`{.R} will **only print** the result of `x + 1`{.R}, but not add 1 to `x` and save this as the new value of `x`. 
+
+**To actually modify** the value stored in `x`, type `x <- x + 1`{.R}.
 :::
 
 ### Special values
-R handles infinity, NaN, and has $\pi$ defined. Missing numbers are handled through the `NA`{.R} keyword.
+R handles infinity, NaN (Not a Number), and has $\pi$ defined. Missing numbers are handled through the `NA`{.R} keyword (Not Attributed).
 
 ```{r, warnings=FALSE}
 pi
@@ -46,50 +48,63 @@ NA
 
 ### Booleans and common tests on values
 
-Booleans are handled with the `TRUE`{.R} and `FALSE`{.R} keywords, and are usually obtained as the result of a test on values. Let's us create two variables `x` and `y`:
+Booleans are handled with the `TRUE`{.R} and `FALSE`{.R} keywords, and are usually obtained as the result of a test on values. 
+
+Once you've understood these tests, you can use them in [conditional actions](11-conditions_loops.qmd) of the type `if(test){then}else{then}`{.R}, or to apply some filter on your data.
+
+Let's create two variables `x` and `y` and test some assertions on these two variables (*i.e.* answer the following questions):
 
 ```{r}
 x <- 1
 y <- 2
 ```
-and now let's test some assertions on these two variables:
 
-- Is x equal to y?
+- Is `x` equal to `y`?
 ```{r}
 x == y
 ```
 
-- Is x not equal to y?
+- Is `x` not equal to `y`?
 ```{r}
 x != y
 ```
 
-- Is x smaller than y?
+- Is `x` smaller than `y`?
 ```{r}
 x < y 
 ```
 
-- Is x smaller or equal than y?
+- Is `x` smaller or equal than `y`?
 ```{r}
 x <= y
 ```
 
-- Operator "and"
+- Operator "and": `&`{.R}
 ```{r}
 x == y & x < y 
 ```
 
-- Operator "or"
+- Operator "or": `|`{.R}
 ```{r}
 x == y | x < y 
 ```
 
-- Is x a NaN?
+- Is `x` a NaN?
 ```{r}
 is.nan(x)
 ```
 
-- Is x a NA?
+- Is `x` a number?
+```{r}
+is.numeric(x)
+```
+
+- Is `x` a string?
+```{r}
+is.character(x)
+```
+
+- Is `x` a NA?
 ```{r}
 is.na(x)
 ```
@@ -106,8 +121,12 @@ as.logical(0)
 ```
 
 
-:::{.callout-note collapse="true"}
+
+
+
 ## Complex values
+:::{.callout-note collapse="true"}
+## Click to expand
 R also natively handles complex values:
 ```{r, warnings=FALSE, error=TRUE}
 1+i   # not a valid complex value
@@ -116,6 +135,8 @@ exp(1i*pi)
 sqrt(-1)
 sqrt(-1 + 0i)
 Im(exp(1i*pi))
+Re(exp(1i*pi))
+Mod(exp(1i*pi))
 ```
 :::
 
@@ -133,6 +154,12 @@ phrase <- "Hello World "
 - Concatenation of strings using `paste()`{.R}:
 ```{r}
 paste("phrase", phrase, sep=" = ")
+```
+
+- Concatenation of strings using `glue::glue()`{.R}:
+```{r}
+library(glue)
+glue("phrase = {phrase}")
 ```
 
 - Acessing a sub-string:

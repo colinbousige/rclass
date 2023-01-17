@@ -50,6 +50,7 @@ head(df, 2)
 
 ### Defining a data.frame from a file
 
+#### A text file
 Let's say we have `test.dat` that looks like this:
 ```{bash}
 # Bash code:
@@ -60,7 +61,7 @@ head Data/test.dat
 ```{r}
 read.table("Data/test.dat")
 ```
-- If your file contains column names, you will use first line as column names like so:
+- If your file contains column names, you can use the first line as column names, like so:
 ```{r}
 read.table("Data/test.dat", header=TRUE)
 ```
@@ -74,7 +75,9 @@ read.table("Data/test.dat", skip=1, col.names = c("A","B"))
 ```
 - You can type `?read.table` for more options.
 
-- Now, to read an Excel file, use the `readxl` library:
+#### An Excel file
+
+Now, to read an Excel file, use the `readxl` library:
 ```{r}
 library(readxl) # load readxl from tidyverse to read Excel files
 read_excel("Data/test.xlsx", sheet=1)
@@ -232,7 +235,9 @@ knitr::include_graphics('./Plots/tidyr-pivoting.gif')
 
 ### Tibbles
 
-A `tibble`{.R} is an enhanced version of the `data.frame`{.R} provided by the `tibble` package (which is part of the `tidyverse`). The main advantage of `tibble`{.R} is that it has easier initialization and nicer printing than `data.frame`{.R}. Moreover, the performance are also enhanced for the reading from files with `read_csv()`{.R}, `read_tsv()`{.R}, `read_table()`{.R} and `read_delim()`{.R} that do the same things as their `read.xx()` counterparts and return a `tibble`. Otherwise, the handling is basically the same.
+A `tibble`{.R} is an enhanced version of the `data.frame`{.R} provided by the `tibble` package (which is part of the `tidyverse`). The main advantage of `tibble`{.R} is that it has easier initialization and nicer printing than `data.frame`{.R}. 
+
+Moreover, the performance are also enhanced for the reading from files with `read_csv()`{.R}, `read_tsv()`{.R}, `read_table()`{.R} and `read_delim()`{.R} that do the same things as their `read.xx()` counterparts and return a `tibble`. Otherwise, the handling is basically the same.
 
 More on tibbles [here](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
 
@@ -243,8 +248,9 @@ rm(x)
 - Note that when initializing `tibble`s, the construction is iterative. It means that when creating a second column, one can refer to the first one that was created. This does't work with `data.frame`s.
 
 ```{r, error=TRUE, warnings=FALSE, message=FALSE}
+# won't work unless a `x` vector was created before
+data.frame(x=runif(1e3), y=cumsum(x)) 
 library(tidyverse)
-data.frame(x=runif(1e3), y=cumsum(x))
 tib <- tibble(x=runif(1e3), y=cumsum(x))
 tib
 ```
@@ -267,6 +273,17 @@ tib1 <- tibble(x=1:3, y=1:3)
 tib2 <- tibble(x=1:5, y=1:5)
 tib  <- tibble(number=1:2, data=list(tib1, tib2))
 tib
+```
+
+```{r}
+#| label: fig-excel-nested
+#| echo: false
+#| fig-cap: "Excel equivalent to a nested `tibble`."
+#| out-width: 50%
+knitr::include_graphics("./Plots/excel-nested.png")
+```
+
+```{r warning=FALSE, message=FALSE}
 tib_unnested <- unnest(tib, data)
 tib_unnested
 tib_unnested_renested <- nest(tib_unnested, data = c(number, y))
@@ -278,7 +295,7 @@ tib_unnested_renested$data # The `data` column is a list
 
 ## Operations in the tidyverse
 
-In the end, base R and the `tidyverse` package provide many efficient functions to perform most of the tasks you would want to perform recursively, thus allowing avoiding explicit for loops.
+In the end, base R and the `tidyverse` package provide many efficient functions to perform most of the tasks you would want to perform recursively, thus allowing avoiding explicit for loops (that are slow).
 
 Here are some examples, and you will find much more [here](https://cran.r-project.org/web/packages/dplyr/vignettes/dplyr.html). Take a look at the cheatsheets on [tidyr](https://github.com/rstudio/cheatsheets/blob/main/data-import.pdf) and on [dplyr](https://github.com/rstudio/cheatsheets/blob/main/data-transformation.pdf), it's really helpful. 
 
@@ -287,10 +304,10 @@ Let's work on this `tibble`:
 # Let's create a random tibble
 library(tidyverse)
 N <- 500
-dt <- tibble(x     = rep(runif(N,-1,1),3), 
-             y     = runif(N*3,-1,1), 
-             signx = ifelse(x>0,"positive","negative"),
-             signy = ifelse(y>0,"positive","negative")
+dt <- tibble(x     = rep(runif(N, -1, 1), 3), 
+             y     = runif(N*3, -1, 1), 
+             signx = ifelse(x>0, "positive", "negative"),
+             signy = ifelse(y>0, "positive", "negative")
 )
 dt
 ```
@@ -308,13 +325,15 @@ dt %>%
     summary()
 ```
 
-Note that the 4.1 version of R introduced a native pipe operator: `|>`{.R}. However, for backward compatibility with all my previous code I still stick to the `magrittr` version `%>%`, but that's not the only reason. Indeed, in base R's pipe, the piped object can only be given as first argument to the function on the right. This is also the default behavior of `%>%`, but `%>%` allows for retrieving the piped object with the operator `.`. 
+Note that since the 4.1 version of R, R has a native pipe operator: `|>`{.R}. However, for backward compatibility with all my previous code I still stick to the `magrittr` version `%>%`. In `magrittr`'s pipe, retrieving the piped object is done with the operator `.`, while it is done with the operator `_` in base R's.
 
 Silly example:
 
 ```{r, error=TRUE}
-"Hello" %>% gsub("o", "e")
-"Hello" %>% gsub("o", "e", .)
+"Hello" %>% gsub("o", "e") # replace the substring "Hello" by "o" in string "e"
+"Hello" %>% gsub("o", "e", .) # replace the substring "o" by "e" in string "Hello"
+"Hello" |> gsub("o", "e") # replace the substring "Hello" by "o" in string "e"
+"Hello" |> gsub("o", "e", x=_) # replace the substring "o" by "e" in string "Hello"
 ```
 
 
@@ -328,6 +347,8 @@ dt %>% sample_n(3) # randomly
 `group_by(column)`{.R} groups by similar values of the wanted column(s) and performs the next operations on each element of the group successively.
 
 ```{r, message=FALSE}
+dt %>% 
+    group_by(signx)
 dt %>% 
     group_by(signx) %>% 
     sample_n(3)

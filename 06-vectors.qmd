@@ -152,13 +152,16 @@ x[-c(1,3)]
 
 :::{.callout-warning}
 ## Attention
-Writing `x[-c(1,3)]`{.R} will **just print** the result of `x[-c(1,3)]`{.R}, but not actually modify `x`. To really modify `x`, you'd need to write `x <- x[-c(1,3)]`{.R}.
+Writing `x[-c(1,3)]`{.R} will **just print** the result of `x[-c(1,3)]`{.R}, but not actually modify `x`. 
+
+To really modify `x`, you'd need to write `x <- x[-c(1,3)]`{.R}.
 :::
 
 #### Filtering values with tests
 
-You can access values with booleans. Values getting a `TRUE`{.R} will be kept, while values with a `FALSE`{.R} will be discarded:
+You can access values with booleans. Values getting a `TRUE`{.R} will be kept, while values with a `FALSE`{.R} will be discarded – or return a `NA` if a `TRUE` is given to a non existing value (*i.e.* to an index larger than the size of the vector):
 ```{r}
+x
 x[c(TRUE,TRUE,TRUE,FALSE,TRUE,TRUE)]
 ```
 Therefore, you can apply tests on your values and filter them very easily:
@@ -190,11 +193,11 @@ names(y)
 ```{r, warnings=FALSE}
 sort(x)
 ```
-- It works with strings too, but `gtools::mixedsort()`{.R} might be needed for strings mixing letters and numbers:
+- It works with strings too, but `stringr::str_sort()`{.R} might be needed for strings mixing letters and numbers:
 ```{r, warnings=FALSE}
 sort(c("c","a","d","ab")) 
 sort(c("c", "a10", "a2", "d", "ab"))
-gtools::mixedsort(c("c", "a10", "a2", "d", "ab"))
+stringr::str_sort(c("c", "a10", "a2", "d", "ab"), numeric = TRUE)
 ```
 - Sorting by descending number:
 ```{r, warnings=FALSE}

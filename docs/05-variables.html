@@ -256,8 +256,9 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
   <li><a href="#booleans-and-common-tests-on-values" id="toc-booleans-and-common-tests-on-values" class="nav-link" data-scroll-target="#booleans-and-common-tests-on-values"><span class="toc-section-number">4.1.2</span>  Booleans and common tests on values</a></li>
   </ul>
 </li>
-  <li><a href="#strings" id="toc-strings" class="nav-link" data-scroll-target="#strings"><span class="toc-section-number">4.2</span>  Strings</a></li>
-  <li><a href="#exo-variables" id="toc-exo-variables" class="nav-link" data-scroll-target="#exo-variables"><span class="toc-section-number">4.3</span>  Exercises</a></li>
+  <li><a href="#complex-values" id="toc-complex-values" class="nav-link" data-scroll-target="#complex-values"><span class="toc-section-number">4.2</span>  Complex values</a></li>
+  <li><a href="#strings" id="toc-strings" class="nav-link" data-scroll-target="#strings"><span class="toc-section-number">4.3</span>  Strings</a></li>
+  <li><a href="#exo-variables" id="toc-exo-variables" class="nav-link" data-scroll-target="#exo-variables"><span class="toc-section-number">4.4</span>  Exercises</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/rclass/blob/main/05-variables.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -327,12 +328,13 @@ Attention
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Typing <code class="sourceCode r">x <span class="sc">+</span> <span class="dv">1</span></code> will <strong>only print</strong> the result of <code class="sourceCode r">x <span class="sc">+</span> <span class="dv">1</span></code>, but not add 1 to <code>x</code> and save this as the new value of <code>x</code>. <strong>To actually modify</strong> <code>x</code>, type <code class="sourceCode r">x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">1</span></code>.</p>
+<p>Typing <code class="sourceCode r">x <span class="sc">+</span> <span class="dv">1</span></code> will <strong>only print</strong> the result of <code class="sourceCode r">x <span class="sc">+</span> <span class="dv">1</span></code>, but not add 1 to <code>x</code> and save this as the new value of <code>x</code>.</p>
+<p><strong>To actually modify</strong> the value stored in <code>x</code>, type <code class="sourceCode r">x <span class="ot">&lt;-</span> x <span class="sc">+</span> <span class="dv">1</span></code>.</p>
 </div>
 </div>
 <section id="special-values" class="level3" data-number="4.1.1"><h3 data-number="4.1.1" class="anchored" data-anchor-id="special-values">
 <span class="header-section-number">4.1.1</span> Special values</h3>
-<p>R handles infinity, NaN, and has <span class="math inline">\(\pi\)</span> defined. Missing numbers are handled through the <code class="sourceCode r"><span class="cn">NA</span></code> keyword.</p>
+<p>R handles infinity, NaN (Not a Number), and has <span class="math inline">\(\pi\)</span> defined. Missing numbers are handled through the <code class="sourceCode r"><span class="cn">NA</span></code> keyword (Not Attributed).</p>
 <div class="cell" data-warnings="false">
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">pi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -353,14 +355,15 @@ Attention
 </div>
 </section><section id="booleans-and-common-tests-on-values" class="level3" data-number="4.1.2"><h3 data-number="4.1.2" class="anchored" data-anchor-id="booleans-and-common-tests-on-values">
 <span class="header-section-number">4.1.2</span> Booleans and common tests on values</h3>
-<p>Booleans are handled with the <code class="sourceCode r"><span class="cn">TRUE</span></code> and <code class="sourceCode r"><span class="cn">FALSE</span></code> keywords, and are usually obtained as the result of a test on values. Let’s us create two variables <code>x</code> and <code>y</code>:</p>
+<p>Booleans are handled with the <code class="sourceCode r"><span class="cn">TRUE</span></code> and <code class="sourceCode r"><span class="cn">FALSE</span></code> keywords, and are usually obtained as the result of a test on values.</p>
+<p>Once you’ve understood these tests, you can use them in <a href="./11-conditions_loops.html">conditional actions</a> of the type <code class="sourceCode r"><span class="cf">if</span>(test){then}<span class="cf">else</span>{then}</code>, or to apply some filter on your data.</p>
+<p>Let’s create two variables <code>x</code> and <code>y</code> and test some assertions on these two variables (<em>i.e.</em> answer the following questions):</p>
 <div class="cell">
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fl">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>and now let’s test some assertions on these two variables:</p>
 <ul>
-<li>Is x equal to y?</li>
+<li>Is <code>x</code> equal to <code>y</code>?</li>
 </ul>
 <div class="cell">
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">==</span> <span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -369,7 +372,7 @@ Attention
 </div>
 </div>
 <ul>
-<li>Is x not equal to y?</li>
+<li>Is <code>x</code> not equal to <code>y</code>?</li>
 </ul>
 <div class="cell">
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">!=</span> <span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -378,7 +381,7 @@ Attention
 </div>
 </div>
 <ul>
-<li>Is x smaller than y?</li>
+<li>Is <code>x</code> smaller than <code>y</code>?</li>
 </ul>
 <div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;</span> <span class="va">y</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -387,7 +390,7 @@ Attention
 </div>
 </div>
 <ul>
-<li>Is x smaller or equal than y?</li>
+<li>Is <code>x</code> smaller or equal than <code>y</code>?</li>
 </ul>
 <div class="cell">
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;=</span> <span class="va">y</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -396,7 +399,8 @@ Attention
 </div>
 </div>
 <ul>
-<li>Operator “and”</li>
+<li>Operator “and”: <code class="sourceCode r"><span class="sc">&amp;</span></code>
+</li>
 </ul>
 <div class="cell">
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">==</span> <span class="va">y</span> <span class="op">&amp;</span> <span class="va">x</span> <span class="op">&lt;</span> <span class="va">y</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -405,7 +409,8 @@ Attention
 </div>
 </div>
 <ul>
-<li>Operator “or”</li>
+<li>Operator “or”: <code class="sourceCode r"><span class="sc">|</span></code>
+</li>
 </ul>
 <div class="cell">
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">==</span> <span class="va">y</span> <span class="op">|</span> <span class="va">x</span> <span class="op">&lt;</span> <span class="va">y</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -414,7 +419,7 @@ Attention
 </div>
 </div>
 <ul>
-<li>Is x a NaN?</li>
+<li>Is <code>x</code> a NaN?</li>
 </ul>
 <div class="cell">
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/is.finite.html">is.nan</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -423,10 +428,28 @@ Attention
 </div>
 </div>
 <ul>
-<li>Is x a NA?</li>
+<li>Is <code>x</code> a number?</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] TRUE</code></pre>
+</div>
+</div>
+<ul>
+<li>Is <code>x</code> a string?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/character.html">is.character</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] FALSE</code></pre>
+</div>
+</div>
+<ul>
+<li>Is <code>x</code> a NA?</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] FALSE</code></pre>
 </div>
@@ -435,29 +458,31 @@ Attention
 <li>Operator “not” (inverse)</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] TRUE</code></pre>
 </div>
 </div>
 <p>A number can by converted to a boolean using <code class="sourceCode r"><span class="fu">as.logical</span>()</code>: any number non 0 is equivalent to <code>TRUE</code>, and 0 is <code>FALSE</code>.</p>
 <div class="cell" data-warnings="false">
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] TRUE</code></pre>
 </div>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/logical.html">as.logical</a></span><span class="op">(</span><span class="fl">0</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] FALSE</code></pre>
 </div>
 </div>
+</section></section><section id="complex-values" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="complex-values">
+<span class="header-section-number">4.2</span> Complex values</h2>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-caption-container flex-fill">
-Complex values
+Click to expand
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -465,57 +490,75 @@ Complex values
 <div class="callout-body-container callout-body">
 <p>R also natively handles complex values:</p>
 <div class="cell" data-warnings="false">
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">+</span><span class="va">i</span>   <span class="co"># not a valid complex value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">+</span><span class="va">i</span>   <span class="co"># not a valid complex value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>#&gt; Error in eval(expr, envir, enclos): object 'i' not found</code></pre>
 </div>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">+</span><span class="fl">1i</span>  <span class="co"># valid complex value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">+</span><span class="fl">1i</span>  <span class="co"># valid complex value</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 1+1i</code></pre>
 </div>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">1i</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">1i</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] -1+0i</code></pre>
 </div>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] NaN</code></pre>
 </div>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">0i</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="op">-</span><span class="fl">1</span> <span class="op">+</span> <span class="fl">0i</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0+1i</code></pre>
 </div>
-<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/complex.html">Im</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">1i</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/complex.html">Im</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">1i</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 1.224647e-16</code></pre>
 </div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/complex.html">Re</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">1i</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] -1</code></pre>
+</div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/complex.html">Mod</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op">(</span><span class="fl">1i</span><span class="op">*</span><span class="va">pi</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; [1] 1</code></pre>
 </div>
 </div>
 </div>
 </div>
-</section></section><section id="strings" class="level2" data-number="4.2"><h2 data-number="4.2" class="anchored" data-anchor-id="strings">
-<span class="header-section-number">4.2</span> Strings</h2>
+</div>
+</section><section id="strings" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="strings">
+<span class="header-section-number">4.3</span> Strings</h2>
 <p>A string is defined between quotation marks such as: <code class="sourceCode r"><span class="st">"string"</span></code>. Thus <code class="sourceCode r"><span class="st">"1"</span></code> is not the number <em>1</em>, but rather the character “1”. Here are some operations on strings :</p>
 <ul>
 <li>Definition of a string:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">phrase</span> <span class="op">&lt;-</span> <span class="st">"Hello World "</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">phrase</span> <span class="op">&lt;-</span> <span class="st">"Hello World "</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ul>
 <li>Concatenation of strings using <code class="sourceCode r"><span class="fu">paste</span>()</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"phrase"</span>, <span class="va">phrase</span>, sep<span class="op">=</span><span class="st">" = "</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb59"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste</a></span><span class="op">(</span><span class="st">"phrase"</span>, <span class="va">phrase</span>, sep<span class="op">=</span><span class="st">" = "</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "phrase = Hello World "</code></pre>
+</div>
+</div>
+<ul>
+<li>Concatenation of strings using <code class="sourceCode r">glue<span class="sc">::</span><span class="fu">glue</span>()</code>:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode" id="cb61"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/tidyverse/glue">glue</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://glue.tidyverse.org/reference/glue.html">glue</a></span><span class="op">(</span><span class="st">"phrase = {phrase}"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; phrase = Hello World</code></pre>
 </div>
 </div>
 <ul>
 <li>Acessing a sub-string:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb53"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb63"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "Hell"</code></pre>
 </div>
@@ -524,7 +567,7 @@ Complex values
 <li>Change case of string with <code class="sourceCode r"><span class="fu">tolower</span>()</code> and <code class="sourceCode r"><span class="fu">toupper</span>()</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb55"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">toupper</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb65"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">toupper</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "hello world "</code></pre>
 </div>
@@ -536,7 +579,7 @@ Complex values
 <li>Change the first occurrence of “o” in “a” with <code class="sourceCode r"><span class="fu">sub</span>()</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"o"</span>, <span class="st">"a"</span>, <span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">sub</a></span><span class="op">(</span><span class="st">"o"</span>, <span class="st">"a"</span>, <span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "Hella World "</code></pre>
 </div>
@@ -545,7 +588,7 @@ Complex values
 <li>Change all occurrences of “o” in “a” with <code class="sourceCode r"><span class="fu">gsub</span>()</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb60"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"o"</span>, <span class="st">"a"</span>, <span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span><span class="op">(</span><span class="st">"o"</span>, <span class="st">"a"</span>, <span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "Hella Warld "</code></pre>
 </div>
@@ -554,7 +597,7 @@ Complex values
 <li>Trim white spaces with <code class="sourceCode r"><span class="fu">trimws</span>()</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb62"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/trimws.html">trimws</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/trimws.html">trimws</a></span><span class="op">(</span><span class="va">phrase</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "Hello World"</code></pre>
 </div>
@@ -563,12 +606,12 @@ Complex values
 <li>Get a vector from string separation based on a character with <code class="sourceCode r"><span class="fu">strsplit</span>()</code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb64"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="st">" "</span><span class="op">)</span>         <span class="co"># returns a list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb74"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="st">" "</span><span class="op">)</span>         <span class="co"># returns a list</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [[1]]
 #&gt; [1] "Hello" "World"</code></pre>
 </div>
-<div class="sourceCode" id="cb66"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span> <span class="co"># returns a vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb76"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/strsplit.html">strsplit</a></span><span class="op">(</span><span class="va">phrase</span>, <span class="st">" "</span><span class="op">)</span><span class="op">)</span> <span class="co"># returns a vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "Hello" "World"</code></pre>
 </div>
@@ -584,12 +627,12 @@ Attention!!
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell" data-warnings="false">
-<div class="sourceCode" id="cb68"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">phrase2</span> <span class="op">&lt;-</span> <span class="st">"1234"</span></span>
+<div class="sourceCode" id="cb78"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">phrase2</span> <span class="op">&lt;-</span> <span class="st">"1234"</span></span>
 <span><span class="va">phrase2</span> <span class="op">-</span> <span class="fl">4321</span>             <span class="co"># won't work: string - double</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>#&gt; Error in phrase2 - 4321: non-numeric argument to binary operator</code></pre>
 </div>
-<div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">phrase2</span><span class="op">)</span> <span class="op">-</span> <span class="fl">4321</span> <span class="co"># conversion of string to double</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb80"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">phrase2</span><span class="op">)</span> <span class="op">-</span> <span class="fl">4321</span> <span class="co"># conversion of string to double</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] -3087</code></pre>
 </div>
@@ -597,10 +640,10 @@ Attention!!
 </div>
 </div>
 <p>For more complex operations, see the <code>stringr</code> package and its <a href="https://github.com/rstudio/cheatsheets/blob/main/strings.pdf">cheatsheet</a>.</p>
-</section><section id="exo-variables" class="level2" data-number="4.3"><h2 data-number="4.3" class="anchored" data-anchor-id="exo-variables">
-<span class="header-section-number">4.3</span> Exercises</h2>
+</section><section id="exo-variables" class="level2" data-number="4.4"><h2 data-number="4.4" class="anchored" data-anchor-id="exo-variables">
+<span class="header-section-number">4.4</span> Exercises</h2>
 <p>Interactive exercises can be found in the <a href="https://colinbousige.github.io/tutor/"><code>tutor</code></a> package. For this, simply run:</p>
-<div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tutor</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tutor</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/tutor/man/tuto.html">tuto</a></span><span class="op">(</span><span class="st">"variables"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Alternatively, you can just <a href="Data/exo-in-class.zip" download="" target="_blank">download the archive with all the exercises files</a>, unzip it in your <code>R class</code> RStudio project, and edit the R files.</p>
 <p><br><br><br><br><br></p>
@@ -802,202 +845,229 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb73" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb73-1"><a href="#cb73-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Variables, booleans and strings</span></span>
-<span id="cb73-2"><a href="#cb73-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-3"><a href="#cb73-3" aria-hidden="true" tabindex="-1"></a>In R, the variable attribution is done through the arrow operator <span class="in">`&lt;-`</span>{.R} instead of the <span class="in">`=`</span>{.R} one – for historical reasons. The equal sign, <span class="in">`=`</span>{.R}, would still work though, but you should just take up the habit of using <span class="in">`&lt;-`</span>{.R}.</span>
-<span id="cb73-4"><a href="#cb73-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-5"><a href="#cb73-5" aria-hidden="true" tabindex="-1"></a>In reality, scalar numbers don't exist in R, they are simply 1 element vector: this is why <span class="in">`#&gt; [1]`</span> is printed in the following outputs.</span>
-<span id="cb73-6"><a href="#cb73-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-7"><a href="#cb73-7" aria-hidden="true" tabindex="-1"></a>To understand what you will encounter further down this class, inputs (what you type in the R script and hit Ctrl+⏎ (⌘+⏎)) are the shaded areas with syntax coloring, while outputs (what R returns) are the area underneath starting with <span class="in">`#&gt; [1]`</span>. In case the output spans several lines, each line would start with <span class="in">`#&gt; [x]`</span> where <span class="in">`x`</span> is the index of the first element printed on the line.</span>
-<span id="cb73-8"><a href="#cb73-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-9"><a href="#cb73-9" aria-hidden="true" tabindex="-1"></a>:::{.callout-note} </span>
-<span id="cb73-10"><a href="#cb73-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-11"><a href="#cb73-11" aria-hidden="true" tabindex="-1"></a>Note that different instructions are usually given on separated lines (*i.e.* one instruction per line), but several instructions can be written on a single line if separated with a <span class="in">`;`</span> sign. </span>
-<span id="cb73-12"><a href="#cb73-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-13"><a href="#cb73-13" aria-hidden="true" tabindex="-1"></a>In R code, what is written after the <span class="in">`#`</span> sign is a comment and is thus not interpreted.</span>
-<span id="cb73-14"><a href="#cb73-14" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb73-15"><a href="#cb73-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-16"><a href="#cb73-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scalars and booleans</span></span>
-<span id="cb73-17"><a href="#cb73-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-18"><a href="#cb73-18" aria-hidden="true" tabindex="-1"></a>Defining a scalar value is done with:</span>
-<span id="cb73-19"><a href="#cb73-19" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb73-20"><a href="#cb73-20" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># attribute the value '1' to the variable 'x'</span></span>
-<span id="cb73-21"><a href="#cb73-21" aria-hidden="true" tabindex="-1"></a>x      <span class="co"># print the value of 'x'</span></span>
-<span id="cb73-22"><a href="#cb73-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-23"><a href="#cb73-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-24"><a href="#cb73-24" aria-hidden="true" tabindex="-1"></a>You can use the R console as an advanced calculator:</span>
-<span id="cb73-25"><a href="#cb73-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb73-26"><a href="#cb73-26" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">3</span></span>
-<span id="cb73-27"><a href="#cb73-27" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span></span>
-<span id="cb73-28"><a href="#cb73-28" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">log</span>(<span class="fu">sin</span>(<span class="fu">cos</span>(x<span class="sc">*</span>pi))))</span>
-<span id="cb73-29"><a href="#cb73-29" aria-hidden="true" tabindex="-1"></a>x <span class="sc">-</span> y</span>
-<span id="cb73-30"><a href="#cb73-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-31"><a href="#cb73-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-32"><a href="#cb73-32" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
-<span id="cb73-33"><a href="#cb73-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Attention </span></span>
-<span id="cb73-34"><a href="#cb73-34" aria-hidden="true" tabindex="-1"></a>Typing <span class="in">`x + 1`</span>{.R} will **only print** the result of `x + 1`{.R}, but not add 1 to `x` and save this as the new value of `x`. **To actually modify** <span class="in">`x`</span>, type <span class="in">`x &lt;- x + 1`</span>{.R}.</span>
-<span id="cb73-35"><a href="#cb73-35" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb73-36"><a href="#cb73-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-37"><a href="#cb73-37" aria-hidden="true" tabindex="-1"></a><span class="fu">### Special values</span></span>
-<span id="cb73-38"><a href="#cb73-38" aria-hidden="true" tabindex="-1"></a>R handles infinity, NaN, and has $\pi$ defined. Missing numbers are handled through the <span class="in">`NA`</span>{.R} keyword.</span>
-<span id="cb73-39"><a href="#cb73-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-40"><a href="#cb73-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb73-41"><a href="#cb73-41" aria-hidden="true" tabindex="-1"></a>pi</span>
-<span id="cb73-42"><a href="#cb73-42" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span><span class="sc">/</span><span class="dv">0</span></span>
-<span id="cb73-43"><a href="#cb73-43" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span><span class="sc">/</span><span class="dv">0</span></span>
-<span id="cb73-44"><a href="#cb73-44" aria-hidden="true" tabindex="-1"></a><span class="cn">NA</span></span>
-<span id="cb73-45"><a href="#cb73-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-46"><a href="#cb73-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-47"><a href="#cb73-47" aria-hidden="true" tabindex="-1"></a><span class="fu">### Booleans and common tests on values</span></span>
-<span id="cb73-48"><a href="#cb73-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-49"><a href="#cb73-49" aria-hidden="true" tabindex="-1"></a>Booleans are handled with the <span class="in">`TRUE`</span>{.R} and <span class="in">`FALSE`</span>{.R} keywords, and are usually obtained as the result of a test on values. Let's us create two variables <span class="in">`x`</span> and <span class="in">`y`</span>:</span>
-<span id="cb73-50"><a href="#cb73-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-53"><a href="#cb73-53" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-54"><a href="#cb73-54" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
-<span id="cb73-55"><a href="#cb73-55" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
-<span id="cb73-56"><a href="#cb73-56" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-57"><a href="#cb73-57" aria-hidden="true" tabindex="-1"></a>and now let's test some assertions on these two variables:</span>
-<span id="cb73-58"><a href="#cb73-58" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-59"><a href="#cb73-59" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is x equal to y?</span>
-<span id="cb73-62"><a href="#cb73-62" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-63"><a href="#cb73-63" aria-hidden="true" tabindex="-1"></a>x <span class="sc">==</span> y</span>
-<span id="cb73-64"><a href="#cb73-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-65"><a href="#cb73-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-66"><a href="#cb73-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is x not equal to y?</span>
-<span id="cb73-69"><a href="#cb73-69" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-70"><a href="#cb73-70" aria-hidden="true" tabindex="-1"></a>x <span class="sc">!=</span> y</span>
-<span id="cb73-71"><a href="#cb73-71" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-72"><a href="#cb73-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-73"><a href="#cb73-73" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is x smaller than y?</span>
-<span id="cb73-76"><a href="#cb73-76" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-77"><a href="#cb73-77" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&lt;</span> y </span>
-<span id="cb73-78"><a href="#cb73-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-79"><a href="#cb73-79" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-80"><a href="#cb73-80" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is x smaller or equal than y?</span>
-<span id="cb73-83"><a href="#cb73-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-84"><a href="#cb73-84" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&lt;=</span> y</span>
-<span id="cb73-85"><a href="#cb73-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-86"><a href="#cb73-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-87"><a href="#cb73-87" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Operator "and"</span>
-<span id="cb73-90"><a href="#cb73-90" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-91"><a href="#cb73-91" aria-hidden="true" tabindex="-1"></a>x <span class="sc">==</span> y <span class="sc">&amp;</span> x <span class="sc">&lt;</span> y </span>
-<span id="cb73-92"><a href="#cb73-92" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-93"><a href="#cb73-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-94"><a href="#cb73-94" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Operator "or"</span>
-<span id="cb73-97"><a href="#cb73-97" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-98"><a href="#cb73-98" aria-hidden="true" tabindex="-1"></a>x <span class="sc">==</span> y <span class="sc">|</span> x <span class="sc">&lt;</span> y </span>
-<span id="cb73-99"><a href="#cb73-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-100"><a href="#cb73-100" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-101"><a href="#cb73-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is x a NaN?</span>
-<span id="cb73-104"><a href="#cb73-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-105"><a href="#cb73-105" aria-hidden="true" tabindex="-1"></a><span class="fu">is.nan</span>(x)</span>
-<span id="cb73-106"><a href="#cb73-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-107"><a href="#cb73-107" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-108"><a href="#cb73-108" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is x a NA?</span>
-<span id="cb73-111"><a href="#cb73-111" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-112"><a href="#cb73-112" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(x)</span>
-<span id="cb73-113"><a href="#cb73-113" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-114"><a href="#cb73-114" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-115"><a href="#cb73-115" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Operator "not" (inverse)</span>
-<span id="cb73-118"><a href="#cb73-118" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-119"><a href="#cb73-119" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span><span class="fu">is.na</span>(x)</span>
-<span id="cb73-120"><a href="#cb73-120" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-121"><a href="#cb73-121" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-122"><a href="#cb73-122" aria-hidden="true" tabindex="-1"></a>A number can by converted to a boolean using <span class="in">`as.logical()`</span>{.R}: any number non 0 is equivalent to <span class="in">`TRUE`</span>, and 0 is <span class="in">`FALSE`</span>.</span>
-<span id="cb73-123"><a href="#cb73-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb73-124"><a href="#cb73-124" aria-hidden="true" tabindex="-1"></a><span class="fu">as.logical</span>(<span class="dv">1</span>)</span>
-<span id="cb73-125"><a href="#cb73-125" aria-hidden="true" tabindex="-1"></a><span class="fu">as.logical</span>(<span class="dv">0</span>)</span>
-<span id="cb73-126"><a href="#cb73-126" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-127"><a href="#cb73-127" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-128"><a href="#cb73-128" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-129"><a href="#cb73-129" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true"}</span>
-<span id="cb73-130"><a href="#cb73-130" aria-hidden="true" tabindex="-1"></a><span class="fu">## Complex values</span></span>
-<span id="cb73-131"><a href="#cb73-131" aria-hidden="true" tabindex="-1"></a>R also natively handles complex values:</span>
-<span id="cb73-132"><a href="#cb73-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE, error=TRUE}</span></span>
-<span id="cb73-133"><a href="#cb73-133" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">+</span>i   <span class="co"># not a valid complex value</span></span>
-<span id="cb73-134"><a href="#cb73-134" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">+</span>1i  <span class="co"># valid complex value</span></span>
-<span id="cb73-135"><a href="#cb73-135" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(1i<span class="sc">*</span>pi)</span>
-<span id="cb73-136"><a href="#cb73-136" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="sc">-</span><span class="dv">1</span>)</span>
-<span id="cb73-137"><a href="#cb73-137" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> 0i)</span>
-<span id="cb73-138"><a href="#cb73-138" aria-hidden="true" tabindex="-1"></a><span class="fu">Im</span>(<span class="fu">exp</span>(1i<span class="sc">*</span>pi))</span>
-<span id="cb73-139"><a href="#cb73-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-140"><a href="#cb73-140" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb73-141"><a href="#cb73-141" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-142"><a href="#cb73-142" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-143"><a href="#cb73-143" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-144"><a href="#cb73-144" aria-hidden="true" tabindex="-1"></a><span class="fu">## Strings</span></span>
-<span id="cb73-145"><a href="#cb73-145" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-146"><a href="#cb73-146" aria-hidden="true" tabindex="-1"></a>A string is defined between quotation marks such as: <span class="in">`"string"`</span>{.R}. Thus <span class="in">`"1"`</span>{.R} is not the number *1*, but rather the character "1". Here are some operations on strings :</span>
-<span id="cb73-147"><a href="#cb73-147" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-148"><a href="#cb73-148" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Definition of a string:</span>
-<span id="cb73-151"><a href="#cb73-151" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-152"><a href="#cb73-152" aria-hidden="true" tabindex="-1"></a>phrase <span class="ot">&lt;-</span> <span class="st">"Hello World "</span> </span>
-<span id="cb73-153"><a href="#cb73-153" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-154"><a href="#cb73-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-155"><a href="#cb73-155" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Concatenation of strings using <span class="in">`paste()`</span>{.R}:</span>
-<span id="cb73-158"><a href="#cb73-158" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-159"><a href="#cb73-159" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"phrase"</span>, phrase, <span class="at">sep=</span><span class="st">" = "</span>)</span>
-<span id="cb73-160"><a href="#cb73-160" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-161"><a href="#cb73-161" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-162"><a href="#cb73-162" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Acessing a sub-string:</span>
-<span id="cb73-165"><a href="#cb73-165" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-166"><a href="#cb73-166" aria-hidden="true" tabindex="-1"></a><span class="fu">substr</span>(phrase, <span class="dv">1</span>, <span class="dv">4</span>)</span>
-<span id="cb73-167"><a href="#cb73-167" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-168"><a href="#cb73-168" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-169"><a href="#cb73-169" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Change case of string with <span class="in">`tolower()`</span>{.R} and <span class="in">`toupper()`</span>{.R}:</span>
-<span id="cb73-172"><a href="#cb73-172" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-173"><a href="#cb73-173" aria-hidden="true" tabindex="-1"></a><span class="fu">tolower</span>(phrase); <span class="fu">toupper</span>(phrase)</span>
-<span id="cb73-174"><a href="#cb73-174" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-175"><a href="#cb73-175" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-176"><a href="#cb73-176" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Change the first occurrence of "o" in "a" with <span class="in">`sub()`</span>{.R}:</span>
-<span id="cb73-179"><a href="#cb73-179" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-180"><a href="#cb73-180" aria-hidden="true" tabindex="-1"></a><span class="fu">sub</span>(<span class="st">"o"</span>, <span class="st">"a"</span>, phrase)</span>
-<span id="cb73-181"><a href="#cb73-181" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-182"><a href="#cb73-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-183"><a href="#cb73-183" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Change all occurrences of "o" in "a" with <span class="in">`gsub()`</span>{.R}:</span>
-<span id="cb73-186"><a href="#cb73-186" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-187"><a href="#cb73-187" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="st">"o"</span>, <span class="st">"a"</span>, phrase)</span>
-<span id="cb73-188"><a href="#cb73-188" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-189"><a href="#cb73-189" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-190"><a href="#cb73-190" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Trim white spaces with <span class="in">`trimws()`</span>{.R}:</span>
-<span id="cb73-193"><a href="#cb73-193" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-194"><a href="#cb73-194" aria-hidden="true" tabindex="-1"></a><span class="fu">trimws</span>(phrase)</span>
-<span id="cb73-195"><a href="#cb73-195" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-196"><a href="#cb73-196" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-197"><a href="#cb73-197" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Get a vector from string separation based on a character with <span class="in">`strsplit()`</span>{.R}:</span>
-<span id="cb73-200"><a href="#cb73-200" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb73-201"><a href="#cb73-201" aria-hidden="true" tabindex="-1"></a><span class="fu">strsplit</span>(phrase, <span class="st">" "</span>)         <span class="co"># returns a list</span></span>
-<span id="cb73-202"><a href="#cb73-202" aria-hidden="true" tabindex="-1"></a><span class="fu">unlist</span>(<span class="fu">strsplit</span>(phrase, <span class="st">" "</span>)) <span class="co"># returns a vector</span></span>
-<span id="cb73-203"><a href="#cb73-203" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-204"><a href="#cb73-204" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-205"><a href="#cb73-205" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
-<span id="cb73-206"><a href="#cb73-206" aria-hidden="true" tabindex="-1"></a><span class="fu">## Attention!!</span></span>
-<span id="cb73-207"><a href="#cb73-207" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE, error=TRUE}</span></span>
-<span id="cb73-208"><a href="#cb73-208" aria-hidden="true" tabindex="-1"></a>phrase2 <span class="ot">&lt;-</span> <span class="st">"1234"</span></span>
-<span id="cb73-209"><a href="#cb73-209" aria-hidden="true" tabindex="-1"></a>phrase2 <span class="sc">-</span> <span class="dv">4321</span>             <span class="co"># won't work: string - double</span></span>
-<span id="cb73-210"><a href="#cb73-210" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(phrase2) <span class="sc">-</span> <span class="dv">4321</span> <span class="co"># conversion of string to double</span></span>
-<span id="cb73-211"><a href="#cb73-211" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-212"><a href="#cb73-212" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb73-213"><a href="#cb73-213" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-214"><a href="#cb73-214" aria-hidden="true" tabindex="-1"></a>For more complex operations, see the <span class="in">`stringr`</span> package and its <span class="co">[</span><span class="ot">cheatsheet</span><span class="co">](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf)</span>.</span>
-<span id="cb73-215"><a href="#cb73-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-216"><a href="#cb73-216" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises {#exo-variables}</span></span>
-<span id="cb73-217"><a href="#cb73-217" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-218"><a href="#cb73-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-219"><a href="#cb73-219" aria-hidden="true" tabindex="-1"></a>Interactive exercises can be found in the <span class="co">[</span><span class="ot">`tutor`</span><span class="co">](https://colinbousige.github.io/tutor/)</span> package. For this, simply run:</span>
-<span id="cb73-220"><a href="#cb73-220" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-221"><a href="#cb73-221" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb73-222"><a href="#cb73-222" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tutor)</span>
-<span id="cb73-223"><a href="#cb73-223" aria-hidden="true" tabindex="-1"></a><span class="fu">tuto</span>(<span class="st">"variables"</span>)</span>
-<span id="cb73-224"><a href="#cb73-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb73-225"><a href="#cb73-225" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-226"><a href="#cb73-226" aria-hidden="true" tabindex="-1"></a>Alternatively, you can just <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/exo-in-class.zip"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>download the archive with all the exercises files<span class="kw">&lt;/a&gt;</span>, unzip it in your <span class="in">`R class`</span> RStudio project, and edit the R files.</span>
-<span id="cb73-227"><a href="#cb73-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb73-228"><a href="#cb73-228" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb73-229"><a href="#cb73-229" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb73-230"><a href="#cb73-230" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb73-231"><a href="#cb73-231" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb73-232"><a href="#cb73-232" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<div class="sourceCode" id="cb83" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb83-1"><a href="#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Variables, booleans and strings</span></span>
+<span id="cb83-2"><a href="#cb83-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-3"><a href="#cb83-3" aria-hidden="true" tabindex="-1"></a>In R, the variable attribution is done through the arrow operator <span class="in">`&lt;-`</span>{.R} instead of the <span class="in">`=`</span>{.R} one – for historical reasons. The equal sign, <span class="in">`=`</span>{.R}, would still work though, but you should just take up the habit of using <span class="in">`&lt;-`</span>{.R}.</span>
+<span id="cb83-4"><a href="#cb83-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-5"><a href="#cb83-5" aria-hidden="true" tabindex="-1"></a>In reality, scalar numbers don't exist in R, they are simply 1 element vector: this is why <span class="in">`#&gt; [1]`</span> is printed in the following outputs.</span>
+<span id="cb83-6"><a href="#cb83-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-7"><a href="#cb83-7" aria-hidden="true" tabindex="-1"></a>To understand what you will encounter further down this class, inputs (what you type in the R script and hit Ctrl+⏎ (⌘+⏎)) are the shaded areas with syntax coloring, while outputs (what R returns) are the area underneath starting with <span class="in">`#&gt; [1]`</span>. In case the output spans several lines, each line would start with <span class="in">`#&gt; [x]`</span> where <span class="in">`x`</span> is the index of the first element printed on the line.</span>
+<span id="cb83-8"><a href="#cb83-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-9"><a href="#cb83-9" aria-hidden="true" tabindex="-1"></a>:::{.callout-note} </span>
+<span id="cb83-10"><a href="#cb83-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-11"><a href="#cb83-11" aria-hidden="true" tabindex="-1"></a>Note that different instructions are usually given on separated lines (*i.e.* one instruction per line), but several instructions can be written on a single line if separated with a <span class="in">`;`</span> sign. </span>
+<span id="cb83-12"><a href="#cb83-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-13"><a href="#cb83-13" aria-hidden="true" tabindex="-1"></a>In R code, what is written after the <span class="in">`#`</span> sign is a comment and is thus not interpreted.</span>
+<span id="cb83-14"><a href="#cb83-14" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb83-15"><a href="#cb83-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-16"><a href="#cb83-16" aria-hidden="true" tabindex="-1"></a><span class="fu">## Scalars and booleans</span></span>
+<span id="cb83-17"><a href="#cb83-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-18"><a href="#cb83-18" aria-hidden="true" tabindex="-1"></a>Defining a scalar value is done with:</span>
+<span id="cb83-19"><a href="#cb83-19" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb83-20"><a href="#cb83-20" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="co"># attribute the value '1' to the variable 'x'</span></span>
+<span id="cb83-21"><a href="#cb83-21" aria-hidden="true" tabindex="-1"></a>x      <span class="co"># print the value of 'x'</span></span>
+<span id="cb83-22"><a href="#cb83-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-23"><a href="#cb83-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-24"><a href="#cb83-24" aria-hidden="true" tabindex="-1"></a>You can use the R console as an advanced calculator:</span>
+<span id="cb83-25"><a href="#cb83-25" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb83-26"><a href="#cb83-26" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">3</span></span>
+<span id="cb83-27"><a href="#cb83-27" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb83-28"><a href="#cb83-28" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">exp</span>(<span class="fu">log</span>(<span class="fu">sin</span>(<span class="fu">cos</span>(x<span class="sc">*</span>pi))))</span>
+<span id="cb83-29"><a href="#cb83-29" aria-hidden="true" tabindex="-1"></a>x <span class="sc">-</span> y</span>
+<span id="cb83-30"><a href="#cb83-30" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-31"><a href="#cb83-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-32"><a href="#cb83-32" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
+<span id="cb83-33"><a href="#cb83-33" aria-hidden="true" tabindex="-1"></a><span class="fu">## Attention </span></span>
+<span id="cb83-34"><a href="#cb83-34" aria-hidden="true" tabindex="-1"></a>Typing <span class="in">`x + 1`</span>{.R} will **only print** the result of <span class="in">`x + 1`</span>{.R}, but not add 1 to <span class="in">`x`</span> and save this as the new value of <span class="in">`x`</span>. </span>
+<span id="cb83-35"><a href="#cb83-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-36"><a href="#cb83-36" aria-hidden="true" tabindex="-1"></a>**To actually modify** the value stored in <span class="in">`x`</span>, type <span class="in">`x &lt;- x + 1`</span>{.R}.</span>
+<span id="cb83-37"><a href="#cb83-37" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb83-38"><a href="#cb83-38" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-39"><a href="#cb83-39" aria-hidden="true" tabindex="-1"></a><span class="fu">### Special values</span></span>
+<span id="cb83-40"><a href="#cb83-40" aria-hidden="true" tabindex="-1"></a>R handles infinity, NaN (Not a Number), and has $\pi$ defined. Missing numbers are handled through the <span class="in">`NA`</span>{.R} keyword (Not Attributed).</span>
+<span id="cb83-41"><a href="#cb83-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-42"><a href="#cb83-42" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb83-43"><a href="#cb83-43" aria-hidden="true" tabindex="-1"></a>pi</span>
+<span id="cb83-44"><a href="#cb83-44" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span><span class="sc">/</span><span class="dv">0</span></span>
+<span id="cb83-45"><a href="#cb83-45" aria-hidden="true" tabindex="-1"></a><span class="dv">0</span><span class="sc">/</span><span class="dv">0</span></span>
+<span id="cb83-46"><a href="#cb83-46" aria-hidden="true" tabindex="-1"></a><span class="cn">NA</span></span>
+<span id="cb83-47"><a href="#cb83-47" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-48"><a href="#cb83-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-49"><a href="#cb83-49" aria-hidden="true" tabindex="-1"></a><span class="fu">### Booleans and common tests on values</span></span>
+<span id="cb83-50"><a href="#cb83-50" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-51"><a href="#cb83-51" aria-hidden="true" tabindex="-1"></a>Booleans are handled with the <span class="in">`TRUE`</span>{.R} and <span class="in">`FALSE`</span>{.R} keywords, and are usually obtained as the result of a test on values. </span>
+<span id="cb83-52"><a href="#cb83-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-53"><a href="#cb83-53" aria-hidden="true" tabindex="-1"></a>Once you've understood these tests, you can use them in <span class="co">[</span><span class="ot">conditional actions</span><span class="co">](11-conditions_loops.qmd)</span> of the type <span class="in">`if(test){then}else{then}`</span>{.R}, or to apply some filter on your data.</span>
+<span id="cb83-54"><a href="#cb83-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-55"><a href="#cb83-55" aria-hidden="true" tabindex="-1"></a>Let's create two variables <span class="in">`x`</span> and <span class="in">`y`</span> and test some assertions on these two variables (*i.e.* answer the following questions):</span>
+<span id="cb83-56"><a href="#cb83-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-59"><a href="#cb83-59" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-60"><a href="#cb83-60" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span></span>
+<span id="cb83-61"><a href="#cb83-61" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="dv">2</span></span>
+<span id="cb83-62"><a href="#cb83-62" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-63"><a href="#cb83-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-64"><a href="#cb83-64" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is <span class="in">`x`</span> equal to <span class="in">`y`</span>?</span>
+<span id="cb83-67"><a href="#cb83-67" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-68"><a href="#cb83-68" aria-hidden="true" tabindex="-1"></a>x <span class="sc">==</span> y</span>
+<span id="cb83-69"><a href="#cb83-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-70"><a href="#cb83-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-71"><a href="#cb83-71" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is <span class="in">`x`</span> not equal to <span class="in">`y`</span>?</span>
+<span id="cb83-74"><a href="#cb83-74" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-75"><a href="#cb83-75" aria-hidden="true" tabindex="-1"></a>x <span class="sc">!=</span> y</span>
+<span id="cb83-76"><a href="#cb83-76" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-77"><a href="#cb83-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-78"><a href="#cb83-78" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is <span class="in">`x`</span> smaller than <span class="in">`y`</span>?</span>
+<span id="cb83-81"><a href="#cb83-81" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-82"><a href="#cb83-82" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&lt;</span> y </span>
+<span id="cb83-83"><a href="#cb83-83" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-84"><a href="#cb83-84" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-85"><a href="#cb83-85" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is <span class="in">`x`</span> smaller or equal than <span class="in">`y`</span>?</span>
+<span id="cb83-88"><a href="#cb83-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-89"><a href="#cb83-89" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&lt;=</span> y</span>
+<span id="cb83-90"><a href="#cb83-90" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-91"><a href="#cb83-91" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-92"><a href="#cb83-92" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Operator "and": <span class="in">`&amp;`</span>{.R}</span>
+<span id="cb83-95"><a href="#cb83-95" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-96"><a href="#cb83-96" aria-hidden="true" tabindex="-1"></a>x <span class="sc">==</span> y <span class="sc">&amp;</span> x <span class="sc">&lt;</span> y </span>
+<span id="cb83-97"><a href="#cb83-97" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-98"><a href="#cb83-98" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-99"><a href="#cb83-99" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Operator "or": <span class="in">`|`</span>{.R}</span>
+<span id="cb83-102"><a href="#cb83-102" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-103"><a href="#cb83-103" aria-hidden="true" tabindex="-1"></a>x <span class="sc">==</span> y <span class="sc">|</span> x <span class="sc">&lt;</span> y </span>
+<span id="cb83-104"><a href="#cb83-104" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-105"><a href="#cb83-105" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-106"><a href="#cb83-106" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is <span class="in">`x`</span> a NaN?</span>
+<span id="cb83-109"><a href="#cb83-109" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-110"><a href="#cb83-110" aria-hidden="true" tabindex="-1"></a><span class="fu">is.nan</span>(x)</span>
+<span id="cb83-111"><a href="#cb83-111" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-112"><a href="#cb83-112" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-113"><a href="#cb83-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is <span class="in">`x`</span> a number?</span>
+<span id="cb83-116"><a href="#cb83-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-117"><a href="#cb83-117" aria-hidden="true" tabindex="-1"></a><span class="fu">is.numeric</span>(x)</span>
+<span id="cb83-118"><a href="#cb83-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-119"><a href="#cb83-119" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-120"><a href="#cb83-120" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is <span class="in">`x`</span> a string?</span>
+<span id="cb83-123"><a href="#cb83-123" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-124"><a href="#cb83-124" aria-hidden="true" tabindex="-1"></a><span class="fu">is.character</span>(x)</span>
+<span id="cb83-125"><a href="#cb83-125" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-126"><a href="#cb83-126" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-127"><a href="#cb83-127" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Is <span class="in">`x`</span> a NA?</span>
+<span id="cb83-130"><a href="#cb83-130" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-131"><a href="#cb83-131" aria-hidden="true" tabindex="-1"></a><span class="fu">is.na</span>(x)</span>
+<span id="cb83-132"><a href="#cb83-132" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-133"><a href="#cb83-133" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-134"><a href="#cb83-134" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Operator "not" (inverse)</span>
+<span id="cb83-137"><a href="#cb83-137" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-138"><a href="#cb83-138" aria-hidden="true" tabindex="-1"></a><span class="sc">!</span><span class="fu">is.na</span>(x)</span>
+<span id="cb83-139"><a href="#cb83-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-140"><a href="#cb83-140" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-141"><a href="#cb83-141" aria-hidden="true" tabindex="-1"></a>A number can by converted to a boolean using <span class="in">`as.logical()`</span>{.R}: any number non 0 is equivalent to <span class="in">`TRUE`</span>, and 0 is <span class="in">`FALSE`</span>.</span>
+<span id="cb83-142"><a href="#cb83-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb83-143"><a href="#cb83-143" aria-hidden="true" tabindex="-1"></a><span class="fu">as.logical</span>(<span class="dv">1</span>)</span>
+<span id="cb83-144"><a href="#cb83-144" aria-hidden="true" tabindex="-1"></a><span class="fu">as.logical</span>(<span class="dv">0</span>)</span>
+<span id="cb83-145"><a href="#cb83-145" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-146"><a href="#cb83-146" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-147"><a href="#cb83-147" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-148"><a href="#cb83-148" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-149"><a href="#cb83-149" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-150"><a href="#cb83-150" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-151"><a href="#cb83-151" aria-hidden="true" tabindex="-1"></a><span class="fu">## Complex values</span></span>
+<span id="cb83-152"><a href="#cb83-152" aria-hidden="true" tabindex="-1"></a>:::{.callout-note collapse="true"}</span>
+<span id="cb83-153"><a href="#cb83-153" aria-hidden="true" tabindex="-1"></a><span class="fu">## Click to expand</span></span>
+<span id="cb83-154"><a href="#cb83-154" aria-hidden="true" tabindex="-1"></a>R also natively handles complex values:</span>
+<span id="cb83-155"><a href="#cb83-155" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE, error=TRUE}</span></span>
+<span id="cb83-156"><a href="#cb83-156" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">+</span>i   <span class="co"># not a valid complex value</span></span>
+<span id="cb83-157"><a href="#cb83-157" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">+</span>1i  <span class="co"># valid complex value</span></span>
+<span id="cb83-158"><a href="#cb83-158" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(1i<span class="sc">*</span>pi)</span>
+<span id="cb83-159"><a href="#cb83-159" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb83-160"><a href="#cb83-160" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="sc">-</span><span class="dv">1</span> <span class="sc">+</span> 0i)</span>
+<span id="cb83-161"><a href="#cb83-161" aria-hidden="true" tabindex="-1"></a><span class="fu">Im</span>(<span class="fu">exp</span>(1i<span class="sc">*</span>pi))</span>
+<span id="cb83-162"><a href="#cb83-162" aria-hidden="true" tabindex="-1"></a><span class="fu">Re</span>(<span class="fu">exp</span>(1i<span class="sc">*</span>pi))</span>
+<span id="cb83-163"><a href="#cb83-163" aria-hidden="true" tabindex="-1"></a><span class="fu">Mod</span>(<span class="fu">exp</span>(1i<span class="sc">*</span>pi))</span>
+<span id="cb83-164"><a href="#cb83-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-165"><a href="#cb83-165" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb83-166"><a href="#cb83-166" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-167"><a href="#cb83-167" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-168"><a href="#cb83-168" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-169"><a href="#cb83-169" aria-hidden="true" tabindex="-1"></a><span class="fu">## Strings</span></span>
+<span id="cb83-170"><a href="#cb83-170" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-171"><a href="#cb83-171" aria-hidden="true" tabindex="-1"></a>A string is defined between quotation marks such as: <span class="in">`"string"`</span>{.R}. Thus <span class="in">`"1"`</span>{.R} is not the number *1*, but rather the character "1". Here are some operations on strings :</span>
+<span id="cb83-172"><a href="#cb83-172" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-173"><a href="#cb83-173" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Definition of a string:</span>
+<span id="cb83-176"><a href="#cb83-176" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-177"><a href="#cb83-177" aria-hidden="true" tabindex="-1"></a>phrase <span class="ot">&lt;-</span> <span class="st">"Hello World "</span> </span>
+<span id="cb83-178"><a href="#cb83-178" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-179"><a href="#cb83-179" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-180"><a href="#cb83-180" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Concatenation of strings using <span class="in">`paste()`</span>{.R}:</span>
+<span id="cb83-183"><a href="#cb83-183" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-184"><a href="#cb83-184" aria-hidden="true" tabindex="-1"></a><span class="fu">paste</span>(<span class="st">"phrase"</span>, phrase, <span class="at">sep=</span><span class="st">" = "</span>)</span>
+<span id="cb83-185"><a href="#cb83-185" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-186"><a href="#cb83-186" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-187"><a href="#cb83-187" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Concatenation of strings using <span class="in">`glue::glue()`</span>{.R}:</span>
+<span id="cb83-190"><a href="#cb83-190" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-191"><a href="#cb83-191" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glue)</span>
+<span id="cb83-192"><a href="#cb83-192" aria-hidden="true" tabindex="-1"></a><span class="fu">glue</span>(<span class="st">"phrase = {phrase}"</span>)</span>
+<span id="cb83-193"><a href="#cb83-193" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-194"><a href="#cb83-194" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-195"><a href="#cb83-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Acessing a sub-string:</span>
+<span id="cb83-198"><a href="#cb83-198" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-199"><a href="#cb83-199" aria-hidden="true" tabindex="-1"></a><span class="fu">substr</span>(phrase, <span class="dv">1</span>, <span class="dv">4</span>)</span>
+<span id="cb83-200"><a href="#cb83-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-201"><a href="#cb83-201" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-202"><a href="#cb83-202" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Change case of string with <span class="in">`tolower()`</span>{.R} and <span class="in">`toupper()`</span>{.R}:</span>
+<span id="cb83-205"><a href="#cb83-205" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-206"><a href="#cb83-206" aria-hidden="true" tabindex="-1"></a><span class="fu">tolower</span>(phrase); <span class="fu">toupper</span>(phrase)</span>
+<span id="cb83-207"><a href="#cb83-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-208"><a href="#cb83-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-209"><a href="#cb83-209" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Change the first occurrence of "o" in "a" with <span class="in">`sub()`</span>{.R}:</span>
+<span id="cb83-212"><a href="#cb83-212" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-213"><a href="#cb83-213" aria-hidden="true" tabindex="-1"></a><span class="fu">sub</span>(<span class="st">"o"</span>, <span class="st">"a"</span>, phrase)</span>
+<span id="cb83-214"><a href="#cb83-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-215"><a href="#cb83-215" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-216"><a href="#cb83-216" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Change all occurrences of "o" in "a" with <span class="in">`gsub()`</span>{.R}:</span>
+<span id="cb83-219"><a href="#cb83-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-220"><a href="#cb83-220" aria-hidden="true" tabindex="-1"></a><span class="fu">gsub</span>(<span class="st">"o"</span>, <span class="st">"a"</span>, phrase)</span>
+<span id="cb83-221"><a href="#cb83-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-222"><a href="#cb83-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-223"><a href="#cb83-223" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Trim white spaces with <span class="in">`trimws()`</span>{.R}:</span>
+<span id="cb83-226"><a href="#cb83-226" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-227"><a href="#cb83-227" aria-hidden="true" tabindex="-1"></a><span class="fu">trimws</span>(phrase)</span>
+<span id="cb83-228"><a href="#cb83-228" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-229"><a href="#cb83-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-230"><a href="#cb83-230" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Get a vector from string separation based on a character with <span class="in">`strsplit()`</span>{.R}:</span>
+<span id="cb83-233"><a href="#cb83-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb83-234"><a href="#cb83-234" aria-hidden="true" tabindex="-1"></a><span class="fu">strsplit</span>(phrase, <span class="st">" "</span>)         <span class="co"># returns a list</span></span>
+<span id="cb83-235"><a href="#cb83-235" aria-hidden="true" tabindex="-1"></a><span class="fu">unlist</span>(<span class="fu">strsplit</span>(phrase, <span class="st">" "</span>)) <span class="co"># returns a vector</span></span>
+<span id="cb83-236"><a href="#cb83-236" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-237"><a href="#cb83-237" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-238"><a href="#cb83-238" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
+<span id="cb83-239"><a href="#cb83-239" aria-hidden="true" tabindex="-1"></a><span class="fu">## Attention!!</span></span>
+<span id="cb83-240"><a href="#cb83-240" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE, error=TRUE}</span></span>
+<span id="cb83-241"><a href="#cb83-241" aria-hidden="true" tabindex="-1"></a>phrase2 <span class="ot">&lt;-</span> <span class="st">"1234"</span></span>
+<span id="cb83-242"><a href="#cb83-242" aria-hidden="true" tabindex="-1"></a>phrase2 <span class="sc">-</span> <span class="dv">4321</span>             <span class="co"># won't work: string - double</span></span>
+<span id="cb83-243"><a href="#cb83-243" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(phrase2) <span class="sc">-</span> <span class="dv">4321</span> <span class="co"># conversion of string to double</span></span>
+<span id="cb83-244"><a href="#cb83-244" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-245"><a href="#cb83-245" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb83-246"><a href="#cb83-246" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-247"><a href="#cb83-247" aria-hidden="true" tabindex="-1"></a>For more complex operations, see the <span class="in">`stringr`</span> package and its <span class="co">[</span><span class="ot">cheatsheet</span><span class="co">](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf)</span>.</span>
+<span id="cb83-248"><a href="#cb83-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-249"><a href="#cb83-249" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises {#exo-variables}</span></span>
+<span id="cb83-250"><a href="#cb83-250" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-251"><a href="#cb83-251" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-252"><a href="#cb83-252" aria-hidden="true" tabindex="-1"></a>Interactive exercises can be found in the <span class="co">[</span><span class="ot">`tutor`</span><span class="co">](https://colinbousige.github.io/tutor/)</span> package. For this, simply run:</span>
+<span id="cb83-253"><a href="#cb83-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-254"><a href="#cb83-254" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb83-255"><a href="#cb83-255" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tutor)</span>
+<span id="cb83-256"><a href="#cb83-256" aria-hidden="true" tabindex="-1"></a><span class="fu">tuto</span>(<span class="st">"variables"</span>)</span>
+<span id="cb83-257"><a href="#cb83-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb83-258"><a href="#cb83-258" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-259"><a href="#cb83-259" aria-hidden="true" tabindex="-1"></a>Alternatively, you can just <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/exo-in-class.zip"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>download the archive with all the exercises files<span class="kw">&lt;/a&gt;</span>, unzip it in your <span class="in">`R class`</span> RStudio project, and edit the R files.</span>
+<span id="cb83-260"><a href="#cb83-260" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb83-261"><a href="#cb83-261" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb83-262"><a href="#cb83-262" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb83-263"><a href="#cb83-263" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb83-264"><a href="#cb83-264" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb83-265"><a href="#cb83-265" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
