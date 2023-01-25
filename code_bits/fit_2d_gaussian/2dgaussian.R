@@ -72,6 +72,6 @@ P3 <- df %>%
 
 
 ggsave("data_and_fit.pdf", 
-        P1/P2/P3,
-        height = 8,
-        width = 6)
+        (P1+P2+P3+plot_layout(nrow = 2)),
+        height = 6,
+        width = 8)
