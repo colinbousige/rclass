@@ -1,47 +1,57 @@
 library(tidyverse)
 library(patchwork)
 library(broom)
-theme_set(theme_bw())
-colors <- colorRampPalette(c("white","royalblue","seagreen","orange","red", "brown"))
+theme_set(theme_bw()+theme(legend.key.height = unit(1.5, 'cm')))
+cols <- c("#e7f0fa", "#c9e2f6", "#95cbee", "#0099dc", 
+          "#4ab04a", "#ffd73e", "#eec73a", "#e29421", 
+          "#e29421", "#f05336", "#ce472e", "black")
+colors <- colorRampPalette(cols)
 
 # Create general elliptical 2D Gaussian function (spherical if b=0)
-gauss2 <- function(x,y,x0=0,y0=0,A=1,a=1,b=.1,c=1) {
-    A*exp(-(a*(x-x0)^2+2*b*(x-x0)*(y-y0)+c*(y-y0)^2))
+Gauss2D <- function(x,y,x0=0,y0=0,A=1,a=1,b=.1,c=1) {
+    stopifnot(length(x)==length(y), length(x0)==length(y0),
+              length(x0)==length(A),length(x0)==length(a),
+              length(x0)==length(b),length(x0)==length(c))
+    z <- 0
+    for(i in seq_along(x0)){
+        z <- z + A[i]*exp(-(a[i]*(x-x0[i])^2+2*b[i]*(x-x0[i])*(y-y0[i])+c[i]*(y-y0[i])^2))
+    }
+    return(z)
 }
 
 # Create fake data
 df <- tibble(expand.grid(x=seq(0,10,by=.1), 
                          y=seq(0,10,by=.1)),
-             z = gauss2(x,y,x0=5,y0=5,A=10,a=2.2,b=0.15,c=2.2)+ 
-                 gauss2(x,y,x0=3,y0=4,A=5,a=1.5,b=0.15,c=1.5)+ 
-                 runif(length(x))
+             z = Gauss2D(x, y,
+                        x0=c(5,3),  y0=c(5,6),
+                         A=c(10,6),  a=c(2.2,1.5),
+                         b=c(0.15,1),c=c(2.2,1.5)) + runif(length(x))
                  )
-# Look at it
-df
 
 # Plot fake data
 P1 <- df %>% 
     ggplot(aes(x = x, y = y, fill = z)) +
         geom_raster(interpolate=TRUE)+
         scale_fill_gradientn(colors = colors(10), 
+                             limits = c(-.2,11),
+                             breaks = seq(0,12,2),
                              name = "Intensity\n[arb. units]")+
         labs(title="Plot data")
-
 # Perform fit
 fit <- nls(data=df,
-    z ~ gauss2(x,y,x0_1,y0_1,A_1,a_1,b_1,c_1)+ 
-        gauss2(x,y,x0_2,y0_2,A_2,a_2,b_2,c_2),
-    start=list(x0_1 = 4.5, y0_1 = 4.5,
-               x0_2 = 2.5, y0_2 = 3.8,
-               A_1 = 8, a_1 = 2, b_1 = 0.1, c_1 = 2,
-               A_2 = 4, a_2 = 1, b_2 = 0.1, c_2 = 1),
+    z ~ z0 + Gauss2D(x,y,x0,y0,A,a,b,c),
+    start=list(z0 = 0.1,
+               x0 = c(4.5, 3.2), 
+               y0 = c(4.5, 5.5),
+               A = c(8,8),     a = c(2,2), 
+               b = c(0.1,0.1), c = c(2,2)),
     control = nls.control(maxiter = 1000)
     )
 
 # Get fit parameters
 tidy(fit)
 centers <- tidy(fit) %>% 
-    filter(str_detect(term, "0_")) %>% 
+    filter(str_detect(term, "x") | str_detect(term, "y")) %>% 
     select(term, estimate) %>% 
     pivot_wider(names_from = term, 
                 values_from = estimate) %>% 
@@ -51,27 +61,42 @@ centers <- tidy(fit) %>%
                  names_pattern = "(.)")
 
 # Plot fit
-P2 <- augment(fit)%>% 
-    ggplot(aes(x = x, y = y, fill = .fitted)) +
+P2 <- df %>% 
+    ggplot(aes(x = x, y = y, fill = predict(fit))) +
         geom_raster(interpolate=TRUE)+
         scale_fill_gradientn(colors = colors(10), 
+                             limits = c(-.2,11),
+                             breaks = seq(0,12,2),
                              name = "Intensity\n[arb. units]")+
-        labs(title="Plot fit")
+        labs(title="Fit result")
+
+# Plot data - fit
+P3 <- df %>% 
+    ggplot(aes(x = x, y = y, fill = z-predict(fit))) +
+        geom_raster(interpolate=TRUE)+
+        scale_fill_gradientn(colors = colors(10), 
+                             limits = c(-.2,11),
+                             breaks = seq(0,12,2),
+                             name = "Intensity\n[arb. units]")+
+        labs(title="Data - fit")
 
 # Plot data and overlay fit as contour plot
-P3 <- df %>% 
+P4 <- df %>% 
     ggplot(aes(x = x, y = y)) +
         geom_raster(aes(fill = z), interpolate=TRUE)+
         scale_fill_gradientn(colors = colors(10), 
+                             limits = c(-.2,11),
+                             breaks = seq(0,12,2),
                              name = "Intensity\n[arb. units]")+
-        geom_contour(data=augment(fit), 
-                     aes(z = .fitted), color = "black", bins = 5)+
-        labs(title="Plot data and overlay fit as contour plot",
+        geom_contour(aes(z = predict(fit)), color = "black", bins = 5)+
+        labs(title="Plot data and overlay fit as contour",
              subtitle="Fitted centers as grey points")+
         geom_point(data=centers, color="gray", size=2)
 
 
 ggsave("data_and_fit.pdf", 
-        (P1+P2+P3+plot_layout(nrow = 2)),
+        P1+P2+P3+P4+plot_layout(guides="collect"),
         height = 6,
         width = 8)
+
+
