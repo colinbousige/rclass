@@ -92,5 +92,3 @@ ggsave("data_and_fit_cross.pdf",
         P1+P2+P3+P4,
         height = 6,
         width = 8)
-
-
