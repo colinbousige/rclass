@@ -243,6 +243,7 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
   <a href="./18-exercises.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">List of exercises</span></a>
   </div>
 </li>
+        <li class="px-0"><hr class="sidebar-divider hi "></li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./code_bits.html" class="sidebar-item-text sidebar-link">Code bits</a>
@@ -370,9 +371,9 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Unit: milliseconds
-#&gt;       expr       min        lq      mean    median        uq       max neval
-#&gt;    forloop 441.26131 444.75342 465.55763 464.55030 475.97872 513.29575    10
-#&gt;  noforloop  12.37439  13.10724  23.62379  18.80699  27.31871  67.87744    10</code></pre>
+#&gt;       expr       min        lq      mean    median       uq       max neval
+#&gt;    forloop 463.78964 570.22501 613.63336 605.60541 619.4871 830.90103    10
+#&gt;  noforloop  12.45316  13.10397  21.69227  23.97474  25.9687  29.90477    10</code></pre>
 </div>
 </div>
 <section id="the-apply-family" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="the-apply-family">
@@ -487,18 +488,18 @@ gtag('config', 'google_analytics.html', { 'anonymize_ip': true});
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,000 × 2
-#&gt;          x y    
-#&gt;      &lt;dbl&gt; &lt;chr&gt;
-#&gt;  1  0.365  x&gt;0  
-#&gt;  2 -0.739  x&lt;=0 
-#&gt;  3 -0.689  x&lt;=0 
-#&gt;  4 -0.843  x&lt;=0 
-#&gt;  5 -0.303  x&lt;=0 
-#&gt;  6  0.894  x&gt;0  
-#&gt;  7 -0.587  x&lt;=0 
-#&gt;  8 -0.0843 x&lt;=0 
-#&gt;  9  0.261  x&gt;0  
-#&gt; 10  0.823  x&gt;0  
+#&gt;         x y    
+#&gt;     &lt;dbl&gt; &lt;chr&gt;
+#&gt;  1 -0.625 x&lt;=0 
+#&gt;  2  0.131 x&gt;0  
+#&gt;  3  0.204 x&gt;0  
+#&gt;  4  0.753 x&gt;0  
+#&gt;  5 -0.378 x&lt;=0 
+#&gt;  6  0.715 x&gt;0  
+#&gt;  7  0.440 x&gt;0  
+#&gt;  8  0.826 x&gt;0  
+#&gt;  9  0.443 x&gt;0  
+#&gt; 10 -0.646 x&lt;=0 
 #&gt; # … with 990 more rows</code></pre>
 </div>
 </div>
@@ -519,22 +520,22 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; $A
-#&gt; [1] 52.14737
+#&gt; [1] 51.60701
 #&gt; 
 #&gt; $B
-#&gt; [1] -3.899796
+#&gt; [1] -9.995451
 #&gt; 
 #&gt; $C
-#&gt; [1] 102.2145</code></pre>
+#&gt; [1] 103.2238</code></pre>
 </div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;          A          B          C 
-#&gt;  52.147367  -3.899796 102.214497</code></pre>
+#&gt;  51.607006  -9.995451 103.223843</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;          A          B          C 
-#&gt;  52.147367  -3.899796 102.214497</code></pre>
+#&gt;  51.607006  -9.995451 103.223843</code></pre>
 </div>
 </div>
 </details></details><details><summary><strong>Exercise 3</strong>
