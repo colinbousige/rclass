@@ -1,4 +1,6 @@
 library(tidyverse)
+library(patchwork)
+theme_set(theme_bw())
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # 
 ## Exercise 1
@@ -6,7 +8,7 @@ library(tidyverse)
 
 # We will work with the well known table `mtcars` included in R:
 
-str(mtcars)
+?mtcars
 
 
 ### Basic stuff 1
@@ -17,15 +19,34 @@ mtcars %>% # we work on the mtcars dataset, send it to ggplot
     ggplot(aes(x = wt, y = mpg))+ 
         geom_point() # plot with points
 
+# Now change the color and shape of the points, and add transparency
+mtcars %>% 
+    ggplot(aes(x = wt, y = mpg))+ 
+        geom_point(___)
+
 ### Basic stuff 2
 
 # What happens if you use `factor(gear)` instead?
 
-mtcars %>% # we work on the mtcars dataset, send it to ggplot
+P <- mtcars %>% # we work on the mtcars dataset, send it to ggplot
     # define the x and y variables of the plot, and also the color:
     ggplot(aes(x = wt, y = mpg, color = gear))+ 
         geom_point() # plot with points
 
+### Tuning the plot
+# Using the previously defined plot P:
+# Add nice labels : 
+# - wt = Weight (1000 lbs)
+# - mpg = Miles/(US) gallon
+# - gear = Number of forward gears
+# - title : add a title
+# Set colors to :
+# - ones you define yourself
+# - ones you define from the palette 'Set1' from scale_color_brewer()
+# Force the x and y ranges to reach 0
+# Reorganise the gears in descending order in the legend
+
+P + ___
 
 ### Faceting 1
 
@@ -97,4 +118,23 @@ Py
 Pz
 Pw
 Pu
+
+
+# # # # # # # # # # # # # # # # # # # # # # # # # 
+## Exercise 3
+# # # # # # # # # # # # # # # # # # # # # # # # # 
+
+# Let's work on `faithfuld` and plot as a 3D color plot the density, as a function of eruptions vs waiting
+# Plot with geom_contour_filled() or geom_raster() and see the difference
+# Add big red diamond points in (4.4, 80) and (1.94, 53) using either geom_point() or annotate("point", ...)
+
+faithfuld %>% 
+    ggplot(___)+
+        geom_contour_filled()
+
+faithfuld %>% 
+    ggplot(___)+
+        geom_raster()
+
+
 
