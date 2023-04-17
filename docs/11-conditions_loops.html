@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.2.335">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 10&nbsp; Conditional actions and loops</title>
 <style>
@@ -307,7 +307,7 @@ ga('send', {
 <pre><code>#&gt; [1] "x is smaller than y"</code></pre>
 </div>
 </div>
-<p>Sometimes, it’s usefull to be able to do this in one line using <code class="sourceCode r"><span class="fu">ifesle</span>(test, yes, no)</code>:</p>
+<p>Sometimes, it’s usefull to be able to do this in one line using <code class="sourceCode r"><span class="fu">ifelse</span>(test, yes, no)</code>:</p>
 <div class="cell">
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">3</span><span class="op">:</span><span class="fl">7</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="va">x</span><span class="op">&gt;</span><span class="fl">5</span>, <span class="st">"larger than 5"</span>, <span class="st">"lower than 5"</span><span class="op">)</span> </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -378,9 +378,9 @@ ga('send', {
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Unit: milliseconds
-#&gt;       expr       min        lq      mean    median        uq       max neval
-#&gt;    forloop 465.42391 486.99555 494.71984 489.18703 500.50497 550.45809    10
-#&gt;  noforloop  13.00894  13.57176  25.90763  19.99987  26.97201  85.26286    10</code></pre>
+#&gt;       expr       min        lq      mean   median        uq       max neval
+#&gt;    forloop 472.65402 491.76641 514.47809 515.6864 541.96592 556.11971    10
+#&gt;  noforloop  12.56885  14.31425  23.90043  18.6753  29.41658  58.41526    10</code></pre>
 </div>
 </div>
 <section id="the-apply-family" class="level3" data-number="10.3.1"><h3 data-number="10.3.1" class="anchored" data-anchor-id="the-apply-family">
@@ -497,17 +497,17 @@ ga('send', {
 <pre><code>#&gt; # A tibble: 1,000 × 2
 #&gt;          x y    
 #&gt;      &lt;dbl&gt; &lt;chr&gt;
-#&gt;  1 -0.365  x&lt;=0 
-#&gt;  2 -0.780  x&lt;=0 
-#&gt;  3  0.363  x&gt;0  
-#&gt;  4  0.0117 x&gt;0  
-#&gt;  5 -0.852  x&lt;=0 
-#&gt;  6  0.0166 x&gt;0  
-#&gt;  7 -0.565  x&lt;=0 
-#&gt;  8  0.340  x&gt;0  
-#&gt;  9 -0.887  x&lt;=0 
-#&gt; 10  0.335  x&gt;0  
-#&gt; # … with 990 more rows</code></pre>
+#&gt;  1 -0.998  x&lt;=0 
+#&gt;  2 -0.260  x&lt;=0 
+#&gt;  3  0.102  x&gt;0  
+#&gt;  4  0.0191 x&gt;0  
+#&gt;  5  0.256  x&gt;0  
+#&gt;  6  0.169  x&gt;0  
+#&gt;  7  0.629  x&gt;0  
+#&gt;  8  0.357  x&gt;0  
+#&gt;  9 -0.416  x&lt;=0 
+#&gt; 10  0.473  x&gt;0  
+#&gt; # ℹ 990 more rows</code></pre>
 </div>
 </div>
 </details><details><summary><strong>Exercise 2</strong>
@@ -527,22 +527,22 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; $A
-#&gt; [1] 50.57393
+#&gt; [1] 56.62741
 #&gt; 
 #&gt; $B
-#&gt; [1] 50.7776
+#&gt; [1] -16.00709
 #&gt; 
 #&gt; $C
-#&gt; [1] 99.30287</code></pre>
+#&gt; [1] 96.77122</code></pre>
 </div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;        A        B        C 
-#&gt; 50.57393 50.77760 99.30287</code></pre>
+<pre><code>#&gt;         A         B         C 
+#&gt;  56.62741 -16.00709  96.77122</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;        A        B        C 
-#&gt; 50.57393 50.77760 99.30287</code></pre>
+<pre><code>#&gt;         A         B         C 
+#&gt;  56.62741 -16.00709  96.77122</code></pre>
 </div>
 </div>
 </details></details><details><summary><strong>Exercise 3</strong>
@@ -864,7 +864,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>Sometimes, it's usefull to be able to do this in one line using <span class="in">`ifesle(test, yes, no)`</span>{.R}:</span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>Sometimes, it's usefull to be able to do this in one line using <span class="in">`ifelse(test, yes, no)`</span>{.R}:</span>
 <span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb50-24"><a href="#cb50-24" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">3</span><span class="sc">:</span><span class="dv">7</span></span>
 <span id="cb50-25"><a href="#cb50-25" aria-hidden="true" tabindex="-1"></a><span class="fu">ifelse</span>(x<span class="sc">&gt;</span><span class="dv">5</span>, <span class="st">"larger than 5"</span>, <span class="st">"lower than 5"</span>) </span>

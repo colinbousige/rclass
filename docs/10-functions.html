@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.2.335">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 9&nbsp; Functions</title>
 <style>
@@ -512,10 +512,10 @@ Your new moto
 <span><span class="va">lin_interp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/approxfun.html">approxfun</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span>        <span class="co">#is a function</span></span>
 <span><span class="fu">lin_interp</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>; <span class="fu">lin_interp</span><span class="op">(</span><span class="va">pi</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] -6.831858e-05</code></pre>
+<pre><code>#&gt; [1] 0.0006207817</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] -6.91804e-05</code></pre>
+<pre><code>#&gt; [1] -0.01088138</code></pre>
 </div>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yy_lin</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/approxfun.html">approx</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xout<span class="op">=</span><span class="va">xx</span><span class="op">)</span> <span class="co">#is a list containing x and y</span></span>
 <span></span>

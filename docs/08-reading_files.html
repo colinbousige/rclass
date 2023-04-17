@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.313">
+<meta name="generator" content="quarto-1.2.335">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 7&nbsp; Reading/writing all kinds of files</title>
 <style>
@@ -342,7 +342,7 @@ ga('send', {
 #&gt;  8 Arab World     ARB             1967 112406932
 #&gt;  9 Arab World     ARB             1968 115680165
 #&gt; 10 Arab World     ARB             1969 119016542
-#&gt; # … with 14,875 more rows</code></pre>
+#&gt; # ℹ 14,875 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"Data/tot_population.csv"</span>, skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -359,7 +359,7 @@ ga('send', {
 #&gt;  8 Arab World   ARB     1968  115680165
 #&gt;  9 Arab World   ARB     1969  119016542
 #&gt; 10 Arab World   ARB     1970  122398374
-#&gt; # … with 14,874 more rows</code></pre>
+#&gt; # ℹ 14,874 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"Data/tot_population.csv"</span>, skip <span class="op">=</span> <span class="fl">1</span>, col_names <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -376,7 +376,7 @@ ga('send', {
 #&gt;  8 Arab World ARB    1967 112406932
 #&gt;  9 Arab World ARB    1968 115680165
 #&gt; 10 Arab World ARB    1969 119016542
-#&gt; # … with 14,875 more rows</code></pre>
+#&gt; # ℹ 14,875 more rows</code></pre>
 </div>
 </div>
 <p>Since version 2.0 of <code>readr</code>, <code class="sourceCode r"><span class="fu">read_csv</span>()</code> can also take a vector as argument, which will result in reading all files in the vector successively:</p>
@@ -515,7 +515,7 @@ ga('send', {
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">file</span> <span class="kw">in</span> <span class="va">file_list</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="va">df_temp</span> <span class="op">&lt;-</span> <span class="fu">read_function</span><span class="op">(</span><span class="va">file</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>            <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">file</span><span class="op">)</span> <span class="co"># add the column `name` to make the tibble tidy</span></span>
-<span>    <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind.html">bind_rows</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">def_temp</span><span class="op">)</span></span>
+<span>    <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">def_temp</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>An R-friendly way of doing this would be to avoid using a <code class="sourceCode r"><span class="cf">for</span></code> loop:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
