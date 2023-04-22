@@ -20,6 +20,7 @@ theme_set(theme_bw()+
 colors <- colorRampPalette(c("black","royalblue","seagreen","orange","red"))
 ```
 
+
 ## Why are statistical tools necessary in physical science?
 
 When doing Science, one has to fully grasp the concept of *physical measurement*. Let's take an example to visualize the importance of this concept.
@@ -443,7 +444,7 @@ As can be seen on @tbl-tablevalues, using the FWHM ensures that roughly 76% of t
 
 : Integral values for various values of $a$ in $\int_{-a}^aP(z)dz$. {#tbl-tablevalues}
 
-<!-- ```{r}
+<!-- 
 #| label: tbl-tablevalues
 #| tbl-cap: "Integral values for various values of $a$ in $\\int_{-a}^aP(z)dz$."
 #| warning: false
@@ -458,7 +459,143 @@ dat <- tibble(`Integration range $a$` = c("$\\sigma$", "$\\sqrt{2\\ln{2}}\\sigma
        `$\\int_{-a}^aP(z)dz$` = c(integral(x, a = 1), integral(x, a = sqrt(2 * log(2))), integral(x, a = 2), integral(x, a = 3), integral(x, a = 4))
       )
 knitr::kable(dat)
-``` -->
+-->
+
+## Usual statistical tests on distributions
+
+### Hypothesis testing and p-values
+
+A **hypothesis test** is a statistical test that is used to determine whether a given hypothesis is true or not.
+It is based on the comparison of the observed data with the expected data, given the hypothesis.
+
+The **null hypothesis** (usually noted $H_0$) is the hypothesis that is tested, and the **alternative hypothesis** (usually noted $H_1$) is the hypothesis that is assumed to be true if the null hypothesis is rejected.
+
+The **p-value** is the probability of obtaining a fluctuation in data under the null hypothesis that is as, or more, extreme than that observed by a given experiment. 
+If the p-value is smaller than a predifined tolerance (usually set to 0.05), then one might consider rejecting the null hypothesis as the probability of observing such a fluctuation under the null hypothesis is extremely small.
+
+::: {.callout-important}
+- If the **p-value** $\ge\alpha$ (typically 0.05), the null hypothesis is accepted.
+- If the **p-value** is below a certain threshold $\alpha$, the null hypothesis is rejected.
+:::
+
+In R, most tests will automatically return a p-value, which will help you decide whether the test is conclusive or not – we will not delve into the details of computing these p-values.
+
+
+### Asserting the Gaussian nature of a distribution: the Shapiro–Wilk test
+
+The Shapiro-Wilk test is a statistical test that can be used to determine whether a distribution of data is Gaussian or not. 
+It is based on the comparison of the observed distribution with the expected distribution of a Gaussian distribution with the same mean and standard deviation.
+Its **null hypothesis** is that the data are normally distributed, thus:
+
+- If the **p-value** $\lt\alpha$, the null hypothesis is rejected and the data are not normally distributed.
+- If the **p-value** $\ge\alpha$, the null hypothesis is not rejected and the data are normally distributed.
+
+Let's perform a Shapiro-Wilk test on the distribution of the data in @fig-histogramT:
+
+```{r}
+#| warning: false
+#| message: false
+#| echo: true
+temp <- c(38, 38.1, 38.0, 38.0, 38.3, 37.9, 38.1, 38.2, 39.8)
+shapiro.test(temp)
+```
+We see here that the p-value is `r sprintf("%.3g",shapiro.test(temp)$p.value)`, which is below the threshold $\alpha$ = 0.05. 
+This means that **it is extremely unlikely that you'd observe such measurements if their distribution were normal**.
+The null hypothesis that the data are normally distributed is thus rejected, and we can conclude that the data are not normally distributed -- as expected from their representation in @fig-histogramT.
+
+If we were to remove the outlier (39.8) and perform the test again, we would get a p-value of `r sprintf("%.3g",shapiro.test(temp[temp!=39.8])$p.value)`, which means that there is a `r round(100*shapiro.test(temp[temp!=39.8])$p.value,1)`% chance to observe such measurements if their distribution were normal. As p-value > 0.05, the null hypothesis that the data are normally distributed is not rejected, and we can conclude that the data are normally distributed.
+
+### Student's t-test 
+
+The Student's t-test is a statistical test that can be used to determine whether two sets of data are significantly different from each other.
+Its **null hypothesis** is that **the two sets of data are drawn from the same distribution**, thus:
+
+- If the **p-value** $\lt\alpha$, the null hypothesis is rejected and the data are not drawn from the same distribution.
+- If the **p-value** $\ge\alpha$, the null hypothesis is not rejected and the data are drawn from the same distribution.
+
+Let's work on two sets of temperature measurements performed on two different days on two different person. We want to assert whether the temperature evolution between the two days is significant or not for each patient. For the sake of example, let's say that in both cases, they present the same average temperature on day 1 and on day 2 but with a different spread in data.
+
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+library(tidyverse)
+temps1 <- tibble(Day1=rnorm(100, 38.5, .2),
+                 Day2=rnorm(100, 37.7, .3)) %>% 
+            pivot_longer(everything(), 
+                         names_to = "Day", 
+                         values_to =  "Temperature") %>% 
+            mutate(Patient="A")
+temps2 <- tibble(Day1=rnorm(100, 38.5, 3),
+                 Day2=rnorm(100, 37.7, 3)) %>% 
+            pivot_longer(everything(), 
+                         names_to = "Day", 
+                         values_to = "Temperature")%>% 
+            mutate(Patient="B")
+temperatures <- bind_rows(temps1, temps2)
+temperatures %>% 
+    ggplot(aes(x = Day, y = Temperature, color = Patient)) +
+        geom_jitter(width = .04, size = 2, alpha = .3)+
+        geom_boxplot(notch=TRUE, position = "identity", 
+                     fill=NA, width=.2, 
+                     show.legend = FALSE)+
+        geom_violin(position = "identity", 
+                     fill=NA, show.legend = FALSE)+
+        scale_color_manual(values=c("orange", "royalblue"))+
+        scale_fill_manual(values=c("orange", "royalblue"))+
+        stat_summary(fun = "mean", size = 4, geom = "point")+
+        labs(x     = "Day",
+             y     = "Temperature [˚C]")
+```
+
+```{r}
+#| code-fold: false
+#| echo: false
+TA <- t.test(temperatures %>% filter(Patient == "A", Day=="Day1") %>% pull(Temperature), 
+       temperatures %>% filter(Patient == "A", Day=="Day2") %>% pull(Temperature))
+TB <- t.test(temperatures %>% filter(Patient == "B", Day=="Day1") %>% pull(Temperature), 
+       temperatures %>% filter(Patient == "B", Day=="Day2") %>% pull(Temperature))
+```
+
+Data means and 95% confidence intervals:
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+temperatures %>% 
+    nest(data=Temperature) %>%
+    mutate(CI = map(data, ~as_tibble(as.list(Rmisc::CI(.$Temperature,ci=.95))))) %>% 
+    unnest(CI) 
+```
+
+We want to determine whether the temperature evolution between the two days is significant or not for each patient.
+We can perform a Student's t-test to assert whether the two sets of data are significantly different from each other. 
+
+First, **to apply a t-test, we need to make sure that the data are normally distributed**, which we can do by performing a Shapiro-Wilk test on each set of data:
+```{r}
+#| code-fold: true
+#| code-summary: "Show the code"
+temperatures %>% 
+    nest(data = Temperature) %>% 
+    mutate(shapiro = map(data, ~as_tibble(
+        shapiro.test(.$Temperature)[c('statistic','p.value')]))) %>% 
+    unnest(shapiro)
+```
+In all cases the p-value is above 0.05, which means that the null hypothesis that the data are normally distributed is not rejected, and **we can conclude that the data are normally distributed**. The application of the t-test is thus valid.
+
+Let's start now with patient A:
+```{r}
+t.test(temperatures %>% filter(Patient == "A", Day=="Day1") %>% pull(Temperature), 
+       temperatures %>% filter(Patient == "A", Day=="Day2") %>% pull(Temperature))
+```
+As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of `r sprintf("%.3g",TA$p.value)`, which is largely below the threshold $\alpha$ = 0.05.
+To report it properly, we can say that "the temperature of patient A on day 1 (`r round(TA$estimate[1],2)`˚C, 95% CI = [`r sort(round(Rmisc::CI(temperatures %>% filter(Patient == "A", Day=="Day1") %>% pull(Temperature))[c(1,3)],2))`]˚C), was statistically significantly higher than on day 2 (`r round(TA$estimate[2],2)`˚C, 95% CI = [`r sort(round(Rmisc::CI(temperatures %>% filter(Patient == "A", Day=="Day2") %>% pull(Temperature))[c(1,3)],2))`]˚C), t(`r round(TA$parameter,2)`) = `r round(TA$statistic,2)`, p = `r sprintf("%.3g",TA$p.value)`."
+Here , `r round(TA$parameter,2)` is the degrees of freedom associated with the t test-statistic.
+The 95% confidence interval for the difference between the means is `r round(TA$conf.int[1],2)`˚C to `r round(TA$conf.int[2],2)`˚C.
+
+For patient B however, even though the average temperature decreased between the two days, the spread in data is so large that the t-test does not allow concluding concerning any significant temperature difference between the two days:
+```{r}
+t.test(temperatures %>% filter(Patient == "B", Day=="Day1") %>% pull(Temperature), 
+       temperatures %>% filter(Patient == "B", Day=="Day2") %>% pull(Temperature))
+```
 
 ## Uncertainty and errors
 
