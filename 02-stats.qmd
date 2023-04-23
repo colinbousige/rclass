@@ -14,7 +14,7 @@ theme_set(theme_bw()+
     theme(text=element_text(size=10),
           strip.background = element_blank(),
           strip.text = element_text(face="bold"),
-          panel.border = element_rect(size=1)
+          panel.border = element_rect(linewidth=1)
          )
     )
 colors <- colorRampPalette(c("black","royalblue","seagreen","orange","red"))
@@ -176,7 +176,7 @@ where $x_i$ is the $i$-th measurement of $x$.
 @fig-histogramT shows the representation of a sample of data plotted in a histogram. This figure shows the mode, mean and median. For this particular sample of data, the mean is `r round(mean(temp$T),1)` °C, the median is `r round(median(temp$T),1)` °C, and the mode is 38.0 °C. The fact that the mode is smaller than the mean is an indication that the data are asymmetric about the mean. We usually refer to such a distribution as being skewed, and in this case the data are skewed to the right.
 
 
-#### Quantifying the spread of data: variance and standard deviation
+#### Quantifying the spread of data: variance, standard deviation and standard error
 
 The mean of an ensemble of data doesn't provide any information as to how the data are distributed. So any description of a set of data just quoting a mean value is incomplete. We need a second number in order to quantify the dispersion of data around the mean value. The average deviations from the mean, $\left< x-\overline{x} \right>$, is not a useful quantity as, by definition, this will be zero for a symmetrically distributed sample of data (which is always the case for randomly distributed data -- a consequence of the central limit theorem, as we will see later). We should rather consider the average value of the squared deviations from the mean as a measure of the spread of our ensemble of measurements. This is called the **variance** $V(x)$, which is given by:
 
@@ -206,6 +206,15 @@ In general, scientists often prefer using the standard deviation rather than the
 ## Important
 A measurement of a quantity $x$ is therefore usually presented under the form $\left< x \right>\pm\sigma_x$, where $\left< x \right>$ is the arithmetic average and $\sigma_x$ is the standard deviation of the data.
 :::
+
+The **standard error** is defined as the standard deviation of the mean, and is given by:
+$$
+\begin{aligned}
+\sigma(\overline{x})=\frac{\sigma(x)}{\sqrt{N}}
+\end{aligned}
+$$ {#eq-se}
+where $N$ is the number of measurements. The standard error is a measure of the precision of the mean value $\overline{x}$, and is often used to quantify the uncertainty on the mean value.
+
 
 #### Caveats
 
@@ -411,11 +420,15 @@ dat %>%
         geom_segment(aes(x = -sqrt(2*log(2)), y = 1/2/sqrt(2*pi)/2, 
                          xend = sqrt(2*log(2)), yend = 1/2/sqrt(2*pi)/2),
             arrow = arrow(ends = "both", length = unit(0.25, "cm")))+
-        annotate("text", x = 0, y = .12, label="FWHM")
+        annotate("text", x = 0, y = .115, label="FWHM")+
+        geom_segment(aes(x = 0, y = 1/2/sqrt(2*pi)/4, 
+                         xend = sqrt(2*log(2)), yend = 1/2/sqrt(2*pi)/4),
+            arrow = arrow(ends = "both", length = unit(0.25, "cm")))+
+        annotate("text", x = .6, y = .065, label="HWHM")
 ```
 
 Sometimes instead of quantifying a Gaussian distribution (or any monomodal distribution, for that matter) using the variance or standard deviation, scientists will speak about the full width at half maximum (**FWHM**). 
-This has the advantage that any extreme outliers of the distribution do not contribute to the quantification of the spread of data. As the name suggests, the FWHM is the width of the distribution (the spread above and below the mean) at the points where the distribution reaches half of its maximum. 
+This has the advantage that any extreme outliers of the distribution do not contribute to the quantification of the spread of data. As the name suggests, the FWHM is the width of the distribution (the spread above and below the mean) at the points where the distribution reaches half of its maximum. You can also encounter the HWHM = FWHM/2, the Half Width at Half Maximum.
 
 For a Gaussian distribution $P(z)$, the half maximum is attained when $z_{HM}$ is so that:
 
@@ -432,19 +445,9 @@ $$
 FWHM=2\sqrt{2\ln{2}}\times\sigma
 $$
 
-As can be seen on @tbl-tablevalues, using the FWHM ensures that roughly 76% of the data are comprised between $\mu-\sigma$ and $\mu+\sigma$, and this goes up to $\sim95$% for $\mu-2\sigma$ and $\mu+2\sigma$.
+As can be seen on @tbl-tablevalues, using the FWHM ensures that roughly 76% of the data are comprised between $\mu-HWHM$ and $\mu+HWHM$, and this goes up to $\sim95$% for the range $[\mu-2\sigma, \mu+2\sigma]$.
 
-|Integration range $a$  |$\int_{-a}^aP(z)dz$ |
-|:----------------------|:-------------------|
-|$\sigma$               |0.68293             |
-|$\sqrt{2\ln{2}}\sigma$ |0.76100             |
-|$2\sigma$              |0.95455             |
-|$3\sigma$              |0.99730             |
-|$4\sigma$              |0.99994             |
-
-: Integral values for various values of $a$ in $\int_{-a}^aP(z)dz$. {#tbl-tablevalues}
-
-<!-- 
+```{r}
 #| label: tbl-tablevalues
 #| tbl-cap: "Integral values for various values of $a$ in $\\int_{-a}^aP(z)dz$."
 #| warning: false
@@ -455,11 +458,36 @@ y <- dnorm(x,0,1)
 integral <- function(x,a=1) {
     sprintf("%.5f", sum(y[abs(x) <= a] * (x[2] - x[1])))
 }
-dat <- tibble(`Integration range $a$` = c("$\\sigma$", "$\\sqrt{2\\ln{2}}\\sigma$", "$2\\sigma$", "$3\\sigma$", "$4\\sigma$"),
-       `$\\int_{-a}^aP(z)dz$` = c(integral(x, a = 1), integral(x, a = sqrt(2 * log(2))), integral(x, a = 2), integral(x, a = 3), integral(x, a = 4))
+dat <- tibble(`Integration range $a$` = c("$\\sigma$", "$HWHM=\\sqrt{2\\ln{2}}\\sigma$", "$1.96\\sigma$", "$2\\sigma$", "$3\\sigma$", "$4\\sigma$"),
+       `$\\int_{-a}^aP(z)dz$` = c(integral(x, a = 1), integral(x, a = sqrt(2 * log(2))), integral(x, a = 1.96), integral(x, a = 2), integral(x, a = 3), integral(x, a = 4))
       )
-knitr::kable(dat)
--->
+knitr::kable(dat,format = "markdown")
+```
+
+::: {.callout-note}
+
+## Important
+
+You can see from @tbl-tablevalues that if you want to make sure that exactly 95% of your data will fall in the given range, *i.e.* which defines the **95% confidence interval**, you need to use a range of $1.96\sigma$.
+
+:::
+
+::: {.callout-tip collapse="true"}
+
+## Tip: compute the 95% CI in R
+
+In R, you can compute the 95% CI of a distribution using `Rmisc::CI()`{.R} or `t.test()`{.R}.
+
+```{r}
+x <- rnorm(100, mean = 3, sd = 2)
+Rmisc::CI(x, ci = 0.95)
+t.test(x, conf.level = 0.95)
+```
+
+:::
+
+
+
 
 ## Usual statistical tests on distributions
 
@@ -473,7 +501,9 @@ The **null hypothesis** (usually noted $H_0$) is the hypothesis that is tested, 
 The **p-value** is the probability of obtaining a fluctuation in data under the null hypothesis that is as, or more, extreme than that observed by a given experiment. 
 If the p-value is smaller than a predifined tolerance (usually set to 0.05), then one might consider rejecting the null hypothesis as the probability of observing such a fluctuation under the null hypothesis is extremely small.
 
-::: {.callout-important}
+::: {.callout-note}
+
+## Important
 - If the **p-value** $\ge\alpha$ (typically 0.05), the null hypothesis is accepted.
 - If the **p-value** is below a certain threshold $\alpha$, the null hypothesis is rejected.
 :::
@@ -563,8 +593,11 @@ Data means and 95% confidence intervals:
 temperatures %>% 
     nest(data=Temperature) %>%
     mutate(CI = map(data, ~as_tibble(as.list(Rmisc::CI(.$Temperature,ci=.95))))) %>% 
-    unnest(CI) 
+    unnest(CI) %>% 
+    select(Day, Patient, lower, mean, upper) %>% 
+    knitr::kable(format = "markdown")
 ```
+
 
 We want to determine whether the temperature evolution between the two days is significant or not for each patient.
 We can perform a Student's t-test to assert whether the two sets of data are significantly different from each other. 
@@ -577,7 +610,9 @@ temperatures %>%
     nest(data = Temperature) %>% 
     mutate(shapiro = map(data, ~as_tibble(
         shapiro.test(.$Temperature)[c('statistic','p.value')]))) %>% 
-    unnest(shapiro)
+    unnest(shapiro) %>% 
+    select(-data) %>% 
+    knitr::kable(format = "markdown")
 ```
 In all cases the p-value is above 0.05, which means that the null hypothesis that the data are normally distributed is not rejected, and **we can conclude that the data are normally distributed**. The application of the t-test is thus valid.
 
@@ -596,6 +631,16 @@ For patient B however, even though the average temperature decreased between the
 t.test(temperatures %>% filter(Patient == "B", Day=="Day1") %>% pull(Temperature), 
        temperatures %>% filter(Patient == "B", Day=="Day2") %>% pull(Temperature))
 ```
+
+::: {.callout-note}
+
+Performing a t-test on a single distribution will test whether the distribution's mean is equal to 0:
+
+```{r}
+t.test(temperatures %>% filter(Patient == "B", Day=="Day1") %>% pull(Temperature))
+```
+
+::: 
 
 ## Uncertainty and errors
 
