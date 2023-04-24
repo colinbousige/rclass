@@ -72,10 +72,7 @@ format:
           \renewcommand{\headrulewidth}{0.1pt}
           \renewcommand{\footrulewidth}{0.1pt}
           \cfoot{\thepage/\pageref*{LastPage}}
-          \let\paragraph\oldparagraph
-          \let\subparagraph\oldsubparagraph
-          \usepackage{titlesec}
-          \usepackage{titletoc}
+          
           \setlength{\headheight}{14pt}
           \fancypagestyle{refstyle}{%
               \pagestyle{fancyplain}
@@ -95,6 +92,20 @@ format:
           }
           
           %%%%%%%%%%%%%%%%%%%%%%%%
+          % TOC
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          \makeatletter\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{2.3em}}\makeatother
+          \makeatletter\renewcommand*\l@subsection{\@dottedtocline{1}{2.5em}{2.3em}}
+          \makeatother
+
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          % Captions
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          \usepackage[font=small,labelfont=bf,labelsep=endash]{caption}
+          \renewcommand{\figurename}{Fig.}
+          \renewcommand{\tablename}{Tab.}
+
+          %%%%%%%%%%%%%%%%%%%%%%%%
           % Abstract
           %%%%%%%%%%%%%%%%%%%%%%%%
           \usepackage{abstract}
@@ -107,6 +118,10 @@ format:
           %%%%%%%%%%%%%%%%%%%%%%%%
           % Sections style
           %%%%%%%%%%%%%%%%%%%%%%%%
+          \let\paragraph\oldparagraph
+          \let\subparagraph\oldsubparagraph
+          \usepackage{titlesec}
+          \usepackage{titletoc}
           \titleformat{\section}{\color{BLUE}\normalfont\large\bfseries}{\color{BLUE}}{0em}{\thesection.~}
           \titleformat{\subsection}{\color{BLUE}\normalfont\bfseries}{\color{BLUE}}{0em}{\thesubsection.~}
           \titleformat{\subsubsection}{\normalfont\bfseries}{}{0em}{\thesubsubsection.~}
