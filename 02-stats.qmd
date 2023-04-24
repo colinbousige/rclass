@@ -1,11 +1,10 @@
 # A little reminder on Statistics
 
-
 ```{r include=FALSE, warning = FALSE, cache=FALSE}
+library(tidyverse)
 library(pracma)
 library(knitr)
 library(kableExtra)
-library(tidyverse)
 library(patchwork)
 library(quantities)
 library(broom)
@@ -461,7 +460,7 @@ integral <- function(x,a=1) {
 dat <- tibble(`Integration range $a$` = c("$\\sigma$", "$HWHM=\\sqrt{2\\ln{2}}\\sigma$", "$1.96\\sigma$", "$2\\sigma$", "$3\\sigma$", "$4\\sigma$"),
        `$\\int_{-a}^aP(z)dz$` = c(integral(x, a = 1), integral(x, a = sqrt(2 * log(2))), integral(x, a = 1.96), integral(x, a = 2), integral(x, a = 3), integral(x, a = 4))
       )
-knitr::kable(dat,format = "markdown")
+kable(dat,format = "markdown")
 ```
 
 ::: {.callout-note}
@@ -517,7 +516,7 @@ The Shapiro-Wilk test is a statistical test that can be used to determine whethe
 It is based on the comparison of the observed distribution with the expected distribution of a Gaussian distribution with the same mean and standard deviation.
 Its **null hypothesis** is that the data are normally distributed, thus:
 
-- If the **p-value** $\lt\alpha$, the null hypothesis is rejected and the data are not normally distributed.
+- If the **p-value** $<\alpha$, the null hypothesis is rejected and the data are not normally distributed.
 - If the **p-value** $\ge\alpha$, the null hypothesis is not rejected and the data are normally distributed.
 
 Let's perform a Shapiro-Wilk test on the distribution of the data in @fig-histogramT:
@@ -540,7 +539,7 @@ If we were to remove the outlier (39.8) and perform the test again, we would get
 The Student's t-test is a statistical test that can be used to determine whether two sets of data are significantly different from each other.
 Its **null hypothesis** is that **the two sets of data are drawn from the same distribution**, thus:
 
-- If the **p-value** $\lt\alpha$, the null hypothesis is rejected and the data are not drawn from the same distribution.
+- If the **p-value** $<\alpha$, the null hypothesis is rejected and the data are not drawn from the same distribution.
 - If the **p-value** $\ge\alpha$, the null hypothesis is not rejected and the data are drawn from the same distribution.
 
 Let's work on two sets of temperature measurements performed on two different days on two different person. We want to assert whether the temperature evolution between the two days is significant or not for each patient. For the sake of example, let's say that in both cases, they present the same average temperature on day 1 and on day 2 but with a different spread in data.
@@ -548,15 +547,14 @@ Let's work on two sets of temperature measurements performed on two different da
 ```{r}
 #| code-fold: true
 #| code-summary: "Show the code"
-library(tidyverse)
-temps1 <- tibble(Day1=rnorm(100, 38.5, .2),
-                 Day2=rnorm(100, 37.7, .3)) %>% 
+temps1 <- tibble(Day1 = rnorm(20, 38.2, .2),
+                 Day2 = rnorm(20, 37.7, .3)) %>% 
             pivot_longer(everything(), 
                          names_to = "Day", 
-                         values_to =  "Temperature") %>% 
+                         values_to = "Temperature") %>% 
             mutate(Patient="A")
-temps2 <- tibble(Day1=rnorm(100, 38.5, 3),
-                 Day2=rnorm(100, 37.7, 3)) %>% 
+temps2 <- tibble(Day1 = rnorm(20, 38.2, 3),
+                 Day2 = rnorm(20, 37.7, 3)) %>% 
             pivot_longer(everything(), 
                          names_to = "Day", 
                          values_to = "Temperature")%>% 
@@ -565,25 +563,25 @@ temperatures <- bind_rows(temps1, temps2)
 temperatures %>% 
     ggplot(aes(x = Day, y = Temperature, color = Patient)) +
         geom_jitter(width = .04, size = 2, alpha = .3)+
-        geom_boxplot(notch=TRUE, position = "identity", 
-                     fill=NA, width=.2, 
+        geom_boxplot(notch = TRUE, position = "identity", 
+                     fill = NA, width = .2, 
                      show.legend = FALSE)+
         geom_violin(position = "identity", 
                      fill=NA, show.legend = FALSE)+
-        scale_color_manual(values=c("orange", "royalblue"))+
-        scale_fill_manual(values=c("orange", "royalblue"))+
+        scale_color_manual(values = c("orange", "royalblue"))+
+        scale_fill_manual(values = c("orange", "royalblue"))+
         stat_summary(fun = "mean", size = 4, geom = "point")+
-        labs(x     = "Day",
-             y     = "Temperature [˚C]")
+        labs(x = "Day",
+             y = "Temperature [°C]")
 ```
 
 ```{r}
 #| code-fold: false
 #| echo: false
-TA <- t.test(temperatures %>% filter(Patient == "A", Day=="Day1") %>% pull(Temperature), 
-       temperatures %>% filter(Patient == "A", Day=="Day2") %>% pull(Temperature))
-TB <- t.test(temperatures %>% filter(Patient == "B", Day=="Day1") %>% pull(Temperature), 
-       temperatures %>% filter(Patient == "B", Day=="Day2") %>% pull(Temperature))
+TA <- t.test(data = temperatures %>% filter(Patient == "A"),
+       Temperature ~ Day)
+TB <- t.test(data = temperatures %>% filter(Patient == "B"),
+       Temperature ~ Day)
 ```
 
 Data means and 95% confidence intervals:
@@ -591,11 +589,11 @@ Data means and 95% confidence intervals:
 #| code-fold: true
 #| code-summary: "Show the code"
 temperatures %>% 
-    nest(data=Temperature) %>%
+    nest(data = Temperature) %>%
     mutate(CI = map(data, ~as_tibble(as.list(Rmisc::CI(.$Temperature,ci=.95))))) %>% 
     unnest(CI) %>% 
     select(Day, Patient, lower, mean, upper) %>% 
-    knitr::kable(format = "markdown")
+    kable(format = "markdown")
 ```
 
 
@@ -612,24 +610,24 @@ temperatures %>%
         shapiro.test(.$Temperature)[c('statistic','p.value')]))) %>% 
     unnest(shapiro) %>% 
     select(-data) %>% 
-    knitr::kable(format = "markdown")
+    kable(format = "markdown")
 ```
 In all cases the p-value is above 0.05, which means that the null hypothesis that the data are normally distributed is not rejected, and **we can conclude that the data are normally distributed**. The application of the t-test is thus valid.
 
 Let's start now with patient A:
 ```{r}
-t.test(temperatures %>% filter(Patient == "A", Day=="Day1") %>% pull(Temperature), 
-       temperatures %>% filter(Patient == "A", Day=="Day2") %>% pull(Temperature))
+t.test(data = temperatures %>% filter(Patient == "A"),
+       Temperature ~ Day)
 ```
 As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of `r sprintf("%.3g",TA$p.value)`, which is largely below the threshold $\alpha$ = 0.05.
-To report it properly, we can say that "the temperature of patient A on day 1 (`r round(TA$estimate[1],2)`˚C, 95% CI = [`r sort(round(Rmisc::CI(temperatures %>% filter(Patient == "A", Day=="Day1") %>% pull(Temperature))[c(1,3)],2))`]˚C), was statistically significantly higher than on day 2 (`r round(TA$estimate[2],2)`˚C, 95% CI = [`r sort(round(Rmisc::CI(temperatures %>% filter(Patient == "A", Day=="Day2") %>% pull(Temperature))[c(1,3)],2))`]˚C), t(`r round(TA$parameter,2)`) = `r round(TA$statistic,2)`, p = `r sprintf("%.3g",TA$p.value)`."
+To report it properly, we can say that "the temperature of patient A on day 1 (`r round(TA$estimate[1],2)`°C, 95% CI = [`r sort(round(Rmisc::CI(temperatures %>% filter(Patient == "A", Day=="Day1") %>% pull(Temperature))[c(1,3)],2))`]°C), was statistically significantly higher than on day 2 (`r round(TA$estimate[2],2)`°C, 95% CI = [`r sort(round(Rmisc::CI(temperatures %>% filter(Patient == "A", Day=="Day2") %>% pull(Temperature))[c(1,3)],2))`]°C), t(`r round(TA$parameter,2)`) = `r round(TA$statistic,2)`, p = `r sprintf("%.3g",TA$p.value)`."
 Here , `r round(TA$parameter,2)` is the degrees of freedom associated with the t test-statistic.
-The 95% confidence interval for the difference between the means is `r round(TA$conf.int[1],2)`˚C to `r round(TA$conf.int[2],2)`˚C.
+The 95% confidence interval for the difference between the means is `r round(TA$conf.int[1],2)`°C to `r round(TA$conf.int[2],2)`°C.
 
 For patient B however, even though the average temperature decreased between the two days, the spread in data is so large that the t-test does not allow concluding concerning any significant temperature difference between the two days:
 ```{r}
-t.test(temperatures %>% filter(Patient == "B", Day=="Day1") %>% pull(Temperature), 
-       temperatures %>% filter(Patient == "B", Day=="Day2") %>% pull(Temperature))
+t.test(data = temperatures %>% filter(Patient == "B"),
+       Temperature ~ Day)
 ```
 
 ::: {.callout-note}
