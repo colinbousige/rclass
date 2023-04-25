@@ -19,11 +19,18 @@ t <- set_units(t, "s")
 t
 ```
 
+And it works with the pipe too:
+
+```{r}
+t <- seq(0.1,1,length=3) |> set_units("s")
+t
+```
+
 - When possible, automatic units conversion is performed. Also, it is possible to attribute units to columns of `tibble`s and `data.frame`s:
 ```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
-d1    <- set_units(seq(1,2,length=3), "m")
+d1    <- seq(1,2,length=3) %>% set_units("m")
 (tib1 <- tibble(t=t, d=d1, speed=d1/t))
-d2    <- set_units(seq(0.1, .3, length=3), "cm")
+d2    <- seq(0.1, .3, length=3) %>% set_units("cm")
 (tib2 <- tibble(t=t, d=d2, speed=d2/t))
 bind_rows(tib1,tib2)
 ```
@@ -31,6 +38,7 @@ bind_rows(tib1,tib2)
 ```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
 T <- set_units(1, "fs")
 set_units(1/T, "THz")
+1/T %>% set_units(THz)
 units(T) <- "ns"; T
 ```
 - Sometimes, you may define the unit outside of the `set_units()`{.R} call and want to retrieve it, or use a unit from another variable in a new variable. For this, use the `mode="standard"` option:
@@ -77,7 +85,7 @@ Here is the gist of it:
 library(quantities)
 options(errors.notation="plus-minus", errors.digits=4)
 a <- set_errors(1, 0.1)
-b <- set_errors(2, 0.2)
+b <- 2 %>% set_errors(0.2)
 a+b
 a*b
 a^3
@@ -108,3 +116,24 @@ starwars %>%
         geom_errorbarh(aes(xmin=errors_min(height),
                            xmax=errors_max(height)))
 ```
+
+
+
+## Using pysical constants
+
+Now that we know how to work with units, it becomes super easy to use physical constants in our calculations. The `constants` package comes with a lot of pysical constants defined with their units:
+
+```{r}
+library(constants)
+library(units)
+# Boltzmann constant
+syms_with_units$k
+syms_with_units$k |> set_units(meV/K)
+# Planck constant
+syms_with_units$h
+syms_with_units$hbar
+# Avogadro number: find the symbol
+lookup("Avogadro")
+syms_with_units$na
+```
+

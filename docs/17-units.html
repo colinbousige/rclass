@@ -259,6 +259,7 @@ ga('send', {
   <ul>
 <li><a href="#working-with-units" id="toc-working-with-units" class="nav-link active" data-scroll-target="#working-with-units"><span class="header-section-number">16.1</span> Working with units</a></li>
   <li><a href="#working-with-experimental-errors" id="toc-working-with-experimental-errors" class="nav-link" data-scroll-target="#working-with-experimental-errors"><span class="header-section-number">16.2</span> Working with experimental errors</a></li>
+  <li><a href="#using-pysical-constants" id="toc-using-pysical-constants" class="nav-link" data-scroll-target="#using-pysical-constants"><span class="header-section-number">16.3</span> Using pysical constants</a></li>
   </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/rclass/blob/main/17-units.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
@@ -295,21 +296,36 @@ ga('send', {
 #&gt; [1] 0.10 0.55 1.00</code></pre>
 </div>
 </div>
+<p>And it works with the pipe too:</p>
+<div class="cell">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">t</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>,<span class="fl">1</span>,length<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="st">"s"</span><span class="op">)</span></span>
+<span><span class="va">t</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; Units: [s]
+#&gt; [1] 0.10 0.55 1.00</code></pre>
+</div>
+</div>
 <ul>
 <li>When possible, automatic units conversion is performed. Also, it is possible to attribute units to columns of <code>tibble</code>s and <code>data.frame</code>s:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d1</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,length<span class="op">=</span><span class="fl">3</span><span class="op">)</span>, <span class="st">"m"</span><span class="op">)</span></span>
-<span><span class="op">(</span><span class="va">tib1</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>t<span class="op">=</span><span class="va">t</span>, d<span class="op">=</span><span class="va">d1</span>, speed<span class="op">=</span><span class="va">d1</span><span class="op">/</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d1</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,length<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="st">"m"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>#&gt; Error in seq(1, 2, length = 3) %&gt;% set_units("m"): could not find function "%&gt;%"</code></pre>
+</div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">tib1</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>t<span class="op">=</span><span class="va">t</span>, d<span class="op">=</span><span class="va">d1</span>, speed<span class="op">=</span><span class="va">d1</span><span class="op">/</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>#&gt; Error in tibble(t = t, d = d1, speed = d1/t): could not find function "tibble"</code></pre>
 </div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d2</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">.3</span>, length<span class="op">=</span><span class="fl">3</span><span class="op">)</span>, <span class="st">"cm"</span><span class="op">)</span></span>
-<span><span class="op">(</span><span class="va">tib2</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>t<span class="op">=</span><span class="va">t</span>, d<span class="op">=</span><span class="va">d2</span>, speed<span class="op">=</span><span class="va">d2</span><span class="op">/</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">d2</span>    <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">.3</span>, length<span class="op">=</span><span class="fl">3</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="st">"cm"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>#&gt; Error in seq(0.1, 0.3, length = 3) %&gt;% set_units("cm"): could not find function "%&gt;%"</code></pre>
+</div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op">(</span><span class="va">tib2</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>t<span class="op">=</span><span class="va">t</span>, d<span class="op">=</span><span class="va">d2</span>, speed<span class="op">=</span><span class="va">d2</span><span class="op">/</span><span class="va">t</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>#&gt; Error in tibble(t = t, d = d2, speed = d2/t): could not find function "tibble"</code></pre>
 </div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">bind_rows</span><span class="op">(</span><span class="va">tib1</span>,<span class="va">tib2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">bind_rows</span><span class="op">(</span><span class="va">tib1</span>,<span class="va">tib2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>#&gt; Error in bind_rows(tib1, tib2): could not find function "bind_rows"</code></pre>
 </div>
@@ -318,12 +334,16 @@ ga('send', {
 <li>You can moreover convert between units systems using <code class="sourceCode r"><span class="fu">set_units</span>(vector, <span class="st">"unit"</span>)</code> or <code class="sourceCode r"><span class="fu">units</span>(vector) <span class="ot">&lt;-</span> <span class="st">"unit"</span></code>:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"fs"</span><span class="op">)</span></span>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="cn">T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"fs"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span><span class="op">/</span><span class="cn">T</span>, <span class="st">"THz"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 1000 [THz]</code></pre>
 </div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html">units</a></span><span class="op">(</span><span class="cn">T</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"ns"</span>; <span class="cn">T</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fl">1</span><span class="op">/</span><span class="cn">T</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">THz</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>#&gt; Error in T %&gt;% set_units(THz): could not find function "%&gt;%"</code></pre>
+</div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/difftime.html">units</a></span><span class="op">(</span><span class="cn">T</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"ns"</span>; <span class="cn">T</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 1e-06 [ns]</code></pre>
 </div>
@@ -332,7 +352,7 @@ ga('send', {
 <li>Sometimes, you may define the unit outside of the <code class="sourceCode r"><span class="fu">set_units</span>()</code> call and want to retrieve it, or use a unit from another variable in a new variable. For this, use the <code>mode="standard"</code> option:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">UNIT</span> <span class="op">&lt;-</span> <span class="st">"m"</span></span>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">UNIT</span> <span class="op">&lt;-</span> <span class="st">"m"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="va">UNIT</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <pre><code>#&gt; Error: In 'UNIT', 'UNIT' is not recognized by udunits.
@@ -343,12 +363,12 @@ ga('send', {
 #&gt; See a table of valid unit prefixes with valid_udunits_prefixes().
 #&gt; Prefixes will automatically work with any user-defined unit.</code></pre>
 </div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="va">UNIT</span>, mode<span class="op">=</span><span class="st">"standard"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="va">UNIT</span>, mode<span class="op">=</span><span class="st">"standard"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Units: [m]
 #&gt;  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 </div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/difftime.html">units</a></span><span class="op">(</span><span class="cn">T</span><span class="op">)</span>, mode<span class="op">=</span><span class="st">"standard"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/difftime.html">units</a></span><span class="op">(</span><span class="cn">T</span><span class="op">)</span>, mode<span class="op">=</span><span class="st">"standard"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Units: [ns]
 #&gt;  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
@@ -358,7 +378,7 @@ ga('send', {
 <li>You can give units to table columns:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="va">starwars</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 87 × 14
@@ -378,7 +398,7 @@ ga('send', {
 #&gt; # ℹ 5 more variables: homeworld &lt;chr&gt;, species &lt;chr&gt;, films &lt;list&gt;,
 #&gt; #   vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span><span class="op">)</span>,</span>
 <span>           mass   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -404,7 +424,7 @@ ga('send', {
 <li>You can plot using units and easily convert between units while plotting:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">&lt;-</span> <span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>height <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span><span class="op">)</span>,</span>
 <span>           mass   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">!=</span> <span class="st">"hermaphroditic"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
@@ -413,12 +433,12 @@ ga('send', {
 <span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x<span class="op">=</span><span class="st">"Height"</span>, y<span class="op">=</span><span class="st">"Mass"</span><span class="op">)</span></span>
 <span><span class="va">p</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="17-units_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="17-units_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span> <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://ggforce.data-imaginist.com/reference/scale_unit.html">scale_x_unit</a></span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span> <span class="op">+</span></span>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">p</span> <span class="op">+</span> <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://ggforce.data-imaginist.com/reference/scale_unit.html">scale_x_unit</a></span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"inches"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu">ggforce</span><span class="fu">::</span><span class="fu"><a href="https://ggforce.data-imaginist.com/reference/scale_unit.html">scale_y_unit</a></span><span class="op">(</span>unit <span class="op">=</span> <span class="st">"pounds"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="17-units_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
+<p><img src="17-units_files/figure-html/unnamed-chunk-7-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section><section id="working-with-experimental-errors" class="level2" data-number="16.2"><h2 data-number="16.2" class="anchored" data-anchor-id="working-with-experimental-errors">
@@ -426,38 +446,38 @@ ga('send', {
 <p>When working in experimental science, you have to account for measurement errors and error propagation all along your data treatment. This is made really easy thanks to the <a href="https://github.com/r-quantities/quantities"><code>quantities</code> package</a> that gathers the <code>error</code> and <code>units</code> packages. Most importantly, this allows you <strong>propagating</strong> the errors in the proper way. So, you input your experimental error once, and you don’t have to think about it anymore. Neat, isn’t it?</p>
 <p>Here is the gist of it:</p>
 <div class="cell">
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/quantities">quantities</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/quantities">quantities</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>errors.notation<span class="op">=</span><span class="st">"plus-minus"</span>, errors.digits<span class="op">=</span><span class="fl">4</span><span class="op">)</span></span>
 <span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">set_errors</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">0.1</span><span class="op">)</span></span>
-<span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">set_errors</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">0.2</span><span class="op">)</span></span>
+<span><span class="va">b</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">set_errors</a></span><span class="op">(</span><span class="fl">0.2</span><span class="op">)</span></span>
 <span><span class="va">a</span><span class="op">+</span><span class="va">b</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 3.0000 ± 0.2236</code></pre>
 </div>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span><span class="op">*</span><span class="va">b</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span><span class="op">*</span><span class="va">b</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 2.0000 ± 0.2828</code></pre>
 </div>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span><span class="op">^</span><span class="fl">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">a</span><span class="op">^</span><span class="fl">3</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 1.0000 ± 0.3000</code></pre>
 </div>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.1</code></pre>
 </div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_min</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_min</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 0.9</code></pre>
 </div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_max</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_max</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 1.1</code></pre>
 </div>
 </div>
 <p>It thus becomes easy to plot the error bars from your experimental data. I recommend using the <code>ggforce</code> library to make <code>ggplot2</code> work better with <code>quantities</code>:</p>
 <div class="cell">
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com">ggforce</a></span><span class="op">)</span></span>
+<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggforce.data-imaginist.com">ggforce</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>errors.notation<span class="op">=</span><span class="st">"parenthesis"</span>, errors.digits<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>height<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span>,<span class="va">height</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span>,</span>
@@ -481,7 +501,7 @@ ga('send', {
 #&gt; # ℹ 6 more variables: gender &lt;chr&gt;, homeworld &lt;chr&gt;, species &lt;chr&gt;,
 #&gt; #   films &lt;list&gt;, vehicles &lt;list&gt;, starships &lt;list&gt;</code></pre>
 </div>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<div class="sourceCode" id="cb47"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">starwars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>height<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">height</span>,<span class="st">"cm"</span>,<span class="va">height</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span>,</span>
 <span>           mass<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/quantities/man/quantities.html">set_quantities</a></span><span class="op">(</span><span class="va">mass</span>,<span class="st">"kg"</span>,<span class="va">mass</span><span class="op">*</span><span class="fl">.05</span><span class="op">)</span></span>
 <span>           <span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -494,7 +514,44 @@ ga('send', {
 <span>        <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_errorbarh.html">geom_errorbarh</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>xmin<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_min</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span>,</span>
 <span>                           xmax<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/errors/man/errors.html">errors_max</a></span><span class="op">(</span><span class="va">height</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="17-units_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="17-units_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section><section id="using-pysical-constants" class="level2" data-number="16.3"><h2 data-number="16.3" class="anchored" data-anchor-id="using-pysical-constants">
+<span class="header-section-number">16.3</span> Using pysical constants</h2>
+<p>Now that we know how to work with units, it becomes super easy to use physical constants in our calculations. The <code>constants</code> package comes with a lot of pysical constants defined with their units:</p>
+<div class="cell">
+<div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/constants">constants</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/r-quantities/units">units</a></span><span class="op">)</span></span>
+<span><span class="co"># Boltzmann constant</span></span>
+<span><span class="va">syms_with_units</span><span class="op">$</span><span class="va">k</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 1.380649e-23 [J/K]</code></pre>
+</div>
+<div class="sourceCode" id="cb50"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">syms_with_units</span><span class="op">$</span><span class="va">k</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/pkg/units/man/units.html">set_units</a></span><span class="op">(</span><span class="va">meV</span><span class="op">/</span><span class="va">K</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 0.0861733 [meV/K]</code></pre>
+</div>
+<div class="sourceCode" id="cb52"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Planck constant</span></span>
+<span><span class="va">syms_with_units</span><span class="op">$</span><span class="va">h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 6.62607e-34 [J/Hz]</code></pre>
+</div>
+<div class="sourceCode" id="cb54"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">syms_with_units</span><span class="op">$</span><span class="va">hbar</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 1.054572e-34 [J*s]</code></pre>
+</div>
+<div class="sourceCode" id="cb56"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Avogadro number: find the symbol</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/constants/man/lookup.html">lookup</a></span><span class="op">(</span><span class="st">"Avogadro"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt;    symbol          quantity                             type        value
+#&gt; 36     na Avogadro constant Physico-chemical, Adopted values 6.022141e+23
+#&gt;    uncertainty  unit
+#&gt; 36           0 1/mol</code></pre>
+</div>
+<div class="sourceCode" id="cb58"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">syms_with_units</span><span class="op">$</span><span class="va">na</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>#&gt; 6.022141e+23 [1/mol]</code></pre>
 </div>
 </div>
 
@@ -795,116 +852,144 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb40" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Working with units and experimental errors</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with units</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>It is easy to work with units in *R* thanks to the package <span class="in">`units`</span> (see <span class="co">[</span><span class="ot">vignette</span><span class="co">](https://r-quantities.github.io/units/articles/measurement_units_in_R.html#handling-data-with-units-in-r-the-units-package-1)</span>).</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>Working with the <span class="in">`units`</span> package can prove a *very* good idea to avoid conversion errors in your data treatment...</span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>Here is the gist of it:</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}</span></span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the 'units' library</span></span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(units)</span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>,<span class="dv">1</span>,<span class="at">length=</span><span class="dv">3</span>)</span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a><span class="co"># attribute a unit, here 'seconds':</span></span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">set_units</span>(t, <span class="st">"s"</span>) </span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>t</span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When possible, automatic units conversion is performed. Also, it is possible to attribute units to columns of <span class="in">`tibble`</span>s and <span class="in">`data.frame`</span>s:</span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}</span></span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>d1    <span class="ot">&lt;-</span> <span class="fu">set_units</span>(<span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="at">length=</span><span class="dv">3</span>), <span class="st">"m"</span>)</span>
-<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>(tib1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">t=</span>t, <span class="at">d=</span>d1, <span class="at">speed=</span>d1<span class="sc">/</span>t))</span>
-<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>d2    <span class="ot">&lt;-</span> <span class="fu">set_units</span>(<span class="fu">seq</span>(<span class="fl">0.1</span>, .<span class="dv">3</span>, <span class="at">length=</span><span class="dv">3</span>), <span class="st">"cm"</span>)</span>
-<span id="cb40-27"><a href="#cb40-27" aria-hidden="true" tabindex="-1"></a>(tib2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">t=</span>t, <span class="at">d=</span>d2, <span class="at">speed=</span>d2<span class="sc">/</span>t))</span>
-<span id="cb40-28"><a href="#cb40-28" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(tib1,tib2)</span>
-<span id="cb40-29"><a href="#cb40-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-30"><a href="#cb40-30" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can moreover convert between units systems using <span class="in">`set_units(vector, "unit")`</span>{.R} or <span class="in">`units(vector) &lt;- "unit"`</span>{.R}:</span>
-<span id="cb40-31"><a href="#cb40-31" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}</span></span>
-<span id="cb40-32"><a href="#cb40-32" aria-hidden="true" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">set_units</span>(<span class="dv">1</span>, <span class="st">"fs"</span>)</span>
-<span id="cb40-33"><a href="#cb40-33" aria-hidden="true" tabindex="-1"></a><span class="fu">set_units</span>(<span class="dv">1</span><span class="sc">/</span>T, <span class="st">"THz"</span>)</span>
-<span id="cb40-34"><a href="#cb40-34" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(T) <span class="ot">&lt;-</span> <span class="st">"ns"</span>; T</span>
-<span id="cb40-35"><a href="#cb40-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-36"><a href="#cb40-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sometimes, you may define the unit outside of the <span class="in">`set_units()`</span>{.R} call and want to retrieve it, or use a unit from another variable in a new variable. For this, use the <span class="in">`mode="standard"`</span> option:</span>
-<span id="cb40-37"><a href="#cb40-37" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}</span></span>
-<span id="cb40-38"><a href="#cb40-38" aria-hidden="true" tabindex="-1"></a>UNIT <span class="ot">&lt;-</span> <span class="st">"m"</span></span>
-<span id="cb40-39"><a href="#cb40-39" aria-hidden="true" tabindex="-1"></a><span class="fu">set_units</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, UNIT)</span>
-<span id="cb40-40"><a href="#cb40-40" aria-hidden="true" tabindex="-1"></a><span class="fu">set_units</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, UNIT, <span class="at">mode=</span><span class="st">"standard"</span>)</span>
-<span id="cb40-41"><a href="#cb40-41" aria-hidden="true" tabindex="-1"></a><span class="fu">set_units</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="fu">units</span>(T), <span class="at">mode=</span><span class="st">"standard"</span>)</span>
-<span id="cb40-42"><a href="#cb40-42" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-43"><a href="#cb40-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-44"><a href="#cb40-44" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can give units to table columns:</span>
-<span id="cb40-47"><a href="#cb40-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb40-48"><a href="#cb40-48" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb40-49"><a href="#cb40-49" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb40-50"><a href="#cb40-50" aria-hidden="true" tabindex="-1"></a>starwars</span>
-<span id="cb40-51"><a href="#cb40-51" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb40-52"><a href="#cb40-52" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">height =</span> <span class="fu">set_units</span>(height,<span class="st">"cm"</span>),</span>
-<span id="cb40-53"><a href="#cb40-53" aria-hidden="true" tabindex="-1"></a>           <span class="at">mass   =</span> <span class="fu">set_units</span>(mass,<span class="st">"kg"</span>))</span>
-<span id="cb40-54"><a href="#cb40-54" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-55"><a href="#cb40-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-56"><a href="#cb40-56" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can plot using units and easily convert between units while plotting:</span>
-<span id="cb40-57"><a href="#cb40-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE, warning=FALSE, message=FALSE}</span></span>
-<span id="cb40-58"><a href="#cb40-58" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb40-59"><a href="#cb40-59" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">height =</span> <span class="fu">set_units</span>(height,<span class="st">"cm"</span>),</span>
-<span id="cb40-60"><a href="#cb40-60" aria-hidden="true" tabindex="-1"></a>           <span class="at">mass   =</span> <span class="fu">set_units</span>(mass,<span class="st">"kg"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-61"><a href="#cb40-61" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(sex <span class="sc">!=</span> <span class="st">"hermaphroditic"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb40-62"><a href="#cb40-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>height, <span class="at">y=</span>mass, <span class="at">color=</span>sex))<span class="sc">+</span></span>
-<span id="cb40-63"><a href="#cb40-63" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
-<span id="cb40-64"><a href="#cb40-64" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Height"</span>, <span class="at">y=</span><span class="st">"Mass"</span>)</span>
-<span id="cb40-65"><a href="#cb40-65" aria-hidden="true" tabindex="-1"></a>p</span>
-<span id="cb40-66"><a href="#cb40-66" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> ggforce<span class="sc">::</span><span class="fu">scale_x_unit</span>(<span class="at">unit =</span> <span class="st">"inches"</span>) <span class="sc">+</span></span>
-<span id="cb40-67"><a href="#cb40-67" aria-hidden="true" tabindex="-1"></a>    ggforce<span class="sc">::</span><span class="fu">scale_y_unit</span>(<span class="at">unit =</span> <span class="st">"pounds"</span>)</span>
-<span id="cb40-68"><a href="#cb40-68" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-69"><a href="#cb40-69" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-70"><a href="#cb40-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-71"><a href="#cb40-71" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with experimental errors</span></span>
-<span id="cb40-72"><a href="#cb40-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-73"><a href="#cb40-73" aria-hidden="true" tabindex="-1"></a>When working in experimental science, you have to account for measurement errors and error propagation all along your data treatment.</span>
-<span id="cb40-74"><a href="#cb40-74" aria-hidden="true" tabindex="-1"></a>This is made really easy thanks to the <span class="co">[</span><span class="ot">`quantities` package</span><span class="co">](https://github.com/r-quantities/quantities)</span> that gathers the <span class="in">`error`</span> and <span class="in">`units`</span> packages. Most importantly, this allows you **propagating** the errors in the proper way. So, you input your experimental error once, and you don't have to think about it anymore. Neat, isn't it?</span>
-<span id="cb40-75"><a href="#cb40-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-76"><a href="#cb40-76" aria-hidden="true" tabindex="-1"></a>Here is the gist of it:</span>
-<span id="cb40-77"><a href="#cb40-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-78"><a href="#cb40-78" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE, error=TRUE}</span></span>
-<span id="cb40-79"><a href="#cb40-79" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quantities)</span>
-<span id="cb40-80"><a href="#cb40-80" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">errors.notation=</span><span class="st">"plus-minus"</span>, <span class="at">errors.digits=</span><span class="dv">4</span>)</span>
-<span id="cb40-81"><a href="#cb40-81" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">set_errors</span>(<span class="dv">1</span>, <span class="fl">0.1</span>)</span>
-<span id="cb40-82"><a href="#cb40-82" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="fu">set_errors</span>(<span class="dv">2</span>, <span class="fl">0.2</span>)</span>
-<span id="cb40-83"><a href="#cb40-83" aria-hidden="true" tabindex="-1"></a>a<span class="sc">+</span>b</span>
-<span id="cb40-84"><a href="#cb40-84" aria-hidden="true" tabindex="-1"></a>a<span class="sc">*</span>b</span>
-<span id="cb40-85"><a href="#cb40-85" aria-hidden="true" tabindex="-1"></a>a<span class="sc">^</span><span class="dv">3</span></span>
-<span id="cb40-86"><a href="#cb40-86" aria-hidden="true" tabindex="-1"></a><span class="fu">errors</span>(a)</span>
-<span id="cb40-87"><a href="#cb40-87" aria-hidden="true" tabindex="-1"></a><span class="fu">errors_min</span>(a)</span>
-<span id="cb40-88"><a href="#cb40-88" aria-hidden="true" tabindex="-1"></a><span class="fu">errors_max</span>(a)</span>
-<span id="cb40-89"><a href="#cb40-89" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb40-90"><a href="#cb40-90" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-91"><a href="#cb40-91" aria-hidden="true" tabindex="-1"></a>It thus becomes easy to plot the error bars from your experimental data. I recommend using the <span class="in">`ggforce`</span> library to make <span class="in">`ggplot2`</span> work better with <span class="in">`quantities`</span>:</span>
-<span id="cb40-92"><a href="#cb40-92" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-93"><a href="#cb40-93" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE, error=TRUE}</span></span>
-<span id="cb40-94"><a href="#cb40-94" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggforce)</span>
-<span id="cb40-95"><a href="#cb40-95" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">errors.notation=</span><span class="st">"parenthesis"</span>, <span class="at">errors.digits=</span><span class="dv">1</span>)</span>
-<span id="cb40-96"><a href="#cb40-96" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb40-97"><a href="#cb40-97" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">height=</span><span class="fu">set_quantities</span>(height,<span class="st">"cm"</span>,height<span class="sc">*</span>.<span class="dv">05</span>),</span>
-<span id="cb40-98"><a href="#cb40-98" aria-hidden="true" tabindex="-1"></a>           <span class="at">mass=</span><span class="fu">set_quantities</span>(mass,<span class="st">"kg"</span>,mass<span class="sc">*</span>.<span class="dv">05</span>)</span>
-<span id="cb40-99"><a href="#cb40-99" aria-hidden="true" tabindex="-1"></a>           )</span>
-<span id="cb40-100"><a href="#cb40-100" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
-<span id="cb40-101"><a href="#cb40-101" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">height=</span><span class="fu">set_quantities</span>(height,<span class="st">"cm"</span>,height<span class="sc">*</span>.<span class="dv">05</span>),</span>
-<span id="cb40-102"><a href="#cb40-102" aria-hidden="true" tabindex="-1"></a>           <span class="at">mass=</span><span class="fu">set_quantities</span>(mass,<span class="st">"kg"</span>,mass<span class="sc">*</span>.<span class="dv">05</span>)</span>
-<span id="cb40-103"><a href="#cb40-103" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-104"><a href="#cb40-104" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(sex<span class="sc">!=</span><span class="st">"hermaphroditic"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb40-105"><a href="#cb40-105" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>height, <span class="at">y=</span>mass, <span class="at">color=</span>sex))<span class="sc">+</span></span>
-<span id="cb40-106"><a href="#cb40-106" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
-<span id="cb40-107"><a href="#cb40-107" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Height"</span>, <span class="at">y=</span><span class="st">"Mass"</span>)<span class="sc">+</span></span>
-<span id="cb40-108"><a href="#cb40-108" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span><span class="fu">errors_min</span>(mass),</span>
-<span id="cb40-109"><a href="#cb40-109" aria-hidden="true" tabindex="-1"></a>                          <span class="at">ymax=</span><span class="fu">errors_max</span>(mass)))<span class="sc">+</span></span>
-<span id="cb40-110"><a href="#cb40-110" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin=</span><span class="fu">errors_min</span>(height),</span>
-<span id="cb40-111"><a href="#cb40-111" aria-hidden="true" tabindex="-1"></a>                           <span class="at">xmax=</span><span class="fu">errors_max</span>(height)))</span>
-<span id="cb40-112"><a href="#cb40-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<div class="sourceCode" id="cb60" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Working with units and experimental errors</span></span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with units</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>It is easy to work with units in *R* thanks to the package <span class="in">`units`</span> (see <span class="co">[</span><span class="ot">vignette</span><span class="co">](https://r-quantities.github.io/units/articles/measurement_units_in_R.html#handling-data-with-units-in-r-the-units-package-1)</span>).</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>Working with the <span class="in">`units`</span> package can prove a *very* good idea to avoid conversion errors in your data treatment...</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>Here is the gist of it:</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}</span></span>
+<span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the 'units' library</span></span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(units)</span>
+<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>,<span class="dv">1</span>,<span class="at">length=</span><span class="dv">3</span>)</span>
+<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a><span class="co"># attribute a unit, here 'seconds':</span></span>
+<span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">set_units</span>(t, <span class="st">"s"</span>) </span>
+<span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a>t</span>
+<span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb60-21"><a href="#cb60-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-22"><a href="#cb60-22" aria-hidden="true" tabindex="-1"></a>And it works with the pipe too:</span>
+<span id="cb60-23"><a href="#cb60-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-26"><a href="#cb60-26" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb60-27"><a href="#cb60-27" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>,<span class="dv">1</span>,<span class="at">length=</span><span class="dv">3</span>) <span class="sc">|&gt;</span> <span class="fu">set_units</span>(<span class="st">"s"</span>)</span>
+<span id="cb60-28"><a href="#cb60-28" aria-hidden="true" tabindex="-1"></a>t</span>
+<span id="cb60-29"><a href="#cb60-29" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb60-30"><a href="#cb60-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-31"><a href="#cb60-31" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>When possible, automatic units conversion is performed. Also, it is possible to attribute units to columns of <span class="in">`tibble`</span>s and <span class="in">`data.frame`</span>s:</span>
+<span id="cb60-32"><a href="#cb60-32" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}</span></span>
+<span id="cb60-33"><a href="#cb60-33" aria-hidden="true" tabindex="-1"></a>d1    <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="at">length=</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> <span class="fu">set_units</span>(<span class="st">"m"</span>)</span>
+<span id="cb60-34"><a href="#cb60-34" aria-hidden="true" tabindex="-1"></a>(tib1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">t=</span>t, <span class="at">d=</span>d1, <span class="at">speed=</span>d1<span class="sc">/</span>t))</span>
+<span id="cb60-35"><a href="#cb60-35" aria-hidden="true" tabindex="-1"></a>d2    <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.1</span>, .<span class="dv">3</span>, <span class="at">length=</span><span class="dv">3</span>) <span class="sc">%&gt;%</span> <span class="fu">set_units</span>(<span class="st">"cm"</span>)</span>
+<span id="cb60-36"><a href="#cb60-36" aria-hidden="true" tabindex="-1"></a>(tib2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">t=</span>t, <span class="at">d=</span>d2, <span class="at">speed=</span>d2<span class="sc">/</span>t))</span>
+<span id="cb60-37"><a href="#cb60-37" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(tib1,tib2)</span>
+<span id="cb60-38"><a href="#cb60-38" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb60-39"><a href="#cb60-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can moreover convert between units systems using <span class="in">`set_units(vector, "unit")`</span>{.R} or <span class="in">`units(vector) &lt;- "unit"`</span>{.R}:</span>
+<span id="cb60-40"><a href="#cb60-40" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}</span></span>
+<span id="cb60-41"><a href="#cb60-41" aria-hidden="true" tabindex="-1"></a>T <span class="ot">&lt;-</span> <span class="fu">set_units</span>(<span class="dv">1</span>, <span class="st">"fs"</span>)</span>
+<span id="cb60-42"><a href="#cb60-42" aria-hidden="true" tabindex="-1"></a><span class="fu">set_units</span>(<span class="dv">1</span><span class="sc">/</span>T, <span class="st">"THz"</span>)</span>
+<span id="cb60-43"><a href="#cb60-43" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">/</span>T <span class="sc">%&gt;%</span> <span class="fu">set_units</span>(THz)</span>
+<span id="cb60-44"><a href="#cb60-44" aria-hidden="true" tabindex="-1"></a><span class="fu">units</span>(T) <span class="ot">&lt;-</span> <span class="st">"ns"</span>; T</span>
+<span id="cb60-45"><a href="#cb60-45" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb60-46"><a href="#cb60-46" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sometimes, you may define the unit outside of the <span class="in">`set_units()`</span>{.R} call and want to retrieve it, or use a unit from another variable in a new variable. For this, use the <span class="in">`mode="standard"`</span> option:</span>
+<span id="cb60-47"><a href="#cb60-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}</span></span>
+<span id="cb60-48"><a href="#cb60-48" aria-hidden="true" tabindex="-1"></a>UNIT <span class="ot">&lt;-</span> <span class="st">"m"</span></span>
+<span id="cb60-49"><a href="#cb60-49" aria-hidden="true" tabindex="-1"></a><span class="fu">set_units</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, UNIT)</span>
+<span id="cb60-50"><a href="#cb60-50" aria-hidden="true" tabindex="-1"></a><span class="fu">set_units</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, UNIT, <span class="at">mode=</span><span class="st">"standard"</span>)</span>
+<span id="cb60-51"><a href="#cb60-51" aria-hidden="true" tabindex="-1"></a><span class="fu">set_units</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="fu">units</span>(T), <span class="at">mode=</span><span class="st">"standard"</span>)</span>
+<span id="cb60-52"><a href="#cb60-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb60-53"><a href="#cb60-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-54"><a href="#cb60-54" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can give units to table columns:</span>
+<span id="cb60-57"><a href="#cb60-57" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb60-58"><a href="#cb60-58" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb60-59"><a href="#cb60-59" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb60-60"><a href="#cb60-60" aria-hidden="true" tabindex="-1"></a>starwars</span>
+<span id="cb60-61"><a href="#cb60-61" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb60-62"><a href="#cb60-62" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">height =</span> <span class="fu">set_units</span>(height,<span class="st">"cm"</span>),</span>
+<span id="cb60-63"><a href="#cb60-63" aria-hidden="true" tabindex="-1"></a>           <span class="at">mass   =</span> <span class="fu">set_units</span>(mass,<span class="st">"kg"</span>))</span>
+<span id="cb60-64"><a href="#cb60-64" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb60-65"><a href="#cb60-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-66"><a href="#cb60-66" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can plot using units and easily convert between units while plotting:</span>
+<span id="cb60-67"><a href="#cb60-67" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE, warning=FALSE, message=FALSE}</span></span>
+<span id="cb60-68"><a href="#cb60-68" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb60-69"><a href="#cb60-69" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">height =</span> <span class="fu">set_units</span>(height,<span class="st">"cm"</span>),</span>
+<span id="cb60-70"><a href="#cb60-70" aria-hidden="true" tabindex="-1"></a>           <span class="at">mass   =</span> <span class="fu">set_units</span>(mass,<span class="st">"kg"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-71"><a href="#cb60-71" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(sex <span class="sc">!=</span> <span class="st">"hermaphroditic"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb60-72"><a href="#cb60-72" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>height, <span class="at">y=</span>mass, <span class="at">color=</span>sex))<span class="sc">+</span></span>
+<span id="cb60-73"><a href="#cb60-73" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb60-74"><a href="#cb60-74" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Height"</span>, <span class="at">y=</span><span class="st">"Mass"</span>)</span>
+<span id="cb60-75"><a href="#cb60-75" aria-hidden="true" tabindex="-1"></a>p</span>
+<span id="cb60-76"><a href="#cb60-76" aria-hidden="true" tabindex="-1"></a>p <span class="sc">+</span> ggforce<span class="sc">::</span><span class="fu">scale_x_unit</span>(<span class="at">unit =</span> <span class="st">"inches"</span>) <span class="sc">+</span></span>
+<span id="cb60-77"><a href="#cb60-77" aria-hidden="true" tabindex="-1"></a>    ggforce<span class="sc">::</span><span class="fu">scale_y_unit</span>(<span class="at">unit =</span> <span class="st">"pounds"</span>)</span>
+<span id="cb60-78"><a href="#cb60-78" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb60-79"><a href="#cb60-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-80"><a href="#cb60-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-81"><a href="#cb60-81" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working with experimental errors</span></span>
+<span id="cb60-82"><a href="#cb60-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-83"><a href="#cb60-83" aria-hidden="true" tabindex="-1"></a>When working in experimental science, you have to account for measurement errors and error propagation all along your data treatment.</span>
+<span id="cb60-84"><a href="#cb60-84" aria-hidden="true" tabindex="-1"></a>This is made really easy thanks to the <span class="co">[</span><span class="ot">`quantities` package</span><span class="co">](https://github.com/r-quantities/quantities)</span> that gathers the <span class="in">`error`</span> and <span class="in">`units`</span> packages. Most importantly, this allows you **propagating** the errors in the proper way. So, you input your experimental error once, and you don't have to think about it anymore. Neat, isn't it?</span>
+<span id="cb60-85"><a href="#cb60-85" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-86"><a href="#cb60-86" aria-hidden="true" tabindex="-1"></a>Here is the gist of it:</span>
+<span id="cb60-87"><a href="#cb60-87" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-88"><a href="#cb60-88" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE, error=TRUE}</span></span>
+<span id="cb60-89"><a href="#cb60-89" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quantities)</span>
+<span id="cb60-90"><a href="#cb60-90" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">errors.notation=</span><span class="st">"plus-minus"</span>, <span class="at">errors.digits=</span><span class="dv">4</span>)</span>
+<span id="cb60-91"><a href="#cb60-91" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> <span class="fu">set_errors</span>(<span class="dv">1</span>, <span class="fl">0.1</span>)</span>
+<span id="cb60-92"><a href="#cb60-92" aria-hidden="true" tabindex="-1"></a>b <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">%&gt;%</span> <span class="fu">set_errors</span>(<span class="fl">0.2</span>)</span>
+<span id="cb60-93"><a href="#cb60-93" aria-hidden="true" tabindex="-1"></a>a<span class="sc">+</span>b</span>
+<span id="cb60-94"><a href="#cb60-94" aria-hidden="true" tabindex="-1"></a>a<span class="sc">*</span>b</span>
+<span id="cb60-95"><a href="#cb60-95" aria-hidden="true" tabindex="-1"></a>a<span class="sc">^</span><span class="dv">3</span></span>
+<span id="cb60-96"><a href="#cb60-96" aria-hidden="true" tabindex="-1"></a><span class="fu">errors</span>(a)</span>
+<span id="cb60-97"><a href="#cb60-97" aria-hidden="true" tabindex="-1"></a><span class="fu">errors_min</span>(a)</span>
+<span id="cb60-98"><a href="#cb60-98" aria-hidden="true" tabindex="-1"></a><span class="fu">errors_max</span>(a)</span>
+<span id="cb60-99"><a href="#cb60-99" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb60-100"><a href="#cb60-100" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-101"><a href="#cb60-101" aria-hidden="true" tabindex="-1"></a>It thus becomes easy to plot the error bars from your experimental data. I recommend using the <span class="in">`ggforce`</span> library to make <span class="in">`ggplot2`</span> work better with <span class="in">`quantities`</span>:</span>
+<span id="cb60-102"><a href="#cb60-102" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-103"><a href="#cb60-103" aria-hidden="true" tabindex="-1"></a><span class="in">```{r warning=FALSE, message=FALSE, error=TRUE}</span></span>
+<span id="cb60-104"><a href="#cb60-104" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggforce)</span>
+<span id="cb60-105"><a href="#cb60-105" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">errors.notation=</span><span class="st">"parenthesis"</span>, <span class="at">errors.digits=</span><span class="dv">1</span>)</span>
+<span id="cb60-106"><a href="#cb60-106" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb60-107"><a href="#cb60-107" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">height=</span><span class="fu">set_quantities</span>(height,<span class="st">"cm"</span>,height<span class="sc">*</span>.<span class="dv">05</span>),</span>
+<span id="cb60-108"><a href="#cb60-108" aria-hidden="true" tabindex="-1"></a>           <span class="at">mass=</span><span class="fu">set_quantities</span>(mass,<span class="st">"kg"</span>,mass<span class="sc">*</span>.<span class="dv">05</span>)</span>
+<span id="cb60-109"><a href="#cb60-109" aria-hidden="true" tabindex="-1"></a>           )</span>
+<span id="cb60-110"><a href="#cb60-110" aria-hidden="true" tabindex="-1"></a>starwars <span class="sc">%&gt;%</span> </span>
+<span id="cb60-111"><a href="#cb60-111" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">height=</span><span class="fu">set_quantities</span>(height,<span class="st">"cm"</span>,height<span class="sc">*</span>.<span class="dv">05</span>),</span>
+<span id="cb60-112"><a href="#cb60-112" aria-hidden="true" tabindex="-1"></a>           <span class="at">mass=</span><span class="fu">set_quantities</span>(mass,<span class="st">"kg"</span>,mass<span class="sc">*</span>.<span class="dv">05</span>)</span>
+<span id="cb60-113"><a href="#cb60-113" aria-hidden="true" tabindex="-1"></a>           ) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-114"><a href="#cb60-114" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(sex<span class="sc">!=</span><span class="st">"hermaphroditic"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb60-115"><a href="#cb60-115" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x=</span>height, <span class="at">y=</span>mass, <span class="at">color=</span>sex))<span class="sc">+</span></span>
+<span id="cb60-116"><a href="#cb60-116" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb60-117"><a href="#cb60-117" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Height"</span>, <span class="at">y=</span><span class="st">"Mass"</span>)<span class="sc">+</span></span>
+<span id="cb60-118"><a href="#cb60-118" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span><span class="fu">errors_min</span>(mass),</span>
+<span id="cb60-119"><a href="#cb60-119" aria-hidden="true" tabindex="-1"></a>                          <span class="at">ymax=</span><span class="fu">errors_max</span>(mass)))<span class="sc">+</span></span>
+<span id="cb60-120"><a href="#cb60-120" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_errorbarh</span>(<span class="fu">aes</span>(<span class="at">xmin=</span><span class="fu">errors_min</span>(height),</span>
+<span id="cb60-121"><a href="#cb60-121" aria-hidden="true" tabindex="-1"></a>                           <span class="at">xmax=</span><span class="fu">errors_max</span>(height)))</span>
+<span id="cb60-122"><a href="#cb60-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb60-123"><a href="#cb60-123" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-124"><a href="#cb60-124" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-125"><a href="#cb60-125" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-126"><a href="#cb60-126" aria-hidden="true" tabindex="-1"></a><span class="fu">## Using pysical constants</span></span>
+<span id="cb60-127"><a href="#cb60-127" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-128"><a href="#cb60-128" aria-hidden="true" tabindex="-1"></a>Now that we know how to work with units, it becomes super easy to use physical constants in our calculations. The <span class="in">`constants`</span> package comes with a lot of pysical constants defined with their units:</span>
+<span id="cb60-129"><a href="#cb60-129" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-132"><a href="#cb60-132" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb60-133"><a href="#cb60-133" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(constants)</span>
+<span id="cb60-134"><a href="#cb60-134" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(units)</span>
+<span id="cb60-135"><a href="#cb60-135" aria-hidden="true" tabindex="-1"></a><span class="co"># Boltzmann constant</span></span>
+<span id="cb60-136"><a href="#cb60-136" aria-hidden="true" tabindex="-1"></a>syms_with_units<span class="sc">$</span>k</span>
+<span id="cb60-137"><a href="#cb60-137" aria-hidden="true" tabindex="-1"></a>syms_with_units<span class="sc">$</span>k <span class="sc">|&gt;</span> <span class="fu">set_units</span>(meV<span class="sc">/</span>K)</span>
+<span id="cb60-138"><a href="#cb60-138" aria-hidden="true" tabindex="-1"></a><span class="co"># Planck constant</span></span>
+<span id="cb60-139"><a href="#cb60-139" aria-hidden="true" tabindex="-1"></a>syms_with_units<span class="sc">$</span>h</span>
+<span id="cb60-140"><a href="#cb60-140" aria-hidden="true" tabindex="-1"></a>syms_with_units<span class="sc">$</span>hbar</span>
+<span id="cb60-141"><a href="#cb60-141" aria-hidden="true" tabindex="-1"></a><span class="co"># Avogadro number: find the symbol</span></span>
+<span id="cb60-142"><a href="#cb60-142" aria-hidden="true" tabindex="-1"></a><span class="fu">lookup</span>(<span class="st">"Avogadro"</span>)</span>
+<span id="cb60-143"><a href="#cb60-143" aria-hidden="true" tabindex="-1"></a>syms_with_units<span class="sc">$</span>na</span>
+<span id="cb60-144"><a href="#cb60-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->

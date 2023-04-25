@@ -157,7 +157,7 @@ dat %>%
        labs(x="x [unit]", y="y [unit]")
 ```
 
-You can think of each set of {datapoint + error bar} as an histogram: the displayed point is the mean value of the histogram, and the error bar is its standard deviation. **Therefore, plotting a straight line between points is usually pointless**. Plotting a line going through the data points only has meaning if this line results from a physical model explaining the variation of the quantity $y$ with the evolution of the quantity $x$ -- this is called a **fit**, and we will see more about it in the [R class later](#fitting).
+You can think of each set of {datapoint + error bar} as an histogram: the displayed point is the mean value of the histogram, and the error bar is its standard deviation. **Therefore, plotting a straight line between points is usually pointless**. Plotting a line going through the data points only has meaning if this line results from a physical model explaining the variation of the quantity $y$ with the evolution of the quantity $x$ -- this is called a **fit**, and we will see more about it in the [R class later](https://colinbousige.github.io/rclass/14-fitting.html).
 
 ## Characterizing an ensemble of measurements
 
@@ -549,8 +549,7 @@ Its **null hypothesis** is that **the two sets of data are drawn from the same d
 Let's work on two sets of temperature measurements performed on two different days on two different person. We want to assert whether the temperature evolution between the two days is significant or not for each patient. For the sake of example, let's say that in both cases, they present the same average temperature on day 1 and on day 2 but with a different spread in data.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
+#| echo: false
 temps1 <- tibble(Day1 = rnorm(20, 38.2, .2),
                  Day2 = rnorm(20, 37.7, .3)) %>% 
             pivot_longer(everything(), 
@@ -590,8 +589,7 @@ TB <- t.test(data = temperatures %>% filter(Patient == "B"),
 
 Data means and 95% confidence intervals:
 ```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
+#| echo: false
 temperatures %>% 
     nest(data = Temperature) %>%
     mutate(CI = map(data, ~as_tibble(as.list(Rmisc::CI(.$Temperature,ci=.95))))) %>% 
@@ -606,8 +604,7 @@ We can perform a Student's t-test to assert whether the two sets of data are sig
 
 First, **to apply a t-test, we need to make sure that the data are normally distributed**, which we can do by performing a Shapiro-Wilk test on each set of data:
 ```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
+#| echo: false
 temperatures %>% 
     nest(data = Temperature) %>% 
     mutate(shapiro = map(data, ~as_tibble(
@@ -644,7 +641,7 @@ t.test(temperatures %>% filter(Patient == "B", Day=="Day1") %>% pull(Temperature
 
 ::: 
 
-\clearpage
+<!-- \clearpage -->
 # Uncertainty and errors
 
 ## Central limit theorem: on the Gaussian nature of statistical uncertainty
@@ -741,9 +738,9 @@ $$
 We thus have to perform the above operation on the errors, $\sigma_{result}=\sqrt{\sigma^2_{solution}+\sigma^2_{reference}}$. It means that in order to have a statistically sound resulting spectrum, the reference needs to be measured with a very good statistics in order to not dominate the resulting error.
 :::
 
-It is a good thing to think about error propagation and where it comes from... but you don't have to bother computing it by hand, as [packages are here to do it for you](#working-with-experimental-errors), as we will see later in the class.
+It is a good thing to think about error propagation and where it comes from... but you don't have to bother computing it by hand, as [packages are here to do it for you](https://colinbousige.github.io/rclass/17-units.html#working-with-experimental-errors), as we will see later in the class.
 
-
+\clearpage
 # Further reading
 
 - A. Bevan, *[Statistical Data Analysis for the Physical Sciences](https://www.cambridge.org/core/books/statistical-data-analysis-for-the-physical-sciences/2E3D132870E72277EE5FB96FE616B9F1)*, Cambridge University Press (2013)
