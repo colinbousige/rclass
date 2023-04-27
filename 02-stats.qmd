@@ -1,5 +1,6 @@
 # A little reminder on Statistics
 
+
 ```{r include=FALSE, warning = FALSE, cache=FALSE}
 library(tidyverse)
 library(pracma)
@@ -8,6 +9,7 @@ library(kableExtra)
 library(patchwork)
 library(quantities)
 library(broom)
+library(latex2exp)
 opts_chunk$set(fig.align = "center")
 theme_set(theme_bw()+
     theme(text=element_text(size=10),
@@ -153,7 +155,7 @@ dat %>%
        labs(x="x [unit]", y="y [unit]")
 ```
 
-You can think of each set of {datapoint + error bar} as an histogram: the displayed point is the mean value of the histogram, and the error bar is its standard deviation. **Therefore, plotting a straight line between points is usually pointless**. Plotting a line going through the data points only has meaning if this line results from a physical model explaining the variation of the quantity $y$ with the evolution of the quantity $x$ -- this is called a **fit**, and we will see more about it in the [R class later](#fitting).
+You can think of each set of {datapoint + error bar} as an histogram: the displayed point is the mean value of the histogram, and the error bar is its standard deviation. **Therefore, plotting a straight line between points is usually pointless**. Plotting a line going through the data points only has meaning if this line results from a physical model explaining the variation of the quantity $y$ with the evolution of the quantity $x$ -- this is called a **fit**, and we will see more about it in the [R class later](https://colinbousige.github.io/rclass/14-fitting.html).
 
 ### Characterizing an ensemble of measurements
 
@@ -213,6 +215,7 @@ $$
 \end{aligned}
 $$ {#eq-se}
 where $N$ is the number of measurements. The standard error is a measure of the precision of the mean value $\overline{x}$, and is often used to quantify the uncertainty on the mean value.
+
 
 
 #### Caveats
@@ -278,6 +281,19 @@ V&=\int_{-\infty}^{\infty}(x - \overline{x})^2P(x)dx\\
 \end{aligned}
 $$ {#eq-secondmoment}
 
+### Cumulative Distribution Functions
+
+The **Cumulative Distribution Function** (CDF) is defined as the integral of the PDF from $-\infty$ to $x$:
+
+$$
+\begin{aligned}
+F(x)&=\int_{-\infty}^{x}P(t)dt\\
+\text{or } F(x)&=\sum_{i}P(x_i) \text{ for a discrete distribution}
+\end{aligned}
+$$ {#eq-CDF}
+
+It gives the probability of obtaining a value smaller than $x$. The CDF is thus a monotonically increasing function, with $F(-\infty)=0$ and $F(\infty)=1$.
+
 
 ### The Poisson distribution
 
@@ -334,13 +350,20 @@ dat2 %>%
         theme(text = element_text(size = 35), title = element_text(size = 25))
 dat3 %>% 
     ggplot(aes(x = lam, y = poisson, color=factor(k))) +
-       geom_line(size=2)+
-       labs(color = expression(italic("k")), 
+        geom_line(size=2)+
+        scale_x_continuous(breaks=seq(0,500,100))+
+        labs(color = expression(italic("k")), 
             x = expression(lambda), 
             y = expression(italic("P")[lambda] * (italic("k"))))+
         theme(text = element_text(size = 35), title = element_text(size = 25))
 ```
 
+::: {.callout-note appearance="minimal"}
+
+In R, the Poisson distribution is implemented in the `dpois(x, lambda)`{.R} function. The `x` argument is the number of events, and `lambda` is the average number of events. The `ppois(x, lambda)`{.R} function gives the cumulative probability of observing less than `x` events.
+The `qpois(p, lambda)`{.R} function gives the number of events `x` for which the cumulative probability is `p`. Finally, the `rpois(n, lambda)`{.R} function generates `n` random numbers following a Poisson distribution with average `lambda`.
+
+:::
 
 #### Characteristics
 
@@ -395,6 +418,11 @@ It is useful to transform data from the $x$ space to a corresponding $z$ space w
 $$
 P(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2}
 $$
+
+::: {.callout-note appearance="minimal"}
+
+In R, the Gaussian distribution is implemented in the function `dnorm(x, mean=0, sd=1)`{.R}. The function `pnorm(x, mean=0, sd=1)`{.R} gives the cumulative distribution function (CDF), *i.e.* the probability that a random variable $X$ is less than or equal to $x$. The function `qnorm(p, mean=0, sd=1)`{.R} gives the quantile function, *i.e.* the value of $x$ for which the CDF is equal to $p$.
+:::
 
 #### Characteristics
 
@@ -467,24 +495,178 @@ kable(dat,format = "markdown")
 
 ## Important
 
-You can see from @tbl-tablevalues that if you want to make sure that exactly 95% of your data will fall in the given range, *i.e.* which defines the **95% confidence interval**, you need to use a range of $1.96\sigma$.
+You can see from @tbl-tablevalues that if you want to make sure that exactly 95% of your data will fall in the given range, *i.e.* which defines the **95% tolerence interval**, you need to use a range of $1.96\sigma$.
 
 :::
 
-::: {.callout-tip collapse="true"}
+### The Student's t-distribution
 
-## Tip: compute the 95% CI in R
+The Student's t-distribution (or simply, "t-distribution") is a probability distribution that is used to estimate population parameters **when the sample size is small** and/or when the population variance is unknown. 
+It is a bell-shaped distribution that is symmetrical about the mean, showing that data near the mean are more frequent in occurrence than data far from the mean. 
 
-In R, you can compute the 95% CI of a distribution using `Rmisc::CI()`{.R} or `t.test()`{.R}.
+The t-distribution is used in place of the normal distribution when dealing with small samples ($N < 30$) or when the population standard deviation is unknown.
+It's shape is similar to the normal distribution but it has heavier tails, meaning that it is more prone to producing values that fall far from its mean.
+It has the following PDF formula:
+
+$$
+P(x, \nu)=\frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\Gamma\left(\frac{\nu}{2}\right)}\left(1+\frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}
+$$
+where $\Gamma$ is the [gamma function](https://en.wikipedia.org/wiki/Gamma_function) and $\nu$ is the number of degrees of freedom defined as $\nu=N-1$.
+For large number of observations, the t-distribution converges to the normal distribution.
+
+::: {.callout-note appearance="minimal"}
+In R, the t-distribution is implemented in the function `dt(x, df)`{.R} where `x` is the vector of quantiles and `df` is the number of degrees of freedom. The `qt(p, df)`{.R} function returns the quantiles $q$ of the t-distribution such that $P(X\leq q)=p$.
+:::
 
 ```{r}
-x <- rnorm(100, mean = 3, sd = 2)
-Rmisc::CI(x, ci = 0.95)
-t.test(x, conf.level = 0.95)
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "The t-distribution for various degrees of freedom compared to the Gaussian distribution."
+#| fig-align: "center"
+#| out-width: 60%
+dat <- tibble(x = seq(-5,5,.01))
+colors <- colorRampPalette(c("royalblue","seagreen","orange","red"))
+dat %>% 
+    ggplot(aes(x = x)) +
+       geom_line(aes(y=dnorm(x), color="Gaussian"), linewidth=2)+
+       geom_line(aes(y=dt(x, df = 1), color="1"), linewidth=1)+
+       geom_line(aes(y=dt(x, df = 2), color="2"), linewidth=1)+
+       geom_line(aes(y=dt(x, df = 3), color="3"), linewidth=1)+
+       geom_line(aes(y=dt(x, df = 30), color="30"), linewidth=1)+
+       scale_color_manual(values = c(colors(4), "gray"))+
+       labs(color=TeX(r'($\nu$)'), y="Density", x="x")
 ```
 
-:::
 
+
+
+### Tolerence interval and confidence interval
+
+#### Tolerance interval {#sec-tolerence-interval}
+
+A **tolerance interval** is a range of values that is likely to contain a certain proportion of the population. 
+It is thus representative of the spread of data in the population, and it is usually given by the standard deviation $\sigma$ multiplied by a **confidence level** factor.
+As seen in @tbl-tablevalues, for a Gaussian distribution, the range $[\mu-1.96\sigma, \mu+1.96\sigma]$ contains roughly 95% of the data in the population, and this is the **95% tolerence interval**.
+It means that if you draw a sample of data from the population, the probability that the data points of the sample will fall in this range is 95%.
+If your distribution population is small however ($N<30$), you should use the t-distribution instead of the Gaussian distribution to compute the tolerence interval.
+
+```{r}
+#| label: fig-tolerenceinterval
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: "The 95% tolerence interval for a Gaussian distribution."
+#| fig-align: "center"
+#| out-width: 60%
+dat <- tibble(x = seq(-5,5,.01), y = dnorm(x))
+xlow <- qnorm(0.025)
+xhi <- qnorm(0.975)
+dat %>% 
+    ggplot(aes(x = x, y = y)) +
+        geom_line()+
+        geom_area(data=dat %>% filter(x<=xlow), alpha=0.5, fill="royalblue")+
+        geom_area(data=dat %>% filter(x>=xhi), alpha=0.5, fill="royalblue")+
+        labs(y="Density", x="x")+
+        annotate("text", x = xlow-.75, y = 0.06, label = "2.5%", size = 5, color="royalblue")+
+        annotate("text", x = xhi+.75, y = 0.06, label = "2.5%", size = 5, color="royalblue")+
+        annotate("text", x = 0, y = 0.15, label = "95%", size = 13)
+```
+
+In R, you would use the `qt(p, df)`{.R} (for a t-distribution) or `qnorm(p)`{.R} (for a Gaussian distribution) functions to compute the quantiles $q$ such that $P(X\leq q)=p$.
+If you want to compute the **95% tolerence interval** for a distribution, you need to compute the quantiles $q$ such that $P(X\leq q)=0.025$ and $P(X\leq q)=0.975$, *i.e.* find the values below and above which 2.5% of the distribtution are left out, as shown in @fig-tolerenceinterval. 
+
+Since both the Gaussian and t-distributions are symmetric, the tolerence interval is given by $[q, -q]$: for a tolerance interval with *tolerence level* $\alpha$, you want the quantile for the probability $p=(1+\alpha)/2$.
+Some special values are gathered in @tbl-tolerenceinterval.
+
+
+```{r}
+#| label: tbl-tolerenceinterval
+#| echo: false
+#| tbl-cap: "Quantiles of the t- and Gaussian distributions for various degrees of freedom ($\\nu$) and tolerence levels ($\\alpha$)."
+nu <- c(1,2,3,30, Inf)
+P <- c(.5, .8, .9, .95, .99, .999)
+expand_grid(`$\\nu$`=nu, P=P) %>% 
+    mutate(Q=qt(1-(1-P)/2, df=`$\\nu$`),
+           `$\\nu$`=as.character(`$\\nu$`)) %>% 
+    bind_rows(tibble(`$\\nu$`="Gaussian", P=P, Q=qnorm(1-(1-P)/2))) %>%
+    mutate(P=glue::glue(r"($\alpha$: {P*100}%)")) %>% 
+    pivot_wider(names_from=P, values_from=Q) %>% 
+    mutate(`$\\nu$`=str_replace(`$\\nu$`, "Inf", r"($\\infty$)")) %>%
+    kable(format="markdown")
+```
+
+
+#### Confidence interval
+
+**Confidence intervals** represent the range of uncertainty associated with the estimate of a statistic (*i.e.* the mean, proportion or standard deviation etc...). 
+An estimate is necessarily subject to the risk of sampling error. Confidence intervals are useful for establishing limits for the estimation of, for example, the mean or a standard deviation, but also regression coefficients, proportions, frequency rates (Poisson) and differences between populations.
+
+**Confidence intervals** are thus a measurement of the **standard error of the estimated statistic**, and their widths thus naturally decrease with the sampling size.
+As the sample size approaches the entire population, the width of the confidence interval approaches zero, as can be seen on @fig-confidenceinterval.
+
+```{r}
+#| label: fig-confidenceinterval
+#| echo: false
+#| warning: false
+#| message: false
+#| layout-ncol: 2
+#| fig-cap: Histograms of a Gaussian distribution of mean 0 (red line) and standard deviation 1 with two samplings. The measured mean of the distribution is shown in black, and the 95% confidence interval of the mean is shown in orange. As the population size increases, the width of the confidence interval decreases since the error on the determination of the mean decreases.
+#| fig-subcap: 
+#|   - "Population size: 20"
+#|   - "Population size: 500"
+x1 <- rnorm(2e1)
+x1CI <- mean(x1)+c(-1,1)*qt(1-.05/2, df=length(x1)-1)*sd(x1)/sqrt(length(x1))
+x2 <- rnorm(500)
+x2CI <- mean(x2)+c(-1,1)*qt(1-.05/2, df=length(x2)-1)*sd(x2)/sqrt(length(x2))
+ggplot(data=NULL, aes(x=x1))+
+    annotate("rect", ymin=-Inf, ymax=Inf, xmin=x1CI[1], xmax=x1CI[2], alpha=.5, fill="orange")+
+    geom_vline(xintercept=0, color="red", linewidth=1)+
+    geom_vline(xintercept=mean(x1), color="black", linewidth=1)+
+    geom_histogram(aes(y=stat(count / max(count))), bins=50, alpha=.8, fill="royalblue")+
+    coord_cartesian(xlim=c(-4,4), ylim=c(0,1))+
+    labs(y="Density", x="x")
+ggplot(data=NULL, aes(x=x2))+
+    annotate("rect", ymin=-Inf, ymax=Inf, xmin=x2CI[1], xmax=x2CI[2], alpha=.5, fill="orange")+
+    geom_vline(xintercept=mean(x2), color="black", linewidth=1)+
+    geom_vline(xintercept=0, color="red", linewidth=1)+
+    geom_histogram(aes(y=stat(count / max(count))), bins=50, alpha=.8, fill="royalblue")+
+    coord_cartesian(xlim=c(-4,4), ylim=c(0,1))+
+    labs(y="Density", x="x")
+```
+
+To compute the confidence interval of a statistic, you need to know the **standard error** of the statistic, which is the standard deviation of the sampling distribution of the statistic.
+@tbl-SE gathers a few typical standard errors on statistics:
+
+|Statistic|Standard error|
+|:--------|:-------------|
+|Mean|$SE(\overline{x})=\frac{\sigma(x)}{\sqrt{N}}$|
+|||
+|Standard deviation|$SE(\sigma(x))=\frac{\sigma(x)}{\sqrt{2(N-1)}}$|
+|||
+|Median|$SE(\widetilde{x})=\sqrt{\frac{\pi}{2}}\frac{\sigma(x)}{\sqrt{N}}$|
+|||
+|Difference between two means|$SE(\overline{x_1}-\overline{x_2})=\sqrt{\frac{\sigma(x_1)^2}{N_1}+\frac{\sigma(x_2)^2}{N_2}}$|
+
+: Standard errors of typical statistics {#tbl-SE}
+
+
+Then, the confidence interval for the statistics $X$ with a confidence level $\alpha$ is computed as:
+$$
+CI(X, \alpha)=X\pm \text{qt}\left(\frac{1+\alpha}{2},\nu\right)\times SE(X)
+$$ {#eq-CI}
+where $\text{qt}\left(\frac{1+\alpha}{2},\nu\right)$ is the quantile of the Student distribution with $\nu$ degrees of freedom and a probability of $\frac{1+\alpha}{2}$ (as seen in @sec-tolerence-interval).
+
+
+::: {.callout-note}
+
+### Remember
+
+The width of a **tolerance interval** is due to both the sampling error and the variance in the population. It is a measurement of the spread of data.
+
+The width of a **confidence interval** is due to the sampling error only. It is a measurement of the precision of the estimate of a statistic.
+
+:::
 
 
 
@@ -545,8 +727,7 @@ Its **null hypothesis** is that **the two sets of data are drawn from the same d
 Let's work on two sets of temperature measurements performed on two different days on two different person. We want to assert whether the temperature evolution between the two days is significant or not for each patient. For the sake of example, let's say that in both cases, they present the same average temperature on day 1 and on day 2 but with a different spread in data.
 
 ```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
+#| echo: false
 temps1 <- tibble(Day1 = rnorm(20, 38.2, .2),
                  Day2 = rnorm(20, 37.7, .3)) %>% 
             pivot_longer(everything(), 
@@ -584,15 +765,13 @@ TB <- t.test(data = temperatures %>% filter(Patient == "B"),
        Temperature ~ Day)
 ```
 
-Data means and 95% confidence intervals:
 ```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
+#| echo: false
+#| tbl-cap: Data means and standard deviations
 temperatures %>% 
-    nest(data = Temperature) %>%
-    mutate(CI = map(data, ~as_tibble(as.list(Rmisc::CI(.$Temperature,ci=.95))))) %>% 
-    unnest(CI) %>% 
-    select(Day, Patient, lower, mean, upper) %>% 
+    summarize(.by = c(Day, Patient),
+              mean = mean(Temperature),
+              sd = sd(Temperature)) %>%
     kable(format = "markdown")
 ```
 
@@ -602,8 +781,7 @@ We can perform a Student's t-test to assert whether the two sets of data are sig
 
 First, **to apply a t-test, we need to make sure that the data are normally distributed**, which we can do by performing a Shapiro-Wilk test on each set of data:
 ```{r}
-#| code-fold: true
-#| code-summary: "Show the code"
+#| echo: false
 temperatures %>% 
     nest(data = Temperature) %>% 
     mutate(shapiro = map(data, ~as_tibble(
@@ -736,7 +914,7 @@ $$
 We thus have to perform the above operation on the errors, $\sigma_{result}=\sqrt{\sigma^2_{solution}+\sigma^2_{reference}}$. It means that in order to have a statistically sound resulting spectrum, the reference needs to be measured with a very good statistics in order to not dominate the resulting error.
 :::
 
-It is a good thing to think about error propagation and where it comes from... but you don't have to bother computing it by hand, as [packages are here to do it for you](#working-with-experimental-errors), as we will see later in the class.
+It is a good thing to think about error propagation and where it comes from... but you don't have to bother computing it by hand, as [packages are here to do it for you](https://colinbousige.github.io/rclass/17-units.html#working-with-experimental-errors), as we will see later in the class.
 
 
 ## Further reading
