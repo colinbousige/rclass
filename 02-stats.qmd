@@ -520,11 +520,11 @@ In R, the t-distribution is implemented in the function `dt(x, df)`{.R} where `x
 
 ```{r}
 #| echo: false
+#| label: fig-t-distribution
 #| warning: false
 #| message: false
 #| fig-cap: "The t-distribution for various degrees of freedom compared to the Gaussian distribution."
 #| fig-align: "center"
-#| out-width: 60%
 dat <- tibble(x = seq(-5,5,.01))
 colors <- colorRampPalette(c("royalblue","seagreen","orange","red"))
 dat %>% 
@@ -558,7 +558,6 @@ If your distribution population is small however ($N<30$), you should use the t-
 #| message: false
 #| fig-cap: "The 95% tolerence interval for a Gaussian distribution."
 #| fig-align: "center"
-#| out-width: 60%
 dat <- tibble(x = seq(-5,5,.01), y = dnorm(x))
 xlow <- qnorm(0.025)
 xhi <- qnorm(0.975)
