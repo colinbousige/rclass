@@ -624,14 +624,16 @@ ggplot(data=NULL, aes(x=x1))+
     geom_vline(xintercept=mean(x1), color="black", linewidth=1)+
     geom_histogram(aes(y=stat(count / max(count))), bins=50, alpha=.8, fill="royalblue")+
     coord_cartesian(xlim=c(-4,4), ylim=c(0,1))+
-    labs(y="Density", x="x")
+    labs(y="Density", x="x") +
+    theme(text = element_text(size = 20))
 ggplot(data=NULL, aes(x=x2))+
     annotate("rect", ymin=-Inf, ymax=Inf, xmin=x2CI[1], xmax=x2CI[2], alpha=.5, fill="orange")+
     geom_vline(xintercept=mean(x2), color="black", linewidth=1)+
     geom_vline(xintercept=0, color="red", linewidth=1)+
     geom_histogram(aes(y=stat(count / max(count))), bins=50, alpha=.8, fill="royalblue")+
     coord_cartesian(xlim=c(-4,4), ylim=c(0,1))+
-    labs(y="Density", x="x")
+    labs(y="Density", x="x") +
+    theme(text = element_text(size = 20))
 ```
 
 To compute the confidence interval of a statistic, you need to know the **standard error** of the statistic, which is the standard deviation of the sampling distribution of the statistic.
@@ -640,11 +642,8 @@ To compute the confidence interval of a statistic, you need to know the **standa
 |Statistic|Standard error|
 |:--------|:-------------|
 |Mean|$SE(\overline{x})=\frac{\sigma(x)}{\sqrt{N}}$|
-|||
 |Standard deviation|$SE(\sigma(x))=\frac{\sigma(x)}{\sqrt{2(N-1)}}$|
-|||
 |Median|$SE(\widetilde{x})=\sqrt{\frac{\pi}{2}}\frac{\sigma(x)}{\sqrt{N}}$|
-|||
 |Difference between two means|$SE(\overline{x_1}-\overline{x_2})=\sqrt{\frac{\sigma(x_1)^2}{N_1}+\frac{\sigma(x_2)^2}{N_2}}$|
 
 : Standard errors of typical statistics {#tbl-SE}
