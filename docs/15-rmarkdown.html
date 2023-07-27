@@ -426,7 +426,7 @@ ga('send', {
 <div class="sourceCode" id="cb9"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">title  </span><span class="kw">:</span><span class="at"> Your Title</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">author </span><span class="kw">:</span><span class="at"> John Doe</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date   </span><span class="kw">:</span><span class="at"> `r format(Sys.time(), '%d/%m/%Y')`</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">date   </span><span class="kw">:</span><span class="at"> </span><span class="st">"`r format(Sys.time(), '%d/%m/%Y')`"</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">output </span><span class="kw">:</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">html_document</span><span class="kw">:</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">toc            </span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
@@ -444,7 +444,7 @@ ga('send', {
 <li>
 <code>title</code>, <code>author</code> and <code>date</code>: easy. The date can automatically be set to the current one by setting it to:</li>
 </ul>
-<pre><code>`r format(Sys.time(), '%d/%m/%Y')`</code></pre>
+<pre><code>"`r format(Sys.time(), '%d/%m/%Y')`"</code></pre>
 <ul>
 <li>
 <code>output</code>: this tells pandoc the output format you want. When compiling, in case there are multiple entries, the compiler will only look to the <em><strong>first</strong></em> one. Click the links below to see more options.
@@ -627,7 +627,7 @@ ga('send', {
 <p>But the installation is a tad complicated for the non initiate, and, well, it is just like Rmarkdown but less easy to use and share, in my opinion. But if you mostly work with python, then you have to get used to it since Rmarkdown is better suited for R.</p>
 </section><section id="welcome-to-the-future-quarto" class="level2" data-number="14.9"><h2 data-number="14.9" class="anchored" data-anchor-id="welcome-to-the-future-quarto">
 <span class="header-section-number">14.9</span> Welcome to the future: Quarto</h2>
-<p><a href="https://quarto.org/">Quarto</a> is a standalone project from the Rstudio team built on <a href="https://pandoc.org/">pandoc</a> that lookis a lot like Rmarkdown, but tailored not only for R but also for python, julia and observable.</p>
+<p><a href="https://quarto.org/">Quarto</a> is a standalone project from the Rstudio team built on <a href="https://pandoc.org/">pandoc</a> that looks a lot like Rmarkdown, but tailored not only for R but also for python, julia and observable.</p>
 <p>All your <code>Rmd</code> files should be directly compatible with quarto upon changing the extension name to <code>qmd</code>. Then I invite you to explore the <a href="https://quarto.org/docs/guide/">new possibilities offerd by quarto</a>.</p>
 </section><section id="exo-rmd" class="level2" data-number="14.10"><h2 data-number="14.10" class="anchored" data-anchor-id="exo-rmd">
 <span class="header-section-number">14.10</span> Exercise</h2>
@@ -1090,7 +1090,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb13-143"><a href="#cb13-143" aria-hidden="true" tabindex="-1"></a><span class="pp">---</span></span>
 <span id="cb13-144"><a href="#cb13-144" aria-hidden="true" tabindex="-1"></a><span class="fu">title  </span><span class="kw">:</span><span class="at"> Your Title</span></span>
 <span id="cb13-145"><a href="#cb13-145" aria-hidden="true" tabindex="-1"></a><span class="fu">author </span><span class="kw">:</span><span class="at"> John Doe</span></span>
-<span id="cb13-146"><a href="#cb13-146" aria-hidden="true" tabindex="-1"></a><span class="fu">date   </span><span class="kw">:</span><span class="at"> ``r ''`r format(Sys.time(), '%d/%m/%Y')`</span></span>
+<span id="cb13-146"><a href="#cb13-146" aria-hidden="true" tabindex="-1"></a><span class="fu">date   </span><span class="kw">:</span><span class="at"> </span><span class="st">"``r ''`r format(Sys.time(), '%d/%m/%Y')`"</span></span>
 <span id="cb13-147"><a href="#cb13-147" aria-hidden="true" tabindex="-1"></a><span class="fu">output </span><span class="kw">:</span></span>
 <span id="cb13-148"><a href="#cb13-148" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">html_document</span><span class="kw">:</span></span>
 <span id="cb13-149"><a href="#cb13-149" aria-hidden="true" tabindex="-1"></a><span class="at">        </span><span class="fu">toc            </span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
@@ -1107,7 +1107,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb13-160"><a href="#cb13-160" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`---`</span>: surrounds the YAML header. The body comes after that.</span>
 <span id="cb13-161"><a href="#cb13-161" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`title`</span>, <span class="in">`author`</span> and <span class="in">`date`</span>: easy. The date can automatically be set to the current one by setting it to:</span>
 <span id="cb13-162"><a href="#cb13-162" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb13-163"><a href="#cb13-163" aria-hidden="true" tabindex="-1"></a><span class="in">``r ''`r format(Sys.time(), '%d/%m/%Y')`</span></span>
+<span id="cb13-163"><a href="#cb13-163" aria-hidden="true" tabindex="-1"></a><span class="in">"``r ''`r format(Sys.time(), '%d/%m/%Y')`"</span></span>
 <span id="cb13-164"><a href="#cb13-164" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb13-165"><a href="#cb13-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`output`</span>: this tells pandoc the output format you want. When compiling, in case there are multiple entries, the compiler will only look to the _**first**_ one. Click the links below to see more options.</span>
 <span id="cb13-166"><a href="#cb13-166" aria-hidden="true" tabindex="-1"></a><span class="ss">    + </span>In this case, the output will be an <span class="co">[</span><span class="ot">html document</span><span class="co">](https://bookdown.org/yihui/rmarkdown/html-document.html)</span> with a floating table of contents, unnumbered sections and all code chunks will be hidden with a button to allow showing them.</span>
@@ -1287,7 +1287,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb13-340"><a href="#cb13-340" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-341"><a href="#cb13-341" aria-hidden="true" tabindex="-1"></a><span class="fu">## Welcome to the future: Quarto</span></span>
 <span id="cb13-342"><a href="#cb13-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-343"><a href="#cb13-343" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Quarto</span><span class="co">](https://quarto.org/)</span> is a standalone project from the Rstudio team built on <span class="co">[</span><span class="ot">pandoc</span><span class="co">](https://pandoc.org/)</span> that lookis a lot like Rmarkdown, but tailored not only for R but also for python, julia and observable.</span>
+<span id="cb13-343"><a href="#cb13-343" aria-hidden="true" tabindex="-1"></a><span class="co">[</span><span class="ot">Quarto</span><span class="co">](https://quarto.org/)</span> is a standalone project from the Rstudio team built on <span class="co">[</span><span class="ot">pandoc</span><span class="co">](https://pandoc.org/)</span> that looks a lot like Rmarkdown, but tailored not only for R but also for python, julia and observable.</span>
 <span id="cb13-344"><a href="#cb13-344" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb13-345"><a href="#cb13-345" aria-hidden="true" tabindex="-1"></a>All your <span class="in">`Rmd`</span> files should be directly compatible with quarto upon changing the extension name to <span class="in">`qmd`</span>. Then I invite you to explore the <span class="co">[</span><span class="ot">new possibilities offerd by quarto</span><span class="co">](https://quarto.org/docs/guide/)</span>.</span>
 <span id="cb13-346"><a href="#cb13-346" aria-hidden="true" tabindex="-1"></a></span>

@@ -141,7 +141,7 @@ Create an _example.Rmd_ file with the following YAML header (**the indentation i
 ---
 title  : Your Title
 author : John Doe
-date   : ``r ''`r format(Sys.time(), '%d/%m/%Y')`
+date   : "``r ''`r format(Sys.time(), '%d/%m/%Y')`"
 output :
     html_document:
         toc            : true
@@ -158,7 +158,7 @@ How to understand this header:
 - `---`: surrounds the YAML header. The body comes after that.
 - `title`, `author` and `date`: easy. The date can automatically be set to the current one by setting it to:
 ```
-``r ''`r format(Sys.time(), '%d/%m/%Y')`
+"``r ''`r format(Sys.time(), '%d/%m/%Y')`"
 ```
 - `output`: this tells pandoc the output format you want. When compiling, in case there are multiple entries, the compiler will only look to the _**first**_ one. Click the links below to see more options.
     + In this case, the output will be an [html document](https://bookdown.org/yihui/rmarkdown/html-document.html) with a floating table of contents, unnumbered sections and all code chunks will be hidden with a button to allow showing them.
@@ -338,7 +338,7 @@ But the installation is a tad complicated for the non initiate, and, well, it is
 
 ## Welcome to the future: Quarto
 
-[Quarto](https://quarto.org/) is a standalone project from the Rstudio team built on [pandoc](https://pandoc.org/) that lookis a lot like Rmarkdown, but tailored not only for R but also for python, julia and observable.
+[Quarto](https://quarto.org/) is a standalone project from the Rstudio team built on [pandoc](https://pandoc.org/) that looks a lot like Rmarkdown, but tailored not only for R but also for python, julia and observable.
 
 All your `Rmd` files should be directly compatible with quarto upon changing the extension name to `qmd`. Then I invite you to explore the [new possibilities offerd by quarto](https://quarto.org/docs/guide/).
 
