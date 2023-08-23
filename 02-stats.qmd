@@ -504,7 +504,7 @@ The Student's t-distribution (or simply, "t-distribution") is a probability dist
 It is a bell-shaped distribution that is symmetrical about the mean, showing that data near the mean are more frequent in occurrence than data far from the mean. 
 
 The t-distribution is used in place of the normal distribution when dealing with small samples ($N < 30$) or when the population standard deviation is unknown.
-It's shape is similar to the normal distribution but it has heavier tails, meaning that it is more prone to producing values that fall far from its mean.
+Its shape is similar to the normal distribution but it has heavier tails, meaning that it is more prone to producing values that fall far from its mean.
 It has the following PDF formula:
 
 $$
@@ -565,6 +565,7 @@ dat %>%
         geom_line()+
         geom_area(data=dat %>% filter(x<=xlow), alpha=0.5, fill="royalblue")+
         geom_area(data=dat %>% filter(x>=xhi), alpha=0.5, fill="royalblue")+
+        scale_x_continuous(breaks=seq(-5,5,1))+
         labs(y="Density", x="x")+
         annotate("text", x = xlow-.75, y = 0.06, label = "2.5%", size = 5, color="royalblue")+
         annotate("text", x = xhi+.75, y = 0.06, label = "2.5%", size = 5, color="royalblue")+
