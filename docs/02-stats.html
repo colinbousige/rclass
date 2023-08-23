@@ -699,7 +699,7 @@ Important
 </section></section><section id="the-students-t-distribution" class="level3" data-number="2.3.6"><h3 data-number="2.3.6" class="anchored" data-anchor-id="the-students-t-distribution">
 <span class="header-section-number">2.3.6</span> The Student’s t-distribution</h3>
 <p>The Student’s t-distribution (or simply, “t-distribution”) is a probability distribution that is used to estimate population parameters <strong>when the sample size is small</strong> and/or when the population variance is unknown. It is a bell-shaped distribution that is symmetrical about the mean, showing that data near the mean are more frequent in occurrence than data far from the mean.</p>
-<p>The t-distribution is used in place of the normal distribution when dealing with small samples (<span class="math inline">\(N &lt; 30\)</span>) or when the population standard deviation is unknown. It’s shape is similar to the normal distribution but it has heavier tails, meaning that it is more prone to producing values that fall far from its mean. It has the following PDF formula:</p>
+<p>The t-distribution is used in place of the normal distribution when dealing with small samples (<span class="math inline">\(N &lt; 30\)</span>) or when the population standard deviation is unknown. Its shape is similar to the normal distribution but it has heavier tails, meaning that it is more prone to producing values that fall far from its mean. It has the following PDF formula:</p>
 <p><span class="math display">\[
 P(x, \nu)=\frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\Gamma\left(\frac{\nu}{2}\right)}\left(1+\frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}
 \]</span> where <span class="math inline">\(\Gamma\)</span> is the <a href="https://en.wikipedia.org/wiki/Gamma_function">gamma function</a> and <span class="math inline">\(\nu\)</span> is the number of degrees of freedom defined as <span class="math inline">\(\nu=N-1\)</span>. For large number of observations, the t-distribution converges to the normal distribution.</p>
@@ -971,26 +971,26 @@ Important
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">38.24081</td>
-<td style="text-align: right;">0.2175923</td>
+<td style="text-align: right;">38.14387</td>
+<td style="text-align: right;">0.1910252</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">37.71114</td>
-<td style="text-align: right;">0.3681028</td>
+<td style="text-align: right;">37.64129</td>
+<td style="text-align: right;">0.2167204</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">37.84148</td>
-<td style="text-align: right;">2.5539263</td>
+<td style="text-align: right;">37.45765</td>
+<td style="text-align: right;">2.7623291</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">38.00523</td>
-<td style="text-align: right;">2.1264899</td>
+<td style="text-align: right;">39.59477</td>
+<td style="text-align: right;">2.5755671</td>
 </tr>
 </tbody>
 </table>
@@ -1011,26 +1011,26 @@ Important
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.9608335</td>
-<td style="text-align: right;">0.5606323</td>
+<td style="text-align: right;">0.9453545</td>
+<td style="text-align: right;">0.3020128</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.9525831</td>
-<td style="text-align: right;">0.4080092</td>
+<td style="text-align: right;">0.9744703</td>
+<td style="text-align: right;">0.8449693</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.9247364</td>
-<td style="text-align: right;">0.1222556</td>
+<td style="text-align: right;">0.9698521</td>
+<td style="text-align: right;">0.7517474</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.9493254</td>
-<td style="text-align: right;">0.3569657</td>
+<td style="text-align: right;">0.9748082</td>
+<td style="text-align: right;">0.8512819</td>
 </tr>
 </tbody>
 </table>
@@ -1046,16 +1046,16 @@ Important
 #&gt;  Welch Two Sample t-test
 #&gt; 
 #&gt; data:  Temperature by Day
-#&gt; t = 5.5396, df = 30.833, p-value = 4.651e-06
+#&gt; t = 7.7801, df = 37.41, p-value = 2.467e-09
 #&gt; alternative hypothesis: true difference in means between group Day1 and group Day2 is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  0.3346186 0.7247219
+#&gt;  0.3717412 0.6334208
 #&gt; sample estimates:
 #&gt; mean in group Day1 mean in group Day2 
-#&gt;           38.24081           37.71114</code></pre>
+#&gt;           38.14387           37.64129</code></pre>
 </div>
 </div>
-<p>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of 4.65e-06, which is largely below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. To report it properly, we can say that “the temperature of patient A on day 1 (38.24°C, 95% CI = [38.14, 38.34]°C), was statistically significantly higher than on day 2 (37.71°C, 95% CI = [37.54, 37.88]°C), t(30.83) = 5.54, p = 4.65e-06.” Here , 30.83 is the degrees of freedom associated with the t test-statistic. The 95% confidence interval for the difference between the means is 0.33°C to 0.72°C.</p>
+<p>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of 2.47e-09, which is largely below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. To report it properly, we can say that “the temperature of patient A on day 1 (38.14°C, 95% CI = [38.05, 38.23]°C), was statistically significantly higher than on day 2 (37.64°C, 95% CI = [37.54, 37.74]°C), t(37.41) = 7.78, p = 2.47e-09.” Here , 37.41 is the degrees of freedom associated with the t test-statistic. The 95% confidence interval for the difference between the means is 0.37°C to 0.63°C.</p>
 <p>For patient B however, even though the average temperature decreased between the two days, the spread in data is so large that the t-test does not allow concluding concerning any significant temperature difference between the two days:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">temperatures</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Patient</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span>,</span>
@@ -1065,13 +1065,13 @@ Important
 #&gt;  Welch Two Sample t-test
 #&gt; 
 #&gt; data:  Temperature by Day
-#&gt; t = -0.22036, df = 36.793, p-value = 0.8268
+#&gt; t = -2.5306, df = 37.815, p-value = 0.01567
 #&gt; alternative hypothesis: true difference in means between group Day1 and group Day2 is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  -1.669739  1.342235
+#&gt;  -3.8470152 -0.4272166
 #&gt; sample estimates:
 #&gt; mean in group Day1 mean in group Day2 
-#&gt;           37.84148           38.00523</code></pre>
+#&gt;           37.45765           39.59477</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1092,13 +1092,13 @@ Note
 #&gt;  One Sample t-test
 #&gt; 
 #&gt; data:  temperatures %&gt;% filter(Patient == "B", Day == "Day1") %&gt;% pull(Temperature)
-#&gt; t = 66.264, df = 19, p-value &lt; 2.2e-16
+#&gt; t = 60.643, df = 19, p-value &lt; 2.2e-16
 #&gt; alternative hypothesis: true mean is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  36.64621 39.03675
+#&gt;  36.16484 38.75046
 #&gt; sample estimates:
 #&gt; mean of x 
-#&gt;  37.84148</code></pre>
+#&gt;  37.45765</code></pre>
 </div>
 </div>
 </div>
@@ -2016,7 +2016,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-518"><a href="#cb9-518" aria-hidden="true" tabindex="-1"></a>It is a bell-shaped distribution that is symmetrical about the mean, showing that data near the mean are more frequent in occurrence than data far from the mean. </span>
 <span id="cb9-519"><a href="#cb9-519" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-520"><a href="#cb9-520" aria-hidden="true" tabindex="-1"></a>The t-distribution is used in place of the normal distribution when dealing with small samples ($N &lt; 30$) or when the population standard deviation is unknown.</span>
-<span id="cb9-521"><a href="#cb9-521" aria-hidden="true" tabindex="-1"></a>It's shape is similar to the normal distribution but it has heavier tails, meaning that it is more prone to producing values that fall far from its mean.</span>
+<span id="cb9-521"><a href="#cb9-521" aria-hidden="true" tabindex="-1"></a>Its shape is similar to the normal distribution but it has heavier tails, meaning that it is more prone to producing values that fall far from its mean.</span>
 <span id="cb9-522"><a href="#cb9-522" aria-hidden="true" tabindex="-1"></a>It has the following PDF formula:</span>
 <span id="cb9-523"><a href="#cb9-523" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-524"><a href="#cb9-524" aria-hidden="true" tabindex="-1"></a>$$</span>
@@ -2077,360 +2077,361 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-583"><a href="#cb9-583" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_line</span>()<span class="sc">+</span></span>
 <span id="cb9-584"><a href="#cb9-584" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_area</span>(<span class="at">data=</span>dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(x<span class="sc">&lt;=</span>xlow), <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
 <span id="cb9-585"><a href="#cb9-585" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_area</span>(<span class="at">data=</span>dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(x<span class="sc">&gt;=</span>xhi), <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
-<span id="cb9-586"><a href="#cb9-586" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Density"</span>, <span class="at">x=</span><span class="st">"x"</span>)<span class="sc">+</span></span>
-<span id="cb9-587"><a href="#cb9-587" aria-hidden="true" tabindex="-1"></a>        <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> xlow<span class="fl">-.75</span>, <span class="at">y =</span> <span class="fl">0.06</span>, <span class="at">label =</span> <span class="st">"2.5%"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
-<span id="cb9-588"><a href="#cb9-588" aria-hidden="true" tabindex="-1"></a>        <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> xhi<span class="fl">+.75</span>, <span class="at">y =</span> <span class="fl">0.06</span>, <span class="at">label =</span> <span class="st">"2.5%"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
-<span id="cb9-589"><a href="#cb9-589" aria-hidden="true" tabindex="-1"></a>        <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="fl">0.15</span>, <span class="at">label =</span> <span class="st">"95%"</span>, <span class="at">size =</span> <span class="dv">13</span>)</span>
-<span id="cb9-590"><a href="#cb9-590" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-591"><a href="#cb9-591" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-592"><a href="#cb9-592" aria-hidden="true" tabindex="-1"></a>In R, you would use the <span class="in">`qt(p, df)`</span>{.R} (for a t-distribution) or <span class="in">`qnorm(p)`</span>{.R} (for a Gaussian distribution) functions to compute the quantiles $q$ such that $P(X\leq q)=p$.</span>
-<span id="cb9-593"><a href="#cb9-593" aria-hidden="true" tabindex="-1"></a>If you want to compute the **95% tolerence interval** for a distribution, you need to compute the quantiles $q$ such that $P(X\leq q)=0.025$ and $P(X\leq q)=0.975$, *i.e.* find the values below and above which 2.5% of the distribtution are left out, as shown in @fig-tolerenceinterval. </span>
-<span id="cb9-594"><a href="#cb9-594" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-595"><a href="#cb9-595" aria-hidden="true" tabindex="-1"></a>Since both the Gaussian and t-distributions are symmetric, the tolerence interval is given by $<span class="co">[</span><span class="ot">q, -q</span><span class="co">]</span>$: for a tolerance interval with *tolerence level* $\alpha$, you want the quantile for the probability $p=(1+\alpha)/2$.</span>
-<span id="cb9-596"><a href="#cb9-596" aria-hidden="true" tabindex="-1"></a>Some special values are gathered in @tbl-tolerenceinterval.</span>
-<span id="cb9-597"><a href="#cb9-597" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-586"><a href="#cb9-586" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb9-587"><a href="#cb9-587" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Density"</span>, <span class="at">x=</span><span class="st">"x"</span>)<span class="sc">+</span></span>
+<span id="cb9-588"><a href="#cb9-588" aria-hidden="true" tabindex="-1"></a>        <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> xlow<span class="fl">-.75</span>, <span class="at">y =</span> <span class="fl">0.06</span>, <span class="at">label =</span> <span class="st">"2.5%"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb9-589"><a href="#cb9-589" aria-hidden="true" tabindex="-1"></a>        <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> xhi<span class="fl">+.75</span>, <span class="at">y =</span> <span class="fl">0.06</span>, <span class="at">label =</span> <span class="st">"2.5%"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb9-590"><a href="#cb9-590" aria-hidden="true" tabindex="-1"></a>        <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="fl">0.15</span>, <span class="at">label =</span> <span class="st">"95%"</span>, <span class="at">size =</span> <span class="dv">13</span>)</span>
+<span id="cb9-591"><a href="#cb9-591" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-592"><a href="#cb9-592" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-593"><a href="#cb9-593" aria-hidden="true" tabindex="-1"></a>In R, you would use the <span class="in">`qt(p, df)`</span>{.R} (for a t-distribution) or <span class="in">`qnorm(p)`</span>{.R} (for a Gaussian distribution) functions to compute the quantiles $q$ such that $P(X\leq q)=p$.</span>
+<span id="cb9-594"><a href="#cb9-594" aria-hidden="true" tabindex="-1"></a>If you want to compute the **95% tolerence interval** for a distribution, you need to compute the quantiles $q$ such that $P(X\leq q)=0.025$ and $P(X\leq q)=0.975$, *i.e.* find the values below and above which 2.5% of the distribtution are left out, as shown in @fig-tolerenceinterval. </span>
+<span id="cb9-595"><a href="#cb9-595" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-596"><a href="#cb9-596" aria-hidden="true" tabindex="-1"></a>Since both the Gaussian and t-distributions are symmetric, the tolerence interval is given by $<span class="co">[</span><span class="ot">q, -q</span><span class="co">]</span>$: for a tolerance interval with *tolerence level* $\alpha$, you want the quantile for the probability $p=(1+\alpha)/2$.</span>
+<span id="cb9-597"><a href="#cb9-597" aria-hidden="true" tabindex="-1"></a>Some special values are gathered in @tbl-tolerenceinterval.</span>
 <span id="cb9-598"><a href="#cb9-598" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-601"><a href="#cb9-601" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-602"><a href="#cb9-602" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-tolerenceinterval</span></span>
-<span id="cb9-603"><a href="#cb9-603" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb9-604"><a href="#cb9-604" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Quantiles of the t- and Gaussian distributions for various degrees of freedom ($\\nu$) and tolerence levels ($\\alpha$)."</span></span>
-<span id="cb9-605"><a href="#cb9-605" aria-hidden="true" tabindex="-1"></a>nu <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">30</span>, <span class="cn">Inf</span>)</span>
-<span id="cb9-606"><a href="#cb9-606" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">8</span>, .<span class="dv">9</span>, .<span class="dv">95</span>, .<span class="dv">99</span>, .<span class="dv">999</span>)</span>
-<span id="cb9-607"><a href="#cb9-607" aria-hidden="true" tabindex="-1"></a><span class="fu">expand_grid</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span>nu, <span class="at">P=</span>P) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-608"><a href="#cb9-608" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Q=</span><span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="sc">-</span>P)<span class="sc">/</span><span class="dv">2</span>, <span class="at">df=</span><span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span>),</span>
-<span id="cb9-609"><a href="#cb9-609" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="fu">as.character</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-610"><a href="#cb9-610" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="st">"Gaussian"</span>, <span class="at">P=</span>P, <span class="at">Q=</span><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="sc">-</span>P)<span class="sc">/</span><span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb9-611"><a href="#cb9-611" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">P=</span>glue<span class="sc">::</span><span class="fu">glue</span>(r<span class="st">"($</span><span class="sc">\a</span><span class="st">lpha$: {P*100}%)"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-612"><a href="#cb9-612" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>P, <span class="at">values_from=</span>Q) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-613"><a href="#cb9-613" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="fu">str_replace</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span>, <span class="st">"Inf"</span>, r<span class="st">"($</span><span class="sc">\\</span><span class="st">infty$)"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb9-614"><a href="#cb9-614" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">format=</span><span class="st">"markdown"</span>)</span>
-<span id="cb9-615"><a href="#cb9-615" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-616"><a href="#cb9-616" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-599"><a href="#cb9-599" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-602"><a href="#cb9-602" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-603"><a href="#cb9-603" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: tbl-tolerenceinterval</span></span>
+<span id="cb9-604"><a href="#cb9-604" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-605"><a href="#cb9-605" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Quantiles of the t- and Gaussian distributions for various degrees of freedom ($\\nu$) and tolerence levels ($\\alpha$)."</span></span>
+<span id="cb9-606"><a href="#cb9-606" aria-hidden="true" tabindex="-1"></a>nu <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">30</span>, <span class="cn">Inf</span>)</span>
+<span id="cb9-607"><a href="#cb9-607" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">8</span>, .<span class="dv">9</span>, .<span class="dv">95</span>, .<span class="dv">99</span>, .<span class="dv">999</span>)</span>
+<span id="cb9-608"><a href="#cb9-608" aria-hidden="true" tabindex="-1"></a><span class="fu">expand_grid</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span>nu, <span class="at">P=</span>P) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-609"><a href="#cb9-609" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Q=</span><span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="sc">-</span>P)<span class="sc">/</span><span class="dv">2</span>, <span class="at">df=</span><span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span>),</span>
+<span id="cb9-610"><a href="#cb9-610" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="fu">as.character</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-611"><a href="#cb9-611" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="st">"Gaussian"</span>, <span class="at">P=</span>P, <span class="at">Q=</span><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="sc">-</span>P)<span class="sc">/</span><span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
+<span id="cb9-612"><a href="#cb9-612" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">P=</span>glue<span class="sc">::</span><span class="fu">glue</span>(r<span class="st">"($</span><span class="sc">\a</span><span class="st">lpha$: {P*100}%)"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-613"><a href="#cb9-613" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>P, <span class="at">values_from=</span>Q) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-614"><a href="#cb9-614" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="fu">str_replace</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span>, <span class="st">"Inf"</span>, r<span class="st">"($</span><span class="sc">\\</span><span class="st">infty$)"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-615"><a href="#cb9-615" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">format=</span><span class="st">"markdown"</span>)</span>
+<span id="cb9-616"><a href="#cb9-616" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-617"><a href="#cb9-617" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-618"><a href="#cb9-618" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Confidence interval</span></span>
-<span id="cb9-619"><a href="#cb9-619" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-620"><a href="#cb9-620" aria-hidden="true" tabindex="-1"></a>**Confidence intervals** represent the range of uncertainty associated with the estimate of a statistic (*i.e.* the mean, proportion or standard deviation etc...). </span>
-<span id="cb9-621"><a href="#cb9-621" aria-hidden="true" tabindex="-1"></a>An estimate is necessarily subject to the risk of sampling error. Confidence intervals are useful for establishing limits for the estimation of, for example, the mean or a standard deviation, but also regression coefficients, proportions, frequency rates (Poisson) and differences between populations.</span>
-<span id="cb9-622"><a href="#cb9-622" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-623"><a href="#cb9-623" aria-hidden="true" tabindex="-1"></a>**Confidence intervals** are thus a measurement of the **standard error of the estimated statistic**, and their widths thus naturally decrease with the sampling size.</span>
-<span id="cb9-624"><a href="#cb9-624" aria-hidden="true" tabindex="-1"></a>As the sample size approaches the entire population, the width of the confidence interval approaches zero, as can be seen on @fig-confidenceinterval.</span>
-<span id="cb9-625"><a href="#cb9-625" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-628"><a href="#cb9-628" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-629"><a href="#cb9-629" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-confidenceinterval</span></span>
-<span id="cb9-630"><a href="#cb9-630" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb9-631"><a href="#cb9-631" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb9-632"><a href="#cb9-632" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb9-633"><a href="#cb9-633" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
-<span id="cb9-634"><a href="#cb9-634" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: Histograms of a Gaussian distribution of mean 0 (red line) and standard deviation 1 with two samplings. The measured mean of the distribution is shown in black, and the 95% confidence interval of the mean is shown in orange. As the population size increases, the width of the confidence interval decreases since the error on the determination of the mean decreases.</span></span>
-<span id="cb9-635"><a href="#cb9-635" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-subcap: </span></span>
-<span id="cb9-636"><a href="#cb9-636" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Population size: 20"</span></span>
-<span id="cb9-637"><a href="#cb9-637" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Population size: 500"</span></span>
-<span id="cb9-638"><a href="#cb9-638" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fl">2e1</span>)</span>
-<span id="cb9-639"><a href="#cb9-639" aria-hidden="true" tabindex="-1"></a>x1CI <span class="ot">&lt;-</span> <span class="fu">mean</span>(x1)<span class="sc">+</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="dv">1</span><span class="fl">-.05</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">df=</span><span class="fu">length</span>(x1)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">sd</span>(x1)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x1))</span>
-<span id="cb9-640"><a href="#cb9-640" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">500</span>)</span>
-<span id="cb9-641"><a href="#cb9-641" aria-hidden="true" tabindex="-1"></a>x2CI <span class="ot">&lt;-</span> <span class="fu">mean</span>(x2)<span class="sc">+</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="dv">1</span><span class="fl">-.05</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">df=</span><span class="fu">length</span>(x2)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">sd</span>(x2)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x2))</span>
-<span id="cb9-642"><a href="#cb9-642" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="cn">NULL</span>, <span class="fu">aes</span>(<span class="at">x=</span>x1))<span class="sc">+</span></span>
-<span id="cb9-643"><a href="#cb9-643" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">ymin=</span><span class="sc">-</span><span class="cn">Inf</span>, <span class="at">ymax=</span><span class="cn">Inf</span>, <span class="at">xmin=</span>x1CI[<span class="dv">1</span>], <span class="at">xmax=</span>x1CI[<span class="dv">2</span>], <span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">fill=</span><span class="st">"orange"</span>)<span class="sc">+</span></span>
-<span id="cb9-644"><a href="#cb9-644" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb9-645"><a href="#cb9-645" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">mean</span>(x1), <span class="at">color=</span><span class="st">"black"</span>, <span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb9-646"><a href="#cb9-646" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span><span class="fu">stat</span>(count <span class="sc">/</span> <span class="fu">max</span>(count))), <span class="at">bins=</span><span class="dv">50</span>, <span class="at">alpha=</span>.<span class="dv">8</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
-<span id="cb9-647"><a href="#cb9-647" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
-<span id="cb9-648"><a href="#cb9-648" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Density"</span>, <span class="at">x=</span><span class="st">"x"</span>) <span class="sc">+</span></span>
-<span id="cb9-649"><a href="#cb9-649" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))</span>
-<span id="cb9-650"><a href="#cb9-650" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="cn">NULL</span>, <span class="fu">aes</span>(<span class="at">x=</span>x2))<span class="sc">+</span></span>
-<span id="cb9-651"><a href="#cb9-651" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">ymin=</span><span class="sc">-</span><span class="cn">Inf</span>, <span class="at">ymax=</span><span class="cn">Inf</span>, <span class="at">xmin=</span>x2CI[<span class="dv">1</span>], <span class="at">xmax=</span>x2CI[<span class="dv">2</span>], <span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">fill=</span><span class="st">"orange"</span>)<span class="sc">+</span></span>
-<span id="cb9-652"><a href="#cb9-652" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">mean</span>(x2), <span class="at">color=</span><span class="st">"black"</span>, <span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb9-653"><a href="#cb9-653" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span></span>
-<span id="cb9-654"><a href="#cb9-654" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span><span class="fu">stat</span>(count <span class="sc">/</span> <span class="fu">max</span>(count))), <span class="at">bins=</span><span class="dv">50</span>, <span class="at">alpha=</span>.<span class="dv">8</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
-<span id="cb9-655"><a href="#cb9-655" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
-<span id="cb9-656"><a href="#cb9-656" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Density"</span>, <span class="at">x=</span><span class="st">"x"</span>) <span class="sc">+</span></span>
-<span id="cb9-657"><a href="#cb9-657" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))</span>
-<span id="cb9-658"><a href="#cb9-658" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-659"><a href="#cb9-659" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-660"><a href="#cb9-660" aria-hidden="true" tabindex="-1"></a>To compute the confidence interval of a statistic, you need to know the **standard error** of the statistic, which is the standard deviation of the sampling distribution of the statistic.</span>
-<span id="cb9-661"><a href="#cb9-661" aria-hidden="true" tabindex="-1"></a>@tbl-SE gathers a few typical standard errors on statistics:</span>
-<span id="cb9-662"><a href="#cb9-662" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-663"><a href="#cb9-663" aria-hidden="true" tabindex="-1"></a>|Statistic|Standard error|</span>
-<span id="cb9-664"><a href="#cb9-664" aria-hidden="true" tabindex="-1"></a>|:--------|:-------------|</span>
-<span id="cb9-665"><a href="#cb9-665" aria-hidden="true" tabindex="-1"></a>|Mean|$SE(\overline{x})=\frac{\sigma(x)}{\sqrt{N}}$|</span>
-<span id="cb9-666"><a href="#cb9-666" aria-hidden="true" tabindex="-1"></a>|Standard deviation|$SE(\sigma(x))=\frac{\sigma(x)}{\sqrt{2(N-1)}}$|</span>
-<span id="cb9-667"><a href="#cb9-667" aria-hidden="true" tabindex="-1"></a>|Median|$SE(\widetilde{x})=\sqrt{\frac{\pi}{2}}\frac{\sigma(x)}{\sqrt{N}}$|</span>
-<span id="cb9-668"><a href="#cb9-668" aria-hidden="true" tabindex="-1"></a>|Difference between two means|$SE(\overline{x_1}-\overline{x_2})=\sqrt{\frac{\sigma(x_1)^2}{N_1}+\frac{\sigma(x_2)^2}{N_2}}$|</span>
-<span id="cb9-669"><a href="#cb9-669" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-670"><a href="#cb9-670" aria-hidden="true" tabindex="-1"></a>: Standard errors of typical statistics {#tbl-SE}</span>
-<span id="cb9-671"><a href="#cb9-671" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-618"><a href="#cb9-618" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-619"><a href="#cb9-619" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Confidence interval</span></span>
+<span id="cb9-620"><a href="#cb9-620" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-621"><a href="#cb9-621" aria-hidden="true" tabindex="-1"></a>**Confidence intervals** represent the range of uncertainty associated with the estimate of a statistic (*i.e.* the mean, proportion or standard deviation etc...). </span>
+<span id="cb9-622"><a href="#cb9-622" aria-hidden="true" tabindex="-1"></a>An estimate is necessarily subject to the risk of sampling error. Confidence intervals are useful for establishing limits for the estimation of, for example, the mean or a standard deviation, but also regression coefficients, proportions, frequency rates (Poisson) and differences between populations.</span>
+<span id="cb9-623"><a href="#cb9-623" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-624"><a href="#cb9-624" aria-hidden="true" tabindex="-1"></a>**Confidence intervals** are thus a measurement of the **standard error of the estimated statistic**, and their widths thus naturally decrease with the sampling size.</span>
+<span id="cb9-625"><a href="#cb9-625" aria-hidden="true" tabindex="-1"></a>As the sample size approaches the entire population, the width of the confidence interval approaches zero, as can be seen on @fig-confidenceinterval.</span>
+<span id="cb9-626"><a href="#cb9-626" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-629"><a href="#cb9-629" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-630"><a href="#cb9-630" aria-hidden="true" tabindex="-1"></a><span class="co">#| label: fig-confidenceinterval</span></span>
+<span id="cb9-631"><a href="#cb9-631" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-632"><a href="#cb9-632" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb9-633"><a href="#cb9-633" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb9-634"><a href="#cb9-634" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
+<span id="cb9-635"><a href="#cb9-635" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-cap: Histograms of a Gaussian distribution of mean 0 (red line) and standard deviation 1 with two samplings. The measured mean of the distribution is shown in black, and the 95% confidence interval of the mean is shown in orange. As the population size increases, the width of the confidence interval decreases since the error on the determination of the mean decreases.</span></span>
+<span id="cb9-636"><a href="#cb9-636" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-subcap: </span></span>
+<span id="cb9-637"><a href="#cb9-637" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Population size: 20"</span></span>
+<span id="cb9-638"><a href="#cb9-638" aria-hidden="true" tabindex="-1"></a><span class="co">#|   - "Population size: 500"</span></span>
+<span id="cb9-639"><a href="#cb9-639" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fl">2e1</span>)</span>
+<span id="cb9-640"><a href="#cb9-640" aria-hidden="true" tabindex="-1"></a>x1CI <span class="ot">&lt;-</span> <span class="fu">mean</span>(x1)<span class="sc">+</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="dv">1</span><span class="fl">-.05</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">df=</span><span class="fu">length</span>(x1)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">sd</span>(x1)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x1))</span>
+<span id="cb9-641"><a href="#cb9-641" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">500</span>)</span>
+<span id="cb9-642"><a href="#cb9-642" aria-hidden="true" tabindex="-1"></a>x2CI <span class="ot">&lt;-</span> <span class="fu">mean</span>(x2)<span class="sc">+</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>,<span class="dv">1</span>)<span class="sc">*</span><span class="fu">qt</span>(<span class="dv">1</span><span class="fl">-.05</span><span class="sc">/</span><span class="dv">2</span>, <span class="at">df=</span><span class="fu">length</span>(x2)<span class="sc">-</span><span class="dv">1</span>)<span class="sc">*</span><span class="fu">sd</span>(x2)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">length</span>(x2))</span>
+<span id="cb9-643"><a href="#cb9-643" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="cn">NULL</span>, <span class="fu">aes</span>(<span class="at">x=</span>x1))<span class="sc">+</span></span>
+<span id="cb9-644"><a href="#cb9-644" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">ymin=</span><span class="sc">-</span><span class="cn">Inf</span>, <span class="at">ymax=</span><span class="cn">Inf</span>, <span class="at">xmin=</span>x1CI[<span class="dv">1</span>], <span class="at">xmax=</span>x1CI[<span class="dv">2</span>], <span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">fill=</span><span class="st">"orange"</span>)<span class="sc">+</span></span>
+<span id="cb9-645"><a href="#cb9-645" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb9-646"><a href="#cb9-646" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">mean</span>(x1), <span class="at">color=</span><span class="st">"black"</span>, <span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb9-647"><a href="#cb9-647" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span><span class="fu">stat</span>(count <span class="sc">/</span> <span class="fu">max</span>(count))), <span class="at">bins=</span><span class="dv">50</span>, <span class="at">alpha=</span>.<span class="dv">8</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb9-648"><a href="#cb9-648" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb9-649"><a href="#cb9-649" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Density"</span>, <span class="at">x=</span><span class="st">"x"</span>) <span class="sc">+</span></span>
+<span id="cb9-650"><a href="#cb9-650" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))</span>
+<span id="cb9-651"><a href="#cb9-651" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="cn">NULL</span>, <span class="fu">aes</span>(<span class="at">x=</span>x2))<span class="sc">+</span></span>
+<span id="cb9-652"><a href="#cb9-652" aria-hidden="true" tabindex="-1"></a>    <span class="fu">annotate</span>(<span class="st">"rect"</span>, <span class="at">ymin=</span><span class="sc">-</span><span class="cn">Inf</span>, <span class="at">ymax=</span><span class="cn">Inf</span>, <span class="at">xmin=</span>x2CI[<span class="dv">1</span>], <span class="at">xmax=</span>x2CI[<span class="dv">2</span>], <span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">fill=</span><span class="st">"orange"</span>)<span class="sc">+</span></span>
+<span id="cb9-653"><a href="#cb9-653" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="fu">mean</span>(x2), <span class="at">color=</span><span class="st">"black"</span>, <span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb9-654"><a href="#cb9-654" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_vline</span>(<span class="at">xintercept=</span><span class="dv">0</span>, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span></span>
+<span id="cb9-655"><a href="#cb9-655" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y=</span><span class="fu">stat</span>(count <span class="sc">/</span> <span class="fu">max</span>(count))), <span class="at">bins=</span><span class="dv">50</span>, <span class="at">alpha=</span>.<span class="dv">8</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb9-656"><a href="#cb9-656" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_cartesian</span>(<span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>,<span class="dv">4</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
+<span id="cb9-657"><a href="#cb9-657" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Density"</span>, <span class="at">x=</span><span class="st">"x"</span>) <span class="sc">+</span></span>
+<span id="cb9-658"><a href="#cb9-658" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))</span>
+<span id="cb9-659"><a href="#cb9-659" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-660"><a href="#cb9-660" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-661"><a href="#cb9-661" aria-hidden="true" tabindex="-1"></a>To compute the confidence interval of a statistic, you need to know the **standard error** of the statistic, which is the standard deviation of the sampling distribution of the statistic.</span>
+<span id="cb9-662"><a href="#cb9-662" aria-hidden="true" tabindex="-1"></a>@tbl-SE gathers a few typical standard errors on statistics:</span>
+<span id="cb9-663"><a href="#cb9-663" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-664"><a href="#cb9-664" aria-hidden="true" tabindex="-1"></a>|Statistic|Standard error|</span>
+<span id="cb9-665"><a href="#cb9-665" aria-hidden="true" tabindex="-1"></a>|:--------|:-------------|</span>
+<span id="cb9-666"><a href="#cb9-666" aria-hidden="true" tabindex="-1"></a>|Mean|$SE(\overline{x})=\frac{\sigma(x)}{\sqrt{N}}$|</span>
+<span id="cb9-667"><a href="#cb9-667" aria-hidden="true" tabindex="-1"></a>|Standard deviation|$SE(\sigma(x))=\frac{\sigma(x)}{\sqrt{2(N-1)}}$|</span>
+<span id="cb9-668"><a href="#cb9-668" aria-hidden="true" tabindex="-1"></a>|Median|$SE(\widetilde{x})=\sqrt{\frac{\pi}{2}}\frac{\sigma(x)}{\sqrt{N}}$|</span>
+<span id="cb9-669"><a href="#cb9-669" aria-hidden="true" tabindex="-1"></a>|Difference between two means|$SE(\overline{x_1}-\overline{x_2})=\sqrt{\frac{\sigma(x_1)^2}{N_1}+\frac{\sigma(x_2)^2}{N_2}}$|</span>
+<span id="cb9-670"><a href="#cb9-670" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-671"><a href="#cb9-671" aria-hidden="true" tabindex="-1"></a>: Standard errors of typical statistics {#tbl-SE}</span>
 <span id="cb9-672"><a href="#cb9-672" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-673"><a href="#cb9-673" aria-hidden="true" tabindex="-1"></a>Then, the confidence interval for the statistics $X$ with a confidence level $\alpha$ is computed as:</span>
-<span id="cb9-674"><a href="#cb9-674" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-675"><a href="#cb9-675" aria-hidden="true" tabindex="-1"></a>CI(X, \alpha)=X\pm \text{qt}\left(\frac{1+\alpha}{2},\nu\right)\times SE(X)</span>
-<span id="cb9-676"><a href="#cb9-676" aria-hidden="true" tabindex="-1"></a>$$ {#eq-CI}</span>
-<span id="cb9-677"><a href="#cb9-677" aria-hidden="true" tabindex="-1"></a>where $\text{qt}\left(\frac{1+\alpha}{2},\nu\right)$ is the quantile of the Student distribution with $\nu$ degrees of freedom and a probability of $\frac{1+\alpha}{2}$ (as seen in @sec-tolerence-interval).</span>
-<span id="cb9-678"><a href="#cb9-678" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-673"><a href="#cb9-673" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-674"><a href="#cb9-674" aria-hidden="true" tabindex="-1"></a>Then, the confidence interval for the statistics $X$ with a confidence level $\alpha$ is computed as:</span>
+<span id="cb9-675"><a href="#cb9-675" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-676"><a href="#cb9-676" aria-hidden="true" tabindex="-1"></a>CI(X, \alpha)=X\pm \text{qt}\left(\frac{1+\alpha}{2},\nu\right)\times SE(X)</span>
+<span id="cb9-677"><a href="#cb9-677" aria-hidden="true" tabindex="-1"></a>$$ {#eq-CI}</span>
+<span id="cb9-678"><a href="#cb9-678" aria-hidden="true" tabindex="-1"></a>where $\text{qt}\left(\frac{1+\alpha}{2},\nu\right)$ is the quantile of the Student distribution with $\nu$ degrees of freedom and a probability of $\frac{1+\alpha}{2}$ (as seen in @sec-tolerence-interval).</span>
 <span id="cb9-679"><a href="#cb9-679" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-680"><a href="#cb9-680" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb9-681"><a href="#cb9-681" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-682"><a href="#cb9-682" aria-hidden="true" tabindex="-1"></a><span class="fu">### Remember</span></span>
-<span id="cb9-683"><a href="#cb9-683" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-684"><a href="#cb9-684" aria-hidden="true" tabindex="-1"></a>The width of a **tolerance interval** is due to both the sampling error and the variance in the population. It is a measurement of the spread of data.</span>
-<span id="cb9-685"><a href="#cb9-685" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-686"><a href="#cb9-686" aria-hidden="true" tabindex="-1"></a>The width of a **confidence interval** is due to the sampling error only. It is a measurement of the precision of the estimate of a statistic.</span>
-<span id="cb9-687"><a href="#cb9-687" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-688"><a href="#cb9-688" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-689"><a href="#cb9-689" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-680"><a href="#cb9-680" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-681"><a href="#cb9-681" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb9-682"><a href="#cb9-682" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-683"><a href="#cb9-683" aria-hidden="true" tabindex="-1"></a><span class="fu">### Remember</span></span>
+<span id="cb9-684"><a href="#cb9-684" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-685"><a href="#cb9-685" aria-hidden="true" tabindex="-1"></a>The width of a **tolerance interval** is due to both the sampling error and the variance in the population. It is a measurement of the spread of data.</span>
+<span id="cb9-686"><a href="#cb9-686" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-687"><a href="#cb9-687" aria-hidden="true" tabindex="-1"></a>The width of a **confidence interval** is due to the sampling error only. It is a measurement of the precision of the estimate of a statistic.</span>
+<span id="cb9-688"><a href="#cb9-688" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-689"><a href="#cb9-689" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb9-690"><a href="#cb9-690" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-691"><a href="#cb9-691" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-692"><a href="#cb9-692" aria-hidden="true" tabindex="-1"></a><span class="fu">## Usual statistical tests on distributions</span></span>
-<span id="cb9-693"><a href="#cb9-693" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-694"><a href="#cb9-694" aria-hidden="true" tabindex="-1"></a><span class="fu">### Hypothesis testing and p-values</span></span>
-<span id="cb9-695"><a href="#cb9-695" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-696"><a href="#cb9-696" aria-hidden="true" tabindex="-1"></a>A **hypothesis test** is a statistical test that is used to determine whether a given hypothesis is true or not.</span>
-<span id="cb9-697"><a href="#cb9-697" aria-hidden="true" tabindex="-1"></a>It is based on the comparison of the observed data with the expected data, given the hypothesis.</span>
-<span id="cb9-698"><a href="#cb9-698" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-699"><a href="#cb9-699" aria-hidden="true" tabindex="-1"></a>The **null hypothesis** (usually noted $H_0$) is the hypothesis that is tested, and the **alternative hypothesis** (usually noted $H_1$) is the hypothesis that is assumed to be true if the null hypothesis is rejected.</span>
-<span id="cb9-700"><a href="#cb9-700" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-701"><a href="#cb9-701" aria-hidden="true" tabindex="-1"></a>The **p-value** is the probability of obtaining a fluctuation in data under the null hypothesis that is as, or more, extreme than that observed by a given experiment. </span>
-<span id="cb9-702"><a href="#cb9-702" aria-hidden="true" tabindex="-1"></a>If the p-value is smaller than a predifined tolerance (usually set to 0.05), then one might consider rejecting the null hypothesis as the probability of observing such a fluctuation under the null hypothesis is extremely small.</span>
-<span id="cb9-703"><a href="#cb9-703" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-704"><a href="#cb9-704" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb9-705"><a href="#cb9-705" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-706"><a href="#cb9-706" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
-<span id="cb9-707"><a href="#cb9-707" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** $\ge\alpha$ (typically 0.05), the null hypothesis is accepted.</span>
-<span id="cb9-708"><a href="#cb9-708" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** is below a certain threshold $\alpha$, the null hypothesis is rejected.</span>
-<span id="cb9-709"><a href="#cb9-709" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-710"><a href="#cb9-710" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-711"><a href="#cb9-711" aria-hidden="true" tabindex="-1"></a>In R, most tests will automatically return a p-value, which will help you decide whether the test is conclusive or not – we will not delve into the details of computing these p-values.</span>
-<span id="cb9-712"><a href="#cb9-712" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-692"><a href="#cb9-692" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-693"><a href="#cb9-693" aria-hidden="true" tabindex="-1"></a><span class="fu">## Usual statistical tests on distributions</span></span>
+<span id="cb9-694"><a href="#cb9-694" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-695"><a href="#cb9-695" aria-hidden="true" tabindex="-1"></a><span class="fu">### Hypothesis testing and p-values</span></span>
+<span id="cb9-696"><a href="#cb9-696" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-697"><a href="#cb9-697" aria-hidden="true" tabindex="-1"></a>A **hypothesis test** is a statistical test that is used to determine whether a given hypothesis is true or not.</span>
+<span id="cb9-698"><a href="#cb9-698" aria-hidden="true" tabindex="-1"></a>It is based on the comparison of the observed data with the expected data, given the hypothesis.</span>
+<span id="cb9-699"><a href="#cb9-699" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-700"><a href="#cb9-700" aria-hidden="true" tabindex="-1"></a>The **null hypothesis** (usually noted $H_0$) is the hypothesis that is tested, and the **alternative hypothesis** (usually noted $H_1$) is the hypothesis that is assumed to be true if the null hypothesis is rejected.</span>
+<span id="cb9-701"><a href="#cb9-701" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-702"><a href="#cb9-702" aria-hidden="true" tabindex="-1"></a>The **p-value** is the probability of obtaining a fluctuation in data under the null hypothesis that is as, or more, extreme than that observed by a given experiment. </span>
+<span id="cb9-703"><a href="#cb9-703" aria-hidden="true" tabindex="-1"></a>If the p-value is smaller than a predifined tolerance (usually set to 0.05), then one might consider rejecting the null hypothesis as the probability of observing such a fluctuation under the null hypothesis is extremely small.</span>
+<span id="cb9-704"><a href="#cb9-704" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-705"><a href="#cb9-705" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb9-706"><a href="#cb9-706" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-707"><a href="#cb9-707" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
+<span id="cb9-708"><a href="#cb9-708" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** $\ge\alpha$ (typically 0.05), the null hypothesis is accepted.</span>
+<span id="cb9-709"><a href="#cb9-709" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** is below a certain threshold $\alpha$, the null hypothesis is rejected.</span>
+<span id="cb9-710"><a href="#cb9-710" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-711"><a href="#cb9-711" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-712"><a href="#cb9-712" aria-hidden="true" tabindex="-1"></a>In R, most tests will automatically return a p-value, which will help you decide whether the test is conclusive or not – we will not delve into the details of computing these p-values.</span>
 <span id="cb9-713"><a href="#cb9-713" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-714"><a href="#cb9-714" aria-hidden="true" tabindex="-1"></a><span class="fu">### Asserting the Gaussian nature of a distribution: the Shapiro–Wilk test</span></span>
-<span id="cb9-715"><a href="#cb9-715" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-716"><a href="#cb9-716" aria-hidden="true" tabindex="-1"></a>The Shapiro-Wilk test is a statistical test that can be used to determine whether a distribution of data is Gaussian or not. </span>
-<span id="cb9-717"><a href="#cb9-717" aria-hidden="true" tabindex="-1"></a>It is based on the comparison of the observed distribution with the expected distribution of a Gaussian distribution with the same mean and standard deviation.</span>
-<span id="cb9-718"><a href="#cb9-718" aria-hidden="true" tabindex="-1"></a>Its **null hypothesis** is that the data are normally distributed, thus:</span>
-<span id="cb9-719"><a href="#cb9-719" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-720"><a href="#cb9-720" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** $&lt;\alpha$, the null hypothesis is rejected and the data are not normally distributed.</span>
-<span id="cb9-721"><a href="#cb9-721" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** $\ge\alpha$, the null hypothesis is not rejected and the data are normally distributed.</span>
-<span id="cb9-722"><a href="#cb9-722" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-723"><a href="#cb9-723" aria-hidden="true" tabindex="-1"></a>Let's perform a Shapiro-Wilk test on the distribution of the data in @fig-histogramT:</span>
-<span id="cb9-724"><a href="#cb9-724" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-727"><a href="#cb9-727" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-728"><a href="#cb9-728" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
-<span id="cb9-729"><a href="#cb9-729" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
-<span id="cb9-730"><a href="#cb9-730" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
-<span id="cb9-731"><a href="#cb9-731" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">38</span>, <span class="fl">38.1</span>, <span class="fl">38.0</span>, <span class="fl">38.0</span>, <span class="fl">38.3</span>, <span class="fl">37.9</span>, <span class="fl">38.1</span>, <span class="fl">38.2</span>, <span class="fl">39.8</span>)</span>
-<span id="cb9-732"><a href="#cb9-732" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(temp)</span>
-<span id="cb9-733"><a href="#cb9-733" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-734"><a href="#cb9-734" aria-hidden="true" tabindex="-1"></a>We see here that the p-value is <span class="in">`r sprintf("%.3g",shapiro.test(temp)$p.value)`</span>, which is below the threshold $\alpha$ = 0.05. </span>
-<span id="cb9-735"><a href="#cb9-735" aria-hidden="true" tabindex="-1"></a>This means that **it is extremely unlikely that you'd observe such measurements if their distribution were normal**.</span>
-<span id="cb9-736"><a href="#cb9-736" aria-hidden="true" tabindex="-1"></a>The null hypothesis that the data are normally distributed is thus rejected, and we can conclude that the data are not normally distributed -- as expected from their representation in @fig-histogramT.</span>
-<span id="cb9-737"><a href="#cb9-737" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-738"><a href="#cb9-738" aria-hidden="true" tabindex="-1"></a>If we were to remove the outlier (39.8) and perform the test again, we would get a p-value of <span class="in">`r sprintf("%.3g",shapiro.test(temp[temp!=39.8])$p.value)`</span>, which means that there is a <span class="in">`r round(100*shapiro.test(temp[temp!=39.8])$p.value,1)`</span>% chance to observe such measurements if their distribution were normal. As p-value &gt; 0.05, the null hypothesis that the data are normally distributed is not rejected, and we can conclude that the data are normally distributed.</span>
-<span id="cb9-739"><a href="#cb9-739" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-740"><a href="#cb9-740" aria-hidden="true" tabindex="-1"></a><span class="fu">### Student's t-test </span></span>
-<span id="cb9-741"><a href="#cb9-741" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-742"><a href="#cb9-742" aria-hidden="true" tabindex="-1"></a>The Student's t-test is a statistical test that can be used to determine whether two sets of data are significantly different from each other.</span>
-<span id="cb9-743"><a href="#cb9-743" aria-hidden="true" tabindex="-1"></a>Its **null hypothesis** is that **the two sets of data are drawn from the same distribution**, thus:</span>
-<span id="cb9-744"><a href="#cb9-744" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-745"><a href="#cb9-745" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** $&lt;\alpha$, the null hypothesis is rejected and the data are not drawn from the same distribution.</span>
-<span id="cb9-746"><a href="#cb9-746" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** $\ge\alpha$, the null hypothesis is not rejected and the data are drawn from the same distribution.</span>
-<span id="cb9-747"><a href="#cb9-747" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-748"><a href="#cb9-748" aria-hidden="true" tabindex="-1"></a>Let's work on two sets of temperature measurements performed on two different days on two different person. We want to assert whether the temperature evolution between the two days is significant or not for each patient. For the sake of example, let's say that in both cases, they present the same average temperature on day 1 and on day 2 but with a different spread in data.</span>
-<span id="cb9-749"><a href="#cb9-749" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-752"><a href="#cb9-752" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-753"><a href="#cb9-753" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb9-754"><a href="#cb9-754" aria-hidden="true" tabindex="-1"></a>temps1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Day1 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">38.2</span>, .<span class="dv">2</span>),</span>
-<span id="cb9-755"><a href="#cb9-755" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Day2 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">37.7</span>, .<span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-756"><a href="#cb9-756" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), </span>
-<span id="cb9-757"><a href="#cb9-757" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">"Day"</span>, </span>
-<span id="cb9-758"><a href="#cb9-758" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"Temperature"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-759"><a href="#cb9-759" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">Patient=</span><span class="st">"A"</span>)</span>
-<span id="cb9-760"><a href="#cb9-760" aria-hidden="true" tabindex="-1"></a>temps2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Day1 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">38.2</span>, <span class="dv">3</span>),</span>
-<span id="cb9-761"><a href="#cb9-761" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Day2 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">37.7</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-762"><a href="#cb9-762" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), </span>
-<span id="cb9-763"><a href="#cb9-763" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">"Day"</span>, </span>
-<span id="cb9-764"><a href="#cb9-764" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"Temperature"</span>)<span class="sc">%&gt;%</span> </span>
-<span id="cb9-765"><a href="#cb9-765" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">Patient=</span><span class="st">"B"</span>)</span>
-<span id="cb9-766"><a href="#cb9-766" aria-hidden="true" tabindex="-1"></a>temperatures <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(temps1, temps2)</span>
-<span id="cb9-767"><a href="#cb9-767" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">%&gt;%</span> </span>
-<span id="cb9-768"><a href="#cb9-768" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Day, <span class="at">y =</span> Temperature, <span class="at">color =</span> Patient)) <span class="sc">+</span></span>
-<span id="cb9-769"><a href="#cb9-769" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_jitter</span>(<span class="at">width =</span> .<span class="dv">04</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> .<span class="dv">3</span>)<span class="sc">+</span></span>
-<span id="cb9-770"><a href="#cb9-770" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>, <span class="at">position =</span> <span class="st">"identity"</span>, </span>
-<span id="cb9-771"><a href="#cb9-771" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">width =</span> .<span class="dv">2</span>, </span>
-<span id="cb9-772"><a href="#cb9-772" aria-hidden="true" tabindex="-1"></a>                     <span class="at">show.legend =</span> <span class="cn">FALSE</span>)<span class="sc">+</span></span>
-<span id="cb9-773"><a href="#cb9-773" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_violin</span>(<span class="at">position =</span> <span class="st">"identity"</span>, </span>
-<span id="cb9-774"><a href="#cb9-774" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill=</span><span class="cn">NA</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)<span class="sc">+</span></span>
-<span id="cb9-775"><a href="#cb9-775" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"royalblue"</span>))<span class="sc">+</span></span>
-<span id="cb9-776"><a href="#cb9-776" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"royalblue"</span>))<span class="sc">+</span></span>
-<span id="cb9-777"><a href="#cb9-777" aria-hidden="true" tabindex="-1"></a>        <span class="fu">stat_summary</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">geom =</span> <span class="st">"point"</span>)<span class="sc">+</span></span>
-<span id="cb9-778"><a href="#cb9-778" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day"</span>,</span>
-<span id="cb9-779"><a href="#cb9-779" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="st">"Temperature [°C]"</span>)</span>
-<span id="cb9-780"><a href="#cb9-780" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-781"><a href="#cb9-781" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-784"><a href="#cb9-784" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-785"><a href="#cb9-785" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
-<span id="cb9-786"><a href="#cb9-786" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb9-787"><a href="#cb9-787" aria-hidden="true" tabindex="-1"></a>TA <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"A"</span>),</span>
-<span id="cb9-788"><a href="#cb9-788" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
-<span id="cb9-789"><a href="#cb9-789" aria-hidden="true" tabindex="-1"></a>TB <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>),</span>
-<span id="cb9-790"><a href="#cb9-790" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
-<span id="cb9-791"><a href="#cb9-791" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-792"><a href="#cb9-792" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-795"><a href="#cb9-795" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-796"><a href="#cb9-796" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb9-797"><a href="#cb9-797" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: Data means and standard deviations</span></span>
-<span id="cb9-798"><a href="#cb9-798" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">%&gt;%</span> </span>
-<span id="cb9-799"><a href="#cb9-799" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">.by =</span> <span class="fu">c</span>(Day, Patient),</span>
-<span id="cb9-800"><a href="#cb9-800" aria-hidden="true" tabindex="-1"></a>              <span class="at">mean =</span> <span class="fu">mean</span>(Temperature),</span>
-<span id="cb9-801"><a href="#cb9-801" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd =</span> <span class="fu">sd</span>(Temperature)) <span class="sc">%&gt;%</span></span>
-<span id="cb9-802"><a href="#cb9-802" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"markdown"</span>)</span>
-<span id="cb9-803"><a href="#cb9-803" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-804"><a href="#cb9-804" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-714"><a href="#cb9-714" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-715"><a href="#cb9-715" aria-hidden="true" tabindex="-1"></a><span class="fu">### Asserting the Gaussian nature of a distribution: the Shapiro–Wilk test</span></span>
+<span id="cb9-716"><a href="#cb9-716" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-717"><a href="#cb9-717" aria-hidden="true" tabindex="-1"></a>The Shapiro-Wilk test is a statistical test that can be used to determine whether a distribution of data is Gaussian or not. </span>
+<span id="cb9-718"><a href="#cb9-718" aria-hidden="true" tabindex="-1"></a>It is based on the comparison of the observed distribution with the expected distribution of a Gaussian distribution with the same mean and standard deviation.</span>
+<span id="cb9-719"><a href="#cb9-719" aria-hidden="true" tabindex="-1"></a>Its **null hypothesis** is that the data are normally distributed, thus:</span>
+<span id="cb9-720"><a href="#cb9-720" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-721"><a href="#cb9-721" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** $&lt;\alpha$, the null hypothesis is rejected and the data are not normally distributed.</span>
+<span id="cb9-722"><a href="#cb9-722" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** $\ge\alpha$, the null hypothesis is not rejected and the data are normally distributed.</span>
+<span id="cb9-723"><a href="#cb9-723" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-724"><a href="#cb9-724" aria-hidden="true" tabindex="-1"></a>Let's perform a Shapiro-Wilk test on the distribution of the data in @fig-histogramT:</span>
+<span id="cb9-725"><a href="#cb9-725" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-728"><a href="#cb9-728" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-729"><a href="#cb9-729" aria-hidden="true" tabindex="-1"></a><span class="co">#| warning: false</span></span>
+<span id="cb9-730"><a href="#cb9-730" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
+<span id="cb9-731"><a href="#cb9-731" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: true</span></span>
+<span id="cb9-732"><a href="#cb9-732" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">38</span>, <span class="fl">38.1</span>, <span class="fl">38.0</span>, <span class="fl">38.0</span>, <span class="fl">38.3</span>, <span class="fl">37.9</span>, <span class="fl">38.1</span>, <span class="fl">38.2</span>, <span class="fl">39.8</span>)</span>
+<span id="cb9-733"><a href="#cb9-733" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(temp)</span>
+<span id="cb9-734"><a href="#cb9-734" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-735"><a href="#cb9-735" aria-hidden="true" tabindex="-1"></a>We see here that the p-value is <span class="in">`r sprintf("%.3g",shapiro.test(temp)$p.value)`</span>, which is below the threshold $\alpha$ = 0.05. </span>
+<span id="cb9-736"><a href="#cb9-736" aria-hidden="true" tabindex="-1"></a>This means that **it is extremely unlikely that you'd observe such measurements if their distribution were normal**.</span>
+<span id="cb9-737"><a href="#cb9-737" aria-hidden="true" tabindex="-1"></a>The null hypothesis that the data are normally distributed is thus rejected, and we can conclude that the data are not normally distributed -- as expected from their representation in @fig-histogramT.</span>
+<span id="cb9-738"><a href="#cb9-738" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-739"><a href="#cb9-739" aria-hidden="true" tabindex="-1"></a>If we were to remove the outlier (39.8) and perform the test again, we would get a p-value of <span class="in">`r sprintf("%.3g",shapiro.test(temp[temp!=39.8])$p.value)`</span>, which means that there is a <span class="in">`r round(100*shapiro.test(temp[temp!=39.8])$p.value,1)`</span>% chance to observe such measurements if their distribution were normal. As p-value &gt; 0.05, the null hypothesis that the data are normally distributed is not rejected, and we can conclude that the data are normally distributed.</span>
+<span id="cb9-740"><a href="#cb9-740" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-741"><a href="#cb9-741" aria-hidden="true" tabindex="-1"></a><span class="fu">### Student's t-test </span></span>
+<span id="cb9-742"><a href="#cb9-742" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-743"><a href="#cb9-743" aria-hidden="true" tabindex="-1"></a>The Student's t-test is a statistical test that can be used to determine whether two sets of data are significantly different from each other.</span>
+<span id="cb9-744"><a href="#cb9-744" aria-hidden="true" tabindex="-1"></a>Its **null hypothesis** is that **the two sets of data are drawn from the same distribution**, thus:</span>
+<span id="cb9-745"><a href="#cb9-745" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-746"><a href="#cb9-746" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** $&lt;\alpha$, the null hypothesis is rejected and the data are not drawn from the same distribution.</span>
+<span id="cb9-747"><a href="#cb9-747" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>If the **p-value** $\ge\alpha$, the null hypothesis is not rejected and the data are drawn from the same distribution.</span>
+<span id="cb9-748"><a href="#cb9-748" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-749"><a href="#cb9-749" aria-hidden="true" tabindex="-1"></a>Let's work on two sets of temperature measurements performed on two different days on two different person. We want to assert whether the temperature evolution between the two days is significant or not for each patient. For the sake of example, let's say that in both cases, they present the same average temperature on day 1 and on day 2 but with a different spread in data.</span>
+<span id="cb9-750"><a href="#cb9-750" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-753"><a href="#cb9-753" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-754"><a href="#cb9-754" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-755"><a href="#cb9-755" aria-hidden="true" tabindex="-1"></a>temps1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Day1 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">38.2</span>, .<span class="dv">2</span>),</span>
+<span id="cb9-756"><a href="#cb9-756" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Day2 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">37.7</span>, .<span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-757"><a href="#cb9-757" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), </span>
+<span id="cb9-758"><a href="#cb9-758" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">"Day"</span>, </span>
+<span id="cb9-759"><a href="#cb9-759" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"Temperature"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-760"><a href="#cb9-760" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">Patient=</span><span class="st">"A"</span>)</span>
+<span id="cb9-761"><a href="#cb9-761" aria-hidden="true" tabindex="-1"></a>temps2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Day1 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">38.2</span>, <span class="dv">3</span>),</span>
+<span id="cb9-762"><a href="#cb9-762" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Day2 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">37.7</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-763"><a href="#cb9-763" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), </span>
+<span id="cb9-764"><a href="#cb9-764" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">"Day"</span>, </span>
+<span id="cb9-765"><a href="#cb9-765" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"Temperature"</span>)<span class="sc">%&gt;%</span> </span>
+<span id="cb9-766"><a href="#cb9-766" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">Patient=</span><span class="st">"B"</span>)</span>
+<span id="cb9-767"><a href="#cb9-767" aria-hidden="true" tabindex="-1"></a>temperatures <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(temps1, temps2)</span>
+<span id="cb9-768"><a href="#cb9-768" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">%&gt;%</span> </span>
+<span id="cb9-769"><a href="#cb9-769" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Day, <span class="at">y =</span> Temperature, <span class="at">color =</span> Patient)) <span class="sc">+</span></span>
+<span id="cb9-770"><a href="#cb9-770" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_jitter</span>(<span class="at">width =</span> .<span class="dv">04</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> .<span class="dv">3</span>)<span class="sc">+</span></span>
+<span id="cb9-771"><a href="#cb9-771" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>, <span class="at">position =</span> <span class="st">"identity"</span>, </span>
+<span id="cb9-772"><a href="#cb9-772" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">width =</span> .<span class="dv">2</span>, </span>
+<span id="cb9-773"><a href="#cb9-773" aria-hidden="true" tabindex="-1"></a>                     <span class="at">show.legend =</span> <span class="cn">FALSE</span>)<span class="sc">+</span></span>
+<span id="cb9-774"><a href="#cb9-774" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_violin</span>(<span class="at">position =</span> <span class="st">"identity"</span>, </span>
+<span id="cb9-775"><a href="#cb9-775" aria-hidden="true" tabindex="-1"></a>                     <span class="at">fill=</span><span class="cn">NA</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>)<span class="sc">+</span></span>
+<span id="cb9-776"><a href="#cb9-776" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"royalblue"</span>))<span class="sc">+</span></span>
+<span id="cb9-777"><a href="#cb9-777" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"royalblue"</span>))<span class="sc">+</span></span>
+<span id="cb9-778"><a href="#cb9-778" aria-hidden="true" tabindex="-1"></a>        <span class="fu">stat_summary</span>(<span class="at">fun =</span> <span class="st">"mean"</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">geom =</span> <span class="st">"point"</span>)<span class="sc">+</span></span>
+<span id="cb9-779"><a href="#cb9-779" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day"</span>,</span>
+<span id="cb9-780"><a href="#cb9-780" aria-hidden="true" tabindex="-1"></a>             <span class="at">y =</span> <span class="st">"Temperature [°C]"</span>)</span>
+<span id="cb9-781"><a href="#cb9-781" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-782"><a href="#cb9-782" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-785"><a href="#cb9-785" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-786"><a href="#cb9-786" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
+<span id="cb9-787"><a href="#cb9-787" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-788"><a href="#cb9-788" aria-hidden="true" tabindex="-1"></a>TA <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"A"</span>),</span>
+<span id="cb9-789"><a href="#cb9-789" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
+<span id="cb9-790"><a href="#cb9-790" aria-hidden="true" tabindex="-1"></a>TB <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>),</span>
+<span id="cb9-791"><a href="#cb9-791" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
+<span id="cb9-792"><a href="#cb9-792" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-793"><a href="#cb9-793" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-796"><a href="#cb9-796" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-797"><a href="#cb9-797" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-798"><a href="#cb9-798" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: Data means and standard deviations</span></span>
+<span id="cb9-799"><a href="#cb9-799" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">%&gt;%</span> </span>
+<span id="cb9-800"><a href="#cb9-800" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">.by =</span> <span class="fu">c</span>(Day, Patient),</span>
+<span id="cb9-801"><a href="#cb9-801" aria-hidden="true" tabindex="-1"></a>              <span class="at">mean =</span> <span class="fu">mean</span>(Temperature),</span>
+<span id="cb9-802"><a href="#cb9-802" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd =</span> <span class="fu">sd</span>(Temperature)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-803"><a href="#cb9-803" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"markdown"</span>)</span>
+<span id="cb9-804"><a href="#cb9-804" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-805"><a href="#cb9-805" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-806"><a href="#cb9-806" aria-hidden="true" tabindex="-1"></a>We want to determine whether the temperature evolution between the two days is significant or not for each patient.</span>
-<span id="cb9-807"><a href="#cb9-807" aria-hidden="true" tabindex="-1"></a>We can perform a Student's t-test to assert whether the two sets of data are significantly different from each other. </span>
-<span id="cb9-808"><a href="#cb9-808" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-809"><a href="#cb9-809" aria-hidden="true" tabindex="-1"></a>First, **to apply a t-test, we need to make sure that the data are normally distributed**, which we can do by performing a Shapiro-Wilk test on each set of data:</span>
-<span id="cb9-812"><a href="#cb9-812" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-813"><a href="#cb9-813" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb9-814"><a href="#cb9-814" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">%&gt;%</span> </span>
-<span id="cb9-815"><a href="#cb9-815" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nest</span>(<span class="at">data =</span> Temperature) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-816"><a href="#cb9-816" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">shapiro =</span> <span class="fu">map</span>(data, <span class="sc">~</span><span class="fu">as_tibble</span>(</span>
-<span id="cb9-817"><a href="#cb9-817" aria-hidden="true" tabindex="-1"></a>        <span class="fu">shapiro.test</span>(.<span class="sc">$</span>Temperature)[<span class="fu">c</span>(<span class="st">'statistic'</span>,<span class="st">'p.value'</span>)]))) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-818"><a href="#cb9-818" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(shapiro) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-819"><a href="#cb9-819" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>data) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-820"><a href="#cb9-820" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"markdown"</span>)</span>
-<span id="cb9-821"><a href="#cb9-821" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-822"><a href="#cb9-822" aria-hidden="true" tabindex="-1"></a>In all cases the p-value is above 0.05, which means that the null hypothesis that the data are normally distributed is not rejected, and **we can conclude that the data are normally distributed**. The application of the t-test is thus valid.</span>
-<span id="cb9-823"><a href="#cb9-823" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-824"><a href="#cb9-824" aria-hidden="true" tabindex="-1"></a>Let's start now with patient A:</span>
-<span id="cb9-827"><a href="#cb9-827" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-828"><a href="#cb9-828" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"A"</span>),</span>
-<span id="cb9-829"><a href="#cb9-829" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
-<span id="cb9-830"><a href="#cb9-830" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-831"><a href="#cb9-831" aria-hidden="true" tabindex="-1"></a>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of <span class="in">`r sprintf("%.3g",TA$p.value)`</span>, which is largely below the threshold $\alpha$ = 0.05.</span>
-<span id="cb9-832"><a href="#cb9-832" aria-hidden="true" tabindex="-1"></a>To report it properly, we can say that "the temperature of patient A on day 1 (<span class="in">`r round(TA$estimate[1],2)`</span>°C, 95% CI = <span class="co">[</span><span class="ot">`r sort(round(Rmisc::CI(temperatures %&gt;% filter(Patient == "A", Day=="Day1") %&gt;% pull(Temperature))[c(1,3)],2))`</span><span class="co">]</span>°C), was statistically significantly higher than on day 2 (<span class="in">`r round(TA$estimate[2],2)`</span>°C, 95% CI = <span class="co">[</span><span class="ot">`r sort(round(Rmisc::CI(temperatures %&gt;% filter(Patient == "A", Day=="Day2") %&gt;% pull(Temperature))[c(1,3)],2))`</span><span class="co">]</span>°C), t(<span class="in">`r round(TA$parameter,2)`</span>) = <span class="in">`r round(TA$statistic,2)`</span>, p = <span class="in">`r sprintf("%.3g",TA$p.value)`</span>."</span>
-<span id="cb9-833"><a href="#cb9-833" aria-hidden="true" tabindex="-1"></a>Here , <span class="in">`r round(TA$parameter,2)`</span> is the degrees of freedom associated with the t test-statistic.</span>
-<span id="cb9-834"><a href="#cb9-834" aria-hidden="true" tabindex="-1"></a>The 95% confidence interval for the difference between the means is <span class="in">`r round(TA$conf.int[1],2)`</span>°C to <span class="in">`r round(TA$conf.int[2],2)`</span>°C.</span>
-<span id="cb9-835"><a href="#cb9-835" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-836"><a href="#cb9-836" aria-hidden="true" tabindex="-1"></a>For patient B however, even though the average temperature decreased between the two days, the spread in data is so large that the t-test does not allow concluding concerning any significant temperature difference between the two days:</span>
-<span id="cb9-839"><a href="#cb9-839" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-840"><a href="#cb9-840" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>),</span>
-<span id="cb9-841"><a href="#cb9-841" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
-<span id="cb9-842"><a href="#cb9-842" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-843"><a href="#cb9-843" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-844"><a href="#cb9-844" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb9-845"><a href="#cb9-845" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-846"><a href="#cb9-846" aria-hidden="true" tabindex="-1"></a>Performing a t-test on a single distribution will test whether the distribution's mean is equal to 0:</span>
-<span id="cb9-847"><a href="#cb9-847" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-850"><a href="#cb9-850" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-851"><a href="#cb9-851" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>, Day<span class="sc">==</span><span class="st">"Day1"</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(Temperature))</span>
-<span id="cb9-852"><a href="#cb9-852" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb9-853"><a href="#cb9-853" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-854"><a href="#cb9-854" aria-hidden="true" tabindex="-1"></a>::: </span>
-<span id="cb9-855"><a href="#cb9-855" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-856"><a href="#cb9-856" aria-hidden="true" tabindex="-1"></a><span class="fu">## Uncertainty and errors</span></span>
-<span id="cb9-857"><a href="#cb9-857" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-858"><a href="#cb9-858" aria-hidden="true" tabindex="-1"></a><span class="fu">### Central limit theorem: on the Gaussian nature of statistical uncertainty</span></span>
-<span id="cb9-859"><a href="#cb9-859" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-860"><a href="#cb9-860" aria-hidden="true" tabindex="-1"></a>The **central limit theorem** states that if one takes $N$ random independent samples of a distribution of data that describes some variable $x$, then as $N$ tends to infinity, the distribution of the sum of the samples tends to a Gaussian distribution. </span>
-<span id="cb9-861"><a href="#cb9-861" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-862"><a href="#cb9-862" aria-hidden="true" tabindex="-1"></a>In other terms: the mean value of a large number $N$ of independent random variables (that can be distributed following any distribution with finite variance), obeying the same distribution with variance $\sigma_0^2$, approaches a normal distribution with variance $\sigma^2 = \sigma _0^2/N$.</span>
-<span id="cb9-863"><a href="#cb9-863" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-864"><a href="#cb9-864" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb9-865"><a href="#cb9-865" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-866"><a href="#cb9-866" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
-<span id="cb9-867"><a href="#cb9-867" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-868"><a href="#cb9-868" aria-hidden="true" tabindex="-1"></a>**This result is fundamental** as it implies that **independent measurements of any observable will show values that will be spread following a Gaussian distribution**, and thus statistical uncertainties that are Gaussian in nature.</span>
-<span id="cb9-869"><a href="#cb9-869" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-870"><a href="#cb9-870" aria-hidden="true" tabindex="-1"></a>Moreover, we see here the typical property of statistical errors, which is that **the relative error is proportional to** $1/\sqrt{N}$. Increasing the number of observations thus decreases the error, *i.e.* increases the precision.</span>
-<span id="cb9-871"><a href="#cb9-871" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-872"><a href="#cb9-872" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-873"><a href="#cb9-873" aria-hidden="true" tabindex="-1"></a><span class="fu">### Combination of errors</span></span>
-<span id="cb9-874"><a href="#cb9-874" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-875"><a href="#cb9-875" aria-hidden="true" tabindex="-1"></a>Let us consider a function of $n$ variables, $f(u_1, u_2, ..., u_n)$. We can Taylor expand this function about the various mean values $u_i=\overline{u_i}$, so that, at the first order:</span>
-<span id="cb9-876"><a href="#cb9-876" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-877"><a href="#cb9-877" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-878"><a href="#cb9-878" aria-hidden="true" tabindex="-1"></a>f(u_1, ..., u_n) = f(\overline{u_1}, ..., \overline{u_n}) + \sum_{i=1}^n (u_i-\overline{u_i})\frac{\partial f}{\partial u_i}</span>
-<span id="cb9-879"><a href="#cb9-879" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-880"><a href="#cb9-880" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-881"><a href="#cb9-881" aria-hidden="true" tabindex="-1"></a>Considering that the variance of a quantity $f$ is given by $\sigma^2(f) = (f - \overline{f} )^2$, it follows that the variance of our multivariable function is given by:</span>
-<span id="cb9-882"><a href="#cb9-882" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-883"><a href="#cb9-883" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-884"><a href="#cb9-884" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb9-885"><a href="#cb9-885" aria-hidden="true" tabindex="-1"></a>\sigma^2(f) &amp;= \left(\sum_{i=1}^n (u_i-\overline{u_i})\frac{\partial f}{\partial u_i}\right)^2<span class="sc">\\</span></span>
-<span id="cb9-886"><a href="#cb9-886" aria-hidden="true" tabindex="-1"></a>         &amp;= \sum_{i=1}^n \left(\frac{\partial f}{\partial u_i}\right)^2\sigma_{u_i}^2 + 2\sum_{i\ne j}\frac{\partial f}{\partial u_i}\frac{\partial f}{\partial u_j}\sigma_{u_iu_j}<span class="sc">\\</span></span>
-<span id="cb9-887"><a href="#cb9-887" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
-<span id="cb9-888"><a href="#cb9-888" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-889"><a href="#cb9-889" aria-hidden="true" tabindex="-1"></a>where we have replaced $(u_i-\overline{u_i})^2$ by the variance $\sigma_{u_i}^2$ and $(u_i-\overline{u_i})(u_j-\overline{u_j})$ by the covariance $\sigma_{u_iu_j}$.</span>
-<span id="cb9-890"><a href="#cb9-890" aria-hidden="true" tabindex="-1"></a>\</span>
-<span id="cb9-891"><a href="#cb9-891" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-892"><a href="#cb9-892" aria-hidden="true" tabindex="-1"></a>If the variables $u_i$ are independent then the covariance $\sigma_{u_iu_j}$ is null, and it follows the general expression of the standard error that can be applied to **any function of independent variables**:</span>
-<span id="cb9-893"><a href="#cb9-893" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-894"><a href="#cb9-894" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal"}</span>
-<span id="cb9-895"><a href="#cb9-895" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-806"><a href="#cb9-806" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-807"><a href="#cb9-807" aria-hidden="true" tabindex="-1"></a>We want to determine whether the temperature evolution between the two days is significant or not for each patient.</span>
+<span id="cb9-808"><a href="#cb9-808" aria-hidden="true" tabindex="-1"></a>We can perform a Student's t-test to assert whether the two sets of data are significantly different from each other. </span>
+<span id="cb9-809"><a href="#cb9-809" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-810"><a href="#cb9-810" aria-hidden="true" tabindex="-1"></a>First, **to apply a t-test, we need to make sure that the data are normally distributed**, which we can do by performing a Shapiro-Wilk test on each set of data:</span>
+<span id="cb9-813"><a href="#cb9-813" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-814"><a href="#cb9-814" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
+<span id="cb9-815"><a href="#cb9-815" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">%&gt;%</span> </span>
+<span id="cb9-816"><a href="#cb9-816" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nest</span>(<span class="at">data =</span> Temperature) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-817"><a href="#cb9-817" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">shapiro =</span> <span class="fu">map</span>(data, <span class="sc">~</span><span class="fu">as_tibble</span>(</span>
+<span id="cb9-818"><a href="#cb9-818" aria-hidden="true" tabindex="-1"></a>        <span class="fu">shapiro.test</span>(.<span class="sc">$</span>Temperature)[<span class="fu">c</span>(<span class="st">'statistic'</span>,<span class="st">'p.value'</span>)]))) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-819"><a href="#cb9-819" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(shapiro) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-820"><a href="#cb9-820" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>data) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-821"><a href="#cb9-821" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"markdown"</span>)</span>
+<span id="cb9-822"><a href="#cb9-822" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-823"><a href="#cb9-823" aria-hidden="true" tabindex="-1"></a>In all cases the p-value is above 0.05, which means that the null hypothesis that the data are normally distributed is not rejected, and **we can conclude that the data are normally distributed**. The application of the t-test is thus valid.</span>
+<span id="cb9-824"><a href="#cb9-824" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-825"><a href="#cb9-825" aria-hidden="true" tabindex="-1"></a>Let's start now with patient A:</span>
+<span id="cb9-828"><a href="#cb9-828" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-829"><a href="#cb9-829" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"A"</span>),</span>
+<span id="cb9-830"><a href="#cb9-830" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
+<span id="cb9-831"><a href="#cb9-831" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-832"><a href="#cb9-832" aria-hidden="true" tabindex="-1"></a>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of <span class="in">`r sprintf("%.3g",TA$p.value)`</span>, which is largely below the threshold $\alpha$ = 0.05.</span>
+<span id="cb9-833"><a href="#cb9-833" aria-hidden="true" tabindex="-1"></a>To report it properly, we can say that "the temperature of patient A on day 1 (<span class="in">`r round(TA$estimate[1],2)`</span>°C, 95% CI = <span class="co">[</span><span class="ot">`r sort(round(Rmisc::CI(temperatures %&gt;% filter(Patient == "A", Day=="Day1") %&gt;% pull(Temperature))[c(1,3)],2))`</span><span class="co">]</span>°C), was statistically significantly higher than on day 2 (<span class="in">`r round(TA$estimate[2],2)`</span>°C, 95% CI = <span class="co">[</span><span class="ot">`r sort(round(Rmisc::CI(temperatures %&gt;% filter(Patient == "A", Day=="Day2") %&gt;% pull(Temperature))[c(1,3)],2))`</span><span class="co">]</span>°C), t(<span class="in">`r round(TA$parameter,2)`</span>) = <span class="in">`r round(TA$statistic,2)`</span>, p = <span class="in">`r sprintf("%.3g",TA$p.value)`</span>."</span>
+<span id="cb9-834"><a href="#cb9-834" aria-hidden="true" tabindex="-1"></a>Here , <span class="in">`r round(TA$parameter,2)`</span> is the degrees of freedom associated with the t test-statistic.</span>
+<span id="cb9-835"><a href="#cb9-835" aria-hidden="true" tabindex="-1"></a>The 95% confidence interval for the difference between the means is <span class="in">`r round(TA$conf.int[1],2)`</span>°C to <span class="in">`r round(TA$conf.int[2],2)`</span>°C.</span>
+<span id="cb9-836"><a href="#cb9-836" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-837"><a href="#cb9-837" aria-hidden="true" tabindex="-1"></a>For patient B however, even though the average temperature decreased between the two days, the spread in data is so large that the t-test does not allow concluding concerning any significant temperature difference between the two days:</span>
+<span id="cb9-840"><a href="#cb9-840" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-841"><a href="#cb9-841" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>),</span>
+<span id="cb9-842"><a href="#cb9-842" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
+<span id="cb9-843"><a href="#cb9-843" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-844"><a href="#cb9-844" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-845"><a href="#cb9-845" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb9-846"><a href="#cb9-846" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-847"><a href="#cb9-847" aria-hidden="true" tabindex="-1"></a>Performing a t-test on a single distribution will test whether the distribution's mean is equal to 0:</span>
+<span id="cb9-848"><a href="#cb9-848" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-851"><a href="#cb9-851" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb9-852"><a href="#cb9-852" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>, Day<span class="sc">==</span><span class="st">"Day1"</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(Temperature))</span>
+<span id="cb9-853"><a href="#cb9-853" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb9-854"><a href="#cb9-854" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-855"><a href="#cb9-855" aria-hidden="true" tabindex="-1"></a>::: </span>
+<span id="cb9-856"><a href="#cb9-856" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-857"><a href="#cb9-857" aria-hidden="true" tabindex="-1"></a><span class="fu">## Uncertainty and errors</span></span>
+<span id="cb9-858"><a href="#cb9-858" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-859"><a href="#cb9-859" aria-hidden="true" tabindex="-1"></a><span class="fu">### Central limit theorem: on the Gaussian nature of statistical uncertainty</span></span>
+<span id="cb9-860"><a href="#cb9-860" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-861"><a href="#cb9-861" aria-hidden="true" tabindex="-1"></a>The **central limit theorem** states that if one takes $N$ random independent samples of a distribution of data that describes some variable $x$, then as $N$ tends to infinity, the distribution of the sum of the samples tends to a Gaussian distribution. </span>
+<span id="cb9-862"><a href="#cb9-862" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-863"><a href="#cb9-863" aria-hidden="true" tabindex="-1"></a>In other terms: the mean value of a large number $N$ of independent random variables (that can be distributed following any distribution with finite variance), obeying the same distribution with variance $\sigma_0^2$, approaches a normal distribution with variance $\sigma^2 = \sigma _0^2/N$.</span>
+<span id="cb9-864"><a href="#cb9-864" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-865"><a href="#cb9-865" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb9-866"><a href="#cb9-866" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-867"><a href="#cb9-867" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
+<span id="cb9-868"><a href="#cb9-868" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-869"><a href="#cb9-869" aria-hidden="true" tabindex="-1"></a>**This result is fundamental** as it implies that **independent measurements of any observable will show values that will be spread following a Gaussian distribution**, and thus statistical uncertainties that are Gaussian in nature.</span>
+<span id="cb9-870"><a href="#cb9-870" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-871"><a href="#cb9-871" aria-hidden="true" tabindex="-1"></a>Moreover, we see here the typical property of statistical errors, which is that **the relative error is proportional to** $1/\sqrt{N}$. Increasing the number of observations thus decreases the error, *i.e.* increases the precision.</span>
+<span id="cb9-872"><a href="#cb9-872" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-873"><a href="#cb9-873" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-874"><a href="#cb9-874" aria-hidden="true" tabindex="-1"></a><span class="fu">### Combination of errors</span></span>
+<span id="cb9-875"><a href="#cb9-875" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-876"><a href="#cb9-876" aria-hidden="true" tabindex="-1"></a>Let us consider a function of $n$ variables, $f(u_1, u_2, ..., u_n)$. We can Taylor expand this function about the various mean values $u_i=\overline{u_i}$, so that, at the first order:</span>
+<span id="cb9-877"><a href="#cb9-877" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-878"><a href="#cb9-878" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-879"><a href="#cb9-879" aria-hidden="true" tabindex="-1"></a>f(u_1, ..., u_n) = f(\overline{u_1}, ..., \overline{u_n}) + \sum_{i=1}^n (u_i-\overline{u_i})\frac{\partial f}{\partial u_i}</span>
+<span id="cb9-880"><a href="#cb9-880" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-881"><a href="#cb9-881" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-882"><a href="#cb9-882" aria-hidden="true" tabindex="-1"></a>Considering that the variance of a quantity $f$ is given by $\sigma^2(f) = (f - \overline{f} )^2$, it follows that the variance of our multivariable function is given by:</span>
+<span id="cb9-883"><a href="#cb9-883" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-884"><a href="#cb9-884" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-885"><a href="#cb9-885" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb9-886"><a href="#cb9-886" aria-hidden="true" tabindex="-1"></a>\sigma^2(f) &amp;= \left(\sum_{i=1}^n (u_i-\overline{u_i})\frac{\partial f}{\partial u_i}\right)^2<span class="sc">\\</span></span>
+<span id="cb9-887"><a href="#cb9-887" aria-hidden="true" tabindex="-1"></a>         &amp;= \sum_{i=1}^n \left(\frac{\partial f}{\partial u_i}\right)^2\sigma_{u_i}^2 + 2\sum_{i\ne j}\frac{\partial f}{\partial u_i}\frac{\partial f}{\partial u_j}\sigma_{u_iu_j}<span class="sc">\\</span></span>
+<span id="cb9-888"><a href="#cb9-888" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb9-889"><a href="#cb9-889" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-890"><a href="#cb9-890" aria-hidden="true" tabindex="-1"></a>where we have replaced $(u_i-\overline{u_i})^2$ by the variance $\sigma_{u_i}^2$ and $(u_i-\overline{u_i})(u_j-\overline{u_j})$ by the covariance $\sigma_{u_iu_j}$.</span>
+<span id="cb9-891"><a href="#cb9-891" aria-hidden="true" tabindex="-1"></a>\</span>
+<span id="cb9-892"><a href="#cb9-892" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-893"><a href="#cb9-893" aria-hidden="true" tabindex="-1"></a>If the variables $u_i$ are independent then the covariance $\sigma_{u_iu_j}$ is null, and it follows the general expression of the standard error that can be applied to **any function of independent variables**:</span>
+<span id="cb9-894"><a href="#cb9-894" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-895"><a href="#cb9-895" aria-hidden="true" tabindex="-1"></a>::: {.callout-note appearance="minimal"}</span>
 <span id="cb9-896"><a href="#cb9-896" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-897"><a href="#cb9-897" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-898"><a href="#cb9-898" aria-hidden="true" tabindex="-1"></a>\sigma(f) = \sqrt{\sum_{i=1}^n \left(\frac{\partial f}{\partial u_i}\right)^2\sigma_{u_i}^2}</span>
-<span id="cb9-899"><a href="#cb9-899" aria-hidden="true" tabindex="-1"></a>$$ {#eq-uncertainty}</span>
-<span id="cb9-900"><a href="#cb9-900" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-901"><a href="#cb9-901" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-902"><a href="#cb9-902" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-903"><a href="#cb9-903" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Functions of one variable</span></span>
-<span id="cb9-904"><a href="#cb9-904" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-905"><a href="#cb9-905" aria-hidden="true" tabindex="-1"></a>Let us consider a function $f$ having a form that depends only on one observable $x$, for example:</span>
-<span id="cb9-906"><a href="#cb9-906" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-907"><a href="#cb9-907" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-908"><a href="#cb9-908" aria-hidden="true" tabindex="-1"></a>f = Ax + B</span>
-<span id="cb9-909"><a href="#cb9-909" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-910"><a href="#cb9-910" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-911"><a href="#cb9-911" aria-hidden="true" tabindex="-1"></a>Then, following @eq-uncertainty, the standard error on that function is given by:</span>
-<span id="cb9-912"><a href="#cb9-912" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-913"><a href="#cb9-913" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-914"><a href="#cb9-914" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb9-915"><a href="#cb9-915" aria-hidden="true" tabindex="-1"></a>\sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2}<span class="sc">\\</span></span>
-<span id="cb9-916"><a href="#cb9-916" aria-hidden="true" tabindex="-1"></a>         &amp;= A\sigma_x</span>
-<span id="cb9-917"><a href="#cb9-917" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
-<span id="cb9-918"><a href="#cb9-918" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-919"><a href="#cb9-919" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-920"><a href="#cb9-920" aria-hidden="true" tabindex="-1"></a>So, **independently of any offset of the measured observable**, the resulting error must be corrected by the same factor as the intensity.</span>
-<span id="cb9-921"><a href="#cb9-921" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-922"><a href="#cb9-922" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb9-923"><a href="#cb9-923" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-924"><a href="#cb9-924" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
-<span id="cb9-925"><a href="#cb9-925" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-926"><a href="#cb9-926" aria-hidden="true" tabindex="-1"></a>**In practice**, let's say we measure a Raman spectrum. As we saw above, the error on each intensity count is given by the square root of this intensity count. </span>
-<span id="cb9-927"><a href="#cb9-927" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-928"><a href="#cb9-928" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It is possible to shift vertically this spectrum without having to recompute the error bars.</span>
-<span id="cb9-929"><a href="#cb9-929" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>But if you want to normalize (say, to 1) this spectrum, you have to multiply all the errors by the renormalization constant.</span>
-<span id="cb9-930"><a href="#cb9-930" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-931"><a href="#cb9-931" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-932"><a href="#cb9-932" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Functions of two variables</span></span>
-<span id="cb9-933"><a href="#cb9-933" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-934"><a href="#cb9-934" aria-hidden="true" tabindex="-1"></a>Now consider the function $f = Ax + By$, where we have measured the mean and standard deviation of both $x$ and $y$, and want to compute the standard deviation on their sum/subtraction. We can use the general formula of @eq-uncertainty to determine how to do this, hence:</span>
-<span id="cb9-935"><a href="#cb9-935" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-936"><a href="#cb9-936" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-937"><a href="#cb9-937" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
-<span id="cb9-938"><a href="#cb9-938" aria-hidden="true" tabindex="-1"></a>\sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2 + \left(\frac{\partial f}{\partial y}\right)^2\sigma_y^2}<span class="sc">\\</span></span>
-<span id="cb9-939"><a href="#cb9-939" aria-hidden="true" tabindex="-1"></a>         &amp;= \sqrt{A^2\sigma_x^2 + B^2\sigma_y^2}</span>
-<span id="cb9-940"><a href="#cb9-940" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
-<span id="cb9-941"><a href="#cb9-941" aria-hidden="true" tabindex="-1"></a>$$</span>
-<span id="cb9-942"><a href="#cb9-942" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-943"><a href="#cb9-943" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
-<span id="cb9-944"><a href="#cb9-944" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-945"><a href="#cb9-945" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
-<span id="cb9-946"><a href="#cb9-946" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-947"><a href="#cb9-947" aria-hidden="true" tabindex="-1"></a>**In practice**, let's say we measure an UV spectrum of a solution (a molecule in a solvent), and a reference spectrum of this solvent. As we saw above, the error on each intensity count is given by the square root of this intensity count. We want to subtract the signal of the solvent to get only the signal of the molecule.</span>
-<span id="cb9-948"><a href="#cb9-948" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-949"><a href="#cb9-949" aria-hidden="true" tabindex="-1"></a>We thus have to perform the above operation on the errors, $\sigma_{result}=\sqrt{\sigma^2_{solution}+\sigma^2_{reference}}$. It means that in order to have a statistically sound resulting spectrum, the reference needs to be measured with a very good statistics in order to not dominate the resulting error.</span>
-<span id="cb9-950"><a href="#cb9-950" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb9-951"><a href="#cb9-951" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-952"><a href="#cb9-952" aria-hidden="true" tabindex="-1"></a>It is a good thing to think about error propagation and where it comes from... but you don't have to bother computing it by hand, as <span class="co">[</span><span class="ot">packages are here to do it for you</span><span class="co">](https://colinbousige.github.io/rclass/17-units.html#working-with-experimental-errors)</span>, as we will see later in the class.</span>
-<span id="cb9-953"><a href="#cb9-953" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-897"><a href="#cb9-897" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-898"><a href="#cb9-898" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-899"><a href="#cb9-899" aria-hidden="true" tabindex="-1"></a>\sigma(f) = \sqrt{\sum_{i=1}^n \left(\frac{\partial f}{\partial u_i}\right)^2\sigma_{u_i}^2}</span>
+<span id="cb9-900"><a href="#cb9-900" aria-hidden="true" tabindex="-1"></a>$$ {#eq-uncertainty}</span>
+<span id="cb9-901"><a href="#cb9-901" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-902"><a href="#cb9-902" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-903"><a href="#cb9-903" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-904"><a href="#cb9-904" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Functions of one variable</span></span>
+<span id="cb9-905"><a href="#cb9-905" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-906"><a href="#cb9-906" aria-hidden="true" tabindex="-1"></a>Let us consider a function $f$ having a form that depends only on one observable $x$, for example:</span>
+<span id="cb9-907"><a href="#cb9-907" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-908"><a href="#cb9-908" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-909"><a href="#cb9-909" aria-hidden="true" tabindex="-1"></a>f = Ax + B</span>
+<span id="cb9-910"><a href="#cb9-910" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-911"><a href="#cb9-911" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-912"><a href="#cb9-912" aria-hidden="true" tabindex="-1"></a>Then, following @eq-uncertainty, the standard error on that function is given by:</span>
+<span id="cb9-913"><a href="#cb9-913" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-914"><a href="#cb9-914" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-915"><a href="#cb9-915" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb9-916"><a href="#cb9-916" aria-hidden="true" tabindex="-1"></a>\sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2}<span class="sc">\\</span></span>
+<span id="cb9-917"><a href="#cb9-917" aria-hidden="true" tabindex="-1"></a>         &amp;= A\sigma_x</span>
+<span id="cb9-918"><a href="#cb9-918" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb9-919"><a href="#cb9-919" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-920"><a href="#cb9-920" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-921"><a href="#cb9-921" aria-hidden="true" tabindex="-1"></a>So, **independently of any offset of the measured observable**, the resulting error must be corrected by the same factor as the intensity.</span>
+<span id="cb9-922"><a href="#cb9-922" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-923"><a href="#cb9-923" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb9-924"><a href="#cb9-924" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-925"><a href="#cb9-925" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
+<span id="cb9-926"><a href="#cb9-926" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-927"><a href="#cb9-927" aria-hidden="true" tabindex="-1"></a>**In practice**, let's say we measure a Raman spectrum. As we saw above, the error on each intensity count is given by the square root of this intensity count. </span>
+<span id="cb9-928"><a href="#cb9-928" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-929"><a href="#cb9-929" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It is possible to shift vertically this spectrum without having to recompute the error bars.</span>
+<span id="cb9-930"><a href="#cb9-930" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>But if you want to normalize (say, to 1) this spectrum, you have to multiply all the errors by the renormalization constant.</span>
+<span id="cb9-931"><a href="#cb9-931" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-932"><a href="#cb9-932" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-933"><a href="#cb9-933" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Functions of two variables</span></span>
+<span id="cb9-934"><a href="#cb9-934" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-935"><a href="#cb9-935" aria-hidden="true" tabindex="-1"></a>Now consider the function $f = Ax + By$, where we have measured the mean and standard deviation of both $x$ and $y$, and want to compute the standard deviation on their sum/subtraction. We can use the general formula of @eq-uncertainty to determine how to do this, hence:</span>
+<span id="cb9-936"><a href="#cb9-936" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-937"><a href="#cb9-937" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-938"><a href="#cb9-938" aria-hidden="true" tabindex="-1"></a>\begin{aligned}</span>
+<span id="cb9-939"><a href="#cb9-939" aria-hidden="true" tabindex="-1"></a>\sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2 + \left(\frac{\partial f}{\partial y}\right)^2\sigma_y^2}<span class="sc">\\</span></span>
+<span id="cb9-940"><a href="#cb9-940" aria-hidden="true" tabindex="-1"></a>         &amp;= \sqrt{A^2\sigma_x^2 + B^2\sigma_y^2}</span>
+<span id="cb9-941"><a href="#cb9-941" aria-hidden="true" tabindex="-1"></a>\end{aligned}</span>
+<span id="cb9-942"><a href="#cb9-942" aria-hidden="true" tabindex="-1"></a>$$</span>
+<span id="cb9-943"><a href="#cb9-943" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-944"><a href="#cb9-944" aria-hidden="true" tabindex="-1"></a>::: {.callout-note}</span>
+<span id="cb9-945"><a href="#cb9-945" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-946"><a href="#cb9-946" aria-hidden="true" tabindex="-1"></a><span class="fu">## Important</span></span>
+<span id="cb9-947"><a href="#cb9-947" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-948"><a href="#cb9-948" aria-hidden="true" tabindex="-1"></a>**In practice**, let's say we measure an UV spectrum of a solution (a molecule in a solvent), and a reference spectrum of this solvent. As we saw above, the error on each intensity count is given by the square root of this intensity count. We want to subtract the signal of the solvent to get only the signal of the molecule.</span>
+<span id="cb9-949"><a href="#cb9-949" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-950"><a href="#cb9-950" aria-hidden="true" tabindex="-1"></a>We thus have to perform the above operation on the errors, $\sigma_{result}=\sqrt{\sigma^2_{solution}+\sigma^2_{reference}}$. It means that in order to have a statistically sound resulting spectrum, the reference needs to be measured with a very good statistics in order to not dominate the resulting error.</span>
+<span id="cb9-951"><a href="#cb9-951" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb9-952"><a href="#cb9-952" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-953"><a href="#cb9-953" aria-hidden="true" tabindex="-1"></a>It is a good thing to think about error propagation and where it comes from... but you don't have to bother computing it by hand, as <span class="co">[</span><span class="ot">packages are here to do it for you</span><span class="co">](https://colinbousige.github.io/rclass/17-units.html#working-with-experimental-errors)</span>, as we will see later in the class.</span>
 <span id="cb9-954"><a href="#cb9-954" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-955"><a href="#cb9-955" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
-<span id="cb9-956"><a href="#cb9-956" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-957"><a href="#cb9-957" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A. Bevan, *[Statistical Data Analysis for the Physical Sciences](https://www.cambridge.org/core/books/statistical-data-analysis-for-the-physical-sciences/2E3D132870E72277EE5FB96FE616B9F1)*, Cambridge University Press (2013)</span>
-<span id="cb9-958"><a href="#cb9-958" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>G. Bohm, *[Introduction to Statistics and Data Analysis for Physicists](http://www-library.desy.de/preparch/books/vstatmp_engl.pdf)*, Hamburg: Verl. Dt. Elektronen-Synchrotron (2010).</span>
-<span id="cb9-959"><a href="#cb9-959" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>J. Watkins, *[An Introduction to the Science of Statistics](https://www.math.arizona.edu/~jwatkins/statbook.pdf)*</span>
+<span id="cb9-955"><a href="#cb9-955" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-956"><a href="#cb9-956" aria-hidden="true" tabindex="-1"></a><span class="fu">## Further reading</span></span>
+<span id="cb9-957"><a href="#cb9-957" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-958"><a href="#cb9-958" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>A. Bevan, *[Statistical Data Analysis for the Physical Sciences](https://www.cambridge.org/core/books/statistical-data-analysis-for-the-physical-sciences/2E3D132870E72277EE5FB96FE616B9F1)*, Cambridge University Press (2013)</span>
+<span id="cb9-959"><a href="#cb9-959" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>G. Bohm, *[Introduction to Statistics and Data Analysis for Physicists](http://www-library.desy.de/preparch/books/vstatmp_engl.pdf)*, Hamburg: Verl. Dt. Elektronen-Synchrotron (2010).</span>
+<span id="cb9-960"><a href="#cb9-960" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>J. Watkins, *[An Introduction to the Science of Statistics](https://www.math.arizona.edu/~jwatkins/statbook.pdf)*</span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
