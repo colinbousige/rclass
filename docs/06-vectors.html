@@ -363,14 +363,14 @@ ga('send', {
 <span><span class="co"># with given standard deviation `sd`</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean<span class="op">=</span><span class="fl">3</span>, sd<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  [1] 2.720081 1.473838 4.573809 2.827489 3.745672 1.195163 2.720622 1.633784
-#&gt;  [9] 3.656122 3.063380</code></pre>
+<pre><code>#&gt;  [1] 1.487374 3.417737 2.523574 2.281981 1.539284 2.682271 3.596487 3.240041
+#&gt;  [9] 2.549872 1.188674</code></pre>
 </div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># vector with 10 random values uniformly distributed between min and max</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">10</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  [1] 0.2642269 0.1438303 0.6127584 0.6857675 0.2978687 0.2600776 0.5094896
-#&gt;  [8] 0.1202008 0.5240301 0.9188701</code></pre>
+<pre><code>#&gt;  [1] 0.13092386 0.14740335 0.21803967 0.68709861 0.90351050 0.59816399
+#&gt;  [7] 0.58762856 0.06108684 0.43055489 0.30917618</code></pre>
 </div>
 </div>
 </section><section id="numerical-and-categorical-data-types" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="numerical-and-categorical-data-types">
@@ -699,7 +699,7 @@ Attention
 <div class="cell" data-warnings="false">
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 3 9 5</code></pre>
+<pre><code>#&gt; [1] 3 4 3</code></pre>
 </div>
 </div>
 </section><section id="maximum-and-minimum" class="level3" data-number="5.3.4"><h3 data-number="5.3.4" class="anchored" data-anchor-id="maximum-and-minimum">
@@ -844,10 +844,7 @@ Attention
 </div>
 </section></section><section id="exo-vectors" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="exo-vectors">
 <span class="header-section-number">5.4</span> Exercises</h2>
-<p>Interactive exercises can be found in the <a href="https://colinbousige.github.io/tutor/"><code>tutor</code></a> package. For this, simply run:</p>
-<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://colinbousige.github.io/tutor/">tutor</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://colinbousige.github.io/tutor/reference/tuto.html">tuto</a></span><span class="op">(</span><span class="st">"vectors"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p>Alternatively, you can just <a href="Data/exo-in-class.zip" download="" target="_blank">download the archive with all the exercises files</a>, unzip it in your <code>R class</code> RStudio project, and edit the R files.</p>
+<p><a href="Data/exo-in-class.zip" download="" target="_blank">Download the archive with all the exercises files</a>, unzip it in your <code>R class</code> RStudio project, and edit the R files.</p>
 <hr>
 <details><summary><strong>Exercise 1</strong>
 </summary><p>Let’s create a named vector containing age of the students in the class, the names of each value being the first name of the students. Then:</p>
@@ -885,7 +882,7 @@ Attention
 <details><summary>
 Solution
 </summary><div class="cell" data-warnings="false">
-<div class="sourceCode" id="cb131"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a `cities` vector containing all the cities listed in `population.csv`</span></span>
+<div class="sourceCode" id="cb130"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a `cities` vector containing all the cities listed in `population.csv`</span></span>
 <span><span class="va">cities</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Angers"</span>, <span class="st">"Bordeaux"</span>, <span class="st">"Brest"</span>, <span class="st">"Dijon"</span>, <span class="st">"Grenoble"</span>, <span class="st">"Le Havre"</span>, </span>
 <span>            <span class="st">"Le Mans"</span>, <span class="st">"Lille"</span>, <span class="st">"Lyon"</span>, <span class="st">"Marseille"</span>, <span class="st">"Montpellier"</span>, <span class="st">"Nantes"</span>, </span>
 <span>            <span class="st">"Nice"</span>, <span class="st">"Paris"</span>, <span class="st">"Reims"</span>, <span class="st">"Rennes"</span>, <span class="st">"Saint-Etienne"</span>, <span class="st">"Strasbourg"</span>, </span>
@@ -909,7 +906,7 @@ Solution
 #&gt; [10]  852516  268456  291604  343629 2240621  181893  209860  171483  274394
 #&gt; [19]  164899  453317</code></pre>
 </div>
-<div class="sourceCode" id="cb134"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Use names() to name values of `pop_1962` and `pop_2012`. </span></span>
+<div class="sourceCode" id="cb133"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Use names() to name values of `pop_1962` and `pop_2012`. </span></span>
 <span><span class="co"># Print the 2 vectors again. Are there any change?</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">pop_2012</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">pop_1962</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="va">cities</span></span>
 <span><span class="va">pop_1962</span>; <span class="va">pop_2012</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -933,7 +930,7 @@ Solution
 #&gt;        Rennes Saint-Etienne    Strasbourg        Toulon      Toulouse 
 #&gt;        209860        171483        274394        164899        453317</code></pre>
 </div>
-<div class="sourceCode" id="cb137"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># What are the cities with more than 200000 people in 1962? </span></span>
+<div class="sourceCode" id="cb136"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># What are the cities with more than 200000 people in 1962? </span></span>
 <span><span class="co"># For these, how many residents in 2012?</span></span>
 <span><span class="va">cities200k</span> <span class="op">&lt;-</span> <span class="va">cities</span><span class="op">[</span><span class="va">pop_1962</span><span class="op">&gt;</span><span class="fl">200000</span><span class="op">]</span></span>
 <span><span class="va">cities200k</span>; <span class="va">pop_2012</span><span class="op">[</span><span class="va">cities200k</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -948,7 +945,7 @@ Solution
 #&gt;          Nice         Paris Saint-Etienne    Strasbourg      Toulouse 
 #&gt;        343629       2240621        171483        274394        453317</code></pre>
 </div>
-<div class="sourceCode" id="cb140"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># What is the population evolution of Montpellier and Nantes?</span></span>
+<div class="sourceCode" id="cb139"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># What is the population evolution of Montpellier and Nantes?</span></span>
 <span><span class="va">pop_2012</span><span class="op">[</span><span class="st">'Montpellier'</span><span class="op">]</span> <span class="op">-</span> <span class="va">pop_1962</span><span class="op">[</span><span class="st">'Montpellier'</span><span class="op">]</span>; <span class="va">pop_2012</span><span class="op">[</span><span class="st">'Nantes'</span><span class="op">]</span> <span class="op">-</span> <span class="va">pop_1962</span><span class="op">[</span><span class="st">'Nantes'</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Montpellier 
@@ -958,7 +955,7 @@ Solution
 <pre><code>#&gt; Nantes 
 #&gt;  51556</code></pre>
 </div>
-<div class="sourceCode" id="cb143"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a `pop_diff` vector to store population change between 1962 and 2012</span></span>
+<div class="sourceCode" id="cb142"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Create a `pop_diff` vector to store population change between 1962 and 2012</span></span>
 <span><span class="va">pop_diff</span> <span class="op">&lt;-</span> <span class="va">pop_2012</span> <span class="op">-</span> <span class="va">pop_1962</span></span>
 <span><span class="co"># Print cities with a negative change</span></span>
 <span><span class="va">cities</span><span class="op">[</span><span class="va">pop_diff</span><span class="op">&lt;</span><span class="fl">0</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -966,29 +963,29 @@ Solution
 <pre><code>#&gt; [1] "Bordeaux"      "Le Havre"      "Lille"         "Lyon"         
 #&gt; [5] "Paris"         "Saint-Etienne"</code></pre>
 </div>
-<div class="sourceCode" id="cb145"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Print cities which broke the 300000 people barrier between 1962 and 2012</span></span>
+<div class="sourceCode" id="cb144"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Print cities which broke the 300000 people barrier between 1962 and 2012</span></span>
 <span><span class="va">cities</span><span class="op">[</span><span class="va">pop_2012</span><span class="op">&gt;</span><span class="fl">300000</span> <span class="op">&amp;</span> <span class="va">pop_1962</span><span class="op">&lt;</span><span class="fl">300000</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] "Nice"</code></pre>
 </div>
-<div class="sourceCode" id="cb147"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute the total change in population of the 10 largest cities</span></span>
+<div class="sourceCode" id="cb146"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute the total change in population of the 10 largest cities</span></span>
 <span><span class="co"># (as of 1962) between 1962 and 2012.</span></span>
 <span><span class="va">ten_largest</span> <span class="op">&lt;-</span> <span class="va">cities</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="va">pop_1962</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop_2012</span><span class="op">[</span><span class="va">ten_largest</span><span class="op">]</span> <span class="op">-</span> <span class="va">pop_1962</span><span class="op">[</span><span class="va">ten_largest</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] -324432</code></pre>
 </div>
-<div class="sourceCode" id="cb149"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute the population mean for year 1962</span></span>
+<div class="sourceCode" id="cb148"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute the population mean for year 1962</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pop_1962</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 367477.3</code></pre>
 </div>
-<div class="sourceCode" id="cb151"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute the population mean of Paris</span></span>
+<div class="sourceCode" id="cb150"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute the population mean of Paris</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">pop_1962</span><span class="op">[</span><span class="st">'Paris'</span><span class="op">]</span>, <span class="va">pop_2012</span><span class="op">[</span><span class="st">'Paris'</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] 2515356</code></pre>
 </div>
-<div class="sourceCode" id="cb153"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Sort the cities by decreasing order of population for 1962</span></span>
+<div class="sourceCode" id="cb152"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Sort the cities by decreasing order of population for 1962</span></span>
 <span><span class="op">(</span><span class="va">pop_1962_sorted</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">pop_1962</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;         Paris     Marseille          Lyon      Toulouse          Nice 
@@ -1300,413 +1297,406 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>
   </div>
 </nav><div class="modal fade" id="quarto-embedded-source-code-modal" tabindex="-1" aria-labelledby="quarto-embedded-source-code-modal-label" aria-hidden="true"><div class="modal-dialog modal-dialog-scrollable"><div class="modal-content"><div class="modal-header"><h5 class="modal-title" id="quarto-embedded-source-code-modal-label">Source Code</h5><button class="btn-close" data-bs-dismiss="modal"></button></div><div class="modal-body"><div class="">
-<div class="sourceCode" id="cb155" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb155-1"><a href="#cb155-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Vectors</span></span>
-<span id="cb155-2"><a href="#cb155-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-3"><a href="#cb155-3" aria-hidden="true" tabindex="-1"></a>**R is a vectorized language** with built-in arithmetic and relational operators, mathematical functions and types of number. It means that each mathematical function and operator works on a set of data rather than a single scalar value as traditional computer language do, and thus __formal looping can _usually_ be avoided__.</span>
-<span id="cb155-4"><a href="#cb155-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-5"><a href="#cb155-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Different ways of defining a vector</span></span>
-<span id="cb155-6"><a href="#cb155-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-7"><a href="#cb155-7" aria-hidden="true" tabindex="-1"></a>If you want to define a vector by specifying the values, use the function <span class="in">`c()`</span>{.R}, like so:</span>
-<span id="cb155-8"><a href="#cb155-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-9"><a href="#cb155-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Here, <span class="in">`x`</span> is a vector of doubles:</span>
-<span id="cb155-10"><a href="#cb155-10" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-11"><a href="#cb155-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">12</span>, <span class="fl">4.2</span>)</span>
-<span id="cb155-12"><a href="#cb155-12" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb155-13"><a href="#cb155-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-14"><a href="#cb155-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>But here, <span class="in">`x`</span> is converted to a vector of strings because it contains a string:</span>
-<span id="cb155-15"><a href="#cb155-15" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-16"><a href="#cb155-16" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="st">"hello"</span>)</span>
-<span id="cb155-17"><a href="#cb155-17" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb155-18"><a href="#cb155-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-19"><a href="#cb155-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-20"><a href="#cb155-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To define a sequence of increasing numbers, either use the notation <span class="in">`start:end`</span> for a sequence going from <span class="in">`start`</span> to <span class="in">`end`</span> by step of 1, or use the <span class="in">`seq()`</span>{.R} function that is more versatile:</span>
-<span id="cb155-21"><a href="#cb155-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-22"><a href="#cb155-22" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb155-23"><a href="#cb155-23" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">by =</span> .<span class="dv">5</span>)</span>
-<span id="cb155-24"><a href="#cb155-24" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">length =</span> <span class="dv">6</span>)</span>
-<span id="cb155-25"><a href="#cb155-25" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">along =</span> x)</span>
-<span id="cb155-26"><a href="#cb155-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-27"><a href="#cb155-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To repeat values, use the <span class="in">`rep()`</span>{.R} function:</span>
-<span id="cb155-28"><a href="#cb155-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-29"><a href="#cb155-29" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb155-30"><a href="#cb155-30" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="dv">5</span>)</span>
-<span id="cb155-31"><a href="#cb155-31" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">each =</span> <span class="dv">5</span>)</span>
-<span id="cb155-32"><a href="#cb155-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-33"><a href="#cb155-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To create vectors of random numbers, use <span class="in">`rnorm()`</span>{.R} or <span class="in">`runif()`</span>{.R} for normally or uniformly distributed numbers, respectively:</span>
-<span id="cb155-34"><a href="#cb155-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-35"><a href="#cb155-35" aria-hidden="true" tabindex="-1"></a><span class="co"># vector with 10 random values normally distributed around mean </span></span>
-<span id="cb155-36"><a href="#cb155-36" aria-hidden="true" tabindex="-1"></a><span class="co"># with given standard deviation `sd`</span></span>
-<span id="cb155-37"><a href="#cb155-37" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean=</span><span class="dv">3</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
-<span id="cb155-38"><a href="#cb155-38" aria-hidden="true" tabindex="-1"></a><span class="co"># vector with 10 random values uniformly distributed between min and max</span></span>
-<span id="cb155-39"><a href="#cb155-39" aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">10</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span>
-<span id="cb155-40"><a href="#cb155-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-41"><a href="#cb155-41" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-42"><a href="#cb155-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Numerical and categorical data types</span></span>
-<span id="cb155-43"><a href="#cb155-43" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-44"><a href="#cb155-44" aria-hidden="true" tabindex="-1"></a>Data can be of two different types: numerical, or categorical. Let's say you are measuring a the temperature in a room and recording its value over time: </span>
-<span id="cb155-45"><a href="#cb155-45" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-48"><a href="#cb155-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-49"><a href="#cb155-49" aria-hidden="true" tabindex="-1"></a>T1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">22.3</span>, <span class="fl">23.5</span>, <span class="fl">26.0</span>, <span class="fl">30.2</span>)</span>
-<span id="cb155-50"><a href="#cb155-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-51"><a href="#cb155-51" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-52"><a href="#cb155-52" aria-hidden="true" tabindex="-1"></a><span class="in">`T1`</span> is a vector containing **numerical** data.</span>
-<span id="cb155-53"><a href="#cb155-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-54"><a href="#cb155-54" aria-hidden="true" tabindex="-1"></a>Let's say that now you are recording the temperature level, which can be <span class="in">`low`</span>, <span class="in">`high`</span> or <span class="in">`medium`</span></span>
-<span id="cb155-55"><a href="#cb155-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-58"><a href="#cb155-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-59"><a href="#cb155-59" aria-hidden="true" tabindex="-1"></a>T2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"low"</span>, <span class="st">"medium"</span>, <span class="st">"high"</span>)</span>
-<span id="cb155-60"><a href="#cb155-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-61"><a href="#cb155-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-62"><a href="#cb155-62" aria-hidden="true" tabindex="-1"></a><span class="in">`T2`</span> is a vector containing **categorical** data, _i.e._ the data in this example can fall into either of 3 categories. For now, <span class="in">`T2`</span> is however a vector of strings, and we need to tell R that it contains categorical data by using the function <span class="in">`factor()`</span>{.R}:</span>
-<span id="cb155-63"><a href="#cb155-63" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-66"><a href="#cb155-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-67"><a href="#cb155-67" aria-hidden="true" tabindex="-1"></a>T2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(T2)</span>
-<span id="cb155-68"><a href="#cb155-68" aria-hidden="true" tabindex="-1"></a>T2</span>
-<span id="cb155-69"><a href="#cb155-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-70"><a href="#cb155-70" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-71"><a href="#cb155-71" aria-hidden="true" tabindex="-1"></a>We see here that we now have 3 levels, and a numerization of <span class="in">`T2`</span> leads to obtaining the numbers 1, 2 and 3 according to the levels in <span class="in">`T2`</span>:</span>
-<span id="cb155-72"><a href="#cb155-72" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-75"><a href="#cb155-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-76"><a href="#cb155-76" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(T2)</span>
-<span id="cb155-77"><a href="#cb155-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-78"><a href="#cb155-78" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-79"><a href="#cb155-79" aria-hidden="true" tabindex="-1"></a>Numerical data can be converted to factors in the same way -- this can be useful sometimes, _e.g._ when plotting with <span class="in">`ggplot`</span> as we will see later:</span>
-<span id="cb155-80"><a href="#cb155-80" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-83"><a href="#cb155-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-84"><a href="#cb155-84" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(T1)</span>
-<span id="cb155-85"><a href="#cb155-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-86"><a href="#cb155-86" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-87"><a href="#cb155-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## Principal operations on vectors</span></span>
-<span id="cb155-88"><a href="#cb155-88" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-89"><a href="#cb155-89" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mathematical operations</span></span>
-<span id="cb155-90"><a href="#cb155-90" aria-hidden="true" tabindex="-1"></a>Because R is a vectorized language, you don't need to loop on all elements of a vector to perform element-wise operations on it. Let's say that <span class="in">`x &lt;- 1:6`</span>{.R}, then:</span>
-<span id="cb155-91"><a href="#cb155-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE}</span></span>
-<span id="cb155-92"><a href="#cb155-92" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
-<span id="cb155-93"><a href="#cb155-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-94"><a href="#cb155-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-95"><a href="#cb155-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Addition of a value to all elements:</span>
-<span id="cb155-98"><a href="#cb155-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-99"><a href="#cb155-99" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> <span class="fl">2.5</span></span>
-<span id="cb155-100"><a href="#cb155-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-101"><a href="#cb155-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multiplication / division of all elements:</span>
-<span id="cb155-104"><a href="#cb155-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-105"><a href="#cb155-105" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span><span class="dv">2</span></span>
-<span id="cb155-106"><a href="#cb155-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-107"><a href="#cb155-107" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Integer division:</span>
-<span id="cb155-110"><a href="#cb155-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-111"><a href="#cb155-111" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%/%</span> <span class="dv">3</span></span>
-<span id="cb155-112"><a href="#cb155-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-113"><a href="#cb155-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Math functions apply on all elements:</span>
-<span id="cb155-116"><a href="#cb155-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-117"><a href="#cb155-117" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">abs</span>(<span class="fu">cos</span>(x)))</span>
-<span id="cb155-118"><a href="#cb155-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-119"><a href="#cb155-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Power:</span>
-<span id="cb155-122"><a href="#cb155-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-123"><a href="#cb155-123" aria-hidden="true" tabindex="-1"></a>x<span class="sc">^</span><span class="fl">2.5</span></span>
-<span id="cb155-124"><a href="#cb155-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-125"><a href="#cb155-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multiplication of vectors of the same size is performed element by element:</span>
-<span id="cb155-128"><a href="#cb155-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-129"><a href="#cb155-129" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">2.3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">20</span>)</span>
-<span id="cb155-130"><a href="#cb155-130" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span>y</span>
-<span id="cb155-131"><a href="#cb155-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-132"><a href="#cb155-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multiplication of vectors of different sizes: the smaller vector is automatically repeated the number of times needed to get a vector of the size of the larger one. It will work also if the longer object length is not a multiple of shorter object length, but the shorter object will be truncated and you'll get an error:</span>
-<span id="cb155-135"><a href="#cb155-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-136"><a href="#cb155-136" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span></span>
-<span id="cb155-137"><a href="#cb155-137" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
-<span id="cb155-138"><a href="#cb155-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-139"><a href="#cb155-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Modulo:</span>
-<span id="cb155-142"><a href="#cb155-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-143"><a href="#cb155-143" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%%</span> <span class="dv">2</span></span>
-<span id="cb155-144"><a href="#cb155-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-145"><a href="#cb155-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Outer product of vectors (the result is a matrix):</span>
-<span id="cb155-148"><a href="#cb155-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-149"><a href="#cb155-149" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%o%</span> y</span>
-<span id="cb155-150"><a href="#cb155-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-151"><a href="#cb155-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-152"><a href="#cb155-152" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-153"><a href="#cb155-153" aria-hidden="true" tabindex="-1"></a><span class="fu">### Accessing values</span></span>
-<span id="cb155-154"><a href="#cb155-154" aria-hidden="true" tabindex="-1"></a>Let's work on this vector <span class="in">`x`</span>:</span>
-<span id="cb155-157"><a href="#cb155-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-158"><a href="#cb155-158" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">3</span>)</span>
-<span id="cb155-159"><a href="#cb155-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-160"><a href="#cb155-160" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-161"><a href="#cb155-161" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Accessing values by index</span></span>
-<span id="cb155-162"><a href="#cb155-162" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-163"><a href="#cb155-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To access values of a vector <span class="in">`x`</span>, use the <span class="in">`x[i]`</span> notation, where <span class="in">`i`</span> is the index you want to access. <span class="in">`i`</span> can be (and in fact, is always) a vector.</span>
-<span id="cb155-164"><a href="#cb155-164" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-165"><a href="#cb155-165" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
-<span id="cb155-166"><a href="#cb155-166" aria-hidden="true" tabindex="-1"></a><span class="fu">## Attention</span></span>
-<span id="cb155-167"><a href="#cb155-167" aria-hidden="true" tabindex="-1"></a>In R, indexes numbering start at **1** !!!</span>
-<span id="cb155-168"><a href="#cb155-168" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb155-169"><a href="#cb155-169" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-170"><a href="#cb155-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-171"><a href="#cb155-171" aria-hidden="true" tabindex="-1"></a><span class="co"># accessing by indexes</span></span>
-<span id="cb155-172"><a href="#cb155-172" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">3</span>]</span>
-<span id="cb155-173"><a href="#cb155-173" aria-hidden="true" tabindex="-1"></a><span class="co"># access index 1, 5 and 2</span></span>
-<span id="cb155-174"><a href="#cb155-174" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">2</span>)] </span>
-<span id="cb155-175"><a href="#cb155-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-176"><a href="#cb155-176" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-177"><a href="#cb155-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To remove elements <span class="in">`j`</span> from a vector <span class="in">`x`</span>, use the notation <span class="in">`x[-j]`</span>{.R}:</span>
-<span id="cb155-180"><a href="#cb155-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-181"><a href="#cb155-181" aria-hidden="true" tabindex="-1"></a><span class="co"># remove elements 1 and 3</span></span>
-<span id="cb155-182"><a href="#cb155-182" aria-hidden="true" tabindex="-1"></a>x[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span>
-<span id="cb155-183"><a href="#cb155-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-184"><a href="#cb155-184" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-185"><a href="#cb155-185" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
-<span id="cb155-186"><a href="#cb155-186" aria-hidden="true" tabindex="-1"></a><span class="fu">## Attention</span></span>
-<span id="cb155-187"><a href="#cb155-187" aria-hidden="true" tabindex="-1"></a>Writing <span class="in">`x[-c(1,3)]`</span>{.R} will **just print** the result of <span class="in">`x[-c(1,3)]`</span>{.R}, but not actually modify <span class="in">`x`</span>. </span>
-<span id="cb155-188"><a href="#cb155-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-189"><a href="#cb155-189" aria-hidden="true" tabindex="-1"></a>To really modify <span class="in">`x`</span>, you'd need to write <span class="in">`x &lt;- x[-c(1,3)]`</span>{.R}.</span>
-<span id="cb155-190"><a href="#cb155-190" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb155-191"><a href="#cb155-191" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-192"><a href="#cb155-192" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Filtering values with tests</span></span>
-<span id="cb155-193"><a href="#cb155-193" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-194"><a href="#cb155-194" aria-hidden="true" tabindex="-1"></a>You can access values with booleans. Values getting a <span class="in">`TRUE`</span>{.R} will be kept, while values with a <span class="in">`FALSE`</span>{.R} will be discarded – or return a <span class="in">`NA`</span> if a <span class="in">`TRUE`</span> is given to a non existing value (*i.e.* to an index larger than the size of the vector):</span>
-<span id="cb155-197"><a href="#cb155-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-198"><a href="#cb155-198" aria-hidden="true" tabindex="-1"></a>x</span>
-<span id="cb155-199"><a href="#cb155-199" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="cn">TRUE</span>,<span class="cn">TRUE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">TRUE</span>)]</span>
-<span id="cb155-200"><a href="#cb155-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-201"><a href="#cb155-201" aria-hidden="true" tabindex="-1"></a>Therefore, you can apply tests on your values and filter them very easily:</span>
-<span id="cb155-204"><a href="#cb155-204" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-205"><a href="#cb155-205" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;</span> <span class="dv">4</span> <span class="co"># is a vector of booleans</span></span>
-<span id="cb155-206"><a href="#cb155-206" aria-hidden="true" tabindex="-1"></a>x[x <span class="sc">&gt;</span> <span class="dv">4</span>] <span class="co"># is a filtered vector</span></span>
-<span id="cb155-207"><a href="#cb155-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-208"><a href="#cb155-208" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-209"><a href="#cb155-209" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Accessing values by name</span></span>
-<span id="cb155-210"><a href="#cb155-210" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-211"><a href="#cb155-211" aria-hidden="true" tabindex="-1"></a>Finally, values in vectors can be **named**, and thus can be accessed by their name:</span>
-<span id="cb155-212"><a href="#cb155-212" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-213"><a href="#cb155-213" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">age=</span><span class="dv">32</span>, <span class="at">name=</span><span class="st">"John"</span>, <span class="at">pet=</span><span class="st">"Cat"</span>)</span>
-<span id="cb155-214"><a href="#cb155-214" aria-hidden="true" tabindex="-1"></a>y</span>
-<span id="cb155-215"><a href="#cb155-215" aria-hidden="true" tabindex="-1"></a>y[<span class="fu">c</span>(<span class="st">'age'</span>,<span class="st">'pet'</span>)] <span class="co"># prints a named vector</span></span>
-<span id="cb155-216"><a href="#cb155-216" aria-hidden="true" tabindex="-1"></a>y[[<span class="st">'name'</span>]] <span class="co"># prints an un-named vector</span></span>
-<span id="cb155-217"><a href="#cb155-217" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-218"><a href="#cb155-218" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-219"><a href="#cb155-219" aria-hidden="true" tabindex="-1"></a>And you can access the names of the vector using <span class="in">`names()`</span>{.R}:</span>
-<span id="cb155-220"><a href="#cb155-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-221"><a href="#cb155-221" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(y)</span>
-<span id="cb155-222"><a href="#cb155-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-223"><a href="#cb155-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-224"><a href="#cb155-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-225"><a href="#cb155-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sorting, removing duplicates, sampling</span></span>
-<span id="cb155-226"><a href="#cb155-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-227"><a href="#cb155-227" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-228"><a href="#cb155-228" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sorting by ascending number:</span>
-<span id="cb155-229"><a href="#cb155-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-230"><a href="#cb155-230" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(x)</span>
-<span id="cb155-231"><a href="#cb155-231" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-232"><a href="#cb155-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It works with strings too, but <span class="in">`stringr::str_sort()`</span>{.R} might be needed for strings mixing letters and numbers:</span>
-<span id="cb155-233"><a href="#cb155-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-234"><a href="#cb155-234" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">c</span>(<span class="st">"c"</span>,<span class="st">"a"</span>,<span class="st">"d"</span>,<span class="st">"ab"</span>)) </span>
-<span id="cb155-235"><a href="#cb155-235" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"a10"</span>, <span class="st">"a2"</span>, <span class="st">"d"</span>, <span class="st">"ab"</span>))</span>
-<span id="cb155-236"><a href="#cb155-236" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_sort</span>(<span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"a10"</span>, <span class="st">"a2"</span>, <span class="st">"d"</span>, <span class="st">"ab"</span>), <span class="at">numeric =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb155-237"><a href="#cb155-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-238"><a href="#cb155-238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sorting by descending number:</span>
-<span id="cb155-239"><a href="#cb155-239" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-240"><a href="#cb155-240" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(x, <span class="at">decreasing =</span> <span class="cn">TRUE</span>) </span>
-<span id="cb155-241"><a href="#cb155-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-242"><a href="#cb155-242" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Inverting the order of the vector:</span>
-<span id="cb155-245"><a href="#cb155-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-246"><a href="#cb155-246" aria-hidden="true" tabindex="-1"></a><span class="fu">rev</span>(x)</span>
-<span id="cb155-247"><a href="#cb155-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-248"><a href="#cb155-248" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-249"><a href="#cb155-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Find the order of the indexes of the sorting:</span>
-<span id="cb155-250"><a href="#cb155-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-251"><a href="#cb155-251" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(x)</span>
-<span id="cb155-252"><a href="#cb155-252" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">order</span>(x)] <span class="co"># is thus equivalent to `sort(x)`</span></span>
-<span id="cb155-253"><a href="#cb155-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-254"><a href="#cb155-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Find duplicates:</span>
-<span id="cb155-255"><a href="#cb155-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-256"><a href="#cb155-256" aria-hidden="true" tabindex="-1"></a><span class="fu">duplicated</span>(x)</span>
-<span id="cb155-257"><a href="#cb155-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-258"><a href="#cb155-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Remove duplicates:</span>
-<span id="cb155-259"><a href="#cb155-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-260"><a href="#cb155-260" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(x)</span>
-<span id="cb155-261"><a href="#cb155-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-262"><a href="#cb155-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Choose 3 random values:</span>
-<span id="cb155-263"><a href="#cb155-263" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-264"><a href="#cb155-264" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x, <span class="dv">3</span>)</span>
-<span id="cb155-265"><a href="#cb155-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-266"><a href="#cb155-266" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-267"><a href="#cb155-267" aria-hidden="true" tabindex="-1"></a><span class="fu">### Maximum and minimum</span></span>
-<span id="cb155-268"><a href="#cb155-268" aria-hidden="true" tabindex="-1"></a>This is quite straightforward:</span>
-<span id="cb155-269"><a href="#cb155-269" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-270"><a href="#cb155-270" aria-hidden="true" tabindex="-1"></a><span class="co"># maximum of x and its index</span></span>
-<span id="cb155-271"><a href="#cb155-271" aria-hidden="true" tabindex="-1"></a>x; <span class="fu">max</span>(x); <span class="fu">which.max</span>(x) </span>
-<span id="cb155-272"><a href="#cb155-272" aria-hidden="true" tabindex="-1"></a><span class="co"># minimum of x and its index</span></span>
-<span id="cb155-273"><a href="#cb155-273" aria-hidden="true" tabindex="-1"></a>x; <span class="fu">min</span>(x); <span class="fu">which.min</span>(x)</span>
-<span id="cb155-274"><a href="#cb155-274" aria-hidden="true" tabindex="-1"></a><span class="co"># range of a vector</span></span>
-<span id="cb155-275"><a href="#cb155-275" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(x)</span>
-<span id="cb155-276"><a href="#cb155-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-277"><a href="#cb155-277" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-278"><a href="#cb155-278" aria-hidden="true" tabindex="-1"></a><span class="fu">### Characteristics of vectors</span></span>
-<span id="cb155-279"><a href="#cb155-279" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-280"><a href="#cb155-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Size of a vector:</span>
-<span id="cb155-281"><a href="#cb155-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-282"><a href="#cb155-282" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x)</span>
-<span id="cb155-283"><a href="#cb155-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-284"><a href="#cb155-284" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Statistics on vector:</span>
-<span id="cb155-285"><a href="#cb155-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-286"><a href="#cb155-286" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span>
-<span id="cb155-287"><a href="#cb155-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-288"><a href="#cb155-288" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sum of all terms:</span>
-<span id="cb155-289"><a href="#cb155-289" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-290"><a href="#cb155-290" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x)</span>
-<span id="cb155-291"><a href="#cb155-291" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-292"><a href="#cb155-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Average value:</span>
-<span id="cb155-293"><a href="#cb155-293" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-294"><a href="#cb155-294" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
-<span id="cb155-295"><a href="#cb155-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-296"><a href="#cb155-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Median value:</span>
-<span id="cb155-297"><a href="#cb155-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-298"><a href="#cb155-298" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(x)</span>
-<span id="cb155-299"><a href="#cb155-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-300"><a href="#cb155-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Standard deviation:</span>
-<span id="cb155-301"><a href="#cb155-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-302"><a href="#cb155-302" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(x)</span>
-<span id="cb155-303"><a href="#cb155-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-304"><a href="#cb155-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Count occurrence of values:</span>
-<span id="cb155-305"><a href="#cb155-305" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-306"><a href="#cb155-306" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(x)</span>
-<span id="cb155-307"><a href="#cb155-307" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-308"><a href="#cb155-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cumulative sum:</span>
-<span id="cb155-311"><a href="#cb155-311" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-312"><a href="#cb155-312" aria-hidden="true" tabindex="-1"></a><span class="fu">cumsum</span>(x)</span>
-<span id="cb155-313"><a href="#cb155-313" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-314"><a href="#cb155-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Term-by-term difference</span>
-<span id="cb155-317"><a href="#cb155-317" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb155-318"><a href="#cb155-318" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(x)</span>
-<span id="cb155-319"><a href="#cb155-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-320"><a href="#cb155-320" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-321"><a href="#cb155-321" aria-hidden="true" tabindex="-1"></a><span class="fu">### Concatenation of vectors</span></span>
-<span id="cb155-322"><a href="#cb155-322" aria-hidden="true" tabindex="-1"></a>This is done using the <span class="in">`c()`</span> notation: you basically create a vector of vectors, the result being a new vector:</span>
-<span id="cb155-323"><a href="#cb155-323" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-324"><a href="#cb155-324" aria-hidden="true" tabindex="-1"></a><span class="co"># concatenate vectors</span></span>
-<span id="cb155-325"><a href="#cb155-325" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="cn">NA</span>, <span class="sc">-</span>x); z</span>
-<span id="cb155-326"><a href="#cb155-326" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-327"><a href="#cb155-327" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-328"><a href="#cb155-328" aria-hidden="true" tabindex="-1"></a>Another option is to use the <span class="in">`append()`</span>{.R} function that allows for more options:</span>
-<span id="cb155-329"><a href="#cb155-329" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-330"><a href="#cb155-330" aria-hidden="true" tabindex="-1"></a><span class="co"># append values</span></span>
-<span id="cb155-331"><a href="#cb155-331" aria-hidden="true" tabindex="-1"></a><span class="fu">append</span>(x, <span class="dv">4</span>)    <span class="co"># at the end</span></span>
-<span id="cb155-332"><a href="#cb155-332" aria-hidden="true" tabindex="-1"></a><span class="fu">append</span>(x, <span class="dv">4</span><span class="sc">:</span><span class="dv">1</span>, <span class="dv">3</span>) <span class="co"># or after a given index</span></span>
-<span id="cb155-333"><a href="#cb155-333" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-334"><a href="#cb155-334" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-335"><a href="#cb155-335" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-336"><a href="#cb155-336" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises {#exo-vectors}</span></span>
-<span id="cb155-337"><a href="#cb155-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-338"><a href="#cb155-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-339"><a href="#cb155-339" aria-hidden="true" tabindex="-1"></a>Interactive exercises can be found in the <span class="co">[</span><span class="ot">`tutor`</span><span class="co">](https://colinbousige.github.io/tutor/)</span> package. For this, simply run:</span>
-<span id="cb155-340"><a href="#cb155-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-341"><a href="#cb155-341" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb155-342"><a href="#cb155-342" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tutor)</span>
-<span id="cb155-343"><a href="#cb155-343" aria-hidden="true" tabindex="-1"></a><span class="fu">tuto</span>(<span class="st">"vectors"</span>)</span>
-<span id="cb155-344"><a href="#cb155-344" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-345"><a href="#cb155-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-346"><a href="#cb155-346" aria-hidden="true" tabindex="-1"></a>Alternatively, you can just <span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/exo-in-class.zip"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>download the archive with all the exercises files<span class="kw">&lt;/a&gt;</span>, unzip it in your <span class="in">`R class`</span> RStudio project, and edit the R files.</span>
-<span id="cb155-347"><a href="#cb155-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-348"><a href="#cb155-348" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb155-349"><a href="#cb155-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-350"><a href="#cb155-350" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb155-351"><a href="#cb155-351" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 1**<span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb155-352"><a href="#cb155-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-353"><a href="#cb155-353" aria-hidden="true" tabindex="-1"></a>Let's create a named vector containing age of the students in the class, the names of each value being the first name of the students. Then:</span>
-<span id="cb155-354"><a href="#cb155-354" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-355"><a href="#cb155-355" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the average age and its standard deviation</span>
-<span id="cb155-356"><a href="#cb155-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the median age</span>
-<span id="cb155-357"><a href="#cb155-357" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the maximum, minimum and range of the ages in the class?</span>
-<span id="cb155-358"><a href="#cb155-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What are all the student names in the class?</span>
-<span id="cb155-359"><a href="#cb155-359" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print the sorted ages by increasing and decreasing order</span>
-<span id="cb155-360"><a href="#cb155-360" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print the ages sorted by alphabetically ordered names (increasing and decreasing)</span>
-<span id="cb155-361"><a href="#cb155-361" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Show a histogram of the ages distribution using <span class="in">`hist()`</span>{.R} and play with the parameter <span class="in">`breaks`</span> to modify the histogram</span>
-<span id="cb155-362"><a href="#cb155-362" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Show a boxplot of the ages distribution using <span class="in">`boxplot()`</span>{.R}</span>
-<span id="cb155-363"><a href="#cb155-363" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-364"><a href="#cb155-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-365"><a href="#cb155-365" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
-<span id="cb155-366"><a href="#cb155-366" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-367"><a href="#cb155-367" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb155-368"><a href="#cb155-368" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 2**<span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb155-369"><a href="#cb155-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-370"><a href="#cb155-370" aria-hidden="true" tabindex="-1"></a>This exercise is adapted from <span class="co">[</span><span class="ot">here</span><span class="co">](https://perso.esiee.fr/~courivad/R/05-vectors.html#application-population-in-french-cities-1962-2012)</span>.</span>
-<span id="cb155-371"><a href="#cb155-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-372"><a href="#cb155-372" aria-hidden="true" tabindex="-1"></a>Open Rstudio and create a new R script, save it as <span class="in">`population.R`</span> in your wanted directory, say <span class="in">`Rcourse/`</span>.</span>
-<span id="cb155-373"><a href="#cb155-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-374"><a href="#cb155-374" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-375"><a href="#cb155-375" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/population.csv"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>Download<span class="kw">&lt;/a&gt;</span> the <span class="in">`population.csv`</span> file and save it in your working directory.</span>
-<span id="cb155-376"><a href="#cb155-376" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-377"><a href="#cb155-377" aria-hidden="true" tabindex="-1"></a>A csv file contains raw data stored as plain text and separated by a comma (Comma Separated Values). Open it with Rstudio.</span>
-<span id="cb155-378"><a href="#cb155-378" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-379"><a href="#cb155-379" aria-hidden="true" tabindex="-1"></a>We can of course directly load such file with R and store its data in an appropriate format (_i.e._ a <span class="in">`data.frame`</span>), but this is for the next chapter. For now, just copy-paste the text in the Rstudio script area to:</span>
-<span id="cb155-380"><a href="#cb155-380" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-381"><a href="#cb155-381" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`cities`</span> vector containing all the cities listed in <span class="in">`population.csv`</span></span>
-<span id="cb155-382"><a href="#cb155-382" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`pop_1962`</span> and <span class="in">`pop_2012`</span> vectors containing the populations of each city at these years. Print the 2 vectors. </span>
-<span id="cb155-383"><a href="#cb155-383" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use <span class="in">`names()`</span>{.R} to name values of <span class="in">`pop_1962`</span> and <span class="in">`pop_2012`</span>. Print the 2 vectors again. Are there any change?</span>
-<span id="cb155-384"><a href="#cb155-384" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What are the cities with more than 200000 people in 1962? For these, how many residents in 2012?</span>
-<span id="cb155-385"><a href="#cb155-385" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the population evolution of Montpellier and Nantes?</span>
-<span id="cb155-386"><a href="#cb155-386" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`pop_diff`</span> vector to store population change between 1962 and 2012</span>
-<span id="cb155-387"><a href="#cb155-387" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print cities with a negative change</span>
-<span id="cb155-388"><a href="#cb155-388" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print cities which broke the 300000 people barrier between 1962 and 2012</span>
-<span id="cb155-389"><a href="#cb155-389" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the total change in population of the 10 largest cities (as of 1962) between 1962 and 2012.</span>
-<span id="cb155-390"><a href="#cb155-390" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the population mean for year 1962</span>
-<span id="cb155-391"><a href="#cb155-391" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the population mean of Paris over these two years</span>
-<span id="cb155-392"><a href="#cb155-392" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sort the cities by decreasing order of population for 1962</span>
-<span id="cb155-393"><a href="#cb155-393" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-394"><a href="#cb155-394" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb155-395"><a href="#cb155-395" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
-<span id="cb155-396"><a href="#cb155-396" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-397"><a href="#cb155-397" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb155-398"><a href="#cb155-398" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a `cities` vector containing all the cities listed in `population.csv`</span></span>
-<span id="cb155-399"><a href="#cb155-399" aria-hidden="true" tabindex="-1"></a>cities <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Angers"</span>, <span class="st">"Bordeaux"</span>, <span class="st">"Brest"</span>, <span class="st">"Dijon"</span>, <span class="st">"Grenoble"</span>, <span class="st">"Le Havre"</span>, </span>
-<span id="cb155-400"><a href="#cb155-400" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Le Mans"</span>, <span class="st">"Lille"</span>, <span class="st">"Lyon"</span>, <span class="st">"Marseille"</span>, <span class="st">"Montpellier"</span>, <span class="st">"Nantes"</span>, </span>
-<span id="cb155-401"><a href="#cb155-401" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Nice"</span>, <span class="st">"Paris"</span>, <span class="st">"Reims"</span>, <span class="st">"Rennes"</span>, <span class="st">"Saint-Etienne"</span>, <span class="st">"Strasbourg"</span>, </span>
-<span id="cb155-402"><a href="#cb155-402" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Toulon"</span>, <span class="st">"Toulouse"</span>)</span>
-<span id="cb155-403"><a href="#cb155-403" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a `pop_1962` and `pop_2012` vectors containing the populations </span></span>
-<span id="cb155-404"><a href="#cb155-404" aria-hidden="true" tabindex="-1"></a><span class="co"># of each city at these years. Print the 2 vectors. </span></span>
-<span id="cb155-405"><a href="#cb155-405" aria-hidden="true" tabindex="-1"></a>pop_1962 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">115273</span>,<span class="dv">278403</span>,<span class="dv">136104</span>,<span class="dv">135694</span>,<span class="dv">156707</span>,<span class="dv">187845</span>,<span class="dv">132181</span>,<span class="dv">239955</span>,</span>
-<span id="cb155-406"><a href="#cb155-406" aria-hidden="true" tabindex="-1"></a>              <span class="dv">535746</span>,<span class="dv">778071</span>,<span class="dv">118864</span>,<span class="dv">240048</span>,<span class="dv">292958</span>,<span class="dv">2790091</span>,<span class="dv">134856</span>,<span class="dv">151948</span>,</span>
-<span id="cb155-407"><a href="#cb155-407" aria-hidden="true" tabindex="-1"></a>              <span class="dv">210311</span>,<span class="dv">228971</span>,<span class="dv">161797</span>,<span class="dv">323724</span>)</span>
-<span id="cb155-408"><a href="#cb155-408" aria-hidden="true" tabindex="-1"></a>pop_2012 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">149017</span>,<span class="dv">241287</span>,<span class="dv">139676</span>,<span class="dv">152071</span>,<span class="dv">158346</span>,<span class="dv">173142</span>,<span class="dv">143599</span>,<span class="dv">228652</span>,</span>
-<span id="cb155-409"><a href="#cb155-409" aria-hidden="true" tabindex="-1"></a>              <span class="dv">496343</span>,<span class="dv">852516</span>,<span class="dv">268456</span>,<span class="dv">291604</span>,<span class="dv">343629</span>,<span class="dv">2240621</span>,<span class="dv">181893</span>,<span class="dv">209860</span>,</span>
-<span id="cb155-410"><a href="#cb155-410" aria-hidden="true" tabindex="-1"></a>              <span class="dv">171483</span>,<span class="dv">274394</span>,<span class="dv">164899</span>,<span class="dv">453317</span>)</span>
-<span id="cb155-411"><a href="#cb155-411" aria-hidden="true" tabindex="-1"></a>pop_1962; pop_2012</span>
-<span id="cb155-412"><a href="#cb155-412" aria-hidden="true" tabindex="-1"></a><span class="co"># Use names() to name values of `pop_1962` and `pop_2012`. </span></span>
-<span id="cb155-413"><a href="#cb155-413" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the 2 vectors again. Are there any change?</span></span>
-<span id="cb155-414"><a href="#cb155-414" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pop_2012) <span class="ot">&lt;-</span> <span class="fu">names</span>(pop_1962) <span class="ot">&lt;-</span> cities</span>
-<span id="cb155-415"><a href="#cb155-415" aria-hidden="true" tabindex="-1"></a>pop_1962; pop_2012</span>
-<span id="cb155-416"><a href="#cb155-416" aria-hidden="true" tabindex="-1"></a><span class="co"># What are the cities with more than 200000 people in 1962? </span></span>
-<span id="cb155-417"><a href="#cb155-417" aria-hidden="true" tabindex="-1"></a><span class="co"># For these, how many residents in 2012?</span></span>
-<span id="cb155-418"><a href="#cb155-418" aria-hidden="true" tabindex="-1"></a>cities200k <span class="ot">&lt;-</span> cities[pop_1962<span class="sc">&gt;</span><span class="dv">200000</span>]</span>
-<span id="cb155-419"><a href="#cb155-419" aria-hidden="true" tabindex="-1"></a>cities200k; pop_2012[cities200k]</span>
-<span id="cb155-420"><a href="#cb155-420" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the population evolution of Montpellier and Nantes?</span></span>
-<span id="cb155-421"><a href="#cb155-421" aria-hidden="true" tabindex="-1"></a>pop_2012[<span class="st">'Montpellier'</span>] <span class="sc">-</span> pop_1962[<span class="st">'Montpellier'</span>]; pop_2012[<span class="st">'Nantes'</span>] <span class="sc">-</span> pop_1962[<span class="st">'Nantes'</span>]</span>
-<span id="cb155-422"><a href="#cb155-422" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a `pop_diff` vector to store population change between 1962 and 2012</span></span>
-<span id="cb155-423"><a href="#cb155-423" aria-hidden="true" tabindex="-1"></a>pop_diff <span class="ot">&lt;-</span> pop_2012 <span class="sc">-</span> pop_1962</span>
-<span id="cb155-424"><a href="#cb155-424" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cities with a negative change</span></span>
-<span id="cb155-425"><a href="#cb155-425" aria-hidden="true" tabindex="-1"></a>cities[pop_diff<span class="sc">&lt;</span><span class="dv">0</span>]</span>
-<span id="cb155-426"><a href="#cb155-426" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cities which broke the 300000 people barrier between 1962 and 2012</span></span>
-<span id="cb155-427"><a href="#cb155-427" aria-hidden="true" tabindex="-1"></a>cities[pop_2012<span class="sc">&gt;</span><span class="dv">300000</span> <span class="sc">&amp;</span> pop_1962<span class="sc">&lt;</span><span class="dv">300000</span>]</span>
-<span id="cb155-428"><a href="#cb155-428" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the total change in population of the 10 largest cities</span></span>
-<span id="cb155-429"><a href="#cb155-429" aria-hidden="true" tabindex="-1"></a><span class="co"># (as of 1962) between 1962 and 2012.</span></span>
-<span id="cb155-430"><a href="#cb155-430" aria-hidden="true" tabindex="-1"></a>ten_largest <span class="ot">&lt;-</span> cities[<span class="fu">order</span>(pop_1962, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]]</span>
-<span id="cb155-431"><a href="#cb155-431" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(pop_2012[ten_largest] <span class="sc">-</span> pop_1962[ten_largest])</span>
-<span id="cb155-432"><a href="#cb155-432" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the population mean for year 1962</span></span>
-<span id="cb155-433"><a href="#cb155-433" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(pop_1962)</span>
-<span id="cb155-434"><a href="#cb155-434" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the population mean of Paris</span></span>
-<span id="cb155-435"><a href="#cb155-435" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(pop_1962[<span class="st">'Paris'</span>], pop_2012[<span class="st">'Paris'</span>]))</span>
-<span id="cb155-436"><a href="#cb155-436" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the cities by decreasing order of population for 1962</span></span>
-<span id="cb155-437"><a href="#cb155-437" aria-hidden="true" tabindex="-1"></a>(pop_1962_sorted <span class="ot">&lt;-</span> <span class="fu">sort</span>(pop_1962, <span class="at">decreasing =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb155-438"><a href="#cb155-438" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb155-439"><a href="#cb155-439" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-440"><a href="#cb155-440" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
-<span id="cb155-441"><a href="#cb155-441" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
-<span id="cb155-442"><a href="#cb155-442" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-443"><a href="#cb155-443" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb155-444"><a href="#cb155-444" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb155-445"><a href="#cb155-445" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb155-446"><a href="#cb155-446" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb155-447"><a href="#cb155-447" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb155-448"><a href="#cb155-448" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb155-449"><a href="#cb155-449" aria-hidden="true" tabindex="-1"></a></span>
+<div class="sourceCode" id="cb154" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb154-1"><a href="#cb154-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Vectors</span></span>
+<span id="cb154-2"><a href="#cb154-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-3"><a href="#cb154-3" aria-hidden="true" tabindex="-1"></a>**R is a vectorized language** with built-in arithmetic and relational operators, mathematical functions and types of number. It means that each mathematical function and operator works on a set of data rather than a single scalar value as traditional computer language do, and thus __formal looping can _usually_ be avoided__.</span>
+<span id="cb154-4"><a href="#cb154-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-5"><a href="#cb154-5" aria-hidden="true" tabindex="-1"></a><span class="fu">## Different ways of defining a vector</span></span>
+<span id="cb154-6"><a href="#cb154-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-7"><a href="#cb154-7" aria-hidden="true" tabindex="-1"></a>If you want to define a vector by specifying the values, use the function <span class="in">`c()`</span>{.R}, like so:</span>
+<span id="cb154-8"><a href="#cb154-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-9"><a href="#cb154-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Here, <span class="in">`x`</span> is a vector of doubles:</span>
+<span id="cb154-10"><a href="#cb154-10" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-11"><a href="#cb154-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">12</span>, <span class="fl">4.2</span>)</span>
+<span id="cb154-12"><a href="#cb154-12" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb154-13"><a href="#cb154-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-14"><a href="#cb154-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>But here, <span class="in">`x`</span> is converted to a vector of strings because it contains a string:</span>
+<span id="cb154-15"><a href="#cb154-15" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-16"><a href="#cb154-16" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="st">"hello"</span>)</span>
+<span id="cb154-17"><a href="#cb154-17" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb154-18"><a href="#cb154-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-19"><a href="#cb154-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-20"><a href="#cb154-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To define a sequence of increasing numbers, either use the notation <span class="in">`start:end`</span> for a sequence going from <span class="in">`start`</span> to <span class="in">`end`</span> by step of 1, or use the <span class="in">`seq()`</span>{.R} function that is more versatile:</span>
+<span id="cb154-21"><a href="#cb154-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-22"><a href="#cb154-22" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb154-23"><a href="#cb154-23" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">by =</span> .<span class="dv">5</span>)</span>
+<span id="cb154-24"><a href="#cb154-24" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">length =</span> <span class="dv">6</span>)</span>
+<span id="cb154-25"><a href="#cb154-25" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">along =</span> x)</span>
+<span id="cb154-26"><a href="#cb154-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-27"><a href="#cb154-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To repeat values, use the <span class="in">`rep()`</span>{.R} function:</span>
+<span id="cb154-28"><a href="#cb154-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-29"><a href="#cb154-29" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb154-30"><a href="#cb154-30" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="dv">5</span>)</span>
+<span id="cb154-31"><a href="#cb154-31" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">each =</span> <span class="dv">5</span>)</span>
+<span id="cb154-32"><a href="#cb154-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-33"><a href="#cb154-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To create vectors of random numbers, use <span class="in">`rnorm()`</span>{.R} or <span class="in">`runif()`</span>{.R} for normally or uniformly distributed numbers, respectively:</span>
+<span id="cb154-34"><a href="#cb154-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-35"><a href="#cb154-35" aria-hidden="true" tabindex="-1"></a><span class="co"># vector with 10 random values normally distributed around mean </span></span>
+<span id="cb154-36"><a href="#cb154-36" aria-hidden="true" tabindex="-1"></a><span class="co"># with given standard deviation `sd`</span></span>
+<span id="cb154-37"><a href="#cb154-37" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean=</span><span class="dv">3</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb154-38"><a href="#cb154-38" aria-hidden="true" tabindex="-1"></a><span class="co"># vector with 10 random values uniformly distributed between min and max</span></span>
+<span id="cb154-39"><a href="#cb154-39" aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">10</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span>
+<span id="cb154-40"><a href="#cb154-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-41"><a href="#cb154-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-42"><a href="#cb154-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Numerical and categorical data types</span></span>
+<span id="cb154-43"><a href="#cb154-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-44"><a href="#cb154-44" aria-hidden="true" tabindex="-1"></a>Data can be of two different types: numerical, or categorical. Let's say you are measuring a the temperature in a room and recording its value over time: </span>
+<span id="cb154-45"><a href="#cb154-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-48"><a href="#cb154-48" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-49"><a href="#cb154-49" aria-hidden="true" tabindex="-1"></a>T1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">22.3</span>, <span class="fl">23.5</span>, <span class="fl">26.0</span>, <span class="fl">30.2</span>)</span>
+<span id="cb154-50"><a href="#cb154-50" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-51"><a href="#cb154-51" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-52"><a href="#cb154-52" aria-hidden="true" tabindex="-1"></a><span class="in">`T1`</span> is a vector containing **numerical** data.</span>
+<span id="cb154-53"><a href="#cb154-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-54"><a href="#cb154-54" aria-hidden="true" tabindex="-1"></a>Let's say that now you are recording the temperature level, which can be <span class="in">`low`</span>, <span class="in">`high`</span> or <span class="in">`medium`</span></span>
+<span id="cb154-55"><a href="#cb154-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-58"><a href="#cb154-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-59"><a href="#cb154-59" aria-hidden="true" tabindex="-1"></a>T2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"low"</span>, <span class="st">"medium"</span>, <span class="st">"high"</span>)</span>
+<span id="cb154-60"><a href="#cb154-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-61"><a href="#cb154-61" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-62"><a href="#cb154-62" aria-hidden="true" tabindex="-1"></a><span class="in">`T2`</span> is a vector containing **categorical** data, _i.e._ the data in this example can fall into either of 3 categories. For now, <span class="in">`T2`</span> is however a vector of strings, and we need to tell R that it contains categorical data by using the function <span class="in">`factor()`</span>{.R}:</span>
+<span id="cb154-63"><a href="#cb154-63" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-66"><a href="#cb154-66" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-67"><a href="#cb154-67" aria-hidden="true" tabindex="-1"></a>T2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(T2)</span>
+<span id="cb154-68"><a href="#cb154-68" aria-hidden="true" tabindex="-1"></a>T2</span>
+<span id="cb154-69"><a href="#cb154-69" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-70"><a href="#cb154-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-71"><a href="#cb154-71" aria-hidden="true" tabindex="-1"></a>We see here that we now have 3 levels, and a numerization of <span class="in">`T2`</span> leads to obtaining the numbers 1, 2 and 3 according to the levels in <span class="in">`T2`</span>:</span>
+<span id="cb154-72"><a href="#cb154-72" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-75"><a href="#cb154-75" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-76"><a href="#cb154-76" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(T2)</span>
+<span id="cb154-77"><a href="#cb154-77" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-78"><a href="#cb154-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-79"><a href="#cb154-79" aria-hidden="true" tabindex="-1"></a>Numerical data can be converted to factors in the same way -- this can be useful sometimes, _e.g._ when plotting with <span class="in">`ggplot`</span> as we will see later:</span>
+<span id="cb154-80"><a href="#cb154-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-83"><a href="#cb154-83" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-84"><a href="#cb154-84" aria-hidden="true" tabindex="-1"></a><span class="fu">factor</span>(T1)</span>
+<span id="cb154-85"><a href="#cb154-85" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-86"><a href="#cb154-86" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-87"><a href="#cb154-87" aria-hidden="true" tabindex="-1"></a><span class="fu">## Principal operations on vectors</span></span>
+<span id="cb154-88"><a href="#cb154-88" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-89"><a href="#cb154-89" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mathematical operations</span></span>
+<span id="cb154-90"><a href="#cb154-90" aria-hidden="true" tabindex="-1"></a>Because R is a vectorized language, you don't need to loop on all elements of a vector to perform element-wise operations on it. Let's say that <span class="in">`x &lt;- 1:6`</span>{.R}, then:</span>
+<span id="cb154-91"><a href="#cb154-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE}</span></span>
+<span id="cb154-92"><a href="#cb154-92" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb154-93"><a href="#cb154-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-94"><a href="#cb154-94" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-95"><a href="#cb154-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Addition of a value to all elements:</span>
+<span id="cb154-98"><a href="#cb154-98" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-99"><a href="#cb154-99" aria-hidden="true" tabindex="-1"></a>x <span class="sc">+</span> <span class="fl">2.5</span></span>
+<span id="cb154-100"><a href="#cb154-100" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-101"><a href="#cb154-101" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multiplication / division of all elements:</span>
+<span id="cb154-104"><a href="#cb154-104" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-105"><a href="#cb154-105" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span><span class="dv">2</span></span>
+<span id="cb154-106"><a href="#cb154-106" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-107"><a href="#cb154-107" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Integer division:</span>
+<span id="cb154-110"><a href="#cb154-110" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-111"><a href="#cb154-111" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%/%</span> <span class="dv">3</span></span>
+<span id="cb154-112"><a href="#cb154-112" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-113"><a href="#cb154-113" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Math functions apply on all elements:</span>
+<span id="cb154-116"><a href="#cb154-116" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-117"><a href="#cb154-117" aria-hidden="true" tabindex="-1"></a><span class="fu">sqrt</span>(<span class="fu">abs</span>(<span class="fu">cos</span>(x)))</span>
+<span id="cb154-118"><a href="#cb154-118" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-119"><a href="#cb154-119" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Power:</span>
+<span id="cb154-122"><a href="#cb154-122" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-123"><a href="#cb154-123" aria-hidden="true" tabindex="-1"></a>x<span class="sc">^</span><span class="fl">2.5</span></span>
+<span id="cb154-124"><a href="#cb154-124" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-125"><a href="#cb154-125" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multiplication of vectors of the same size is performed element by element:</span>
+<span id="cb154-128"><a href="#cb154-128" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-129"><a href="#cb154-129" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">2.3</span>, <span class="dv">5</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">12</span>, <span class="dv">20</span>)</span>
+<span id="cb154-130"><a href="#cb154-130" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span>y</span>
+<span id="cb154-131"><a href="#cb154-131" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-132"><a href="#cb154-132" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Multiplication of vectors of different sizes: the smaller vector is automatically repeated the number of times needed to get a vector of the size of the larger one. It will work also if the longer object length is not a multiple of shorter object length, but the shorter object will be truncated and you'll get an error:</span>
+<span id="cb154-135"><a href="#cb154-135" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-136"><a href="#cb154-136" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span></span>
+<span id="cb154-137"><a href="#cb154-137" aria-hidden="true" tabindex="-1"></a>x<span class="sc">*</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span>
+<span id="cb154-138"><a href="#cb154-138" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-139"><a href="#cb154-139" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Modulo:</span>
+<span id="cb154-142"><a href="#cb154-142" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-143"><a href="#cb154-143" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%%</span> <span class="dv">2</span></span>
+<span id="cb154-144"><a href="#cb154-144" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-145"><a href="#cb154-145" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Outer product of vectors (the result is a matrix):</span>
+<span id="cb154-148"><a href="#cb154-148" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-149"><a href="#cb154-149" aria-hidden="true" tabindex="-1"></a>x <span class="sc">%o%</span> y</span>
+<span id="cb154-150"><a href="#cb154-150" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-151"><a href="#cb154-151" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-152"><a href="#cb154-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-153"><a href="#cb154-153" aria-hidden="true" tabindex="-1"></a><span class="fu">### Accessing values</span></span>
+<span id="cb154-154"><a href="#cb154-154" aria-hidden="true" tabindex="-1"></a>Let's work on this vector <span class="in">`x`</span>:</span>
+<span id="cb154-157"><a href="#cb154-157" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-158"><a href="#cb154-158" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">9</span>, <span class="dv">3</span>)</span>
+<span id="cb154-159"><a href="#cb154-159" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-160"><a href="#cb154-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-161"><a href="#cb154-161" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Accessing values by index</span></span>
+<span id="cb154-162"><a href="#cb154-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-163"><a href="#cb154-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To access values of a vector <span class="in">`x`</span>, use the <span class="in">`x[i]`</span> notation, where <span class="in">`i`</span> is the index you want to access. <span class="in">`i`</span> can be (and in fact, is always) a vector.</span>
+<span id="cb154-164"><a href="#cb154-164" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-165"><a href="#cb154-165" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
+<span id="cb154-166"><a href="#cb154-166" aria-hidden="true" tabindex="-1"></a><span class="fu">## Attention</span></span>
+<span id="cb154-167"><a href="#cb154-167" aria-hidden="true" tabindex="-1"></a>In R, indexes numbering start at **1** !!!</span>
+<span id="cb154-168"><a href="#cb154-168" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb154-169"><a href="#cb154-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-170"><a href="#cb154-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-171"><a href="#cb154-171" aria-hidden="true" tabindex="-1"></a><span class="co"># accessing by indexes</span></span>
+<span id="cb154-172"><a href="#cb154-172" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">3</span>]</span>
+<span id="cb154-173"><a href="#cb154-173" aria-hidden="true" tabindex="-1"></a><span class="co"># access index 1, 5 and 2</span></span>
+<span id="cb154-174"><a href="#cb154-174" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">2</span>)] </span>
+<span id="cb154-175"><a href="#cb154-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-176"><a href="#cb154-176" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-177"><a href="#cb154-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To remove elements <span class="in">`j`</span> from a vector <span class="in">`x`</span>, use the notation <span class="in">`x[-j]`</span>{.R}:</span>
+<span id="cb154-180"><a href="#cb154-180" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-181"><a href="#cb154-181" aria-hidden="true" tabindex="-1"></a><span class="co"># remove elements 1 and 3</span></span>
+<span id="cb154-182"><a href="#cb154-182" aria-hidden="true" tabindex="-1"></a>x[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>)]</span>
+<span id="cb154-183"><a href="#cb154-183" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-184"><a href="#cb154-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-185"><a href="#cb154-185" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
+<span id="cb154-186"><a href="#cb154-186" aria-hidden="true" tabindex="-1"></a><span class="fu">## Attention</span></span>
+<span id="cb154-187"><a href="#cb154-187" aria-hidden="true" tabindex="-1"></a>Writing <span class="in">`x[-c(1,3)]`</span>{.R} will **just print** the result of <span class="in">`x[-c(1,3)]`</span>{.R}, but not actually modify <span class="in">`x`</span>. </span>
+<span id="cb154-188"><a href="#cb154-188" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-189"><a href="#cb154-189" aria-hidden="true" tabindex="-1"></a>To really modify <span class="in">`x`</span>, you'd need to write <span class="in">`x &lt;- x[-c(1,3)]`</span>{.R}.</span>
+<span id="cb154-190"><a href="#cb154-190" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb154-191"><a href="#cb154-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-192"><a href="#cb154-192" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Filtering values with tests</span></span>
+<span id="cb154-193"><a href="#cb154-193" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-194"><a href="#cb154-194" aria-hidden="true" tabindex="-1"></a>You can access values with booleans. Values getting a <span class="in">`TRUE`</span>{.R} will be kept, while values with a <span class="in">`FALSE`</span>{.R} will be discarded – or return a <span class="in">`NA`</span> if a <span class="in">`TRUE`</span> is given to a non existing value (*i.e.* to an index larger than the size of the vector):</span>
+<span id="cb154-197"><a href="#cb154-197" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-198"><a href="#cb154-198" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb154-199"><a href="#cb154-199" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="cn">TRUE</span>,<span class="cn">TRUE</span>,<span class="cn">TRUE</span>,<span class="cn">FALSE</span>,<span class="cn">TRUE</span>,<span class="cn">TRUE</span>)]</span>
+<span id="cb154-200"><a href="#cb154-200" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-201"><a href="#cb154-201" aria-hidden="true" tabindex="-1"></a>Therefore, you can apply tests on your values and filter them very easily:</span>
+<span id="cb154-204"><a href="#cb154-204" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-205"><a href="#cb154-205" aria-hidden="true" tabindex="-1"></a>x <span class="sc">&gt;</span> <span class="dv">4</span> <span class="co"># is a vector of booleans</span></span>
+<span id="cb154-206"><a href="#cb154-206" aria-hidden="true" tabindex="-1"></a>x[x <span class="sc">&gt;</span> <span class="dv">4</span>] <span class="co"># is a filtered vector</span></span>
+<span id="cb154-207"><a href="#cb154-207" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-208"><a href="#cb154-208" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-209"><a href="#cb154-209" aria-hidden="true" tabindex="-1"></a><span class="fu">#### Accessing values by name</span></span>
+<span id="cb154-210"><a href="#cb154-210" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-211"><a href="#cb154-211" aria-hidden="true" tabindex="-1"></a>Finally, values in vectors can be **named**, and thus can be accessed by their name:</span>
+<span id="cb154-212"><a href="#cb154-212" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-213"><a href="#cb154-213" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">age=</span><span class="dv">32</span>, <span class="at">name=</span><span class="st">"John"</span>, <span class="at">pet=</span><span class="st">"Cat"</span>)</span>
+<span id="cb154-214"><a href="#cb154-214" aria-hidden="true" tabindex="-1"></a>y</span>
+<span id="cb154-215"><a href="#cb154-215" aria-hidden="true" tabindex="-1"></a>y[<span class="fu">c</span>(<span class="st">'age'</span>,<span class="st">'pet'</span>)] <span class="co"># prints a named vector</span></span>
+<span id="cb154-216"><a href="#cb154-216" aria-hidden="true" tabindex="-1"></a>y[[<span class="st">'name'</span>]] <span class="co"># prints an un-named vector</span></span>
+<span id="cb154-217"><a href="#cb154-217" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-218"><a href="#cb154-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-219"><a href="#cb154-219" aria-hidden="true" tabindex="-1"></a>And you can access the names of the vector using <span class="in">`names()`</span>{.R}:</span>
+<span id="cb154-220"><a href="#cb154-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-221"><a href="#cb154-221" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(y)</span>
+<span id="cb154-222"><a href="#cb154-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-223"><a href="#cb154-223" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-224"><a href="#cb154-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-225"><a href="#cb154-225" aria-hidden="true" tabindex="-1"></a><span class="fu">### Sorting, removing duplicates, sampling</span></span>
+<span id="cb154-226"><a href="#cb154-226" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-227"><a href="#cb154-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-228"><a href="#cb154-228" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sorting by ascending number:</span>
+<span id="cb154-229"><a href="#cb154-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-230"><a href="#cb154-230" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(x)</span>
+<span id="cb154-231"><a href="#cb154-231" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-232"><a href="#cb154-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It works with strings too, but <span class="in">`stringr::str_sort()`</span>{.R} might be needed for strings mixing letters and numbers:</span>
+<span id="cb154-233"><a href="#cb154-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-234"><a href="#cb154-234" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">c</span>(<span class="st">"c"</span>,<span class="st">"a"</span>,<span class="st">"d"</span>,<span class="st">"ab"</span>)) </span>
+<span id="cb154-235"><a href="#cb154-235" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"a10"</span>, <span class="st">"a2"</span>, <span class="st">"d"</span>, <span class="st">"ab"</span>))</span>
+<span id="cb154-236"><a href="#cb154-236" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_sort</span>(<span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"a10"</span>, <span class="st">"a2"</span>, <span class="st">"d"</span>, <span class="st">"ab"</span>), <span class="at">numeric =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb154-237"><a href="#cb154-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-238"><a href="#cb154-238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sorting by descending number:</span>
+<span id="cb154-239"><a href="#cb154-239" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-240"><a href="#cb154-240" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(x, <span class="at">decreasing =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb154-241"><a href="#cb154-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-242"><a href="#cb154-242" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Inverting the order of the vector:</span>
+<span id="cb154-245"><a href="#cb154-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-246"><a href="#cb154-246" aria-hidden="true" tabindex="-1"></a><span class="fu">rev</span>(x)</span>
+<span id="cb154-247"><a href="#cb154-247" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-248"><a href="#cb154-248" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-249"><a href="#cb154-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Find the order of the indexes of the sorting:</span>
+<span id="cb154-250"><a href="#cb154-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-251"><a href="#cb154-251" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(x)</span>
+<span id="cb154-252"><a href="#cb154-252" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">order</span>(x)] <span class="co"># is thus equivalent to `sort(x)`</span></span>
+<span id="cb154-253"><a href="#cb154-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-254"><a href="#cb154-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Find duplicates:</span>
+<span id="cb154-255"><a href="#cb154-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-256"><a href="#cb154-256" aria-hidden="true" tabindex="-1"></a><span class="fu">duplicated</span>(x)</span>
+<span id="cb154-257"><a href="#cb154-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-258"><a href="#cb154-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Remove duplicates:</span>
+<span id="cb154-259"><a href="#cb154-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-260"><a href="#cb154-260" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(x)</span>
+<span id="cb154-261"><a href="#cb154-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-262"><a href="#cb154-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Choose 3 random values:</span>
+<span id="cb154-263"><a href="#cb154-263" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-264"><a href="#cb154-264" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x, <span class="dv">3</span>)</span>
+<span id="cb154-265"><a href="#cb154-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-266"><a href="#cb154-266" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-267"><a href="#cb154-267" aria-hidden="true" tabindex="-1"></a><span class="fu">### Maximum and minimum</span></span>
+<span id="cb154-268"><a href="#cb154-268" aria-hidden="true" tabindex="-1"></a>This is quite straightforward:</span>
+<span id="cb154-269"><a href="#cb154-269" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-270"><a href="#cb154-270" aria-hidden="true" tabindex="-1"></a><span class="co"># maximum of x and its index</span></span>
+<span id="cb154-271"><a href="#cb154-271" aria-hidden="true" tabindex="-1"></a>x; <span class="fu">max</span>(x); <span class="fu">which.max</span>(x) </span>
+<span id="cb154-272"><a href="#cb154-272" aria-hidden="true" tabindex="-1"></a><span class="co"># minimum of x and its index</span></span>
+<span id="cb154-273"><a href="#cb154-273" aria-hidden="true" tabindex="-1"></a>x; <span class="fu">min</span>(x); <span class="fu">which.min</span>(x)</span>
+<span id="cb154-274"><a href="#cb154-274" aria-hidden="true" tabindex="-1"></a><span class="co"># range of a vector</span></span>
+<span id="cb154-275"><a href="#cb154-275" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(x)</span>
+<span id="cb154-276"><a href="#cb154-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-277"><a href="#cb154-277" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-278"><a href="#cb154-278" aria-hidden="true" tabindex="-1"></a><span class="fu">### Characteristics of vectors</span></span>
+<span id="cb154-279"><a href="#cb154-279" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-280"><a href="#cb154-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Size of a vector:</span>
+<span id="cb154-281"><a href="#cb154-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-282"><a href="#cb154-282" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x)</span>
+<span id="cb154-283"><a href="#cb154-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-284"><a href="#cb154-284" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Statistics on vector:</span>
+<span id="cb154-285"><a href="#cb154-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-286"><a href="#cb154-286" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span>
+<span id="cb154-287"><a href="#cb154-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-288"><a href="#cb154-288" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sum of all terms:</span>
+<span id="cb154-289"><a href="#cb154-289" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-290"><a href="#cb154-290" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x)</span>
+<span id="cb154-291"><a href="#cb154-291" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-292"><a href="#cb154-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Average value:</span>
+<span id="cb154-293"><a href="#cb154-293" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-294"><a href="#cb154-294" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
+<span id="cb154-295"><a href="#cb154-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-296"><a href="#cb154-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Median value:</span>
+<span id="cb154-297"><a href="#cb154-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-298"><a href="#cb154-298" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(x)</span>
+<span id="cb154-299"><a href="#cb154-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-300"><a href="#cb154-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Standard deviation:</span>
+<span id="cb154-301"><a href="#cb154-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-302"><a href="#cb154-302" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(x)</span>
+<span id="cb154-303"><a href="#cb154-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-304"><a href="#cb154-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Count occurrence of values:</span>
+<span id="cb154-305"><a href="#cb154-305" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-306"><a href="#cb154-306" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(x)</span>
+<span id="cb154-307"><a href="#cb154-307" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-308"><a href="#cb154-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cumulative sum:</span>
+<span id="cb154-311"><a href="#cb154-311" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-312"><a href="#cb154-312" aria-hidden="true" tabindex="-1"></a><span class="fu">cumsum</span>(x)</span>
+<span id="cb154-313"><a href="#cb154-313" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-314"><a href="#cb154-314" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Term-by-term difference</span>
+<span id="cb154-317"><a href="#cb154-317" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb154-318"><a href="#cb154-318" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(x)</span>
+<span id="cb154-319"><a href="#cb154-319" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-320"><a href="#cb154-320" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-321"><a href="#cb154-321" aria-hidden="true" tabindex="-1"></a><span class="fu">### Concatenation of vectors</span></span>
+<span id="cb154-322"><a href="#cb154-322" aria-hidden="true" tabindex="-1"></a>This is done using the <span class="in">`c()`</span> notation: you basically create a vector of vectors, the result being a new vector:</span>
+<span id="cb154-323"><a href="#cb154-323" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-324"><a href="#cb154-324" aria-hidden="true" tabindex="-1"></a><span class="co"># concatenate vectors</span></span>
+<span id="cb154-325"><a href="#cb154-325" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="cn">NA</span>, <span class="sc">-</span>x); z</span>
+<span id="cb154-326"><a href="#cb154-326" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-327"><a href="#cb154-327" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-328"><a href="#cb154-328" aria-hidden="true" tabindex="-1"></a>Another option is to use the <span class="in">`append()`</span>{.R} function that allows for more options:</span>
+<span id="cb154-329"><a href="#cb154-329" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-330"><a href="#cb154-330" aria-hidden="true" tabindex="-1"></a><span class="co"># append values</span></span>
+<span id="cb154-331"><a href="#cb154-331" aria-hidden="true" tabindex="-1"></a><span class="fu">append</span>(x, <span class="dv">4</span>)    <span class="co"># at the end</span></span>
+<span id="cb154-332"><a href="#cb154-332" aria-hidden="true" tabindex="-1"></a><span class="fu">append</span>(x, <span class="dv">4</span><span class="sc">:</span><span class="dv">1</span>, <span class="dv">3</span>) <span class="co"># or after a given index</span></span>
+<span id="cb154-333"><a href="#cb154-333" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-334"><a href="#cb154-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-335"><a href="#cb154-335" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-336"><a href="#cb154-336" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises {#exo-vectors}</span></span>
+<span id="cb154-337"><a href="#cb154-337" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-338"><a href="#cb154-338" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-339"><a href="#cb154-339" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/exo-in-class.zip"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>Download the archive with all the exercises files<span class="kw">&lt;/a&gt;</span>, unzip it in your <span class="in">`R class`</span> RStudio project, and edit the R files.</span>
+<span id="cb154-340"><a href="#cb154-340" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-341"><a href="#cb154-341" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb154-342"><a href="#cb154-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-343"><a href="#cb154-343" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb154-344"><a href="#cb154-344" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 1**<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb154-345"><a href="#cb154-345" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-346"><a href="#cb154-346" aria-hidden="true" tabindex="-1"></a>Let's create a named vector containing age of the students in the class, the names of each value being the first name of the students. Then:</span>
+<span id="cb154-347"><a href="#cb154-347" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-348"><a href="#cb154-348" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the average age and its standard deviation</span>
+<span id="cb154-349"><a href="#cb154-349" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the median age</span>
+<span id="cb154-350"><a href="#cb154-350" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the maximum, minimum and range of the ages in the class?</span>
+<span id="cb154-351"><a href="#cb154-351" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What are all the student names in the class?</span>
+<span id="cb154-352"><a href="#cb154-352" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print the sorted ages by increasing and decreasing order</span>
+<span id="cb154-353"><a href="#cb154-353" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print the ages sorted by alphabetically ordered names (increasing and decreasing)</span>
+<span id="cb154-354"><a href="#cb154-354" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Show a histogram of the ages distribution using <span class="in">`hist()`</span>{.R} and play with the parameter <span class="in">`breaks`</span> to modify the histogram</span>
+<span id="cb154-355"><a href="#cb154-355" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Show a boxplot of the ages distribution using <span class="in">`boxplot()`</span>{.R}</span>
+<span id="cb154-356"><a href="#cb154-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-357"><a href="#cb154-357" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-358"><a href="#cb154-358" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb154-359"><a href="#cb154-359" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-360"><a href="#cb154-360" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb154-361"><a href="#cb154-361" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 2**<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb154-362"><a href="#cb154-362" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-363"><a href="#cb154-363" aria-hidden="true" tabindex="-1"></a>This exercise is adapted from <span class="co">[</span><span class="ot">here</span><span class="co">](https://perso.esiee.fr/~courivad/R/05-vectors.html#application-population-in-french-cities-1962-2012)</span>.</span>
+<span id="cb154-364"><a href="#cb154-364" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-365"><a href="#cb154-365" aria-hidden="true" tabindex="-1"></a>Open Rstudio and create a new R script, save it as <span class="in">`population.R`</span> in your wanted directory, say <span class="in">`Rcourse/`</span>.</span>
+<span id="cb154-366"><a href="#cb154-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-367"><a href="#cb154-367" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-368"><a href="#cb154-368" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/population.csv"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>Download<span class="kw">&lt;/a&gt;</span> the <span class="in">`population.csv`</span> file and save it in your working directory.</span>
+<span id="cb154-369"><a href="#cb154-369" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-370"><a href="#cb154-370" aria-hidden="true" tabindex="-1"></a>A csv file contains raw data stored as plain text and separated by a comma (Comma Separated Values). Open it with Rstudio.</span>
+<span id="cb154-371"><a href="#cb154-371" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-372"><a href="#cb154-372" aria-hidden="true" tabindex="-1"></a>We can of course directly load such file with R and store its data in an appropriate format (_i.e._ a <span class="in">`data.frame`</span>), but this is for the next chapter. For now, just copy-paste the text in the Rstudio script area to:</span>
+<span id="cb154-373"><a href="#cb154-373" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-374"><a href="#cb154-374" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`cities`</span> vector containing all the cities listed in <span class="in">`population.csv`</span></span>
+<span id="cb154-375"><a href="#cb154-375" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`pop_1962`</span> and <span class="in">`pop_2012`</span> vectors containing the populations of each city at these years. Print the 2 vectors. </span>
+<span id="cb154-376"><a href="#cb154-376" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use <span class="in">`names()`</span>{.R} to name values of <span class="in">`pop_1962`</span> and <span class="in">`pop_2012`</span>. Print the 2 vectors again. Are there any change?</span>
+<span id="cb154-377"><a href="#cb154-377" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What are the cities with more than 200000 people in 1962? For these, how many residents in 2012?</span>
+<span id="cb154-378"><a href="#cb154-378" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the population evolution of Montpellier and Nantes?</span>
+<span id="cb154-379"><a href="#cb154-379" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`pop_diff`</span> vector to store population change between 1962 and 2012</span>
+<span id="cb154-380"><a href="#cb154-380" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print cities with a negative change</span>
+<span id="cb154-381"><a href="#cb154-381" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print cities which broke the 300000 people barrier between 1962 and 2012</span>
+<span id="cb154-382"><a href="#cb154-382" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the total change in population of the 10 largest cities (as of 1962) between 1962 and 2012.</span>
+<span id="cb154-383"><a href="#cb154-383" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the population mean for year 1962</span>
+<span id="cb154-384"><a href="#cb154-384" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the population mean of Paris over these two years</span>
+<span id="cb154-385"><a href="#cb154-385" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sort the cities by decreasing order of population for 1962</span>
+<span id="cb154-386"><a href="#cb154-386" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-387"><a href="#cb154-387" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
+<span id="cb154-388"><a href="#cb154-388" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb154-389"><a href="#cb154-389" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-390"><a href="#cb154-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-391"><a href="#cb154-391" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a `cities` vector containing all the cities listed in `population.csv`</span></span>
+<span id="cb154-392"><a href="#cb154-392" aria-hidden="true" tabindex="-1"></a>cities <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Angers"</span>, <span class="st">"Bordeaux"</span>, <span class="st">"Brest"</span>, <span class="st">"Dijon"</span>, <span class="st">"Grenoble"</span>, <span class="st">"Le Havre"</span>, </span>
+<span id="cb154-393"><a href="#cb154-393" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Le Mans"</span>, <span class="st">"Lille"</span>, <span class="st">"Lyon"</span>, <span class="st">"Marseille"</span>, <span class="st">"Montpellier"</span>, <span class="st">"Nantes"</span>, </span>
+<span id="cb154-394"><a href="#cb154-394" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Nice"</span>, <span class="st">"Paris"</span>, <span class="st">"Reims"</span>, <span class="st">"Rennes"</span>, <span class="st">"Saint-Etienne"</span>, <span class="st">"Strasbourg"</span>, </span>
+<span id="cb154-395"><a href="#cb154-395" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Toulon"</span>, <span class="st">"Toulouse"</span>)</span>
+<span id="cb154-396"><a href="#cb154-396" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a `pop_1962` and `pop_2012` vectors containing the populations </span></span>
+<span id="cb154-397"><a href="#cb154-397" aria-hidden="true" tabindex="-1"></a><span class="co"># of each city at these years. Print the 2 vectors. </span></span>
+<span id="cb154-398"><a href="#cb154-398" aria-hidden="true" tabindex="-1"></a>pop_1962 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">115273</span>,<span class="dv">278403</span>,<span class="dv">136104</span>,<span class="dv">135694</span>,<span class="dv">156707</span>,<span class="dv">187845</span>,<span class="dv">132181</span>,<span class="dv">239955</span>,</span>
+<span id="cb154-399"><a href="#cb154-399" aria-hidden="true" tabindex="-1"></a>              <span class="dv">535746</span>,<span class="dv">778071</span>,<span class="dv">118864</span>,<span class="dv">240048</span>,<span class="dv">292958</span>,<span class="dv">2790091</span>,<span class="dv">134856</span>,<span class="dv">151948</span>,</span>
+<span id="cb154-400"><a href="#cb154-400" aria-hidden="true" tabindex="-1"></a>              <span class="dv">210311</span>,<span class="dv">228971</span>,<span class="dv">161797</span>,<span class="dv">323724</span>)</span>
+<span id="cb154-401"><a href="#cb154-401" aria-hidden="true" tabindex="-1"></a>pop_2012 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">149017</span>,<span class="dv">241287</span>,<span class="dv">139676</span>,<span class="dv">152071</span>,<span class="dv">158346</span>,<span class="dv">173142</span>,<span class="dv">143599</span>,<span class="dv">228652</span>,</span>
+<span id="cb154-402"><a href="#cb154-402" aria-hidden="true" tabindex="-1"></a>              <span class="dv">496343</span>,<span class="dv">852516</span>,<span class="dv">268456</span>,<span class="dv">291604</span>,<span class="dv">343629</span>,<span class="dv">2240621</span>,<span class="dv">181893</span>,<span class="dv">209860</span>,</span>
+<span id="cb154-403"><a href="#cb154-403" aria-hidden="true" tabindex="-1"></a>              <span class="dv">171483</span>,<span class="dv">274394</span>,<span class="dv">164899</span>,<span class="dv">453317</span>)</span>
+<span id="cb154-404"><a href="#cb154-404" aria-hidden="true" tabindex="-1"></a>pop_1962; pop_2012</span>
+<span id="cb154-405"><a href="#cb154-405" aria-hidden="true" tabindex="-1"></a><span class="co"># Use names() to name values of `pop_1962` and `pop_2012`. </span></span>
+<span id="cb154-406"><a href="#cb154-406" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the 2 vectors again. Are there any change?</span></span>
+<span id="cb154-407"><a href="#cb154-407" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pop_2012) <span class="ot">&lt;-</span> <span class="fu">names</span>(pop_1962) <span class="ot">&lt;-</span> cities</span>
+<span id="cb154-408"><a href="#cb154-408" aria-hidden="true" tabindex="-1"></a>pop_1962; pop_2012</span>
+<span id="cb154-409"><a href="#cb154-409" aria-hidden="true" tabindex="-1"></a><span class="co"># What are the cities with more than 200000 people in 1962? </span></span>
+<span id="cb154-410"><a href="#cb154-410" aria-hidden="true" tabindex="-1"></a><span class="co"># For these, how many residents in 2012?</span></span>
+<span id="cb154-411"><a href="#cb154-411" aria-hidden="true" tabindex="-1"></a>cities200k <span class="ot">&lt;-</span> cities[pop_1962<span class="sc">&gt;</span><span class="dv">200000</span>]</span>
+<span id="cb154-412"><a href="#cb154-412" aria-hidden="true" tabindex="-1"></a>cities200k; pop_2012[cities200k]</span>
+<span id="cb154-413"><a href="#cb154-413" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the population evolution of Montpellier and Nantes?</span></span>
+<span id="cb154-414"><a href="#cb154-414" aria-hidden="true" tabindex="-1"></a>pop_2012[<span class="st">'Montpellier'</span>] <span class="sc">-</span> pop_1962[<span class="st">'Montpellier'</span>]; pop_2012[<span class="st">'Nantes'</span>] <span class="sc">-</span> pop_1962[<span class="st">'Nantes'</span>]</span>
+<span id="cb154-415"><a href="#cb154-415" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a `pop_diff` vector to store population change between 1962 and 2012</span></span>
+<span id="cb154-416"><a href="#cb154-416" aria-hidden="true" tabindex="-1"></a>pop_diff <span class="ot">&lt;-</span> pop_2012 <span class="sc">-</span> pop_1962</span>
+<span id="cb154-417"><a href="#cb154-417" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cities with a negative change</span></span>
+<span id="cb154-418"><a href="#cb154-418" aria-hidden="true" tabindex="-1"></a>cities[pop_diff<span class="sc">&lt;</span><span class="dv">0</span>]</span>
+<span id="cb154-419"><a href="#cb154-419" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cities which broke the 300000 people barrier between 1962 and 2012</span></span>
+<span id="cb154-420"><a href="#cb154-420" aria-hidden="true" tabindex="-1"></a>cities[pop_2012<span class="sc">&gt;</span><span class="dv">300000</span> <span class="sc">&amp;</span> pop_1962<span class="sc">&lt;</span><span class="dv">300000</span>]</span>
+<span id="cb154-421"><a href="#cb154-421" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the total change in population of the 10 largest cities</span></span>
+<span id="cb154-422"><a href="#cb154-422" aria-hidden="true" tabindex="-1"></a><span class="co"># (as of 1962) between 1962 and 2012.</span></span>
+<span id="cb154-423"><a href="#cb154-423" aria-hidden="true" tabindex="-1"></a>ten_largest <span class="ot">&lt;-</span> cities[<span class="fu">order</span>(pop_1962, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]]</span>
+<span id="cb154-424"><a href="#cb154-424" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(pop_2012[ten_largest] <span class="sc">-</span> pop_1962[ten_largest])</span>
+<span id="cb154-425"><a href="#cb154-425" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the population mean for year 1962</span></span>
+<span id="cb154-426"><a href="#cb154-426" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(pop_1962)</span>
+<span id="cb154-427"><a href="#cb154-427" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the population mean of Paris</span></span>
+<span id="cb154-428"><a href="#cb154-428" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(pop_1962[<span class="st">'Paris'</span>], pop_2012[<span class="st">'Paris'</span>]))</span>
+<span id="cb154-429"><a href="#cb154-429" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the cities by decreasing order of population for 1962</span></span>
+<span id="cb154-430"><a href="#cb154-430" aria-hidden="true" tabindex="-1"></a>(pop_1962_sorted <span class="ot">&lt;-</span> <span class="fu">sort</span>(pop_1962, <span class="at">decreasing =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb154-431"><a href="#cb154-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-432"><a href="#cb154-432" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-433"><a href="#cb154-433" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb154-434"><a href="#cb154-434" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb154-435"><a href="#cb154-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-436"><a href="#cb154-436" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-437"><a href="#cb154-437" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb154-438"><a href="#cb154-438" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb154-439"><a href="#cb154-439" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb154-440"><a href="#cb154-440" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb154-441"><a href="#cb154-441" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb154-442"><a href="#cb154-442" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
