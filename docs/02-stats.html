@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.336">
+<meta name="generator" content="quarto-1.3.450">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 2&nbsp; A little reminder on Statistics</title>
 <style>
@@ -87,7 +87,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script><script type="text/javascript">
 
@@ -113,7 +114,7 @@ ga('send', {
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-stats.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A little reminder on Statistics</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -123,7 +124,7 @@ ga('send', {
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Reproducible data treatment with R</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/colinbousige/rclass" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/colinbousige/rclass" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -971,26 +972,26 @@ Important
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">38.22177</td>
-<td style="text-align: right;">0.1237754</td>
+<td style="text-align: right;">38.16477</td>
+<td style="text-align: right;">0.2284830</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">37.73248</td>
-<td style="text-align: right;">0.2477495</td>
+<td style="text-align: right;">37.73058</td>
+<td style="text-align: right;">0.2685701</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">36.45260</td>
-<td style="text-align: right;">3.5734917</td>
+<td style="text-align: right;">38.15975</td>
+<td style="text-align: right;">3.0163888</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">37.85452</td>
-<td style="text-align: right;">2.9130951</td>
+<td style="text-align: right;">37.14723</td>
+<td style="text-align: right;">2.8937964</td>
 </tr>
 </tbody>
 </table>
@@ -1011,26 +1012,26 @@ Important
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.9505432</td>
-<td style="text-align: right;">0.3754103</td>
+<td style="text-align: right;">0.9306275</td>
+<td style="text-align: right;">0.1587704</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.9603269</td>
-<td style="text-align: right;">0.5504003</td>
+<td style="text-align: right;">0.9354078</td>
+<td style="text-align: right;">0.1960994</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.9745332</td>
-<td style="text-align: right;">0.8461515</td>
+<td style="text-align: right;">0.9877669</td>
+<td style="text-align: right;">0.9937510</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.9595208</td>
-<td style="text-align: right;">0.5343214</td>
+<td style="text-align: right;">0.9647883</td>
+<td style="text-align: right;">0.6432244</td>
 </tr>
 </tbody>
 </table>
@@ -1046,16 +1047,16 @@ Important
 #&gt;  Welch Two Sample t-test
 #&gt; 
 #&gt; data:  Temperature by Day
-#&gt; t = 7.901, df = 27.929, p-value = 1.345e-08
+#&gt; t = 5.5068, df = 37.049, p-value = 2.912e-06
 #&gt; alternative hypothesis: true difference in means between group Day1 and group Day2 is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  0.3624245 0.6161590
+#&gt;  0.2744370 0.5939379
 #&gt; sample estimates:
 #&gt; mean in group Day1 mean in group Day2 
-#&gt;           38.22177           37.73248</code></pre>
+#&gt;           38.16477           37.73058</code></pre>
 </div>
 </div>
-<p>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of 1.34e-08, which is largely below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. To report it properly, we can say that “the temperature of patient A on day 1 (38.22°C, 95% CI = [38.16, 38.28]°C), was statistically significantly higher than on day 2 (37.73°C, 95% CI = [37.62, 37.85]°C), t(27.93) = 7.9, p = 1.34e-08.” Here , 27.93 is the degrees of freedom associated with the t test-statistic. The 95% confidence interval for the difference between the means is 0.36°C to 0.62°C.</p>
+<p>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of 2.91e-06, which is largely below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. To report it properly, we can say that “the temperature of patient A on day 1 (38.16°C, 95% CI = [38.06, 38.27]°C), was statistically significantly higher than on day 2 (37.73°C, 95% CI = [37.6, 37.86]°C), t(37.05) = 5.51, p = 2.91e-06.” Here , 37.05 is the degrees of freedom associated with the t test-statistic. The 95% confidence interval for the difference between the means is 0.27°C to 0.59°C.</p>
 <p>For patient B however, even though the average temperature decreased between the two days, the spread in data is so large that the t-test does not allow concluding concerning any significant temperature difference between the two days:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">temperatures</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Patient</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span>,</span>
@@ -1065,13 +1066,13 @@ Important
 #&gt;  Welch Two Sample t-test
 #&gt; 
 #&gt; data:  Temperature by Day
-#&gt; t = -1.3599, df = 36.517, p-value = 0.1822
+#&gt; t = 1.0833, df = 37.935, p-value = 0.2855
 #&gt; alternative hypothesis: true difference in means between group Day1 and group Day2 is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  -3.491692  0.687864
+#&gt;  -0.8797542  2.9047945
 #&gt; sample estimates:
 #&gt; mean in group Day1 mean in group Day2 
-#&gt;           36.45260           37.85452</code></pre>
+#&gt;           38.15975           37.14723</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1092,13 +1093,13 @@ Note
 #&gt;  One Sample t-test
 #&gt; 
 #&gt; data:  temperatures %&gt;% filter(Patient == "B", Day == "Day1") %&gt;% pull(Temperature)
-#&gt; t = 45.62, df = 19, p-value &lt; 2.2e-16
+#&gt; t = 56.576, df = 19, p-value &lt; 2.2e-16
 #&gt; alternative hypothesis: true mean is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  34.78016 38.12505
+#&gt;  36.74803 39.57146
 #&gt; sample estimates:
 #&gt; mean of x 
-#&gt;   36.4526</code></pre>
+#&gt;  38.15975</code></pre>
 </div>
 </div>
 </div>
