@@ -1,0 +1,164 @@
+---
+title : "R Exercises - Spectroscopic data"
+date  : "`r Sys.Date()`"
+output: 
+    html_document:
+        toc            : true
+        toc_float      : true
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: false
+        code_download  : false
+params: 
+    solution:
+        value: false
+---
+
+
+We will now work with Raman spectroscopy data from the luminescence of a ruby particle under high pressure: `Ddata/rubis_xx.txt`. 
+This measurement is performed in a diamond anvil cell with a laser of wavelength $\lambda_L$=568.189 nm, and the pressure is known by calibrating the frequency of a diamond line. 
+
+The ruby luminescence contains two lines, and we want to use the position of the R1 line, which is the most intense and has the highest energy, to determine the pressure. We therefore need to determine the parameters $A$ and $B$ of the equation of state linking wavelength (in nm) and pressure (in GPa):
+
+$$
+P~[GPa] = \frac{A}{B}\left[\left(\frac{\lambda}{\lambda_0}\right)^B-1\right],
+$$
+where $\lambda_0$ = 694.24 nm is the wavelength of the R1 line at zero pressure, and $\lambda$ is the wavelength of the R1 line at $P$ pressure. 
+For a given line, the relationship between its measured Raman shift, $\omega$, and its wavelength is given by $\lambda = \frac{10^7}{\omega_L - \omega}$, with $\omega_L= \frac{10^7}{\lambda_L}$ the frequency of the probe laser.
+
+Open one of the files, for example [Data/rubis_1.txt](Data/rubis_1.txt) to see its structure - they're all the same. They are made up of two columns, which are the Raman shifts in cm^-1^ and the intensities. The nomenclature of the files `"Data/rubis_xx.txt"` is such that `xx` is the pressure in GPa.
+
+> First, consider the steps involved in determining the parameters $A$ and $B$ of the equation of state. 
+> - What data do you need? 
+> - What steps do you need to take to obtain them?
+
+- Let's start by defining the function `Prubis(w,A,B)`, which returns the pressure in GPa as a function of the Raman shift in cm^-1^, and the parameters $A$ and $B$. 
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+- Find in the folder "Data" the list of files with the pattern "rubis\_" in their name (check out the `list.files()` function) and store it in `flist`
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+- What is the length of `flist`?
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+- Initialize an empty tibble called `spec` that will store all spectra:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+- Using a `for` loop, load each file in `flist` and store them into `spec` by *making it tidy*.
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+Another version of this that does not use a for loop would be like so (try to understand what's happening in this code by running each line one after the other and looking at the help on the functions used):
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+- Modify `spec` to get the pressure in GPa from the file name, and so that the intensity column is normalized to [0,1].
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+- Plot the first spectrum in `spec` to see the x range
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+- Using `ggplot2`, plot all spectra normalized to [0,1] (with points) and stacked on top of each other with a vertical shift corresponding to the pressure in GPa
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+- What we want to do now is to fit this data by the sum of two Lorentzians to find the precise position of the R1 line as a function of pressure. To do this, we'll use the function [`nls()`](https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/nls), which allows us to make a non-linear fit of the data. We also need to define the function `lor(x,x0,gamma)` which returns a [Lorentzian](https://fr.wikipedia.org/wiki/Fonction_lorentzienne) centered at `x0` and of width at half-height `gamma`. Start by defining the function `lor(x,x0,gamma)`.
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+- Now create an empty tibble called `results`, in which we'll store all the fitting parameters in a tidy tibble. Then fit each spectrum by the sum of two Lorentzians, and save all fit parameters in `results`, along with the file name and pressure. For the fit to work, you'll need to give reasonable initial values for the fit parameters using the `start=list(...)` argument of `nls()`. For example, you can use the `which.max()` function to find the index of the maximum of a vector.
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+
+
+Another way of doing that is to use the `map()` function from the `purrr` package, which allows us to apply a function to each element of a list. Here, we want to apply the `nls()` function to each spectrum in `spec`, and store the result in a new column of `spec`. We can do this like so:
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+library(broom)
+specfitted <- spec %>% 
+    nest(data=c(w,int)) %>% 
+    mutate(fit=map(data, ~nls(int ~ A1*lor(w, x1, gamma1) + A2*lor(w, x2, gamma2), 
+                              data=., 
+                              start=list(x1=.$w[which.max(.$int)], 
+                                         x2=.$w[which.max(.$int)]-30, 
+                                         gamma1=10, gamma2=10,
+                                         A1=10,A2=7))),
+           tidied = map(fit, tidy),
+           augmented = map(fit, augment))
+results <- specfitted %>% 
+    unnest(tidied) %>% 
+    select(name, pressure, term, estimate)
+specfitted <- specfitted %>% 
+    unnest(augmented)
+```
+
+- Plot the result of the fit on the graph above. 
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+- Now all you have to do is plot the position of the peak as a function of pressure, and model this data by the equation of state defined at the beginning. What values of A and B do you obtain? Compare with the [literature values](https://doi.org/10.1063/1.2135877): A = 1876 GPa and B = 10.71.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+

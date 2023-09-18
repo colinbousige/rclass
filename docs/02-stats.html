@@ -972,26 +972,26 @@ Important
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">38.16387</td>
-<td style="text-align: right;">0.1550848</td>
+<td style="text-align: right;">38.23743</td>
+<td style="text-align: right;">0.1909361</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">37.68334</td>
-<td style="text-align: right;">0.1607142</td>
+<td style="text-align: right;">37.65915</td>
+<td style="text-align: right;">0.3005035</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">38.86882</td>
-<td style="text-align: right;">2.4641838</td>
+<td style="text-align: right;">39.26185</td>
+<td style="text-align: right;">2.7741587</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">37.60195</td>
-<td style="text-align: right;">2.7724718</td>
+<td style="text-align: right;">36.83639</td>
+<td style="text-align: right;">3.4682528</td>
 </tr>
 </tbody>
 </table>
@@ -1012,26 +1012,26 @@ Important
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.9550805</td>
-<td style="text-align: right;">0.4508046</td>
+<td style="text-align: right;">0.9901534</td>
+<td style="text-align: right;">0.9983330</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.9807780</td>
-<td style="text-align: right;">0.9437449</td>
+<td style="text-align: right;">0.9828284</td>
+<td style="text-align: right;">0.9651878</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.9003790</td>
-<td style="text-align: right;">0.0419193</td>
+<td style="text-align: right;">0.9377141</td>
+<td style="text-align: right;">0.2170008</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.9664390</td>
-<td style="text-align: right;">0.6786235</td>
+<td style="text-align: right;">0.9522753</td>
+<td style="text-align: right;">0.4029542</td>
 </tr>
 </tbody>
 </table>
@@ -1047,16 +1047,16 @@ Important
 #&gt;  Welch Two Sample t-test
 #&gt; 
 #&gt; data:  Temperature by Day
-#&gt; t = 9.6222, df = 37.952, p-value = 9.979e-12
+#&gt; t = 7.2638, df = 32.191, p-value = 2.866e-08
 #&gt; alternative hypothesis: true difference in means between group Day1 and group Day2 is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  0.3794291 0.5816346
+#&gt;  0.4161544 0.7404044
 #&gt; sample estimates:
 #&gt; mean in group Day1 mean in group Day2 
-#&gt;           38.16387           37.68334</code></pre>
+#&gt;           38.23743           37.65915</code></pre>
 </div>
 </div>
-<p>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of 9.98e-12, which is largely below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. To report it properly, we can say that “the temperature of patient A on day 1 (38.16°C, 95% CI = [38.09, 38.24]°C), was statistically significantly higher than on day 2 (37.68°C, 95% CI = [37.61, 37.76]°C), t(37.95) = 9.62, p = 9.98e-12.” Here , 37.95 is the degrees of freedom associated with the t test-statistic. The 95% confidence interval for the difference between the means is 0.38°C to 0.58°C.</p>
+<p>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of 2.87e-08, which is largely below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. To report it properly, we can say that “the temperature of patient A on day 1 (38.24°C, 95% CI = [38.15, 38.33]°C), was statistically significantly higher than on day 2 (37.66°C, 95% CI = [37.52, 37.8]°C), t(32.19) = 7.26, p = 2.87e-08.” Here , 32.19 is the degrees of freedom associated with the t test-statistic. The 95% confidence interval for the difference between the means is 0.42°C to 0.74°C.</p>
 <p>For patient B however, even though the average temperature decreased between the two days, the spread in data is so large that the t-test does not allow concluding concerning any significant temperature difference between the two days:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">temperatures</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Patient</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span>,</span>
@@ -1066,13 +1066,13 @@ Important
 #&gt;  Welch Two Sample t-test
 #&gt; 
 #&gt; data:  Temperature by Day
-#&gt; t = 1.5274, df = 37.484, p-value = 0.1351
+#&gt; t = 2.4423, df = 36.251, p-value = 0.0196
 #&gt; alternative hypothesis: true difference in means between group Day1 and group Day2 is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  -0.4129673  2.9467039
+#&gt;  0.4118514 4.4390619
 #&gt; sample estimates:
 #&gt; mean in group Day1 mean in group Day2 
-#&gt;           38.86882           37.60195</code></pre>
+#&gt;           39.26185           36.83639</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1093,13 +1093,13 @@ Note
 #&gt;  One Sample t-test
 #&gt; 
 #&gt; data:  temperatures %&gt;% filter(Patient == "B", Day == "Day1") %&gt;% pull(Temperature)
-#&gt; t = 70.541, df = 19, p-value &lt; 2.2e-16
+#&gt; t = 63.293, df = 19, p-value &lt; 2.2e-16
 #&gt; alternative hypothesis: true mean is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  37.71554 40.02209
+#&gt;  37.96350 40.56019
 #&gt; sample estimates:
 #&gt; mean of x 
-#&gt;  38.86882</code></pre>
+#&gt;  39.26185</code></pre>
 </div>
 </div>
 </div>
