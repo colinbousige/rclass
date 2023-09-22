@@ -827,16 +827,16 @@ Show output
 <pre><code>#&gt; # A tibble: 1,000 × 2
 #&gt;        x     y
 #&gt;    &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1 0.525 0.525
-#&gt;  2 0.721 1.25 
-#&gt;  3 0.303 1.55 
-#&gt;  4 0.209 1.76 
-#&gt;  5 0.260 2.02 
-#&gt;  6 0.825 2.84 
-#&gt;  7 0.166 3.01 
-#&gt;  8 0.307 3.32 
-#&gt;  9 0.906 4.22 
-#&gt; 10 0.724 4.95 
+#&gt;  1 0.981 0.981
+#&gt;  2 0.946 1.93 
+#&gt;  3 0.528 2.46 
+#&gt;  4 0.490 2.94 
+#&gt;  5 0.609 3.55 
+#&gt;  6 0.143 3.70 
+#&gt;  7 0.108 3.80 
+#&gt;  8 0.702 4.51 
+#&gt;  9 0.701 5.21 
+#&gt; 10 0.175 5.38 
 #&gt; # ℹ 990 more rows</code></pre>
 </div>
 </div>
@@ -857,19 +857,19 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tib</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># is a vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.5253016 0.7205710 0.3025764 0.2088975 0.2595087 0.8251481</code></pre>
+<pre><code>#&gt; [1] 0.9811207 0.9460822 0.5280108 0.4895827 0.6090303 0.1433469</code></pre>
 </div>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tib</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>  <span class="co"># is a tibble</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 6 × 1
 #&gt;       x
 #&gt;   &lt;dbl&gt;
-#&gt; 1 0.525
-#&gt; 2 0.721
-#&gt; 3 0.303
-#&gt; 4 0.209
-#&gt; 5 0.260
-#&gt; 6 0.825</code></pre>
+#&gt; 1 0.981
+#&gt; 2 0.946
+#&gt; 3 0.528
+#&gt; 4 0.490
+#&gt; 5 0.609
+#&gt; 6 0.143</code></pre>
 </div>
 </div>
 <p>Unless you want to get a <code>tibble</code>, I recommend always using the <code>$</code> notation when you want to get a column as a vector to avoid problems.</p>
@@ -978,18 +978,18 @@ Attention
 <span><span class="va">dt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 4
-#&gt;         x      y signx    signy   
-#&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1  0.314 -0.639 positive negative
-#&gt;  2 -0.698 -0.951 negative negative
-#&gt;  3 -0.735 -0.715 negative negative
-#&gt;  4  0.460  0.770 positive positive
-#&gt;  5  0.785  0.481 positive positive
-#&gt;  6  0.589 -0.131 positive negative
-#&gt;  7  0.282  0.588 positive positive
-#&gt;  8 -0.950 -0.309 negative negative
-#&gt;  9 -0.623 -0.577 negative negative
-#&gt; 10  0.906  0.434 positive positive
+#&gt;          x      y signx    signy   
+#&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt;  1 -0.987   0.621 negative positive
+#&gt;  2 -0.220   0.700 negative positive
+#&gt;  3  0.795   0.429 positive positive
+#&gt;  4  0.463   0.533 positive positive
+#&gt;  5 -0.558  -0.453 negative negative
+#&gt;  6 -0.218  -0.117 negative negative
+#&gt;  7  0.0728  0.606 positive positive
+#&gt;  8 -0.538   0.933 negative positive
+#&gt;  9  0.339   0.507 positive positive
+#&gt; 10 -0.833   0.728 negative positive
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1026,20 +1026,20 @@ Attention
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>  <span class="co"># by index</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
-#&gt;        x      y signx    signy   
-#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt; 1  0.314 -0.639 positive negative
-#&gt; 2 -0.698 -0.951 negative negative
-#&gt; 3 -0.735 -0.715 negative negative</code></pre>
+#&gt;        x     y signx    signy   
+#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt; 1 -0.987 0.621 negative positive
+#&gt; 2 -0.220 0.700 negative positive
+#&gt; 3  0.795 0.429 positive positive</code></pre>
 </div>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="co"># randomly</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
-#&gt;        x     y signx    signy   
-#&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt; 1  0.957 0.232 positive positive
-#&gt; 2 -0.917 0.999 negative positive
-#&gt; 3 -0.616 0.577 negative positive</code></pre>
+#&gt;       x      y signx    signy   
+#&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt; 1 0.160 -0.898 positive negative
+#&gt; 2 0.222  0.273 positive positive
+#&gt; 3 0.719 -0.794 positive negative</code></pre>
 </div>
 </div>
 </section><section id="operations-on-groups-of-a-variable" class="level3" data-number="6.5.3"><h3 data-number="6.5.3" class="anchored" data-anchor-id="operations-on-groups-of-a-variable">
@@ -1051,18 +1051,18 @@ Attention
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 4
 #&gt; # Groups:   signx [2]
-#&gt;         x      y signx    signy   
-#&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1  0.314 -0.639 positive negative
-#&gt;  2 -0.698 -0.951 negative negative
-#&gt;  3 -0.735 -0.715 negative negative
-#&gt;  4  0.460  0.770 positive positive
-#&gt;  5  0.785  0.481 positive positive
-#&gt;  6  0.589 -0.131 positive negative
-#&gt;  7  0.282  0.588 positive positive
-#&gt;  8 -0.950 -0.309 negative negative
-#&gt;  9 -0.623 -0.577 negative negative
-#&gt; 10  0.906  0.434 positive positive
+#&gt;          x      y signx    signy   
+#&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt;  1 -0.987   0.621 negative positive
+#&gt;  2 -0.220   0.700 negative positive
+#&gt;  3  0.795   0.429 positive positive
+#&gt;  4  0.463   0.533 positive positive
+#&gt;  5 -0.558  -0.453 negative negative
+#&gt;  6 -0.218  -0.117 negative negative
+#&gt;  7  0.0728  0.606 positive positive
+#&gt;  8 -0.538   0.933 negative positive
+#&gt;  9  0.339   0.507 positive positive
+#&gt; 10 -0.833   0.728 negative positive
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1073,12 +1073,12 @@ Attention
 #&gt; # Groups:   signx [2]
 #&gt;        x      y signx    signy   
 #&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt; 1 -0.966 -0.516 negative negative
-#&gt; 2 -0.324  0.427 negative positive
-#&gt; 3 -0.502  0.984 negative positive
-#&gt; 4  0.263 -0.266 positive negative
-#&gt; 5  0.652  0.165 positive positive
-#&gt; 6  0.243  0.842 positive positive</code></pre>
+#&gt; 1 -0.257  0.773 negative positive
+#&gt; 2 -0.558  0.714 negative positive
+#&gt; 3 -0.911  0.409 negative positive
+#&gt; 4  0.454 -0.336 positive negative
+#&gt; 5  0.721  0.551 positive positive
+#&gt; 6  0.393  0.481 positive positive</code></pre>
 </div>
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">signx</span>, <span class="va">signy</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1088,18 +1088,18 @@ Attention
 #&gt; # Groups:   signx, signy [4]
 #&gt;          x       y signx    signy   
 #&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 -0.823  -0.308  negative negative
-#&gt;  2 -0.113  -0.0381 negative negative
-#&gt;  3 -0.567  -0.530  negative negative
-#&gt;  4 -0.0239  0.396  negative positive
-#&gt;  5 -0.683   0.0668 negative positive
-#&gt;  6 -0.619   0.209  negative positive
-#&gt;  7  0.505  -0.898  positive negative
-#&gt;  8  0.465  -0.702  positive negative
-#&gt;  9  0.646  -0.834  positive negative
-#&gt; 10  0.491   0.268  positive positive
-#&gt; 11  0.233   0.455  positive positive
-#&gt; 12  0.275   0.0399 positive positive</code></pre>
+#&gt;  1 -0.0212 -0.0872 negative negative
+#&gt;  2 -0.283  -0.537  negative negative
+#&gt;  3 -0.0411 -0.110  negative negative
+#&gt;  4 -0.961   0.917  negative positive
+#&gt;  5 -0.742   0.423  negative positive
+#&gt;  6 -0.218   0.646  negative positive
+#&gt;  7  0.655  -0.180  positive negative
+#&gt;  8  0.942  -0.483  positive negative
+#&gt;  9  0.160  -0.706  positive negative
+#&gt; 10  0.449   0.205  positive positive
+#&gt; 11  0.0157  0.539  positive positive
+#&gt; 12  0.812   0.935  positive positive</code></pre>
 </div>
 </div>
 </section><section id="summary-by-groups-of-a-variable" class="level3" data-number="6.5.4"><h3 data-number="6.5.4" class="anchored" data-anchor-id="summary-by-groups-of-a-variable">
@@ -1115,8 +1115,8 @@ Attention
 <pre><code>#&gt; # A tibble: 2 × 4
 #&gt;   signx    count mean_x  sd_x
 #&gt;   &lt;chr&gt;    &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1 negative   681 -0.523 0.279
-#&gt; 2 positive   819  0.483 0.274</code></pre>
+#&gt; 1 negative   777 -0.520 0.288
+#&gt; 2 positive   723  0.492 0.286</code></pre>
 </div>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">signx</span>, <span class="va">signy</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -1128,10 +1128,10 @@ Attention
 #&gt; # Groups:   signx [2]
 #&gt;   signx    signy    count mean_x mean_y
 #&gt;   &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt; 1 negative negative   338 -0.511 -0.495
-#&gt; 2 negative positive   343 -0.534  0.503
-#&gt; 3 positive negative   408  0.486 -0.497
-#&gt; 4 positive positive   411  0.480  0.501</code></pre>
+#&gt; 1 negative negative   401 -0.507 -0.481
+#&gt; 2 negative positive   376 -0.534  0.498
+#&gt; 3 positive negative   370  0.488 -0.513
+#&gt; 4 positive positive   353  0.495  0.511</code></pre>
 </div>
 </div>
 </section><section id="sorting" class="level3" data-number="6.5.5"><h3 data-number="6.5.5" class="anchored" data-anchor-id="sorting">
@@ -1140,35 +1140,35 @@ Attention
 <div class="sourceCode" id="cb107"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 4
-#&gt;         x        y signx    signy   
-#&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 -0.994  0.0971  negative positive
-#&gt;  2 -0.994 -0.285   negative negative
-#&gt;  3 -0.994 -0.238   negative negative
-#&gt;  4 -0.979 -0.101   negative negative
-#&gt;  5 -0.979 -0.983   negative negative
-#&gt;  6 -0.979  0.0590  negative positive
-#&gt;  7 -0.971  0.210   negative positive
-#&gt;  8 -0.971 -0.00741 negative negative
-#&gt;  9 -0.971 -0.418   negative negative
-#&gt; 10 -0.966 -0.516   negative negative
+#&gt;         x       y signx    signy   
+#&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt;  1 -0.994 -0.454  negative negative
+#&gt;  2 -0.994  0.258  negative positive
+#&gt;  3 -0.994  0.907  negative positive
+#&gt;  4 -0.992 -0.585  negative negative
+#&gt;  5 -0.992  0.726  negative positive
+#&gt;  6 -0.992  0.809  negative positive
+#&gt;  7 -0.990  0.0819 negative positive
+#&gt;  8 -0.990 -0.405  negative negative
+#&gt;  9 -0.990  0.280  negative positive
+#&gt; 10 -0.987  0.621  negative positive
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 4
-#&gt;         x         y signx    signy   
-#&gt;     &lt;dbl&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 -0.994  0.0971   negative positive
-#&gt;  2 -0.994 -0.238    negative negative
-#&gt;  3 -0.994 -0.285    negative negative
-#&gt;  4 -0.979  0.0590   negative positive
-#&gt;  5 -0.979 -0.101    negative negative
-#&gt;  6 -0.979 -0.983    negative negative
-#&gt;  7 -0.971  0.210    negative positive
-#&gt;  8 -0.971 -0.00741  negative negative
-#&gt;  9 -0.971 -0.418    negative negative
-#&gt; 10 -0.966 -0.000984 negative negative
+#&gt;         x       y signx    signy   
+#&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt;  1 -0.994  0.907  negative positive
+#&gt;  2 -0.994  0.258  negative positive
+#&gt;  3 -0.994 -0.454  negative negative
+#&gt;  4 -0.992  0.809  negative positive
+#&gt;  5 -0.992  0.726  negative positive
+#&gt;  6 -0.992 -0.585  negative negative
+#&gt;  7 -0.990  0.280  negative positive
+#&gt;  8 -0.990  0.0819 negative positive
+#&gt;  9 -0.990 -0.405  negative negative
+#&gt; 10 -0.987  0.621  negative positive
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1192,18 +1192,18 @@ Attention
 <div class="sourceCode" id="cb113"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">dt</span>, <span class="va">dt2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 5
-#&gt;         x      y signx    signy    value
-#&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;lgl&gt;
-#&gt;  1  0.314 -0.639 positive negative FALSE
-#&gt;  2 -0.698 -0.951 negative negative TRUE 
-#&gt;  3 -0.735 -0.715 negative negative TRUE 
-#&gt;  4  0.460  0.770 positive positive TRUE 
-#&gt;  5  0.785  0.481 positive positive TRUE 
-#&gt;  6  0.589 -0.131 positive negative FALSE
-#&gt;  7  0.282  0.588 positive positive TRUE 
-#&gt;  8 -0.950 -0.309 negative negative TRUE 
-#&gt;  9 -0.623 -0.577 negative negative TRUE 
-#&gt; 10  0.906  0.434 positive positive TRUE 
+#&gt;          x      y signx    signy    value
+#&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;lgl&gt;
+#&gt;  1 -0.987   0.621 negative positive FALSE
+#&gt;  2 -0.220   0.700 negative positive FALSE
+#&gt;  3  0.795   0.429 positive positive TRUE 
+#&gt;  4  0.463   0.533 positive positive TRUE 
+#&gt;  5 -0.558  -0.453 negative negative TRUE 
+#&gt;  6 -0.218  -0.117 negative negative TRUE 
+#&gt;  7  0.0728  0.606 positive positive TRUE 
+#&gt;  8 -0.538   0.933 negative positive FALSE
+#&gt;  9  0.339   0.507 positive positive TRUE 
+#&gt; 10 -0.833   0.728 negative positive FALSE
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1233,18 +1233,18 @@ Attention
 <div class="sourceCode" id="cb117"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>w<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, z<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 6
-#&gt;         x      y signx    signy        w      z
-#&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;  &lt;dbl&gt;
-#&gt;  1  0.314 -0.639 positive negative     1  0.309
-#&gt;  2 -0.698 -0.951 negative negative     2 -0.643
-#&gt;  3 -0.735 -0.715 negative negative     3 -0.670
-#&gt;  4  0.460  0.770 positive positive     4  0.444
-#&gt;  5  0.785  0.481 positive positive     5  0.707
-#&gt;  6  0.589 -0.131 positive negative     6  0.556
-#&gt;  7  0.282  0.588 positive positive     7  0.279
-#&gt;  8 -0.950 -0.309 negative negative     8 -0.813
-#&gt;  9 -0.623 -0.577 negative negative     9 -0.584
-#&gt; 10  0.906  0.434 positive positive    10  0.787
+#&gt;          x      y signx    signy        w       z
+#&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;
+#&gt;  1 -0.987   0.621 negative positive     1 -0.834 
+#&gt;  2 -0.220   0.700 negative positive     2 -0.218 
+#&gt;  3  0.795   0.429 positive positive     3  0.714 
+#&gt;  4  0.463   0.533 positive positive     4  0.447 
+#&gt;  5 -0.558  -0.453 negative negative     5 -0.529 
+#&gt;  6 -0.218  -0.117 negative negative     6 -0.216 
+#&gt;  7  0.0728  0.606 positive positive     7  0.0727
+#&gt;  8 -0.538   0.933 negative positive     8 -0.512 
+#&gt;  9  0.339   0.507 positive positive     9  0.333 
+#&gt; 10 -0.833   0.728 negative positive    10 -0.740 
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb119"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1252,16 +1252,16 @@ Attention
 <pre><code>#&gt; # A tibble: 1,500 × 4
 #&gt;        x      y signx    signy   
 #&gt;    &lt;int&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1     1 -0.639 positive negative
-#&gt;  2     2 -0.951 negative negative
-#&gt;  3     3 -0.715 negative negative
-#&gt;  4     4  0.770 positive positive
-#&gt;  5     5  0.481 positive positive
-#&gt;  6     6 -0.131 positive negative
-#&gt;  7     7  0.588 positive positive
-#&gt;  8     8 -0.309 negative negative
-#&gt;  9     9 -0.577 negative negative
-#&gt; 10    10  0.434 positive positive
+#&gt;  1     1  0.621 negative positive
+#&gt;  2     2  0.700 negative positive
+#&gt;  3     3  0.429 positive positive
+#&gt;  4     4  0.533 positive positive
+#&gt;  5     5 -0.453 negative negative
+#&gt;  6     6 -0.117 negative negative
+#&gt;  7     7  0.606 positive positive
+#&gt;  8     8  0.933 negative positive
+#&gt;  9     9  0.507 positive positive
+#&gt; 10    10  0.728 negative positive
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1271,18 +1271,18 @@ Attention
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>  <span class="co"># only x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 1
-#&gt;         x
-#&gt;     &lt;dbl&gt;
-#&gt;  1  0.314
-#&gt;  2 -0.698
-#&gt;  3 -0.735
-#&gt;  4  0.460
-#&gt;  5  0.785
-#&gt;  6  0.589
-#&gt;  7  0.282
-#&gt;  8 -0.950
-#&gt;  9 -0.623
-#&gt; 10  0.906
+#&gt;          x
+#&gt;      &lt;dbl&gt;
+#&gt;  1 -0.987 
+#&gt;  2 -0.220 
+#&gt;  3  0.795 
+#&gt;  4  0.463 
+#&gt;  5 -0.558 
+#&gt;  6 -0.218 
+#&gt;  7  0.0728
+#&gt;  8 -0.538 
+#&gt;  9  0.339 
+#&gt; 10 -0.833 
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb123"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span> <span class="co"># all but x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1290,16 +1290,16 @@ Attention
 <pre><code>#&gt; # A tibble: 1,500 × 3
 #&gt;         y signx    signy   
 #&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 -0.639 positive negative
-#&gt;  2 -0.951 negative negative
-#&gt;  3 -0.715 negative negative
-#&gt;  4  0.770 positive positive
-#&gt;  5  0.481 positive positive
-#&gt;  6 -0.131 positive negative
-#&gt;  7  0.588 positive positive
-#&gt;  8 -0.309 negative negative
-#&gt;  9 -0.577 negative negative
-#&gt; 10  0.434 positive positive
+#&gt;  1  0.621 negative positive
+#&gt;  2  0.700 negative positive
+#&gt;  3  0.429 positive positive
+#&gt;  4  0.533 positive positive
+#&gt;  5 -0.453 negative negative
+#&gt;  6 -0.117 negative negative
+#&gt;  7  0.606 positive positive
+#&gt;  8  0.933 negative positive
+#&gt;  9  0.507 positive positive
+#&gt; 10  0.728 negative positive
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb125"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"sign"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1307,33 +1307,33 @@ Attention
 <pre><code>#&gt; # A tibble: 1,500 × 2
 #&gt;    signx    signy   
 #&gt;    &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 positive negative
-#&gt;  2 negative negative
-#&gt;  3 negative negative
+#&gt;  1 negative positive
+#&gt;  2 negative positive
+#&gt;  3 positive positive
 #&gt;  4 positive positive
-#&gt;  5 positive positive
-#&gt;  6 positive negative
+#&gt;  5 negative negative
+#&gt;  6 negative negative
 #&gt;  7 positive positive
-#&gt;  8 negative negative
-#&gt;  9 negative negative
-#&gt; 10 positive positive
+#&gt;  8 negative positive
+#&gt;  9 positive positive
+#&gt; 10 negative positive
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb127"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 2
-#&gt;         x signx   
-#&gt;     &lt;dbl&gt; &lt;chr&gt;   
-#&gt;  1  0.314 positive
-#&gt;  2 -0.698 negative
-#&gt;  3 -0.735 negative
-#&gt;  4  0.460 positive
-#&gt;  5  0.785 positive
-#&gt;  6  0.589 positive
-#&gt;  7  0.282 positive
-#&gt;  8 -0.950 negative
-#&gt;  9 -0.623 negative
-#&gt; 10  0.906 positive
+#&gt;          x signx   
+#&gt;      &lt;dbl&gt; &lt;chr&gt;   
+#&gt;  1 -0.987  negative
+#&gt;  2 -0.220  negative
+#&gt;  3  0.795  positive
+#&gt;  4  0.463  positive
+#&gt;  5 -0.558  negative
+#&gt;  6 -0.218  negative
+#&gt;  7  0.0728 positive
+#&gt;  8 -0.538  negative
+#&gt;  9  0.339  positive
+#&gt; 10 -0.833  negative
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1342,37 +1342,37 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb129"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">signx</span><span class="op">==</span><span class="st">"positive"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; # A tibble: 819 × 4
-#&gt;         x      y signx    signy   
-#&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 0.314  -0.639 positive negative
-#&gt;  2 0.460   0.770 positive positive
-#&gt;  3 0.785   0.481 positive positive
-#&gt;  4 0.589  -0.131 positive negative
-#&gt;  5 0.282   0.588 positive positive
-#&gt;  6 0.906   0.434 positive positive
-#&gt;  7 0.540   0.310 positive positive
-#&gt;  8 0.387   0.406 positive positive
-#&gt;  9 0.870  -0.697 positive negative
-#&gt; 10 0.0597  0.176 positive positive
-#&gt; # ℹ 809 more rows</code></pre>
+<pre><code>#&gt; # A tibble: 723 × 4
+#&gt;         x       y signx    signy   
+#&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt;  1 0.795   0.429  positive positive
+#&gt;  2 0.463   0.533  positive positive
+#&gt;  3 0.0728  0.606  positive positive
+#&gt;  4 0.339   0.507  positive positive
+#&gt;  5 0.976   0.605  positive positive
+#&gt;  6 0.217   0.509  positive positive
+#&gt;  7 0.124   0.0984 positive positive
+#&gt;  8 0.812   0.935  positive positive
+#&gt;  9 0.598  -0.900  positive negative
+#&gt; 10 0.616   0.747  positive positive
+#&gt; # ℹ 713 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb131"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">x</span><span class="op">&lt;</span><span class="fl">0</span>, <span class="va">y</span><span class="op">&gt;</span><span class="fl">.1</span><span class="op">)</span> <span class="co"># multiple filters can be applied at once</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; # A tibble: 320 × 4
-#&gt;          x     y signx    signy   
-#&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 -0.579  0.278 negative positive
-#&gt;  2 -0.276  0.226 negative positive
-#&gt;  3 -0.917  0.735 negative positive
-#&gt;  4 -0.643  0.379 negative positive
-#&gt;  5 -0.914  0.773 negative positive
-#&gt;  6 -0.863  0.560 negative positive
-#&gt;  7 -0.354  0.998 negative positive
-#&gt;  8 -0.747  0.885 negative positive
-#&gt;  9 -0.148  0.853 negative positive
-#&gt; 10 -0.0256 0.960 negative positive
-#&gt; # ℹ 310 more rows</code></pre>
+<pre><code>#&gt; # A tibble: 338 × 4
+#&gt;         x     y signx    signy   
+#&gt;     &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt;  1 -0.987 0.621 negative positive
+#&gt;  2 -0.220 0.700 negative positive
+#&gt;  3 -0.538 0.933 negative positive
+#&gt;  4 -0.833 0.728 negative positive
+#&gt;  5 -0.931 0.613 negative positive
+#&gt;  6 -0.114 0.290 negative positive
+#&gt;  7 -0.547 0.963 negative positive
+#&gt;  8 -0.922 0.896 negative positive
+#&gt;  9 -0.440 0.100 negative positive
+#&gt; 10 -0.327 0.773 negative positive
+#&gt; # ℹ 328 more rows</code></pre>
 </div>
 </div>
 </section><section id="reorder-columns" class="level3" data-number="6.5.11"><h3 data-number="6.5.11" class="anchored" data-anchor-id="reorder-columns">
@@ -1381,18 +1381,18 @@ Attention
 <div class="sourceCode" id="cb133"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">y</span>, .after <span class="op">=</span> <span class="va">signy</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 4
-#&gt;         x signx    signy         y
-#&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;
-#&gt;  1  0.314 positive negative -0.639
-#&gt;  2 -0.698 negative negative -0.951
-#&gt;  3 -0.735 negative negative -0.715
-#&gt;  4  0.460 positive positive  0.770
-#&gt;  5  0.785 positive positive  0.481
-#&gt;  6  0.589 positive negative -0.131
-#&gt;  7  0.282 positive positive  0.588
-#&gt;  8 -0.950 negative negative -0.309
-#&gt;  9 -0.623 negative negative -0.577
-#&gt; 10  0.906 positive positive  0.434
+#&gt;          x signx    signy         y
+#&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;
+#&gt;  1 -0.987  negative positive  0.621
+#&gt;  2 -0.220  negative positive  0.700
+#&gt;  3  0.795  positive positive  0.429
+#&gt;  4  0.463  positive positive  0.533
+#&gt;  5 -0.558  negative negative -0.453
+#&gt;  6 -0.218  negative negative -0.117
+#&gt;  7  0.0728 positive positive  0.606
+#&gt;  8 -0.538  negative positive  0.933
+#&gt;  9  0.339  positive positive  0.507
+#&gt; 10 -0.833  negative positive  0.728
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1580,27 +1580,27 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;           x         y         z
-#&gt; 1 0.4444418 0.4299540 0.8743958
-#&gt; 2 0.7742949 0.6992122 1.4735071
-#&gt; 3 0.2224976 0.2206664 0.4431640
-#&gt; 4 0.1837964 0.1827633 0.3665597</code></pre>
+#&gt; 1 0.4627713 0.4464296 0.9092009
+#&gt; 2 0.3528884 0.3456096 0.6984980
+#&gt; 3 0.2282714 0.2262941 0.4545655
+#&gt; 4 0.2689873 0.2657553 0.5347426</code></pre>
 </div>
 <div class="sourceCode" id="cb159"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Print the second column</span></span>
 <span><span class="va">df</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  [1] 0.42995398 0.69921219 0.22066636 0.18276330 0.08756709 0.62185392
-#&gt;  [7] 0.52387201 0.78616791 0.76158567 0.73503194</code></pre>
+<pre><code>#&gt;  [1] 0.4464296 0.3456096 0.2262941 0.2657553 0.2912923 0.7553388 0.3816480
+#&gt;  [8] 0.6501410 0.7893070 0.2913702</code></pre>
 </div>
 <div class="sourceCode" id="cb161"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Print the average of the third column</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">z</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 1.057994</code></pre>
+<pre><code>#&gt; [1] 0.921254</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] NA</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 1.057994</code></pre>
+<pre><code>#&gt; [1] 0.921254</code></pre>
 </div>
 <div class="sourceCode" id="cb165"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Using `plot(x,y)`{.R} where `x` and `y` are vectors, </span></span>
 <span><span class="co"># plot the 2nd column as a function of the first</span></span>
@@ -1622,36 +1622,36 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df_tib</span>, <span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 4 × 3
-#&gt;        a      b      c
-#&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt; 1 0.785  0.707  1.49  
-#&gt; 2 0.0316 0.0316 0.0632
-#&gt; 3 0.837  0.742  1.58  
-#&gt; 4 0.254  0.251  0.505</code></pre>
+#&gt;         a       b       c
+#&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+#&gt; 1 0.00234 0.00234 0.00468
+#&gt; 2 0.941   0.808   1.75   
+#&gt; 3 0.266   0.263   0.529  
+#&gt; 4 0.241   0.239   0.480</code></pre>
 </div>
 <div class="sourceCode" id="cb169"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_tib</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>; <span class="va">df_tib</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 10 × 1
-#&gt;         b
-#&gt;     &lt;dbl&gt;
-#&gt;  1 0.707 
-#&gt;  2 0.0316
-#&gt;  3 0.742 
-#&gt;  4 0.251 
-#&gt;  5 0.262 
-#&gt;  6 0.438 
-#&gt;  7 0.256 
-#&gt;  8 0.461 
-#&gt;  9 0.751 
-#&gt; 10 0.768</code></pre>
+#&gt;          b
+#&gt;      &lt;dbl&gt;
+#&gt;  1 0.00234
+#&gt;  2 0.808  
+#&gt;  3 0.263  
+#&gt;  4 0.239  
+#&gt;  5 0.291  
+#&gt;  6 0.159  
+#&gt;  7 0.224  
+#&gt;  8 0.299  
+#&gt;  9 0.821  
+#&gt; 10 0.00119</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  [1] 0.70673638 0.03157681 0.74248619 0.25089897 0.26204630 0.43839707
-#&gt;  [7] 0.25646144 0.46135299 0.75126740 0.76807301</code></pre>
+<pre><code>#&gt;  [1] 0.002337722 0.808015985 0.262853689 0.238708943 0.290904789 0.159377148
+#&gt;  [7] 0.224049985 0.299430035 0.820867675 0.001193704</code></pre>
 </div>
 <div class="sourceCode" id="cb172"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df_tib</span><span class="op">$</span><span class="va">c</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df_tib</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df_tib</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df_tib</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.9759778</code></pre>
+<pre><code>#&gt; [1] 0.6507287</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] NA</code></pre>
@@ -1660,7 +1660,7 @@ Solution
 <pre><code>#&gt; [1] NA</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.9759778</code></pre>
+<pre><code>#&gt; [1] 0.6507287</code></pre>
 </div>
 <div class="sourceCode" id="cb177"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="va">df_tib</span>, <span class="st">"Data/some_data.dat"</span>, quote <span class="op">=</span> <span class="cn">FALSE</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">df_tib</span><span class="op">$</span><span class="va">a</span>, <span class="va">df_tib</span><span class="op">$</span><span class="va">b</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
