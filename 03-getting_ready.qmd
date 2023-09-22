@@ -160,11 +160,11 @@ I have personally used [Sublime Text 3](https://www.sublimetext.com/3) for a lon
 - First, install [Package control](https://packagecontrol.io/installation). 
 - To set up command line launch: `ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime`. 
 - Install *a minima* the packages `LSP`, `R-IDE`, `Terminus`, and `SendCode`, and also the [radian](https://github.com/randy3k/radian) console. 
-- You can also add the useful packages `LatexTools`, `BracketHighlighter`, `RainbowBrackets`, `Citer`, `Path Tools`, `SidebarEnhancements`, `SidebarTools`, `Git`, `GitGutter`, `Alignment`, `AutoFileName`. 
+- You can also add the useful packages `LatexTools`, `BracketHighlighter`, `RainbowBrackets`, `Citer`, `Path Tools`, `SidebarEnhancements`, `SidebarTools`, git, `GitGutter`, `Alignment`, `AutoFileName`. 
 - Install the language server protocol package in R with: `install.packages("languageserver")`{.R}
 - To create a keyboard shortcut to open a terminal with the radian console as the R interpreter, add this to your keybinding file:
 
-```bash
+```json
 { "keys": ["super+option+r"], # put whatever you want here
     "command": "terminus_open",
     "args": {
@@ -179,6 +179,86 @@ I have personally used [Sublime Text 3](https://www.sublimetext.com/3) for a lon
 - You should be good to go: ⌘+⏎ will send the current line/selection to the radian console, ⌘+B will render the current Rmd file, ⌘+\\ will set the working directory to the current file's folder.
 
 :::
+
+## Install and configure git
+
+
+### Setting up git and Rstudio
+R combined with the git version control system provides a convenient setup for making your research project reproducible, since git allows you to track and share your code and analysis:
+
+- It makes it easy to share your projects
+- It facilitates collaboration, since people can contribute to your project and vice versa. They can also report errors (bugs) or suggest new additions (features) to projects
+- You can revert to a previous version if you find bugs or accidentally delete something
+- You can see what changes between different versions of your code
+- Also, R makes it easy to share packages: you can install other people's development packages with a single line of code, *i.e.* `devtools::install_github("username/packagename")`{.R}
+- And finally and for the most important part of this class: we will use [GitHub Classroom](https://classroom.github.com/classrooms) to do and submit homework.
+
+RStudio has built-in support for git, so we will use the common combination of R + git + RStudio.
+
+- First, if you haven't done this already, download and install [git](https://git-scm.com/downloads)
+- Create a [free GitHub account](https://github.com/)
+- Setup git in RStudio:
+  - Open RStudio and go to `Tools > Global Options…` click on git/SVN
+  - Check Enable version control interface for RStudio projects
+  - Set the path to the git executable that you just installed. 
+    - Open a shell, if you don't know where git is installed: `Tools > Terminal > New Terminal`
+    - Windows: type `where git` and hit enter. The path should be something like: C:/Program Files (x86)/git/bin/git.exe
+    - Linux/OS X: type `which git` and hit enter. The path should be something like: /usr/bin/git
+  - Restart RStudio, if it worked out you will find the git icon on the top toolbar, as shown below.
+- Set up your user name and email address (the one you used to register on GitHub) in the terminal (`Tools > Terminal > New Terminal`, see @fig-git1):
+- 
+```bash
+# You only need to do this once
+git config --global user.name 'yourGitHubUsername'
+git config --global user.email 'your@email.com'
+```
+
+```{r, echo=FALSE}
+#| label: fig-git1
+#| fig-cap: "Creating a new terminal in RStudio."
+#| out-width: 80%
+knitr::include_graphics("Plots/git1.png")
+```
+
+### Working with git and RStudio
+
+When creating a new project from scratch or from an existing folder, you can check `Create a git repository` to activate git for this project. You can also do this later by clicking on `Tools > Version Control > Project Setup`.
+
+What we will use for the exercises here, is the possibility of creation of new project from a GitHub repository, as shown in @fig-git2.
+
+- First, copy the repository HTTPS url: you'll find the repository url when pressing the green button `Code`. The link will be something like `https://github.com/username/the-git-repo.git`.
+- Then create a new RStudio project with git version control. Select `File > New Project..`, then `Version Control > Git`, then provide the repository HTTPS link, select where you want to place the R workspace folder, and create the project. RStudio will then download all the repository files in this new folder (or "clone", in git terms).
+- Alternatively, you can also download the zipped repo, unzip the files, and create a new project from this folder.
+
+```{r, echo=FALSE}
+#| label: fig-git2
+#| layout-ncol: 2
+#| fig-cap: "Creating a new project from GitHub in RStudio."
+#| fig-subcap: 
+#|    - "Create a new project  from `Version Control`."
+#|    - "Select `Git`."
+#|    - "Go to the repo website on GitHub, and copy the address in the `Code` button."
+#|    - "Paste it in the required field, an give a name to the folder where you want to place it."
+knitr::include_graphics("Plots/git2.png")
+knitr::include_graphics("Plots/git3.png")
+knitr::include_graphics("Plots/git4.png")
+knitr::include_graphics("Plots/git5.png")
+```
+
+- Then, you'll do your coding in the various files of the project, and save the changes.
+- And finally, you'll need to "Commit" the changes, and then "Push" them on the GitHub repository, as described on @fig-git3.
+
+```{r, echo=FALSE}
+#| label: fig-git3
+#| layout-ncol: 2
+#| fig-cap: "Uploading your changes to the GitHub repository."
+#| fig-subcap: 
+#|    - "Click on `Git > Commit`"
+#|    - "Then select the files that changed, write a commit message, then click on `Commit` then `Push`."
+knitr::include_graphics("Plots/git6.png")
+knitr::include_graphics("Plots/git7.png")
+```
+
 
 ## In any case: install LaTeX
 
@@ -271,3 +351,4 @@ Finally, I also made some interactive exercises that are bundled in the [`tutor`
 
 
 Alternatively, you can just <a href="Data/exo-in-class.zip" download target="_blank">download the archive with all the exercises files</a>, unzip it in your `R class` RStudio project, and edit the R files.
+
