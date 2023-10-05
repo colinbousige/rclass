@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2023-09-18" />
+<meta name="date" content="2023-10-05" />
 
 <title>R Exercises - Spectroscopic data</title>
 
@@ -1452,7 +1452,7 @@ border-radius: 0px;
 
 
 <h1 class="title toc-ignore">R Exercises - Spectroscopic data</h1>
-<h4 class="date">2023-09-18</h4>
+<h4 class="date">2023-10-05</h4>
 
 </div>
 
@@ -1462,7 +1462,7 @@ border-radius: 0px;
 </a>
 <p><br></p>
 <p>We will now work with Raman spectroscopy data from the luminescence
-of a ruby particle under high pressure: <code>Ddata/rubis_xx.txt</code>.
+of a ruby particle under high pressure: <code>Data/rubis_xx.txt</code>.
 This measurement is performed in a diamond anvil cell with a laser of
 wavelength <span class="math inline">\(\lambda_L\)</span>=568.189 nm,
 and the pressure is known by calibrating the frequency of a diamond
@@ -1482,50 +1482,60 @@ the relationship between its measured Raman shift, <span class="math inline">\(\
 <span class="math inline">\(\lambda = \frac{10^7}{\omega_L -
 \omega}\)</span>, with <span class="math inline">\(\omega_L=
 \frac{10^7}{\lambda_L}\)</span> the frequency of the probe laser.</p>
-<p>Open one of the files, for example <a href="Data/rubis_1.txt">Data/rubis_1.txt</a> to see its structure -
+<p>Open one of the files, for example <a href="Data/rubis_01.txt">Data/rubis_01.txt</a> to see its structure -
 they’re all the same. They are made up of two columns, which are the
 Raman shifts in cm<sup>-1</sup> and the intensities. The nomenclature of
 the files <code>&quot;Data/rubis_xx.txt&quot;</code> is such that <code>xx</code>
 is the pressure in GPa.</p>
 <blockquote>
 <p>First, consider the steps involved in determining the parameters
-<span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> of the equation of state. - What data
-do you need? - What steps do you need to take to obtain them?</p>
-</blockquote>
+<span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> of the equation of state.</p>
 <ul>
-<li><p>Let’s start by defining the function <code>Prubis(w,A,B)</code>,
-which returns the pressure in GPa as a function of the Raman shift in
-cm<sup>-1</sup>, and the parameters <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</p></li>
-<li><p>Find in the folder “Data” the list of files with the pattern
-“rubis_” in their name (check out the <code>list.files()</code>
-function) and store it in <code>flist</code></p></li>
-<li><p>What is the length of <code>flist</code>?</p></li>
-<li><p>Initialize an empty tibble called <code>spec</code> that will
-store all spectra:</p></li>
-<li><p>Using a <code>for</code> loop, load each file in
-<code>flist</code> and store them into <code>spec</code> by <em>making
-it tidy</em>.</p></li>
+<li>What data do you need?</li>
+<li>What steps do you need to take to obtain them?</li>
 </ul>
+</blockquote>
+<hr />
+<ul>
+<li>Let’s start by defining the function <code>Prubis(w,A,B)</code>,
+which returns the pressure in GPa as a function of the Raman shift in
+cm<sup>-1</sup>, and the parameters <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</li>
+</ul>
+<hr />
+<p>Find in the folder “Data” the list of files with the pattern “rubis_”
+in their name (check out the <code>list.files()</code> function) and
+store it in <code>flist</code></p>
+<hr />
+<p>What is the length of <code>flist</code>?</p>
+<hr />
+<p>Initialize an empty tibble called <code>spec</code> that will store
+all spectra:</p>
+<hr />
+<p>Using a <code>for</code> loop, load each file in <code>flist</code>
+and store them into <code>spec</code> by <em>making it tidy</em>.</p>
 <p>Another version of this that does not use a for loop would be like so
 (try to understand what’s happening in this code by running each line
 one after the other and looking at the help on the functions used):</p>
-<ul>
-<li><p>Modify <code>spec</code> to get the pressure in GPa from the file
-name, and so that the intensity column is normalized to [0,1].</p></li>
-<li><p>Plot the first spectrum in <code>spec</code> to see the x
-range</p></li>
-<li><p>Using <code>ggplot2</code>, plot all spectra normalized to [0,1]
+<hr />
+<p>Modify <code>spec</code> to get the pressure in GPa from the file
+name, and so that the intensity column is normalized to [0,1].</p>
+<hr />
+<p>Plot the first spectrum in <code>spec</code> to see the x range</p>
+<hr />
+<p>Using <code>ggplot2</code>, plot all spectra normalized to [0,1]
 (with points) and stacked on top of each other with a vertical shift
-corresponding to the pressure in GPa</p></li>
-<li><p>What we want to do now is to fit this data by the sum of two
+corresponding to the pressure in GPa</p>
+<hr />
+<p>What we want to do now is to fit this data by the sum of two
 Lorentzians to find the precise position of the R1 line as a function of
 pressure. To do this, we’ll use the function <a href="https://www.rdocumentation.org/packages/stats/versions/3.6.2/topics/nls"><code>nls()</code></a>,
 which allows us to make a non-linear fit of the data. We also need to
 define the function <code>lor(x,x0,gamma)</code> which returns a <a href="https://fr.wikipedia.org/wiki/Fonction_lorentzienne">Lorentzian</a>
 centered at <code>x0</code> and of width at half-height
 <code>gamma</code>. Start by defining the function
-<code>lor(x,x0,gamma)</code>.</p></li>
-<li><p>Now create an empty tibble called <code>results</code>, in which
+<code>lor(x,x0,gamma)</code>.</p>
+<hr />
+<p>Now create an empty tibble called <code>results</code>, in which
 we’ll store all the fitting parameters in a tidy tibble. Then fit each
 spectrum by the sum of two Lorentzians, and save all fit parameters in
 <code>results</code>, along with the file name and pressure. For the fit
@@ -1533,21 +1543,19 @@ to work, you’ll need to give reasonable initial values for the fit
 parameters using the <code>start=list(...)</code> argument of
 <code>nls()</code>. For example, you can use the
 <code>which.max()</code> function to find the index of the maximum of a
-vector.</p></li>
-</ul>
+vector.</p>
 <p>Another way of doing that is to use the <code>map()</code> function
 from the <code>purrr</code> package, which allows us to apply a function
 to each element of a list. Here, we want to apply the <code>nls()</code>
 function to each spectrum in <code>spec</code>, and store the result in
 a new column of <code>spec</code>. We can do this like so:</p>
-<ul>
-<li><p>Plot the result of the fit on the graph above.</p></li>
-<li><p>Now all you have to do is plot the position of the peak as a
-function of pressure, and model this data by the equation of state
-defined at the beginning. What values of A and B do you obtain? Compare
-with the <a href="https://doi.org/10.1063/1.2135877">literature
-values</a>: A = 1876 GPa and B = 10.71.</p></li>
-</ul>
+<hr />
+<p>Plot the result of the fit on the graph above.</p>
+<hr />
+<p>Now all you have to do is plot the position of the peak as a function
+of pressure, and model this data by the equation of state defined at the
+beginning. What values of A and B do you obtain? Compare with the <a href="https://doi.org/10.1063/1.2135877">literature values</a>: A = 1876
+GPa and B = 10.71.</p>
 
 
 

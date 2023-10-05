@@ -11,7 +11,7 @@ output:
         code_download  : FALSE
 params: 
     solution:
-        value: FALSE
+        value: false
 ---
 
 
@@ -28,7 +28,7 @@ blockquote {
 ```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align="center"}
 library(downloadthis)
 download_link(
-  link = "https://github.com/colinbousige/rclass/raw/main/Exo/SEM_particles/Archive.zip",
+  link = "./Archive.zip",
   output_name = "Data Files",
   button_label = "Download Data Files",
   button_type = "default",
@@ -44,262 +44,147 @@ options(width = 80)
 
 # Context
 
-In this exercise we are going to study the results from a particle analysis performed on a set of SEM images of Ni nanoparticles. 
+The aim of this exercise is to determine the correlations between experimental parameters and the size distributions of nickel nanoparticles obtained by dewetting. The nanoparticles were obtained by heat treatment at different temperatures under dihydrogen of a silicon wafer on which a layer of 2, 4.5 or 8 nm of nickel had previously been deposited. Treatment was carried out for 5, 10, 15, 30 or 60 minutes. 
 
-To obtain these nanoparticles, we start from Si wafers on which a 5 or 10 nm layer of Ni is deposited by PVD. These wafers are then heated in an H~2~ atmosphere to reduce them, which provokes the formation of nanoparticles through unwetting of the Si surface. These nanoparticles are then used as catalyst for the growth of vertically aligned carbon nanotubes by PECVD. As the diameter and density of the tubes are directly related to the diameter and density of the nanoparticles, we are interested in getting a clear idea of these parameters before performing the nanotube growth.
+These wafers were then observed by scanning electron microscopy, and different images of the surface were taken: these images were analyzed with [ImageJ](https://imagej.net/Welcome), as shown on Figure \@ref(fig:SEMimages). With this analysis, we obtained a set of files of type `[x]nmNi-T[y]-[z]min-[u].csv`, where:
 
-Some Ni-covered Si wafers were prepared before the first confinement (substrates labeled as `old`), some were prepared in September (`new` substrates). Here, we are interested in seeing whether the age and thickness of the Ni layer plays a role on the nanoparticles size and density. Also, the other parameters to study are the temperature at which the unwetting is performed, as well as the duration of this reaction.
+- `[x]` is the Ni thickness in the sample before treatment, 
+- `[y]` is the treatment temperature in ˚C,
+- `[z]` the treatment time in minutes, and
+- `[u]` the image number. 
 
-To perform this study, we prepared samples from various substrates at various temperatures and during various times. The substrates are then observed with SEM, and several pictures are taken to increase the statistics. These pictures are then analyzed with [ImageJ](https://imagej.net/Welcome), as shown on Figure \@ref(fig:SEMimages). 
+Area values are given in pixel^2^, with scales stored in a separate file [`Data/scales.csv`](Data/scales.csv). 
 
-```{r SEMimages, echo=FALSE, message=FALSE, fig.cap="Typical SEM image of Ni nanoparticles: from the raw image to particle analysis", fig.align="center", out.width="33%", fig.show='hold'}
-myimages <- c("Data/ML26_01.png", "Data/ML26_01-threshold.png", "Data/ML26_01-particles.png")
+```{r SEMimages, echo=FALSE, message=FALSE, fig.cap="Typical SEM image of Ni nanoparticles: from the raw image to particle analysis", fig.align="center", out.width="85%"}
+myimages <- c("Data/picture.png")
 knitr::include_graphics(myimages)
 ```
 
-In this exercise, we are going to treat the tables obtained from ImageJ: these tables contain the (x,y) positions of the particles as well as their area.
+> In this tutorial, we'll see how to import data from a large number of files, and aggregate them into a single tidy array. This table can then be exported in csv format, or used to generate graphs.
 
 # Data wrangling
 
-- Load the packages `tidyverse`, `readxl`, `units`, `broom`, and `ggforce`. We are going to getting used to work with units in this exercise, which is a very good habit to take in order to avoid many unit conversion problems. The package `ggforce` allows doing `ggplot` plots with tibbles containing units. Set the global `ggplot2` theme to black and white. Also, make it so that the `strip.background` (background of the facets titles) is blank, and that the `strip.text` is bold.
+- Load the package `tidyverse`. Set the global `ggplot2` theme to black and white. Also, make it so that the `strip.background` (background of the facets titles) is blank, and that the `strip.text` is bold.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE}
 library(tidyverse)
-library(readxl)
-library(units)
-library(ggforce)
-library(broom)
 theme_set(theme_bw()+
           theme(strip.background = element_blank(),
-                strip.text=element_text(face = "bold", size=14)
+                strip.text=element_text(face = "bold")
                 ))
 ```
 
-- Find all MLxx_xx_cc.csv files in the `Data` folder and store them in `flist`.
+- Find all `[x]nmNi-T[y]-[z]min-[u].csv` files in the `Data` folder and store them in `flist`. You could use the function `glob2rx()`{.R} to help write a regular expression using the wildcard sign `*`{.R}.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE}
-flist <- list.files(path="Data", pattern="m.csv")
+flist <- list.files(path="Data", pattern=glob2rx("*nmNi*.csv"), full.names=TRUE)
 ```
 
-- Read the `sample.xlsx` file that contain all characteristics of the various samples, such as their temperature, substrate type, time of reaction, and store the result in `samples`. 
-    - Modify the tibble `samples` so that its columns are named "sample", "T", "time", and "substrate"
-    - Using `separate()`{.R}, separate the "substrate" column into "sub_thick" and "sub_age" containing the thickness and age of the substrate. Use `convert = TRUE` to convert the characters to integers if applicable.
-    - Give the columns their proper unit when applicable (refer to [this example](https://lmi.cnrs.fr/r/working-with-units.html))
+- The pixel <-> length correspondence for each image has been stored in the file `Data/scales.csv`. Import this file into a `scales` tibble. 
+  - Next, add to `scales` a column `pix2_to_nm2` which will contain the pixel^2^ -> nm^2^ conversion value for each image.
+  - Then, modify the `file` column to contain the file name without extension. 
+  - Separate the `file` column into 4 columns `thickness`, `temperature`, `time` and `img`.
+  - Convert these new columns to numeric values (you need to remove the text in them first).
 
 ```{r include=params$solution, warning = FALSE, message=FALSE}
-samples <- read_excel("Data/sample.xlsx") %>% 
-    rename(sample    = "name",
-           T         = "Temperature (°C)",
-           time      = "Time (minutes)",
-           substrate = "Substrate (nm)") %>% 
-    separate(substrate, c("sub_thick","sub_age"), convert = TRUE) %>% 
-    mutate(sub_thick = set_units(sub_thick,"nm"),
-           time      = set_units(time,"min"),
-           T         = set_units(T,"degC")
-           )
+scales <- read_csv("Data/scales.csv") %>% 
+    mutate(pix2_to_nm2 = size^2/pixel^2,
+           file        = file %>% str_remove(".jpg")) %>% 
+    separate(file, c("thickness","temperature","time","img"), convert=TRUE, sep="-") %>%
+    mutate(thickness   = as.numeric(thickness %>% str_remove("nmNi")),
+           temperature = as.numeric(temperature %>% str_remove("T")),
+           time        = as.numeric(time %>% str_remove("min")))
 ```
 
-- Create the `readfile(filename)`{.R} function that, given one of the csv files names, will:
-    - Determine the unit used in this file: from `filename`, store the unit into the variable `UNIT` (that should be the string `"um"` or `"nm"`). You can use `unlist(strsplit(filename,"_"))`{.R} to get a vector of the elements of `filename` separated by a `_` character.
-    - Read the csv file, then successively:
-    - Select only the X, Y and Area columns (some files have more columns) and rename them to lowercases names.
-    - Add the `file` column containing the filename, and then separate it into 3 columns `sample`, `number` and `unit`
-    - Remove the `unit` column
-    - Apply the corresponding units to x, y and area. You can apply a unit to a vector `x` based on a **string** `UNIT` using `set_units(x, UNIT, mode = "standard")`{.R}.
-    - Create a column `diameter` containing the diameter of the particles.
-- Test this function on 2 files with 2 different units to check that it gives the expected result.
+- Let's now import all our data files into a tibble called `data`, and modify this tibble to also store the information written in the files names. We will do this in a succession of pipe operations.
+  - First, import all csv files into a tibble called `data`. You can use the `read_csv()`{.R} function to do so, and look into the `id` parameter to store the file name in a column `file`. Also, we are only interested in the `Area` column.
+  - Nest the `Area` column into a column `data` using the `nest()`{.R} function. This will make the next operations faster.
+  - Modify the `file` column so that it contains the file name without extension and path.
+  - Separate the `file` column into 4 columns `thickness`, `temperature`, `time` and `img`.
+  - Convert these new columns to numeric values (you need to remove the text in them first).
+  - Finally, unnest the `data` column to get a single column `Area` containing the area values.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE}
-readfile <- function(filename){
-    UNIT <- unlist(strsplit(filename,"_"))
-    UNIT <- gsub(".csv","",UNIT[length(UNIT)])
-    read_csv(filename) %>% 
-        rename_all(tolower) %>% 
-        select(x,y,area) %>% 
-        mutate(file=gsub("Data/","",filename)) %>% 
-        separate(file, c("sample","number","unit"), sep="_") %>% 
-        select(-unit) %>% 
-        mutate(x        = set_units(x, UNIT, mode = "standard"),
-               y        = set_units(y, UNIT, mode = "standard"),
-               area     = set_units(area, paste0(UNIT,"*",UNIT), mode = "standard"),
-               diameter = sqrt(4*area/pi))
-}
-readfile("Data/ML16_02_um.csv")
-readfile("Data/ML16_04_nm.csv")
+data <- read_csv(flist, id='file', col_select=Area) %>% 
+    nest(data=Area) %>% 
+    mutate(file = basename(file) %>% str_remove(".csv")) %>% 
+    separate(file, c("thickness","temperature","time","img"), convert=TRUE, sep="-") %>%
+    mutate(thickness   = as.numeric(thickness %>% str_remove("nmNi")),
+           temperature = as.numeric(temperature %>% str_remove("T")),
+           time        = as.numeric(time %>% str_remove("min"))) %>% 
+    unnest(data)
 ```
 
-- Using `readfile()`{.R} that you just defined, read all csv files and store them into a tidy tibble called `particles`. **Do not use a for loop to do so.** Join this table with the `samples` one. You will see that, since we attributed units to some columns, all data are automatically converted to a single unit. Filter the data for diameters lower than 40 µm as some very large particles were detected in the image processing that are actually not particles. The resulting tibble should look like this:
+- Now we want to convert the areas in pixel^2^ to areas in nm^2^. 
+  - We will first join the `data` and `scales` tibbles into a tibble called `alldata`. 
+  - Then, we'll modify the `Area` column to convert it to nm^2^, and we'll create a `diameter` column containing the diameter of the particles in nm. 
+  - Then, we'll get rid of the `pix2_to_nm2`, `pixel` and `size` columns that are useless. 
+  - Finally, we'll filter the data to keep only particles with a diameter between 10 and 400 nm.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE}
-particles <- tibble(file=flist) %>% 
-    mutate(data = map(file, ~readfile(file.path("Data",.)))) %>% 
-    unnest(data) %>% 
-    inner_join(samples) %>% 
-    filter(diameter<set_units(40,"um"))
-```
-
-```{r}
-particles
+alldata <- data %>% inner_join(scales) %>% 
+    mutate(Area     = Area*pix2_to_nm2,
+           diameter = sqrt(Area/pi)*2) %>% 
+    select(-c(pix2_to_nm2, pixel, size)) %>% 
+    filter(diameter>10, diameter<400)
 ```
 
 ```{r include=FALSE, warning = FALSE, message=FALSE}
-write_tsv(particles, "Data/particles.dat")
+write_csv(alldata, "Data/alldata.csv")
 ```
 
-> In case you didn't manage to get there, [here](Data/particles.dat) is the `particles` tibble (it doesn't contain the units though as you can't save it in a text file.)
+> In case you didn't manage to get there, [here](Data/alldata.csv) is the `data` tibble, you can read it with `alldata <- read_csv("Data/alldata.csv")`{.R}.
 
 
 # Plotting and analysis
 
-## Size analysis
+## Plotting
 
-- Now, plot the histogram of all particle diameters, with a fill color depending on the time (you need to convert time to a factor), and with a grid showing temperature vs. substrate age and thickness. Put the legend on top of the graph, and add some transparency to your colors.
+- First we want to take a look at our data. Plot the histogram of all particle diameters, with a fill color depending on the time (you need to convert time to a factor), and with a grid showing temperature vs. substrate thickness. Put the legend on top of the graph, and add some transparency to your colors.
 - In fact, I usually prefer to plot it using `geom_density()`{.R} which is basically an histogram convoluted with a Gaussian distribution of bandwidth `bw`. This allows for smoother graphs. Make this plot and play with the `bw` parameter.
-- Convert -- *with ggplot* -- the unit of the particle diameters to nanometers or any other unit you want.
+- Your plot should look like this:
 
-```{r include=params$solution, warning = FALSE, message=FALSE}
-particles %>% 
-    ggplot(aes(x=diameter, fill=factor(time)))+
-        geom_density(alpha=.5, color=NA, bw=4)+
-        labs(x    = "`Particle Diameter`",
-             y    = "Density [arb. units]",
-             fill = "Time [min]")+
-        facet_grid(reorder(paste(T,"K"),T)~
-                   reorder(paste(sub_thick,"nm Ni -",sub_age),sub_thick), 
-                   scales="free_y")+
-        theme(legend.position = "top")+
-        scale_x_unit(unit="nm", limits=c(0,300))
+```{r histogram, echo=FALSE, message=FALSE, fig.cap="The wanted plot", fig.align="center", out.width="100%"}
+knitr::include_graphics("Data/plot.png")
 ```
 
-- Now, store in `particles_ave` the average particle diameter and its standard deviation per substrate thickness and age, time and temperature of reaction. You will note that `mean()`{.R} keeps the unit of vectors while `sd()`{.R} loses it. Make sure that the standard deviation column has the proper unit (use `units(a) <- units(b)`{.R}).
+```{r include=params$solution, warning = FALSE, message=FALSE, out.width="100%"}
+alldata %>%
+    ggplot(aes(x=diameter, fill=factor(time), color=factor(time)))+
+        geom_density(alpha=.1, bw=5)+
+        labs(x    = "Particle Diameter [nm]",
+             y    = "Density [arb. units]",
+             color= "Time [min]",
+             fill = "Time [min]")+
+        facet_grid(glue::glue("{thickness} nm Ni") ~
+                   glue::glue("{temperature}˚C"), 
+                   scales="free_y")+
+        theme(legend.position = "top",
+              text = element_text(size=10),
+              strip.text.y = element_text(angle = 0))+
+        ggthemes::scale_fill_tableau()+
+        ggthemes::scale_color_tableau()
+```
+
+## Analysis
+
+- Now, store in `particles_ave` the average particle diameter and its standard deviation per substrate thickness, time and temperature of reaction.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE}
-particles_ave <- particles %>% 
-    group_by(sub_thick, sub_age, time, T) %>% 
+particles_ave <- alldata %>% 
+    group_by(thickness, time, temperature) %>% 
     summarise(diam   = mean(diameter),
               sddiam = sd(diameter))
-units(particles_ave$sddiam) <- units(particles_ave$diam)
+particles_ave
 ```
 
-- Plot the average diameter evolution with reaction time, with a color per substrate thickness, and on a grid showing substrate age vs temperature.
-    - Don't forget to add error bars corresponding to the standard error of the diameters distribution.
-    - Add a line showing a linear fit for all groups. 
-    - Make sure both plot axes go to 0. 
-    - Put the legend on top.
-    - Define nice axis labels (with sentences instead of column names). In case a column has a unit that was attributed, it will return an error in case the axis label you want to give contains white spaces. You will thus need to use backticks, like so: ``"`Two words`"``
+- Let's see what are the parameters influencing the particle diameters the most. For this, we'll perform a [multiple linear regression](http://www.sthda.com/english/articles/40-regression-analysis/168-multiple-linear-regression-in-r/) using `lm()`{.R}, fitting the `diam` variable as a function of a combination of `thickness`, `temperature`, and `time`. We can also set the weights for the `diam` values as the inverse of their standard deviation squared (by convention). Store the result in `fit`, and print the summary of the fit.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE}
-particles_ave %>% 
-    ggplot(aes(x=time, y=diam, color=factor(sub_thick)))+
-        geom_point(alpha=.5)+
-        expand_limits(x = 0, y=0)+
-        geom_errorbar(aes(ymin=diam-sddiam,ymax=diam+sddiam), width=.2)+
-        geom_smooth(method="lm", se=FALSE, )+
-        facet_grid(T~sub_age)+
-        labs(x     = "Time",
-             y     = "`Average particle diameter`",
-             color = "Substrate thickness [nm]")+
-        theme(legend.position = "top")+
-        scale_y_unit(unit="nm")
+fit <- lm(diam ~ thickness + temperature + time,
+          data = particles_ave, 
+          weights = 1/sddiam^2)
+fit %>% summary()
 ```
 
-- Using `broom` display the slopes and intercept of all linear fits, **without using a for loop**. This doesn't work well with units, so prior to doing the fit, remove the units of your time and diameter columns using `as.vector()`{.R}.
-
-```{r include=params$solution, warning = FALSE, message=FALSE}
-particles_ave %>% 
-    mutate(diam   = as.vector(set_units(diam,"nm")),
-           sddiam = as.vector(set_units(sddiam,"nm")),
-           time   = as.vector(time)
-           ) %>% 
-    nest(data=-c(sub_thick,sub_age,T)) %>% 
-    mutate(fit    = map(data, ~lm(data=., diam~time, weights = 1/sddiam)),
-           tidied = map(fit, tidy)) %>% 
-    unnest(tidied) %>% 
-    select(sub_thick,sub_age,T,term,estimate,std.error) %>% 
-    mutate(term=gsub("\\(Intercept\\)","y0",term)) %>% 
-    mutate(term=gsub("time","slope",term)) %>% 
-    pivot_wider(names_from = term, 
-               values_from = c(estimate,std.error)) %>% 
-    set_names(~ str_to_lower(.) %>%
-                str_replace_all("estimate_","") %>% 
-                str_replace_all("std.error_","d")) %>% 
-    select(sub_thick,sub_age,t,y0,dy0,slope,dslope)
-```
-
-## Density and ordering analysis
-
-- Now we want to see the evolution of the density of particles and their ordering. One way of doing this is to look at the *G(r)* distribution, *i.e.* the probability to find a particle in *r* if one is in 0. I provide here below the function `gofr(x,y,dr,Rmax)`{.R} that computes it between `0` and `Rmax` with a step `dr`, provided the (x,y) positions of particles.
-
-```{r include=TRUE, warning = FALSE, message=FALSE}
-gofr <- function(x, y, dr=.2, Rmax=10){
-    # Make sure units are uniform before using dist()
-    units(y) <- units(x) 
-    # dr and Rmax are unitless but should be given in the same units as x
-    dr   <- as.vector(dr)
-    Rmax <- as.vector(Rmax)
-    # Get a vector of all Euclidian distances
-    dd   <- as.vector(dist(tibble::tibble(x,y)))
-    # Make a histogram out of it
-    dd.hist <- hist(dd, 
-                    breaks=seq(0, max(dd)+dr, by=dr),
-                    plot=FALSE)
-    # Get the r values
-    r <- dd.hist$mids
-    # Compute the normalization by the surface of the 
-    # ring of radius r and thickness dr
-    rlo  <- r - dr/2
-    rup  <- r + dr/2
-    ring <- pi*(rup^2 - rlo^2)
-    # Return the tibble containing r and G(r) with the same unit as x
-    # Only data for r<Rmax is wanted, and we remove the first element too
-    d <- tibble::tibble(R    = r[r<Rmax], 
-                        GofR = dd.hist$counts[r<Rmax]/ring[r<Rmax]) %>% 
-            rename(r="R",gofr="GofR")
-    units(d$r) <- units(x)
-    d[-1,]
-}
-```
-
-- Using pipe operations, compute G(r) for each image and store it into `particles_gofr`. 
-    - We want to compute G(r) up to 500 nm by step of 2 nm. Make sure x, y, dr and Rmax are given with the same unit.
-    - Then, compute the average G(r) for each sample.
-    - Join `particles_gofr` with `samples` to retrieve the samples information
-
-```{r include=params$solution, warning = FALSE, message=FALSE}
-particles_gofr <- particles %>% 
-    mutate(x = set_units(x,"nm"),
-           y = set_units(y,"nm")
-           ) %>% 
-    nest(data = -c(sample, number)) %>% 
-    mutate(GofR = map(data, ~gofr(.$x, .$y, dr=2, Rmax=500))) %>% 
-    unnest(GofR) %>% 
-    group_by(sample, r) %>% 
-    summarize(gofr=mean(gofr)) %>% 
-    inner_join(samples)
-```
-
-- Find the best way to represent G(r) for all samples, that allows seeing the evolution with all parameters.
-
-```{r include=params$solution, warning = FALSE, message=FALSE}
-particles_gofr %>% 
-    ggplot(aes(x=r, 
-               y=gofr, 
-               color=factor(time)))+
-        geom_smooth(method="loess", alpha=.5, span=.15, se=FALSE)+
-        geom_line(alpha=.2)+
-        expand_limits(x = 0, y=0)+
-        facet_grid(reorder(paste(T,"K"),T)~
-                   reorder(paste(sub_thick,"nm Ni -",sub_age),sub_thick), 
-                   scales="free_y")+
-        theme(legend.position = "top")+
-        labs(x     = "r",
-             y     = "G(r)",
-             color = "Time [min]")
-```
-
-
-
-
-
-
-
+How would you interpret the result? What are the most important parameters?
