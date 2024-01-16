@@ -1,0 +1,73 @@
+---
+title: Exercise
+params:
+  alpha: 0.1
+---
+
+```{r}
+#| include: false
+set.seed(0)
+library(reticulate)
+library(tidyverse)
+alpha <- params$alpha
+```
+
+```{python}
+#| include: false
+import numpy as np
+import matplotlib.pyplot as plt
+np.random.seed(0)
+alpha = r.alpha
+```
+
+
+## Exercise 1
+
+Here is a distribution of width $\alpha=$ `r alpha` defined with `python`. Now do your stuff.
+
+```{python}
+distribution = np.random.normal(0, alpha, 10)
+print(distribution)
+```
+
+And here we define it with `R`:
+
+```{r}
+rdistribution <- rnorm(10, mean=0, sd=alpha)
+rdistribution
+```
+
+
+::: {.content-visible when-profile="solution"}
+
+### Solution
+
+Here is the solution with some maths : $\alpha=$ `r alpha`, and some code and graphs:
+
+```{python}
+plt.hist(distribution)
+plt.show()
+```
+
+:::
+
+---------------
+
+## Exercise 2
+
+Do some other stuff.
+
+::: {.content-visible when-profile="solution"}
+
+### Solution
+
+Here is the solution to the second exercise.
+
+```{r}
+rdistribution %>% as_tibble() %>%
+    ggplot(aes(rdistribution))+
+    geom_histogram()+
+    theme_bw()
+```
+
+:::
