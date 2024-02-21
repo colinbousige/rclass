@@ -119,6 +119,9 @@ Pz
 Pw
 Pu
 
+# Now, transform the tibble df to a tidy one using a pivot function, and gather all 4 plots on a 2x2 grid, using `facet_wrap()` to add a facet for each variable. Use a color for each variable.
+
+
 
 # # # # # # # # # # # # # # # # # # # # # # # # # 
 ## Exercise 3

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.537">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 2&nbsp; A little reminder on Statistics</title>
 <style>
@@ -19,7 +19,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -77,7 +77,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -86,6 +92,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -102,29 +109,54 @@ ga('send', {
   hitType: 'pageview',
   'anonymizeIp': true,
 });
-</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><link rel="stylesheet" href="style.css">
+</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script><link rel="stylesheet" href="style.css">
 </head>
 <body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-stats.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A little reminder on Statistics</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-stats.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A little reminder on Statistics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Reproducible data treatment with R</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/colinbousige/rclass" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/colinbousige/rclass" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -252,7 +284,7 @@ ga('send', {
 </li>
     </ul>
 </div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
@@ -300,7 +332,7 @@ ga('send', {
   </ul>
 </li>
   <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">2.6</span> Further reading</a></li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/rclass/blob/main/02-stats.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/colinbousige/rclass/blob/main/02-stats.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -311,13 +343,14 @@ ga('send', {
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-body">
 
     
   
     
   </div>
   
+
 
 </header><section id="why-are-statistical-tools-necessary-in-physical-science" class="level2" data-number="2.1"><h2 data-number="2.1" class="anchored" data-anchor-id="why-are-statistical-tools-necessary-in-physical-science">
 <span class="header-section-number">2.1</span> Why are statistical tools necessary in physical science?</h2>
@@ -341,12 +374,16 @@ Important
 </div>
 </section><section id="probabilistic-description-of-physical-systems" class="level3" data-number="2.1.2"><h3 data-number="2.1.2" class="anchored" data-anchor-id="probabilistic-description-of-physical-systems">
 <span class="header-section-number">2.1.2</span> Probabilistic description of physical systems</h3>
-<p>Let’s continue with our example of the body temperature measured with a thermocouple or a laser thermometer with a 0.1 °C precision. Our first measurement of the body temperature yielded (38.0±0.1) °C. Now let’s repeat this measurement a number of times in various area of the body (which are left to your imagination). Let’s say it then shows (38.1±0.1) °C, (38.0±0.1) °C, (38.3±0.1) °C, (37.9±0.1) °C, (38.2±0.1) °C, (38.1±0.1) °C, (38.1±0.1) °C, (39.8±0.1) °C. What is the actual body temperature then? Should we stick to a single measurement? Of course not. We have to make an histogram of the measured values, and study the distribution of the measurements (<a href="#fig-histogramT">Figure&nbsp;<span>2.1</span></a>). We can then see that one of the values is clearly an outlier – something might have gone wrong there. What if we had done the measurement only once and only measured that value? We might have jumped to a very wrong conclusion, with possibly a very serious consequence like giving the wrong medicine.</p>
+<p>Let’s continue with our example of the body temperature measured with a thermocouple or a laser thermometer with a 0.1 °C precision. Our first measurement of the body temperature yielded (38.0±0.1) °C. Now let’s repeat this measurement a number of times in various area of the body (which are left to your imagination). Let’s say it then shows (38.1±0.1) °C, (38.0±0.1) °C, (38.3±0.1) °C, (37.9±0.1) °C, (38.2±0.1) °C, (38.1±0.1) °C, (38.1±0.1) °C, (39.8±0.1) °C. What is the actual body temperature then? Should we stick to a single measurement? Of course not. We have to make an histogram of the measured values, and study the distribution of the measurements (<a href="#fig-histogramT" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>). We can then see that one of the values is clearly an outlier – something might have gone wrong there. What if we had done the measurement only once and only measured that value? We might have jumped to a very wrong conclusion, with possibly a very serious consequence like giving the wrong medicine.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-histogramT" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-histogramT-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.1: Histogram of the body temperature measurements. The red line is the mean value, the orange one is the mode and the blue one is the median.</figcaption></figure>
+<div id="fig-histogramT" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-histogramT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-histogramT-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-histogramT-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.1: Histogram of the body temperature measurements. The red line is the mean value, the orange one is the mode and the blue one is the median.
+</figcaption></figure>
 </div>
 </div>
 </div>
@@ -371,57 +408,87 @@ Important
 <p>Depending on the data you are looking at, various ways of representing them are possible. I can’t stress enough the importance of picking the right representation for your data, it is the expression of your physical sense. A good representation will help you make sense of your data and communicate your results. A bad representation, well…</p>
 <section id="histograms" class="level4" data-number="2.2.1.1"><h4 data-number="2.2.1.1" class="anchored" data-anchor-id="histograms">
 <span class="header-section-number">2.2.1.1</span> Histograms</h4>
-<p>When looking at discrete values or when you want to characterize the distribution of a measurement, it is often a good idea to use the histogram representation, which represents the frequency at which a measurement is made within a certain range, called bin. Let’s take <a href="#fig-histogramT">Figure&nbsp;<span>2.1</span></a> and plot it with various bin sizes. One can see that the choice of bin size is important, as it determines whether your data are noisy or lack fine information.</p>
-<div id="fig-histograms" class="cell quarto-layout-panel">
-<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-histograms-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-histograms-1.png" class="img-fluid figure-img" data-ref-parent="fig-histograms" width="672"></p>
-<figcaption class="figure-caption">(a) Bin width = 0.1 °C</figcaption></figure>
+<p>When looking at discrete values or when you want to characterize the distribution of a measurement, it is often a good idea to use the histogram representation, which represents the frequency at which a measurement is made within a certain range, called bin. Let’s take <a href="#fig-histogramT" class="quarto-xref">Figure&nbsp;<span>2.1</span></a> and plot it with various bin sizes. One can see that the choice of bin size is important, as it determines whether your data are noisy or lack fine information.</p>
+<div id="fig-histograms" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-histograms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-histograms" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histograms-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-histograms-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-histograms-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-ref-parent="fig-histograms" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-histograms-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Bin width = 0.1 °C
+</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-histograms-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-histograms-2.png" class="img-fluid figure-img" data-ref-parent="fig-histograms" width="672"></p>
-<figcaption class="figure-caption">(b) Bin width = 0.2 °C</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-histograms" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histograms-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-histograms-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-histograms-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-ref-parent="fig-histograms" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-histograms-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Bin width = 0.2 °C
+</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-histograms-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-histograms-3.png" class="img-fluid figure-img" data-ref-parent="fig-histograms" width="672"></p>
-<figcaption class="figure-caption">(c) Bin width = 1 °C</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-histograms" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-histograms-3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-histograms-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-histograms-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-ref-parent="fig-histograms" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-histograms-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Bin width = 1 °C
+</figcaption></figure>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.2: Histogram of the body temperature measurements with different bin widths.</figcaption><p></p>
-</figure>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-histograms-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.2: Histogram of the body temperature measurements with different bin widths.
+</figcaption></figure>
 </div>
 </section><section id="graphs" class="level4" data-number="2.2.1.2"><h4 data-number="2.2.1.2" class="anchored" data-anchor-id="graphs">
 <span class="header-section-number">2.2.1.2</span> Graphs</h4>
 <p>In case you want to represent continuous data, say the evolution of a quantity <span class="math inline">\(y\)</span> with respect to a quantity <span class="math inline">\(x\)</span>, you should then use the graph representation. As we saw before, any physical quantity should be given with its uncertainty and unit. <strong>The same applies to a graph</strong>: it <strong>must</strong> clearly display the <strong>units</strong> of the quantities <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and <strong>error bars</strong> that are usually taken as the standard deviation of each individual measurement (that should thus be performed a number of times, depending on what you are looking at).</p>
-<div id="fig-graphs" class="cell quarto-layout-panel">
-<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-graphs-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-graphs-1.png" class="img-fluid figure-img" data-ref-parent="fig-graphs" width="672"></p>
-<figcaption class="figure-caption">(a) Meaningless graph</figcaption></figure>
+<div id="fig-graphs" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-graphs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-graphs" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-graphs-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-graphs-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-graphs-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-ref-parent="fig-graphs" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-graphs-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Meaningless graph
+</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-graphs-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-graphs-2.png" class="img-fluid figure-img" data-ref-parent="fig-graphs" width="672"></p>
-<figcaption class="figure-caption">(b) Noise</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-graphs" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-graphs-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-graphs-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-graphs-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-ref-parent="fig-graphs" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-graphs-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Noise
+</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-graphs-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-graphs-3.png" class="img-fluid figure-img" data-ref-parent="fig-graphs" width="672"></p>
-<figcaption class="figure-caption">(c) Meaningful graph</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-graphs" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-graphs-3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-graphs-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-graphs-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-ref-parent="fig-graphs" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-graphs-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Meaningful graph
+</figcaption></figure>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.3: Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data.</figcaption><p></p>
-</figure>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-graphs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.3: Representing the same datapoints without error bars, with large error bars with respect to the data, and with small error bars with respect to the data: the difference between meaningless data, noise, and meaningful data.
+</figcaption></figure>
 </div>
 <p>You can think of each set of {datapoint + error bar} as an histogram: the displayed point is the mean value of the histogram, and the error bar is its standard deviation. <strong>Therefore, plotting a straight line between points is usually pointless</strong>. Plotting a line going through the data points only has meaning if this line results from a physical model explaining the variation of the quantity <span class="math inline">\(y\)</span> with the evolution of the quantity <span class="math inline">\(x\)</span> – this is called a <strong>fit</strong>, and we will see more about it in the <a href="https://colinbousige.github.io/rclass/14-fitting.html">R class later</a>.</p>
 </section></section><section id="characterizing-an-ensemble-of-measurements" class="level3" data-number="2.2.2"><h3 data-number="2.2.2" class="anchored" data-anchor-id="characterizing-an-ensemble-of-measurements">
@@ -435,7 +502,7 @@ Important
 <p><span class="math display">\[
 \overline{x}=\left&lt; x \right&gt;=\frac{1}{N}\sum_{i=1}^Nx_i,
 \]</span> where <span class="math inline">\(x_i\)</span> is the <span class="math inline">\(i\)</span>-th measurement of <span class="math inline">\(x\)</span>.</p>
-<p><a href="#fig-histogramT">Figure&nbsp;<span>2.1</span></a> shows the representation of a sample of data plotted in a histogram. This figure shows the mode, mean and median. For this particular sample of data, the mean is 38.3 °C, the median is 38.1 °C, and the mode is 38.0 °C. The fact that the mode is smaller than the mean is an indication that the data are asymmetric about the mean. We usually refer to such a distribution as being skewed, and in this case the data are skewed to the right.</p>
+<p><a href="#fig-histogramT" class="quarto-xref">Figure&nbsp;<span>2.1</span></a> shows the representation of a sample of data plotted in a histogram. This figure shows the mode, mean and median. For this particular sample of data, the mean is 38.3 °C, the median is 38.1 °C, and the mode is 38.0 °C. The fact that the mode is smaller than the mean is an indication that the data are asymmetric about the mean. We usually refer to such a distribution as being skewed, and in this case the data are skewed to the right.</p>
 </section><section id="quantifying-the-spread-of-data-variance-standard-deviation-and-standard-error" class="level4" data-number="2.2.2.2"><h4 data-number="2.2.2.2" class="anchored" data-anchor-id="quantifying-the-spread-of-data-variance-standard-deviation-and-standard-error">
 <span class="header-section-number">2.2.2.2</span> Quantifying the spread of data: variance, standard deviation and standard error</h4>
 <p>The mean of an ensemble of data doesn’t provide any information as to how the data are distributed. So any description of a set of data just quoting a mean value is incomplete. We need a second number in order to quantify the dispersion of data around the mean value. The average deviations from the mean, <span class="math inline">\(\left&lt; x-\overline{x} \right&gt;\)</span>, is not a useful quantity as, by definition, this will be zero for a symmetrically distributed sample of data (which is always the case for randomly distributed data – a consequence of the central limit theorem, as we will see later). We should rather consider the average value of the squared deviations from the mean as a measure of the spread of our ensemble of measurements. This is called the <strong>variance</strong> <span class="math inline">\(V(x)\)</span>, which is given by:</p>
@@ -475,12 +542,16 @@ Important
 \tag{2.3}\]</span></span> where <span class="math inline">\(N\)</span> is the number of measurements. The standard error is a measure of the precision of the mean value <span class="math inline">\(\overline{x}\)</span>, and is often used to quantify the uncertainty on the mean value.</p>
 </section><section id="caveats" class="level4" data-number="2.2.2.3"><h4 data-number="2.2.2.3" class="anchored" data-anchor-id="caveats">
 <span class="header-section-number">2.2.2.3</span> Caveats</h4>
-<p>The above considerations all assume that the distribution of measured values is mono-modal, <em>i.e.</em> the histogram of the measured values is centered around a single value. In the case of a multimodal distribution such as shown in <a href="#fig-multimodal">Figure&nbsp;<span>2.4</span></a>, it would be meaningless to use such tools as the fine information on the distribution would be lost.</p>
+<p>The above considerations all assume that the distribution of measured values is mono-modal, <em>i.e.</em> the histogram of the measured values is centered around a single value. In the case of a multimodal distribution such as shown in <a href="#fig-multimodal" class="quarto-xref">Figure&nbsp;<span>2.4</span></a>, it would be meaningless to use such tools as the fine information on the distribution would be lost.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-multimodal" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-multimodal-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.4: A trimodal distribution of measurements. The red line shows the mean value of the distribution: it fails to grasp the reality of the distribution.</figcaption></figure>
+<div id="fig-multimodal" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-multimodal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-multimodal-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-multimodal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.4: A trimodal distribution of measurements. The red line shows the mean value of the distribution: it fails to grasp the reality of the distribution.
+</figcaption></figure>
 </div>
 </div>
 </div>
@@ -530,29 +601,44 @@ F(x)&amp;=\int_{-\infty}^{x}P(t)dt\\
 P_\lambda(k) = \frac{\lambda^ke^{-\lambda}}{k!}
 \tag{2.8}\]</span></span></p>
 <p>Examples of encounters of Poisson distributions could be as various as the number of calls received per hours in a call center, the yearly number of Prussian soldiers killed by horse kicks… or the number of particles (photons, neutrons, neutrinos…) hitting a detector every second.</p>
-<div id="fig-poissondistrib" class="cell quarto-layout-panel">
-<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-poissondistrib-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-poissondistrib-1.png" class="img-fluid figure-img" data-ref-parent="fig-poissondistrib" width="672"></p>
-<figcaption class="figure-caption">(a)</figcaption></figure>
+<div id="fig-poissondistrib" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-poissondistrib-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-poissondistrib" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-poissondistrib-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="672">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-poissondistrib-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-poissondistrib-1.png" id="fig-poissondistrib-1" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" data-ref-parent="fig-poissondistrib" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-poissondistrib-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a)
+</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-poissondistrib-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-poissondistrib-2.png" class="img-fluid figure-img" data-ref-parent="fig-poissondistrib" width="672"></p>
-<figcaption class="figure-caption">(b)</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-poissondistrib" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-poissondistrib-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="672">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-poissondistrib-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-poissondistrib-2.png" id="fig-poissondistrib-2" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" data-ref-parent="fig-poissondistrib" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-poissondistrib-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b)
+</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
-<div id="fig-poissondistrib-3" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-poissondistrib-3.png" class="img-fluid figure-img" data-ref-parent="fig-poissondistrib" width="672"></p>
-<figcaption class="figure-caption">(c)</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-poissondistrib" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-poissondistrib-3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" width="672">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-poissondistrib-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-poissondistrib-3.png" id="fig-poissondistrib-3" class="img-fluid quarto-figure quarto-figure-center anchored figure-img" data-ref-parent="fig-poissondistrib" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-poissondistrib-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c)
+</figcaption></figure>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.5: Poisson distribution for various parameters. While asymmetric for small values of <span class="math inline">\(k\)</span> and <span class="math inline">\(\lambda\)</span>, it tends towards a Gaussian lineshape at larger values.</figcaption><p></p>
-</figure>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-poissondistrib-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.5: Poisson distribution for various parameters. While asymmetric for small values of <span class="math inline">\(k\)</span> and <span class="math inline">\(\lambda\)</span>, it tends towards a Gaussian lineshape at larger values.
+</figcaption></figure>
 </div>
 <div class="callout callout-style-simple callout-note no-icon">
 <div class="callout-body d-flex">
@@ -566,8 +652,8 @@ P_\lambda(k) = \frac{\lambda^ke^{-\lambda}}{k!}
 </div>
 </section><section id="characteristics" class="level4" data-number="2.3.4.2"><h4 data-number="2.3.4.2" class="anchored" data-anchor-id="characteristics">
 <span class="header-section-number">2.3.4.2</span> Characteristics</h4>
-<p>As shown on <a href="#fig-poissondistrib">Figure&nbsp;<span>2.5</span></a>, for small <span class="math inline">\(\lambda\)</span> the distribution is asymmetric and skewed to the right. As <span class="math inline">\(\lambda\)</span> increases the Poisson distribution becomes more symmetric.</p>
-<p>Following <a href="#eq-firstmoment">Equation&nbsp;<span>2.5</span></a>, the average number of observed events, <span class="math inline">\(\left&lt; k \right&gt;\)</span>, is given by:</p>
+<p>As shown on <a href="#fig-poissondistrib" class="quarto-xref">Figure&nbsp;<span>2.5</span></a>, for small <span class="math inline">\(\lambda\)</span> the distribution is asymmetric and skewed to the right. As <span class="math inline">\(\lambda\)</span> increases the Poisson distribution becomes more symmetric.</p>
+<p>Following <a href="#eq-firstmoment" class="quarto-xref">Equation&nbsp;<span>2.5</span></a>, the average number of observed events, <span class="math inline">\(\left&lt; k \right&gt;\)</span>, is given by:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \left&lt; k \right&gt; &amp;= \sum_{k=0}^\infty kP_\lambda(k) = \sum_{k=1}^\infty k\frac{\lambda^ke^{-\lambda}}{k!}\\
@@ -625,9 +711,13 @@ P(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2}
 <span class="header-section-number">2.3.5.2</span> Characteristics</h4>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-gaussian" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-gaussian-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.6: A zero-centered Gaussian distribution with standard deviation of 1, <span class="math inline">\(P(z)\)</span>. The red line marks the half maximum, <span class="math inline">\(P(z_{HM})=1/2\sqrt{2\pi}\)</span>, and the blue lines the values of <span class="math inline">\(z\)</span> for which the half maximum is obtained, <span class="math inline">\(z_{HM}=\pm\sqrt{2\ln{2}}\)</span>.</figcaption></figure>
+<div id="fig-gaussian" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-gaussian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-gaussian-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gaussian-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.6: A zero-centered Gaussian distribution with standard deviation of 1, <span class="math inline">\(P(z)\)</span>. The red line marks the half maximum, <span class="math inline">\(P(z_{HM})=1/2\sqrt{2\pi}\)</span>, and the blue lines the values of <span class="math inline">\(z\)</span> for which the half maximum is obtained, <span class="math inline">\(z_{HM}=\pm\sqrt{2\ln{2}}\)</span>.
+</figcaption></figure>
 </div>
 </div>
 </div>
@@ -643,12 +733,14 @@ P(z)=\frac{1}{\sqrt{2\pi}}e^{-z^2/2}
 <p><span class="math display">\[
 FWHM=2\sqrt{2\ln{2}}\times\sigma
 \]</span></p>
-<p>As can be seen on <a href="#tbl-tablevalues">Table&nbsp;<span>2.1</span></a>, using the FWHM ensures that roughly 76% of the data are comprised between <span class="math inline">\(\mu-HWHM\)</span> and <span class="math inline">\(\mu+HWHM\)</span>, and this goes up to <span class="math inline">\(\sim95\)</span>% for the range <span class="math inline">\([\mu-2\sigma, \mu+2\sigma]\)</span>.</p>
+<p>As can be seen on <a href="#tbl-tablevalues" class="quarto-xref">Table&nbsp;<span>2.1</span></a>, using the FWHM ensures that roughly 76% of the data are comprised between <span class="math inline">\(\mu-HWHM\)</span> and <span class="math inline">\(\mu+HWHM\)</span>, and this goes up to <span class="math inline">\(\sim95\)</span>% for the range <span class="math inline">\([\mu-2\sigma, \mu+2\sigma]\)</span>.</p>
 <div class="cell" data-layout-align="center">
+<div id="tbl-tablevalues" class="cell quarto-float anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tablevalues-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.1: Integral values for various values of <span class="math inline">\(a\)</span> in <span class="math inline">\(\int_{-a}^aP(z)dz\)</span>.
+</figcaption><div aria-describedby="tbl-tablevalues-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-tablevalues" class="anchored">
-<table class="table table-sm table-striped small">
-<caption>Table&nbsp;2.1: Integral values for various values of <span class="math inline">\(a\)</span> in <span class="math inline">\(\int_{-a}^aP(z)dz\)</span>.</caption>
+<table class="do-not-create-environment cell table table-sm table-striped small">
 <thead><tr class="header">
 <th style="text-align: left;">Integration range <span class="math inline">\(a\)</span>
 </th>
@@ -683,6 +775,8 @@ FWHM=2\sqrt{2\ln{2}}\times\sigma
 </table>
 </div>
 </div>
+</figure>
+</div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -694,7 +788,7 @@ Important
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>You can see from <a href="#tbl-tablevalues">Table&nbsp;<span>2.1</span></a> that if you want to make sure that exactly 95% of your data will fall in the given range, <em>i.e.</em> which defines the <strong>95% tolerence interval</strong>, you need to use a range of <span class="math inline">\(1.96\sigma\)</span>.</p>
+<p>You can see from <a href="#tbl-tablevalues" class="quarto-xref">Table&nbsp;<span>2.1</span></a> that if you want to make sure that exactly 95% of your data will fall in the given range, <em>i.e.</em> which defines the <strong>95% tolerence interval</strong>, you need to use a range of <span class="math inline">\(1.96\sigma\)</span>.</p>
 </div>
 </div>
 </section></section><section id="the-students-t-distribution" class="level3" data-number="2.3.6"><h3 data-number="2.3.6" class="anchored" data-anchor-id="the-students-t-distribution">
@@ -716,9 +810,13 @@ P(x, \nu)=\frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\Gamma\left(\fr
 </div>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-t-distribution" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-t-distribution-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.7: The t-distribution for various degrees of freedom compared to the Gaussian distribution.</figcaption></figure>
+<div id="fig-t-distribution" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-t-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-t-distribution-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-t-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.7: The t-distribution for various degrees of freedom compared to the Gaussian distribution.
+</figcaption></figure>
 </div>
 </div>
 </div>
@@ -726,22 +824,28 @@ P(x, \nu)=\frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\Gamma\left(\fr
 <span class="header-section-number">2.3.7</span> Tolerence interval and confidence interval</h3>
 <section id="sec-tolerence-interval" class="level4" data-number="2.3.7.1"><h4 data-number="2.3.7.1" class="anchored" data-anchor-id="sec-tolerence-interval">
 <span class="header-section-number">2.3.7.1</span> Tolerance interval</h4>
-<p>A <strong>tolerance interval</strong> is a range of values that is likely to contain a certain proportion of the population. It is thus representative of the spread of data in the population, and it is usually given by the standard deviation <span class="math inline">\(\sigma\)</span> multiplied by a <strong>confidence level</strong> factor. As seen in <a href="#tbl-tablevalues">Table&nbsp;<span>2.1</span></a>, for a Gaussian distribution, the range <span class="math inline">\([\mu-1.96\sigma, \mu+1.96\sigma]\)</span> contains roughly 95% of the data in the population, and this is the <strong>95% tolerence interval</strong>. It means that if you draw a sample of data from the population, the probability that the data points of the sample will fall in this range is 95%. If your distribution population is small however (<span class="math inline">\(N&lt;30\)</span>), you should use the t-distribution instead of the Gaussian distribution to compute the tolerence interval.</p>
+<p>A <strong>tolerance interval</strong> is a range of values that is likely to contain a certain proportion of the population. It is thus representative of the spread of data in the population, and it is usually given by the standard deviation <span class="math inline">\(\sigma\)</span> multiplied by a <strong>confidence level</strong> factor. As seen in <a href="#tbl-tablevalues" class="quarto-xref">Table&nbsp;<span>2.1</span></a>, for a Gaussian distribution, the range <span class="math inline">\([\mu-1.96\sigma, \mu+1.96\sigma]\)</span> contains roughly 95% of the data in the population, and this is the <strong>95% tolerence interval</strong>. It means that if you draw a sample of data from the population, the probability that the data points of the sample will fall in this range is 95%. If your distribution population is small however (<span class="math inline">\(N&lt;30\)</span>), you should use the t-distribution instead of the Gaussian distribution to compute the tolerence interval.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
-<div id="fig-tolerenceinterval" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-tolerenceinterval-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption class="figure-caption">Figure&nbsp;2.8: The 95% tolerence interval for a Gaussian distribution.</figcaption></figure>
+<div id="fig-tolerenceinterval" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-tolerenceinterval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-tolerenceinterval-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tolerenceinterval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.8: The 95% tolerence interval for a Gaussian distribution.
+</figcaption></figure>
 </div>
 </div>
 </div>
-<p>In R, you would use the <code class="sourceCode r"><span class="fu">qt</span>(p, df)</code> (for a t-distribution) or <code class="sourceCode r"><span class="fu">qnorm</span>(p)</code> (for a Gaussian distribution) functions to compute the quantiles <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X\leq q)=p\)</span>. If you want to compute the <strong>95% tolerence interval</strong> for a distribution, you need to compute the quantiles <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X\leq q)=0.025\)</span> and <span class="math inline">\(P(X\leq q)=0.975\)</span>, <em>i.e.</em> find the values below and above which 2.5% of the distribtution are left out, as shown in <a href="#fig-tolerenceinterval">Figure&nbsp;<span>2.8</span></a>.</p>
-<p>Since both the Gaussian and t-distributions are symmetric, the tolerence interval is given by <span class="math inline">\([q, -q]\)</span>: for a tolerance interval with <em>tolerence level</em> <span class="math inline">\(\alpha\)</span>, you want the quantile for the probability <span class="math inline">\(p=(1+\alpha)/2\)</span>. Some special values are gathered in <a href="#tbl-tolerenceinterval">Table&nbsp;<span>2.2</span></a>.</p>
+<p>In R, you would use the <code class="sourceCode r"><span class="fu">qt</span>(p, df)</code> (for a t-distribution) or <code class="sourceCode r"><span class="fu">qnorm</span>(p)</code> (for a Gaussian distribution) functions to compute the quantiles <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X\leq q)=p\)</span>. If you want to compute the <strong>95% tolerence interval</strong> for a distribution, you need to compute the quantiles <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X\leq q)=0.025\)</span> and <span class="math inline">\(P(X\leq q)=0.975\)</span>, <em>i.e.</em> find the values below and above which 2.5% of the distribtution are left out, as shown in <a href="#fig-tolerenceinterval" class="quarto-xref">Figure&nbsp;<span>2.8</span></a>.</p>
+<p>Since both the Gaussian and t-distributions are symmetric, the tolerence interval is given by <span class="math inline">\([q, -q]\)</span>: for a tolerance interval with <em>tolerence level</em> <span class="math inline">\(\alpha\)</span>, you want the quantile for the probability <span class="math inline">\(p=(1+\alpha)/2\)</span>. Some special values are gathered in <a href="#tbl-tolerenceinterval" class="quarto-xref">Table&nbsp;<span>2.2</span></a>.</p>
 <div class="cell" data-layout-align="center">
+<div id="tbl-tolerenceinterval" class="cell quarto-float anchored" data-layout-align="center">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tolerenceinterval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.2: Quantiles of the t- and Gaussian distributions for various degrees of freedom (<span class="math inline">\(\nu\)</span>) and tolerence levels (<span class="math inline">\(\alpha\)</span>).
+</figcaption><div aria-describedby="tbl-tolerenceinterval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="tbl-tolerenceinterval" class="anchored">
-<table class="table table-sm table-striped small">
-<caption>Table&nbsp;2.2: Quantiles of the t- and Gaussian distributions for various degrees of freedom (<span class="math inline">\(\nu\)</span>) and tolerence levels (<span class="math inline">\(\alpha\)</span>).</caption>
+<table class="do-not-create-environment cell table table-sm table-striped small">
 <colgroup>
 <col style="width: 9%">
 <col style="width: 14%">
@@ -825,33 +929,48 @@ P(x, \nu)=\frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\Gamma\left(\fr
 </table>
 </div>
 </div>
+</figure>
+</div>
 </div>
 </section><section id="confidence-interval" class="level4" data-number="2.3.7.2"><h4 data-number="2.3.7.2" class="anchored" data-anchor-id="confidence-interval">
 <span class="header-section-number">2.3.7.2</span> Confidence interval</h4>
 <p><strong>Confidence intervals</strong> represent the range of uncertainty associated with the estimate of a statistic (<em>i.e.</em> the mean, proportion or standard deviation etc…). An estimate is necessarily subject to the risk of sampling error. Confidence intervals are useful for establishing limits for the estimation of, for example, the mean or a standard deviation, but also regression coefficients, proportions, frequency rates (Poisson) and differences between populations.</p>
-<p><strong>Confidence intervals</strong> are thus a measurement of the <strong>standard error of the estimated statistic</strong>, and their widths thus naturally decrease with the sampling size. As the sample size approaches the entire population, the width of the confidence interval approaches zero, as can be seen on <a href="#fig-confidenceinterval">Figure&nbsp;<span>2.9</span></a>.</p>
-<div id="fig-confidenceinterval" class="cell quarto-layout-panel">
-<figure class="figure"><div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-confidenceinterval-1" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-confidenceinterval-1.png" class="img-fluid figure-img" data-ref-parent="fig-confidenceinterval" width="672"></p>
-<figcaption class="figure-caption">(a) Population size: 20</figcaption></figure>
+<p><strong>Confidence intervals</strong> are thus a measurement of the <strong>standard error of the estimated statistic</strong>, and their widths thus naturally decrease with the sampling size. As the sample size approaches the entire population, the width of the confidence interval approaches zero, as can be seen on <a href="#fig-confidenceinterval" class="quarto-xref">Figure&nbsp;<span>2.9</span></a>.</p>
+<div id="fig-confidenceinterval" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-confidenceinterval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-confidenceinterval" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-confidenceinterval-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-confidenceinterval-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-confidenceinterval-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-ref-parent="fig-confidenceinterval" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-confidenceinterval-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Population size: 20
+</figcaption></figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
-<div id="fig-confidenceinterval-2" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure"><p><img src="02-stats_files/figure-html/fig-confidenceinterval-2.png" class="img-fluid figure-img" data-ref-parent="fig-confidenceinterval" width="672"></p>
-<figcaption class="figure-caption">(b) Population size: 500</figcaption></figure>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-confidenceinterval" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-confidenceinterval-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-confidenceinterval-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="02-stats_files/figure-html/fig-confidenceinterval-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" data-ref-parent="fig-confidenceinterval" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-confidenceinterval-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Population size: 500
+</figcaption></figure>
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;2.9: Histograms of a Gaussian distribution of mean 0 (red line) and standard deviation 1 with two samplings. The measured mean of the distribution is shown in black, and the 95% confidence interval of the mean is shown in orange. As the population size increases, the width of the confidence interval decreases since the error on the determination of the mean decreases.</figcaption><p></p>
-</figure>
 </div>
-<p>To compute the confidence interval of a statistic, you need to know the <strong>standard error</strong> of the statistic, which is the standard deviation of the sampling distribution of the statistic. <a href="#tbl-SE">Table&nbsp;<span>2.3</span></a> gathers a few typical standard errors on statistics:</p>
-<div id="tbl-SE" class="anchored">
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-confidenceinterval-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2.9: Histograms of a Gaussian distribution of mean 0 (red line) and standard deviation 1 with two samplings. The measured mean of the distribution is shown in black, and the 95% confidence interval of the mean is shown in orange. As the population size increases, the width of the confidence interval decreases since the error on the determination of the mean decreases.
+</figcaption></figure>
+</div>
+<p>To compute the confidence interval of a statistic, you need to know the <strong>standard error</strong> of the statistic, which is the standard deviation of the sampling distribution of the statistic. <a href="#tbl-SE" class="quarto-xref">Table&nbsp;<span>2.3</span></a> gathers a few typical standard errors on statistics:</p>
+<div id="tbl-SE" class="quarto-float anchored">
+<figure class="quarto-float quarto-float-tbl figure"><figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-SE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;2.3: Standard errors of typical statistics
+</figcaption><div aria-describedby="tbl-SE-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="table">
-<caption>Table&nbsp;2.3: Standard errors of typical statistics</caption>
 <colgroup>
 <col style="width: 39%">
 <col style="width: 60%">
@@ -880,9 +999,11 @@ P(x, \nu)=\frac{\Gamma\left(\frac{\nu+1}{2}\right)}{\sqrt{\nu\pi}\Gamma\left(\fr
 </tbody>
 </table>
 </div>
+</figure>
+</div>
 <p>Then, the confidence interval for the statistics <span class="math inline">\(X\)</span> with a confidence level <span class="math inline">\(\alpha\)</span> is computed as: <span id="eq-CI"><span class="math display">\[
 CI(X, \alpha)=X\pm \text{qt}\left(\frac{1+\alpha}{2},\nu\right)\times SE(X)
-\tag{2.9}\]</span></span> where <span class="math inline">\(\text{qt}\left(\frac{1+\alpha}{2},\nu\right)\)</span> is the quantile of the Student distribution with <span class="math inline">\(\nu\)</span> degrees of freedom and a probability of <span class="math inline">\(\frac{1+\alpha}{2}\)</span> (as seen in <a href="#sec-tolerence-interval"><span>Section&nbsp;2.3.7.1</span></a>).</p>
+\tag{2.9}\]</span></span> where <span class="math inline">\(\text{qt}\left(\frac{1+\alpha}{2},\nu\right)\)</span> is the quantile of the Student distribution with <span class="math inline">\(\nu\)</span> degrees of freedom and a probability of <span class="math inline">\(\frac{1+\alpha}{2}\)</span> (as seen in <a href="#sec-tolerence-interval" class="quarto-xref"><span>Section 2.3.7.1</span></a>).</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -928,7 +1049,7 @@ Important
 <li>If the <strong>p-value</strong> <span class="math inline">\(&lt;\alpha\)</span>, the null hypothesis is rejected and the data are not normally distributed.</li>
 <li>If the <strong>p-value</strong> <span class="math inline">\(\ge\alpha\)</span>, the null hypothesis is not rejected and the data are normally distributed.</li>
 </ul>
-<p>Let’s perform a Shapiro-Wilk test on the distribution of the data in <a href="#fig-histogramT">Figure&nbsp;<span>2.1</span></a>:</p>
+<p>Let’s perform a Shapiro-Wilk test on the distribution of the data in <a href="#fig-histogramT" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">temp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">38</span>, <span class="fl">38.1</span>, <span class="fl">38.0</span>, <span class="fl">38.0</span>, <span class="fl">38.3</span>, <span class="fl">37.9</span>, <span class="fl">38.1</span>, <span class="fl">38.2</span>, <span class="fl">39.8</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/shapiro.test.html">shapiro.test</a></span><span class="op">(</span><span class="va">temp</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -940,7 +1061,7 @@ Important
 #&gt; W = 0.57969, p-value = 5.526e-05</code></pre>
 </div>
 </div>
-<p>We see here that the p-value is 5.53e-05, which is below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. This means that <strong>it is extremely unlikely that you’d observe such measurements if their distribution were normal</strong>. The null hypothesis that the data are normally distributed is thus rejected, and we can conclude that the data are not normally distributed – as expected from their representation in <a href="#fig-histogramT">Figure&nbsp;<span>2.1</span></a>.</p>
+<p>We see here that the p-value is 5.53e-05, which is below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. This means that <strong>it is extremely unlikely that you’d observe such measurements if their distribution were normal</strong>. The null hypothesis that the data are normally distributed is thus rejected, and we can conclude that the data are not normally distributed – as expected from their representation in <a href="#fig-histogramT" class="quarto-xref">Figure&nbsp;<span>2.1</span></a>.</p>
 <p>If we were to remove the outlier (39.8) and perform the test again, we would get a p-value of 0.592, which means that there is a 59.2% chance to observe such measurements if their distribution were normal. As p-value &gt; 0.05, the null hypothesis that the data are normally distributed is not rejected, and we can conclude that the data are normally distributed.</p>
 </section><section id="students-t-test" class="level3" data-number="2.4.3"><h3 data-number="2.4.3" class="anchored" data-anchor-id="students-t-test">
 <span class="header-section-number">2.4.3</span> Student’s t-test</h3>
@@ -953,7 +1074,7 @@ Important
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
-<figure class="figure"><p><img src="02-stats_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<figure class="figure"><p><img src="02-stats_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -961,7 +1082,7 @@ Important
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
-<caption>Data means and standard deviations </caption>
+<caption>Data means and standard deviations</caption>
 <thead><tr class="header">
 <th style="text-align: left;">Day</th>
 <th style="text-align: left;">Patient</th>
@@ -972,26 +1093,26 @@ Important
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">38.23462</td>
-<td style="text-align: right;">0.1443704</td>
+<td style="text-align: right;">38.13567</td>
+<td style="text-align: right;">0.1985529</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">37.65656</td>
-<td style="text-align: right;">0.3076378</td>
+<td style="text-align: right;">37.76977</td>
+<td style="text-align: right;">0.3030642</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">37.22896</td>
-<td style="text-align: right;">2.6793605</td>
+<td style="text-align: right;">38.87932</td>
+<td style="text-align: right;">2.0848640</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">37.82662</td>
-<td style="text-align: right;">2.6623728</td>
+<td style="text-align: right;">38.15403</td>
+<td style="text-align: right;">3.2504956</td>
 </tr>
 </tbody>
 </table>
@@ -1012,26 +1133,26 @@ Important
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.9515737</td>
-<td style="text-align: right;">0.3916123</td>
+<td style="text-align: right;">0.9730496</td>
+<td style="text-align: right;">0.8175197</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.9497398</td>
-<td style="text-align: right;">0.3631568</td>
+<td style="text-align: right;">0.9645934</td>
+<td style="text-align: right;">0.6390686</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.9814820</td>
-<td style="text-align: right;">0.9517652</td>
+<td style="text-align: right;">0.9726938</td>
+<td style="text-align: right;">0.8104389</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.9520072</td>
-<td style="text-align: right;">0.3985894</td>
+<td style="text-align: right;">0.9574300</td>
+<td style="text-align: right;">0.4938732</td>
 </tr>
 </tbody>
 </table>
@@ -1047,16 +1168,16 @@ Important
 #&gt;  Welch Two Sample t-test
 #&gt; 
 #&gt; data:  Temperature by Day
-#&gt; t = 7.6072, df = 26.982, p-value = 3.515e-08
+#&gt; t = 4.5164, df = 32.773, p-value = 7.707e-05
 #&gt; alternative hypothesis: true difference in means between group Day1 and group Day2 is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  0.4221335 0.7339728
+#&gt;  0.2010291 0.5307715
 #&gt; sample estimates:
 #&gt; mean in group Day1 mean in group Day2 
-#&gt;           38.23462           37.65656</code></pre>
+#&gt;           38.13567           37.76977</code></pre>
 </div>
 </div>
-<p>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of 3.51e-08, which is largely below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. To report it properly, we can say that “the temperature of patient A on day 1 (38.23°C, 95% CI = [38.17, 38.3]°C), was statistically significantly higher than on day 2 (37.66°C, 95% CI = [37.51, 37.8]°C), t(26.98) = 7.61, p = 3.51e-08.” Here , 26.98 is the degrees of freedom associated with the t test-statistic. The 95% confidence interval for the difference between the means is 0.42°C to 0.73°C.</p>
+<p>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of 7.71e-05, which is largely below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. To report it properly, we can say that “the temperature of patient A on day 1 (38.14°C, 95% CI = [38.04, 38.23]°C), was statistically significantly higher than on day 2 (37.77°C, 95% CI = [37.63, 37.91]°C), t(32.77) = 4.52, p = 7.71e-05.” Here , 32.77 is the degrees of freedom associated with the t test-statistic. The 95% confidence interval for the difference between the means is 0.2°C to 0.53°C.</p>
 <p>For patient B however, even though the average temperature decreased between the two days, the spread in data is so large that the t-test does not allow concluding concerning any significant temperature difference between the two days:</p>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">temperatures</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Patient</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span>,</span>
@@ -1066,13 +1187,13 @@ Important
 #&gt;  Welch Two Sample t-test
 #&gt; 
 #&gt; data:  Temperature by Day
-#&gt; t = -0.70763, df = 37.998, p-value = 0.4835
+#&gt; t = 0.83996, df = 32.37, p-value = 0.4071
 #&gt; alternative hypothesis: true difference in means between group Day1 and group Day2 is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  -2.307488  1.112149
+#&gt;  -1.032790  2.483386
 #&gt; sample estimates:
 #&gt; mean in group Day1 mean in group Day2 
-#&gt;           37.22896           37.82662</code></pre>
+#&gt;           38.87932           38.15403</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1093,13 +1214,13 @@ Note
 #&gt;  One Sample t-test
 #&gt; 
 #&gt; data:  temperatures %&gt;% filter(Patient == "B", Day == "Day1") %&gt;% pull(Temperature)
-#&gt; t = 62.139, df = 19, p-value &lt; 2.2e-16
+#&gt; t = 83.398, df = 19, p-value &lt; 2.2e-16
 #&gt; alternative hypothesis: true mean is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  35.97498 38.48293
+#&gt;  37.90358 39.85507
 #&gt; sample estimates:
 #&gt; mean of x 
-#&gt;  37.22896</code></pre>
+#&gt;  38.87932</code></pre>
 </div>
 </div>
 </div>
@@ -1156,7 +1277,7 @@ f(u_1, ..., u_n) = f(\overline{u_1}, ..., \overline{u_n}) + \sum_{i=1}^n (u_i-\o
 <p><span class="math display">\[
 f = Ax + B
 \]</span></p>
-<p>Then, following <a href="#eq-uncertainty">Equation&nbsp;<span>2.10</span></a>, the standard error on that function is given by:</p>
+<p>Then, following <a href="#eq-uncertainty" class="quarto-xref">Equation&nbsp;<span>2.10</span></a>, the standard error on that function is given by:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2}\\
@@ -1183,7 +1304,7 @@ Important
 </div>
 </section><section id="functions-of-two-variables" class="level4" data-number="2.5.2.2"><h4 data-number="2.5.2.2" class="anchored" data-anchor-id="functions-of-two-variables">
 <span class="header-section-number">2.5.2.2</span> Functions of two variables</h4>
-<p>Now consider the function <span class="math inline">\(f = Ax + By\)</span>, where we have measured the mean and standard deviation of both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and want to compute the standard deviation on their sum/subtraction. We can use the general formula of <a href="#eq-uncertainty">Equation&nbsp;<span>2.10</span></a> to determine how to do this, hence:</p>
+<p>Now consider the function <span class="math inline">\(f = Ax + By\)</span>, where we have measured the mean and standard deviation of both <span class="math inline">\(x\)</span> and <span class="math inline">\(y\)</span>, and want to compute the standard deviation on their sum/subtraction. We can use the general formula of <a href="#eq-uncertainty" class="quarto-xref">Equation&nbsp;<span>2.10</span></a> to determine how to do this, hence:</p>
 <p><span class="math display">\[
 \begin{aligned}
 \sigma_f &amp;= \sqrt{\left(\frac{\partial f}{\partial x}\right)^2\sigma_x^2 + \left(\frac{\partial f}{\partial y}\right)^2\sigma_y^2}\\
@@ -1347,10 +1468,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1360,8 +1480,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1374,6 +1503,120 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1417,6 +1660,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1442,6 +1686,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1501,12 +1771,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation column-body"><div class="nav-page nav-page-previous">
-      <a href="./01-about.html" class="pagination-link">
+      <a href="./01-about.html" class="pagination-link  aria-label=" the="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">About the class</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./03-getting_ready.html" class="pagination-link">
+      <a href="./03-getting_ready.html" class="pagination-link" aria-label="<span class='chapter-number'>3</span>&nbsp; <span class='chapter-title'>Getting ready</span>">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting ready</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1514,23 +1784,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <div class="sourceCode" id="cb9" data-shortcodes="false"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># A little reminder on Statistics</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="in">```{r include=FALSE, warning = FALSE, cache=FALSE}</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pracma)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(quantities)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latex2exp)</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>opts_chunk<span class="sc">$</span><span class="fu">set</span>(<span class="at">fig.align =</span> <span class="st">"center"</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>()<span class="sc">+</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.background =</span> <span class="fu">element_blank</span>(),</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">face=</span><span class="st">"bold"</span>),</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">panel.border =</span> <span class="fu">element_rect</span>(<span class="at">linewidth=</span><span class="dv">1</span>)</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>         )</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"black"</span>,<span class="st">"royalblue"</span>,<span class="st">"seagreen"</span>,<span class="st">"orange"</span>,<span class="st">"red"</span>))</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="in">library(tidyverse)</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="in">library(pracma)</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in">library(knitr)</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="in">library(kableExtra)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="in">library(patchwork)</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">library(quantities)</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="in">library(broom)</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="in">library(latex2exp)</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="in">opts_chunk$set(fig.align = "center")</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="in">theme_set(theme_bw()+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(text=element_text(size=10),</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="in">          strip.background = element_blank(),</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="in">          strip.text = element_text(face="bold"),</span></span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="in">          panel.border = element_rect(linewidth=1)</span></span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a><span class="in">         )</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a><span class="in">    )</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a><span class="in">colors &lt;- colorRampPalette(c("black","royalblue","seagreen","orange","red"))</span></span>
 <span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a></span>
@@ -2439,4 +2709,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/colinbousige/rclass/blob/main/02-stats.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

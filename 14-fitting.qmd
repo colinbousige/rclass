@@ -29,7 +29,7 @@ df <- tibble(l = seq(.2,20,2),
              T = period(l,9.81) + 1*runif(length(l)),
              dT = .2+.1*runif(length(l))
              )
-df %>% 
+df |> 
     ggplot(aes(x = l, y = T)) +
        geom_point(alpha=0.5, size=2)+
        coord_cartesian(ylim=c(0,10))+
@@ -79,9 +79,9 @@ So, let's try a few values of *g* and see what is the resulting residual error $
 #| echo: FALSE
 #| warning: FALSE
 #| message: FALSE
-fit <- df %>% nls(data=.,
-            T~period(l,g),
-            start=list(g=10))
+fit <- df |> nls(data = _,
+                 T~period(l,g),
+                 start=list(g=10))
 g <- as.numeric(round(coef(fit),3))
 
 df$fit <- predict(fit)
@@ -101,7 +101,7 @@ fitted4 <- tibble(l=seq(0,20,.01),
                   T=period(l,6))
 chi4    <- round(sum((df$fit4-df$T)^2),3)
 
-P1 <- df %>% 
+P1 <- df |> 
     ggplot(aes(x = l, y = T)) +
        geom_point(alpha=0.5, size=2)+
        coord_cartesian(ylim=c(0,10))+
@@ -111,7 +111,7 @@ P1 <- df %>%
             subtitle = TeX(glue(r"($\chi^2= {chi1}$)")),
             x= "Pendulum length L [m]",
             y= "Period [s]")
-P2 <- df %>% 
+P2 <- df |> 
     ggplot(aes(x = l, y = T)) +
        geom_point(alpha=0.5, size=2)+
        coord_cartesian(ylim=c(0,10))+
@@ -121,7 +121,7 @@ P2 <- df %>%
             subtitle = TeX(glue(r"($\chi^2= {chi2}$)")),
             x= "Pendulum length L [m]",
             y= "Period [s]")
-P3 <- df %>% 
+P3 <- df |> 
     ggplot(aes(x = l, y = T)) +
        geom_point(alpha=0.5, size=2)+
        coord_cartesian(ylim=c(0,10))+
@@ -131,7 +131,7 @@ P3 <- df %>%
             subtitle = TeX(glue(r"($\chi^2= {chi3}$)")),
             x= "Pendulum length L [m]",
             y= "Period [s]")
-P4 <- df %>% 
+P4 <- df |> 
     ggplot(aes(x = l, y = T)) +
        geom_point(alpha=0.5, size=2)+
        coord_cartesian(ylim=c(0,10))+
@@ -164,7 +164,7 @@ fitted7 <- tibble(l=seq(0,20,.01), T=period(l,9))
 chi7    <- round(sum((df$fit7-df$T)^2),3)
 X <- tibble(G=c(g,7,11,6,8,10,9),
             x2=c(chi1, chi2,chi3,chi4,chi5,chi6,chi7))
-X %>% 
+X |> 
     ggplot(aes(x = G, y = x2)) +
        geom_point(size=2)+
        geom_point(aes(x=g,y=chi1),size=4, color="red")+
@@ -220,7 +220,7 @@ We see that this data shows a linear evolution, for which we might want to extra
 # 3 equivalent ways of calling it
 fit <- lm(data = d, y ~ x)
 fit <- lm(d$y ~ d$x)
-fit <- d %>% lm(data=., y ~ x)
+fit <- d |> lm(data=_, y ~ x)
 ```
 
 Here, and everywhere else in R, the operator `~` is to be understood as "as a function of". So with this bit of code, we tell R to "fit y as a function of x using a linear model".
@@ -256,8 +256,7 @@ summary(fit)$r.squared
 And finally, to plot the result of the fit:
 ```{r, warning=FALSE, message=FALSE}
 # Get the fitted paramters and make a string with it to be printed
-to_print <- paste("y = ", round(coef(fit)[1],2)," + x*",
-                    round(coef(fit)[2],2), sep="")
+to_print <- glue("y = {round(coef(fit)[1],2)} + x*{round(coef(fit)[2],2)}")
 # Base plot
 plot(d, pch = 16, main = "With base plot", sub = to_print)
 abline(coef(fit), col="red")
@@ -284,7 +283,7 @@ fit1.5 <- lm(data = d, y - 1.5 ~ x + 0) # intercept will be fixed in 1.5
 ```
 
 ```{r warning=FALSE}
-d %>% ggplot(aes(x,y)) + 
+d |> ggplot(aes(x,y)) + 
     geom_point(cex=3) +
     geom_abline(slope = coef(fit0)[1], intercept = 0, col="red")+
     geom_abline(slope = coef(fit1.5)[1], intercept = 1.5, col="royalblue")+
@@ -437,11 +436,11 @@ d <- tibble(x=rep(a,3),
             T=rep(1:3, each=length(a))
             )
 # Plot the data
-d %>% ggplot(aes(x=x, y=y, color=factor(T))) + 
+d |> ggplot(aes(x=x, y=y, color=factor(T))) + 
     geom_point()
 # Fit all data
-d_fitted <- d %>% 
-    nest(data = -T) %>%
+d_fitted <- d |> 
+    nest(data = -T) |>
     mutate(fit = map(data, ~ nls(data = .,
                      y ~ y0 + A*dnorm(x, mean=x0, sd=FW), 
                      start=list(A  = max(.$y),
@@ -461,26 +460,26 @@ Then you can see the results for all your data at once:
 
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
 # data and fit resulting curve
-d_fitted %>% 
+d_fitted |> 
   unnest(augmented)
 # fit parameters
-d_fitted %>% 
+d_fitted |> 
   unnest(tidied)
 # fit parameters as a wide table
-d_fitted %>% 
-  unnest(tidied) %>% 
-  select(T, term, estimate, std.error) %>% 
+d_fitted |> 
+  unnest(tidied) |> 
+  select(T, term, estimate, std.error) |> 
   pivot_wider(names_from = term, 
               values_from = c(estimate,std.error))
 # plot fit result
-d_fitted %>% 
-    unnest(augmented) %>% 
+d_fitted |> 
+    unnest(augmented) |> 
     ggplot(aes(x=x, color=factor(T)))+
         geom_point(aes(y=y), alpha=0.5, size=3) + 
         geom_line(aes(y=.fitted))
 # plot fit parameters
-d_fitted %>% 
-  unnest(tidied) %>% 
+d_fitted |> 
+  unnest(tidied) |> 
   ggplot(aes(x=T, y=estimate, color=term))+
     geom_point()+
     geom_errorbar(aes(ymin=estimate-std.error,
@@ -548,9 +547,9 @@ library(tidyverse)
 # Define a function `norm01(x)`, that, given a vector `x`, returns this vector normalized to [0,1].
 norm01 <- function(x) {(x-min(x))/(max(x)-min(x))}
 # Load rubis_1.txt, normalize it to [0,1] and plot it
-d <- read_table("Data/rubis_01.txt", col_names=c("w", "Int")) %>% 
+d <- read_table("Data/rubis_01.txt", col_names=c("w", "Int")) |> 
     mutate(Int_n = norm01(Int))
-P <- d %>%
+P <- d |>
     ggplot(aes(x=w, y=Int_n))+
         geom_point(alpha=0.5)
 P
@@ -636,7 +635,7 @@ norm01 <- function(x) {
 # reads the file into a tibble, gives the proper column names, normalizes the 
 # intensity to [0,1], and returns the tibble.
 read_ruby <- function(filename){
-    read_table(filename, col_names = c("w", "Int")) %>% 
+    read_table(filename, col_names = c("w", "Int")) |> 
         mutate(Int = norm01(Int))
 }
 # - Create a `fitfunc(tib)` function that, given a tibble `tib`, fits this 
@@ -675,39 +674,39 @@ fitfunc <- function(tib){
 #     - Turn the `file` column into `run` that will contain the run number 
 #       (*i.e.* the number in the file name) as a numeric value. 
 #       Use the function `separate()`{.R} to do so.
-data <- tibble(file=flist) %>% 
+data <- tibble(file=flist) |> 
     mutate(data = map(file, read_ruby),
            fit = map(data, fitfunc),
            tidied = map(fit, tidy),
            augmented = map(fit, augment)
-           ) %>% 
+           ) |> 
     separate(file, c(NA, NA, "run", NA), convert = TRUE)
 # - Plot all the experimental data and the fit with black points and red lines 
 # into a faceted plot. Play with various ways of plotting this, 
 # like a ridge or slider plot.
-data %>% 
-    unnest(augmented) %>% 
+data |> 
+    unnest(augmented) |> 
     ggplot(aes(x = w, y = Int)) +
        geom_point(alpha=0.5)+
        geom_line(aes(y=.fitted), col="red")+
        facet_wrap(~run)
-data %>% 
-    unnest(augmented) %>% 
+data |> 
+    unnest(augmented) |> 
     ggplot(aes(x = w, y = Int + as.numeric(factor(run)), group=run)) +
        geom_point(alpha=0.5)+
        geom_line(aes(y = .fitted + as.numeric(factor(run))), col = "red")
-P <- data %>%
-    unnest(augmented) %>%
+P <- data |>
+    unnest(augmented) |>
     ggplot(aes(x = w, y = Int, frame=run)) +
         geom_point(alpha = 0.5) +
         geom_line(aes(y = .fitted), col = "red")
 library(plotly)
-ggplotly(P, dynamicTicks = TRUE) %>% 
-    animation_opts(5)%>%
+ggplotly(P, dynamicTicks = TRUE) |> 
+    animation_opts(5)|>
     layout(xaxis = list(autorange=FALSE, range = c(3050, 3550)))
 # - Plot the evolution of all fitting parameters as a function of the run number.
-data %>%
-    unnest(tidied) %>% 
+data |>
+    unnest(tidied) |> 
     ggplot(aes(x = run, y = estimate)) +
         geom_point()+
         facet_wrap(~term, scales = "free")+
@@ -715,9 +714,9 @@ data %>%
                           ymax = estimate + std.error),
                       width=0.5)
 # - Plot the evolution of the position of the higher intensity peaks.
-data %>%
-    unnest(tidied) %>% 
-    filter(term == "x1") %>% 
+data |>
+    unnest(tidied) |> 
+    filter(term == "x1") |> 
     ggplot(aes(x = run, y = estimate)) +
         geom_point()+
         geom_errorbar(aes(ymin = estimate - std.error,
@@ -726,17 +725,17 @@ data %>%
 # - Fit linearly the evolution of the higher intensity peaks with respect to the 
 #   run number. Display the fitted parameters and R^2^.Plot the fit as a red line. 
 #   Make sure to use proper weighing for the fit.
-lmfit <- data %>%
-    unnest(tidied) %>%
-    filter(term == "x1") %>% 
-    lm(data=., 
+lmfit <- data |>
+    unnest(tidied) |>
+    filter(term == "x1") |> 
+    lm(data=_, 
        estimate ~ run, 
        weights = 1/std.error^2)
 tidy(lmfit)
 glance(lmfit)
-data %>%
-    unnest(tidied) %>% 
-    filter(term == "x1") %>% 
+data |>
+    unnest(tidied) |> 
+    filter(term == "x1") |> 
     ggplot(aes(x = run, y = estimate)) +
         geom_point()+
         geom_errorbar(aes(ymin = estimate - std.error,

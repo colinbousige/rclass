@@ -28,6 +28,7 @@ plot(df)  # plot providing a multi-columns data.frame
 ```
 
 ### Adding some style
+
 OK, easy. Now let's do some tuning of this, because it's a tad ugly...
 Type in each command and see what they do.
 ```{r, warnings=FALSE}
@@ -301,19 +302,19 @@ but it does not display any data points. For this we have to add a geometry to t
 p + geom_point()
 ```
 
-OK, we're onto something, but we can probably add some information to this plot. We will first cut the data above 3 carats because they are not relevant, and add some transparency to the points to see some statistical information. Let's make use of the pipe operator `%>%` to make this easily readable:
+OK, we're onto something, but we can probably add some information to this plot. We will first cut the data above 3 carats because they are not relevant, and add some transparency to the points to see some statistical information. Let's make use of the pipe operator `|>` to make this easily readable:
 
 ```{r, warnings=FALSE}
-p <- diamonds %>% 
-        filter(carat<=3) %>% 
+p <- diamonds |> 
+        filter(carat<=3) |> 
         ggplot(aes(x = carat, y = price))
 p + geom_point(alpha=0.5)
 ```
 
 Let's now see whether the type of cut plays a role here by coloring the points according to the `cut` variable:
 ```{r, warnings=FALSE}
-p <- diamonds %>% 
-        filter(carat<=3) %>% 
+p <- diamonds |> 
+        filter(carat<=3) |> 
         ggplot(aes(x = carat, y = price, color = cut))
 p + geom_point(alpha=0.5)
 ```
@@ -326,8 +327,8 @@ p + geom_point(alpha=0.5) +
 
 The slope evolution shows that in general, the better the cut, the higher the price. But there are some discrepancies that may be explained in another manner:
 ```{r, warnings=FALSE}
-p <- diamonds %>% 
-        filter(carat<=3) %>% 
+p <- diamonds |> 
+        filter(carat<=3) |> 
         ggplot(aes(x = carat, y = price, color = clarity))
 p + geom_point(alpha=0.5) + geom_smooth()
 ```
@@ -335,8 +336,8 @@ p + geom_point(alpha=0.5) + geom_smooth()
 It is often easier to grasp a multi-variable problem by plotting all our data in a facet plot using `facet_wrap(~variable1)`{.R} if you want one variable changing in each plot:
 ```{r, warning = FALSE, message=FALSE}
 colors <- rainbow(length(unique(diamonds$clarity)))
-p <- ggplot(diamonds, 
-            aes(x = price, y = carat, color = clarity)) + 
+p <- diamonds |> 
+        ggplot(aes(x = price, y = carat, color = clarity)) + 
         geom_point(alpha = 0.5, size = 1) + 
         geom_smooth(color = "black") + 
         scale_colour_manual(values = colors, name = "Clarity") +
@@ -346,8 +347,8 @@ p
 
 ... or `facet_grid(y_variable ~ x_variable)`{.R} if you want to see one variable as a function of another:
 ```{r, warning = FALSE, message=FALSE, fig.asp=1.4}
-p <- ggplot(diamonds, 
-            aes(x = price, y = carat, color = color)) + 
+p <- diamonds |> 
+        ggplot(aes(x = price, y = carat, color = color)) + 
         geom_point(alpha = 0.8, size = 1) + 
         geom_smooth(method = "lm", color = "black") + 
         scale_colour_brewer(palette = "Spectral", name = "Color") +
@@ -357,8 +358,8 @@ p
 
 Or by adding another graphical parameter such as the size of the points:
 ```{r, warnings=FALSE}
-p <- ggplot(diamonds, 
-            aes(x = price, y = carat, color = clarity, size = cut)) + 
+p <- diamonds |> 
+        ggplot(aes(x = price, y = carat, color = clarity, size = cut)) + 
         geom_point(alpha = 0.5) + 
         scale_colour_manual(values = colors, name = "Clarity")
 p
@@ -366,8 +367,9 @@ p
 
 OK, maybe not here because the graph gets clogged, so we can lighten it by sampling data:
 ```{r, warnings=FALSE}
-p <- ggplot(diamonds %>% sample_n(500), 
-            aes(x = carat, y = price, color = clarity, size = cut)) + 
+p <- diamonds |> 
+        sample_n(500) |> 
+        ggplot(aes(x = carat, y = price, color = clarity, size = cut)) + 
         geom_point(alpha = 0.5) + 
         scale_colour_manual(values = colors, name = "Clarity")
 p
@@ -386,7 +388,8 @@ library(latex2exp)
 library(glue)
 A <- 1.2
 B <- 4
-diamonds %>% sample_n(100) %>% 
+diamonds |> 
+    sample_n(100) |> 
     ggplot(aes(x = carat, y = price))+
         geom_point(alpha = 0.5) +
         labs(x = "Carat",
@@ -438,7 +441,7 @@ p + my_theme
 Go to Rstudio **Preferences**, **Code**, **Edit code snippets**, and add the following lines:
 ```r
 snippet ggplot
-	%>%
+	 |>
 	ggplot(aes(x=${1:x}, y=${2:y}, color=${3:z})) +
 		geom_point() +
 		labs(x = "X label", 
@@ -460,8 +463,9 @@ library(plotly)
 library(plotly)
 ```
 ```{r, warnings=FALSE}
-p <- ggplot(diamonds %>% sample_n(100), 
-        aes(x = carat, y = price)) + 
+p <- diamonds |> 
+        sample_n(100) |> 
+        ggplot(aes(x = carat, y = price)) + 
         geom_point(aes(color = clarity), alpha = 0.5, size = 2) + 
         my_theme
 ggplotly(p, dynamicTicks = TRUE)
@@ -605,12 +609,12 @@ norm01 <- function(x) {
     (x-min(x))/(max(x)-min(x))
 }
 # Using `group_by` and `mutate`, add a column `norm_int` in df_tidy of normalized intensity for each file
-df_tidy <- df_tidy %>% 
-    group_by(file_name) %>% 
+df_tidy <- df_tidy |> 
+    group_by(file_name) |> 
     mutate(norm_int=norm01(Intensity))
 # Plot the two normalized spectra on the same graph using lines of different colors
 # Play with the theme and parameters to reproduce the following plot:
-df_tidy %>% 
+df_tidy |> 
     ggplot(aes(x=w, y=norm_int, color=file_name)) +
         geom_line()+
         scale_color_manual(values=c("red","royalblue"), name="") +
@@ -647,17 +651,17 @@ norm01 <- function(x) {
     (x-min(x))/(max(x)-min(x))
 }
 # Using `group_by` and `mutate`, add a column `norm_int` in df_tidy of normalized intensity for each file
-df_tidy <- df_tidy %>% 
-    group_by(file_name) %>% 
+df_tidy <- df_tidy |> 
+    group_by(file_name) |> 
     mutate(norm_int=norm01(Intensity))
 # Plot the two normalized spectra on the same graph using lines of different colors
 library(ggplot2)
-df_tidy %>% 
+df_tidy |> 
     ggplot(aes(x=w, y=norm_int, color=file_name))+
         geom_line()+
         theme_bw()
 # Play with the theme and parameters to reproduce the following plot:
-df_tidy %>% 
+df_tidy |> 
     ggplot(aes(x=w, y=norm_int, color=file_name)) +
         geom_line()+
         scale_color_manual(values=c("red","royalblue"), name="") +
@@ -792,8 +796,8 @@ for (file in allfiles) {#file <- allfiles[1]
     alldata <- bind_rows(alldata, d)
 }
 # plot all data
-alldata %>% 
-    filter(w<=1750, w>=1500) %>% # zoom on the interesting part
+alldata |> 
+    filter(w<=1750, w>=1500) |> # zoom on the interesting part
     ggplot(aes(x=w, 
                y=Int_n + run_number - 1))+ # to stack the plots
         geom_point(color="gray", alpha=.5, size=.2)+ #plot data with points
@@ -817,9 +821,9 @@ alldata %>%
 ```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
 # Looking at data for increasing pressures, plot the data using an interactive slider
 library(plotly)
-P <- alldata %>% 
-    filter(grepl("up",name)) %>% # only increasing pressures
-    filter(w<=1850, w>=1500) %>% # zoom on the interesting part
+P <- alldata |> 
+    filter(grepl("up",name)) |> # only increasing pressures
+    filter(w<=1850, w>=1500) |> # zoom on the interesting part
     ggplot(aes(x=w, 
                y=Int_n,
                frame=P))+ # each pressure in a new frame
@@ -840,9 +844,8 @@ ggplotly(P, dynamicTicks = TRUE)
 # you will need to interpolate the data on a regular grid 
 # with the `akima` package and its `interp()` function
 library(akima)
-toplot <- alldata %>% 
-            filter(grepl("up",name)) %>%
-            filter(w<=1850, w>=1500)
+toplot <- alldata |> 
+            filter(grepl("up",name)) |>             filter(w<=1850, w>=1500)
 toplot.interp <- with(toplot, 
                     interp(x = w, y = P, z = Int_n, 
                            duplicate="median",
@@ -906,7 +909,7 @@ my_theme <- theme_bw()+
                   panel.border = element_rect(colour = "black", fill=NA, linewidth=1)
                   )
 colors <- c("royalblue","red")
-p1 <- df %>% filter(City%in%c("Montpellier","Nantes")) %>% 
+p1 <- df |> filter(City%in%c("Montpellier","Nantes")) |> 
     ggplot(aes(x=year, y=Population, size=Population, color=City)) +
         geom_point() + 
         geom_smooth(method="lm", aes(fill=City), alpha=0.1, show.legend = FALSE) + 
@@ -963,7 +966,7 @@ my_theme <- theme_bw()+
                   panel.border = element_rect(colour = "black", fill=NA, linewidth=1)
                   )
 colors <- c("royalblue","red")
-p1 <- df %>% filter(City%in%c("Montpellier","Nantes")) %>% 
+p1 <- df |> filter(City%in%c("Montpellier","Nantes")) |> 
         ggplot(aes(x=year, y=Population, size=Population, color=City)) +
             geom_point() + 
             geom_smooth(method="lm", aes(fill=City), 
@@ -974,7 +977,7 @@ p1 <- df %>% filter(City%in%c("Montpellier","Nantes")) %>%
             labs(x="Year", y="Population")+
             my_theme 
 p1
-p2 <- df %>% filter(year==2012) %>% 
+p2 <- df |> filter(year==2012) |> 
         ggplot(aes(x=reorder(City,-Population), 
                    y=Population/1e6, 
                    fill=Population/1e6)) +

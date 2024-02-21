@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.537">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 5&nbsp; Vectors</title>
 <style>
@@ -19,7 +19,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -77,7 +77,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -86,6 +92,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -108,23 +115,23 @@ ga('send', {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-vectors.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Vectors</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-vectors.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Vectors</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Reproducible data treatment with R</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/colinbousige/rclass" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/colinbousige/rclass" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -252,7 +259,7 @@ ga('send', {
 </li>
     </ul>
 </div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
@@ -272,7 +279,7 @@ ga('send', {
   </ul>
 </li>
   <li><a href="#exo-vectors" id="toc-exo-vectors" class="nav-link" data-scroll-target="#exo-vectors"><span class="header-section-number">5.4</span> Exercises</a></li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/rclass/blob/main/06-vectors.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/colinbousige/rclass/blob/main/06-vectors.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -283,13 +290,14 @@ ga('send', {
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-body">
 
     
   
     
   </div>
   
+
 
 </header><p><strong>R is a vectorized language</strong> with built-in arithmetic and relational operators, mathematical functions and types of number. It means that each mathematical function and operator works on a set of data rather than a single scalar value as traditional computer language do, and thus <strong>formal looping can <em>usually</em> be avoided</strong>.</p>
 <section id="different-ways-of-defining-a-vector" class="level2" data-number="5.1"><h2 data-number="5.1" class="anchored" data-anchor-id="different-ways-of-defining-a-vector">
@@ -364,14 +372,14 @@ ga('send', {
 <span><span class="co"># with given standard deviation `sd`</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean<span class="op">=</span><span class="fl">3</span>, sd<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  [1] 1.833363 2.908191 3.086808 2.980330 3.069519 3.124660 3.230909 3.733080
-#&gt;  [9] 2.249598 1.886670</code></pre>
+<pre><code>#&gt;  [1] 4.821562 2.080144 2.124498 1.426847 5.283999 3.053678 3.186055 4.662175
+#&gt;  [9] 3.873088 3.965097</code></pre>
 </div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># vector with 10 random values uniformly distributed between min and max</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">10</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  [1] 0.65133494 0.20489596 0.49150380 0.49330630 0.25614982 0.46024728
-#&gt;  [7] 0.04112648 0.81054912 0.96162368 0.69431122</code></pre>
+<pre><code>#&gt;  [1] 0.8536089 0.1788303 0.4390439 0.9027255 0.8458482 0.3846050 0.5609296
+#&gt;  [8] 0.3774411 0.5124256 0.3763797</code></pre>
 </div>
 </div>
 </section><section id="numerical-and-categorical-data-types" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="numerical-and-categorical-data-types">
@@ -700,7 +708,7 @@ Attention
 <div class="cell" data-warnings="false">
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 5 4 3</code></pre>
+<pre><code>#&gt; [1] 3 4 3</code></pre>
 </div>
 </div>
 </section><section id="maximum-and-minimum" class="level3" data-number="5.3.4"><h3 data-number="5.3.4" class="anchored" data-anchor-id="maximum-and-minimum">
@@ -1134,10 +1142,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1147,8 +1154,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1161,6 +1177,120 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1204,6 +1334,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1229,6 +1360,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1288,12 +1445,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation column-body"><div class="nav-page nav-page-previous">
-      <a href="./05-variables.html" class="pagination-link">
+      <a href="./05-variables.html" class="pagination-link  aria-label=" booleans="" and="" strings="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Variables, booleans and strings</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07-dataframes.html" class="pagination-link">
+      <a href="./07-dataframes.html" class="pagination-link" aria-label="<span class='chapter-number'>6</span>&nbsp; <span class='chapter-title'>Data frames</span>">
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data frames</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1308,35 +1465,35 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb154-8"><a href="#cb154-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-9"><a href="#cb154-9" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Here, <span class="in">`x`</span> is a vector of doubles:</span>
 <span id="cb154-10"><a href="#cb154-10" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-11"><a href="#cb154-11" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="dv">12</span>, <span class="fl">4.2</span>)</span>
-<span id="cb154-12"><a href="#cb154-12" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb154-11"><a href="#cb154-11" aria-hidden="true" tabindex="-1"></a><span class="in">x &lt;- c(1, 5, 3, 12, 4.2)</span></span>
+<span id="cb154-12"><a href="#cb154-12" aria-hidden="true" tabindex="-1"></a><span class="in">x</span></span>
 <span id="cb154-13"><a href="#cb154-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-14"><a href="#cb154-14" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>But here, <span class="in">`x`</span> is converted to a vector of strings because it contains a string:</span>
 <span id="cb154-15"><a href="#cb154-15" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-16"><a href="#cb154-16" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">3</span>, <span class="st">"hello"</span>)</span>
-<span id="cb154-17"><a href="#cb154-17" aria-hidden="true" tabindex="-1"></a>x</span>
+<span id="cb154-16"><a href="#cb154-16" aria-hidden="true" tabindex="-1"></a><span class="in">x &lt;- c(1, 5, 3, "hello")</span></span>
+<span id="cb154-17"><a href="#cb154-17" aria-hidden="true" tabindex="-1"></a><span class="in">x</span></span>
 <span id="cb154-18"><a href="#cb154-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-19"><a href="#cb154-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-20"><a href="#cb154-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To define a sequence of increasing numbers, either use the notation <span class="in">`start:end`</span> for a sequence going from <span class="in">`start`</span> to <span class="in">`end`</span> by step of 1, or use the <span class="in">`seq()`</span>{.R} function that is more versatile:</span>
 <span id="cb154-21"><a href="#cb154-21" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-22"><a href="#cb154-22" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb154-23"><a href="#cb154-23" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">by =</span> .<span class="dv">5</span>)</span>
-<span id="cb154-24"><a href="#cb154-24" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">length =</span> <span class="dv">6</span>)</span>
-<span id="cb154-25"><a href="#cb154-25" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="at">along =</span> x)</span>
+<span id="cb154-22"><a href="#cb154-22" aria-hidden="true" tabindex="-1"></a><span class="in">1:10</span></span>
+<span id="cb154-23"><a href="#cb154-23" aria-hidden="true" tabindex="-1"></a><span class="in">seq(-10, 10, by = .5)</span></span>
+<span id="cb154-24"><a href="#cb154-24" aria-hidden="true" tabindex="-1"></a><span class="in">seq(-10, 10, length = 6)</span></span>
+<span id="cb154-25"><a href="#cb154-25" aria-hidden="true" tabindex="-1"></a><span class="in">seq(-10, 10, along = x)</span></span>
 <span id="cb154-26"><a href="#cb154-26" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-27"><a href="#cb154-27" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To repeat values, use the <span class="in">`rep()`</span>{.R} function:</span>
 <span id="cb154-28"><a href="#cb154-28" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-29"><a href="#cb154-29" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">10</span>)</span>
-<span id="cb154-30"><a href="#cb154-30" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="dv">5</span>)</span>
-<span id="cb154-31"><a href="#cb154-31" aria-hidden="true" tabindex="-1"></a><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">2</span>), <span class="at">each =</span> <span class="dv">5</span>)</span>
+<span id="cb154-29"><a href="#cb154-29" aria-hidden="true" tabindex="-1"></a><span class="in">rep(0, 10)</span></span>
+<span id="cb154-30"><a href="#cb154-30" aria-hidden="true" tabindex="-1"></a><span class="in">rep(c(0, 2), 5)</span></span>
+<span id="cb154-31"><a href="#cb154-31" aria-hidden="true" tabindex="-1"></a><span class="in">rep(c(0, 2), each = 5)</span></span>
 <span id="cb154-32"><a href="#cb154-32" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-33"><a href="#cb154-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To create vectors of random numbers, use <span class="in">`rnorm()`</span>{.R} or <span class="in">`runif()`</span>{.R} for normally or uniformly distributed numbers, respectively:</span>
 <span id="cb154-34"><a href="#cb154-34" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-35"><a href="#cb154-35" aria-hidden="true" tabindex="-1"></a><span class="co"># vector with 10 random values normally distributed around mean </span></span>
-<span id="cb154-36"><a href="#cb154-36" aria-hidden="true" tabindex="-1"></a><span class="co"># with given standard deviation `sd`</span></span>
-<span id="cb154-37"><a href="#cb154-37" aria-hidden="true" tabindex="-1"></a><span class="fu">rnorm</span>(<span class="dv">10</span>, <span class="at">mean=</span><span class="dv">3</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
-<span id="cb154-38"><a href="#cb154-38" aria-hidden="true" tabindex="-1"></a><span class="co"># vector with 10 random values uniformly distributed between min and max</span></span>
-<span id="cb154-39"><a href="#cb154-39" aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">10</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span>
+<span id="cb154-35"><a href="#cb154-35" aria-hidden="true" tabindex="-1"></a><span class="in"># vector with 10 random values normally distributed around mean </span></span>
+<span id="cb154-36"><a href="#cb154-36" aria-hidden="true" tabindex="-1"></a><span class="in"># with given standard deviation `sd`</span></span>
+<span id="cb154-37"><a href="#cb154-37" aria-hidden="true" tabindex="-1"></a><span class="in">rnorm(10, mean=3, sd=1)</span></span>
+<span id="cb154-38"><a href="#cb154-38" aria-hidden="true" tabindex="-1"></a><span class="in"># vector with 10 random values uniformly distributed between min and max</span></span>
+<span id="cb154-39"><a href="#cb154-39" aria-hidden="true" tabindex="-1"></a><span class="in">runif(10, min = 0, max = 1)</span></span>
 <span id="cb154-40"><a href="#cb154-40" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-41"><a href="#cb154-41" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-42"><a href="#cb154-42" aria-hidden="true" tabindex="-1"></a><span class="fu">## Numerical and categorical data types</span></span>
@@ -1379,7 +1536,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb154-89"><a href="#cb154-89" aria-hidden="true" tabindex="-1"></a><span class="fu">### Mathematical operations</span></span>
 <span id="cb154-90"><a href="#cb154-90" aria-hidden="true" tabindex="-1"></a>Because R is a vectorized language, you don't need to loop on all elements of a vector to perform element-wise operations on it. Let's say that <span class="in">`x &lt;- 1:6`</span>{.R}, then:</span>
 <span id="cb154-91"><a href="#cb154-91" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, include=FALSE}</span></span>
-<span id="cb154-92"><a href="#cb154-92" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span></span>
+<span id="cb154-92"><a href="#cb154-92" aria-hidden="true" tabindex="-1"></a><span class="in">x &lt;- 1:6</span></span>
 <span id="cb154-93"><a href="#cb154-93" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-94"><a href="#cb154-94" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-95"><a href="#cb154-95" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Addition of a value to all elements:</span>
@@ -1438,10 +1595,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb154-168"><a href="#cb154-168" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb154-169"><a href="#cb154-169" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-170"><a href="#cb154-170" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-171"><a href="#cb154-171" aria-hidden="true" tabindex="-1"></a><span class="co"># accessing by indexes</span></span>
-<span id="cb154-172"><a href="#cb154-172" aria-hidden="true" tabindex="-1"></a>x[<span class="dv">3</span>]</span>
-<span id="cb154-173"><a href="#cb154-173" aria-hidden="true" tabindex="-1"></a><span class="co"># access index 1, 5 and 2</span></span>
-<span id="cb154-174"><a href="#cb154-174" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">5</span>,<span class="dv">2</span>)] </span>
+<span id="cb154-171"><a href="#cb154-171" aria-hidden="true" tabindex="-1"></a><span class="in"># accessing by indexes</span></span>
+<span id="cb154-172"><a href="#cb154-172" aria-hidden="true" tabindex="-1"></a><span class="in">x[3]</span></span>
+<span id="cb154-173"><a href="#cb154-173" aria-hidden="true" tabindex="-1"></a><span class="in"># access index 1, 5 and 2</span></span>
+<span id="cb154-174"><a href="#cb154-174" aria-hidden="true" tabindex="-1"></a><span class="in">x[c(1,5,2)] </span></span>
 <span id="cb154-175"><a href="#cb154-175" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-176"><a href="#cb154-176" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-177"><a href="#cb154-177" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To remove elements <span class="in">`j`</span> from a vector <span class="in">`x`</span>, use the notation <span class="in">`x[-j]`</span>{.R}:</span>
@@ -1474,15 +1631,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb154-210"><a href="#cb154-210" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-211"><a href="#cb154-211" aria-hidden="true" tabindex="-1"></a>Finally, values in vectors can be **named**, and thus can be accessed by their name:</span>
 <span id="cb154-212"><a href="#cb154-212" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-213"><a href="#cb154-213" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">age=</span><span class="dv">32</span>, <span class="at">name=</span><span class="st">"John"</span>, <span class="at">pet=</span><span class="st">"Cat"</span>)</span>
-<span id="cb154-214"><a href="#cb154-214" aria-hidden="true" tabindex="-1"></a>y</span>
-<span id="cb154-215"><a href="#cb154-215" aria-hidden="true" tabindex="-1"></a>y[<span class="fu">c</span>(<span class="st">'age'</span>,<span class="st">'pet'</span>)] <span class="co"># prints a named vector</span></span>
-<span id="cb154-216"><a href="#cb154-216" aria-hidden="true" tabindex="-1"></a>y[[<span class="st">'name'</span>]] <span class="co"># prints an un-named vector</span></span>
+<span id="cb154-213"><a href="#cb154-213" aria-hidden="true" tabindex="-1"></a><span class="in">y &lt;- c(age=32, name="John", pet="Cat")</span></span>
+<span id="cb154-214"><a href="#cb154-214" aria-hidden="true" tabindex="-1"></a><span class="in">y</span></span>
+<span id="cb154-215"><a href="#cb154-215" aria-hidden="true" tabindex="-1"></a><span class="in">y[c('age','pet')] # prints a named vector</span></span>
+<span id="cb154-216"><a href="#cb154-216" aria-hidden="true" tabindex="-1"></a><span class="in">y[['name']] # prints an un-named vector</span></span>
 <span id="cb154-217"><a href="#cb154-217" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-218"><a href="#cb154-218" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-219"><a href="#cb154-219" aria-hidden="true" tabindex="-1"></a>And you can access the names of the vector using <span class="in">`names()`</span>{.R}:</span>
 <span id="cb154-220"><a href="#cb154-220" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-221"><a href="#cb154-221" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(y)</span>
+<span id="cb154-221"><a href="#cb154-221" aria-hidden="true" tabindex="-1"></a><span class="in">names(y)</span></span>
 <span id="cb154-222"><a href="#cb154-222" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-223"><a href="#cb154-223" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-224"><a href="#cb154-224" aria-hidden="true" tabindex="-1"></a></span>
@@ -1491,17 +1648,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb154-227"><a href="#cb154-227" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-228"><a href="#cb154-228" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sorting by ascending number:</span>
 <span id="cb154-229"><a href="#cb154-229" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-230"><a href="#cb154-230" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(x)</span>
+<span id="cb154-230"><a href="#cb154-230" aria-hidden="true" tabindex="-1"></a><span class="in">sort(x)</span></span>
 <span id="cb154-231"><a href="#cb154-231" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-232"><a href="#cb154-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It works with strings too, but <span class="in">`stringr::str_sort()`</span>{.R} might be needed for strings mixing letters and numbers:</span>
 <span id="cb154-233"><a href="#cb154-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-234"><a href="#cb154-234" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">c</span>(<span class="st">"c"</span>,<span class="st">"a"</span>,<span class="st">"d"</span>,<span class="st">"ab"</span>)) </span>
-<span id="cb154-235"><a href="#cb154-235" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"a10"</span>, <span class="st">"a2"</span>, <span class="st">"d"</span>, <span class="st">"ab"</span>))</span>
-<span id="cb154-236"><a href="#cb154-236" aria-hidden="true" tabindex="-1"></a>stringr<span class="sc">::</span><span class="fu">str_sort</span>(<span class="fu">c</span>(<span class="st">"c"</span>, <span class="st">"a10"</span>, <span class="st">"a2"</span>, <span class="st">"d"</span>, <span class="st">"ab"</span>), <span class="at">numeric =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb154-234"><a href="#cb154-234" aria-hidden="true" tabindex="-1"></a><span class="in">sort(c("c","a","d","ab")) </span></span>
+<span id="cb154-235"><a href="#cb154-235" aria-hidden="true" tabindex="-1"></a><span class="in">sort(c("c", "a10", "a2", "d", "ab"))</span></span>
+<span id="cb154-236"><a href="#cb154-236" aria-hidden="true" tabindex="-1"></a><span class="in">stringr::str_sort(c("c", "a10", "a2", "d", "ab"), numeric = TRUE)</span></span>
 <span id="cb154-237"><a href="#cb154-237" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-238"><a href="#cb154-238" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sorting by descending number:</span>
 <span id="cb154-239"><a href="#cb154-239" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-240"><a href="#cb154-240" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(x, <span class="at">decreasing =</span> <span class="cn">TRUE</span>) </span>
+<span id="cb154-240"><a href="#cb154-240" aria-hidden="true" tabindex="-1"></a><span class="in">sort(x, decreasing = TRUE) </span></span>
 <span id="cb154-241"><a href="#cb154-241" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-242"><a href="#cb154-242" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Inverting the order of the vector:</span>
 <span id="cb154-245"><a href="#cb154-245" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -1510,62 +1667,62 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb154-248"><a href="#cb154-248" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-249"><a href="#cb154-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Find the order of the indexes of the sorting:</span>
 <span id="cb154-250"><a href="#cb154-250" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-251"><a href="#cb154-251" aria-hidden="true" tabindex="-1"></a><span class="fu">order</span>(x)</span>
-<span id="cb154-252"><a href="#cb154-252" aria-hidden="true" tabindex="-1"></a>x[<span class="fu">order</span>(x)] <span class="co"># is thus equivalent to `sort(x)`</span></span>
+<span id="cb154-251"><a href="#cb154-251" aria-hidden="true" tabindex="-1"></a><span class="in">order(x)</span></span>
+<span id="cb154-252"><a href="#cb154-252" aria-hidden="true" tabindex="-1"></a><span class="in">x[order(x)] # is thus equivalent to `sort(x)`</span></span>
 <span id="cb154-253"><a href="#cb154-253" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-254"><a href="#cb154-254" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Find duplicates:</span>
 <span id="cb154-255"><a href="#cb154-255" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-256"><a href="#cb154-256" aria-hidden="true" tabindex="-1"></a><span class="fu">duplicated</span>(x)</span>
+<span id="cb154-256"><a href="#cb154-256" aria-hidden="true" tabindex="-1"></a><span class="in">duplicated(x)</span></span>
 <span id="cb154-257"><a href="#cb154-257" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-258"><a href="#cb154-258" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Remove duplicates:</span>
 <span id="cb154-259"><a href="#cb154-259" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-260"><a href="#cb154-260" aria-hidden="true" tabindex="-1"></a><span class="fu">unique</span>(x)</span>
+<span id="cb154-260"><a href="#cb154-260" aria-hidden="true" tabindex="-1"></a><span class="in">unique(x)</span></span>
 <span id="cb154-261"><a href="#cb154-261" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-262"><a href="#cb154-262" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Choose 3 random values:</span>
 <span id="cb154-263"><a href="#cb154-263" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-264"><a href="#cb154-264" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(x, <span class="dv">3</span>)</span>
+<span id="cb154-264"><a href="#cb154-264" aria-hidden="true" tabindex="-1"></a><span class="in">sample(x, 3)</span></span>
 <span id="cb154-265"><a href="#cb154-265" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-266"><a href="#cb154-266" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-267"><a href="#cb154-267" aria-hidden="true" tabindex="-1"></a><span class="fu">### Maximum and minimum</span></span>
 <span id="cb154-268"><a href="#cb154-268" aria-hidden="true" tabindex="-1"></a>This is quite straightforward:</span>
 <span id="cb154-269"><a href="#cb154-269" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-270"><a href="#cb154-270" aria-hidden="true" tabindex="-1"></a><span class="co"># maximum of x and its index</span></span>
-<span id="cb154-271"><a href="#cb154-271" aria-hidden="true" tabindex="-1"></a>x; <span class="fu">max</span>(x); <span class="fu">which.max</span>(x) </span>
-<span id="cb154-272"><a href="#cb154-272" aria-hidden="true" tabindex="-1"></a><span class="co"># minimum of x and its index</span></span>
-<span id="cb154-273"><a href="#cb154-273" aria-hidden="true" tabindex="-1"></a>x; <span class="fu">min</span>(x); <span class="fu">which.min</span>(x)</span>
-<span id="cb154-274"><a href="#cb154-274" aria-hidden="true" tabindex="-1"></a><span class="co"># range of a vector</span></span>
-<span id="cb154-275"><a href="#cb154-275" aria-hidden="true" tabindex="-1"></a><span class="fu">range</span>(x)</span>
+<span id="cb154-270"><a href="#cb154-270" aria-hidden="true" tabindex="-1"></a><span class="in"># maximum of x and its index</span></span>
+<span id="cb154-271"><a href="#cb154-271" aria-hidden="true" tabindex="-1"></a><span class="in">x; max(x); which.max(x) </span></span>
+<span id="cb154-272"><a href="#cb154-272" aria-hidden="true" tabindex="-1"></a><span class="in"># minimum of x and its index</span></span>
+<span id="cb154-273"><a href="#cb154-273" aria-hidden="true" tabindex="-1"></a><span class="in">x; min(x); which.min(x)</span></span>
+<span id="cb154-274"><a href="#cb154-274" aria-hidden="true" tabindex="-1"></a><span class="in"># range of a vector</span></span>
+<span id="cb154-275"><a href="#cb154-275" aria-hidden="true" tabindex="-1"></a><span class="in">range(x)</span></span>
 <span id="cb154-276"><a href="#cb154-276" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-277"><a href="#cb154-277" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-278"><a href="#cb154-278" aria-hidden="true" tabindex="-1"></a><span class="fu">### Characteristics of vectors</span></span>
 <span id="cb154-279"><a href="#cb154-279" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-280"><a href="#cb154-280" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Size of a vector:</span>
 <span id="cb154-281"><a href="#cb154-281" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-282"><a href="#cb154-282" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(x)</span>
+<span id="cb154-282"><a href="#cb154-282" aria-hidden="true" tabindex="-1"></a><span class="in">length(x)</span></span>
 <span id="cb154-283"><a href="#cb154-283" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-284"><a href="#cb154-284" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Statistics on vector:</span>
 <span id="cb154-285"><a href="#cb154-285" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-286"><a href="#cb154-286" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(x)</span>
+<span id="cb154-286"><a href="#cb154-286" aria-hidden="true" tabindex="-1"></a><span class="in">summary(x)</span></span>
 <span id="cb154-287"><a href="#cb154-287" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-288"><a href="#cb154-288" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sum of all terms:</span>
 <span id="cb154-289"><a href="#cb154-289" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-290"><a href="#cb154-290" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(x)</span>
+<span id="cb154-290"><a href="#cb154-290" aria-hidden="true" tabindex="-1"></a><span class="in">sum(x)</span></span>
 <span id="cb154-291"><a href="#cb154-291" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-292"><a href="#cb154-292" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Average value:</span>
 <span id="cb154-293"><a href="#cb154-293" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-294"><a href="#cb154-294" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span>
+<span id="cb154-294"><a href="#cb154-294" aria-hidden="true" tabindex="-1"></a><span class="in">mean(x)</span></span>
 <span id="cb154-295"><a href="#cb154-295" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-296"><a href="#cb154-296" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Median value:</span>
 <span id="cb154-297"><a href="#cb154-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-298"><a href="#cb154-298" aria-hidden="true" tabindex="-1"></a><span class="fu">median</span>(x)</span>
+<span id="cb154-298"><a href="#cb154-298" aria-hidden="true" tabindex="-1"></a><span class="in">median(x)</span></span>
 <span id="cb154-299"><a href="#cb154-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-300"><a href="#cb154-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Standard deviation:</span>
 <span id="cb154-301"><a href="#cb154-301" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-302"><a href="#cb154-302" aria-hidden="true" tabindex="-1"></a><span class="fu">sd</span>(x)</span>
+<span id="cb154-302"><a href="#cb154-302" aria-hidden="true" tabindex="-1"></a><span class="in">sd(x)</span></span>
 <span id="cb154-303"><a href="#cb154-303" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-304"><a href="#cb154-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Count occurrence of values:</span>
 <span id="cb154-305"><a href="#cb154-305" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-306"><a href="#cb154-306" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(x)</span>
+<span id="cb154-306"><a href="#cb154-306" aria-hidden="true" tabindex="-1"></a><span class="in">table(x)</span></span>
 <span id="cb154-307"><a href="#cb154-307" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-308"><a href="#cb154-308" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Cumulative sum:</span>
 <span id="cb154-311"><a href="#cb154-311" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
@@ -1579,27 +1736,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb154-321"><a href="#cb154-321" aria-hidden="true" tabindex="-1"></a><span class="fu">### Concatenation of vectors</span></span>
 <span id="cb154-322"><a href="#cb154-322" aria-hidden="true" tabindex="-1"></a>This is done using the <span class="in">`c()`</span> notation: you basically create a vector of vectors, the result being a new vector:</span>
 <span id="cb154-323"><a href="#cb154-323" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-324"><a href="#cb154-324" aria-hidden="true" tabindex="-1"></a><span class="co"># concatenate vectors</span></span>
-<span id="cb154-325"><a href="#cb154-325" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>, <span class="cn">NA</span>, <span class="sc">-</span>x); z</span>
+<span id="cb154-324"><a href="#cb154-324" aria-hidden="true" tabindex="-1"></a><span class="in"># concatenate vectors</span></span>
+<span id="cb154-325"><a href="#cb154-325" aria-hidden="true" tabindex="-1"></a><span class="in">z &lt;- c(-1:4, NA, -x); z</span></span>
 <span id="cb154-326"><a href="#cb154-326" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-327"><a href="#cb154-327" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-328"><a href="#cb154-328" aria-hidden="true" tabindex="-1"></a>Another option is to use the <span class="in">`append()`</span>{.R} function that allows for more options:</span>
 <span id="cb154-329"><a href="#cb154-329" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-330"><a href="#cb154-330" aria-hidden="true" tabindex="-1"></a><span class="co"># append values</span></span>
-<span id="cb154-331"><a href="#cb154-331" aria-hidden="true" tabindex="-1"></a><span class="fu">append</span>(x, <span class="dv">4</span>)    <span class="co"># at the end</span></span>
-<span id="cb154-332"><a href="#cb154-332" aria-hidden="true" tabindex="-1"></a><span class="fu">append</span>(x, <span class="dv">4</span><span class="sc">:</span><span class="dv">1</span>, <span class="dv">3</span>) <span class="co"># or after a given index</span></span>
+<span id="cb154-330"><a href="#cb154-330" aria-hidden="true" tabindex="-1"></a><span class="in"># append values</span></span>
+<span id="cb154-331"><a href="#cb154-331" aria-hidden="true" tabindex="-1"></a><span class="in">append(x, 4)    # at the end</span></span>
+<span id="cb154-332"><a href="#cb154-332" aria-hidden="true" tabindex="-1"></a><span class="in">append(x, 4:1, 3) # or after a given index</span></span>
 <span id="cb154-333"><a href="#cb154-333" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-334"><a href="#cb154-334" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-335"><a href="#cb154-335" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-336"><a href="#cb154-336" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises {#exo-vectors}</span></span>
 <span id="cb154-337"><a href="#cb154-337" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-338"><a href="#cb154-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-339"><a href="#cb154-339" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/exo-in-class.zip"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>Download the archive with all the exercises files<span class="kw">&lt;/a&gt;</span>, unzip it in your <span class="in">`R class`</span> RStudio project, and edit the R files.</span>
+<span id="cb154-339"><a href="#cb154-339" aria-hidden="true" tabindex="-1"></a>&lt;a href="Data/exo-in-class.zip" download target="_blank"&gt;Download the archive with all the exercises files&lt;/a&gt;, unzip it in your <span class="in">`R class`</span> RStudio project, and edit the R files.</span>
 <span id="cb154-340"><a href="#cb154-340" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-341"><a href="#cb154-341" aria-hidden="true" tabindex="-1"></a>---</span>
 <span id="cb154-342"><a href="#cb154-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-343"><a href="#cb154-343" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb154-344"><a href="#cb154-344" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 1**<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb154-343"><a href="#cb154-343" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb154-344"><a href="#cb154-344" aria-hidden="true" tabindex="-1"></a>    &lt;summary&gt;**Exercise 1**&lt;/summary&gt;</span>
 <span id="cb154-345"><a href="#cb154-345" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-346"><a href="#cb154-346" aria-hidden="true" tabindex="-1"></a>Let's create a named vector containing age of the students in the class, the names of each value being the first name of the students. Then:</span>
 <span id="cb154-347"><a href="#cb154-347" aria-hidden="true" tabindex="-1"></a></span>
@@ -1613,17 +1770,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb154-355"><a href="#cb154-355" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Show a boxplot of the ages distribution using <span class="in">`boxplot()`</span>{.R}</span>
 <span id="cb154-356"><a href="#cb154-356" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-357"><a href="#cb154-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-358"><a href="#cb154-358" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb154-358"><a href="#cb154-358" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb154-359"><a href="#cb154-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-360"><a href="#cb154-360" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb154-361"><a href="#cb154-361" aria-hidden="true" tabindex="-1"></a>    <span class="kw">&lt;summary&gt;</span>**Exercise 2**<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb154-360"><a href="#cb154-360" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb154-361"><a href="#cb154-361" aria-hidden="true" tabindex="-1"></a>    &lt;summary&gt;**Exercise 2**&lt;/summary&gt;</span>
 <span id="cb154-362"><a href="#cb154-362" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-363"><a href="#cb154-363" aria-hidden="true" tabindex="-1"></a>This exercise is adapted from <span class="co">[</span><span class="ot">here</span><span class="co">](https://perso.esiee.fr/~courivad/R/05-vectors.html#application-population-in-french-cities-1962-2012)</span>.</span>
 <span id="cb154-364"><a href="#cb154-364" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-365"><a href="#cb154-365" aria-hidden="true" tabindex="-1"></a>Open Rstudio and create a new R script, save it as <span class="in">`population.R`</span> in your wanted directory, say <span class="in">`Rcourse/`</span>.</span>
 <span id="cb154-366"><a href="#cb154-366" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-367"><a href="#cb154-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-368"><a href="#cb154-368" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/population.csv"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>Download<span class="kw">&lt;/a&gt;</span> the <span class="in">`population.csv`</span> file and save it in your working directory.</span>
+<span id="cb154-368"><a href="#cb154-368" aria-hidden="true" tabindex="-1"></a>&lt;a href="Data/population.csv" download target="_blank"&gt;Download&lt;/a&gt; the <span class="in">`population.csv`</span> file and save it in your working directory.</span>
 <span id="cb154-369"><a href="#cb154-369" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-370"><a href="#cb154-370" aria-hidden="true" tabindex="-1"></a>A csv file contains raw data stored as plain text and separated by a comma (Comma Separated Values). Open it with Rstudio.</span>
 <span id="cb154-371"><a href="#cb154-371" aria-hidden="true" tabindex="-1"></a></span>
@@ -1642,61 +1799,61 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb154-384"><a href="#cb154-384" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the population mean of Paris over these two years</span>
 <span id="cb154-385"><a href="#cb154-385" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sort the cities by decreasing order of population for 1962</span>
 <span id="cb154-386"><a href="#cb154-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-387"><a href="#cb154-387" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;details&gt;</span></span>
-<span id="cb154-388"><a href="#cb154-388" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;summary&gt;</span>Solution<span class="kw">&lt;/summary&gt;</span></span>
+<span id="cb154-387"><a href="#cb154-387" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb154-388"><a href="#cb154-388" aria-hidden="true" tabindex="-1"></a>&lt;summary&gt;Solution&lt;/summary&gt;</span>
 <span id="cb154-389"><a href="#cb154-389" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-390"><a href="#cb154-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-391"><a href="#cb154-391" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a `cities` vector containing all the cities listed in `population.csv`</span></span>
-<span id="cb154-392"><a href="#cb154-392" aria-hidden="true" tabindex="-1"></a>cities <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Angers"</span>, <span class="st">"Bordeaux"</span>, <span class="st">"Brest"</span>, <span class="st">"Dijon"</span>, <span class="st">"Grenoble"</span>, <span class="st">"Le Havre"</span>, </span>
-<span id="cb154-393"><a href="#cb154-393" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Le Mans"</span>, <span class="st">"Lille"</span>, <span class="st">"Lyon"</span>, <span class="st">"Marseille"</span>, <span class="st">"Montpellier"</span>, <span class="st">"Nantes"</span>, </span>
-<span id="cb154-394"><a href="#cb154-394" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Nice"</span>, <span class="st">"Paris"</span>, <span class="st">"Reims"</span>, <span class="st">"Rennes"</span>, <span class="st">"Saint-Etienne"</span>, <span class="st">"Strasbourg"</span>, </span>
-<span id="cb154-395"><a href="#cb154-395" aria-hidden="true" tabindex="-1"></a>            <span class="st">"Toulon"</span>, <span class="st">"Toulouse"</span>)</span>
-<span id="cb154-396"><a href="#cb154-396" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a `pop_1962` and `pop_2012` vectors containing the populations </span></span>
-<span id="cb154-397"><a href="#cb154-397" aria-hidden="true" tabindex="-1"></a><span class="co"># of each city at these years. Print the 2 vectors. </span></span>
-<span id="cb154-398"><a href="#cb154-398" aria-hidden="true" tabindex="-1"></a>pop_1962 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">115273</span>,<span class="dv">278403</span>,<span class="dv">136104</span>,<span class="dv">135694</span>,<span class="dv">156707</span>,<span class="dv">187845</span>,<span class="dv">132181</span>,<span class="dv">239955</span>,</span>
-<span id="cb154-399"><a href="#cb154-399" aria-hidden="true" tabindex="-1"></a>              <span class="dv">535746</span>,<span class="dv">778071</span>,<span class="dv">118864</span>,<span class="dv">240048</span>,<span class="dv">292958</span>,<span class="dv">2790091</span>,<span class="dv">134856</span>,<span class="dv">151948</span>,</span>
-<span id="cb154-400"><a href="#cb154-400" aria-hidden="true" tabindex="-1"></a>              <span class="dv">210311</span>,<span class="dv">228971</span>,<span class="dv">161797</span>,<span class="dv">323724</span>)</span>
-<span id="cb154-401"><a href="#cb154-401" aria-hidden="true" tabindex="-1"></a>pop_2012 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">149017</span>,<span class="dv">241287</span>,<span class="dv">139676</span>,<span class="dv">152071</span>,<span class="dv">158346</span>,<span class="dv">173142</span>,<span class="dv">143599</span>,<span class="dv">228652</span>,</span>
-<span id="cb154-402"><a href="#cb154-402" aria-hidden="true" tabindex="-1"></a>              <span class="dv">496343</span>,<span class="dv">852516</span>,<span class="dv">268456</span>,<span class="dv">291604</span>,<span class="dv">343629</span>,<span class="dv">2240621</span>,<span class="dv">181893</span>,<span class="dv">209860</span>,</span>
-<span id="cb154-403"><a href="#cb154-403" aria-hidden="true" tabindex="-1"></a>              <span class="dv">171483</span>,<span class="dv">274394</span>,<span class="dv">164899</span>,<span class="dv">453317</span>)</span>
-<span id="cb154-404"><a href="#cb154-404" aria-hidden="true" tabindex="-1"></a>pop_1962; pop_2012</span>
-<span id="cb154-405"><a href="#cb154-405" aria-hidden="true" tabindex="-1"></a><span class="co"># Use names() to name values of `pop_1962` and `pop_2012`. </span></span>
-<span id="cb154-406"><a href="#cb154-406" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the 2 vectors again. Are there any change?</span></span>
-<span id="cb154-407"><a href="#cb154-407" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(pop_2012) <span class="ot">&lt;-</span> <span class="fu">names</span>(pop_1962) <span class="ot">&lt;-</span> cities</span>
-<span id="cb154-408"><a href="#cb154-408" aria-hidden="true" tabindex="-1"></a>pop_1962; pop_2012</span>
-<span id="cb154-409"><a href="#cb154-409" aria-hidden="true" tabindex="-1"></a><span class="co"># What are the cities with more than 200000 people in 1962? </span></span>
-<span id="cb154-410"><a href="#cb154-410" aria-hidden="true" tabindex="-1"></a><span class="co"># For these, how many residents in 2012?</span></span>
-<span id="cb154-411"><a href="#cb154-411" aria-hidden="true" tabindex="-1"></a>cities200k <span class="ot">&lt;-</span> cities[pop_1962<span class="sc">&gt;</span><span class="dv">200000</span>]</span>
-<span id="cb154-412"><a href="#cb154-412" aria-hidden="true" tabindex="-1"></a>cities200k; pop_2012[cities200k]</span>
-<span id="cb154-413"><a href="#cb154-413" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the population evolution of Montpellier and Nantes?</span></span>
-<span id="cb154-414"><a href="#cb154-414" aria-hidden="true" tabindex="-1"></a>pop_2012[<span class="st">'Montpellier'</span>] <span class="sc">-</span> pop_1962[<span class="st">'Montpellier'</span>]; pop_2012[<span class="st">'Nantes'</span>] <span class="sc">-</span> pop_1962[<span class="st">'Nantes'</span>]</span>
-<span id="cb154-415"><a href="#cb154-415" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a `pop_diff` vector to store population change between 1962 and 2012</span></span>
-<span id="cb154-416"><a href="#cb154-416" aria-hidden="true" tabindex="-1"></a>pop_diff <span class="ot">&lt;-</span> pop_2012 <span class="sc">-</span> pop_1962</span>
-<span id="cb154-417"><a href="#cb154-417" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cities with a negative change</span></span>
-<span id="cb154-418"><a href="#cb154-418" aria-hidden="true" tabindex="-1"></a>cities[pop_diff<span class="sc">&lt;</span><span class="dv">0</span>]</span>
-<span id="cb154-419"><a href="#cb154-419" aria-hidden="true" tabindex="-1"></a><span class="co"># Print cities which broke the 300000 people barrier between 1962 and 2012</span></span>
-<span id="cb154-420"><a href="#cb154-420" aria-hidden="true" tabindex="-1"></a>cities[pop_2012<span class="sc">&gt;</span><span class="dv">300000</span> <span class="sc">&amp;</span> pop_1962<span class="sc">&lt;</span><span class="dv">300000</span>]</span>
-<span id="cb154-421"><a href="#cb154-421" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the total change in population of the 10 largest cities</span></span>
-<span id="cb154-422"><a href="#cb154-422" aria-hidden="true" tabindex="-1"></a><span class="co"># (as of 1962) between 1962 and 2012.</span></span>
-<span id="cb154-423"><a href="#cb154-423" aria-hidden="true" tabindex="-1"></a>ten_largest <span class="ot">&lt;-</span> cities[<span class="fu">order</span>(pop_1962, <span class="at">decreasing =</span> <span class="cn">TRUE</span>)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]]</span>
-<span id="cb154-424"><a href="#cb154-424" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(pop_2012[ten_largest] <span class="sc">-</span> pop_1962[ten_largest])</span>
-<span id="cb154-425"><a href="#cb154-425" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the population mean for year 1962</span></span>
-<span id="cb154-426"><a href="#cb154-426" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(pop_1962)</span>
-<span id="cb154-427"><a href="#cb154-427" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the population mean of Paris</span></span>
-<span id="cb154-428"><a href="#cb154-428" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(<span class="fu">c</span>(pop_1962[<span class="st">'Paris'</span>], pop_2012[<span class="st">'Paris'</span>]))</span>
-<span id="cb154-429"><a href="#cb154-429" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the cities by decreasing order of population for 1962</span></span>
-<span id="cb154-430"><a href="#cb154-430" aria-hidden="true" tabindex="-1"></a>(pop_1962_sorted <span class="ot">&lt;-</span> <span class="fu">sort</span>(pop_1962, <span class="at">decreasing =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb154-391"><a href="#cb154-391" aria-hidden="true" tabindex="-1"></a><span class="in"># Create a `cities` vector containing all the cities listed in `population.csv`</span></span>
+<span id="cb154-392"><a href="#cb154-392" aria-hidden="true" tabindex="-1"></a><span class="in">cities &lt;- c("Angers", "Bordeaux", "Brest", "Dijon", "Grenoble", "Le Havre", </span></span>
+<span id="cb154-393"><a href="#cb154-393" aria-hidden="true" tabindex="-1"></a><span class="in">            "Le Mans", "Lille", "Lyon", "Marseille", "Montpellier", "Nantes", </span></span>
+<span id="cb154-394"><a href="#cb154-394" aria-hidden="true" tabindex="-1"></a><span class="in">            "Nice", "Paris", "Reims", "Rennes", "Saint-Etienne", "Strasbourg", </span></span>
+<span id="cb154-395"><a href="#cb154-395" aria-hidden="true" tabindex="-1"></a><span class="in">            "Toulon", "Toulouse")</span></span>
+<span id="cb154-396"><a href="#cb154-396" aria-hidden="true" tabindex="-1"></a><span class="in"># Create a `pop_1962` and `pop_2012` vectors containing the populations </span></span>
+<span id="cb154-397"><a href="#cb154-397" aria-hidden="true" tabindex="-1"></a><span class="in"># of each city at these years. Print the 2 vectors. </span></span>
+<span id="cb154-398"><a href="#cb154-398" aria-hidden="true" tabindex="-1"></a><span class="in">pop_1962 &lt;- c(115273,278403,136104,135694,156707,187845,132181,239955,</span></span>
+<span id="cb154-399"><a href="#cb154-399" aria-hidden="true" tabindex="-1"></a><span class="in">              535746,778071,118864,240048,292958,2790091,134856,151948,</span></span>
+<span id="cb154-400"><a href="#cb154-400" aria-hidden="true" tabindex="-1"></a><span class="in">              210311,228971,161797,323724)</span></span>
+<span id="cb154-401"><a href="#cb154-401" aria-hidden="true" tabindex="-1"></a><span class="in">pop_2012 &lt;- c(149017,241287,139676,152071,158346,173142,143599,228652,</span></span>
+<span id="cb154-402"><a href="#cb154-402" aria-hidden="true" tabindex="-1"></a><span class="in">              496343,852516,268456,291604,343629,2240621,181893,209860,</span></span>
+<span id="cb154-403"><a href="#cb154-403" aria-hidden="true" tabindex="-1"></a><span class="in">              171483,274394,164899,453317)</span></span>
+<span id="cb154-404"><a href="#cb154-404" aria-hidden="true" tabindex="-1"></a><span class="in">pop_1962; pop_2012</span></span>
+<span id="cb154-405"><a href="#cb154-405" aria-hidden="true" tabindex="-1"></a><span class="in"># Use names() to name values of `pop_1962` and `pop_2012`. </span></span>
+<span id="cb154-406"><a href="#cb154-406" aria-hidden="true" tabindex="-1"></a><span class="in"># Print the 2 vectors again. Are there any change?</span></span>
+<span id="cb154-407"><a href="#cb154-407" aria-hidden="true" tabindex="-1"></a><span class="in">names(pop_2012) &lt;- names(pop_1962) &lt;- cities</span></span>
+<span id="cb154-408"><a href="#cb154-408" aria-hidden="true" tabindex="-1"></a><span class="in">pop_1962; pop_2012</span></span>
+<span id="cb154-409"><a href="#cb154-409" aria-hidden="true" tabindex="-1"></a><span class="in"># What are the cities with more than 200000 people in 1962? </span></span>
+<span id="cb154-410"><a href="#cb154-410" aria-hidden="true" tabindex="-1"></a><span class="in"># For these, how many residents in 2012?</span></span>
+<span id="cb154-411"><a href="#cb154-411" aria-hidden="true" tabindex="-1"></a><span class="in">cities200k &lt;- cities[pop_1962&gt;200000]</span></span>
+<span id="cb154-412"><a href="#cb154-412" aria-hidden="true" tabindex="-1"></a><span class="in">cities200k; pop_2012[cities200k]</span></span>
+<span id="cb154-413"><a href="#cb154-413" aria-hidden="true" tabindex="-1"></a><span class="in"># What is the population evolution of Montpellier and Nantes?</span></span>
+<span id="cb154-414"><a href="#cb154-414" aria-hidden="true" tabindex="-1"></a><span class="in">pop_2012['Montpellier'] - pop_1962['Montpellier']; pop_2012['Nantes'] - pop_1962['Nantes']</span></span>
+<span id="cb154-415"><a href="#cb154-415" aria-hidden="true" tabindex="-1"></a><span class="in"># Create a `pop_diff` vector to store population change between 1962 and 2012</span></span>
+<span id="cb154-416"><a href="#cb154-416" aria-hidden="true" tabindex="-1"></a><span class="in">pop_diff &lt;- pop_2012 - pop_1962</span></span>
+<span id="cb154-417"><a href="#cb154-417" aria-hidden="true" tabindex="-1"></a><span class="in"># Print cities with a negative change</span></span>
+<span id="cb154-418"><a href="#cb154-418" aria-hidden="true" tabindex="-1"></a><span class="in">cities[pop_diff&lt;0]</span></span>
+<span id="cb154-419"><a href="#cb154-419" aria-hidden="true" tabindex="-1"></a><span class="in"># Print cities which broke the 300000 people barrier between 1962 and 2012</span></span>
+<span id="cb154-420"><a href="#cb154-420" aria-hidden="true" tabindex="-1"></a><span class="in">cities[pop_2012&gt;300000 &amp; pop_1962&lt;300000]</span></span>
+<span id="cb154-421"><a href="#cb154-421" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute the total change in population of the 10 largest cities</span></span>
+<span id="cb154-422"><a href="#cb154-422" aria-hidden="true" tabindex="-1"></a><span class="in"># (as of 1962) between 1962 and 2012.</span></span>
+<span id="cb154-423"><a href="#cb154-423" aria-hidden="true" tabindex="-1"></a><span class="in">ten_largest &lt;- cities[order(pop_1962, decreasing = TRUE)[1:10]]</span></span>
+<span id="cb154-424"><a href="#cb154-424" aria-hidden="true" tabindex="-1"></a><span class="in">sum(pop_2012[ten_largest] - pop_1962[ten_largest])</span></span>
+<span id="cb154-425"><a href="#cb154-425" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute the population mean for year 1962</span></span>
+<span id="cb154-426"><a href="#cb154-426" aria-hidden="true" tabindex="-1"></a><span class="in">mean(pop_1962)</span></span>
+<span id="cb154-427"><a href="#cb154-427" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute the population mean of Paris</span></span>
+<span id="cb154-428"><a href="#cb154-428" aria-hidden="true" tabindex="-1"></a><span class="in">mean(c(pop_1962['Paris'], pop_2012['Paris']))</span></span>
+<span id="cb154-429"><a href="#cb154-429" aria-hidden="true" tabindex="-1"></a><span class="in"># Sort the cities by decreasing order of population for 1962</span></span>
+<span id="cb154-430"><a href="#cb154-430" aria-hidden="true" tabindex="-1"></a><span class="in">(pop_1962_sorted &lt;- sort(pop_1962, decreasing = TRUE))</span></span>
 <span id="cb154-431"><a href="#cb154-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb154-432"><a href="#cb154-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-433"><a href="#cb154-433" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
-<span id="cb154-434"><a href="#cb154-434" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;/details&gt;</span></span>
+<span id="cb154-433"><a href="#cb154-433" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
+<span id="cb154-434"><a href="#cb154-434" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb154-435"><a href="#cb154-435" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-436"><a href="#cb154-436" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-437"><a href="#cb154-437" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb154-438"><a href="#cb154-438" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb154-439"><a href="#cb154-439" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb154-440"><a href="#cb154-440" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb154-441"><a href="#cb154-441" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb154-437"><a href="#cb154-437" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb154-438"><a href="#cb154-438" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb154-439"><a href="#cb154-439" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb154-440"><a href="#cb154-440" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb154-441"><a href="#cb154-441" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
 <span id="cb154-442"><a href="#cb154-442" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
@@ -1704,4 +1861,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/colinbousige/rclass/blob/main/06-vectors.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

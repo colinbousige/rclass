@@ -24,12 +24,12 @@ library(tidyverse)
 Nspec <- 40                           # Amount of spectra
 N     <- 500                          # Size of the x vector
 # Create a fake data tibble
-fake_data <- tibble(T = round(seq(273, 500, length=Nspec), 1)) %>% 
+fake_data <- tibble(T = round(seq(273, 500, length=Nspec), 1)) |> 
     mutate(spec = map(T, ~tibble(w = seq(0, 100, length = N),
                          Intensity = 50*dnorm(w, mean = (./T[1])*20 + 25, 
                                                   sd  = 10+runif(1,max=5)))))
 fake_data
-fake_data <- fake_data %>% unnest(spec)
+fake_data <- fake_data |> unnest(spec)
 fake_data
 ```
 
@@ -97,8 +97,8 @@ In some cases you end up with a matrix _z_, and two vectors _x_ and _y_. This is
 ```{r, out.width='100%', message = FALSE, warning = FALSE, fig.asp=.6,cache=FALSE}
 x <- sort(unique(fake_data$w))
 y <- sort(unique(fake_data$T))
-z <- as.matrix(fake_data %>% 
-                pivot_wider(values_from = Intensity, names_from = T) %>% 
+z <- as.matrix(fake_data |> 
+                pivot_wider(values_from = Intensity, names_from = T) |> 
                 select(-w)
                )
 colors <- colorRampPalette(c("white","royalblue","seagreen","orange","red","brown"))(50)
@@ -124,12 +124,12 @@ aY <- list(title = "Temperature [K]")
 # Weird but you need to use t(z) here:
 z <- t(z)
 # Color plot
-plot_ly(x = x, y = y, z = z, type = "heatmap", colors = colors) %>% 
+plot_ly(x = x, y = y, z = z, type = "heatmap", colors = colors) |> 
    layout(xaxis = aX, yaxis = aY)
 ```
 Or, very cool, an interactive surface plot:
 ```{r, out.width='100%', message = FALSE, warning = FALSE, fig.asp=.9,cache=FALSE}
-plot_ly(x=x, y=y, z=z, type = "surface", colors=colors) %>%
+plot_ly(x=x, y=y, z=z, type = "surface", colors=colors) |>
    layout(scene = list(xaxis = aX, yaxis = aY, dragmode="turntable"))
 ```
 
@@ -165,12 +165,12 @@ irreg.df.interp <- with(irreg.df,
 str(irreg.df.interp)
 # Regrouping this list to a 3-columns data.frame
 irreg.df.smooth <- expand.grid(w = irreg.df.interp$x, 
-                               T = irreg.df.interp$y) %>% 
-                        tibble() %>% 
-                        mutate(Intensity = as.vector(irreg.df.interp$z)) %>% 
+                               T = irreg.df.interp$y) |> 
+                        tibble() |> 
+                        mutate(Intensity = as.vector(irreg.df.interp$z)) |> 
                         na.omit()
 # Plotting
-irreg.df.smooth %>% 
+irreg.df.smooth |> 
     ggplot(aes(x=w, y=T, fill=Intensity)) + 
         geom_raster() + 
         ggtitle("Some irregular fake data that have been interpolated with cubic splines") + 

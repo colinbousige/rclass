@@ -11,7 +11,6 @@ output:
         code_download  : true
 ---
 
-
 In these exercises we will see the power of the libraries `ggplot2` and `plotly` to make sense of statistical data. The goal is to reproduce the moving chart that you can see in this video from Hans Rosling -- I invite you to watch his other videos, they are quite enlightening and inspiring:
 
 <div style="text-align: center;">
@@ -44,17 +43,13 @@ The first thing to do is to load and regroup all these datasets into a single on
 
 ```
 
-2. To reproduce the chart on the video, we need to determine the dominant religion in each country. In the `religion` dataset, add a column `Religion` that will give the name of the dominant religion for each country. For this, you might want to use this method that returns the name of the column containing the maximum of each row of a table:
 
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-DF <- tibble(V1=c(2,8,1),V2=c(7,3,5),V3=c(9,6,4))
-DF
-names(DF)[max.col(DF)]
-```
+2. To reproduce the chart on the video, we need to determine the dominant religion in each country. In the `religion` dataset, add a column `Religion` that will give the name of the dominant religion for each country. For this, you need to make the table contain just the `Country` and all religions, make the table tidy, and then select the religion with the highest proportion for each country. We will filter the data to get only the year 2020.
 
 ```{r warning=FALSE, message=FALSE}
 
 ```
+
 
 3. Using `pivot_longer()`, make all datasets tidy. 
 
@@ -62,7 +57,7 @@ names(DF)[max.col(DF)]
 - `income` should now contain 3 columns: `Country`, `Year` and `Income`. 
 - `pop` should now contain 3 columns: `Country`, `Year` and `Population`. 
 
-We will only consider data from 1800 to 2018. Example of syntax using the pipe operator `%>%`:
+We will only consider data from 1900 to 2018. Example of syntax using the pipe operator `|>`:
 
 ```{r}
 DF <- read_table("name  2010  2011  2012  2014
@@ -71,8 +66,8 @@ Jane   122   56   23   4
 "
 )
 DF
-DF %>% 
-    select(name, '2010':'2012') %>% 
+DF |> 
+    select(name, '2010':'2012') |> 
     pivot_longer(col=-name,
                  names_to="Year", 
                  values_to="Score",
@@ -84,14 +79,13 @@ The line `names_transform=list(Year = as.numeric)` is here to convert the charac
 
 ```
 
-4. Now we want to combine all these datasets into a single one called `dat`, containing the columns `Country`, `Year`, `Population`, `Religion`, `Fertility` and `Income`. Look into the `inner_join()` function of the `dplyr` library (which is part of the `tidyverse` library). For the `religion` dataset, we will consider that the proportions of 2010 are representative of all times.
 
-- So play with the `religion` dataset so that it contains only two columns, `Country` and `Religion`, the data being filtered from the original `religion` dataset for the year 2010.
-- Join the 4 datasets into one called `dat`.
+4. Now we want to combine all these datasets into a single one called `dat`, containing the columns `Country`, `Year`, `Population`, `Religion`, `Fertility` and `Income`. Look into the `inner_join()` function of the `dplyr` library (which is part of the `tidyverse` library). 
 
 ```{r warning=FALSE, message=FALSE}
 
 ```
+
 
 In case you struggled to get there, download the archive with the button at the top and get the `dat` tibble with `dat <- read_csv("Data/dat.csv")`{.R}.
 
@@ -105,11 +99,13 @@ Now our dataset is ready, let's plot it.
 
 ```
 
+
 2. Create a subset of `dat` concerning your origin country. For me it will be `dat_france`
 
 ```{r warning=FALSE, message=FALSE}
 
 ```
+
 
 3. Plot the evolution of the income per capita and the number of children per woman as a function of the years, and make it look like that (notice the kinks during the two world wars):
 
@@ -123,6 +119,7 @@ Now our dataset is ready, let's plot it.
 
 ```
 
+
 5. Plot again income and fertility as a function of the years, but add a color corresponding to the country and a point size to its population:
 
 ```{r warning=FALSE, message=FALSE}
@@ -135,9 +132,12 @@ Now our dataset is ready, let's plot it.
 
 ```
 
+
 7. Finally, you can add a slider to the interactive graph allowing selecting a value for another variable (just like in the video) by adding the keyword `frame =` in the chart's aesthetics. So now, make the graph of the video ! (you can also add the aesthetics `id=Country` to show the country name in the popup when hovering on a point).
 
 ```{r warning=FALSE, message=FALSE}
 
 ```
+
+
 

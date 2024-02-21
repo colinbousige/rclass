@@ -8,7 +8,7 @@ output:
         toc_depth      : 4
         highlight      : tango
         number_sections: true
-        code_download  : FALSE
+        code_download  : true
 params: 
     solution:
         value: false
@@ -17,7 +17,7 @@ params:
 ```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align="center"}
 library(downloadthis)
 download_link(
-  link = "https://github.com/colinbousige/rclass/raw/main/Exo/religion_babies/Archive.zip",
+  link = "./Archive.zip",
   output_name = "Data Files",
   button_label = "Download Data Files",
   button_type = "default",
@@ -25,7 +25,6 @@ download_link(
   icon = "fa fa-save",
   self_contained = FALSE
 )
-options(width = 80)
 ```
 <br>
 
@@ -68,18 +67,18 @@ pop      <- read_csv("Data/population_total.csv")
 religion <- read_csv("Data/religion.csv")
 ```
 
-2. To reproduce the chart on the video, we need to determine the dominant religion in each country. In the `religion` dataset, add a column `Religion` that will give the name of the dominant religion for each country. For this, you might want to use this method that returns the name of the column containing the maximum of each row of a table:
-
-```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
-DF <- tibble(V1=c(2,8,1),V2=c(7,3,5),V3=c(9,6,4))
-DF
-names(DF)[max.col(DF)]
-```
+2. To reproduce the chart on the video, we need to determine the dominant religion in each country. In the `religion` dataset, add a column `Religion` that will give the name of the dominant religion for each country. For this, you need to make the table contain just the `Country` and all religions, make the table tidy, and then select the religion with the highest proportion for each country. We will filter the data to get only the year 2020.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-DF <- religion %>% select(Buddhists:Unaffiliated)
-religion <- religion %>% 
-        mutate(Religion=names(DF)[max.col(DF)])
+religion <- religion |>
+        filter(Year==2020) |>
+        select(Country, Buddhists:Unaffiliated) |> 
+        pivot_longer(cols=-Country, 
+                     names_to="Religion", 
+                     values_to="Proportion") |>
+        filter(.by = Country,
+               Proportion==max(Proportion)) |>
+        select(-Proportion)
 ```
 
 3. Using `pivot_longer()`, make all datasets tidy. 
@@ -88,7 +87,7 @@ religion <- religion %>%
 - `income` should now contain 3 columns: `Country`, `Year` and `Income`. 
 - `pop` should now contain 3 columns: `Country`, `Year` and `Population`. 
 
-We will only consider data from 1800 to 2018. Example of syntax using the pipe operator `%>%`:
+We will only consider data from 1900 to 2018. Example of syntax using the pipe operator `|>`:
 
 ```{r}
 DF <- read_table("name  2010  2011  2012  2014
@@ -97,8 +96,8 @@ Jane   122   56   23   4
 "
 )
 DF
-DF %>% 
-    select(name, '2010':'2012') %>% 
+DF |> 
+    select(name, '2010':'2012') |> 
     pivot_longer(col=-name,
                  names_to="Year", 
                  values_to="Score",
@@ -107,37 +106,32 @@ DF %>%
 The line `names_transform=list(Year = as.numeric)` is here to convert the character year values to numerical values.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-children <- children %>% 
+children <- children |> 
+                select(Country, '1900':'2018') |> 
                 pivot_longer(col=-Country, 
                              names_to="Year", 
                              values_to="Fertility",
                              names_transform=list(Year = as.numeric))
-income   <- income %>% 
-                select(Country, '1800':'2018') %>% 
+income   <- income |> 
+                select(Country, '1900':'2018') |> 
                 pivot_longer(col=-Country, 
                              names_to="Year", 
                              values_to="Income",
                              names_transform=list(Year = as.numeric))
-pop      <- pop %>% 
-                select(Country, '1800':'2018') %>% 
+pop      <- pop |> 
+                select(Country, '1900':'2018') |> 
                 pivot_longer(col=-Country, 
                              names_to="Year", 
                              values_to="Population",
                              names_transform=list(Year = as.numeric))
 ```
 
-4. Now we want to combine all these datasets into a single one called `dat`, containing the columns `Country`, `Year`, `Population`, `Religion`, `Fertility` and `Income`. Look into the `inner_join()` function of the `dplyr` library (which is part of the `tidyverse` library). For the `religion` dataset, we will consider that the proportions of 2010 are representative of all times.
-
-- So play with the `religion` dataset so that it contains only two columns, `Country` and `Religion`, the data being filtered from the original `religion` dataset for the year 2010.
-- Join the 4 datasets into one called `dat`.
+4. Now we want to combine all these datasets into a single one called `dat`, containing the columns `Country`, `Year`, `Population`, `Religion`, `Fertility` and `Income`. Look into the `inner_join()` function of the `dplyr` library (which is part of the `tidyverse` library). 
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-dat <- inner_join(children, income) %>%
-        inner_join(pop) %>%
-        inner_join(religion %>% 
-                    filter(Year==2010) %>% 
-                    select(Country, Religion) # that's the critical part
-                  )
+dat <- inner_join(children, income) |>
+        inner_join(pop) |>
+        inner_join(religion)
 # write_csv(dat, "Data/dat.csv")
 ```
 
@@ -163,7 +157,7 @@ theme_set(theme_bw())
 2. Create a subset of `dat` concerning your origin country. For me it will be `dat_france`
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-dat_france <- dat%>%filter(Country=="France")
+dat_france <- dat |> filter(Country=="France")
 ```
 
 3. Plot the evolution of the income per capita and the number of children per woman as a function of the years, and make it look like that (notice the kinks during the two world wars):
@@ -190,7 +184,7 @@ ggplot(data=dat_france, aes(x=Year, y=Fertility))+
 4. Create a subset of `dat` containing the data for your country plus all the neighbor countries (if you come from an island, the nearest countries...). For me, `dat_france_region` will contain data from France, Spain, Italy, Switzerland, Germany, Luxembourg and Belgium.
 
 ```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
-dat_france_region <- dat%>%
+dat_france_region <- dat |>
         filter(Country %in% c("France", "Spain", "Italy", "Switzerland", "Germany", "Luxembourg", "Belgium"))
 ```
 
@@ -220,8 +214,9 @@ ggplot(data=dat_france_region, aes(x=Year, y=Fertility, col=Country, size=Popula
 library(plotly)
 P <- ggplot(data = dat_france, aes(x=Population, y=Income))+
         geom_point()
-ggplotly(P)# add dynamicTicks=TRUE allows redrawing ticks when zooming in
+ggplotly(P) # add dynamicTicks=TRUE allows redrawing ticks when zooming in
 ```
+
 
 7. Finally, you can add a slider to the interactive graph allowing selecting a value for another variable (just like in the video) by adding the keyword `frame =` in the chart's aesthetics. So now, make the graph of the video ! (you can also add the aesthetics `id=Country` to show the country name in the popup when hovering on a point).
 
@@ -238,8 +233,9 @@ P <- ggplot(data=dat, aes(x=Income,
     ggtitle("Fertility vs. Income in the World")+
     xlab("Household income per capita per year [constant $]")+
     lims(y=c(0,8))+
-    scale_x_log10()+
     scale_size(range=c(1, 15))+
     ylab("Children per woman")
-ggplotly(P)
+ggplotly(P, dynamicTicks = TRUE) |> 
+  layout(yaxis = list(autorange = FALSE), 
+         xaxis = list(autorange = FALSE, type = 'log', range=list(2, 5.5)))
 ```

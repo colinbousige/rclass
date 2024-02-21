@@ -315,45 +315,47 @@ dt
 
 ### The pipe operator
 
-In the following, we will introduce the pipe operator from the `magrittr` package: `%>%`{.R}.
+In the following, we will introduce the pipe operator `|>`{.R}, that was introduced in the version 4.1 of R.
 This operator allows a clear syntax for successive operations, as "what is on the left of the operator is given as first argument of what is on the right". It is thus a good habit to write each operation on a separate line to facilitate the reading. This is particularly helpful when performing multiple nested operations. For example, `summary(head(tail(dt),2))`{.R}, which is hard to read, would translate to:
 
 ```r
-dt %>% 
-    tail() %>% 
-    head(2) %>% 
+dt |> 
+    tail() |> 
+    head(2) |> 
     summary()
 ```
 
-Note that since the 4.1 version of R, R has a native pipe operator: `|>`{.R}. However, for backward compatibility with all my previous code I still stick to the `magrittr` version `%>%`. In `magrittr`'s pipe, retrieving the piped object is done with the operator `.`, while it is done with the operator `_` in base R's.
+Note that before the 4.1 version of R, the pipe operator was only present thanks to the `magrittr` package, and was written `%>%`{.R}. In `magrittr`'s pipe, retrieving the piped object is done with the operator `.`, while it is done with the operator `_` in base R's.
 
 Silly example:
 
 ```{r, error=TRUE}
-"Hello" %>% gsub("o", "e") # replace the substring "Hello" by "o" in string "e"
-"Hello" %>% gsub("o", "e", .) # replace the substring "o" by "e" in string "Hello"
 "Hello" |> gsub("o", "e") # replace the substring "Hello" by "o" in string "e"
 "Hello" |> gsub("o", "e", x=_) # replace the substring "o" by "e" in string "Hello"
+"Hello" %>% gsub("o", "e") # replace the substring "Hello" by "o" in string "e"
+# /!\ In base R pipe, the '_' need to  be for a named argument, 
+# while it is not necessary for the '%>%' pipe
+"Hello" %>% gsub("o", "e", .) # replace the substring "o" by "e" in string "Hello"
 ```
 
 
 ### Sampling data
 ```{r, message=FALSE}
-dt %>% slice(1:3)  # by index
-dt %>% sample_n(3) # randomly
+dt |> slice(1:3)  # by index
+dt |> sample_n(3) # randomly
 ```
 
 ### Operations on groups of a variable
 `group_by(column)`{.R} groups by similar values of the wanted column(s) and performs the next operations on each element of the group successively.
 
 ```{r, message=FALSE}
-dt %>% 
+dt |> 
     group_by(signx)
-dt %>% 
-    group_by(signx) %>% 
+dt |> 
+    group_by(signx) |> 
     sample_n(3)
-dt %>% 
-    group_by(signx, signy) %>% 
+dt |> 
+    group_by(signx, signy) |> 
     sample_n(3)
 ```
 
@@ -361,13 +363,13 @@ dt %>%
 `summarise()`{.R} returns a **single value** for each element of the groups.
 
 ```{r, message=FALSE}
-dt %>% 
-    group_by(signx) %>% 
+dt |> 
+    group_by(signx) |> 
     summarise(count  = n(),
               mean_x = mean(x), 
               sd_x   = sd(x))
-dt %>% 
-    group_by(signx, signy) %>% 
+dt |> 
+    group_by(signx, signy) |> 
     summarise(count  = n(),
               mean_x = mean(x), 
               mean_y = mean(y))
@@ -376,8 +378,8 @@ dt %>%
 ### Sorting
 
 ```{r, message=FALSE}
-dt %>% arrange(x)
-dt %>% arrange(x, desc(y))
+dt |> arrange(x)
+dt |> arrange(x, desc(y))
 ```
 
 ### Merge tables column-wise
@@ -404,30 +406,30 @@ bind_rows(dt3, dt4)
 
 `mutate()`{.R}, like `$`{.R}, adds a column if it doesn't exist, and modifies it if it does.
 ```{r, message=FALSE}
-dt %>% mutate(w=seq_along(x), z=sin(x))
-dt %>% mutate(x=seq_along(x))
+dt |> mutate(w=seq_along(x), z=sin(x))
+dt |> mutate(x=seq_along(x))
 ```
 
 ### Selecting columns
 
 ```{r, message=FALSE}
-dt %>% select(x)  # only x
-dt %>% select(-x) # all but x
-dt %>% select(starts_with("sign"))
-dt %>% select(contains("x"))
+dt |> select(x)  # only x
+dt |> select(-x) # all but x
+dt |> select(starts_with("sign"))
+dt |> select(contains("x"))
 ```
 
 ### Filtering columns
 
 ```{r, message=FALSE}
-dt %>% filter(signx=="positive")
-dt %>% filter(x<0, y>.1) # multiple filters can be applied at once
+dt |> filter(signx=="positive")
+dt |> filter(x<0, y>.1) # multiple filters can be applied at once
 ```
 
 ### Reorder columns
 
 ```{r, message=FALSE}
-dt %>% relocate(y, .after = signy)
+dt |> relocate(y, .after = signy)
 ```
 
 ### Separate columns
@@ -437,11 +439,10 @@ The separation is based on standard separators such as "-", "\_", ".", " ", etc.
 ```{r, message=FALSE}
 dt5 <- tibble(file=list.files(path="Exo/FTIR/Data/", pattern=".xls"))
 dt5
-dt5 %>% separate(file, c(NA, "sample", "temperature", NA), convert = TRUE)
-dt5 %>% separate(file, 
-                 c("name", "extension"), 
-                 sep = "\\."
-                 )
+dt5 |> separate(file, c(NA, "sample", "temperature", NA), convert = TRUE)
+dt5 |> separate(file, 
+                c("name", "extension"), 
+                sep = "\\.")
 ```
 
 ### Apply a function recursively on each element of a column
@@ -451,37 +452,39 @@ Take a look at the [cheatsheet on the `purrr` package](https://github.com/rstudi
 ```{r, message=FALSE}
 x <- c(pi, pi/3, pi/2)
 map(x, sin)     # returns a list
-x %>% map_dbl(sin) # returns a vector
+x |> map_dbl(sin) # returns a vector
 ```
 
 Of course, in the above case, it's a stupid use of the power of `map()`{.R}. A typical use case is when you want to read multiple files, for example:
 ```{r, message=FALSE, warning=FALSE}
-dt6 <- tibble(file=list.files(path="Exo/spectro/Data", 
+dt6 <- tibble(file=list.files(path="Exo/spectro2/Data", 
                               pattern = ".txt", 
-                              full.names = TRUE)) %>% 
-    slice(1:5) %>% 
-    mutate(data = map(file, read_table))
+                              full.names = TRUE)) |> 
+    slice(1:5) |> 
+    mutate(data = map(file, read_table, col_names = c("w", "Int"))) |> 
+    mutate(file = basename(file))
 dt6
 ```
 This is (almost) equivalent to:
 ```{r, message=FALSE, warning=FALSE}
-dt6 <- tibble(file=list.files(path="Exo/spectro/Data", 
+dt6 <- tibble(file=list.files(path="Exo/spectro2/Data", 
                               pattern = ".txt", 
-                              full.names = TRUE)) %>% 
-    slice(1:5) %>%
-    mutate(data = map(file, ~ read_table(., col_names = c("w", "Int"))))
+                              full.names = TRUE)) |> 
+    slice(1:5) |> 
+    mutate(data = map(file, ~read_table(., col_names = c("w", "Int")))) |> 
+    mutate(file = basename(file))
 ```
 
 You see that you can create the function directly within the call to map using the shortcut `map(vector, ~ function(.))`{.R}. This is useful to provide more arguments to the function -- another solution is to write your own function before the call to `map()`{.R} and then call this function in `map()`{.R}.
 
 Note that in case you need more parameters, you can use `purrr::map2(vector1, vector2, ~function(.x, .y))`{.R}, where `.x` and `.y` refer to `vector1` and `vector2`, respectively (it's always `.x` and `.y` whatever the name of `vector1` and `vector2`).
 ```{r}
-tibble(x=1:3, y=5:7) %>% 
+tibble(x=1:3, y=5:7) |> 
     mutate(sum = map2_dbl(x, y, sum))
 tibble(a=list(tibble(x=1:3, y=5:7), 
               tibble(x=0:3, y=4:7)), 
        b=list(tibble(x=10:13, y=15:18), 
-              tibble(x=-1:2,  y=-14:-17))) %>% 
+              tibble(x=-1:2,  y=-14:-17))) |> 
     mutate(sumx = map2_dbl(a, b, ~sum(.x$x, .y$x)),
            sumy = map2_dbl(a, b, ~sum(.x$y, .y$y)))
 ```
@@ -489,19 +492,19 @@ tibble(a=list(tibble(x=1:3, y=5:7),
 ### Nesting and un-nesting data
 
 ```{r, message=FALSE}
-dt7 <- dt6 %>% 
-    mutate(file = basename(file)) %>% 
+dt7 <- dt6 |> 
+    mutate(file = basename(file)) |> 
     unnest(data)
 dt7
 # Nesting data per repeated values in a column (~equivalent to grouping)
-dt7 %>% nest(data=-file)
+dt7 |> nest(data=-file)
 ```
 
 ### Providing data to ggplot
 
 ```{r, message=FALSE}
-library(ggplot2)
-dt %>% filter(abs(y) > 0.1) %>% 
+dt |> 
+    filter(abs(y) > 0.1) |> 
     ggplot(aes(x=x, y=y, color=signy))+
         geom_point()
 ```
@@ -616,7 +619,7 @@ head(d)
 library(tidyverse)
 d <- read_table("Data/ATG.txt", 
                 skip    = 10,
-                comment = "[") %>% 
+                comment = "[") |> 
         drop_na()
 d
 ```
@@ -649,7 +652,7 @@ popul <- read_csv("Data/population.csv")
 names(popul); dim(popul)
 # Are the data tidy?
 head(popul) # no
-popul.tidy <- popul %>% 
+popul.tidy <- popul |> 
     pivot_longer(cols=-year,
                  names_to = "city",
                  values_to = "pop"
@@ -658,7 +661,7 @@ popul.tidy
 # Create a subset containing the data for Montpellier
 mtp <- subset(popul.tidy, city == "Montpellier")
 # I prefer the tidyverse version
-mtp <- popul.tidy %>% filter(city == "Montpellier")
+mtp <- popul.tidy |> filter(city == "Montpellier")
 # What is the max and min of population in this city?
 max(mtp$pop)
 min(mtp$pop)
@@ -667,17 +670,17 @@ range(mtp$pop)
 mean(mtp$pop)
 # What is the total population in 2012?
 sum(popul.tidy[popul.tidy$year == 2012, "pop"])
-popul.tidy %>% 
-    filter(year==2012) %>% 
-    select(pop) %>% 
+popul.tidy |> 
+    filter(year==2012) |> 
+    select(pop) |> 
     sum()
 # What is the total population per year?
-popul.tidy %>% 
-    group_by(year) %>% 
+popul.tidy |> 
+    group_by(year) |> 
     summarise(pop_tot=sum(pop))
 # What is the average population per city over the years?
-popul.tidy %>% 
-    group_by(city) %>% 
+popul.tidy |> 
+    group_by(city) |> 
     summarise(pop_ave=mean(pop))
 ```
 
@@ -711,9 +714,8 @@ popul.tidy %>%
     <summary>Solution</summary>
 
 ```{r, warnings=FALSE, message=FALSE}
-# First, load the `tidyverse` and `lubridate` package
+# First, load the `tidyverse` package
 library(tidyverse)
-library(lubridate)
 # Load people1.csv and people2.csv
 pp1  <- read_csv("Data/people1.csv")
 pp2  <- read_csv("Data/people2.csv")
@@ -723,38 +725,45 @@ pp2  <- read_csv("Data/people2.csv")
 # - adding a column `age` containing the age in years 
 #   (use lubridate's `time_length(x, 'years')` with x a time
 #   difference in days) by using `mutate()`
-pp <- pp1 %>% 
-        inner_join(pp2) %>% 
+pp <- pp1 |> 
+        inner_join(pp2) |> 
         mutate(age=time_length(today()-dateofbirth,'years'))
 # Display a summary of the table using `str()`
 str(pp)
 # Using `groupe_by()` and `summarize()`:
 # - Show the number of males and females in the table 
 #   (use the counter `n()`)
-pp %>% group_by(gender) %>% summarize(count=n())
+pp |> 
+    group_by(gender) |> 
+    summarize(count=n())
 # - Show the average age per gender
-pp %>% group_by(gender) %>% summarize(age=mean(age))
+pp |> 
+    group_by(gender) |> 
+    summarize(age=mean(age))
 # - Show the average size per gender and institution
-pp %>% group_by(gender, institution) %>% summarize(size=mean(size))
+pp |> 
+    group_by(gender, institution) |> 
+    summarize(size=mean(size))
 # - Show the number of people from each country, 
 #   sorted by descending population
-pp %>% group_by(origin) %>% 
-        summarize(count=n()) %>% 
-        arrange(desc(count))
+pp |> 
+    group_by(origin) |> 
+    summarize(count=n()) |> 
+    arrange(desc(count))
 # Using `select()`, display:
 # - only the name and age columns
-pp %>% select(c(name, age))
+pp |> select(c(name, age))
 # - all but the name column
-pp %>% select(-name)
+pp |> select(-name)
 # Using `filter()`, show data only for
 # - Chinese people
-pp %>% filter(origin=='China')
+pp |> filter(origin=='China')
 # - From institution ECL and UCBL
-pp %>% filter(institution %in% c('ECL', 'UCBL'))
+pp |> filter(institution %in% c('ECL', 'UCBL'))
 # - People older than 22 
-pp %>% filter(age>22)
+pp |> filter(age>22)
 # - People with a `e` in their name
-pp %>% filter(grepl('e',name))
+pp |> filter(grepl('e',name))
 ```
 
 

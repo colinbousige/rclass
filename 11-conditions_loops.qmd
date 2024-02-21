@@ -169,15 +169,15 @@ data.frame(year=df[,"year"],
 # A tidy-compatible version 
 library(tidyverse)
 popul <- pivot_longer(df, cols=-year, names_to="city", values_to="pop")
-popul %>%
-  group_by(year) %>%
+popul |> 
+  group_by(year) |> 
   summarise(totpop = sum(pop))
 # or equivalently
 summarise(group_by(popul, year), totpop = sum(pop))
 # What is the mean population for each city?
 apply(df[,-1], 2, mean)
-popul %>%
-  group_by(city) %>%
+popul |> 
+  group_by(city) |> 
   summarise(avepop = mean(pop))
 ```
 

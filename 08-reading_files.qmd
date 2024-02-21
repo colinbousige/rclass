@@ -142,7 +142,7 @@ Let's say we store the list of file names into a vector `file_list` and read the
 library(tidyverse)
 df <- tibble() # empty initialization
 for (file in file_list) {
-    df_temp <- read_function(file) %>% 
+    df_temp <- read_function(file) |> 
             mutate(name = file) # add the column `name` to make the tibble tidy
     df <- bind_rows(df, def_temp)
 }
@@ -151,8 +151,8 @@ for (file in file_list) {
 An R-friendly way of doing this would be to avoid using a `for`{.R} loop:
 ```r
 library(tidyverse)
-df <- tibble(name = file_list) %>% 
-    mutate(data = map(name, read_function)) %>% 
+df <- tibble(name = file_list) |> 
+    mutate(data = map(name, read_function)) |> 
     unnest(data)
 ```
 

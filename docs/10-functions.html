@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.537">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>Reproducible data treatment with R - 9&nbsp; Functions</title>
 <style>
@@ -19,7 +19,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -77,7 +77,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -86,6 +92,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -108,23 +115,23 @@ ga('send', {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-functions.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Functions</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-functions.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Functions</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
   </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Reproducible data treatment with R</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/colinbousige/rclass" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/colinbousige/rclass" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -252,7 +259,7 @@ ga('send', {
 </li>
     </ul>
 </div>
-</nav><div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
@@ -265,7 +272,7 @@ ga('send', {
   <li><a href="#documenting-your-function" id="toc-documenting-your-function" class="nav-link" data-scroll-target="#documenting-your-function"><span class="header-section-number">9.5</span> Documenting your function</a></li>
   <li><a href="#interpolation-of-data" id="toc-interpolation-of-data" class="nav-link" data-scroll-target="#interpolation-of-data"><span class="header-section-number">9.6</span> Interpolation of data</a></li>
   <li><a href="#exo-functions" id="toc-exo-functions" class="nav-link" data-scroll-target="#exo-functions"><span class="header-section-number">9.7</span> Exercises</a></li>
-  </ul><div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/colinbousige/rclass/blob/main/10-functions.qmd" class="toc-action">View source</a></p><p><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/colinbousige/rclass/blob/main/10-functions.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content column-body" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
@@ -276,13 +283,14 @@ ga('send', {
 
 
 
-<div class="quarto-title-meta">
+<div class="quarto-title-meta column-body">
 
     
   
     
   </div>
   
+
 
 </header><p>Functions should become a really important part of your coding routine. Basically, consider making this your new moto:</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -365,7 +373,6 @@ Your new moto
 </section><section id="passing-arguments-to-other-functions" class="level2" data-number="9.3"><h2 data-number="9.3" class="anchored" data-anchor-id="passing-arguments-to-other-functions">
 <span class="header-section-number">9.3</span> Passing arguments to other functions</h2>
 <p>One can also pass arguments to other functions within the function, without have to specify all of them:</p>
-<div>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">testfunc2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">...</span><span class="op">)</span><span class="op">{</span></span>
 <span>    <span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">...</span><span class="op">)</span></span>
@@ -373,14 +380,15 @@ Your new moto
 <span><span class="co"># Here, `...` represents all the arguments you could provide to `plot()`</span></span>
 <span><span class="fu">testfunc2</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span></span>
 <span><span class="fu">testfunc2</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span>, type<span class="op">=</span><span class="st">"l"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell quarto-layout-panel" data-warnings="false">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="cell quarto-layout-panel" data-warnings="false" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="10-functions_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="cell-output-display quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="10-functions_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
 </div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="10-functions_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </div>
@@ -395,7 +403,10 @@ Your new moto
 </div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">testfunc3</span><span class="op">(</span><span class="va">plot</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>, type<span class="op">=</span><span class="st">"l"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-functions_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="10-functions_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section><section id="error-handling" class="level2" data-number="9.4"><h2 data-number="9.4" class="anchored" data-anchor-id="error-handling">
@@ -508,10 +519,10 @@ Your new moto
 <span><span class="va">lin_interp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/approxfun.html">approxfun</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span>        <span class="co">#is a function</span></span>
 <span><span class="fu">lin_interp</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>; <span class="fu">lin_interp</span><span class="op">(</span><span class="va">pi</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] -0.001931345</code></pre>
+<pre><code>#&gt; [1] 0.002969519</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] -0.006165774</code></pre>
+<pre><code>#&gt; [1] 0.009008819</code></pre>
 </div>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yy_lin</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/approxfun.html">approx</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xout<span class="op">=</span><span class="va">xx</span><span class="op">)</span> <span class="co">#is a list containing x and y</span></span>
 <span></span>
@@ -534,7 +545,10 @@ Your new moto
 <span>    legend<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"'Experimental' points"</span>, <span class="st">"Linear interpolation"</span>, <span class="st">"Spline interpolation"</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="10-functions_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure"><p><img src="10-functions_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section><section id="exo-functions" class="level2" data-number="9.7"><h2 data-number="9.7" class="anchored" data-anchor-id="exo-functions">
@@ -675,10 +689,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -688,8 +701,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -702,6 +724,120 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      return note.innerHTML;
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -745,6 +881,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -770,6 +907,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -829,12 +992,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation column-body"><div class="nav-page nav-page-previous">
-      <a href="./09-lists.html" class="pagination-link">
+      <a href="./09-lists.html" class="pagination-link  aria-label=">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lists</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./11-conditions_loops.html" class="pagination-link">
+      <a href="./11-conditions_loops.html" class="pagination-link" aria-label="<span class='chapter-number'>10</span>&nbsp; <span class='chapter-title'>Conditional actions and loops</span>">
         <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conditional actions and loops</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -857,10 +1020,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>A function returns the last thing that is called in it. Thus a function defined like that will return nothing:</span>
 <span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>geom_mean <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y){</span>
-<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>    a <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(x<span class="sc">*</span>y)</span>
-<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_mean</span>(<span class="dv">1</span>,<span class="dv">2</span>)</span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="in">geom_mean &lt;- function(x, y){</span></span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a><span class="in">    a &lt;- sqrt(x*y)</span></span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a><span class="in">geom_mean(1,2)</span></span>
 <span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>While either of these three functions will return what you want:</span>
@@ -884,46 +1047,46 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb39-45"><a href="#cb39-45" aria-hidden="true" tabindex="-1"></a>The result of a function can be a list, a data.frame, a vector... or nothing. And you can attribute the result of a function to a variable:</span>
 <span id="cb39-46"><a href="#cb39-46" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-47"><a href="#cb39-47" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb39-48"><a href="#cb39-48" aria-hidden="true" tabindex="-1"></a>person <span class="ot">&lt;-</span> <span class="cf">function</span>(name, age){</span>
-<span id="cb39-49"><a href="#cb39-49" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">name=</span>name, <span class="at">age=</span>age)</span>
-<span id="cb39-50"><a href="#cb39-50" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb39-51"><a href="#cb39-51" aria-hidden="true" tabindex="-1"></a>joe <span class="ot">&lt;-</span> <span class="fu">person</span>(<span class="at">name=</span><span class="st">"Joe"</span>, <span class="at">age=</span><span class="dv">33</span>)</span>
-<span id="cb39-52"><a href="#cb39-52" aria-hidden="true" tabindex="-1"></a>joe</span>
+<span id="cb39-48"><a href="#cb39-48" aria-hidden="true" tabindex="-1"></a><span class="in">person &lt;- function(name, age){</span></span>
+<span id="cb39-49"><a href="#cb39-49" aria-hidden="true" tabindex="-1"></a><span class="in">    list(name=name, age=age)</span></span>
+<span id="cb39-50"><a href="#cb39-50" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb39-51"><a href="#cb39-51" aria-hidden="true" tabindex="-1"></a><span class="in">joe &lt;- person(name="Joe", age=33)</span></span>
+<span id="cb39-52"><a href="#cb39-52" aria-hidden="true" tabindex="-1"></a><span class="in">joe</span></span>
 <span id="cb39-53"><a href="#cb39-53" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-54"><a href="#cb39-54" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-55"><a href="#cb39-55" aria-hidden="true" tabindex="-1"></a><span class="fu">## Default values</span></span>
 <span id="cb39-56"><a href="#cb39-56" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-57"><a href="#cb39-57" aria-hidden="true" tabindex="-1"></a>One can add default values to variables by specifying them in the function definition:</span>
 <span id="cb39-58"><a href="#cb39-58" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb39-59"><a href="#cb39-59" aria-hidden="true" tabindex="-1"></a>testfunc <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">y=</span><span class="dv">1</span>){</span>
-<span id="cb39-60"><a href="#cb39-60" aria-hidden="true" tabindex="-1"></a>    x<span class="sc">*</span>y</span>
-<span id="cb39-61"><a href="#cb39-61" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb39-62"><a href="#cb39-62" aria-hidden="true" tabindex="-1"></a><span class="fu">testfunc</span>(<span class="dv">1</span>)</span>
-<span id="cb39-63"><a href="#cb39-63" aria-hidden="true" tabindex="-1"></a><span class="fu">testfunc</span>(<span class="dv">1</span>, <span class="at">y=</span><span class="dv">2</span>)</span>
-<span id="cb39-64"><a href="#cb39-64" aria-hidden="true" tabindex="-1"></a><span class="fu">testfunc</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">y=</span>.<span class="dv">1</span>)</span>
+<span id="cb39-59"><a href="#cb39-59" aria-hidden="true" tabindex="-1"></a><span class="in">testfunc &lt;- function(x, y=1){</span></span>
+<span id="cb39-60"><a href="#cb39-60" aria-hidden="true" tabindex="-1"></a><span class="in">    x*y</span></span>
+<span id="cb39-61"><a href="#cb39-61" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb39-62"><a href="#cb39-62" aria-hidden="true" tabindex="-1"></a><span class="in">testfunc(1)</span></span>
+<span id="cb39-63"><a href="#cb39-63" aria-hidden="true" tabindex="-1"></a><span class="in">testfunc(1, y=2)</span></span>
+<span id="cb39-64"><a href="#cb39-64" aria-hidden="true" tabindex="-1"></a><span class="in">testfunc(1:3, y=.1)</span></span>
 <span id="cb39-65"><a href="#cb39-65" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-66"><a href="#cb39-66" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-67"><a href="#cb39-67" aria-hidden="true" tabindex="-1"></a><span class="fu">## Passing arguments to other functions</span></span>
 <span id="cb39-68"><a href="#cb39-68" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-69"><a href="#cb39-69" aria-hidden="true" tabindex="-1"></a>One can also pass arguments to other functions within the function, without have to specify all of them:</span>
 <span id="cb39-70"><a href="#cb39-70" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb39-71"><a href="#cb39-71" aria-hidden="true" tabindex="-1"></a><span class="co">#| layout-ncol: 2</span></span>
-<span id="cb39-72"><a href="#cb39-72" aria-hidden="true" tabindex="-1"></a>testfunc2 <span class="ot">&lt;-</span> <span class="cf">function</span>(x, ...){</span>
-<span id="cb39-73"><a href="#cb39-73" aria-hidden="true" tabindex="-1"></a>    y <span class="ot">&lt;-</span> <span class="fu">sin</span>(x)</span>
-<span id="cb39-74"><a href="#cb39-74" aria-hidden="true" tabindex="-1"></a>    <span class="fu">plot</span>(x, y, ...)</span>
-<span id="cb39-75"><a href="#cb39-75" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb39-76"><a href="#cb39-76" aria-hidden="true" tabindex="-1"></a><span class="co"># Here, `...` represents all the arguments you could provide to `plot()`</span></span>
-<span id="cb39-77"><a href="#cb39-77" aria-hidden="true" tabindex="-1"></a><span class="fu">testfunc2</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)</span>
-<span id="cb39-78"><a href="#cb39-78" aria-hidden="true" tabindex="-1"></a><span class="fu">testfunc2</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">type=</span><span class="st">"l"</span>)</span>
+<span id="cb39-71"><a href="#cb39-71" aria-hidden="true" tabindex="-1"></a><span class="in">#| layout-ncol: 2</span></span>
+<span id="cb39-72"><a href="#cb39-72" aria-hidden="true" tabindex="-1"></a><span class="in">testfunc2 &lt;- function(x, ...){</span></span>
+<span id="cb39-73"><a href="#cb39-73" aria-hidden="true" tabindex="-1"></a><span class="in">    y &lt;- sin(x)</span></span>
+<span id="cb39-74"><a href="#cb39-74" aria-hidden="true" tabindex="-1"></a><span class="in">    plot(x, y, ...)</span></span>
+<span id="cb39-75"><a href="#cb39-75" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb39-76"><a href="#cb39-76" aria-hidden="true" tabindex="-1"></a><span class="in"># Here, `...` represents all the arguments you could provide to `plot()`</span></span>
+<span id="cb39-77"><a href="#cb39-77" aria-hidden="true" tabindex="-1"></a><span class="in">testfunc2(1:100)</span></span>
+<span id="cb39-78"><a href="#cb39-78" aria-hidden="true" tabindex="-1"></a><span class="in">testfunc2(1:100, type="l")</span></span>
 <span id="cb39-79"><a href="#cb39-79" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-80"><a href="#cb39-80" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-81"><a href="#cb39-81" aria-hidden="true" tabindex="-1"></a>You can also pass a function as argument:</span>
 <span id="cb39-82"><a href="#cb39-82" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb39-83"><a href="#cb39-83" aria-hidden="true" tabindex="-1"></a>testfunc3 <span class="ot">&lt;-</span> <span class="cf">function</span>(FUN, ...){</span>
-<span id="cb39-84"><a href="#cb39-84" aria-hidden="true" tabindex="-1"></a>    <span class="fu">FUN</span>(...)</span>
-<span id="cb39-85"><a href="#cb39-85" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb39-86"><a href="#cb39-86" aria-hidden="true" tabindex="-1"></a><span class="fu">testfunc3</span>(sum, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>)</span>
-<span id="cb39-87"><a href="#cb39-87" aria-hidden="true" tabindex="-1"></a><span class="fu">testfunc3</span>(plot, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>, <span class="fu">sin</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>), <span class="at">type=</span><span class="st">"l"</span>)</span>
+<span id="cb39-83"><a href="#cb39-83" aria-hidden="true" tabindex="-1"></a><span class="in">testfunc3 &lt;- function(FUN, ...){</span></span>
+<span id="cb39-84"><a href="#cb39-84" aria-hidden="true" tabindex="-1"></a><span class="in">    FUN(...)</span></span>
+<span id="cb39-85"><a href="#cb39-85" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb39-86"><a href="#cb39-86" aria-hidden="true" tabindex="-1"></a><span class="in">testfunc3(sum, 1:10)</span></span>
+<span id="cb39-87"><a href="#cb39-87" aria-hidden="true" tabindex="-1"></a><span class="in">testfunc3(plot, 1:10, sin(1:10), type="l")</span></span>
 <span id="cb39-88"><a href="#cb39-88" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-89"><a href="#cb39-89" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-90"><a href="#cb39-90" aria-hidden="true" tabindex="-1"></a><span class="fu">## Error handling</span></span>
@@ -938,26 +1101,26 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb39-99"><a href="#cb39-99" aria-hidden="true" tabindex="-1"></a>::: {.column width="49%"}</span>
 <span id="cb39-100"><a href="#cb39-100" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-101"><a href="#cb39-101" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE}</span></span>
-<span id="cb39-102"><a href="#cb39-102" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
-<span id="cb39-103"><a href="#cb39-103" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="sc">!</span><span class="fu">is.numeric</span>(x) <span class="sc">|</span> <span class="sc">!</span><span class="fu">is.numeric</span>(y)){</span>
-<span id="cb39-104"><a href="#cb39-104" aria-hidden="true" tabindex="-1"></a>        <span class="fu">stop</span>(<span class="st">"Both x and y should numeric vectors, buddy!"</span>)</span>
-<span id="cb39-105"><a href="#cb39-105" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb39-106"><a href="#cb39-106" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(x) <span class="sc">!=</span> <span class="fu">length</span>(y)){</span>
-<span id="cb39-107"><a href="#cb39-107" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span>(<span class="fu">length</span>(x) <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> <span class="fu">length</span>(y) <span class="sc">==</span> <span class="dv">1</span>){</span>
-<span id="cb39-108"><a href="#cb39-108" aria-hidden="true" tabindex="-1"></a>            <span class="fu">warning</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"x has length {length(x)}, while y has length {length(y)}, are you sure?"</span>))</span>
-<span id="cb39-109"><a href="#cb39-109" aria-hidden="true" tabindex="-1"></a>        }<span class="cf">else</span>{</span>
-<span id="cb39-110"><a href="#cb39-110" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stop</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"Both x and y should have same length or length of 1.</span><span class="sc">\n</span></span>
-<span id="cb39-111"><a href="#cb39-111" aria-hidden="true" tabindex="-1"></a><span class="st">            Here x has length {length(x)}, while y has length {length(y)}."</span>))</span>
-<span id="cb39-112"><a href="#cb39-112" aria-hidden="true" tabindex="-1"></a>        }</span>
-<span id="cb39-113"><a href="#cb39-113" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb39-114"><a href="#cb39-114" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x<span class="sc">*</span><span class="fu">sqrt</span>(y))</span>
-<span id="cb39-115"><a href="#cb39-115" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-102"><a href="#cb39-102" aria-hidden="true" tabindex="-1"></a><span class="in">test &lt;- function(x, y) {</span></span>
+<span id="cb39-103"><a href="#cb39-103" aria-hidden="true" tabindex="-1"></a><span class="in">    if(!is.numeric(x) | !is.numeric(y)){</span></span>
+<span id="cb39-104"><a href="#cb39-104" aria-hidden="true" tabindex="-1"></a><span class="in">        stop("Both x and y should numeric vectors, buddy!")</span></span>
+<span id="cb39-105"><a href="#cb39-105" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb39-106"><a href="#cb39-106" aria-hidden="true" tabindex="-1"></a><span class="in">    if(length(x) != length(y)){</span></span>
+<span id="cb39-107"><a href="#cb39-107" aria-hidden="true" tabindex="-1"></a><span class="in">        if(length(x) == 1 | length(y) == 1){</span></span>
+<span id="cb39-108"><a href="#cb39-108" aria-hidden="true" tabindex="-1"></a><span class="in">            warning(glue::glue("x has length {length(x)}, while y has length {length(y)}, are you sure?"))</span></span>
+<span id="cb39-109"><a href="#cb39-109" aria-hidden="true" tabindex="-1"></a><span class="in">        }else{</span></span>
+<span id="cb39-110"><a href="#cb39-110" aria-hidden="true" tabindex="-1"></a><span class="in">            stop(glue::glue("Both x and y should have same length or length of 1.\n</span></span>
+<span id="cb39-111"><a href="#cb39-111" aria-hidden="true" tabindex="-1"></a><span class="in">            Here x has length {length(x)}, while y has length {length(y)}."))</span></span>
+<span id="cb39-112"><a href="#cb39-112" aria-hidden="true" tabindex="-1"></a><span class="in">        }</span></span>
+<span id="cb39-113"><a href="#cb39-113" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb39-114"><a href="#cb39-114" aria-hidden="true" tabindex="-1"></a><span class="in">    return(x*sqrt(y))</span></span>
+<span id="cb39-115"><a href="#cb39-115" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb39-116"><a href="#cb39-116" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-117"><a href="#cb39-117" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE}</span></span>
-<span id="cb39-118"><a href="#cb39-118" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">y=</span><span class="dv">1</span>)</span>
-<span id="cb39-119"><a href="#cb39-119" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">y=</span><span class="st">"A"</span>)</span>
-<span id="cb39-120"><a href="#cb39-120" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">y=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb39-121"><a href="#cb39-121" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">y=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb39-118"><a href="#cb39-118" aria-hidden="true" tabindex="-1"></a><span class="in">test(x=1:2,y=1)</span></span>
+<span id="cb39-119"><a href="#cb39-119" aria-hidden="true" tabindex="-1"></a><span class="in">test(x=1:2,y="A")</span></span>
+<span id="cb39-120"><a href="#cb39-120" aria-hidden="true" tabindex="-1"></a><span class="in">test(x=1:2,y=3:4)</span></span>
+<span id="cb39-121"><a href="#cb39-121" aria-hidden="true" tabindex="-1"></a><span class="in">test(x=1:2,y=3:10)</span></span>
 <span id="cb39-122"><a href="#cb39-122" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-123"><a href="#cb39-123" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb39-124"><a href="#cb39-124" aria-hidden="true" tabindex="-1"></a></span>
@@ -966,25 +1129,25 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb39-127"><a href="#cb39-127" aria-hidden="true" tabindex="-1"></a>::: {.column width="49%"}</span>
 <span id="cb39-128"><a href="#cb39-128" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-129"><a href="#cb39-129" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE}</span></span>
-<span id="cb39-130"><a href="#cb39-130" aria-hidden="true" tabindex="-1"></a>test <span class="ot">&lt;-</span> <span class="cf">function</span>(x, y) {</span>
-<span id="cb39-131"><a href="#cb39-131" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the condition is the opposite from the one used in stop():</span></span>
-<span id="cb39-132"><a href="#cb39-132" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(<span class="fu">is.numeric</span>(x), <span class="fu">is.numeric</span>(y))</span>
-<span id="cb39-133"><a href="#cb39-133" aria-hidden="true" tabindex="-1"></a>    <span class="fu">stopifnot</span>(<span class="fu">length</span>(x) <span class="sc">==</span> <span class="fu">length</span>(y) <span class="sc">|</span> <span class="fu">length</span>(x) <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> <span class="fu">length</span>(y) <span class="sc">==</span> <span class="dv">1</span>)</span>
-<span id="cb39-134"><a href="#cb39-134" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span>(<span class="fu">length</span>(x) <span class="sc">!=</span> <span class="fu">length</span>(y) <span class="sc">&amp;</span> (<span class="fu">length</span>(x) <span class="sc">==</span> <span class="dv">1</span> <span class="sc">|</span> <span class="fu">length</span>(y) <span class="sc">==</span> <span class="dv">1</span>)){</span>
-<span id="cb39-135"><a href="#cb39-135" aria-hidden="true" tabindex="-1"></a>        <span class="fu">warning</span>(glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"x has length {length(x)}, while y has length {length(y)}, are you sure?"</span>))</span>
-<span id="cb39-136"><a href="#cb39-136" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb39-137"><a href="#cb39-137" aria-hidden="true" tabindex="-1"></a>    <span class="fu">return</span>(x<span class="sc">*</span><span class="fu">sqrt</span>(y))</span>
-<span id="cb39-138"><a href="#cb39-138" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb39-130"><a href="#cb39-130" aria-hidden="true" tabindex="-1"></a><span class="in">test &lt;- function(x, y) {</span></span>
+<span id="cb39-131"><a href="#cb39-131" aria-hidden="true" tabindex="-1"></a><span class="in">    # the condition is the opposite from the one used in stop():</span></span>
+<span id="cb39-132"><a href="#cb39-132" aria-hidden="true" tabindex="-1"></a><span class="in">    stopifnot(is.numeric(x), is.numeric(y))</span></span>
+<span id="cb39-133"><a href="#cb39-133" aria-hidden="true" tabindex="-1"></a><span class="in">    stopifnot(length(x) == length(y) | length(x) == 1 | length(y) == 1)</span></span>
+<span id="cb39-134"><a href="#cb39-134" aria-hidden="true" tabindex="-1"></a><span class="in">    if(length(x) != length(y) &amp; (length(x) == 1 | length(y) == 1)){</span></span>
+<span id="cb39-135"><a href="#cb39-135" aria-hidden="true" tabindex="-1"></a><span class="in">        warning(glue::glue("x has length {length(x)}, while y has length {length(y)}, are you sure?"))</span></span>
+<span id="cb39-136"><a href="#cb39-136" aria-hidden="true" tabindex="-1"></a><span class="in">    }</span></span>
+<span id="cb39-137"><a href="#cb39-137" aria-hidden="true" tabindex="-1"></a><span class="in">    return(x*sqrt(y))</span></span>
+<span id="cb39-138"><a href="#cb39-138" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
 <span id="cb39-139"><a href="#cb39-139" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb39-140"><a href="#cb39-140" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb39-141"><a href="#cb39-141" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb39-142"><a href="#cb39-142" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb39-143"><a href="#cb39-143" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb39-140"><a href="#cb39-140" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb39-141"><a href="#cb39-141" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb39-142"><a href="#cb39-142" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb39-143"><a href="#cb39-143" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
 <span id="cb39-144"><a href="#cb39-144" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, error=TRUE}</span></span>
-<span id="cb39-145"><a href="#cb39-145" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">y=</span><span class="dv">1</span>)</span>
-<span id="cb39-146"><a href="#cb39-146" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">y=</span><span class="st">"A"</span>)</span>
-<span id="cb39-147"><a href="#cb39-147" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">y=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb39-148"><a href="#cb39-148" aria-hidden="true" tabindex="-1"></a><span class="fu">test</span>(<span class="at">x=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>,<span class="at">y=</span><span class="dv">3</span><span class="sc">:</span><span class="dv">10</span>)</span>
+<span id="cb39-145"><a href="#cb39-145" aria-hidden="true" tabindex="-1"></a><span class="in">test(x=1:2,y=1)</span></span>
+<span id="cb39-146"><a href="#cb39-146" aria-hidden="true" tabindex="-1"></a><span class="in">test(x=1:2,y="A")</span></span>
+<span id="cb39-147"><a href="#cb39-147" aria-hidden="true" tabindex="-1"></a><span class="in">test(x=1:2,y=3:4)</span></span>
+<span id="cb39-148"><a href="#cb39-148" aria-hidden="true" tabindex="-1"></a><span class="in">test(x=1:2,y=3:10)</span></span>
 <span id="cb39-149"><a href="#cb39-149" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb39-150"><a href="#cb39-150" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-151"><a href="#cb39-151" aria-hidden="true" tabindex="-1"></a>:::</span>
@@ -1052,15 +1215,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb39-217"><a href="#cb39-217" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-218"><a href="#cb39-218" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises {#exo-functions}</span></span>
 <span id="cb39-219"><a href="#cb39-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-220"><a href="#cb39-220" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;a</span> <span class="er">href</span><span class="ot">=</span><span class="st">"Data/exo-in-class.zip"</span> <span class="er">download</span> <span class="er">target</span><span class="ot">=</span><span class="st">"_blank"</span><span class="kw">&gt;</span>Download the archive with all the exercises files<span class="kw">&lt;/a&gt;</span>, unzip it in your <span class="in">`R class`</span> RStudio project, and edit the R files.</span>
+<span id="cb39-220"><a href="#cb39-220" aria-hidden="true" tabindex="-1"></a>&lt;a href="Data/exo-in-class.zip" download target="_blank"&gt;Download the archive with all the exercises files&lt;/a&gt;, unzip it in your <span class="in">`R class`</span> RStudio project, and edit the R files.</span>
 <span id="cb39-221"><a href="#cb39-221" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-222"><a href="#cb39-222" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-223"><a href="#cb39-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-224"><a href="#cb39-224" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb39-225"><a href="#cb39-225" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb39-226"><a href="#cb39-226" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb39-227"><a href="#cb39-227" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
-<span id="cb39-228"><a href="#cb39-228" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;br&gt;</span></span>
+<span id="cb39-224"><a href="#cb39-224" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb39-225"><a href="#cb39-225" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb39-226"><a href="#cb39-226" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb39-227"><a href="#cb39-227" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb39-228"><a href="#cb39-228" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
 <span id="cb39-229"><a href="#cb39-229" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-230"><a href="#cb39-230" aria-hidden="true" tabindex="-1"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1069,4 +1232,4 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
-</body></html>
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/colinbousige/rclass/blob/main/10-functions.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
