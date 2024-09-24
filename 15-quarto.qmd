@@ -269,62 +269,19 @@ The corresponding output file will be created in the same folder.
 
 ## And what about JuPyteR notebooks?
 
-[JuPyteR notebooks](https://jupyter.org/) are basically a web-based interactive version or Rmarkdown documents working with **Ju**lia, **Pyt**hon and **R**. 
+[JuPyteR notebooks](https://jupyter.org/) are basically a web-based interactive version or Rmarkdown/Quarto documents working with **Ju**lia, **Pyt**hon and **R**. 
 
-But the installation is a tad complicated for the non initiate, and, well, it is just like Rmarkdown and Quarto but less easy to use and share, in my opinion. 
+Quarto can [render JuPyteR notebooks](https://quarto.org/docs/tools/jupyter-lab.html), or [convert between the two formats](https://quarto.org/docs/tools/jupyter-lab.html#converting-notebooks).
 
 
 ## Coming from Rmarkdown?
 
-[Quarto](https://quarto.org/) is a standalone project from the Rstudio team built on [pandoc](https://pandoc.org/) that looks a lot like Rmarkdown, but tailored not only for R but also for python, julia and observable.
-
-All your `Rmd` files should be directly compatible with quarto upon changing the extension name to `qmd`. 
+Quarto is fully compatible with Rmarkdown -- it is an evolution of Rmarkdown.
+All your `Rmd` files should thus be directly compatible with quarto upon changing the extension name to `qmd`. 
 
 ## Exercises {#exo-rmd}
 
 Download the exercises and solutions from the following repository, then create a Rstudio project from the unzipped folder:
 
-- [Quarto exercises](https://github.com/colinbousige/R4-quarto)
-
-<details>
-    <summary>**Exercise 1**</summary>
-
-- Create a new R Markdown file (.Rmd) in RStudio.
-- Insert a YAML Header with title, author and date of your choice at the top of your .Rmd script. Make it so that the output is an html document.
-- Display the summary of “cars” dataset in your report.
-- Make a plot of the “cars” dataset under the summary you just created.
-- Create a small experimental dataframe and display it in your report.
-- Hide the code from your the last code chunk (HINT: Use echo.)
-- Hide the code from all code chunks with the possibility to show it (HINT: use code_folding).
-- Load the package “knitr” in your .Rmd file. and hide the code chunk. HINT: Use include.
-- Hide the warning message that appeared in your report. HINT: Use warning.
-- Set fig.width and fig.height of your plot to 5.
-- Output the same report as pdf.
-
-
-</details>
-
-<details>
-    <summary>**Exercise 2**</summary>
-
-Create an html experimental logbook doing all the data treatment in the example in the previous section.
-
-
-</details>
-
-<details>
-    <summary>**Exercise 3**</summary>
-
-Create an html experimental logbook doing all the data treatment in the example in the previous section **for a single experimental file** that you will provide as a parameter in the YAML header. The file path must be given as an interactive file input selection.
-
-</details>
-
-
-<br>
-<br>
-<br>
-<br>
-<br>
-
-
+- [Quarto and Rmd exercises](https://github.com/colinbousige/R4-quarto)
 
