@@ -1,4 +1,4 @@
-# Writing documents with Rmarkdown
+# Writing documents with Quarto
 
 ## What is markdown?
 
@@ -43,9 +43,9 @@ will render as: Text with `in-line code`
 
 For more commands, you can for example get a digested cheat-sheet [here](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) and a tutorial [here](http://www.markdowntutorial.com/).
 
-## ... and Rmarkdown?
+## ... and Quarto?
 
-Rmarkdown is basically the same thing as markdown (extension: .Rmd instead of .md), with the difference that code chunks in which you specify the language between accolades *will be computed and the result will be displayed*.
+Quarto is basically the same thing as markdown (extension: `.qmd` instead of `.md`), with the difference that code chunks in which you specify the language between accolades *will be computed and the result will be displayed*.
 
 ````r
 ```r
@@ -66,13 +66,13 @@ Rmarkdown is basically the same thing as markdown (extension: .Rmd instead of .m
 
 And in-line code can be computed and rendered:
 ```markdown
-In-line code ``r ''`r 1+2`
+In-line code ``{r} ''`r 1+2`
 ```
 will render as: In-line code `r 1+2`.
 
-This very webpage is fully written in Rmarkdown (see the "View book source" at the bottom of the left sidebar).
+This very webpage is fully written in Quarto (see the "View book source" at the bottom of the left sidebar).
 
-Rmarkdown supports a number of languages:
+Quarto supports a number of languages:
 ```{r}
 names(knitr::knit_engines$get())
 ```
@@ -81,13 +81,13 @@ And `python` and `R` code chunks can communicate thanks to the `reticulate` pack
 
 So... are you starting to see the power of this tool...?
 
-Basically, you can use the best language for each task and combine it in a single Rmd file that will display text and images that are computed at each compilation of the Rmd file: you can fully automatize your data treatment and reporting. 
+Basically, you can use the best language for each task and combine it in a single Rmd file that will display text and images that are computed at each compilation of the `qmd` file: you can fully automatize your data treatment and reporting. 
 
 Example:
 
-- chunk 1: bash, call a program that creates some files
-- chunk 2: python, call a program that do some big computation on these files
-- chunk 3: R, do some data treatment, plot the data
+- Chunk 1: bash, call a program that creates some files
+- Chunk 2: python, call a program that do some big computation on these files
+- Chunk 3: R, do some data treatment, plot the data
 
 
 ## Further readings and ressources
@@ -95,21 +95,11 @@ Example:
 
 There are numerous ressources out there to help you on your Rmarkdown journey:
 
-- [Rmarkdown cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
-- [Code chunks](https://bookdown.org/yihui/rmarkdown/r-code.html)
-- [Languages](https://bookdown.org/yihui/rmarkdown/language-engines.html)
-- [The Rmarkdown gallery](https://rmarkdown.rstudio.com/gallery.html): to help you chose between formats and templates, with example codes
-- [The Rmarkdown cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/): just go there when you have a question about Rmarkdown.
-- [The Rmarkdown definitive guide](https://bookdown.org/yihui/rmarkdown/): *ibidem*.
-- [flexdashboard](https://pkgs.rstudio.com/flexdashboard/): a package to make dashboards
-- [rticles](https://github.com/rstudio/rticles): a package with a collection of pdf templates for scientific articles
-- [rmdformats](https://github.com/juba/rmdformats): a package with a collection of html templates
-- [stevetemplates](http://svmiller.com/stevetemplates/): a collection of pdf templates by Steve Miller
-- [Rexams](http://www.r-exams.org/): a package to help define exams with included/hidden solution
-- [Thesisdown](https://github.com/ismayc/thesisdown): a package to help you write your thesis with Rmarkdown
-- [vitae](https://github.com/mitchelloharawild/vitae): a package to help you write your CV using Rmarkdown, with helpful functions to add content to the documents.
+- [Quarto website](https://quarto.org/)
+- [Quarto cheatsheet](https://rstudio.github.io/cheatsheets/html/quarto.html)
+- [The Quarto gallery](https://quarto.org/docs/gallery/): to help you chose between formats and templates, with example codes
 
-I also provide a collection of examples on the [github repo of this class](https://github.com/colinbousige/Rclass/tree/master/RmdExamples):
+I also provide a collection of Quarto and Rmarkdown examples on the [github repo of this class](https://github.com/colinbousige/Rclass/tree/master/RmdExamples):
 
 - HTML outputs:
     - [Simple page](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/html_page)
@@ -139,16 +129,18 @@ Create an _example.Rmd_ file with the following YAML header (**the indentation i
 
 ```yaml
 ---
+
 title  : Your Title
 author : John Doe
-date   : "``r ''`r format(Sys.time(), '%d/%m/%Y')`"
-output :
-    html_document:
+date-modified : last-modified
+format:
+  html:
         toc            : true
-        toc_float      : true
-        highlight      : tango
-        number_sections: false
-        code_folding   : hide    
+        toc-location   : left
+        highlight-style: tango
+        number-sections: false
+        code-fold      : true
+        code-overflow  : wrap
 bibliography: "biblio.bib"
 csl         : "nature.csl"
 ---
@@ -156,45 +148,40 @@ csl         : "nature.csl"
 How to understand this header:
 
 - `---`: surrounds the YAML header. The body comes after that.
-- `title`, `author` and `date`: easy. The date can automatically be set to the current one by setting it to:
-```
-"``r ''`r format(Sys.time(), '%d/%m/%Y')`"
-```
-- `output`: this tells pandoc the output format you want. When compiling, in case there are multiple entries, the compiler will only look to the _**first**_ one. Click the links below to see more options.
-    + In this case, the output will be an [html document](https://bookdown.org/yihui/rmarkdown/html-document.html) with a floating table of contents, unnumbered sections and all code chunks will be hidden with a button to allow showing them.
-    + [Other output formats allowed](https://rmarkdown.rstudio.com/lesson-9.html):
-        * [`word_document`](https://bookdown.org/yihui/rmarkdown/word-document.html)
-        * [`pdf_document`](https://bookdown.org/yihui/rmarkdown/pdf-document.html)
-        * [`rtf_document`](https://bookdown.org/yihui/rmarkdown/rich-text-format-document.html)
-        * [`beamer_presentation`](https://bookdown.org/yihui/rmarkdown/beamer-presentation.html)
+- `title`, `author` and `date-modified`: easy. The date can automatically be set to the current one by setting it to:
+- `format`: this tells Quarto the output format you want. When compiling, in case there are multiple entries, the compiler will only look to the _**first**_ one. Click the links below to see more options.
+    + Output formats allowed:
+        * [`html`](https://quarto.org/docs/reference/formats/html.html) 
+        * [`docx`](https://quarto.org/docs/reference/formats/docx.html)
+        * [`pdf`](https://quarto.org/docs/reference/formats/pdf.html)
+        * [`beamer`](https://quarto.org/docs/reference/formats/presentations/beamer.html)
+        * [`jupyter`](https://quarto.org/docs/reference/formats/ipynb.html)
         * ...
-    + Useful options: 
-        + Word document: you can supply a reference style (template) to use. Just write a dummy .docx file in which you [edit the style](http://www.dummies.com/software/microsoft-office/word/how-to-change-an-existing-style-in-word-2016/), save it as `word-template.docx` (for example), and set the option `reference_docx: word-template.docx`.
-        + LaTeX: `keep_tex`: when pandoc compiles your markdown file to a PDF, it goes through the intermediate step of creating a .tex file. You can decide to keep it for tweaking the style of the PDF output, like you would normally do with a .tex file.
-        + `fig_caption`: allows for figure caption.
-        + `toc`: creates a table of contents.
-        + `number_sections`: allows for section numbering.
-        + `highlight`: syntax highlighting theme for the code chunks.
+    + Below and indented, you can supply a series of options for the output format. Here, the table of contents will be on the left, the code will be highlighted with the `tango` style, the sections will not be numbered, the code will be folded and the code will wrap if it is too long.
 - `bibliography`: path to your .bib file. To create a bibliography, add a ```# References``` header at the end of your document.
 - `csl`: path to the bibliography style for the output -- in this example, _nature.csl_. [Find your style](https://www.zotero.org/styles) or edit your own. 
-- There are many [other options](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf), but with this you'll fulfill most of your needs.
 
 
 Now you can start adding some content, like:
-````markdown
+````quarto
 ---
 title: "The title"
-output: 
-    bookdown::html_document2: #instead of html_document, for referencing images
-        toc            : true
-        toc_float      : true
-        highlight      : tango
-        number_sections: true
-        code_folding   : show
-        code_download  : true
-    # bookdown::pdf_document2 #instead of pdf_document, for referencing images
-bibliography: "biblio.bib"
-csl         : "nature.csl"
+author: John Doe
+date-modified: last-modified
+format: 
+  html:
+        toc: true
+        toc-location: left
+        highlight-style: tango
+        number-sections: false
+        code-fold: true
+        code-overflow: wrap
+execute:
+  out-width: '75%'
+  fig-asp: 0.618034
+  fig-align: center
+  warning: false
+  message: false
 ---
 
 # First section
@@ -202,33 +189,41 @@ csl         : "nature.csl"
 I am writing _italic_ and __bold__ stuff.
 
 - This is an item
-- Another one with citations [@bevan_statistical_2013;@rcoreteam_language_2017]
+- Another one with 
+
+Citations are written like this `[@bevan_statistical_2013;@rcoreteam_language_2017]`
 
 # Second section
-## First subsection that I want to refer to {#subsectionID}
+## First subsection that I want to refer to {#sec-subsectionID}
 
 This is a text with a footnote[^1].
 
-Now I can refer to my subsection using `\@ref(subsectionID)` like so:
-section \@ref(subsectionID).
+Now I can refer to my subsection using `@sec-subsectionID` like so:
+section @sec-subsectionID. Or see [References](#references).
 
 This is an image with a caption:
 
-`r ''````{r CHUNKname, echo=FALSE, fig.cap="This is a very nice caption", out.width="50%", fig.align='center'}
+`r ''````{r} 
+#| label: fig-CHUNKname
+#| fig-cap: "This is a very nice caption"
 knitr::include_graphics("https://cdn.foliovision.com/images/2017/03/i-love-markdown.png")
 ```
 
-And I can refer to this figure using `\@ref(fig:CHUNKname)`. 
-Example : Figure \@ref(fig:CHUNKname).
+And I can refer to this figure using `@fig-CHUNKname`. 
+Example : @fig-CHUNKname.
 
-Here is a code chunk in R in Fig. \@ref(fig:Rfigure):
-`r ''````{r Rfigure, fig.cap="Test figure in R", fig.align='center'}
+Here is a code chunk in R in @fig-Rfigure:
+`r ''````{r}
+#| label: fig-Rfigure
+#| fig-cap: "Test figure in R"
 x <- seq(0,10,.1)
 plot(x, sin(x), main="R plot")
 ```
 
-And one in python in Fig. \@ref(fig:Pythonfigure):
-`r ''````{python Pythonfigure, fig.cap="Test figure in python", fig.align='center'}
+And one in python in @fig-Pythonfigure:
+`r ''````{python}
+#| label: fig-Pythonfigure
+#| fig-cap: "Test figure in python"
 # Load some libraries
 import numpy as np
 # Matplotlib non interactive plots
@@ -343,7 +338,11 @@ But the installation is a tad complicated for the non initiate, and, well, it is
 All your `Rmd` files should be directly compatible with quarto upon changing the extension name to `qmd`. Then I invite you to explore the [new possibilities offerd by quarto](https://quarto.org/docs/guide/).
 
 
-## Exercise {#exo-rmd}
+## Exercises {#exo-rmd}
+
+Download the exercises and solutions from the following repository, then create a Rstudio project from the unzipped folder:
+
+- [Quarto exercises](https://github.com/colinbousige/R4-quarto)
 
 <details>
     <summary>**Exercise 1**</summary>

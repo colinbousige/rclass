@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Reproducible data treatment with R - 9&nbsp; Functions</title>
+<title>9&nbsp; Functions – Reproducible data treatment with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -115,13 +115,13 @@ ga('send', {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10-functions.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Functions</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -228,8 +228,8 @@ ga('send', {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./15-rmarkdown.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Rmarkdown</span></span></a>
+  <a href="./15-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -385,8 +385,6 @@ Your new moto
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="10-functions_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
-</div>
-<div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
 <p><img src="10-functions_files/figure-html/unnamed-chunk-5-2.png" class="img-fluid" width="672"></p>
 </div>
@@ -519,10 +517,10 @@ Your new moto
 <span><span class="va">lin_interp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/approxfun.html">approxfun</a></span><span class="op">(</span><span class="va">x</span>,<span class="va">y</span><span class="op">)</span>        <span class="co">#is a function</span></span>
 <span><span class="fu">lin_interp</span><span class="op">(</span><span class="fl">0</span><span class="op">)</span>; <span class="fu">lin_interp</span><span class="op">(</span><span class="va">pi</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] -0.00308351</code></pre>
+<pre><code>#&gt; [1] 0.0004911775</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] -0.000634683</code></pre>
+<pre><code>#&gt; [1] -0.05239686</code></pre>
 </div>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">yy_lin</span>     <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/approxfun.html">approx</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, xout<span class="op">=</span><span class="va">xx</span><span class="op">)</span> <span class="co">#is a list containing x and y</span></span>
 <span></span>
@@ -553,7 +551,10 @@ Your new moto
 </div>
 </section><section id="exo-functions" class="level2" data-number="9.7"><h2 data-number="9.7" class="anchored" data-anchor-id="exo-functions">
 <span class="header-section-number">9.7</span> Exercises</h2>
-<p><a href="Data/exo-in-class.zip" download="" target="_blank">Download the archive with all the exercises files</a>, unzip it in your <code>R class</code> RStudio project, and edit the R files.</p>
+<p>Download the exercises and solutions from the following repository, then create a Rstudio project from the unzipped folder:</p>
+<ul>
+<li><a href="https://github.com/colinbousige/R1-beginner">Beginner exercises</a></li>
+</ul>
 <p><br><br><br><br><br></p>
 
 
@@ -594,18 +595,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -637,7 +627,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -689,6 +701,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -723,7 +753,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -771,7 +805,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -992,12 +1031,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation column-body"><div class="nav-page nav-page-previous">
-      <a href="./09-lists.html" class="pagination-link  aria-label=">
+      <a href="./09-lists.html" class="pagination-link" aria-label="Lists">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Lists</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./11-conditions_loops.html" class="pagination-link" aria-label="<span class='chapter-number'>10</span>&nbsp; <span class='chapter-title'>Conditional actions and loops</span>">
+      <a href="./11-conditions_loops.html" class="pagination-link" aria-label="Conditional actions and loops">
         <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conditional actions and loops</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1215,18 +1254,20 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb39-217"><a href="#cb39-217" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-218"><a href="#cb39-218" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises {#exo-functions}</span></span>
 <span id="cb39-219"><a href="#cb39-219" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-220"><a href="#cb39-220" aria-hidden="true" tabindex="-1"></a>&lt;a href="Data/exo-in-class.zip" download target="_blank"&gt;Download the archive with all the exercises files&lt;/a&gt;, unzip it in your <span class="in">`R class`</span> RStudio project, and edit the R files.</span>
+<span id="cb39-220"><a href="#cb39-220" aria-hidden="true" tabindex="-1"></a>Download the exercises and solutions from the following repository, then create a Rstudio project from the unzipped folder:</span>
 <span id="cb39-221"><a href="#cb39-221" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-222"><a href="#cb39-222" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-222"><a href="#cb39-222" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Beginner exercises</span><span class="co">](https://github.com/colinbousige/R1-beginner)</span></span>
 <span id="cb39-223"><a href="#cb39-223" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-224"><a href="#cb39-224" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
-<span id="cb39-225"><a href="#cb39-225" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb39-224"><a href="#cb39-224" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-225"><a href="#cb39-225" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-226"><a href="#cb39-226" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
 <span id="cb39-227"><a href="#cb39-227" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
 <span id="cb39-228"><a href="#cb39-228" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
-<span id="cb39-229"><a href="#cb39-229" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-230"><a href="#cb39-230" aria-hidden="true" tabindex="-1"></a></span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-229"><a href="#cb39-229" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb39-230"><a href="#cb39-230" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb39-231"><a href="#cb39-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-232"><a href="#cb39-232" aria-hidden="true" tabindex="-1"></a></span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

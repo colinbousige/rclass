@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Reproducible data treatment with R - 3&nbsp; Getting ready</title>
+<title>3&nbsp; Getting ready – Reproducible data treatment with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -109,7 +109,7 @@ ga('send', {
   hitType: 'pageview',
   'anonymizeIp': true,
 });
-</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
+</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -140,13 +140,13 @@ window.Quarto = {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-getting_ready.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting ready</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -253,8 +253,8 @@ window.Quarto = {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./15-rmarkdown.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Rmarkdown</span></span></a>
+  <a href="./15-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -302,7 +302,7 @@ window.Quarto = {
   <li><a href="#in-any-case-install-latex" id="toc-in-any-case-install-latex" class="nav-link" data-scroll-target="#in-any-case-install-latex"><span class="header-section-number">3.4</span> In any case: install LaTeX</a></li>
   <li><a href="#working-in-rstudio" id="toc-working-in-rstudio" class="nav-link" data-scroll-target="#working-in-rstudio"><span class="header-section-number">3.5</span> Working in Rstudio</a></li>
   <li><a href="#setting-up-the-environment" id="toc-setting-up-the-environment" class="nav-link" data-scroll-target="#setting-up-the-environment"><span class="header-section-number">3.6</span> Setting up the environment</a></li>
-  <li><a href="#the-tutor-package" id="toc-the-tutor-package" class="nav-link" data-scroll-target="#the-tutor-package"><span class="header-section-number">3.7</span> The <code>tutor</code> package</a></li>
+  <li><a href="#the-exercises" id="toc-the-exercises" class="nav-link" data-scroll-target="#the-exercises"><span class="header-section-number">3.7</span> The exercises</a></li>
   </ul><div class="toc-actions"><ul><li><a href="https://github.com/colinbousige/rclass/blob/main/03-getting_ready.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
@@ -343,11 +343,12 @@ blockquote {
 <li>You’re good to go.</li>
 </ul></section><section id="the-more-advanced-way" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="the-more-advanced-way">
 <span class="header-section-number">3.2</span> The more advanced way</h2>
-<p>If you don’t want to use Rstudio but rather want to keep with your favorite text editor, like I do (<a href="https://code.visualstudio.com/">Visual Studio Code</a> or <a href="https://www.sublimetext.com/3">Sublime Text</a>, see configuration below)</p>
+<p>If you don’t want to use Rstudio but rather want to keep with your favorite text editor, like I do:</p>
 <ul>
 <li>I still recommend <a href="https://cran.r-project.org/">downloading</a> and installing R via CRAN (I had some packages problems due to a <code>homebrew</code> installation on Mac).</li>
 <li>To be fully operational with Rmarkdown files without using Rstudio, you need to <a href="https://pandoc.org/installing.html">install <code>pandoc</code></a>.</li>
 </ul>
+<p>Then you can use <a href="https://code.visualstudio.com/">Visual Studio Code</a> or <a href="https://www.sublimetext.com/3">Sublime Text</a> – see the configuration below. There is also anew fork of VSCode by the Rstudio team: <a href="https://github.com/posit-dev/positron">Positron</a>, a very promissing project.</p>
 <div class="callout callout-style-default callout-caution callout-titled">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -555,7 +556,7 @@ Configuring Sublime Text
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">'your@email.com'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-git1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-git1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-git1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git1.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
@@ -578,7 +579,7 @@ Figure&nbsp;3.1: Creating a new terminal in RStudio.
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-git2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git2" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-git2-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-git2-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git2.png" class="img-fluid figure-img" data-ref-parent="fig-git2" width="589">
 </div>
@@ -588,7 +589,7 @@ Figure&nbsp;3.1: Creating a new terminal in RStudio.
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git2" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-git2-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-git2-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git3.png" class="img-fluid figure-img" data-ref-parent="fig-git2" width="589">
 </div>
@@ -600,7 +601,7 @@ Figure&nbsp;3.1: Creating a new terminal in RStudio.
 </div>
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git2" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-git2-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-git2-3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git2-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git4.png" class="img-fluid figure-img" data-ref-parent="fig-git2" width="589">
 </div>
@@ -610,7 +611,7 @@ Figure&nbsp;3.1: Creating a new terminal in RStudio.
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git2" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-git2-4" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-git2-4" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git2-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git5.png" class="img-fluid figure-img" data-ref-parent="fig-git2" width="589">
 </div>
@@ -633,7 +634,7 @@ Figure&nbsp;3.2: Creating a new project from GitHub in RStudio.
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-git3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git3" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-git3-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-git3-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git3-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git6.png" class="img-fluid figure-img" data-ref-parent="fig-git3" width="1112">
 </div>
@@ -643,7 +644,7 @@ Figure&nbsp;3.2: Creating a new project from GitHub in RStudio.
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git3" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-git3-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-git3-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git3-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git7.png" class="img-fluid figure-img" data-ref-parent="fig-git3" width="1112">
 </div>
@@ -693,7 +694,7 @@ Remember
 <p>Launch Rstudio, click <code>File &gt; New Project</code>, and follow the dialog box (existing directory or not, etc.). When you have several ongoing projects, you can switch between them using the Project navigator (see <a href="#fig-rstudio" class="quarto-xref">Figure&nbsp;<span>3.4</span></a>).</p>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-rstudio" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-rstudio" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rstudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/rstudio.png" class="img-fluid figure-img" width="600">
 </div>
@@ -733,10 +734,17 @@ Figure&nbsp;3.4: The Rstudio interface.
 <p>or by checking it in the “Graphs” panel under the “Packages” tab. If you want to access a function from a given package without loading it (or because several packages define the same function and you want to specify which one to use), type:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">package_name</span><span class="fu">::</span><span class="fu">function_name</span><span class="op">(</span><span class="va">parameters</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you want to access the documentation on a given package, click the link on this package in the “Packages” tab. In a more general way, help on a function is accessed by typing in <code>?function_name</code>, the help appearing in the “Graph” panel.</p>
-</section><section id="the-tutor-package" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="the-tutor-package">
-<span class="header-section-number">3.7</span> The <code>tutor</code> package</h2>
-<p>Finally, I also made some interactive exercises that are bundled in the <a href="https://colinbousige.github.io/tutor/"><code>tutor</code></a> package. I let you go there and follow the instructions for installing it – you have to get used to going to GitHub to install packages and find information on them.</p>
-<p>Alternatively, you can just <a href="Data/exo-in-class.zip" download="" target="_blank">download the archive with all the exercises files</a>, unzip it in your <code>R class</code> RStudio project, and edit the R files.</p>
+</section><section id="the-exercises" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="the-exercises">
+<span class="header-section-number">3.7</span> The exercises</h2>
+<p>I made a series of exercises with their solutions. You can download the exercises and solutions from the following repositories, then create a Rstudio project from the unzipped folder:</p>
+<ul>
+<li><a href="https://github.com/colinbousige/R1-beginner">Beginner exercises</a></li>
+<li><a href="https://github.com/colinbousige/R2-advanced">Avanced exercises</a></li>
+<li><a href="https://github.com/colinbousige/R3-ggplot2">GGplot2 exercises</a></li>
+<li><a href="https://github.com/colinbousige/R4-quarto">Quarto exercises</a></li>
+<li>More “advanced” exercises can be found in chapter 17, <a href="./18-exercises.html">List of exercises</a>
+</li>
+</ul>
 
 
 <!-- -->
@@ -776,18 +784,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -819,7 +816,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -871,6 +890,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -905,7 +942,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -953,7 +994,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -1174,12 +1220,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation column-body"><div class="nav-page nav-page-previous">
-      <a href="./02-stats.html" class="pagination-link  aria-label=" little="" reminder="" on="" statistics="">
+      <a href="./02-stats.html" class="pagination-link" aria-label="A little reminder on Statistics">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A little reminder on Statistics</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./05-variables.html" class="pagination-link" aria-label="<span class='chapter-number'>4</span>&nbsp; <span class='chapter-title'>Variables, booleans and strings</span>">
+      <a href="./05-variables.html" class="pagination-link" aria-label="Variables, booleans and strings">
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Variables, booleans and strings</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1205,338 +1251,344 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a><span class="fu">## The more advanced way</span></span>
 <span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>If you don't want to use Rstudio but rather want to keep with your favorite text editor, like I do (<span class="co">[</span><span class="ot">Visual Studio Code</span><span class="co">](https://code.visualstudio.com/)</span> or <span class="co">[</span><span class="ot">Sublime Text</span><span class="co">](https://www.sublimetext.com/3)</span>,  see configuration below)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>If you don't want to use Rstudio but rather want to keep with your favorite text editor, like I do:</span>
 <span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>I still recommend <span class="co">[</span><span class="ot">downloading</span><span class="co">](https://cran.r-project.org/)</span> and installing R via CRAN (I had some packages problems due to a <span class="in">`homebrew`</span> installation on Mac).</span>
 <span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To be fully operational with Rmarkdown files without using Rstudio, you need to <span class="co">[</span><span class="ot">install `pandoc`</span><span class="co">](https://pandoc.org/installing.html)</span>.</span>
 <span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>:::{.callout-caution collapse="true"}</span>
-<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuring VS Code</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>Then you can use <span class="co">[</span><span class="ot">Visual Studio Code</span><span class="co">](https://code.visualstudio.com/)</span> or <span class="co">[</span><span class="ot">Sublime Text</span><span class="co">](https://www.sublimetext.com/3)</span> – see the configuration below. </span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>There is also anew fork of VSCode by the Rstudio team: <span class="co">[</span><span class="ot">Positron</span><span class="co">](https://github.com/posit-dev/positron)</span>, a very promissing project.</span>
 <span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>I personally use <span class="co">[</span><span class="ot">VS Code</span><span class="co">](https://code.visualstudio.com/)</span>. </span>
-<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First, install the <span class="co">[</span><span class="ot">radian</span><span class="co">](https://github.com/randy3k/radian)</span> console.</span>
-<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Install the language server protocol package in *R* with: <span class="in">`install.packages("languageserver")`</span>{.R}</span>
-<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In VS Code, install the following extensions:</span>
-<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">VSCode R</span><span class="co">](https://marketplace.visualstudio.com/items?itemName=Ikuyadeu.r)</span></span>
-<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">R LSP Client</span><span class="co">](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r-lsp)</span></span>
-<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Enable <span class="in">`r.bracketedPaste`</span> for using Radian</span>
-<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Set up <span class="in">`r.rterm.windows`</span>, <span class="in">`r.rterm.mac`</span> or <span class="in">`r.rterm.linux`</span>: Path to Radian (where you installed radian)</span>
-<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You should be good to go: ⌘+⏎ will send the current line/selection to the radian console and ⌘+Shift+K will render the current Rmd file.</span>
-<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a>Here is the relevant part of my <span class="in">`settings.json`</span> file:</span>
-<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
-<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
-<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.rterm.mac"</span><span class="fu">:</span> <span class="st">"/usr/local/bin/radian"</span><span class="fu">,</span></span>
-<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.rpath.mac"</span><span class="fu">:</span> <span class="st">"/usr/local/bin/R"</span><span class="fu">,</span></span>
-<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.bracketedPaste"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
-<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.lsp.diagnostics"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
-<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.sessionWatcher"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
-<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.rmarkdown.knit.useBackgroundProcess"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
-<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"editor.guides.bracketPairs"</span><span class="fu">:</span> <span class="kw">true</span></span>
-<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span>
-<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a>Also, I recommend turning on the session watcher (<span class="in">`"r.sessionWatcher": true`</span>), and then adding the following code to your <span class="in">`.Rprofile`</span>. This way, the help, tables and figures can be viewed in the VS Code browser panel.</span>
-<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.browser =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.viewer =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.page_viewer =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.view =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.helpPanel =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>() <span class="sc">&amp;&amp;</span> <span class="fu">Sys.getenv</span>(<span class="st">"TERM_PROGRAM"</span>) <span class="sc">==</span> <span class="st">"vscode"</span>) {</span>
-<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="st">"httpgd"</span> <span class="sc">%in%</span> <span class="fu">.packages</span>(<span class="at">all.available =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a>        <span class="fu">options</span>(<span class="at">vsc.plot =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a>        <span class="fu">options</span>(<span class="at">device =</span> <span class="cf">function</span>(...) {</span>
-<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>            httpgd<span class="sc">::</span><span class="fu">hgd</span>(<span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>            <span class="fu">.vsc.browser</span>(httpgd<span class="sc">::</span><span class="fu">hgd_url</span>(), <span class="at">viewer =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;&lt;summary&gt;**Here are also a few keybindings that I use (`keybindings.json`):**&lt;/summary&gt;</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a>:::{.callout-caution collapse="true"}</span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuring VS Code</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>I personally use <span class="co">[</span><span class="ot">VS Code</span><span class="co">](https://code.visualstudio.com/)</span>. </span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First, install the <span class="co">[</span><span class="ot">radian</span><span class="co">](https://github.com/randy3k/radian)</span> console.</span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Install the language server protocol package in *R* with: <span class="in">`install.packages("languageserver")`</span>{.R}</span>
+<span id="cb11-37"><a href="#cb11-37" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>In VS Code, install the following extensions:</span>
+<span id="cb11-38"><a href="#cb11-38" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">VSCode R</span><span class="co">](https://marketplace.visualstudio.com/items?itemName=Ikuyadeu.r)</span></span>
+<span id="cb11-39"><a href="#cb11-39" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span><span class="co">[</span><span class="ot">R LSP Client</span><span class="co">](https://marketplace.visualstudio.com/items?itemName=REditorSupport.r-lsp)</span></span>
+<span id="cb11-40"><a href="#cb11-40" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Enable <span class="in">`r.bracketedPaste`</span> for using Radian</span>
+<span id="cb11-41"><a href="#cb11-41" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Set up <span class="in">`r.rterm.windows`</span>, <span class="in">`r.rterm.mac`</span> or <span class="in">`r.rterm.linux`</span>: Path to Radian (where you installed radian)</span>
+<span id="cb11-42"><a href="#cb11-42" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You should be good to go: ⌘+⏎ will send the current line/selection to the radian console and ⌘+Shift+K will render the current Rmd file.</span>
+<span id="cb11-43"><a href="#cb11-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-44"><a href="#cb11-44" aria-hidden="true" tabindex="-1"></a>Here is the relevant part of my <span class="in">`settings.json`</span> file:</span>
+<span id="cb11-45"><a href="#cb11-45" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb11-46"><a href="#cb11-46" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span></span>
+<span id="cb11-47"><a href="#cb11-47" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.rterm.mac"</span><span class="fu">:</span> <span class="st">"/usr/local/bin/radian"</span><span class="fu">,</span></span>
+<span id="cb11-48"><a href="#cb11-48" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.rpath.mac"</span><span class="fu">:</span> <span class="st">"/usr/local/bin/R"</span><span class="fu">,</span></span>
+<span id="cb11-49"><a href="#cb11-49" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.bracketedPaste"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb11-50"><a href="#cb11-50" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.lsp.diagnostics"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb11-51"><a href="#cb11-51" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.sessionWatcher"</span><span class="fu">:</span> <span class="kw">true</span><span class="fu">,</span></span>
+<span id="cb11-52"><a href="#cb11-52" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"r.rmarkdown.knit.useBackgroundProcess"</span><span class="fu">:</span> <span class="kw">false</span><span class="fu">,</span></span>
+<span id="cb11-53"><a href="#cb11-53" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"editor.guides.bracketPairs"</span><span class="fu">:</span> <span class="kw">true</span></span>
+<span id="cb11-54"><a href="#cb11-54" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span>
+<span id="cb11-55"><a href="#cb11-55" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-56"><a href="#cb11-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-57"><a href="#cb11-57" aria-hidden="true" tabindex="-1"></a>Also, I recommend turning on the session watcher (<span class="in">`"r.sessionWatcher": true`</span>), and then adding the following code to your <span class="in">`.Rprofile`</span>. This way, the help, tables and figures can be viewed in the VS Code browser panel.</span>
+<span id="cb11-58"><a href="#cb11-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-59"><a href="#cb11-59" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb11-60"><a href="#cb11-60" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.browser =</span> <span class="st">"Beside"</span>)</span>
+<span id="cb11-61"><a href="#cb11-61" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.viewer =</span> <span class="st">"Beside"</span>)</span>
+<span id="cb11-62"><a href="#cb11-62" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.page_viewer =</span> <span class="st">"Beside"</span>)</span>
+<span id="cb11-63"><a href="#cb11-63" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.view =</span> <span class="st">"Beside"</span>)</span>
+<span id="cb11-64"><a href="#cb11-64" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.helpPanel =</span> <span class="st">"Beside"</span>)</span>
+<span id="cb11-65"><a href="#cb11-65" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-66"><a href="#cb11-66" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>() <span class="sc">&amp;&amp;</span> <span class="fu">Sys.getenv</span>(<span class="st">"TERM_PROGRAM"</span>) <span class="sc">==</span> <span class="st">"vscode"</span>) {</span>
+<span id="cb11-67"><a href="#cb11-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="st">"httpgd"</span> <span class="sc">%in%</span> <span class="fu">.packages</span>(<span class="at">all.available =</span> <span class="cn">TRUE</span>)) {</span>
+<span id="cb11-68"><a href="#cb11-68" aria-hidden="true" tabindex="-1"></a>        <span class="fu">options</span>(<span class="at">vsc.plot =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb11-69"><a href="#cb11-69" aria-hidden="true" tabindex="-1"></a>        <span class="fu">options</span>(<span class="at">device =</span> <span class="cf">function</span>(...) {</span>
+<span id="cb11-70"><a href="#cb11-70" aria-hidden="true" tabindex="-1"></a>            httpgd<span class="sc">::</span><span class="fu">hgd</span>(<span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb11-71"><a href="#cb11-71" aria-hidden="true" tabindex="-1"></a>            <span class="fu">.vsc.browser</span>(httpgd<span class="sc">::</span><span class="fu">hgd_url</span>(), <span class="at">viewer =</span> <span class="st">"Beside"</span>)</span>
+<span id="cb11-72"><a href="#cb11-72" aria-hidden="true" tabindex="-1"></a>        })</span>
+<span id="cb11-73"><a href="#cb11-73" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb11-74"><a href="#cb11-74" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-75"><a href="#cb11-75" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-76"><a href="#cb11-76" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-77"><a href="#cb11-77" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
-<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
-<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Create R terminal"</span><span class="fu">,</span></span>
-<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"alt+cmd+r"</span><span class="fu">,</span></span>
-<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.createRTerm"</span></span>
-<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Insert code block"</span><span class="fu">,</span></span>
-<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+shift+i"</span><span class="fu">,</span></span>
-<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"editor.action.insertSnippet"</span><span class="fu">,</span></span>
-<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId == 'rmd'"</span><span class="fu">,</span></span>
-<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"snippet"</span><span class="fu">:</span> <span class="st">"``` {r}</span><span class="ch">\n</span><span class="st">$0</span><span class="ch">\n</span><span class="st">```"</span></span>
-<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
-<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Setwd to current file path"</span><span class="fu">,</span></span>
-<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+</span><span class="ch">\\</span><span class="st">"</span><span class="fu">,</span></span>
-<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithEditorPath"</span><span class="fu">,</span></span>
-<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
-<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"setwd(dirname(</span><span class="ch">\"</span><span class="st">$$</span><span class="ch">\"</span><span class="st">))"</span></span>
-<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Insert R arrow"</span><span class="fu">,</span></span>
-<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+,"</span><span class="fu">,</span></span>
-<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"editor.action.insertSnippet"</span><span class="fu">,</span></span>
-<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
-<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"snippet"</span><span class="fu">:</span> <span class="st">" &lt;- "</span></span>
-<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
-<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Insert pipe"</span><span class="fu">,</span></span>
-<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+."</span><span class="fu">,</span></span>
-<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"editor.action.insertSnippet"</span><span class="fu">,</span></span>
-<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
-<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"snippet"</span><span class="fu">:</span> <span class="st">" %&gt;% "</span></span>
-<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>         <span class="fu">}</span></span>
-<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"help document"</span><span class="fu">,</span></span>
-<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+h"</span><span class="fu">,</span></span>
-<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithSelectionOrWord"</span><span class="fu">,</span></span>
-<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
-<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"help($$)"</span></span>
-<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"view table"</span><span class="fu">,</span></span>
-<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+shift+u"</span><span class="fu">,</span></span>
-<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithSelectionOrWord"</span><span class="fu">,</span></span>
-<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
-<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"DT::datatable($$)"</span></span>
-<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"reopen figure panel if closed"</span><span class="fu">,</span></span>
-<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+alt+p"</span><span class="fu">,</span></span>
-<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommand"</span><span class="fu">,</span></span>
-<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
-<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">".vsc.browser(httpgd::hgd_url(), viewer = </span><span class="ch">\"</span><span class="st">Beside</span><span class="ch">\"</span><span class="st">)"</span></span>
-<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
-<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
-<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"view object"</span><span class="fu">,</span></span>
-<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+u"</span><span class="fu">,</span></span>
-<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithSelectionOrWord"</span><span class="fu">,</span></span>
-<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
-<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"View($$)"</span></span>
-<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span>
-<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
-<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-78"><a href="#cb11-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-79"><a href="#cb11-79" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;&lt;summary&gt;**Here are also a few keybindings that I use (`keybindings.json`):**&lt;/summary&gt;</span>
+<span id="cb11-80"><a href="#cb11-80" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-81"><a href="#cb11-81" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb11-82"><a href="#cb11-82" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<span id="cb11-83"><a href="#cb11-83" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb11-84"><a href="#cb11-84" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Create R terminal"</span><span class="fu">,</span></span>
+<span id="cb11-85"><a href="#cb11-85" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"alt+cmd+r"</span><span class="fu">,</span></span>
+<span id="cb11-86"><a href="#cb11-86" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.createRTerm"</span></span>
+<span id="cb11-87"><a href="#cb11-87" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb11-88"><a href="#cb11-88" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb11-89"><a href="#cb11-89" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Insert code block"</span><span class="fu">,</span></span>
+<span id="cb11-90"><a href="#cb11-90" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+shift+i"</span><span class="fu">,</span></span>
+<span id="cb11-91"><a href="#cb11-91" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"editor.action.insertSnippet"</span><span class="fu">,</span></span>
+<span id="cb11-92"><a href="#cb11-92" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId == 'rmd'"</span><span class="fu">,</span></span>
+<span id="cb11-93"><a href="#cb11-93" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb11-94"><a href="#cb11-94" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"snippet"</span><span class="fu">:</span> <span class="st">"``` {r}</span><span class="ch">\n</span><span class="st">$0</span><span class="ch">\n</span><span class="st">```"</span></span>
+<span id="cb11-95"><a href="#cb11-95" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
+<span id="cb11-96"><a href="#cb11-96" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb11-97"><a href="#cb11-97" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb11-98"><a href="#cb11-98" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Setwd to current file path"</span><span class="fu">,</span></span>
+<span id="cb11-99"><a href="#cb11-99" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+</span><span class="ch">\\</span><span class="st">"</span><span class="fu">,</span></span>
+<span id="cb11-100"><a href="#cb11-100" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithEditorPath"</span><span class="fu">,</span></span>
+<span id="cb11-101"><a href="#cb11-101" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb11-102"><a href="#cb11-102" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"setwd(dirname(</span><span class="ch">\"</span><span class="st">$$</span><span class="ch">\"</span><span class="st">))"</span></span>
+<span id="cb11-103"><a href="#cb11-103" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb11-104"><a href="#cb11-104" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb11-105"><a href="#cb11-105" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Insert R arrow"</span><span class="fu">,</span></span>
+<span id="cb11-106"><a href="#cb11-106" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+,"</span><span class="fu">,</span></span>
+<span id="cb11-107"><a href="#cb11-107" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"editor.action.insertSnippet"</span><span class="fu">,</span></span>
+<span id="cb11-108"><a href="#cb11-108" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb11-109"><a href="#cb11-109" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb11-110"><a href="#cb11-110" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"snippet"</span><span class="fu">:</span> <span class="st">" &lt;- "</span></span>
+<span id="cb11-111"><a href="#cb11-111" aria-hidden="true" tabindex="-1"></a>            <span class="fu">}</span></span>
+<span id="cb11-112"><a href="#cb11-112" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb11-113"><a href="#cb11-113" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb11-114"><a href="#cb11-114" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Insert pipe"</span><span class="fu">,</span></span>
+<span id="cb11-115"><a href="#cb11-115" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+."</span><span class="fu">,</span></span>
+<span id="cb11-116"><a href="#cb11-116" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"editor.action.insertSnippet"</span><span class="fu">,</span></span>
+<span id="cb11-117"><a href="#cb11-117" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb11-118"><a href="#cb11-118" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb11-119"><a href="#cb11-119" aria-hidden="true" tabindex="-1"></a>            <span class="dt">"snippet"</span><span class="fu">:</span> <span class="st">" %&gt;% "</span></span>
+<span id="cb11-120"><a href="#cb11-120" aria-hidden="true" tabindex="-1"></a>         <span class="fu">}</span></span>
+<span id="cb11-121"><a href="#cb11-121" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb11-122"><a href="#cb11-122" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb11-123"><a href="#cb11-123" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"help document"</span><span class="fu">,</span></span>
+<span id="cb11-124"><a href="#cb11-124" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+h"</span><span class="fu">,</span></span>
+<span id="cb11-125"><a href="#cb11-125" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithSelectionOrWord"</span><span class="fu">,</span></span>
+<span id="cb11-126"><a href="#cb11-126" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb11-127"><a href="#cb11-127" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"help($$)"</span></span>
+<span id="cb11-128"><a href="#cb11-128" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb11-129"><a href="#cb11-129" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb11-130"><a href="#cb11-130" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"view table"</span><span class="fu">,</span></span>
+<span id="cb11-131"><a href="#cb11-131" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+shift+u"</span><span class="fu">,</span></span>
+<span id="cb11-132"><a href="#cb11-132" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithSelectionOrWord"</span><span class="fu">,</span></span>
+<span id="cb11-133"><a href="#cb11-133" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb11-134"><a href="#cb11-134" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"DT::datatable($$)"</span></span>
+<span id="cb11-135"><a href="#cb11-135" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb11-136"><a href="#cb11-136" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb11-137"><a href="#cb11-137" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"reopen figure panel if closed"</span><span class="fu">,</span></span>
+<span id="cb11-138"><a href="#cb11-138" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"ctrl+alt+p"</span><span class="fu">,</span></span>
+<span id="cb11-139"><a href="#cb11-139" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommand"</span><span class="fu">,</span></span>
+<span id="cb11-140"><a href="#cb11-140" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb11-141"><a href="#cb11-141" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">".vsc.browser(httpgd::hgd_url(), viewer = </span><span class="ch">\"</span><span class="st">Beside</span><span class="ch">\"</span><span class="st">)"</span></span>
+<span id="cb11-142"><a href="#cb11-142" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span><span class="ot">,</span></span>
+<span id="cb11-143"><a href="#cb11-143" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
+<span id="cb11-144"><a href="#cb11-144" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"view object"</span><span class="fu">,</span></span>
+<span id="cb11-145"><a href="#cb11-145" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"cmd+u"</span><span class="fu">,</span></span>
+<span id="cb11-146"><a href="#cb11-146" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"r.runCommandWithSelectionOrWord"</span><span class="fu">,</span></span>
+<span id="cb11-147"><a href="#cb11-147" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"when"</span><span class="fu">:</span> <span class="st">"editorTextFocus &amp;&amp; editorLangId =~ /r|rmd/"</span><span class="fu">,</span></span>
+<span id="cb11-148"><a href="#cb11-148" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"args"</span><span class="fu">:</span> <span class="st">"View($$)"</span></span>
+<span id="cb11-149"><a href="#cb11-149" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb11-150"><a href="#cb11-150" aria-hidden="true" tabindex="-1"></a><span class="ot">]</span></span>
+<span id="cb11-151"><a href="#cb11-151" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-152"><a href="#cb11-152" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-153"><a href="#cb11-153" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb11-154"><a href="#cb11-154" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-155"><a href="#cb11-155" aria-hidden="true" tabindex="-1"></a>:::{.callout-caution collapse="true"}</span>
-<span id="cb11-156"><a href="#cb11-156" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuring Sublime Text</span></span>
+<span id="cb11-155"><a href="#cb11-155" aria-hidden="true" tabindex="-1"></a>:::</span>
+<span id="cb11-156"><a href="#cb11-156" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-157"><a href="#cb11-157" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a>I have personally used <span class="co">[</span><span class="ot">Sublime Text 3</span><span class="co">](https://www.sublimetext.com/3)</span> for a long time, but switched to <span class="co">[</span><span class="ot">VS Code</span><span class="co">](https://code.visualstudio.com/)</span> recently. Here is what I used to do: </span>
-<span id="cb11-159"><a href="#cb11-159" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-160"><a href="#cb11-160" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First, install <span class="co">[</span><span class="ot">Package control</span><span class="co">](https://packagecontrol.io/installation)</span>. </span>
-<span id="cb11-161"><a href="#cb11-161" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To set up command line launch: <span class="in">`ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime`</span>. </span>
-<span id="cb11-162"><a href="#cb11-162" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Install *a minima* the packages <span class="in">`LSP`</span>, <span class="in">`R-IDE`</span>, <span class="in">`Terminus`</span>, and <span class="in">`SendCode`</span>, and also the <span class="co">[</span><span class="ot">radian</span><span class="co">](https://github.com/randy3k/radian)</span> console. </span>
-<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can also add the useful packages <span class="in">`LatexTools`</span>, <span class="in">`BracketHighlighter`</span>, <span class="in">`RainbowBrackets`</span>, <span class="in">`Citer`</span>, <span class="in">`Path Tools`</span>, <span class="in">`SidebarEnhancements`</span>, <span class="in">`SidebarTools`</span>, git, <span class="in">`GitGutter`</span>, <span class="in">`Alignment`</span>, <span class="in">`AutoFileName`</span>. </span>
-<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Install the language server protocol package in R with: <span class="in">`install.packages("languageserver")`</span>{.R}</span>
-<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To create a keyboard shortcut to open a terminal with the radian console as the R interpreter, add this to your keybinding file:</span>
-<span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
-<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span> <span class="dt">"keys"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"super+option+r"</span><span class="ot">]</span><span class="fu">,</span> <span class="er">#</span> <span class="er">put</span> <span class="er">whatever</span> <span class="er">you</span> <span class="er">want</span> <span class="er">here</span></span>
-<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"terminus_open"</span><span class="fu">,</span></span>
-<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"args"</span><span class="fu">:</span> <span class="fu">{</span></span>
-<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"post_window_hooks"</span><span class="fu">:</span> <span class="ot">[</span></span>
-<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a>            <span class="ot">[</span><span class="st">"carry_file_to_pane"</span><span class="ot">,</span> <span class="fu">{</span><span class="dt">"direction"</span><span class="fu">:</span> <span class="st">"right"</span><span class="fu">}</span><span class="ot">]</span></span>
-<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a>        <span class="ot">]</span><span class="fu">,</span></span>
-<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"cmd"</span> <span class="fu">:</span> <span class="st">"radian"</span></span>
-<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
-<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span>
-<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Select <span class="in">`Terminus`</span> as the destination of SendCode</span>
-<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You should be good to go: ⌘+⏎ will send the current line/selection to the radian console, ⌘+B will render the current Rmd file, ⌘+<span class="sc">\\</span> will set the working directory to the current file's folder.</span>
-<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a><span class="fu">## Install and configure git</span></span>
-<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-158"><a href="#cb11-158" aria-hidden="true" tabindex="-1"></a>:::{.callout-caution collapse="true"}</span>
+<span id="cb11-159"><a href="#cb11-159" aria-hidden="true" tabindex="-1"></a><span class="fu">## Configuring Sublime Text</span></span>
+<span id="cb11-160"><a href="#cb11-160" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-161"><a href="#cb11-161" aria-hidden="true" tabindex="-1"></a>I have personally used <span class="co">[</span><span class="ot">Sublime Text 3</span><span class="co">](https://www.sublimetext.com/3)</span> for a long time, but switched to <span class="co">[</span><span class="ot">VS Code</span><span class="co">](https://code.visualstudio.com/)</span> recently. Here is what I used to do: </span>
+<span id="cb11-162"><a href="#cb11-162" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-163"><a href="#cb11-163" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First, install <span class="co">[</span><span class="ot">Package control</span><span class="co">](https://packagecontrol.io/installation)</span>. </span>
+<span id="cb11-164"><a href="#cb11-164" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To set up command line launch: <span class="in">`ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime`</span>. </span>
+<span id="cb11-165"><a href="#cb11-165" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Install *a minima* the packages <span class="in">`LSP`</span>, <span class="in">`R-IDE`</span>, <span class="in">`Terminus`</span>, and <span class="in">`SendCode`</span>, and also the <span class="co">[</span><span class="ot">radian</span><span class="co">](https://github.com/randy3k/radian)</span> console. </span>
+<span id="cb11-166"><a href="#cb11-166" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can also add the useful packages <span class="in">`LatexTools`</span>, <span class="in">`BracketHighlighter`</span>, <span class="in">`RainbowBrackets`</span>, <span class="in">`Citer`</span>, <span class="in">`Path Tools`</span>, <span class="in">`SidebarEnhancements`</span>, <span class="in">`SidebarTools`</span>, git, <span class="in">`GitGutter`</span>, <span class="in">`Alignment`</span>, <span class="in">`AutoFileName`</span>. </span>
+<span id="cb11-167"><a href="#cb11-167" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Install the language server protocol package in R with: <span class="in">`install.packages("languageserver")`</span>{.R}</span>
+<span id="cb11-168"><a href="#cb11-168" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>To create a keyboard shortcut to open a terminal with the radian console as the R interpreter, add this to your keybinding file:</span>
+<span id="cb11-169"><a href="#cb11-169" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-170"><a href="#cb11-170" aria-hidden="true" tabindex="-1"></a><span class="in">```json</span></span>
+<span id="cb11-171"><a href="#cb11-171" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span> <span class="dt">"keys"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"super+option+r"</span><span class="ot">]</span><span class="fu">,</span> <span class="er">#</span> <span class="er">put</span> <span class="er">whatever</span> <span class="er">you</span> <span class="er">want</span> <span class="er">here</span></span>
+<span id="cb11-172"><a href="#cb11-172" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"command"</span><span class="fu">:</span> <span class="st">"terminus_open"</span><span class="fu">,</span></span>
+<span id="cb11-173"><a href="#cb11-173" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"args"</span><span class="fu">:</span> <span class="fu">{</span></span>
+<span id="cb11-174"><a href="#cb11-174" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"post_window_hooks"</span><span class="fu">:</span> <span class="ot">[</span></span>
+<span id="cb11-175"><a href="#cb11-175" aria-hidden="true" tabindex="-1"></a>            <span class="ot">[</span><span class="st">"carry_file_to_pane"</span><span class="ot">,</span> <span class="fu">{</span><span class="dt">"direction"</span><span class="fu">:</span> <span class="st">"right"</span><span class="fu">}</span><span class="ot">]</span></span>
+<span id="cb11-176"><a href="#cb11-176" aria-hidden="true" tabindex="-1"></a>        <span class="ot">]</span><span class="fu">,</span></span>
+<span id="cb11-177"><a href="#cb11-177" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"cmd"</span> <span class="fu">:</span> <span class="st">"radian"</span></span>
+<span id="cb11-178"><a href="#cb11-178" aria-hidden="true" tabindex="-1"></a>    <span class="fu">}</span></span>
+<span id="cb11-179"><a href="#cb11-179" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span>
+<span id="cb11-180"><a href="#cb11-180" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-181"><a href="#cb11-181" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Select <span class="in">`Terminus`</span> as the destination of SendCode</span>
+<span id="cb11-182"><a href="#cb11-182" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You should be good to go: ⌘+⏎ will send the current line/selection to the radian console, ⌘+B will render the current Rmd file, ⌘+<span class="sc">\\</span> will set the working directory to the current file's folder.</span>
+<span id="cb11-183"><a href="#cb11-183" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-184"><a href="#cb11-184" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb11-185"><a href="#cb11-185" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setting up git and Rstudio</span></span>
-<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a>R combined with the git version control system provides a convenient setup for making your research project reproducible, since git allows you to track and share your code and analysis:</span>
+<span id="cb11-186"><a href="#cb11-186" aria-hidden="true" tabindex="-1"></a><span class="fu">## Install and configure git</span></span>
+<span id="cb11-187"><a href="#cb11-187" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-188"><a href="#cb11-188" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It makes it easy to share your projects</span>
-<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It facilitates collaboration, since people can contribute to your project and vice versa. They can also report errors (bugs) or suggest new additions (features) to projects</span>
-<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can revert to a previous version if you find bugs or accidentally delete something</span>
-<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can see what changes between different versions of your code</span>
-<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Also, R makes it easy to share packages: you can install other people's development packages with a single line of code, *i.e.* <span class="in">`devtools::install_github("username/packagename")`</span>{.R}</span>
-<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>And finally and for the most important part of this class: we will use <span class="co">[</span><span class="ot">GitHub Classroom</span><span class="co">](https://classroom.github.com/classrooms)</span> to do and submit homework.</span>
-<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a>RStudio has built-in support for git, so we will use the common combination of R + git + RStudio.</span>
-<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First, if you haven't done this already, download and install <span class="co">[</span><span class="ot">git</span><span class="co">](https://git-scm.com/downloads)</span></span>
-<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="co">[</span><span class="ot">free GitHub account</span><span class="co">](https://github.com/)</span></span>
-<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Setup git in RStudio:</span>
-<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Open RStudio and go to <span class="in">`Tools &gt; Global Options…`</span> click on git/SVN</span>
-<span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Check Enable version control interface for RStudio projects</span>
-<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Set the path to the git executable that you just installed. </span>
-<span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Open a shell, if you don't know where git is installed: <span class="in">`Tools &gt; Terminal &gt; New Terminal`</span></span>
-<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Windows: type <span class="in">`where git`</span> and hit enter. The path should be something like: C:/Program Files (x86)/git/bin/git.exe</span>
-<span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Linux/OS X: type <span class="in">`which git`</span> and hit enter. The path should be something like: /usr/bin/git</span>
-<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Restart RStudio, if it worked out you will find the git icon on the top toolbar, as shown below.</span>
-<span id="cb11-208"><a href="#cb11-208" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Set up your user name and email address (the one you used to register on GitHub) in the terminal (<span class="in">`Tools &gt; Terminal &gt; New Terminal`</span>, see @fig-git1):</span>
-<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
-<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a><span class="co"># You only need to do this once</span></span>
-<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">'yourGitHubUsername'</span></span>
-<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">'your@email.com'</span></span>
-<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-216"><a href="#cb11-216" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE}</span></span>
-<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-git1</span></span>
-<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Creating a new terminal in RStudio."</span></span>
-<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a><span class="in">#| out-width: 80%</span></span>
-<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git1.png")</span></span>
-<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a><span class="fu">### Working with git and RStudio</span></span>
-<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a>When creating a new project from scratch or from an existing folder, you can check <span class="in">`Create a git repository`</span> to activate git for this project. You can also do this later by clicking on <span class="in">`Tools &gt; Version Control &gt; Project Setup`</span>.</span>
-<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a>What we will use for the exercises here, is the possibility of creation of new project from a GitHub repository, as shown in @fig-git2.</span>
-<span id="cb11-228"><a href="#cb11-228" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First, copy the repository HTTPS url: you'll find the repository url when pressing the green button <span class="in">`Code`</span>. The link will be something like <span class="in">`https://github.com/username/the-git-repo.git`</span>.</span>
-<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Then create a new RStudio project with git version control. Select <span class="in">`File &gt; New Project..`</span>, then <span class="in">`Version Control &gt; Git`</span>, then provide the repository HTTPS link, select where you want to place the R workspace folder, and create the project. RStudio will then download all the repository files in this new folder (or "clone", in git terms).</span>
-<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Alternatively, you can also download the zipped repo, unzip the files, and create a new project from this folder.</span>
-<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE}</span></span>
-<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-git2</span></span>
-<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a><span class="in">#| layout-ncol: 2</span></span>
-<span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Creating a new project from GitHub in RStudio."</span></span>
-<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-subcap: </span></span>
-<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Create a new project  from `Version Control`."</span></span>
-<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Select `Git`."</span></span>
-<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Go to the repo website on GitHub, and copy the address in the `Code` button."</span></span>
-<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Paste it in the required field, an give a name to the folder where you want to place it."</span></span>
-<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git2.png")</span></span>
-<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git3.png")</span></span>
-<span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git4.png")</span></span>
-<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git5.png")</span></span>
-<span id="cb11-246"><a href="#cb11-246" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Then, you'll do your coding in the various files of the project, and save the changes.</span>
-<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>And finally, you'll need to "Commit" the changes, and then "Push" them on the GitHub repository, as described on @fig-git3.</span>
+<span id="cb11-189"><a href="#cb11-189" aria-hidden="true" tabindex="-1"></a><span class="fu">### Setting up git and Rstudio</span></span>
+<span id="cb11-190"><a href="#cb11-190" aria-hidden="true" tabindex="-1"></a>R combined with the git version control system provides a convenient setup for making your research project reproducible, since git allows you to track and share your code and analysis:</span>
+<span id="cb11-191"><a href="#cb11-191" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-192"><a href="#cb11-192" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It makes it easy to share your projects</span>
+<span id="cb11-193"><a href="#cb11-193" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>It facilitates collaboration, since people can contribute to your project and vice versa. They can also report errors (bugs) or suggest new additions (features) to projects</span>
+<span id="cb11-194"><a href="#cb11-194" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can revert to a previous version if you find bugs or accidentally delete something</span>
+<span id="cb11-195"><a href="#cb11-195" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You can see what changes between different versions of your code</span>
+<span id="cb11-196"><a href="#cb11-196" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Also, R makes it easy to share packages: you can install other people's development packages with a single line of code, *i.e.* <span class="in">`devtools::install_github("username/packagename")`</span>{.R}</span>
+<span id="cb11-197"><a href="#cb11-197" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>And finally and for the most important part of this class: we will use <span class="co">[</span><span class="ot">GitHub Classroom</span><span class="co">](https://classroom.github.com/classrooms)</span> to do and submit homework.</span>
+<span id="cb11-198"><a href="#cb11-198" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-199"><a href="#cb11-199" aria-hidden="true" tabindex="-1"></a>RStudio has built-in support for git, so we will use the common combination of R + git + RStudio.</span>
+<span id="cb11-200"><a href="#cb11-200" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-201"><a href="#cb11-201" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First, if you haven't done this already, download and install <span class="co">[</span><span class="ot">git</span><span class="co">](https://git-scm.com/downloads)</span></span>
+<span id="cb11-202"><a href="#cb11-202" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="co">[</span><span class="ot">free GitHub account</span><span class="co">](https://github.com/)</span></span>
+<span id="cb11-203"><a href="#cb11-203" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Setup git in RStudio:</span>
+<span id="cb11-204"><a href="#cb11-204" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Open RStudio and go to <span class="in">`Tools &gt; Global Options…`</span> click on git/SVN</span>
+<span id="cb11-205"><a href="#cb11-205" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Check Enable version control interface for RStudio projects</span>
+<span id="cb11-206"><a href="#cb11-206" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Set the path to the git executable that you just installed. </span>
+<span id="cb11-207"><a href="#cb11-207" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Open a shell, if you don't know where git is installed: <span class="in">`Tools &gt; Terminal &gt; New Terminal`</span></span>
+<span id="cb11-208"><a href="#cb11-208" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Windows: type <span class="in">`where git`</span> and hit enter. The path should be something like: C:/Program Files (x86)/git/bin/git.exe</span>
+<span id="cb11-209"><a href="#cb11-209" aria-hidden="true" tabindex="-1"></a><span class="ss">    - </span>Linux/OS X: type <span class="in">`which git`</span> and hit enter. The path should be something like: /usr/bin/git</span>
+<span id="cb11-210"><a href="#cb11-210" aria-hidden="true" tabindex="-1"></a><span class="ss">  - </span>Restart RStudio, if it worked out you will find the git icon on the top toolbar, as shown below.</span>
+<span id="cb11-211"><a href="#cb11-211" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Set up your user name and email address (the one you used to register on GitHub) in the terminal (<span class="in">`Tools &gt; Terminal &gt; New Terminal`</span>, see @fig-git1):</span>
+<span id="cb11-212"><a href="#cb11-212" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-213"><a href="#cb11-213" aria-hidden="true" tabindex="-1"></a><span class="in">```bash</span></span>
+<span id="cb11-214"><a href="#cb11-214" aria-hidden="true" tabindex="-1"></a><span class="co"># You only need to do this once</span></span>
+<span id="cb11-215"><a href="#cb11-215" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.name <span class="st">'yourGitHubUsername'</span></span>
+<span id="cb11-216"><a href="#cb11-216" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> config <span class="at">--global</span> user.email <span class="st">'your@email.com'</span></span>
+<span id="cb11-217"><a href="#cb11-217" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-218"><a href="#cb11-218" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-219"><a href="#cb11-219" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE}</span></span>
+<span id="cb11-220"><a href="#cb11-220" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-git1</span></span>
+<span id="cb11-221"><a href="#cb11-221" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Creating a new terminal in RStudio."</span></span>
+<span id="cb11-222"><a href="#cb11-222" aria-hidden="true" tabindex="-1"></a><span class="in">#| out-width: 80%</span></span>
+<span id="cb11-223"><a href="#cb11-223" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git1.png")</span></span>
+<span id="cb11-224"><a href="#cb11-224" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-225"><a href="#cb11-225" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-226"><a href="#cb11-226" aria-hidden="true" tabindex="-1"></a><span class="fu">### Working with git and RStudio</span></span>
+<span id="cb11-227"><a href="#cb11-227" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-228"><a href="#cb11-228" aria-hidden="true" tabindex="-1"></a>When creating a new project from scratch or from an existing folder, you can check <span class="in">`Create a git repository`</span> to activate git for this project. You can also do this later by clicking on <span class="in">`Tools &gt; Version Control &gt; Project Setup`</span>.</span>
+<span id="cb11-229"><a href="#cb11-229" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-230"><a href="#cb11-230" aria-hidden="true" tabindex="-1"></a>What we will use for the exercises here, is the possibility of creation of new project from a GitHub repository, as shown in @fig-git2.</span>
+<span id="cb11-231"><a href="#cb11-231" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-232"><a href="#cb11-232" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>First, copy the repository HTTPS url: you'll find the repository url when pressing the green button <span class="in">`Code`</span>. The link will be something like <span class="in">`https://github.com/username/the-git-repo.git`</span>.</span>
+<span id="cb11-233"><a href="#cb11-233" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Then create a new RStudio project with git version control. Select <span class="in">`File &gt; New Project..`</span>, then <span class="in">`Version Control &gt; Git`</span>, then provide the repository HTTPS link, select where you want to place the R workspace folder, and create the project. RStudio will then download all the repository files in this new folder (or "clone", in git terms).</span>
+<span id="cb11-234"><a href="#cb11-234" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Alternatively, you can also download the zipped repo, unzip the files, and create a new project from this folder.</span>
+<span id="cb11-235"><a href="#cb11-235" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-236"><a href="#cb11-236" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE}</span></span>
+<span id="cb11-237"><a href="#cb11-237" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-git2</span></span>
+<span id="cb11-238"><a href="#cb11-238" aria-hidden="true" tabindex="-1"></a><span class="in">#| layout-ncol: 2</span></span>
+<span id="cb11-239"><a href="#cb11-239" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Creating a new project from GitHub in RStudio."</span></span>
+<span id="cb11-240"><a href="#cb11-240" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-subcap: </span></span>
+<span id="cb11-241"><a href="#cb11-241" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Create a new project  from `Version Control`."</span></span>
+<span id="cb11-242"><a href="#cb11-242" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Select `Git`."</span></span>
+<span id="cb11-243"><a href="#cb11-243" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Go to the repo website on GitHub, and copy the address in the `Code` button."</span></span>
+<span id="cb11-244"><a href="#cb11-244" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Paste it in the required field, an give a name to the folder where you want to place it."</span></span>
+<span id="cb11-245"><a href="#cb11-245" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git2.png")</span></span>
+<span id="cb11-246"><a href="#cb11-246" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git3.png")</span></span>
+<span id="cb11-247"><a href="#cb11-247" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git4.png")</span></span>
+<span id="cb11-248"><a href="#cb11-248" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git5.png")</span></span>
+<span id="cb11-249"><a href="#cb11-249" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb11-250"><a href="#cb11-250" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE}</span></span>
-<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-git3</span></span>
-<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a><span class="in">#| layout-ncol: 2</span></span>
-<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Uploading your changes to the GitHub repository."</span></span>
-<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-subcap: </span></span>
-<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Click on `Git &gt; Commit`"</span></span>
-<span id="cb11-257"><a href="#cb11-257" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Then select the files that changed, write a commit message, then click on `Commit` then `Push`."</span></span>
-<span id="cb11-258"><a href="#cb11-258" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git6.png")</span></span>
-<span id="cb11-259"><a href="#cb11-259" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git7.png")</span></span>
-<span id="cb11-260"><a href="#cb11-260" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-261"><a href="#cb11-261" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-262"><a href="#cb11-262" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-263"><a href="#cb11-263" aria-hidden="true" tabindex="-1"></a><span class="fu">## In any case: install LaTeX</span></span>
+<span id="cb11-251"><a href="#cb11-251" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Then, you'll do your coding in the various files of the project, and save the changes.</span>
+<span id="cb11-252"><a href="#cb11-252" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>And finally, you'll need to "Commit" the changes, and then "Push" them on the GitHub repository, as described on @fig-git3.</span>
+<span id="cb11-253"><a href="#cb11-253" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-254"><a href="#cb11-254" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, echo=FALSE}</span></span>
+<span id="cb11-255"><a href="#cb11-255" aria-hidden="true" tabindex="-1"></a><span class="in">#| label: fig-git3</span></span>
+<span id="cb11-256"><a href="#cb11-256" aria-hidden="true" tabindex="-1"></a><span class="in">#| layout-ncol: 2</span></span>
+<span id="cb11-257"><a href="#cb11-257" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-cap: "Uploading your changes to the GitHub repository."</span></span>
+<span id="cb11-258"><a href="#cb11-258" aria-hidden="true" tabindex="-1"></a><span class="in">#| fig-subcap: </span></span>
+<span id="cb11-259"><a href="#cb11-259" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Click on `Git &gt; Commit`"</span></span>
+<span id="cb11-260"><a href="#cb11-260" aria-hidden="true" tabindex="-1"></a><span class="in">#|    - "Then select the files that changed, write a commit message, then click on `Commit` then `Push`."</span></span>
+<span id="cb11-261"><a href="#cb11-261" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git6.png")</span></span>
+<span id="cb11-262"><a href="#cb11-262" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/git7.png")</span></span>
+<span id="cb11-263"><a href="#cb11-263" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb11-264"><a href="#cb11-264" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-265"><a href="#cb11-265" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-266"><a href="#cb11-266" aria-hidden="true" tabindex="-1"></a>A **full** $\LaTeX$ distribution (emphasis on **full**) will be needed to knit markdown files to PDFs (you don't need it to output html files though):</span>
+<span id="cb11-266"><a href="#cb11-266" aria-hidden="true" tabindex="-1"></a><span class="fu">## In any case: install LaTeX</span></span>
 <span id="cb11-267"><a href="#cb11-267" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-268"><a href="#cb11-268" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Windows:** go [here](https://miktex.org/download) and download the Net Installer to install the **complete distribution**</span>
-<span id="cb11-269"><a href="#cb11-269" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mac:** go <span class="co">[</span><span class="ot">here</span><span class="co">](https://tug.org/mactex/mactex-download.html)</span> or type <span class="in">`brew cask install mactex`</span> in the terminal if you have <span class="co">[</span><span class="ot">Homebrew</span><span class="co">](https://treehouse.github.io/installation-guides/mac/homebrew)</span> installed</span>
-<span id="cb11-270"><a href="#cb11-270" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Linux:** <span class="co">[</span><span class="ot">here</span><span class="co">](https://dzone.com/articles/installing-latex-ubuntu)</span> fore example</span>
-<span id="cb11-271"><a href="#cb11-271" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-272"><a href="#cb11-272" aria-hidden="true" tabindex="-1"></a>Alternatively, you can also work with <span class="co">[</span><span class="ot">TinyTeX</span><span class="co">](https://yihui.name/tinytex/)</span> that will install the needed packages on the fly. It is recommended on the <span class="in">`knitr`</span> package help, but I only had problems with this, so I recommend the full $\LaTeX$ distribution option if you don't mind taking up a few gigabytes of your disk. If you do, just run this in the R console:</span>
-<span id="cb11-273"><a href="#cb11-273" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-274"><a href="#cb11-274" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb11-275"><a href="#cb11-275" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span>
-<span id="cb11-276"><a href="#cb11-276" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span>
-<span id="cb11-277"><a href="#cb11-277" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-278"><a href="#cb11-278" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-279"><a href="#cb11-279" aria-hidden="true" tabindex="-1"></a>To uninstall TinyTeX, run:</span>
-<span id="cb11-280"><a href="#cb11-280" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb11-281"><a href="#cb11-281" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">uninstall_tinytex</span>()</span>
-<span id="cb11-282"><a href="#cb11-282" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-283"><a href="#cb11-283" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-284"><a href="#cb11-284" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working in Rstudio</span></span>
-<span id="cb11-285"><a href="#cb11-285" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-286"><a href="#cb11-286" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
-<span id="cb11-287"><a href="#cb11-287" aria-hidden="true" tabindex="-1"></a><span class="fu">##  Remember</span></span>
-<span id="cb11-288"><a href="#cb11-288" aria-hidden="true" tabindex="-1"></a>**Always Work with Projects!!**</span>
-<span id="cb11-289"><a href="#cb11-289" aria-hidden="true" tabindex="-1"></a>:::</span>
-<span id="cb11-290"><a href="#cb11-290" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-291"><a href="#cb11-291" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-292"><a href="#cb11-292" aria-hidden="true" tabindex="-1"></a>Launch Rstudio, click <span class="in">`File &gt; New Project`</span>, and follow the dialog box (existing directory or not, etc.). When you have several ongoing projects, you can switch between them using the Project navigator (see @fig-rstudio).</span>
+<span id="cb11-268"><a href="#cb11-268" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-269"><a href="#cb11-269" aria-hidden="true" tabindex="-1"></a>A **full** $\LaTeX$ distribution (emphasis on **full**) will be needed to knit markdown files to PDFs (you don't need it to output html files though):</span>
+<span id="cb11-270"><a href="#cb11-270" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-271"><a href="#cb11-271" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Windows:** go [here](https://miktex.org/download) and download the Net Installer to install the **complete distribution**</span>
+<span id="cb11-272"><a href="#cb11-272" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Mac:** go <span class="co">[</span><span class="ot">here</span><span class="co">](https://tug.org/mactex/mactex-download.html)</span> or type <span class="in">`brew cask install mactex`</span> in the terminal if you have <span class="co">[</span><span class="ot">Homebrew</span><span class="co">](https://treehouse.github.io/installation-guides/mac/homebrew)</span> installed</span>
+<span id="cb11-273"><a href="#cb11-273" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>**Linux:** <span class="co">[</span><span class="ot">here</span><span class="co">](https://dzone.com/articles/installing-latex-ubuntu)</span> fore example</span>
+<span id="cb11-274"><a href="#cb11-274" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-275"><a href="#cb11-275" aria-hidden="true" tabindex="-1"></a>Alternatively, you can also work with <span class="co">[</span><span class="ot">TinyTeX</span><span class="co">](https://yihui.name/tinytex/)</span> that will install the needed packages on the fly. It is recommended on the <span class="in">`knitr`</span> package help, but I only had problems with this, so I recommend the full $\LaTeX$ distribution option if you don't mind taking up a few gigabytes of your disk. If you do, just run this in the R console:</span>
+<span id="cb11-276"><a href="#cb11-276" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-277"><a href="#cb11-277" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb11-278"><a href="#cb11-278" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span>
+<span id="cb11-279"><a href="#cb11-279" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span>
+<span id="cb11-280"><a href="#cb11-280" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-281"><a href="#cb11-281" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-282"><a href="#cb11-282" aria-hidden="true" tabindex="-1"></a>To uninstall TinyTeX, run:</span>
+<span id="cb11-283"><a href="#cb11-283" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb11-284"><a href="#cb11-284" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">uninstall_tinytex</span>()</span>
+<span id="cb11-285"><a href="#cb11-285" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-286"><a href="#cb11-286" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-287"><a href="#cb11-287" aria-hidden="true" tabindex="-1"></a><span class="fu">## Working in Rstudio</span></span>
+<span id="cb11-288"><a href="#cb11-288" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-289"><a href="#cb11-289" aria-hidden="true" tabindex="-1"></a>:::{.callout-warning}</span>
+<span id="cb11-290"><a href="#cb11-290" aria-hidden="true" tabindex="-1"></a><span class="fu">##  Remember</span></span>
+<span id="cb11-291"><a href="#cb11-291" aria-hidden="true" tabindex="-1"></a>**Always Work with Projects!!**</span>
+<span id="cb11-292"><a href="#cb11-292" aria-hidden="true" tabindex="-1"></a>:::</span>
 <span id="cb11-293"><a href="#cb11-293" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-294"><a href="#cb11-294" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-rstudio, echo=FALSE, fig.cap="The Rstudio interface."}</span></span>
-<span id="cb11-295"><a href="#cb11-295" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/rstudio.png")</span></span>
-<span id="cb11-296"><a href="#cb11-296" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-297"><a href="#cb11-297" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-298"><a href="#cb11-298" aria-hidden="true" tabindex="-1"></a>The great interest of working with Projects is that the default working directory will be relative to the root directory of the Project. In other words, if you store your data in a <span class="in">`Data`</span> folder, you can read it by running <span class="in">`read_function("Data/your_file.txt")`</span>{.R}. This is one of the fundamentals of reproducible data treatment as:</span>
-<span id="cb11-299"><a href="#cb11-299" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-300"><a href="#cb11-300" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You won't have to write the absolute path towards your file, like <span class="in">`read_function("C://path/to/your_file.txt")`</span>{.R}, path that is unlikely to be the same depending on the computer it is located on. This helps you share your whole project folder with others, or just move it around on your computer and still have a working code.</span>
-<span id="cb11-301"><a href="#cb11-301" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You won't have to start your script by a <span class="in">`setwd("/path/to/your/data")`</span>{.R} command (for set working directory), which is much better for the same reasons as above.</span>
+<span id="cb11-294"><a href="#cb11-294" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-295"><a href="#cb11-295" aria-hidden="true" tabindex="-1"></a>Launch Rstudio, click <span class="in">`File &gt; New Project`</span>, and follow the dialog box (existing directory or not, etc.). When you have several ongoing projects, you can switch between them using the Project navigator (see @fig-rstudio).</span>
+<span id="cb11-296"><a href="#cb11-296" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-297"><a href="#cb11-297" aria-hidden="true" tabindex="-1"></a><span class="in">```{r fig-rstudio, echo=FALSE, fig.cap="The Rstudio interface."}</span></span>
+<span id="cb11-298"><a href="#cb11-298" aria-hidden="true" tabindex="-1"></a><span class="in">knitr::include_graphics("Plots/rstudio.png")</span></span>
+<span id="cb11-299"><a href="#cb11-299" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-300"><a href="#cb11-300" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-301"><a href="#cb11-301" aria-hidden="true" tabindex="-1"></a>The great interest of working with Projects is that the default working directory will be relative to the root directory of the Project. In other words, if you store your data in a <span class="in">`Data`</span> folder, you can read it by running <span class="in">`read_function("Data/your_file.txt")`</span>{.R}. This is one of the fundamentals of reproducible data treatment as:</span>
 <span id="cb11-302"><a href="#cb11-302" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-303"><a href="#cb11-303" aria-hidden="true" tabindex="-1"></a>Write whatever you want in the "Source code" panel and save it in a <span class="in">`.R`</span> (or <span class="in">`.Rmd`</span>) file, and __run__ it by selecting it and hitting ⌘+⏎ (Ctrl+⏎ on Windows, Linux). If no text is selected, hitting ⌘+⏎ will launch the current line. You can see the file contents of your project in the project's file explorer (see bottom right corner of @fig-rstudio).</span>
-<span id="cb11-304"><a href="#cb11-304" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-305"><a href="#cb11-305" aria-hidden="true" tabindex="-1"></a>The code output will be seen in the "R Console" panel if it's a text, or in the "Graph" panel if it's a graph. A list of all defined variables and functions is available in the "Environment" panel. You can also directly write and run code in the "R Console" panel, if it's code you don't care to save in a script (like installing a package or whatever).</span>
-<span id="cb11-306"><a href="#cb11-306" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-307"><a href="#cb11-307" aria-hidden="true" tabindex="-1"></a>You can install packages by running the <span class="in">`install.packages("package_name")`</span> command in the R console or R script, or you can also click on the "Packages" tab in the bottom right corner, and then "Install" or "Update" in case you want to install or update your packages. "Update" will show you a list of installed packages that have a new published version. All verified packages are located on the CRAN (Comprehensive R Archive Network). It is thus really easy to install packages and maintain (update) your packages in R. There is also the possibility to install packages from source if you want to install custom packages -- "homemade" packages that didn't go through the CRAN verification process: do so at your own risks.</span>
-<span id="cb11-308"><a href="#cb11-308" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-309"><a href="#cb11-309" aria-hidden="true" tabindex="-1"></a>More on the <span class="co">[</span><span class="ot">Rstudio cheatsheet</span><span class="co">](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf)</span>.</span>
-<span id="cb11-310"><a href="#cb11-310" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-303"><a href="#cb11-303" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You won't have to write the absolute path towards your file, like <span class="in">`read_function("C://path/to/your_file.txt")`</span>{.R}, path that is unlikely to be the same depending on the computer it is located on. This helps you share your whole project folder with others, or just move it around on your computer and still have a working code.</span>
+<span id="cb11-304"><a href="#cb11-304" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>You won't have to start your script by a <span class="in">`setwd("/path/to/your/data")`</span>{.R} command (for set working directory), which is much better for the same reasons as above.</span>
+<span id="cb11-305"><a href="#cb11-305" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-306"><a href="#cb11-306" aria-hidden="true" tabindex="-1"></a>Write whatever you want in the "Source code" panel and save it in a <span class="in">`.R`</span> (or <span class="in">`.Rmd`</span>) file, and __run__ it by selecting it and hitting ⌘+⏎ (Ctrl+⏎ on Windows, Linux). If no text is selected, hitting ⌘+⏎ will launch the current line. You can see the file contents of your project in the project's file explorer (see bottom right corner of @fig-rstudio).</span>
+<span id="cb11-307"><a href="#cb11-307" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-308"><a href="#cb11-308" aria-hidden="true" tabindex="-1"></a>The code output will be seen in the "R Console" panel if it's a text, or in the "Graph" panel if it's a graph. A list of all defined variables and functions is available in the "Environment" panel. You can also directly write and run code in the "R Console" panel, if it's code you don't care to save in a script (like installing a package or whatever).</span>
+<span id="cb11-309"><a href="#cb11-309" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-310"><a href="#cb11-310" aria-hidden="true" tabindex="-1"></a>You can install packages by running the <span class="in">`install.packages("package_name")`</span> command in the R console or R script, or you can also click on the "Packages" tab in the bottom right corner, and then "Install" or "Update" in case you want to install or update your packages. "Update" will show you a list of installed packages that have a new published version. All verified packages are located on the CRAN (Comprehensive R Archive Network). It is thus really easy to install packages and maintain (update) your packages in R. There is also the possibility to install packages from source if you want to install custom packages -- "homemade" packages that didn't go through the CRAN verification process: do so at your own risks.</span>
 <span id="cb11-311"><a href="#cb11-311" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-312"><a href="#cb11-312" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setting up the environment</span></span>
+<span id="cb11-312"><a href="#cb11-312" aria-hidden="true" tabindex="-1"></a>More on the <span class="co">[</span><span class="ot">Rstudio cheatsheet</span><span class="co">](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf)</span>.</span>
 <span id="cb11-313"><a href="#cb11-313" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-314"><a href="#cb11-314" aria-hidden="true" tabindex="-1"></a>Make sure you have the following packages installed by launching the following commands: copy-paste them in the "Source code" panel (upper left after having created a new R script), select all the lines and hit Ctrl+⏎ (Windows, Linux) or ⌘+⏎ (Mac). These are the main packages that we will use in this class:</span>
-<span id="cb11-315"><a href="#cb11-315" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-316"><a href="#cb11-316" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb11-317"><a href="#cb11-317" aria-hidden="true" tabindex="-1"></a><span class="co"># Necessary for the exercises</span></span>
-<span id="cb11-318"><a href="#cb11-318" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb11-319"><a href="#cb11-319" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"patchwork"</span>)</span>
-<span id="cb11-320"><a href="#cb11-320" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"broom"</span>)</span>
-<span id="cb11-321"><a href="#cb11-321" aria-hidden="true" tabindex="-1"></a><span class="co"># Recommended for smooth working and some exercises</span></span>
-<span id="cb11-322"><a href="#cb11-322" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb11-323"><a href="#cb11-323" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
-<span id="cb11-324"><a href="#cb11-324" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"knitr"</span>)</span>
-<span id="cb11-325"><a href="#cb11-325" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"shiny"</span>)</span>
-<span id="cb11-326"><a href="#cb11-326" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"plotly"</span>)</span>
-<span id="cb11-327"><a href="#cb11-327" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tikzDevice"</span>)</span>
-<span id="cb11-328"><a href="#cb11-328" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"quantities"</span>)</span>
-<span id="cb11-329"><a href="#cb11-329" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggforce"</span>)</span>
-<span id="cb11-330"><a href="#cb11-330" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-331"><a href="#cb11-331" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-332"><a href="#cb11-332" aria-hidden="true" tabindex="-1"></a>Later on, a package can be loaded by calling:</span>
-<span id="cb11-333"><a href="#cb11-333" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-334"><a href="#cb11-334" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb11-335"><a href="#cb11-335" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(package_name)</span>
-<span id="cb11-336"><a href="#cb11-336" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-337"><a href="#cb11-337" aria-hidden="true" tabindex="-1"></a>or by checking it in the "Graphs" panel under the "Packages" tab.</span>
-<span id="cb11-338"><a href="#cb11-338" aria-hidden="true" tabindex="-1"></a>If you want to access a function from a given package without loading it (or because several packages define the same function and you want to specify which one to use), type:</span>
-<span id="cb11-339"><a href="#cb11-339" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-340"><a href="#cb11-340" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
-<span id="cb11-341"><a href="#cb11-341" aria-hidden="true" tabindex="-1"></a>package_name<span class="sc">::</span><span class="fu">function_name</span>(parameters)</span>
-<span id="cb11-342"><a href="#cb11-342" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb11-343"><a href="#cb11-343" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-344"><a href="#cb11-344" aria-hidden="true" tabindex="-1"></a>If you want to access the documentation on a given package, click the link on this package in the "Packages" tab.</span>
-<span id="cb11-345"><a href="#cb11-345" aria-hidden="true" tabindex="-1"></a>In a more general way, help on a function is accessed by typing in <span class="in">`?function_name`</span>, the help appearing in the "Graph" panel.</span>
+<span id="cb11-314"><a href="#cb11-314" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-315"><a href="#cb11-315" aria-hidden="true" tabindex="-1"></a><span class="fu">## Setting up the environment</span></span>
+<span id="cb11-316"><a href="#cb11-316" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-317"><a href="#cb11-317" aria-hidden="true" tabindex="-1"></a>Make sure you have the following packages installed by launching the following commands: copy-paste them in the "Source code" panel (upper left after having created a new R script), select all the lines and hit Ctrl+⏎ (Windows, Linux) or ⌘+⏎ (Mac). These are the main packages that we will use in this class:</span>
+<span id="cb11-318"><a href="#cb11-318" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-319"><a href="#cb11-319" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb11-320"><a href="#cb11-320" aria-hidden="true" tabindex="-1"></a><span class="co"># Necessary for the exercises</span></span>
+<span id="cb11-321"><a href="#cb11-321" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb11-322"><a href="#cb11-322" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"patchwork"</span>)</span>
+<span id="cb11-323"><a href="#cb11-323" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"broom"</span>)</span>
+<span id="cb11-324"><a href="#cb11-324" aria-hidden="true" tabindex="-1"></a><span class="co"># Recommended for smooth working and some exercises</span></span>
+<span id="cb11-325"><a href="#cb11-325" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
+<span id="cb11-326"><a href="#cb11-326" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
+<span id="cb11-327"><a href="#cb11-327" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"knitr"</span>)</span>
+<span id="cb11-328"><a href="#cb11-328" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"shiny"</span>)</span>
+<span id="cb11-329"><a href="#cb11-329" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"plotly"</span>)</span>
+<span id="cb11-330"><a href="#cb11-330" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tikzDevice"</span>)</span>
+<span id="cb11-331"><a href="#cb11-331" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"quantities"</span>)</span>
+<span id="cb11-332"><a href="#cb11-332" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggforce"</span>)</span>
+<span id="cb11-333"><a href="#cb11-333" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-334"><a href="#cb11-334" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-335"><a href="#cb11-335" aria-hidden="true" tabindex="-1"></a>Later on, a package can be loaded by calling:</span>
+<span id="cb11-336"><a href="#cb11-336" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-337"><a href="#cb11-337" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb11-338"><a href="#cb11-338" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(package_name)</span>
+<span id="cb11-339"><a href="#cb11-339" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb11-340"><a href="#cb11-340" aria-hidden="true" tabindex="-1"></a>or by checking it in the "Graphs" panel under the "Packages" tab.</span>
+<span id="cb11-341"><a href="#cb11-341" aria-hidden="true" tabindex="-1"></a>If you want to access a function from a given package without loading it (or because several packages define the same function and you want to specify which one to use), type:</span>
+<span id="cb11-342"><a href="#cb11-342" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-343"><a href="#cb11-343" aria-hidden="true" tabindex="-1"></a><span class="in">```r</span></span>
+<span id="cb11-344"><a href="#cb11-344" aria-hidden="true" tabindex="-1"></a>package_name<span class="sc">::</span><span class="fu">function_name</span>(parameters)</span>
+<span id="cb11-345"><a href="#cb11-345" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb11-346"><a href="#cb11-346" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-347"><a href="#cb11-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-348"><a href="#cb11-348" aria-hidden="true" tabindex="-1"></a><span class="fu">## The `tutor` package</span></span>
+<span id="cb11-347"><a href="#cb11-347" aria-hidden="true" tabindex="-1"></a>If you want to access the documentation on a given package, click the link on this package in the "Packages" tab.</span>
+<span id="cb11-348"><a href="#cb11-348" aria-hidden="true" tabindex="-1"></a>In a more general way, help on a function is accessed by typing in <span class="in">`?function_name`</span>, the help appearing in the "Graph" panel.</span>
 <span id="cb11-349"><a href="#cb11-349" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-350"><a href="#cb11-350" aria-hidden="true" tabindex="-1"></a>Finally, I also made some interactive exercises that are bundled in the <span class="co">[</span><span class="ot">`tutor`</span><span class="co">](https://colinbousige.github.io/tutor/)</span> package. I let you go there and follow the instructions for installing it – you have to get used to going to GitHub to install packages and find information on them.</span>
-<span id="cb11-351"><a href="#cb11-351" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-350"><a href="#cb11-350" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-351"><a href="#cb11-351" aria-hidden="true" tabindex="-1"></a><span class="fu">## The exercises</span></span>
 <span id="cb11-352"><a href="#cb11-352" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-353"><a href="#cb11-353" aria-hidden="true" tabindex="-1"></a>Alternatively, you can just &lt;a href="Data/exo-in-class.zip" download target="_blank"&gt;download the archive with all the exercises files&lt;/a&gt;, unzip it in your <span class="in">`R class`</span> RStudio project, and edit the R files.</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-353"><a href="#cb11-353" aria-hidden="true" tabindex="-1"></a>I made a series of exercises with their solutions. You can download the exercises and solutions from the following repositories, then create a Rstudio project from the unzipped folder:</span>
+<span id="cb11-354"><a href="#cb11-354" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-355"><a href="#cb11-355" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Beginner exercises</span><span class="co">](https://github.com/colinbousige/R1-beginner)</span></span>
+<span id="cb11-356"><a href="#cb11-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Avanced exercises</span><span class="co">](https://github.com/colinbousige/R2-advanced)</span></span>
+<span id="cb11-357"><a href="#cb11-357" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">GGplot2 exercises</span><span class="co">](https://github.com/colinbousige/R3-ggplot2)</span></span>
+<span id="cb11-358"><a href="#cb11-358" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Quarto exercises</span><span class="co">](https://github.com/colinbousige/R4-quarto)</span></span>
+<span id="cb11-359"><a href="#cb11-359" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>More "advanced" exercises can be found in chapter 17, <span class="co">[</span><span class="ot">List of exercises</span><span class="co">](18-exercises.qmd)</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

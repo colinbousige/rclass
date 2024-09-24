@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Reproducible data treatment with R - 10&nbsp; Conditional actions and loops</title>
+<title>10&nbsp; Conditional actions and loops – Reproducible data treatment with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -115,13 +115,13 @@ ga('send', {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./11-conditions_loops.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Conditional actions and loops</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -228,8 +228,8 @@ ga('send', {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./15-rmarkdown.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Rmarkdown</span></span></a>
+  <a href="./15-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -382,9 +382,9 @@ ga('send', {
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Unit: milliseconds
-#&gt;       expr        min         lq       mean    median         uq       max
-#&gt;    forloop 218.339104 221.693109 225.139569 225.41855 227.184116 233.19697
-#&gt;  noforloop   1.402651   2.544378   6.288494   4.76176   7.762776  22.84167
+#&gt;       expr        min         lq       mean     median         uq       max
+#&gt;    forloop 234.336853 235.826957 238.109156 238.396612 239.979847 244.10756
+#&gt;  noforloop   1.452712   2.102234   5.254716   4.466745   6.871436  15.84265
 #&gt;  neval cld
 #&gt;     10  a 
 #&gt;     10   b</code></pre>
@@ -502,18 +502,18 @@ ga('send', {
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,000 × 2
-#&gt;         x y    
-#&gt;     &lt;dbl&gt; &lt;chr&gt;
-#&gt;  1 -0.235 x&lt;=0 
-#&gt;  2  0.366 x&gt;0  
-#&gt;  3  0.272 x&gt;0  
-#&gt;  4  0.838 x&gt;0  
-#&gt;  5  0.564 x&gt;0  
-#&gt;  6 -0.826 x&lt;=0 
-#&gt;  7 -0.557 x&lt;=0 
-#&gt;  8  0.859 x&gt;0  
-#&gt;  9 -0.607 x&lt;=0 
-#&gt; 10  0.347 x&gt;0  
+#&gt;           x y    
+#&gt;       &lt;dbl&gt; &lt;chr&gt;
+#&gt;  1  0.519   x&gt;0  
+#&gt;  2 -0.376   x&lt;=0 
+#&gt;  3 -0.673   x&lt;=0 
+#&gt;  4  0.0652  x&gt;0  
+#&gt;  5 -0.00135 x&lt;=0 
+#&gt;  6 -0.508   x&lt;=0 
+#&gt;  7 -0.231   x&lt;=0 
+#&gt;  8 -0.566   x&lt;=0 
+#&gt;  9 -0.136   x&lt;=0 
+#&gt; 10 -0.714   x&lt;=0 
 #&gt; # ℹ 990 more rows</code></pre>
 </div>
 </div>
@@ -534,22 +534,22 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; $A
-#&gt; [1] 57.13301
+#&gt; [1] 50.76211
 #&gt; 
 #&gt; $B
-#&gt; [1] 46.07109
+#&gt; [1] -28.455
 #&gt; 
 #&gt; $C
-#&gt; [1] 106.691</code></pre>
+#&gt; [1] 99.2379</code></pre>
 </div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;         A         B         C 
-#&gt;  57.13301  46.07109 106.69103</code></pre>
+#&gt;  50.76211 -28.45500  99.23790</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;         A         B         C 
-#&gt;  57.13301  46.07109 106.69103</code></pre>
+#&gt;  50.76211 -28.45500  99.23790</code></pre>
 </div>
 </div>
 </details></details><details><summary><strong>Exercise 3</strong>
@@ -695,18 +695,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -738,7 +727,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -790,6 +801,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -824,7 +853,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -872,7 +905,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -1093,12 +1131,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation column-body"><div class="nav-page nav-page-previous">
-      <a href="./10-functions.html" class="pagination-link  aria-label=">
+      <a href="./10-functions.html" class="pagination-link" aria-label="Functions">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Functions</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./12-plotting.html" class="pagination-link" aria-label="<span class='chapter-number'>11</span>&nbsp; <span class='chapter-title'>Plotting</span>">
+      <a href="./12-plotting.html" class="pagination-link" aria-label="Plotting">
         <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Plotting</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1296,7 +1334,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb50-203"><a href="#cb50-203" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
 <span id="cb50-204"><a href="#cb50-204" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
 <span id="cb50-205"><a href="#cb50-205" aria-hidden="true" tabindex="-1"></a></span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 

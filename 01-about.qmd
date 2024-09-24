@@ -123,19 +123,14 @@ This class is indented to provide the students with the tools to handle themselv
 remove(list = ls())
 library(plotly)
 library(ggplot2)
-load("plot_data.Rdata")
 ```
 
 **You want to be able to produce interactive plots like these in an automatic experimental report?**
 
 ```{r, echo=FALSE, warning = FALSE}
-ggplotly(gg, dynamicTicks = TRUE) %>%
-  animation_opts(5)%>%
-  layout(xaxis = list(autorange = FALSE, range = c(3050, 3550)))%>%
-  animation_slider(
-    currentvalue = list(prefix = "Pressure: ", 
-                        suffix = " GPa", font = list(color = "red"))
-  )
+d <- tibble::tibble(x = seq(-pi,pi,.01), y = sin(x))
+P <- ggplot(d, aes(x,y))+geom_point()
+ggplotly(P, dynamicTicks = TRUE)
 remove(list = ls())
 ```
 

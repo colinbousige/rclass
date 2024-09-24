@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.537">
+<meta name="generator" content="quarto-1.5.57">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Reproducible data treatment with R - 5&nbsp; Vectors</title>
+<title>5&nbsp; Vectors – Reproducible data treatment with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,7 +30,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -115,13 +115,13 @@ ga('send', {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-vectors.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Vectors</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -228,8 +228,8 @@ ga('send', {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./15-rmarkdown.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Rmarkdown</span></span></a>
+  <a href="./15-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Writing documents with Quarto</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -372,14 +372,14 @@ ga('send', {
 <span><span class="co"># with given standard deviation `sd`</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span>, mean<span class="op">=</span><span class="fl">3</span>, sd<span class="op">=</span><span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  [1] 2.619771 3.025152 3.293682 4.490925 4.431168 3.066530 4.233528 3.863887
-#&gt;  [9] 3.932504 2.220107</code></pre>
+<pre><code>#&gt;  [1] 3.558538 3.102672 2.752335 3.601986 4.128392 2.513220 2.958013 3.760190
+#&gt;  [9] 2.870545 3.002304</code></pre>
 </div>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># vector with 10 random values uniformly distributed between min and max</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">10</span>, min <span class="op">=</span> <span class="fl">0</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  [1] 0.3529724 0.7712596 0.9803776 0.9240055 0.1539559 0.1982481 0.8150497
-#&gt;  [8] 0.2295002 0.6342184 0.8145764</code></pre>
+<pre><code>#&gt;  [1] 0.9135264 0.6623520 0.1584420 0.9348654 0.7851477 0.6908345 0.5821439
+#&gt;  [8] 0.4743019 0.9370265 0.1034351</code></pre>
 </div>
 </div>
 </section><section id="numerical-and-categorical-data-types" class="level2" data-number="5.2"><h2 data-number="5.2" class="anchored" data-anchor-id="numerical-and-categorical-data-types">
@@ -708,7 +708,7 @@ Attention
 <div class="cell" data-warnings="false">
 <div class="sourceCode" id="cb94"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 4 3 9</code></pre>
+<pre><code>#&gt; [1] 4 5 3</code></pre>
 </div>
 </div>
 </section><section id="maximum-and-minimum" class="level3" data-number="5.3.4"><h3 data-number="5.3.4" class="anchored" data-anchor-id="maximum-and-minimum">
@@ -853,7 +853,10 @@ Attention
 </div>
 </section></section><section id="exo-vectors" class="level2" data-number="5.4"><h2 data-number="5.4" class="anchored" data-anchor-id="exo-vectors">
 <span class="header-section-number">5.4</span> Exercises</h2>
-<p><a href="Data/exo-in-class.zip" download="" target="_blank">Download the archive with all the exercises files</a>, unzip it in your <code>R class</code> RStudio project, and edit the R files.</p>
+<p>Download the exercises and solutions from the following repository, then create a Rstudio project from the unzipped folder:</p>
+<ul>
+<li><a href="https://github.com/colinbousige/R1-beginner">Beginner exercises</a></li>
+</ul>
 <hr>
 <details><summary><strong>Exercise 1</strong>
 </summary><p>Let’s create a named vector containing age of the students in the class, the names of each value being the first name of the students. Then:</p>
@@ -1047,18 +1050,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -1090,7 +1082,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
   const viewSource = window.document.getElementById('quarto-view-source') ||
                      window.document.getElementById('quarto-code-tools-source');
   if (viewSource) {
@@ -1142,6 +1156,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   if (showAllCode) {
     showAllCode.addEventListener("click", toggleCodeHandler(true));
   }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1176,7 +1208,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1224,7 +1260,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      return note.innerHTML;
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
     }
   }
   for (var i=0; i<xrefs.length; i++) {
@@ -1445,12 +1486,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script><nav class="page-navigation column-body"><div class="nav-page nav-page-previous">
-      <a href="./05-variables.html" class="pagination-link  aria-label=" booleans="" and="" strings="">
+      <a href="./05-variables.html" class="pagination-link" aria-label="Variables, booleans and strings">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Variables, booleans and strings</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07-dataframes.html" class="pagination-link" aria-label="<span class='chapter-number'>6</span>&nbsp; <span class='chapter-title'>Data frames</span>">
+      <a href="./07-dataframes.html" class="pagination-link" aria-label="Data frames">
         <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data frames</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1750,112 +1791,113 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb154-335"><a href="#cb154-335" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-336"><a href="#cb154-336" aria-hidden="true" tabindex="-1"></a><span class="fu">## Exercises {#exo-vectors}</span></span>
 <span id="cb154-337"><a href="#cb154-337" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-338"><a href="#cb154-338" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-339"><a href="#cb154-339" aria-hidden="true" tabindex="-1"></a>&lt;a href="Data/exo-in-class.zip" download target="_blank"&gt;Download the archive with all the exercises files&lt;/a&gt;, unzip it in your <span class="in">`R class`</span> RStudio project, and edit the R files.</span>
-<span id="cb154-340"><a href="#cb154-340" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-341"><a href="#cb154-341" aria-hidden="true" tabindex="-1"></a>---</span>
-<span id="cb154-342"><a href="#cb154-342" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-343"><a href="#cb154-343" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
-<span id="cb154-344"><a href="#cb154-344" aria-hidden="true" tabindex="-1"></a>    &lt;summary&gt;**Exercise 1**&lt;/summary&gt;</span>
-<span id="cb154-345"><a href="#cb154-345" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-346"><a href="#cb154-346" aria-hidden="true" tabindex="-1"></a>Let's create a named vector containing age of the students in the class, the names of each value being the first name of the students. Then:</span>
-<span id="cb154-347"><a href="#cb154-347" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-348"><a href="#cb154-348" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the average age and its standard deviation</span>
-<span id="cb154-349"><a href="#cb154-349" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the median age</span>
-<span id="cb154-350"><a href="#cb154-350" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the maximum, minimum and range of the ages in the class?</span>
-<span id="cb154-351"><a href="#cb154-351" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What are all the student names in the class?</span>
-<span id="cb154-352"><a href="#cb154-352" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print the sorted ages by increasing and decreasing order</span>
-<span id="cb154-353"><a href="#cb154-353" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print the ages sorted by alphabetically ordered names (increasing and decreasing)</span>
-<span id="cb154-354"><a href="#cb154-354" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Show a histogram of the ages distribution using <span class="in">`hist()`</span>{.R} and play with the parameter <span class="in">`breaks`</span> to modify the histogram</span>
-<span id="cb154-355"><a href="#cb154-355" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Show a boxplot of the ages distribution using <span class="in">`boxplot()`</span>{.R}</span>
-<span id="cb154-356"><a href="#cb154-356" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-338"><a href="#cb154-338" aria-hidden="true" tabindex="-1"></a>Download the exercises and solutions from the following repository, then create a Rstudio project from the unzipped folder:</span>
+<span id="cb154-339"><a href="#cb154-339" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-340"><a href="#cb154-340" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Beginner exercises</span><span class="co">](https://github.com/colinbousige/R1-beginner)</span></span>
+<span id="cb154-341"><a href="#cb154-341" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-342"><a href="#cb154-342" aria-hidden="true" tabindex="-1"></a>---</span>
+<span id="cb154-343"><a href="#cb154-343" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-344"><a href="#cb154-344" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb154-345"><a href="#cb154-345" aria-hidden="true" tabindex="-1"></a>    &lt;summary&gt;**Exercise 1**&lt;/summary&gt;</span>
+<span id="cb154-346"><a href="#cb154-346" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-347"><a href="#cb154-347" aria-hidden="true" tabindex="-1"></a>Let's create a named vector containing age of the students in the class, the names of each value being the first name of the students. Then:</span>
+<span id="cb154-348"><a href="#cb154-348" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-349"><a href="#cb154-349" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the average age and its standard deviation</span>
+<span id="cb154-350"><a href="#cb154-350" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the median age</span>
+<span id="cb154-351"><a href="#cb154-351" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the maximum, minimum and range of the ages in the class?</span>
+<span id="cb154-352"><a href="#cb154-352" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What are all the student names in the class?</span>
+<span id="cb154-353"><a href="#cb154-353" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print the sorted ages by increasing and decreasing order</span>
+<span id="cb154-354"><a href="#cb154-354" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print the ages sorted by alphabetically ordered names (increasing and decreasing)</span>
+<span id="cb154-355"><a href="#cb154-355" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Show a histogram of the ages distribution using <span class="in">`hist()`</span>{.R} and play with the parameter <span class="in">`breaks`</span> to modify the histogram</span>
+<span id="cb154-356"><a href="#cb154-356" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Show a boxplot of the ages distribution using <span class="in">`boxplot()`</span>{.R}</span>
 <span id="cb154-357"><a href="#cb154-357" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-358"><a href="#cb154-358" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
-<span id="cb154-359"><a href="#cb154-359" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-360"><a href="#cb154-360" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
-<span id="cb154-361"><a href="#cb154-361" aria-hidden="true" tabindex="-1"></a>    &lt;summary&gt;**Exercise 2**&lt;/summary&gt;</span>
-<span id="cb154-362"><a href="#cb154-362" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-363"><a href="#cb154-363" aria-hidden="true" tabindex="-1"></a>This exercise is adapted from <span class="co">[</span><span class="ot">here</span><span class="co">](https://perso.esiee.fr/~courivad/R/05-vectors.html#application-population-in-french-cities-1962-2012)</span>.</span>
-<span id="cb154-364"><a href="#cb154-364" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-365"><a href="#cb154-365" aria-hidden="true" tabindex="-1"></a>Open Rstudio and create a new R script, save it as <span class="in">`population.R`</span> in your wanted directory, say <span class="in">`Rcourse/`</span>.</span>
-<span id="cb154-366"><a href="#cb154-366" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-358"><a href="#cb154-358" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-359"><a href="#cb154-359" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
+<span id="cb154-360"><a href="#cb154-360" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-361"><a href="#cb154-361" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb154-362"><a href="#cb154-362" aria-hidden="true" tabindex="-1"></a>    &lt;summary&gt;**Exercise 2**&lt;/summary&gt;</span>
+<span id="cb154-363"><a href="#cb154-363" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-364"><a href="#cb154-364" aria-hidden="true" tabindex="-1"></a>This exercise is adapted from <span class="co">[</span><span class="ot">here</span><span class="co">](https://perso.esiee.fr/~courivad/R/05-vectors.html#application-population-in-french-cities-1962-2012)</span>.</span>
+<span id="cb154-365"><a href="#cb154-365" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-366"><a href="#cb154-366" aria-hidden="true" tabindex="-1"></a>Open Rstudio and create a new R script, save it as <span class="in">`population.R`</span> in your wanted directory, say <span class="in">`Rcourse/`</span>.</span>
 <span id="cb154-367"><a href="#cb154-367" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-368"><a href="#cb154-368" aria-hidden="true" tabindex="-1"></a>&lt;a href="Data/population.csv" download target="_blank"&gt;Download&lt;/a&gt; the <span class="in">`population.csv`</span> file and save it in your working directory.</span>
-<span id="cb154-369"><a href="#cb154-369" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-370"><a href="#cb154-370" aria-hidden="true" tabindex="-1"></a>A csv file contains raw data stored as plain text and separated by a comma (Comma Separated Values). Open it with Rstudio.</span>
-<span id="cb154-371"><a href="#cb154-371" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-372"><a href="#cb154-372" aria-hidden="true" tabindex="-1"></a>We can of course directly load such file with R and store its data in an appropriate format (_i.e._ a <span class="in">`data.frame`</span>), but this is for the next chapter. For now, just copy-paste the text in the Rstudio script area to:</span>
-<span id="cb154-373"><a href="#cb154-373" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-374"><a href="#cb154-374" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`cities`</span> vector containing all the cities listed in <span class="in">`population.csv`</span></span>
-<span id="cb154-375"><a href="#cb154-375" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`pop_1962`</span> and <span class="in">`pop_2012`</span> vectors containing the populations of each city at these years. Print the 2 vectors. </span>
-<span id="cb154-376"><a href="#cb154-376" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use <span class="in">`names()`</span>{.R} to name values of <span class="in">`pop_1962`</span> and <span class="in">`pop_2012`</span>. Print the 2 vectors again. Are there any change?</span>
-<span id="cb154-377"><a href="#cb154-377" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What are the cities with more than 200000 people in 1962? For these, how many residents in 2012?</span>
-<span id="cb154-378"><a href="#cb154-378" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the population evolution of Montpellier and Nantes?</span>
-<span id="cb154-379"><a href="#cb154-379" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`pop_diff`</span> vector to store population change between 1962 and 2012</span>
-<span id="cb154-380"><a href="#cb154-380" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print cities with a negative change</span>
-<span id="cb154-381"><a href="#cb154-381" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print cities which broke the 300000 people barrier between 1962 and 2012</span>
-<span id="cb154-382"><a href="#cb154-382" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the total change in population of the 10 largest cities (as of 1962) between 1962 and 2012.</span>
-<span id="cb154-383"><a href="#cb154-383" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the population mean for year 1962</span>
-<span id="cb154-384"><a href="#cb154-384" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the population mean of Paris over these two years</span>
-<span id="cb154-385"><a href="#cb154-385" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sort the cities by decreasing order of population for 1962</span>
-<span id="cb154-386"><a href="#cb154-386" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-387"><a href="#cb154-387" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
-<span id="cb154-388"><a href="#cb154-388" aria-hidden="true" tabindex="-1"></a>&lt;summary&gt;Solution&lt;/summary&gt;</span>
-<span id="cb154-389"><a href="#cb154-389" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-390"><a href="#cb154-390" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
-<span id="cb154-391"><a href="#cb154-391" aria-hidden="true" tabindex="-1"></a><span class="in"># Create a `cities` vector containing all the cities listed in `population.csv`</span></span>
-<span id="cb154-392"><a href="#cb154-392" aria-hidden="true" tabindex="-1"></a><span class="in">cities &lt;- c("Angers", "Bordeaux", "Brest", "Dijon", "Grenoble", "Le Havre", </span></span>
-<span id="cb154-393"><a href="#cb154-393" aria-hidden="true" tabindex="-1"></a><span class="in">            "Le Mans", "Lille", "Lyon", "Marseille", "Montpellier", "Nantes", </span></span>
-<span id="cb154-394"><a href="#cb154-394" aria-hidden="true" tabindex="-1"></a><span class="in">            "Nice", "Paris", "Reims", "Rennes", "Saint-Etienne", "Strasbourg", </span></span>
-<span id="cb154-395"><a href="#cb154-395" aria-hidden="true" tabindex="-1"></a><span class="in">            "Toulon", "Toulouse")</span></span>
-<span id="cb154-396"><a href="#cb154-396" aria-hidden="true" tabindex="-1"></a><span class="in"># Create a `pop_1962` and `pop_2012` vectors containing the populations </span></span>
-<span id="cb154-397"><a href="#cb154-397" aria-hidden="true" tabindex="-1"></a><span class="in"># of each city at these years. Print the 2 vectors. </span></span>
-<span id="cb154-398"><a href="#cb154-398" aria-hidden="true" tabindex="-1"></a><span class="in">pop_1962 &lt;- c(115273,278403,136104,135694,156707,187845,132181,239955,</span></span>
-<span id="cb154-399"><a href="#cb154-399" aria-hidden="true" tabindex="-1"></a><span class="in">              535746,778071,118864,240048,292958,2790091,134856,151948,</span></span>
-<span id="cb154-400"><a href="#cb154-400" aria-hidden="true" tabindex="-1"></a><span class="in">              210311,228971,161797,323724)</span></span>
-<span id="cb154-401"><a href="#cb154-401" aria-hidden="true" tabindex="-1"></a><span class="in">pop_2012 &lt;- c(149017,241287,139676,152071,158346,173142,143599,228652,</span></span>
-<span id="cb154-402"><a href="#cb154-402" aria-hidden="true" tabindex="-1"></a><span class="in">              496343,852516,268456,291604,343629,2240621,181893,209860,</span></span>
-<span id="cb154-403"><a href="#cb154-403" aria-hidden="true" tabindex="-1"></a><span class="in">              171483,274394,164899,453317)</span></span>
-<span id="cb154-404"><a href="#cb154-404" aria-hidden="true" tabindex="-1"></a><span class="in">pop_1962; pop_2012</span></span>
-<span id="cb154-405"><a href="#cb154-405" aria-hidden="true" tabindex="-1"></a><span class="in"># Use names() to name values of `pop_1962` and `pop_2012`. </span></span>
-<span id="cb154-406"><a href="#cb154-406" aria-hidden="true" tabindex="-1"></a><span class="in"># Print the 2 vectors again. Are there any change?</span></span>
-<span id="cb154-407"><a href="#cb154-407" aria-hidden="true" tabindex="-1"></a><span class="in">names(pop_2012) &lt;- names(pop_1962) &lt;- cities</span></span>
-<span id="cb154-408"><a href="#cb154-408" aria-hidden="true" tabindex="-1"></a><span class="in">pop_1962; pop_2012</span></span>
-<span id="cb154-409"><a href="#cb154-409" aria-hidden="true" tabindex="-1"></a><span class="in"># What are the cities with more than 200000 people in 1962? </span></span>
-<span id="cb154-410"><a href="#cb154-410" aria-hidden="true" tabindex="-1"></a><span class="in"># For these, how many residents in 2012?</span></span>
-<span id="cb154-411"><a href="#cb154-411" aria-hidden="true" tabindex="-1"></a><span class="in">cities200k &lt;- cities[pop_1962&gt;200000]</span></span>
-<span id="cb154-412"><a href="#cb154-412" aria-hidden="true" tabindex="-1"></a><span class="in">cities200k; pop_2012[cities200k]</span></span>
-<span id="cb154-413"><a href="#cb154-413" aria-hidden="true" tabindex="-1"></a><span class="in"># What is the population evolution of Montpellier and Nantes?</span></span>
-<span id="cb154-414"><a href="#cb154-414" aria-hidden="true" tabindex="-1"></a><span class="in">pop_2012['Montpellier'] - pop_1962['Montpellier']; pop_2012['Nantes'] - pop_1962['Nantes']</span></span>
-<span id="cb154-415"><a href="#cb154-415" aria-hidden="true" tabindex="-1"></a><span class="in"># Create a `pop_diff` vector to store population change between 1962 and 2012</span></span>
-<span id="cb154-416"><a href="#cb154-416" aria-hidden="true" tabindex="-1"></a><span class="in">pop_diff &lt;- pop_2012 - pop_1962</span></span>
-<span id="cb154-417"><a href="#cb154-417" aria-hidden="true" tabindex="-1"></a><span class="in"># Print cities with a negative change</span></span>
-<span id="cb154-418"><a href="#cb154-418" aria-hidden="true" tabindex="-1"></a><span class="in">cities[pop_diff&lt;0]</span></span>
-<span id="cb154-419"><a href="#cb154-419" aria-hidden="true" tabindex="-1"></a><span class="in"># Print cities which broke the 300000 people barrier between 1962 and 2012</span></span>
-<span id="cb154-420"><a href="#cb154-420" aria-hidden="true" tabindex="-1"></a><span class="in">cities[pop_2012&gt;300000 &amp; pop_1962&lt;300000]</span></span>
-<span id="cb154-421"><a href="#cb154-421" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute the total change in population of the 10 largest cities</span></span>
-<span id="cb154-422"><a href="#cb154-422" aria-hidden="true" tabindex="-1"></a><span class="in"># (as of 1962) between 1962 and 2012.</span></span>
-<span id="cb154-423"><a href="#cb154-423" aria-hidden="true" tabindex="-1"></a><span class="in">ten_largest &lt;- cities[order(pop_1962, decreasing = TRUE)[1:10]]</span></span>
-<span id="cb154-424"><a href="#cb154-424" aria-hidden="true" tabindex="-1"></a><span class="in">sum(pop_2012[ten_largest] - pop_1962[ten_largest])</span></span>
-<span id="cb154-425"><a href="#cb154-425" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute the population mean for year 1962</span></span>
-<span id="cb154-426"><a href="#cb154-426" aria-hidden="true" tabindex="-1"></a><span class="in">mean(pop_1962)</span></span>
-<span id="cb154-427"><a href="#cb154-427" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute the population mean of Paris</span></span>
-<span id="cb154-428"><a href="#cb154-428" aria-hidden="true" tabindex="-1"></a><span class="in">mean(c(pop_1962['Paris'], pop_2012['Paris']))</span></span>
-<span id="cb154-429"><a href="#cb154-429" aria-hidden="true" tabindex="-1"></a><span class="in"># Sort the cities by decreasing order of population for 1962</span></span>
-<span id="cb154-430"><a href="#cb154-430" aria-hidden="true" tabindex="-1"></a><span class="in">(pop_1962_sorted &lt;- sort(pop_1962, decreasing = TRUE))</span></span>
-<span id="cb154-431"><a href="#cb154-431" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
-<span id="cb154-432"><a href="#cb154-432" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-433"><a href="#cb154-433" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
+<span id="cb154-368"><a href="#cb154-368" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-369"><a href="#cb154-369" aria-hidden="true" tabindex="-1"></a>&lt;a href="Data/population.csv" download target="_blank"&gt;Download&lt;/a&gt; the <span class="in">`population.csv`</span> file and save it in your working directory.</span>
+<span id="cb154-370"><a href="#cb154-370" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-371"><a href="#cb154-371" aria-hidden="true" tabindex="-1"></a>A csv file contains raw data stored as plain text and separated by a comma (Comma Separated Values). Open it with Rstudio.</span>
+<span id="cb154-372"><a href="#cb154-372" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-373"><a href="#cb154-373" aria-hidden="true" tabindex="-1"></a>We can of course directly load such file with R and store its data in an appropriate format (_i.e._ a <span class="in">`data.frame`</span>), but this is for the next chapter. For now, just copy-paste the text in the Rstudio script area to:</span>
+<span id="cb154-374"><a href="#cb154-374" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-375"><a href="#cb154-375" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`cities`</span> vector containing all the cities listed in <span class="in">`population.csv`</span></span>
+<span id="cb154-376"><a href="#cb154-376" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`pop_1962`</span> and <span class="in">`pop_2012`</span> vectors containing the populations of each city at these years. Print the 2 vectors. </span>
+<span id="cb154-377"><a href="#cb154-377" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Use <span class="in">`names()`</span>{.R} to name values of <span class="in">`pop_1962`</span> and <span class="in">`pop_2012`</span>. Print the 2 vectors again. Are there any change?</span>
+<span id="cb154-378"><a href="#cb154-378" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What are the cities with more than 200000 people in 1962? For these, how many residents in 2012?</span>
+<span id="cb154-379"><a href="#cb154-379" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>What is the population evolution of Montpellier and Nantes?</span>
+<span id="cb154-380"><a href="#cb154-380" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Create a <span class="in">`pop_diff`</span> vector to store population change between 1962 and 2012</span>
+<span id="cb154-381"><a href="#cb154-381" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print cities with a negative change</span>
+<span id="cb154-382"><a href="#cb154-382" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Print cities which broke the 300000 people barrier between 1962 and 2012</span>
+<span id="cb154-383"><a href="#cb154-383" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the total change in population of the 10 largest cities (as of 1962) between 1962 and 2012.</span>
+<span id="cb154-384"><a href="#cb154-384" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the population mean for year 1962</span>
+<span id="cb154-385"><a href="#cb154-385" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Compute the population mean of Paris over these two years</span>
+<span id="cb154-386"><a href="#cb154-386" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Sort the cities by decreasing order of population for 1962</span>
+<span id="cb154-387"><a href="#cb154-387" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-388"><a href="#cb154-388" aria-hidden="true" tabindex="-1"></a>&lt;details&gt;</span>
+<span id="cb154-389"><a href="#cb154-389" aria-hidden="true" tabindex="-1"></a>&lt;summary&gt;Solution&lt;/summary&gt;</span>
+<span id="cb154-390"><a href="#cb154-390" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-391"><a href="#cb154-391" aria-hidden="true" tabindex="-1"></a><span class="in">```{r, warnings=FALSE}</span></span>
+<span id="cb154-392"><a href="#cb154-392" aria-hidden="true" tabindex="-1"></a><span class="in"># Create a `cities` vector containing all the cities listed in `population.csv`</span></span>
+<span id="cb154-393"><a href="#cb154-393" aria-hidden="true" tabindex="-1"></a><span class="in">cities &lt;- c("Angers", "Bordeaux", "Brest", "Dijon", "Grenoble", "Le Havre", </span></span>
+<span id="cb154-394"><a href="#cb154-394" aria-hidden="true" tabindex="-1"></a><span class="in">            "Le Mans", "Lille", "Lyon", "Marseille", "Montpellier", "Nantes", </span></span>
+<span id="cb154-395"><a href="#cb154-395" aria-hidden="true" tabindex="-1"></a><span class="in">            "Nice", "Paris", "Reims", "Rennes", "Saint-Etienne", "Strasbourg", </span></span>
+<span id="cb154-396"><a href="#cb154-396" aria-hidden="true" tabindex="-1"></a><span class="in">            "Toulon", "Toulouse")</span></span>
+<span id="cb154-397"><a href="#cb154-397" aria-hidden="true" tabindex="-1"></a><span class="in"># Create a `pop_1962` and `pop_2012` vectors containing the populations </span></span>
+<span id="cb154-398"><a href="#cb154-398" aria-hidden="true" tabindex="-1"></a><span class="in"># of each city at these years. Print the 2 vectors. </span></span>
+<span id="cb154-399"><a href="#cb154-399" aria-hidden="true" tabindex="-1"></a><span class="in">pop_1962 &lt;- c(115273,278403,136104,135694,156707,187845,132181,239955,</span></span>
+<span id="cb154-400"><a href="#cb154-400" aria-hidden="true" tabindex="-1"></a><span class="in">              535746,778071,118864,240048,292958,2790091,134856,151948,</span></span>
+<span id="cb154-401"><a href="#cb154-401" aria-hidden="true" tabindex="-1"></a><span class="in">              210311,228971,161797,323724)</span></span>
+<span id="cb154-402"><a href="#cb154-402" aria-hidden="true" tabindex="-1"></a><span class="in">pop_2012 &lt;- c(149017,241287,139676,152071,158346,173142,143599,228652,</span></span>
+<span id="cb154-403"><a href="#cb154-403" aria-hidden="true" tabindex="-1"></a><span class="in">              496343,852516,268456,291604,343629,2240621,181893,209860,</span></span>
+<span id="cb154-404"><a href="#cb154-404" aria-hidden="true" tabindex="-1"></a><span class="in">              171483,274394,164899,453317)</span></span>
+<span id="cb154-405"><a href="#cb154-405" aria-hidden="true" tabindex="-1"></a><span class="in">pop_1962; pop_2012</span></span>
+<span id="cb154-406"><a href="#cb154-406" aria-hidden="true" tabindex="-1"></a><span class="in"># Use names() to name values of `pop_1962` and `pop_2012`. </span></span>
+<span id="cb154-407"><a href="#cb154-407" aria-hidden="true" tabindex="-1"></a><span class="in"># Print the 2 vectors again. Are there any change?</span></span>
+<span id="cb154-408"><a href="#cb154-408" aria-hidden="true" tabindex="-1"></a><span class="in">names(pop_2012) &lt;- names(pop_1962) &lt;- cities</span></span>
+<span id="cb154-409"><a href="#cb154-409" aria-hidden="true" tabindex="-1"></a><span class="in">pop_1962; pop_2012</span></span>
+<span id="cb154-410"><a href="#cb154-410" aria-hidden="true" tabindex="-1"></a><span class="in"># What are the cities with more than 200000 people in 1962? </span></span>
+<span id="cb154-411"><a href="#cb154-411" aria-hidden="true" tabindex="-1"></a><span class="in"># For these, how many residents in 2012?</span></span>
+<span id="cb154-412"><a href="#cb154-412" aria-hidden="true" tabindex="-1"></a><span class="in">cities200k &lt;- cities[pop_1962&gt;200000]</span></span>
+<span id="cb154-413"><a href="#cb154-413" aria-hidden="true" tabindex="-1"></a><span class="in">cities200k; pop_2012[cities200k]</span></span>
+<span id="cb154-414"><a href="#cb154-414" aria-hidden="true" tabindex="-1"></a><span class="in"># What is the population evolution of Montpellier and Nantes?</span></span>
+<span id="cb154-415"><a href="#cb154-415" aria-hidden="true" tabindex="-1"></a><span class="in">pop_2012['Montpellier'] - pop_1962['Montpellier']; pop_2012['Nantes'] - pop_1962['Nantes']</span></span>
+<span id="cb154-416"><a href="#cb154-416" aria-hidden="true" tabindex="-1"></a><span class="in"># Create a `pop_diff` vector to store population change between 1962 and 2012</span></span>
+<span id="cb154-417"><a href="#cb154-417" aria-hidden="true" tabindex="-1"></a><span class="in">pop_diff &lt;- pop_2012 - pop_1962</span></span>
+<span id="cb154-418"><a href="#cb154-418" aria-hidden="true" tabindex="-1"></a><span class="in"># Print cities with a negative change</span></span>
+<span id="cb154-419"><a href="#cb154-419" aria-hidden="true" tabindex="-1"></a><span class="in">cities[pop_diff&lt;0]</span></span>
+<span id="cb154-420"><a href="#cb154-420" aria-hidden="true" tabindex="-1"></a><span class="in"># Print cities which broke the 300000 people barrier between 1962 and 2012</span></span>
+<span id="cb154-421"><a href="#cb154-421" aria-hidden="true" tabindex="-1"></a><span class="in">cities[pop_2012&gt;300000 &amp; pop_1962&lt;300000]</span></span>
+<span id="cb154-422"><a href="#cb154-422" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute the total change in population of the 10 largest cities</span></span>
+<span id="cb154-423"><a href="#cb154-423" aria-hidden="true" tabindex="-1"></a><span class="in"># (as of 1962) between 1962 and 2012.</span></span>
+<span id="cb154-424"><a href="#cb154-424" aria-hidden="true" tabindex="-1"></a><span class="in">ten_largest &lt;- cities[order(pop_1962, decreasing = TRUE)[1:10]]</span></span>
+<span id="cb154-425"><a href="#cb154-425" aria-hidden="true" tabindex="-1"></a><span class="in">sum(pop_2012[ten_largest] - pop_1962[ten_largest])</span></span>
+<span id="cb154-426"><a href="#cb154-426" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute the population mean for year 1962</span></span>
+<span id="cb154-427"><a href="#cb154-427" aria-hidden="true" tabindex="-1"></a><span class="in">mean(pop_1962)</span></span>
+<span id="cb154-428"><a href="#cb154-428" aria-hidden="true" tabindex="-1"></a><span class="in"># Compute the population mean of Paris</span></span>
+<span id="cb154-429"><a href="#cb154-429" aria-hidden="true" tabindex="-1"></a><span class="in">mean(c(pop_1962['Paris'], pop_2012['Paris']))</span></span>
+<span id="cb154-430"><a href="#cb154-430" aria-hidden="true" tabindex="-1"></a><span class="in"># Sort the cities by decreasing order of population for 1962</span></span>
+<span id="cb154-431"><a href="#cb154-431" aria-hidden="true" tabindex="-1"></a><span class="in">(pop_1962_sorted &lt;- sort(pop_1962, decreasing = TRUE))</span></span>
+<span id="cb154-432"><a href="#cb154-432" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb154-433"><a href="#cb154-433" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-434"><a href="#cb154-434" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
-<span id="cb154-435"><a href="#cb154-435" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb154-435"><a href="#cb154-435" aria-hidden="true" tabindex="-1"></a>&lt;/details&gt;</span>
 <span id="cb154-436"><a href="#cb154-436" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb154-437"><a href="#cb154-437" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb154-437"><a href="#cb154-437" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb154-438"><a href="#cb154-438" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
 <span id="cb154-439"><a href="#cb154-439" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
 <span id="cb154-440"><a href="#cb154-440" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
 <span id="cb154-441"><a href="#cb154-441" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
-<span id="cb154-442"><a href="#cb154-442" aria-hidden="true" tabindex="-1"></a></span>
-</code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb154-442"><a href="#cb154-442" aria-hidden="true" tabindex="-1"></a>&lt;br&gt;</span>
+<span id="cb154-443"><a href="#cb154-443" aria-hidden="true" tabindex="-1"></a></span>
+</code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
 
