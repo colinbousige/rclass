@@ -129,7 +129,6 @@ Create an _example.Rmd_ file with the following YAML header (**the indentation i
 
 ```yaml
 ---
-
 title  : Your Title
 author : John Doe
 date-modified : last-modified
@@ -163,7 +162,7 @@ How to understand this header:
 
 
 Now you can start adding some content, like:
-````quarto
+````markdown
 ---
 title: "The title"
 author: John Doe
@@ -253,90 +252,34 @@ For cross referencing to figures and tables, use `output: bookdown::html_documen
 
 You can add options to a code chunk, like:
 
-- `echo=FALSE`: hide the code, show the output
-- `include=FALSE`: hide the code and the output
-- `warnings=FALSE`: hide the warning messages
-- `error=TRUE`: will compute the code chunk despite errors
-- `cache=TRUE`: cache the result of the chunk for faster re-compilation
-- `fig.asp`: figure aspect ratio
-- `fig.caption`: figure caption
-- ...[and more](https://yihui.name/knitr/options/)
+- `echo: false`: hide the code, show the output
+- `include: false`: hide the code and the output
+- `warnings: false`: hide the warning messages
+- `error: true`: will compute the code chunk despite errors
+- `cache: true`: cache the result of the chunk for faster re-compilation
+- `fig-asp`: figure aspect ratio
+- `fig-caption`: figure caption
+- ...[and more](https://quarto.org/docs/computations/execution-options.html)
 
 ## Compilation
 
-To knit your Rmd file to the desired output, in Rstudio, click the little triangle next to the "Knit" button, like this:
-
-```{r, echo=FALSE}
-knitr::include_graphics("Plots/compile_rmd.png")
-```
+To knit your `qmd` file to the desired output, in Rstudio, click the "Render" button.
 
 The corresponding output file will be created in the same folder.
-
-## Going further: parameters
-
-You can even provide a list of parameters to your Rmarkdown file that you can retrieve in code chunks with `params$param_name`. More information [here](https://bookdown.org/yihui/rmarkdown/parameterized-reports.html), but here is a short example: try compiling it directly using the "Knit" button, and then try compiling it using "Knit with parameters". Alternatively, you can have the popup interactive window by rendering with the command `rmarkdown::render("MyDocument.Rmd", params = "ask")`.
-
-
-````markdown
----
-title: "Test"
-output: html_document
-params:
-  city:
-    label: "City:"
-    value: Angers
-    input: select
-    multiple: TRUE
-    choices: [Angers, Paris, Montpellier, Nantes, Marseille]
-  printcode:
-    label: "Display Code"
-    value: TRUE
-  data:
-    label: "Input dataset:"
-    value: "Data/population.txt"
-    input: file
----
-
-`r ''````{r, setup, include=FALSE}
-# set this option in the first code chunk in the document
-knitr::opts_chunk$set(echo = params$printcode)
-```
-
-Plotting ``r ''`r paste(params$data)`:
-
-`r ''````{r, message=FALSE}
-library(ggplot2)
-library(plotly)
-df <- read.table(params$data, header=TRUE)
-p <- ggplot(data=subset(df, city %in% params$city), 
-            aes(x=year, y=pop, size=pop, color=city)) +
-        geom_point() + 
-        geom_smooth(method="lm", aes(fill=city), alpha=0.1, show.legend = FALSE) + 
-        ggtitle(paste("Population in ",paste(params$city, collapse=", "),sep=""))+
-        labs(x="Year", y="Population")+
-        theme_light()
-ggplotly(p)
-```
-````
-
-
-The "Knit with parameters" launches a `Shiny` user interface allowing interactively choosing the parameters. All options are listed [here](https://bookdown.org/yihui/rmarkdown/params-knit.html#the-interactive-user-interface).
-
 
 
 ## And what about JuPyteR notebooks?
 
 [JuPyteR notebooks](https://jupyter.org/) are basically a web-based interactive version or Rmarkdown documents working with **Ju**lia, **Pyt**hon and **R**. 
 
-But the installation is a tad complicated for the non initiate, and, well, it is just like Rmarkdown but less easy to use and share, in my opinion. But if you mostly work with python, then you have to get used to it since Rmarkdown is better suited for R.
+But the installation is a tad complicated for the non initiate, and, well, it is just like Rmarkdown and Quarto but less easy to use and share, in my opinion. 
 
 
-## Welcome to the future: Quarto
+## Coming from Rmarkdown?
 
 [Quarto](https://quarto.org/) is a standalone project from the Rstudio team built on [pandoc](https://pandoc.org/) that looks a lot like Rmarkdown, but tailored not only for R but also for python, julia and observable.
 
-All your `Rmd` files should be directly compatible with quarto upon changing the extension name to `qmd`. Then I invite you to explore the [new possibilities offerd by quarto](https://quarto.org/docs/guide/).
-
+All your `Rmd` files should be directly compatible with quarto upon changing the extension name to `qmd`. 
 
 ## Exercises {#exo-rmd}
 
