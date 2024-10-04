@@ -576,6 +576,57 @@ tools::texi2pdf("plot.tex") # compile the tex file to pdf
 system("open -a Skim plot.pdf") # on Mac: open the resulting pdf with Skim
 ```
 
+:::{.callout-note collapse="true"}
+## Pro Tip: make a `plot_to_pdf()`{.R} function
+
+Here is a function I use to save my plots as pdf using `tikzDevice`:
+```r
+#' plot_to_pdf()
+#'
+#' Saves a ggplot to pdf through a tikzDevice
+#'
+#' @param P A ggplot plot.
+#' @param filename A file name if pdf export wanted in the folder "Plots".
+#' @param out.folder The folder where the pdf will be saved.
+#' @param H Height of the exported plot
+#' @param W Width of the exported plot
+#' @param open logical. Open the file once created?
+plot_to_pdf <- function(P, 
+                        filename="plot",
+                        out.folder=".",
+                        H=6, 
+                        W=8, 
+                        open=TRUE) {
+    # if tikzDevice is not loaded, load it and set the options
+    if (! "tikzDevice" %in%(.packages())) {
+        library(tikzDevice)
+        options(tikzLatexPackages 
+            =c(getOption( "tikzLatexPackages" ),
+            r"(\usepackage{cmbright})", # for sans serif font
+            r"(\usepackage{bm})", # for bold maths
+            r"(\usepackage[utf8]{inputenc})",
+            r"(\usepackage{wasysym})")
+        )
+    }
+
+    tikz(paste0(filename, ".tex"), height = H, 
+        width = W, pointsize = 10, standAlone = TRUE)
+    print(P)
+    dev.off()
+    # compile the .tex file to pdf
+    tools::texi2pdf(paste0(filename, ".tex"))
+    # move the pdf to the output folder
+    system(paste0("mv ",filename,".pdf ",out.folder,"/"))
+    # clean compilation files
+    system(paste0("find . -name \"",filename,"*\" -not -name \"",filename,".pdf\" -d
+elete"))
+    # open the pdf file with Skim (on Mac)
+    if (open) system(paste0("open -a Skim ",out.folder,"/",filename,".pdf"))
+}
+
+```
+:::
+
 ### Multiple plots
 
 In case you want to output multiple plots with a for loop, you have two options: 

@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>3&nbsp; Getting ready – Reproducible data treatment with R</title>
 <style>
 code{white-space: pre-wrap;}
@@ -56,7 +53,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -75,8 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -102,9 +97,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-<script type="text/javascript">
+}</script><script type="text/javascript">
 
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -116,12 +109,7 @@ ga('send', {
   hitType: 'pageview',
   'anonymizeIp': true,
 });
-</script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
+</script><script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script><script type="text/javascript">
 const typesetMath = (el) => {
   if (window.MathJax) {
     // MathJax Typeset
@@ -146,17 +134,12 @@ const typesetMath = (el) => {
 window.Quarto = {
   typesetMath
 };
-</script>
-
-<link rel="stylesheet" href="style.css">
+</script><link rel="stylesheet" href="style.css">
 </head>
-
 <body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -167,13 +150,9 @@ window.Quarto = {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Reproducible data treatment with R</a> 
         <div class="sidebar-tools-main">
@@ -188,7 +167,7 @@ window.Quarto = {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
@@ -304,35 +283,33 @@ window.Quarto = {
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-easy-way" id="toc-the-easy-way" class="nav-link active" data-scroll-target="#the-easy-way"><span class="header-section-number">3.1</span> The easy way</a></li>
+<li><a href="#the-easy-way" id="toc-the-easy-way" class="nav-link active" data-scroll-target="#the-easy-way"><span class="header-section-number">3.1</span> The easy way</a></li>
   <li><a href="#the-more-advanced-way" id="toc-the-more-advanced-way" class="nav-link" data-scroll-target="#the-more-advanced-way"><span class="header-section-number">3.2</span> The more advanced way</a></li>
-  <li><a href="#install-and-configure-git" id="toc-install-and-configure-git" class="nav-link" data-scroll-target="#install-and-configure-git"><span class="header-section-number">3.3</span> Install and configure git</a>
+  <li>
+<a href="#install-and-configure-git" id="toc-install-and-configure-git" class="nav-link" data-scroll-target="#install-and-configure-git"><span class="header-section-number">3.3</span> Install and configure git</a>
   <ul class="collapse">
-  <li><a href="#setting-up-git-and-rstudio" id="toc-setting-up-git-and-rstudio" class="nav-link" data-scroll-target="#setting-up-git-and-rstudio"><span class="header-section-number">3.3.1</span> Setting up git and Rstudio</a></li>
+<li><a href="#setting-up-git-and-rstudio" id="toc-setting-up-git-and-rstudio" class="nav-link" data-scroll-target="#setting-up-git-and-rstudio"><span class="header-section-number">3.3.1</span> Setting up git and Rstudio</a></li>
   <li><a href="#working-with-git-and-rstudio" id="toc-working-with-git-and-rstudio" class="nav-link" data-scroll-target="#working-with-git-and-rstudio"><span class="header-section-number">3.3.2</span> Working with git and RStudio</a></li>
-  </ul></li>
+  </ul>
+</li>
   <li><a href="#in-any-case-install-latex" id="toc-in-any-case-install-latex" class="nav-link" data-scroll-target="#in-any-case-install-latex"><span class="header-section-number">3.4</span> In any case: install LaTeX</a></li>
   <li><a href="#working-in-rstudio" id="toc-working-in-rstudio" class="nav-link" data-scroll-target="#working-in-rstudio"><span class="header-section-number">3.5</span> Working in Rstudio</a></li>
   <li><a href="#setting-up-the-environment" id="toc-setting-up-the-environment" class="nav-link" data-scroll-target="#setting-up-the-environment"><span class="header-section-number">3.6</span> Setting up the environment</a></li>
   <li><a href="#the-exercises" id="toc-the-exercises" class="nav-link" data-scroll-target="#the-exercises"><span class="header-section-number">3.7</span> The exercises</a></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/colinbousige/rclass/blob/main/03-getting_ready.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/colinbousige/rclass/blob/main/03-getting_ready.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting ready</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<main class="content column-body" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">
+<span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Getting ready</span>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -346,10 +323,7 @@ window.Quarto = {
   
 
 
-</header>
-
-
-<style type="text/css">
+</header><style type="text/css">
 blockquote {
   background: #E9F9FF;
   border-left: 5px solid #026086;
@@ -357,17 +331,18 @@ blockquote {
   padding: 0.5em 10px;
 }
 </style>
-<section id="the-easy-way" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="the-easy-way"><span class="header-section-number">3.1</span> The easy way</h2>
+<section id="the-easy-way" class="level2" data-number="3.1"><h2 data-number="3.1" class="anchored" data-anchor-id="the-easy-way">
+<span class="header-section-number">3.1</span> The easy way</h2>
 <ul>
-<li><a href="https://cran.r-project.org/">Download</a> and install R</li>
-<li><a href="https://www.rstudio.com/products/rstudio/download/#download">Download</a> and install Rstudio</li>
-<li><strong>Windows only:</strong> <a href="https://cran.r-project.org/bin/windows/Rtools/">Download</a> and install Rtools</li>
+<li>
+<a href="https://cran.r-project.org/">Download</a> and install R</li>
+<li>
+<a href="https://www.rstudio.com/products/rstudio/download/#download">Download</a> and install Rstudio</li>
+<li>
+<strong>Windows only:</strong> <a href="https://cran.r-project.org/bin/windows/Rtools/">Download</a> and install Rtools</li>
 <li>You’re good to go.</li>
-</ul>
-</section>
-<section id="the-more-advanced-way" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="the-more-advanced-way"><span class="header-section-number">3.2</span> The more advanced way</h2>
+</ul></section><section id="the-more-advanced-way" class="level2" data-number="3.2"><h2 data-number="3.2" class="anchored" data-anchor-id="the-more-advanced-way">
+<span class="header-section-number">3.2</span> The more advanced way</h2>
 <p>If you don’t want to use Rstudio but rather want to keep with your favorite text editor, like I do:</p>
 <ul>
 <li>I still recommend <a href="https://cran.r-project.org/">downloading</a> and installing R via CRAN (I had some packages problems due to a <code>homebrew</code> installation on Mac).</li>
@@ -389,12 +364,14 @@ Configuring VS Code
 <p>I personally use <a href="https://code.visualstudio.com/">VS Code</a>.</p>
 <ul>
 <li>First, install the <a href="https://github.com/randy3k/radian">radian</a> console.</li>
-<li>Install the language server protocol package in <em>R</em> with: <code class="sourceCode r"><span class="fu">install.packages</span>(<span class="st">"languageserver"</span>)</code></li>
+<li>Install the language server protocol package in <em>R</em> with: <code class="sourceCode r"><span class="fu">install.packages</span>(<span class="st">"languageserver"</span>)</code>
+</li>
 <li>In VS Code, install the following extensions:
 <ul>
 <li><a href="https://marketplace.visualstudio.com/items?itemName=Ikuyadeu.r">VSCode R</a></li>
 <li><a href="https://marketplace.visualstudio.com/items?itemName=REditorSupport.r-lsp">R LSP Client</a></li>
-</ul></li>
+</ul>
+</li>
 <li>Enable <code>r.bracketedPaste</code> for using Radian</li>
 <li>Set up <code>r.rterm.windows</code>, <code>r.rterm.mac</code> or <code>r.rterm.linux</code>: Path to Radian (where you installed radian)</li>
 <li>You should be good to go: ⌘+⏎ will send the current line/selection to the radian console and ⌘+Shift+K will render the current Rmd file.</li>
@@ -410,26 +387,23 @@ Configuring VS Code
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    <span class="dt">"editor.guides.bracketPairs"</span><span class="fu">:</span> <span class="kw">true</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Also, I recommend turning on the session watcher (<code>"r.sessionWatcher": true</code>), and then adding the following code to your <code>.Rprofile</code>. This way, the help, tables and figures can be viewed in the VS Code browser panel.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.browser =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.viewer =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.page_viewer =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.view =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">vsc.helpPanel =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="fu">interactive</span>() <span class="sc">&amp;&amp;</span> <span class="fu">Sys.getenv</span>(<span class="st">"TERM_PROGRAM"</span>) <span class="sc">==</span> <span class="st">"vscode"</span>) {</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="st">"httpgd"</span> <span class="sc">%in%</span> <span class="fu">.packages</span>(<span class="at">all.available =</span> <span class="cn">TRUE</span>)) {</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">options</span>(<span class="at">vsc.plot =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        <span class="fu">options</span>(<span class="at">device =</span> <span class="cf">function</span>(...) {</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>            httpgd<span class="sc">::</span><span class="fu">hgd</span>(<span class="at">silent =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">.vsc.browser</span>(httpgd<span class="sc">::</span><span class="fu">hgd_url</span>(), <span class="at">viewer =</span> <span class="st">"Beside"</span>)</span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        })</span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<details>
-<summary>
-<strong>Here are also a few keybindings that I use (<code>keybindings.json</code>):</strong>
-</summary>
-<div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.browser <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.viewer <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.page_viewer <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.view <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.helpPanel <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="kw">if</span> <span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span><span class="op">(</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html">Sys.getenv</a></span><span class="op">(</span><span class="st">"TERM_PROGRAM"</span><span class="op">)</span> <span class="op">==</span> <span class="st">"vscode"</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="kw">if</span> <span class="op">(</span><span class="st">"httpgd"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/zpackages.html">.packages</a></span><span class="op">(</span>all.available <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>vsc.plot <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span>        <span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>device <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>            <span class="fu">httpgd</span><span class="fu">::</span><span class="fu"><a href="https://nx10.github.io/httpgd/reference/hgd.html">hgd</a></span><span class="op">(</span>silent <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>            <span class="fu">.vsc.browser</span><span class="op">(</span><span class="fu">httpgd</span><span class="fu">::</span><span class="fu"><a href="https://nx10.github.io/httpgd/reference/hgd_url.html">hgd_url</a></span><span class="op">(</span><span class="op">)</span>, viewer <span class="op">=</span> <span class="st">"Beside"</span><span class="op">)</span></span>
+<span>        <span class="op">}</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details><summary><strong>Here are also a few keybindings that I use (<code>keybindings.json</code>):</strong>
+</summary><div class="sourceCode" id="cb3"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ot">[</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">{</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"description"</span><span class="fu">:</span> <span class="st">"Create R terminal"</span><span class="fu">,</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="dt">"key"</span><span class="fu">:</span> <span class="st">"alt+cmd+r"</span><span class="fu">,</span></span>
@@ -520,7 +494,8 @@ Configuring Sublime Text
 <li>To set up command line launch: <code>ln -s "/Applications/Sublime Text.app/Contents/SharedSupport/bin/subl" /usr/local/bin/sublime</code>.</li>
 <li>Install <em>a minima</em> the packages <code>LSP</code>, <code>R-IDE</code>, <code>Terminus</code>, and <code>SendCode</code>, and also the <a href="https://github.com/randy3k/radian">radian</a> console.</li>
 <li>You can also add the useful packages <code>LatexTools</code>, <code>BracketHighlighter</code>, <code>RainbowBrackets</code>, <code>Citer</code>, <code>Path Tools</code>, <code>SidebarEnhancements</code>, <code>SidebarTools</code>, git, <code>GitGutter</code>, <code>Alignment</code>, <code>AutoFileName</code>.</li>
-<li>Install the language server protocol package in R with: <code class="sourceCode r"><span class="fu">install.packages</span>(<span class="st">"languageserver"</span>)</code></li>
+<li>Install the language server protocol package in R with: <code class="sourceCode r"><span class="fu">install.packages</span>(<span class="st">"languageserver"</span>)</code>
+</li>
 <li>To create a keyboard shortcut to open a terminal with the radian console as the R interpreter, add this to your keybinding file:</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode json code-with-copy"><code class="sourceCode json"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">{</span> <span class="dt">"keys"</span><span class="fu">:</span> <span class="ot">[</span><span class="st">"super+option+r"</span><span class="ot">]</span><span class="fu">,</span> <span class="er">#</span> <span class="er">put</span> <span class="er">whatever</span> <span class="er">you</span> <span class="er">want</span> <span class="er">here</span></span>
@@ -539,36 +514,41 @@ Configuring Sublime Text
 </div>
 </div>
 </div>
-</section>
-<section id="install-and-configure-git" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="install-and-configure-git"><span class="header-section-number">3.3</span> Install and configure git</h2>
-<section id="setting-up-git-and-rstudio" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="setting-up-git-and-rstudio"><span class="header-section-number">3.3.1</span> Setting up git and Rstudio</h3>
+</section><section id="install-and-configure-git" class="level2" data-number="3.3"><h2 data-number="3.3" class="anchored" data-anchor-id="install-and-configure-git">
+<span class="header-section-number">3.3</span> Install and configure git</h2>
+<section id="setting-up-git-and-rstudio" class="level3" data-number="3.3.1"><h3 data-number="3.3.1" class="anchored" data-anchor-id="setting-up-git-and-rstudio">
+<span class="header-section-number">3.3.1</span> Setting up git and Rstudio</h3>
 <p>R combined with the git version control system provides a convenient setup for making your research project reproducible, since git allows you to track and share your code and analysis:</p>
 <ul>
 <li>It makes it easy to share your projects</li>
 <li>It facilitates collaboration, since people can contribute to your project and vice versa. They can also report errors (bugs) or suggest new additions (features) to projects</li>
 <li>You can revert to a previous version if you find bugs or accidentally delete something</li>
 <li>You can see what changes between different versions of your code</li>
-<li>Also, R makes it easy to share packages: you can install other people’s development packages with a single line of code, <em>i.e.</em> <code class="sourceCode r">devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"username/packagename"</span>)</code></li>
+<li>Also, R makes it easy to share packages: you can install other people’s development packages with a single line of code, <em>i.e.</em> <code class="sourceCode r">devtools<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"username/packagename"</span>)</code>
+</li>
 <li>And finally and for the most important part of this class: we will use <a href="https://classroom.github.com/classrooms">GitHub Classroom</a> to do and submit homework.</li>
 </ul>
 <p>RStudio has built-in support for git, so we will use the common combination of R + git + RStudio.</p>
 <ul>
-<li>First, if you haven’t done this already, download and install <a href="https://git-scm.com/downloads">git</a></li>
-<li>Create a <a href="https://github.com/">free GitHub account</a></li>
+<li>First, if you haven’t done this already, download and install <a href="https://git-scm.com/downloads">git</a>
+</li>
+<li>Create a <a href="https://github.com/">free GitHub account</a>
+</li>
 <li>Setup git in RStudio:
 <ul>
 <li>Open RStudio and go to <code>Tools &gt; Global Options…</code> click on git/SVN</li>
 <li>Check Enable version control interface for RStudio projects</li>
 <li>Set the path to the git executable that you just installed.
 <ul>
-<li>Open a shell, if you don’t know where git is installed: <code>Tools &gt; Terminal &gt; New Terminal</code></li>
+<li>Open a shell, if you don’t know where git is installed: <code>Tools &gt; Terminal &gt; New Terminal</code>
+</li>
 <li>Windows: type <code>where git</code> and hit enter. The path should be something like: C:/Program Files (x86)/git/bin/git.exe</li>
 <li>Linux/OS X: type <code>which git</code> and hit enter. The path should be something like: /usr/bin/git</li>
-</ul></li>
+</ul>
+</li>
 <li>Restart RStudio, if it worked out you will find the git icon on the top toolbar, as shown below.</li>
-</ul></li>
+</ul>
+</li>
 <li>Set up your user name and email address (the one you used to register on GitHub) in the terminal (<code>Tools &gt; Terminal &gt; New Terminal</code>, see <a href="#fig-git1" class="quarto-xref">Figure&nbsp;<span>3.1</span></a>):</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You only need to do this once</span></span>
@@ -577,20 +557,17 @@ Configuring Sublime Text
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-git1" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-git1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-git1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git1.png" class="img-fluid figure-img" style="width:80.0%">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-git1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.1: Creating a new terminal in RStudio.
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 </div>
 </div>
-</section>
-<section id="working-with-git-and-rstudio" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="working-with-git-and-rstudio"><span class="header-section-number">3.3.2</span> Working with git and RStudio</h3>
+</section><section id="working-with-git-and-rstudio" class="level3" data-number="3.3.2"><h3 data-number="3.3.2" class="anchored" data-anchor-id="working-with-git-and-rstudio">
+<span class="header-section-number">3.3.2</span> Working with git and RStudio</h3>
 <p>When creating a new project from scratch or from an existing folder, you can check <code>Create a git repository</code> to activate git for this project. You can also do this later by clicking on <code>Tools &gt; Version Control &gt; Project Setup</code>.</p>
 <p>What we will use for the exercises here, is the possibility of creation of new project from a GitHub repository, as shown in <a href="#fig-git2" class="quarto-xref">Figure&nbsp;<span>3.2</span></a>.</p>
 <ul>
@@ -599,123 +576,108 @@ Figure&nbsp;3.1: Creating a new terminal in RStudio.
 <li>Alternatively, you can also download the zipped repo, unzip the files, and create a new project from this folder.</li>
 </ul>
 <div id="fig-git2" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-git2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-git2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git2" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-git2-1" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-git2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git2.png" class="img-fluid figure-img" data-ref-parent="fig-git2" width="589">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-git2-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Create a new project from <code>Version Control</code>.
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git2" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-git2-2" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-git2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git3.png" class="img-fluid figure-img" data-ref-parent="fig-git2" width="589">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-git2-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Select <code>Git</code>.
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 </div>
 </div>
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git2" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-git2-3" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-git2-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git2-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git4.png" class="img-fluid figure-img" data-ref-parent="fig-git2" width="589">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-git2-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (c) Go to the repo website on GitHub, and copy the address in the <code>Code</code> button.
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git2" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-git2-4" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-git2-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git2-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git5.png" class="img-fluid figure-img" data-ref-parent="fig-git2" width="589">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-git2-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (d) Paste it in the required field, an give a name to the folder where you want to place it.
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-git2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.2: Creating a new project from GitHub in RStudio.
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 <ul>
 <li>Then, you’ll do your coding in the various files of the project, and save the changes.</li>
 <li>And finally, you’ll need to “Commit” the changes, and then “Push” them on the GitHub repository, as described on <a href="#fig-git3" class="quarto-xref">Figure&nbsp;<span>3.3</span></a>.</li>
 </ul>
 <div id="fig-git3" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-git3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-git3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git3" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-git3-1" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-git3-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git3-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git6.png" class="img-fluid figure-img" data-ref-parent="fig-git3" width="1112">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-git3-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Click on <code>Git &gt; Commit</code>
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-git3" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div id="fig-git3-2" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-git3-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-subfloat-fig figure"><div aria-describedby="fig-git3-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/git7.png" class="img-fluid figure-img" data-ref-parent="fig-git3" width="1112">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-git3-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Then select the files that changed, write a commit message, then click on <code>Commit</code> then <code>Push</code>.
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 </div>
 </div>
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-git3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.3: Uploading your changes to the GitHub repository.
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
-</section>
-</section>
-<section id="in-any-case-install-latex" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="in-any-case-install-latex"><span class="header-section-number">3.4</span> In any case: install LaTeX</h2>
+</section></section><section id="in-any-case-install-latex" class="level2" data-number="3.4"><h2 data-number="3.4" class="anchored" data-anchor-id="in-any-case-install-latex">
+<span class="header-section-number">3.4</span> In any case: install LaTeX</h2>
 <p>A <strong>full</strong> <span class="math inline">\(\LaTeX\)</span> distribution (emphasis on <strong>full</strong>) will be needed to knit markdown files to PDFs (you don’t need it to output html files though):</p>
 <ul>
-<li><strong>Windows:</strong> go <a href="https://miktex.org/download">here</a> and download the Net Installer to install the <strong>complete distribution</strong></li>
-<li><strong>Mac:</strong> go <a href="https://tug.org/mactex/mactex-download.html">here</a> or type <code>brew cask install mactex</code> in the terminal if you have <a href="https://treehouse.github.io/installation-guides/mac/homebrew">Homebrew</a> installed</li>
-<li><strong>Linux:</strong> <a href="https://dzone.com/articles/installing-latex-ubuntu">here</a> fore example</li>
+<li>
+<strong>Windows:</strong> go <a href="https://miktex.org/download">here</a> and download the Net Installer to install the <strong>complete distribution</strong>
+</li>
+<li>
+<strong>Mac:</strong> go <a href="https://tug.org/mactex/mactex-download.html">here</a> or type <code>brew cask install mactex</code> in the terminal if you have <a href="https://treehouse.github.io/installation-guides/mac/homebrew">Homebrew</a> installed</li>
+<li>
+<strong>Linux:</strong> <a href="https://dzone.com/articles/installing-latex-ubuntu">here</a> fore example</li>
 </ul>
 <p>Alternatively, you can also work with <a href="https://yihui.name/tinytex/">TinyTeX</a> that will install the needed packages on the fly. It is recommended on the <code>knitr</code> package help, but I only had problems with this, so I recommend the full <span class="math inline">\(\LaTeX\)</span> distribution option if you don’t mind taking up a few gigabytes of your disk. If you do, just run this in the R console:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tinytex"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">install_tinytex</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tinytex"</span><span class="op">)</span></span>
+<span><span class="fu">tinytex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/install_tinytex.html">install_tinytex</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>To uninstall TinyTeX, run:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>tinytex<span class="sc">::</span><span class="fu">uninstall_tinytex</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="working-in-rstudio" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="working-in-rstudio"><span class="header-section-number">3.5</span> Working in Rstudio</h2>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">tinytex</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/tinytex/man/install_tinytex.html">uninstall_tinytex</a></span><span class="op">(</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="working-in-rstudio" class="level2" data-number="3.5"><h2 data-number="3.5" class="anchored" data-anchor-id="working-in-rstudio">
+<span class="header-section-number">3.5</span> Working in Rstudio</h2>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -733,14 +695,12 @@ Remember
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-rstudio" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-rstudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<figure class="quarto-float quarto-float-fig figure"><div aria-describedby="fig-rstudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="Plots/rstudio.png" class="img-fluid figure-img" width="600">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rstudio-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;3.4: The Rstudio interface.
-</figcaption>
-</figure>
+</figcaption></figure>
 </div>
 </div>
 </div>
@@ -753,47 +713,43 @@ Figure&nbsp;3.4: The Rstudio interface.
 <p>The code output will be seen in the “R Console” panel if it’s a text, or in the “Graph” panel if it’s a graph. A list of all defined variables and functions is available in the “Environment” panel. You can also directly write and run code in the “R Console” panel, if it’s code you don’t care to save in a script (like installing a package or whatever).</p>
 <p>You can install packages by running the <code>install.packages("package_name")</code> command in the R console or R script, or you can also click on the “Packages” tab in the bottom right corner, and then “Install” or “Update” in case you want to install or update your packages. “Update” will show you a list of installed packages that have a new published version. All verified packages are located on the CRAN (Comprehensive R Archive Network). It is thus really easy to install packages and maintain (update) your packages in R. There is also the possibility to install packages from source if you want to install custom packages – “homemade” packages that didn’t go through the CRAN verification process: do so at your own risks.</p>
 <p>More on the <a href="https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf">Rstudio cheatsheet</a>.</p>
-</section>
-<section id="setting-up-the-environment" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="setting-up-the-environment"><span class="header-section-number">3.6</span> Setting up the environment</h2>
+</section><section id="setting-up-the-environment" class="level2" data-number="3.6"><h2 data-number="3.6" class="anchored" data-anchor-id="setting-up-the-environment">
+<span class="header-section-number">3.6</span> Setting up the environment</h2>
 <p>Make sure you have the following packages installed by launching the following commands: copy-paste them in the “Source code” panel (upper left after having created a new R script), select all the lines and hit Ctrl+⏎ (Windows, Linux) or ⌘+⏎ (Mac). These are the main packages that we will use in this class:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Necessary for the exercises</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"patchwork"</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"broom"</span>)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Recommended for smooth working and some exercises</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"devtools"</span>)</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"rmarkdown"</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"knitr"</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"shiny"</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"plotly"</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tikzDevice"</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"quantities"</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"ggforce"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Necessary for the exercises</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"patchwork"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"broom"</span><span class="op">)</span></span>
+<span><span class="co"># Recommended for smooth working and some exercises</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"rmarkdown"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"knitr"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"shiny"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"plotly"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tikzDevice"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"quantities"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"ggforce"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Later on, a package can be loaded by calling:</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(package_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">package_name</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>or by checking it in the “Graphs” panel under the “Packages” tab. If you want to access a function from a given package without loading it (or because several packages define the same function and you want to specify which one to use), type:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>package_name<span class="sc">::</span><span class="fu">function_name</span>(parameters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu">package_name</span><span class="fu">::</span><span class="fu">function_name</span><span class="op">(</span><span class="va">parameters</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>If you want to access the documentation on a given package, click the link on this package in the “Packages” tab. In a more general way, help on a function is accessed by typing in <code>?function_name</code>, the help appearing in the “Graph” panel.</p>
-</section>
-<section id="the-exercises" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="the-exercises"><span class="header-section-number">3.7</span> The exercises</h2>
+</section><section id="the-exercises" class="level2" data-number="3.7"><h2 data-number="3.7" class="anchored" data-anchor-id="the-exercises">
+<span class="header-section-number">3.7</span> The exercises</h2>
 <p>I made a series of exercises with their solutions. You can download the exercises and solutions from the following repositories, then create a Rstudio project from the unzipped folder:</p>
 <ul>
 <li><a href="https://github.com/colinbousige/R1-beginner">Beginner exercises</a></li>
 <li><a href="https://github.com/colinbousige/R2-advanced">Avanced exercises</a></li>
 <li><a href="https://github.com/colinbousige/R3-ggplot2">GGplot2 exercises</a></li>
 <li><a href="https://github.com/colinbousige/R4-quarto">Quarto exercises</a></li>
-<li>More “advanced” exercises can be found in chapter 17, <a href="./18-exercises.html">List of exercises</a></li>
+<li>More “advanced” exercises can be found in chapter 17, <a href="./18-exercises.html">List of exercises</a>
+</li>
 </ul>
 
 
 <!-- -->
 
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1263,9 +1219,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation column-body">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation column-body"><div class="nav-page nav-page-previous">
       <a href="./02-stats.html" class="pagination-link" aria-label="A little reminder on Statistics">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">A little reminder on Statistics</span></span>
       </a>          
@@ -1637,7 +1591,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb11-359"><a href="#cb11-359" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>More "advanced" exercises can be found in chapter 17, <span class="co">[</span><span class="ot">List of exercises</span><span class="co">](18-exercises.qmd)</span></span></code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-
 
 
 
