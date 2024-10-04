@@ -401,6 +401,43 @@ diamonds |>
 
 For more complicated stuff, I however advise to not use the `TeX()`{.R} function and write directly your text in $\LaTeX$, then [export your plot with `tikzDevice` as a .tex file and compile it to pdf](#a-single-plot).
 
+### Logarithmic scale
+
+To transform the axis with a logarithmic scale, use the `transform = "log10"`{.R} option of the or `scale_x(y)_continuous()`{.R} functions. Here is an example:
+
+```{r}
+breakslog10 <- function(x){
+    low <- floor(log10(min(x)))
+    high <- ceiling(log10(max(x)))
+    return(10^(seq(low, high)))
+}
+minorbreakslog10 <- function(x){
+    low <- floor(log10(min(x)))
+    high <- ceiling(log10(max(x)))
+    return(rep(1:9, length(low:high))*(10^rep(low:high, each = 9)))
+}
+diamonds |> 
+    sample_n(100) |> 
+    ggplot(aes(x = carat, y = price))+
+        geom_point(alpha = 0.5) +
+        labs(x = "Carat",
+             y = "Price")+
+        scale_y_continuous(
+            # tweak the limits if you want
+            limits = c(10,1e5),
+            # transform the scale
+            transform = "log10",
+            # major breaks in powers of 10
+            breaks = breakslog10,
+            # minor breaks (only useful for the grid)
+            minor_breaks = minorbreakslog10,
+            # write labels in scientific notation
+            labels = scales::trans_format("log10", scales::math_format(10^.x)),
+            # add logticks
+            guide = guide_axis_logticks(long = 2, mid = 1, short = 0.5)
+        )
+```
+
 
 ### Theming
 
