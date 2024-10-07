@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta name="generator" content="quarto-1.5.57">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
 <title>7&nbsp; Reading/writing all kinds of files – Reproducible data treatment with R</title>
 <style>
 code{white-space: pre-wrap;}
@@ -56,7 +53,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }
 </style>
 
-
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
 <script src="site_libs/quarto-nav/headroom.min.js"></script>
 <script src="site_libs/clipboard/clipboard.min.js"></script>
@@ -75,8 +71,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -102,9 +97,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
-}</script>
-
-<script type="text/javascript">
+}</script><script type="text/javascript">
 
 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -116,18 +109,12 @@ ga('send', {
   hitType: 'pageview',
   'anonymizeIp': true,
 });
-</script>
-
-
-<link rel="stylesheet" href="style.css">
+</script><link rel="stylesheet" href="style.css">
 </head>
-
 <body class="nav-sidebar docked">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
+  <header id="quarto-header" class="headroom fixed-top"><nav class="quarto-secondary-nav"><div class="container-fluid d-flex">
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
@@ -138,13 +125,9 @@ ga('send', {
         <i class="bi bi-search"></i>
       </button>
     </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
+  </nav></header><!-- content --><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto"><div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Reproducible data treatment with R</a> 
         <div class="sidebar-tools-main">
@@ -159,7 +142,7 @@ ga('send', {
         </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
+<li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text">Welcome</span></a>
@@ -275,40 +258,40 @@ ga('send', {
   </div>
 </li>
     </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+</div>
+</nav><div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
+        <nav id="TOC" role="doc-toc" class="toc-active"><h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#reading-files" id="toc-reading-files" class="nav-link active" data-scroll-target="#reading-files"><span class="header-section-number">7.1</span> Reading files</a>
+<li>
+<a href="#reading-files" id="toc-reading-files" class="nav-link active" data-scroll-target="#reading-files"><span class="header-section-number">7.1</span> Reading files</a>
   <ul class="collapse">
-  <li><a href="#column-text-files" id="toc-column-text-files" class="nav-link" data-scroll-target="#column-text-files"><span class="header-section-number">7.1.1</span> Column text files</a></li>
+<li><a href="#column-text-files" id="toc-column-text-files" class="nav-link" data-scroll-target="#column-text-files"><span class="header-section-number">7.1.1</span> Column text files</a></li>
   <li><a href="#excel-files" id="toc-excel-files" class="nav-link" data-scroll-target="#excel-files"><span class="header-section-number">7.1.2</span> Excel files</a></li>
   <li><a href="#origin-files" id="toc-origin-files" class="nav-link" data-scroll-target="#origin-files"><span class="header-section-number">7.1.3</span> Origin files</a></li>
   <li><a href="#matlab-files" id="toc-matlab-files" class="nav-link" data-scroll-target="#matlab-files"><span class="header-section-number">7.1.4</span> Matlab files</a></li>
   <li><a href="#images" id="toc-images" class="nav-link" data-scroll-target="#images"><span class="header-section-number">7.1.5</span> Images</a></li>
   <li><a href="#spectroscopic-files" id="toc-spectroscopic-files" class="nav-link" data-scroll-target="#spectroscopic-files"><span class="header-section-number">7.1.6</span> Spectroscopic files</a></li>
   <li><a href="#compressed-binary-data-files-hdf-netcdf" id="toc-compressed-binary-data-files-hdf-netcdf" class="nav-link" data-scroll-target="#compressed-binary-data-files-hdf-netcdf"><span class="header-section-number">7.1.7</span> Compressed binary data files: HDF, netCDF</a></li>
-  </ul></li>
-  <li><a href="#reading-multiple-files-into-a-tidy-table" id="toc-reading-multiple-files-into-a-tidy-table" class="nav-link" data-scroll-target="#reading-multiple-files-into-a-tidy-table"><span class="header-section-number">7.2</span> Reading multiple files into a tidy table</a></li>
-  <li><a href="#writing-files" id="toc-writing-files" class="nav-link" data-scroll-target="#writing-files"><span class="header-section-number">7.3</span> Writing files</a>
-  <ul class="collapse">
-  <li><a href="#text-files" id="toc-text-files" class="nav-link" data-scroll-target="#text-files"><span class="header-section-number">7.3.1</span> Text files</a></li>
-  <li><a href="#excel-files-1" id="toc-excel-files-1" class="nav-link" data-scroll-target="#excel-files-1"><span class="header-section-number">7.3.2</span> Excel files</a></li>
-  </ul></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/colinbousige/rclass/blob/main/08-reading_files.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+</li>
+  <li><a href="#reading-multiple-files-into-a-tidy-table" id="toc-reading-multiple-files-into-a-tidy-table" class="nav-link" data-scroll-target="#reading-multiple-files-into-a-tidy-table"><span class="header-section-number">7.2</span> Reading multiple files into a tidy table</a></li>
+  <li>
+<a href="#writing-files" id="toc-writing-files" class="nav-link" data-scroll-target="#writing-files"><span class="header-section-number">7.3</span> Writing files</a>
+  <ul class="collapse">
+<li><a href="#text-files" id="toc-text-files" class="nav-link" data-scroll-target="#text-files"><span class="header-section-number">7.3.1</span> Text files</a></li>
+  <li><a href="#excel-files-1" id="toc-excel-files-1" class="nav-link" data-scroll-target="#excel-files-1"><span class="header-section-number">7.3.2</span> Excel files</a></li>
+  </ul>
+</li>
+  </ul><div class="toc-actions"><ul><li><a href="https://github.com/colinbousige/rclass/blob/main/08-reading_files.qmd" class="toc-action"><i class="bi bi-github"></i>View source</a></li><li><a href="https://github.com/colinbousige/rclass/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
-<main class="content column-body" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<div class="quarto-title-block"><div><h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reading/writing all kinds of files</span></h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
+<main class="content column-body" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block default"><div class="quarto-title">
+<div class="quarto-title-block"><div><h1 class="title">
+<span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Reading/writing all kinds of files</span>
+</h1><button type="button" class="btn code-tools-button" id="quarto-code-tools-source"><i class="bi"></i> Code</button></div></div>
 </div>
 
 
@@ -322,18 +305,15 @@ ga('send', {
   
 
 
-</header>
-
-
-<section id="reading-files" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="reading-files"><span class="header-section-number">7.1</span> Reading files</h2>
+</header><section id="reading-files" class="level2" data-number="7.1"><h2 data-number="7.1" class="anchored" data-anchor-id="reading-files">
+<span class="header-section-number">7.1</span> Reading files</h2>
 <p>Working in any data-based scientific field, you will encounter many different types of files. ASCII text files are usually predominant, but you may want to read files from coming from Excel, Origin, etc. Here is a non-exhaustive reminder to help you read the kinds of files you often encounter with R. I invite you to visit the <a href="https://ropensci.org/">RopenSci webpage</a> for more packages, and if this isn’t enough for your need, well, <a href="http://letmegooglethat.com/?q=r+read+my+file+type">Google is your friend</a>.</p>
-<section id="column-text-files" class="level3" data-number="7.1.1">
-<h3 data-number="7.1.1" class="anchored" data-anchor-id="column-text-files"><span class="header-section-number">7.1.1</span> Column text files</h3>
+<section id="column-text-files" class="level3" data-number="7.1.1"><h3 data-number="7.1.1" class="anchored" data-anchor-id="column-text-files">
+<span class="header-section-number">7.1.1</span> Column text files</h3>
 <p>Most base R functions like <code class="sourceCode r"><span class="fu">read.csv</span>()</code> or <code class="sourceCode r"><span class="fu">read.table</span>()</code> have their <code>tidyverse</code> counterpart, like <code class="sourceCode r"><span class="fu">read_csv</span>()</code> and <code class="sourceCode r"><span class="fu">read_table</span>()</code>. I usually prefer the <code>tidyverse</code> version as it outputs a <code>tibble</code> instead of a <code>data.frame</code>. These functions can also be directly provided with an url to the text file.</p>
 <p>If your data file is “complicated” – in the sense that it contains lines or columns to be skipped – look at the help on the reader function with <code>?function_name</code>.</p>
-<section id="comma-separated-values" class="level4" data-number="7.1.1.1">
-<h4 data-number="7.1.1.1" class="anchored" data-anchor-id="comma-separated-values"><span class="header-section-number">7.1.1.1</span> Comma separated values</h4>
+<section id="comma-separated-values" class="level4" data-number="7.1.1.1"><h4 data-number="7.1.1.1" class="anchored" data-anchor-id="comma-separated-values">
+<span class="header-section-number">7.1.1.1</span> Comma separated values</h4>
 <p>Input file looks like this:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -350,8 +330,8 @@ ga('send', {
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r codeoutput code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"Data/tot_population.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"Data/tot_population.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 14,885 × 4
 #&gt;    `Country Name` `Country Code`  Year     Value
@@ -368,7 +348,7 @@ ga('send', {
 #&gt; 10 Arab World     ARB             1969 119016542
 #&gt; # ℹ 14,875 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r codeoutput code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"Data/tot_population.csv"</span>, <span class="at">skip =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"Data/tot_population.csv"</span>, skip <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 14,884 × 4
 #&gt;    `Arab World` ARB   `1960` `92490932`
@@ -385,7 +365,7 @@ ga('send', {
 #&gt; 10 Arab World   ARB     1970  122398374
 #&gt; # ℹ 14,874 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r codeoutput code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"Data/tot_population.csv"</span>, <span class="at">skip =</span> <span class="dv">1</span>, <span class="at">col_names =</span> LETTERS[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"Data/tot_population.csv"</span>, skip <span class="op">=</span> <span class="fl">1</span>, col_names <span class="op">=</span> <span class="va">LETTERS</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 14,885 × 4
 #&gt;    A          B         C         D
@@ -405,9 +385,9 @@ ga('send', {
 </div>
 <p>Since version 2.0 of <code>readr</code>, <code class="sourceCode r"><span class="fu">read_csv</span>()</code> can also take a vector as argument, which will result in reading all files in the vector successively:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r codeoutput code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="fu">c</span>(<span class="st">"Data/test1.csv"</span>,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>           <span class="st">"Data/test2.csv"</span>),</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">id =</span> <span class="st">"file"</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Data/test1.csv"</span>,</span>
+<span>           <span class="st">"Data/test2.csv"</span><span class="op">)</span>,</span>
+<span>         id <span class="op">=</span> <span class="st">"file"</span>, show_col_types <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 4 × 3
 #&gt;   file           name  value
@@ -418,9 +398,8 @@ ga('send', {
 #&gt; 4 Data/test2.csv Louis     8</code></pre>
 </div>
 </div>
-</section>
-<section id="space-separated-values" class="level4" data-number="7.1.1.2">
-<h4 data-number="7.1.1.2" class="anchored" data-anchor-id="space-separated-values"><span class="header-section-number">7.1.1.2</span> Space separated values</h4>
+</section><section id="space-separated-values" class="level4" data-number="7.1.1.2"><h4 data-number="7.1.1.2" class="anchored" data-anchor-id="space-separated-values">
+<span class="header-section-number">7.1.1.2</span> Space separated values</h4>
 <p>Input file looks like this:</p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
@@ -436,21 +415,18 @@ ga('send', {
 #&gt; 3066.2034    48.916748</code></pre>
 </div>
 </div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_table</span>(<span class="st">"Data/rubis_01.txt"</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">read_table</span>(<span class="st">"Data/rubis_01.txt"</span>, <span class="at">col_names =</span> <span class="fu">c</span>(<span class="st">"w"</span>,<span class="st">"int"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="other-separators" class="level4" data-number="7.1.1.3">
-<h4 data-number="7.1.1.3" class="anchored" data-anchor-id="other-separators"><span class="header-section-number">7.1.1.3</span> Other separators</h4>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_table.html">read_table</a></span><span class="op">(</span><span class="st">"Data/rubis_01.txt"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_table.html">read_table</a></span><span class="op">(</span><span class="st">"Data/rubis_01.txt"</span>, col_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"w"</span>,<span class="st">"int"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="other-separators" class="level4" data-number="7.1.1.3"><h4 data-number="7.1.1.3" class="anchored" data-anchor-id="other-separators">
+<span class="header-section-number">7.1.1.3</span> Other separators</h4>
 <p>For tab-separated values, use <code class="sourceCode r"><span class="fu">read_tsv</span>()</code>. For other exotic separators, look into <code class="sourceCode r"><span class="fu">read_delim</span>()</code>.</p>
-</section>
-</section>
-<section id="excel-files" class="level3" data-number="7.1.2">
-<h3 data-number="7.1.2" class="anchored" data-anchor-id="excel-files"><span class="header-section-number">7.1.2</span> Excel files</h3>
+</section></section><section id="excel-files" class="level3" data-number="7.1.2"><h3 data-number="7.1.2" class="anchored" data-anchor-id="excel-files">
+<span class="header-section-number">7.1.2</span> Excel files</h3>
 <p>For this, use the <code>readxl</code> library and its function <code class="sourceCode r"><span class="fu">read_excel</span>()</code> returning a <code>tibble</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r codeoutput code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read_excel</span>(<span class="st">"Data/test.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://readxl.tidyverse.org">readxl</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Data/test.xlsx"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 10 × 2
 #&gt;        x      y
@@ -466,7 +442,7 @@ ga('send', {
 #&gt;  9     9 11.1  
 #&gt; 10    10  7.28</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r codeoutput code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_excel</span>(<span class="st">"Data/test.xlsx"</span>, <span class="at">sheet=</span><span class="dv">2</span>) <span class="co"># specify the sheet by its number or its name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Data/test.xlsx"</span>, sheet<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="co"># specify the sheet by its number or its name</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 4 × 2
 #&gt;   hello  world   
@@ -479,7 +455,7 @@ ga('send', {
 </div>
 <p>In case your Excel file contains merged cells, <code class="sourceCode r"><span class="fu">read_excel</span>()</code> will fill the merged cells by <code>NA</code> values. If you want to avoid this behavior, use <code class="sourceCode r">openxlsx<span class="sc">::</span><span class="fu">read.xlsx</span>()</code> (which returns a <code>data.frame</code>):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r codeoutput code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_excel</span>(<span class="st">"Data/test.xlsx"</span>, <span class="at">sheet=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://readxl.tidyverse.org/reference/read_excel.html">read_excel</a></span><span class="op">(</span><span class="st">"Data/test.xlsx"</span>, sheet<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 5 × 3
 #&gt;   a         b ...3 
@@ -490,8 +466,8 @@ ga('send', {
 #&gt; 4 b        15 f    
 #&gt; 5 &lt;NA&gt;     16 g</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r codeoutput code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read.xlsx</span>(<span class="st">"Data/test.xlsx"</span>, <span class="at">fillMergedCells =</span> <span class="cn">TRUE</span>, <span class="at">sheet =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/read.xlsx.html">read.xlsx</a></span><span class="op">(</span><span class="st">"Data/test.xlsx"</span>, fillMergedCells <span class="op">=</span> <span class="cn">TRUE</span>, sheet <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;   a  b b
 #&gt; 1 a 12 t
@@ -501,90 +477,77 @@ ga('send', {
 #&gt; 5 b 16 g</code></pre>
 </div>
 </div>
-</section>
-<section id="origin-files" class="level3" data-number="7.1.3">
-<h3 data-number="7.1.3" class="anchored" data-anchor-id="origin-files"><span class="header-section-number">7.1.3</span> Origin files</h3>
+</section><section id="origin-files" class="level3" data-number="7.1.3"><h3 data-number="7.1.3" class="anchored" data-anchor-id="origin-files">
+<span class="header-section-number">7.1.3</span> Origin files</h3>
 <p>If you moved to R coming from a workflow where you used <a href="https://www.originlab.com/origin">Origin</a>, chances are you have some .opj files lying around that you still want to be able to read. Lucky you, the <code>Ropj</code> library is here:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Ropj)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">read.opj</span>(<span class="st">"Data/opjfile.opj"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="matlab-files" class="level3" data-number="7.1.4">
-<h3 data-number="7.1.4" class="anchored" data-anchor-id="matlab-files"><span class="header-section-number">7.1.4</span> Matlab files</h3>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/aitap/Ropj">Ropj</a></span><span class="op">)</span></span>
+<span><span class="fu">read.opj</span><span class="op">(</span><span class="st">"Data/opjfile.opj"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="matlab-files" class="level3" data-number="7.1.4"><h3 data-number="7.1.4" class="anchored" data-anchor-id="matlab-files">
+<span class="header-section-number">7.1.4</span> Matlab files</h3>
 <p>To read Matlab’s .mat format datasets, use the <a href="https://github.com/HenrikBengtsson/R.matlab">R.matlab package</a> and its <code class="sourceCode r"><span class="fu">readMat</span>()</code> function.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(R.matlab)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">readMat</span>(<span class="st">"yourfile.mat"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="images" class="level3" data-number="7.1.5">
-<h3 data-number="7.1.5" class="anchored" data-anchor-id="images"><span class="header-section-number">7.1.5</span> Images</h3>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/HenrikBengtsson/R.matlab">R.matlab</a></span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">readMat</span><span class="op">(</span><span class="st">"yourfile.mat"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="images" class="level3" data-number="7.1.5"><h3 data-number="7.1.5" class="anchored" data-anchor-id="images">
+<span class="header-section-number">7.1.5</span> Images</h3>
 <p>You can read an image as a matrix. For example:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(png)</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">readPNG</span>(<span class="st">"image.png"</span>)</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tiff)</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">readTIFF</span>(<span class="st">"image.tiff"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://www.rforge.net/png/">png</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/png/man/readPNG.html">readPNG</a></span><span class="op">(</span><span class="st">"image.png"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://www.rforge.net/tiff/">tiff</a></span><span class="op">)</span></span>
+<span><span class="fu">readTIFF</span><span class="op">(</span><span class="st">"image.tiff"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>For more image processing (pictures or videos), I recommend the <a href="https://dahtah.github.io/imager/imager.html"><code>imager</code> package</a>.</p>
-</section>
-<section id="spectroscopic-files" class="level3" data-number="7.1.6">
-<h3 data-number="7.1.6" class="anchored" data-anchor-id="spectroscopic-files"><span class="header-section-number">7.1.6</span> Spectroscopic files</h3>
+</section><section id="spectroscopic-files" class="level3" data-number="7.1.6"><h3 data-number="7.1.6" class="anchored" data-anchor-id="spectroscopic-files">
+<span class="header-section-number">7.1.6</span> Spectroscopic files</h3>
 <p>In case your spectroscopic data wasn’t saved as an ASCII file but as a <code>spc</code> or another format, take a look at the <a href="https://docs.ropensci.org/lightr/"><code>lightr</code> package</a>, for example.</p>
 <p>Example of a reading function for an spc file:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lightr)</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>read_spc <span class="ot">&lt;-</span> <span class="cf">function</span>(fname){</span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>    d <span class="ot">&lt;-</span> <span class="fu">lr_parse_spc</span>(fname) <span class="co"># d is a list</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">tibble</span>(<span class="at">w         =</span> d[[<span class="dv">1</span>]]<span class="sc">$</span>wl, </span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">intensity =</span> d[[<span class="dv">1</span>]]<span class="sc">$</span>processed)</span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="compressed-binary-data-files-hdf-netcdf" class="level3" data-number="7.1.7">
-<h3 data-number="7.1.7" class="anchored" data-anchor-id="compressed-binary-data-files-hdf-netcdf"><span class="header-section-number">7.1.7</span> Compressed binary data files: HDF, netCDF</h3>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/lightr/">lightr</a></span><span class="op">)</span></span>
+<span><span class="va">read_spc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">fname</span><span class="op">)</span><span class="op">{</span></span>
+<span>    <span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">lr_parse_spc</span><span class="op">(</span><span class="va">fname</span><span class="op">)</span> <span class="co"># d is a list</span></span>
+<span>    <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>w         <span class="op">=</span> <span class="va">d</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">wl</span>, </span>
+<span>           intensity <span class="op">=</span> <span class="va">d</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">processed</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="compressed-binary-data-files-hdf-netcdf" class="level3" data-number="7.1.7"><h3 data-number="7.1.7" class="anchored" data-anchor-id="compressed-binary-data-files-hdf-netcdf">
+<span class="header-section-number">7.1.7</span> Compressed binary data files: HDF, netCDF</h3>
 <p><strong>HDF</strong>: Go to <a href="https://www.bioconductor.org/packages/release/bioc/vignettes/rhdf5/inst/doc/rhdf5.html">this vignette</a> to see how to read Hierarchical Data Files.</p>
 <p><strong>netCDF</strong>: see <a href="https://www.rdocumentation.org/packages/RNetCDF/versions/2.4-2/topics/read.nc">here</a>.</p>
-</section>
-</section>
-<section id="reading-multiple-files-into-a-tidy-table" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="reading-multiple-files-into-a-tidy-table"><span class="header-section-number">7.2</span> Reading multiple files into a tidy table</h2>
+</section></section><section id="reading-multiple-files-into-a-tidy-table" class="level2" data-number="7.2"><h2 data-number="7.2" class="anchored" data-anchor-id="reading-multiple-files-into-a-tidy-table">
+<span class="header-section-number">7.2</span> Reading multiple files into a tidy table</h2>
 <p>We very often encounter the situation where we need to read multiple similar files into a tidy table. For this, you can use a <code class="sourceCode r"><span class="cf">for</span></code> loop: this would work but would be un-R-ly, but in some cases you need to do this because you perform some other operations during the <code>for</code> loop.</p>
 <p>Let’s say we store the list of file names into a vector <code>file_list</code> and read these files using the function <code class="sourceCode r"><span class="fu">read_function</span>()</code>:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>() <span class="co"># empty initialization</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (file <span class="cf">in</span> file_list) {</span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    df_temp <span class="ot">&lt;-</span> <span class="fu">read_function</span>(file) <span class="sc">|&gt;</span> </span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">name =</span> file) <span class="co"># add the column `name` to make the tibble tidy</span></span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>    df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(df, def_temp)</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># empty initialization</span></span>
+<span><span class="kw">for</span> <span class="op">(</span><span class="va">file</span> <span class="kw">in</span> <span class="va">file_list</span><span class="op">)</span> <span class="op">{</span></span>
+<span>    <span class="va">df_temp</span> <span class="op">&lt;-</span> <span class="fu">read_function</span><span class="op">(</span><span class="va">file</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>            <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">file</span><span class="op">)</span> <span class="co"># add the column `name` to make the tibble tidy</span></span>
+<span>    <span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html">bind_rows</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">def_temp</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>An R-friendly way of doing this would be to avoid using a <code class="sourceCode r"><span class="cf">for</span></code> loop:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">name =</span> file_list) <span class="sc">|&gt;</span> </span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">data =</span> <span class="fu">map</span>(name, read_function)) <span class="sc">|&gt;</span> </span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>name <span class="op">=</span> <span class="va">file_list</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">read_function</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>    <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html">unnest</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In case you are reading csv files, you can use the fact that since the version 2.0 of <code>readr</code>, <code class="sourceCode r"><span class="fu">read_csv</span>()</code> takes a vector as first argument. You’ll also need to use the <code>id</code> argument to get a column with the list of file names:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(file_list, <span class="at">id =</span> <span class="st">"name"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</section>
-<section id="writing-files" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="writing-files"><span class="header-section-number">7.3</span> Writing files</h2>
-<section id="text-files" class="level3" data-number="7.3.1">
-<h3 data-number="7.3.1" class="anchored" data-anchor-id="text-files"><span class="header-section-number">7.3.1</span> Text files</h3>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="va">file_list</span>, id <span class="op">=</span> <span class="st">"name"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section><section id="writing-files" class="level2" data-number="7.3"><h2 data-number="7.3" class="anchored" data-anchor-id="writing-files">
+<span class="header-section-number">7.3</span> Writing files</h2>
+<section id="text-files" class="level3" data-number="7.3.1"><h3 data-number="7.3.1" class="anchored" data-anchor-id="text-files">
+<span class="header-section-number">7.3.1</span> Text files</h3>
 <p>Sometimes, you want to output your data as a csv or an Excel file to share it with others or to save your data. Use the <code class="sourceCode r"><span class="fu">write_csv</span>()</code> function to write a csv file (prefer the <code>tidyverse</code>’s <code class="sourceCode r"><span class="fu">write_csv</span>()</code> to the base R <code class="sourceCode r"><span class="fu">write.csv</span>()</code> as it is more easy to use):</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write_csv</span>(df, <span class="st">"your_file.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">df</span>, <span class="st">"your_file.csv"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Note that the <code class="sourceCode r">write_<span class="sc">*</span>()</code> functions will automatically compress outputs if an appropriate extension is given. Three extensions are currently supported: .gz for gzip compression, .bz2 for bzip2 compression and .xz for lzma compression. See the examples in the help for more information.</p>
 <p>If you don’t want to use csv files, look into <code class="sourceCode r"><span class="fu">write_tsv</span>()</code> for tab-separated values or <code class="sourceCode r"><span class="fu">write_delim</span>()</code> for any delimiter. In case you want to output fixed width files, look into <a href="https://www.rdocumentation.org/packages/gdata/versions/2.18.0/topics/write.fwf"><code>gdata</code>’s <code class="sourceCode r"><span class="fu">write.fwf</span>()</code></a>.</p>
-</section>
-<section id="excel-files-1" class="level3" data-number="7.3.2">
-<h3 data-number="7.3.2" class="anchored" data-anchor-id="excel-files-1"><span class="header-section-number">7.3.2</span> Excel files</h3>
+</section><section id="excel-files-1" class="level3" data-number="7.3.2"><h3 data-number="7.3.2" class="anchored" data-anchor-id="excel-files-1">
+<span class="header-section-number">7.3.2</span> Excel files</h3>
 <p>To write Excel files, use the library <code>openxlsx</code> and its function <code class="sourceCode r"><span class="fu">write.xlsx</span>()</code> (see the help on the function for more options):</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(openxlsx)</span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">write.xlsx</span>(df, <span class="st">"your_file.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ycphs.github.io/openxlsx/index.html">openxlsx</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/openxlsx/man/write.xlsx.html">write.xlsx</a></span><span class="op">(</span><span class="va">df</span>, <span class="st">"your_file.xlsx"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 
 <!-- -->
 
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
+</section></section></main><!-- /main --><script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
     const mode = bsSheetEl.getAttribute("data-mode");
@@ -1054,9 +1017,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
 });
-</script>
-<nav class="page-navigation column-body">
-  <div class="nav-page nav-page-previous">
+</script><nav class="page-navigation column-body"><div class="nav-page nav-page-previous">
       <a href="./07-dataframes.html" class="pagination-link" aria-label="Data frames">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Data frames</span></span>
       </a>          
@@ -1264,7 +1225,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
-
 
 
 

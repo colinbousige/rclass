@@ -833,18 +833,18 @@ Show output
 <span><span class="va">tib</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,000 × 2
-#&gt;        x     y
-#&gt;    &lt;dbl&gt; &lt;dbl&gt;
-#&gt;  1 0.210 0.210
-#&gt;  2 0.682 0.892
-#&gt;  3 0.852 1.74 
-#&gt;  4 0.725 2.47 
-#&gt;  5 0.788 3.26 
-#&gt;  6 0.874 4.13 
-#&gt;  7 0.182 4.31 
-#&gt;  8 0.550 4.86 
-#&gt;  9 0.863 5.72 
-#&gt; 10 0.436 6.16 
+#&gt;          x     y
+#&gt;      &lt;dbl&gt; &lt;dbl&gt;
+#&gt;  1 0.560   0.560
+#&gt;  2 0.00500 0.565
+#&gt;  3 0.348   0.913
+#&gt;  4 0.216   1.13 
+#&gt;  5 0.819   1.95 
+#&gt;  6 0.540   2.49 
+#&gt;  7 0.291   2.78 
+#&gt;  8 0.359   3.14 
+#&gt;  9 0.727   3.87 
+#&gt; 10 0.275   4.14 
 #&gt; # ℹ 990 more rows</code></pre>
 </div>
 </div>
@@ -865,19 +865,19 @@ Attention
 <div class="cell">
 <div class="sourceCode" id="cb70"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tib</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span> <span class="co"># is a vector</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 0.2098997 0.6816320 0.8518598 0.7252825 0.7876440 0.8740700</code></pre>
+<pre><code>#&gt; [1] 0.560092457 0.004998975 0.347715483 0.216286917 0.819130149 0.540269714</code></pre>
 </div>
 <div class="sourceCode" id="cb72"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">tib</span><span class="op">[</span>,<span class="fl">1</span><span class="op">]</span><span class="op">)</span>  <span class="co"># is a tibble</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 6 × 1
-#&gt;       x
-#&gt;   &lt;dbl&gt;
-#&gt; 1 0.210
-#&gt; 2 0.682
-#&gt; 3 0.852
-#&gt; 4 0.725
-#&gt; 5 0.788
-#&gt; 6 0.874</code></pre>
+#&gt;         x
+#&gt;     &lt;dbl&gt;
+#&gt; 1 0.560  
+#&gt; 2 0.00500
+#&gt; 3 0.348  
+#&gt; 4 0.216  
+#&gt; 5 0.819  
+#&gt; 6 0.540</code></pre>
 </div>
 </div>
 <p>Unless you want to get a <code>tibble</code>, I recommend always using the <code>$</code> notation when you want to get a column as a vector to avoid problems.</p>
@@ -990,18 +990,18 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <span><span class="va">dt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 4
-#&gt;          x       y signx    signy   
-#&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1  0.856  -0.0608 positive negative
-#&gt;  2  0.0536 -0.299  positive negative
-#&gt;  3 -0.0310  0.115  negative positive
-#&gt;  4 -0.0890  0.653  negative positive
-#&gt;  5  0.321   0.831  positive positive
-#&gt;  6  0.337   0.986  positive positive
-#&gt;  7  0.925   0.218  positive positive
-#&gt;  8 -0.205   0.563  negative positive
-#&gt;  9 -0.218  -0.633  negative negative
-#&gt; 10  0.104  -0.555  positive negative
+#&gt;         x       y signx    signy   
+#&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt;  1 -0.761 -0.185  negative negative
+#&gt;  2 -0.690 -0.832  negative negative
+#&gt;  3  0.191  0.986  positive positive
+#&gt;  4 -0.726 -0.465  negative negative
+#&gt;  5 -0.806 -0.0116 negative negative
+#&gt;  6  0.129  0.436  positive positive
+#&gt;  7  0.394 -0.848  positive negative
+#&gt;  8 -0.425  0.515  negative positive
+#&gt;  9  0.229  0.0935 positive positive
+#&gt; 10 -0.684 -0.984  negative negative
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1040,20 +1040,20 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <div class="sourceCode" id="cb93"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/slice.html">slice</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>  <span class="co"># by index</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
-#&gt;         x       y signx    signy   
-#&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt; 1  0.856  -0.0608 positive negative
-#&gt; 2  0.0536 -0.299  positive negative
-#&gt; 3 -0.0310  0.115  negative positive</code></pre>
+#&gt;        x      y signx    signy   
+#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt; 1 -0.761 -0.185 negative negative
+#&gt; 2 -0.690 -0.832 negative negative
+#&gt; 3  0.191  0.986 positive positive</code></pre>
 </div>
 <div class="sourceCode" id="cb95"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/sample_n.html">sample_n</a></span><span class="op">(</span><span class="fl">3</span><span class="op">)</span> <span class="co"># randomly</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 3 × 4
-#&gt;        x      y signx    signy   
-#&gt;    &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt; 1 -0.227 -0.278 negative negative
-#&gt; 2  0.929  0.497 positive positive
-#&gt; 3 -0.876  0.445 negative positive</code></pre>
+#&gt;         x      y signx    signy   
+#&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt; 1  0.0807 -0.232 positive negative
+#&gt; 2  0.910   0.526 positive positive
+#&gt; 3 -0.425  -0.471 negative negative</code></pre>
 </div>
 </div>
 </section><section id="operations-on-groups-of-a-variable" class="level3" data-number="6.5.3"><h3 data-number="6.5.3" class="anchored" data-anchor-id="operations-on-groups-of-a-variable">
@@ -1065,18 +1065,18 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 4
 #&gt; # Groups:   signx [2]
-#&gt;          x       y signx    signy   
-#&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1  0.856  -0.0608 positive negative
-#&gt;  2  0.0536 -0.299  positive negative
-#&gt;  3 -0.0310  0.115  negative positive
-#&gt;  4 -0.0890  0.653  negative positive
-#&gt;  5  0.321   0.831  positive positive
-#&gt;  6  0.337   0.986  positive positive
-#&gt;  7  0.925   0.218  positive positive
-#&gt;  8 -0.205   0.563  negative positive
-#&gt;  9 -0.218  -0.633  negative negative
-#&gt; 10  0.104  -0.555  positive negative
+#&gt;         x       y signx    signy   
+#&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt;  1 -0.761 -0.185  negative negative
+#&gt;  2 -0.690 -0.832  negative negative
+#&gt;  3  0.191  0.986  positive positive
+#&gt;  4 -0.726 -0.465  negative negative
+#&gt;  5 -0.806 -0.0116 negative negative
+#&gt;  6  0.129  0.436  positive positive
+#&gt;  7  0.394 -0.848  positive negative
+#&gt;  8 -0.425  0.515  negative positive
+#&gt;  9  0.229  0.0935 positive positive
+#&gt; 10 -0.684 -0.984  negative negative
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb99"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> </span>
@@ -1085,14 +1085,14 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 6 × 4
 #&gt; # Groups:   signx [2]
-#&gt;         x       y signx    signy   
-#&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt; 1 -0.0310 -0.966  negative negative
-#&gt; 2 -0.129  -0.324  negative negative
-#&gt; 3 -0.127   0.687  negative positive
-#&gt; 4  0.733   0.0420 positive positive
-#&gt; 5  0.734  -0.330  positive negative
-#&gt; 6  0.387  -0.969  positive negative</code></pre>
+#&gt;        x       y signx    signy   
+#&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt; 1 -0.286 -0.0217 negative negative
+#&gt; 2 -0.468 -0.603  negative negative
+#&gt; 3 -0.535 -0.159  negative negative
+#&gt; 4  0.148  0.911  positive positive
+#&gt; 5  0.548 -0.462  positive negative
+#&gt; 6  0.162  0.143  positive positive</code></pre>
 </div>
 <div class="sourceCode" id="cb101"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">signx</span>, <span class="va">signy</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -1100,20 +1100,20 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 12 × 4
 #&gt; # Groups:   signx, signy [4]
-#&gt;          x       y signx    signy   
-#&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 -0.0319 -0.585  negative negative
-#&gt;  2 -0.656  -0.279  negative negative
-#&gt;  3 -0.0587 -0.975  negative negative
-#&gt;  4 -0.273   0.755  negative positive
-#&gt;  5 -0.306   0.790  negative positive
-#&gt;  6 -0.705   0.215  negative positive
-#&gt;  7  0.104  -0.555  positive negative
-#&gt;  8  0.952  -0.785  positive negative
-#&gt;  9  0.448  -0.623  positive negative
-#&gt; 10  0.344   0.0408 positive positive
-#&gt; 11  0.430   0.0736 positive positive
-#&gt; 12  0.975   0.0874 positive positive</code></pre>
+#&gt;         x       y signx    signy   
+#&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt;  1 -0.631 -0.537  negative negative
+#&gt;  2 -0.891 -0.394  negative negative
+#&gt;  3 -0.264 -0.532  negative negative
+#&gt;  4 -0.963  0.390  negative positive
+#&gt;  5 -0.292  0.643  negative positive
+#&gt;  6 -0.415  0.221  negative positive
+#&gt;  7  0.641 -0.357  positive negative
+#&gt;  8  0.260 -0.355  positive negative
+#&gt;  9  0.237 -0.676  positive negative
+#&gt; 10  0.460  0.905  positive positive
+#&gt; 11  0.930  0.0198 positive positive
+#&gt; 12  0.710  0.452  positive positive</code></pre>
 </div>
 </div>
 </section><section id="summary-by-groups-of-a-variable" class="level3" data-number="6.5.4"><h3 data-number="6.5.4" class="anchored" data-anchor-id="summary-by-groups-of-a-variable">
@@ -1129,8 +1129,8 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <pre><code>#&gt; # A tibble: 2 × 4
 #&gt;   signx    count mean_x  sd_x
 #&gt;   &lt;chr&gt;    &lt;int&gt;  &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1 negative   744 -0.484 0.283
-#&gt; 2 positive   756  0.488 0.291</code></pre>
+#&gt; 1 negative   747 -0.501 0.287
+#&gt; 2 positive   753  0.483 0.287</code></pre>
 </div>
 <div class="sourceCode" id="cb105"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> </span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">signx</span>, <span class="va">signy</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -1142,10 +1142,10 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 #&gt; # Groups:   signx [2]
 #&gt;   signx    signy    count mean_x mean_y
 #&gt;   &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-#&gt; 1 negative negative   371 -0.481 -0.478
-#&gt; 2 negative positive   373 -0.488  0.512
-#&gt; 3 positive negative   369  0.472 -0.494
-#&gt; 4 positive positive   387  0.504  0.491</code></pre>
+#&gt; 1 negative negative   379 -0.515 -0.479
+#&gt; 2 negative positive   368 -0.486  0.509
+#&gt; 3 positive negative   384  0.471 -0.486
+#&gt; 4 positive positive   369  0.495  0.476</code></pre>
 </div>
 </div>
 </section><section id="sorting" class="level3" data-number="6.5.5"><h3 data-number="6.5.5" class="anchored" data-anchor-id="sorting">
@@ -1156,16 +1156,16 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <pre><code>#&gt; # A tibble: 1,500 × 4
 #&gt;         x       y signx    signy   
 #&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 -0.987 -0.806  negative negative
-#&gt;  2 -0.987  0.994  negative positive
-#&gt;  3 -0.987 -0.445  negative negative
-#&gt;  4 -0.978 -0.680  negative negative
-#&gt;  5 -0.978 -0.862  negative negative
-#&gt;  6 -0.978 -0.0198 negative negative
-#&gt;  7 -0.976 -0.102  negative negative
-#&gt;  8 -0.976  0.803  negative positive
-#&gt;  9 -0.976  0.130  negative positive
-#&gt; 10 -0.975  0.764  negative positive
+#&gt;  1 -0.997 -0.994  negative negative
+#&gt;  2 -0.997 -0.0287 negative negative
+#&gt;  3 -0.997  0.918  negative positive
+#&gt;  4 -0.996  0.672  negative positive
+#&gt;  5 -0.996  0.116  negative positive
+#&gt;  6 -0.996 -0.0611 negative negative
+#&gt;  7 -0.993 -0.982  negative negative
+#&gt;  8 -0.993  0.951  negative positive
+#&gt;  9 -0.993  0.642  negative positive
+#&gt; 10 -0.993 -0.861  negative negative
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb109"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">x</span>, <span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1173,16 +1173,16 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <pre><code>#&gt; # A tibble: 1,500 × 4
 #&gt;         x       y signx    signy   
 #&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 -0.987  0.994  negative positive
-#&gt;  2 -0.987 -0.445  negative negative
-#&gt;  3 -0.987 -0.806  negative negative
-#&gt;  4 -0.978 -0.0198 negative negative
-#&gt;  5 -0.978 -0.680  negative negative
-#&gt;  6 -0.978 -0.862  negative negative
-#&gt;  7 -0.976  0.803  negative positive
-#&gt;  8 -0.976  0.130  negative positive
-#&gt;  9 -0.976 -0.102  negative negative
-#&gt; 10 -0.975  0.764  negative positive
+#&gt;  1 -0.997  0.918  negative positive
+#&gt;  2 -0.997 -0.0287 negative negative
+#&gt;  3 -0.997 -0.994  negative negative
+#&gt;  4 -0.996  0.672  negative positive
+#&gt;  5 -0.996  0.116  negative positive
+#&gt;  6 -0.996 -0.0611 negative negative
+#&gt;  7 -0.993  0.951  negative positive
+#&gt;  8 -0.993  0.642  negative positive
+#&gt;  9 -0.993 -0.982  negative negative
+#&gt; 10 -0.993 -0.198  negative negative
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1206,18 +1206,18 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <div class="sourceCode" id="cb113"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate-joins.html">inner_join</a></span><span class="op">(</span><span class="va">dt</span>, <span class="va">dt2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 5
-#&gt;          x       y signx    signy    value
-#&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;lgl&gt;
-#&gt;  1  0.856  -0.0608 positive negative FALSE
-#&gt;  2  0.0536 -0.299  positive negative FALSE
-#&gt;  3 -0.0310  0.115  negative positive FALSE
-#&gt;  4 -0.0890  0.653  negative positive FALSE
-#&gt;  5  0.321   0.831  positive positive TRUE 
-#&gt;  6  0.337   0.986  positive positive TRUE 
-#&gt;  7  0.925   0.218  positive positive TRUE 
-#&gt;  8 -0.205   0.563  negative positive FALSE
-#&gt;  9 -0.218  -0.633  negative negative TRUE 
-#&gt; 10  0.104  -0.555  positive negative FALSE
+#&gt;         x       y signx    signy    value
+#&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;lgl&gt;
+#&gt;  1 -0.761 -0.185  negative negative TRUE 
+#&gt;  2 -0.690 -0.832  negative negative TRUE 
+#&gt;  3  0.191  0.986  positive positive TRUE 
+#&gt;  4 -0.726 -0.465  negative negative TRUE 
+#&gt;  5 -0.806 -0.0116 negative negative TRUE 
+#&gt;  6  0.129  0.436  positive positive TRUE 
+#&gt;  7  0.394 -0.848  positive negative FALSE
+#&gt;  8 -0.425  0.515  negative positive FALSE
+#&gt;  9  0.229  0.0935 positive positive TRUE 
+#&gt; 10 -0.684 -0.984  negative negative TRUE 
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1247,18 +1247,18 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <div class="sourceCode" id="cb117"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>w<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, z<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 6
-#&gt;          x       y signx    signy        w       z
-#&gt;      &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;   &lt;dbl&gt;
-#&gt;  1  0.856  -0.0608 positive negative     1  0.755 
-#&gt;  2  0.0536 -0.299  positive negative     2  0.0536
-#&gt;  3 -0.0310  0.115  negative positive     3 -0.0310
-#&gt;  4 -0.0890  0.653  negative positive     4 -0.0889
-#&gt;  5  0.321   0.831  positive positive     5  0.315 
-#&gt;  6  0.337   0.986  positive positive     6  0.331 
-#&gt;  7  0.925   0.218  positive positive     7  0.799 
-#&gt;  8 -0.205   0.563  negative positive     8 -0.204 
-#&gt;  9 -0.218  -0.633  negative negative     9 -0.216 
-#&gt; 10  0.104  -0.555  positive negative    10  0.104 
+#&gt;         x       y signx    signy        w      z
+#&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;    &lt;int&gt;  &lt;dbl&gt;
+#&gt;  1 -0.761 -0.185  negative negative     1 -0.690
+#&gt;  2 -0.690 -0.832  negative negative     2 -0.636
+#&gt;  3  0.191  0.986  positive positive     3  0.189
+#&gt;  4 -0.726 -0.465  negative negative     4 -0.664
+#&gt;  5 -0.806 -0.0116 negative negative     5 -0.722
+#&gt;  6  0.129  0.436  positive positive     6  0.129
+#&gt;  7  0.394 -0.848  positive negative     7  0.384
+#&gt;  8 -0.425  0.515  negative positive     8 -0.412
+#&gt;  9  0.229  0.0935 positive positive     9  0.227
+#&gt; 10 -0.684 -0.984  negative negative    10 -0.632
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb119"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>x<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1266,16 +1266,16 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <pre><code>#&gt; # A tibble: 1,500 × 4
 #&gt;        x       y signx    signy   
 #&gt;    &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1     1 -0.0608 positive negative
-#&gt;  2     2 -0.299  positive negative
-#&gt;  3     3  0.115  negative positive
-#&gt;  4     4  0.653  negative positive
-#&gt;  5     5  0.831  positive positive
-#&gt;  6     6  0.986  positive positive
-#&gt;  7     7  0.218  positive positive
-#&gt;  8     8  0.563  negative positive
-#&gt;  9     9 -0.633  negative negative
-#&gt; 10    10 -0.555  positive negative
+#&gt;  1     1 -0.185  negative negative
+#&gt;  2     2 -0.832  negative negative
+#&gt;  3     3  0.986  positive positive
+#&gt;  4     4 -0.465  negative negative
+#&gt;  5     5 -0.0116 negative negative
+#&gt;  6     6  0.436  positive positive
+#&gt;  7     7 -0.848  positive negative
+#&gt;  8     8  0.515  negative positive
+#&gt;  9     9  0.0935 positive positive
+#&gt; 10    10 -0.984  negative negative
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1285,18 +1285,18 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <div class="sourceCode" id="cb121"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>  <span class="co"># only x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 1
-#&gt;          x
-#&gt;      &lt;dbl&gt;
-#&gt;  1  0.856 
-#&gt;  2  0.0536
-#&gt;  3 -0.0310
-#&gt;  4 -0.0890
-#&gt;  5  0.321 
-#&gt;  6  0.337 
-#&gt;  7  0.925 
-#&gt;  8 -0.205 
-#&gt;  9 -0.218 
-#&gt; 10  0.104 
+#&gt;         x
+#&gt;     &lt;dbl&gt;
+#&gt;  1 -0.761
+#&gt;  2 -0.690
+#&gt;  3  0.191
+#&gt;  4 -0.726
+#&gt;  5 -0.806
+#&gt;  6  0.129
+#&gt;  7  0.394
+#&gt;  8 -0.425
+#&gt;  9  0.229
+#&gt; 10 -0.684
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb123"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="op">-</span><span class="va">x</span><span class="op">)</span> <span class="co"># all but x</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1304,16 +1304,16 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <pre><code>#&gt; # A tibble: 1,500 × 3
 #&gt;          y signx    signy   
 #&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 -0.0608 positive negative
-#&gt;  2 -0.299  positive negative
-#&gt;  3  0.115  negative positive
-#&gt;  4  0.653  negative positive
-#&gt;  5  0.831  positive positive
-#&gt;  6  0.986  positive positive
-#&gt;  7  0.218  positive positive
-#&gt;  8  0.563  negative positive
-#&gt;  9 -0.633  negative negative
-#&gt; 10 -0.555  positive negative
+#&gt;  1 -0.185  negative negative
+#&gt;  2 -0.832  negative negative
+#&gt;  3  0.986  positive positive
+#&gt;  4 -0.465  negative negative
+#&gt;  5 -0.0116 negative negative
+#&gt;  6  0.436  positive positive
+#&gt;  7 -0.848  positive negative
+#&gt;  8  0.515  negative positive
+#&gt;  9  0.0935 positive positive
+#&gt; 10 -0.984  negative negative
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb125"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"sign"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1321,33 +1321,33 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <pre><code>#&gt; # A tibble: 1,500 × 2
 #&gt;    signx    signy   
 #&gt;    &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 positive negative
-#&gt;  2 positive negative
-#&gt;  3 negative positive
-#&gt;  4 negative positive
-#&gt;  5 positive positive
+#&gt;  1 negative negative
+#&gt;  2 negative negative
+#&gt;  3 positive positive
+#&gt;  4 negative negative
+#&gt;  5 negative negative
 #&gt;  6 positive positive
-#&gt;  7 positive positive
+#&gt;  7 positive negative
 #&gt;  8 negative positive
-#&gt;  9 negative negative
-#&gt; 10 positive negative
+#&gt;  9 positive positive
+#&gt; 10 negative negative
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb127"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 2
-#&gt;          x signx   
-#&gt;      &lt;dbl&gt; &lt;chr&gt;   
-#&gt;  1  0.856  positive
-#&gt;  2  0.0536 positive
-#&gt;  3 -0.0310 negative
-#&gt;  4 -0.0890 negative
-#&gt;  5  0.321  positive
-#&gt;  6  0.337  positive
-#&gt;  7  0.925  positive
-#&gt;  8 -0.205  negative
-#&gt;  9 -0.218  negative
-#&gt; 10  0.104  positive
+#&gt;         x signx   
+#&gt;     &lt;dbl&gt; &lt;chr&gt;   
+#&gt;  1 -0.761 negative
+#&gt;  2 -0.690 negative
+#&gt;  3  0.191 positive
+#&gt;  4 -0.726 negative
+#&gt;  5 -0.806 negative
+#&gt;  6  0.129 positive
+#&gt;  7  0.394 positive
+#&gt;  8 -0.425 negative
+#&gt;  9  0.229 positive
+#&gt; 10 -0.684 negative
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1356,36 +1356,36 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <div class="cell">
 <div class="sourceCode" id="cb129"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">signx</span><span class="op">==</span><span class="st">"positive"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; # A tibble: 756 × 4
-#&gt;         x       y signx    signy   
-#&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 0.856  -0.0608 positive negative
-#&gt;  2 0.0536 -0.299  positive negative
-#&gt;  3 0.321   0.831  positive positive
-#&gt;  4 0.337   0.986  positive positive
-#&gt;  5 0.925   0.218  positive positive
-#&gt;  6 0.104  -0.555  positive negative
-#&gt;  7 0.746  -0.466  positive negative
-#&gt;  8 0.399  -0.454  positive negative
-#&gt;  9 0.0525  0.990  positive positive
-#&gt; 10 0.142  -0.821  positive negative
-#&gt; # ℹ 746 more rows</code></pre>
+<pre><code>#&gt; # A tibble: 753 × 4
+#&gt;        x       y signx    signy   
+#&gt;    &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
+#&gt;  1 0.191  0.986  positive positive
+#&gt;  2 0.129  0.436  positive positive
+#&gt;  3 0.394 -0.848  positive negative
+#&gt;  4 0.229  0.0935 positive positive
+#&gt;  5 0.756  0.411  positive positive
+#&gt;  6 0.229  0.848  positive positive
+#&gt;  7 0.686  0.360  positive positive
+#&gt;  8 0.771  0.852  positive positive
+#&gt;  9 0.105  0.362  positive positive
+#&gt; 10 0.564 -0.395  positive negative
+#&gt; # ℹ 743 more rows</code></pre>
 </div>
 <div class="sourceCode" id="cb131"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">x</span><span class="op">&lt;</span><span class="fl">0</span>, <span class="va">y</span><span class="op">&gt;</span><span class="fl">.1</span><span class="op">)</span> <span class="co"># multiple filters can be applied at once</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 337 × 4
 #&gt;          x     y signx    signy   
 #&gt;      &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;   
-#&gt;  1 -0.0310 0.115 negative positive
-#&gt;  2 -0.0890 0.653 negative positive
-#&gt;  3 -0.205  0.563 negative positive
-#&gt;  4 -0.0349 0.896 negative positive
-#&gt;  5 -0.156  0.878 negative positive
-#&gt;  6 -0.916  0.631 negative positive
-#&gt;  7 -0.0273 0.139 negative positive
-#&gt;  8 -0.960  0.693 negative positive
-#&gt;  9 -0.942  0.193 negative positive
-#&gt; 10 -0.218  0.147 negative positive
+#&gt;  1 -0.425  0.515 negative positive
+#&gt;  2 -0.813  0.626 negative positive
+#&gt;  3 -0.232  0.960 negative positive
+#&gt;  4 -0.171  0.970 negative positive
+#&gt;  5 -0.435  0.714 negative positive
+#&gt;  6 -0.0586 0.249 negative positive
+#&gt;  7 -0.350  0.757 negative positive
+#&gt;  8 -0.412  0.468 negative positive
+#&gt;  9 -0.149  0.634 negative positive
+#&gt; 10 -0.402  0.288 negative positive
 #&gt; # ℹ 327 more rows</code></pre>
 </div>
 </div>
@@ -1395,18 +1395,18 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <div class="sourceCode" id="cb133"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">dt</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/relocate.html">relocate</a></span><span class="op">(</span><span class="va">y</span>, .after <span class="op">=</span> <span class="va">signy</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,500 × 4
-#&gt;          x signx    signy          y
-#&gt;      &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
-#&gt;  1  0.856  positive negative -0.0608
-#&gt;  2  0.0536 positive negative -0.299 
-#&gt;  3 -0.0310 negative positive  0.115 
-#&gt;  4 -0.0890 negative positive  0.653 
-#&gt;  5  0.321  positive positive  0.831 
-#&gt;  6  0.337  positive positive  0.986 
-#&gt;  7  0.925  positive positive  0.218 
-#&gt;  8 -0.205  negative positive  0.563 
-#&gt;  9 -0.218  negative negative -0.633 
-#&gt; 10  0.104  positive negative -0.555 
+#&gt;         x signx    signy          y
+#&gt;     &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;
+#&gt;  1 -0.761 negative negative -0.185 
+#&gt;  2 -0.690 negative negative -0.832 
+#&gt;  3  0.191 positive positive  0.986 
+#&gt;  4 -0.726 negative negative -0.465 
+#&gt;  5 -0.806 negative negative -0.0116
+#&gt;  6  0.129 positive positive  0.436 
+#&gt;  7  0.394 positive negative -0.848 
+#&gt;  8 -0.425 negative positive  0.515 
+#&gt;  9  0.229 positive positive  0.0935
+#&gt; 10 -0.684 negative negative -0.984 
 #&gt; # ℹ 1,490 more rows</code></pre>
 </div>
 </div>
@@ -1598,7 +1598,7 @@ Figure&nbsp;6.1: Excel equivalent to a nested <code>tibble</code>.
 <p>Download the exercises and solutions from the following repositories, then create a Rstudio project from the unzipped folder:</p>
 <ul>
 <li><a href="https://github.com/colinbousige/R1-beginner">Beginner exercises</a></li>
-<li><a href="https://github.com/colinbousige/R2-advanced">Avanced exercises</a></li>
+<li><a href="https://github.com/colinbousige/R2-advanced">Advanced exercises</a></li>
 </ul>
 <hr>
 <details><summary><strong>Exercise 1</strong>
@@ -1625,28 +1625,28 @@ Solution
 <span><span class="co"># Print the 4 first lines of the table</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">df</span>, <span class="fl">4</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;            x          y          z
-#&gt; 1 0.04894543 0.04892589 0.09787132
-#&gt; 2 0.84004989 0.74467642 1.58472630
-#&gt; 3 0.65283434 0.60744035 1.26027469
-#&gt; 4 0.64577374 0.60181655 1.24759029</code></pre>
+<pre><code>#&gt;            x         y          z
+#&gt; 1 0.62283950 0.5833438 1.20618332
+#&gt; 2 0.01460052 0.0146000 0.02920053
+#&gt; 3 0.41900164 0.4068487 0.82585029
+#&gt; 4 0.45794963 0.4421099 0.90005957</code></pre>
 </div>
 <div class="sourceCode" id="cb159"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Print the second column</span></span>
 <span><span class="va">df</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  [1] 0.048925891 0.744676416 0.607440346 0.601816553 0.132937552 0.771302064
-#&gt;  [7] 0.322651502 0.734407868 0.008193651 0.831432256</code></pre>
+<pre><code>#&gt;  [1] 0.58334382 0.01460000 0.40684866 0.44210994 0.74230118 0.05682315
+#&gt;  [7] 0.53731235 0.28038579 0.58098959 0.37518269</code></pre>
 </div>
 <div class="sourceCode" id="cb161"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Print the average of the third column</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">z</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 1.01488</code></pre>
+<pre><code>#&gt; [1] 0.8283621</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] NA</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 1.01488</code></pre>
+<pre><code>#&gt; [1] 0.8283621</code></pre>
 </div>
 <div class="sourceCode" id="cb165"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Using `plot(x,y)`{.R} where `x` and `y` are vectors, </span></span>
 <span><span class="co"># plot the 2nd column as a function of the first</span></span>
@@ -1676,34 +1676,34 @@ Solution
 <pre><code>#&gt; # A tibble: 4 × 3
 #&gt;       a     b     c
 #&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1 0.228 0.226 0.454
-#&gt; 2 0.192 0.190 0.382
-#&gt; 3 0.378 0.369 0.747
-#&gt; 4 0.931 0.802 1.73</code></pre>
+#&gt; 1 0.969 0.825  1.79
+#&gt; 2 0.768 0.695  1.46
+#&gt; 3 0.627 0.587  1.21
+#&gt; 4 0.522 0.498  1.02</code></pre>
 </div>
 <div class="sourceCode" id="cb169"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">df_tib</span><span class="op">[</span>,<span class="fl">2</span><span class="op">]</span>; <span class="va">df_tib</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 10 × 1
-#&gt;        b
-#&gt;    &lt;dbl&gt;
-#&gt;  1 0.226
-#&gt;  2 0.190
-#&gt;  3 0.369
-#&gt;  4 0.802
-#&gt;  5 0.573
-#&gt;  6 0.740
-#&gt;  7 0.446
-#&gt;  8 0.492
-#&gt;  9 0.724
-#&gt; 10 0.386</code></pre>
+#&gt;         b
+#&gt;     &lt;dbl&gt;
+#&gt;  1 0.825 
+#&gt;  2 0.695 
+#&gt;  3 0.587 
+#&gt;  4 0.498 
+#&gt;  5 0.461 
+#&gt;  6 0.0270
+#&gt;  7 0.520 
+#&gt;  8 0.509 
+#&gt;  9 0.257 
+#&gt; 10 0.196</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;  [1] 0.2257987 0.1904658 0.3692559 0.8023090 0.5729622 0.7397669 0.4461965
-#&gt;  [8] 0.4920775 0.7241272 0.3863539</code></pre>
+<pre><code>#&gt;  [1] 0.8245220 0.6946126 0.5865683 0.4981829 0.4611769 0.0269659 0.5198235
+#&gt;  [8] 0.5087905 0.2565594 0.1961070</code></pre>
 </div>
 <div class="sourceCode" id="cb172"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df_tib</span><span class="op">$</span><span class="va">c</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df_tib</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df_tib</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df_tib</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 1.030434</code></pre>
+<pre><code>#&gt; [1] 0.9502425</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; [1] NA</code></pre>
@@ -1712,7 +1712,7 @@ Solution
 <pre><code>#&gt; [1] NA</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt; [1] 1.030434</code></pre>
+<pre><code>#&gt; [1] 0.9502425</code></pre>
 </div>
 <div class="sourceCode" id="cb177"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/write.table.html">write.table</a></span><span class="op">(</span><span class="va">df_tib</span>, <span class="st">"Data/some_data.dat"</span>, quote <span class="op">=</span> <span class="cn">FALSE</span>, row.names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">df_tib</span><span class="op">$</span><span class="va">a</span>, <span class="va">df_tib</span><span class="op">$</span><span class="va">b</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -2054,7 +2054,7 @@ Solution
 #&gt;  $ institution: chr [1:20] "UCBL" "INSA" "ECL" "INSA" ...
 #&gt;  $ dateofbirth: Date[1:20], format: "1997-12-26" "1997-03-28" ...
 #&gt;  $ size       : num [1:20] 161 172 165 186 176 ...
-#&gt;  $ age        : num [1:20] 26.8 27.5 26.8 29.2 29.4 ...</code></pre>
+#&gt;  $ age        : num [1:20] 26.8 27.5 26.8 29.2 29.5 ...</code></pre>
 </div>
 <div class="sourceCode" id="cb219"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Using `groupe_by()` and `summarize()`:</span></span>
 <span><span class="co"># - Show the number of males and females in the table </span></span>
@@ -2129,7 +2129,7 @@ Solution
 #&gt;  2 Dilruwan-Shanaka-Perera  27.5
 #&gt;  3 Hanna                    26.8
 #&gt;  4 Sabin                    29.2
-#&gt;  5 Benedikt                 29.4
+#&gt;  5 Benedikt                 29.5
 #&gt;  6 Jordyn                   27.6
 #&gt;  7 Jennifer                 29.4
 #&gt;  8 Yiran                    29.7
@@ -2156,7 +2156,7 @@ Solution
 #&gt;  2 Male   Sri Lanka   INSA        1997-03-28   172.  27.5
 #&gt;  3 Female Ukraine     ECL         1997-12-30   165.  26.8
 #&gt;  4 Male   India       INSA        1995-08-04   186.  29.2
-#&gt;  5 Male   Austria     UCBL        1995-04-25   176.  29.4
+#&gt;  5 Male   Austria     UCBL        1995-04-25   176.  29.5
 #&gt;  6 Female USA         ECL         1997-02-19   176.  27.6
 #&gt;  7 Female USA         ECL         1995-05-28   179   29.4
 #&gt;  8 Male   China       UCBL        1995-02-04   188.  29.7
@@ -2193,7 +2193,7 @@ Solution
 #&gt;    &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt;   &lt;chr&gt;       &lt;date&gt;      &lt;dbl&gt; &lt;dbl&gt;
 #&gt;  1 Salem    Male   Yemen   UCBL        1997-12-26   161.  26.8
 #&gt;  2 Hanna    Female Ukraine ECL         1997-12-30   165.  26.8
-#&gt;  3 Benedikt Male   Austria UCBL        1995-04-25   176.  29.4
+#&gt;  3 Benedikt Male   Austria UCBL        1995-04-25   176.  29.5
 #&gt;  4 Jordyn   Female USA     ECL         1997-02-19   176.  27.6
 #&gt;  5 Jennifer Female USA     ECL         1995-05-28   179   29.4
 #&gt;  6 Yiran    Male   China   UCBL        1995-02-04   188.  29.7
@@ -2215,7 +2215,7 @@ Solution
 #&gt;  2 Dilruwan-Shanaka-Perera Male   Sri Lanka  INSA        1997-03-28   172.  27.5
 #&gt;  3 Hanna                   Female Ukraine    ECL         1997-12-30   165.  26.8
 #&gt;  4 Sabin                   Male   India      INSA        1995-08-04   186.  29.2
-#&gt;  5 Benedikt                Male   Austria    UCBL        1995-04-25   176.  29.4
+#&gt;  5 Benedikt                Male   Austria    UCBL        1995-04-25   176.  29.5
 #&gt;  6 Jordyn                  Female USA        ECL         1997-02-19   176.  27.6
 #&gt;  7 Jennifer                Female USA        ECL         1995-05-28   179   29.4
 #&gt;  8 Yiran                   Male   China      UCBL        1995-02-04   188.  29.7
@@ -2240,7 +2240,7 @@ Solution
 #&gt;    &lt;chr&gt;                   &lt;chr&gt;  &lt;chr&gt;      &lt;chr&gt;       &lt;date&gt;      &lt;dbl&gt; &lt;dbl&gt;
 #&gt;  1 Salem                   Male   Yemen      UCBL        1997-12-26   161.  26.8
 #&gt;  2 Dilruwan-Shanaka-Perera Male   Sri Lanka  INSA        1997-03-28   172.  27.5
-#&gt;  3 Benedikt                Male   Austria    UCBL        1995-04-25   176.  29.4
+#&gt;  3 Benedikt                Male   Austria    UCBL        1995-04-25   176.  29.5
 #&gt;  4 Jennifer                Female USA        ECL         1995-05-28   179   29.4
 #&gt;  5 Leran                   Male   China      UCBL        1992-12-30   186   31.8
 #&gt;  6 Aymen                   Male   Tunisia    INSA        1990-03-03   160.  34.6
@@ -3261,7 +3261,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb239-536"><a href="#cb239-536" aria-hidden="true" tabindex="-1"></a>Download the exercises and solutions from the following repositories, then create a Rstudio project from the unzipped folder:</span>
 <span id="cb239-537"><a href="#cb239-537" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb239-538"><a href="#cb239-538" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Beginner exercises</span><span class="co">](https://github.com/colinbousige/R1-beginner)</span></span>
-<span id="cb239-539"><a href="#cb239-539" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Avanced exercises</span><span class="co">](https://github.com/colinbousige/R2-advanced)</span></span>
+<span id="cb239-539"><a href="#cb239-539" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="co">[</span><span class="ot">Advanced exercises</span><span class="co">](https://github.com/colinbousige/R2-advanced)</span></span>
 <span id="cb239-540"><a href="#cb239-540" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb239-541"><a href="#cb239-541" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb239-542"><a href="#cb239-542" aria-hidden="true" tabindex="-1"></a>---</span>

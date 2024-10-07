@@ -382,9 +382,9 @@ ga('send', {
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Unit: milliseconds
-#&gt;       expr        min         lq      mean     median         uq        max
-#&gt;    forloop 235.453365 236.377710 238.80591 239.179773 240.634576 242.036735
-#&gt;  noforloop   1.447669   1.471367   4.52508   5.809659   7.071844   7.369873
+#&gt;       expr        min         lq       mean     median         uq       max
+#&gt;    forloop 231.699323 232.757697 234.916495 235.928637 236.145363 238.11586
+#&gt;  noforloop   1.362963   2.276935   6.438558   5.782968   6.923875  22.23168
 #&gt;  neval cld
 #&gt;     10  a 
 #&gt;     10   b</code></pre>
@@ -396,7 +396,7 @@ ga('send', {
 <p>Take a look at the help on these functions, but the summary is that <code class="sourceCode r"><span class="fu">apply</span>(df, direction, <span class="cf">function</span>)</code> applies a function in the wanted direction (1 for rows, 2 for columns) of the given <code class="sourceCode r">data.frame</code> (or vector). Example:</p>
 <div class="cell">
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span></span>
-<span><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tibble/man/tibble.html">tibble</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, y<span class="op">=</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span>, z<span class="op">=</span><span class="va">x</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span>;<span class="va">dt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="va">dt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, y<span class="op">=</span><span class="va">x</span><span class="op">^</span><span class="fl">2</span>, z<span class="op">=</span><span class="va">x</span><span class="op">^</span><span class="fl">3</span><span class="op">)</span>;<span class="va">dt</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 5 × 3
 #&gt;       x     y     z
@@ -504,16 +504,16 @@ ga('send', {
 <pre><code>#&gt; # A tibble: 1,000 × 2
 #&gt;          x y    
 #&gt;      &lt;dbl&gt; &lt;chr&gt;
-#&gt;  1  0.0627 x&gt;0  
-#&gt;  2  0.991  x&gt;0  
-#&gt;  3 -0.397  x&lt;=0 
-#&gt;  4  0.986  x&gt;0  
-#&gt;  5 -0.0390 x&lt;=0 
-#&gt;  6  0.535  x&gt;0  
-#&gt;  7  0.466  x&gt;0  
-#&gt;  8 -0.952  x&lt;=0 
-#&gt;  9  0.551  x&gt;0  
-#&gt; 10 -0.0155 x&lt;=0 
+#&gt;  1  0.828  x&gt;0  
+#&gt;  2  0.780  x&gt;0  
+#&gt;  3 -0.439  x&lt;=0 
+#&gt;  4 -0.323  x&lt;=0 
+#&gt;  5  0.0130 x&gt;0  
+#&gt;  6 -0.426  x&lt;=0 
+#&gt;  7  0.623  x&gt;0  
+#&gt;  8 -0.404  x&lt;=0 
+#&gt;  9  0.713  x&gt;0  
+#&gt; 10  0.266  x&gt;0  
 #&gt; # ℹ 990 more rows</code></pre>
 </div>
 </div>
@@ -534,22 +534,22 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; $A
-#&gt; [1] 45.79505
+#&gt; [1] 50.53956
 #&gt; 
 #&gt; $B
-#&gt; [1] -38.78892
+#&gt; [1] -44.83477
 #&gt; 
 #&gt; $C
-#&gt; [1] 96.53304</code></pre>
+#&gt; [1] 103.4457</code></pre>
 </div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;         A         B         C 
-#&gt;  45.79505 -38.78892  96.53304</code></pre>
+#&gt;  50.53956 -44.83477 103.44567</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;         A         B         C 
-#&gt;  45.79505 -38.78892  96.53304</code></pre>
+#&gt;  50.53956 -44.83477 103.44567</code></pre>
 </div>
 </div>
 </details></details><details><summary><strong>Exercise 3</strong>
@@ -582,10 +582,10 @@ Solution
 </div>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># A tidy-compatible version </span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="va">popul</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/tidyr/man/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="va">df</span>, cols<span class="op">=</span><span class="op">-</span><span class="va">year</span>, names_to<span class="op">=</span><span class="st">"city"</span>, values_to<span class="op">=</span><span class="st">"pop"</span><span class="op">)</span></span>
+<span><span class="va">popul</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/pivot_longer.html">pivot_longer</a></span><span class="op">(</span><span class="va">df</span>, cols<span class="op">=</span><span class="op">-</span><span class="va">year</span>, names_to<span class="op">=</span><span class="st">"city"</span>, values_to<span class="op">=</span><span class="st">"pop"</span><span class="op">)</span></span>
 <span><span class="va">popul</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/summarise.html">summarise</a></span><span class="op">(</span>totpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>totpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 8 × 2
 #&gt;    year  totpop
@@ -600,7 +600,7 @@ Solution
 #&gt; 8  2012 7334805</code></pre>
 </div>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># or equivalently</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span><span class="op">(</span><span class="va">popul</span>, <span class="va">year</span><span class="op">)</span>, totpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">popul</span>, <span class="va">year</span><span class="op">)</span>, totpop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 8 × 2
 #&gt;    year  totpop
@@ -627,8 +627,8 @@ Solution
 #&gt;      193424.9      198134.6      255429.1      169682.6      382264.9</code></pre>
 </div>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="va">popul</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/group_by.html">group_by</a></span><span class="op">(</span><span class="va">city</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/summarise.html">summarise</a></span><span class="op">(</span>avepop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">city</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>avepop <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">pop</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 20 × 2
 #&gt;    city            avepop
