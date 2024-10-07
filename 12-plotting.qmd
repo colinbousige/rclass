@@ -620,7 +620,9 @@ plot_to_pdf <- function(P,
               to = paste0(out.folder, "/"))
     # clean compilation files
     toremove <- list.files(pattern = filename)
-    toremove <- toremove[!grepl(".pdf", toremove)]
+    if(out.folder == "."){
+        toremove <- toremove[!grepl(".pdf", toremove)]
+    }
     file.remove(toremove)
     # open the pdf file with Skim (on Mac)
     if (open) system(paste0("open -a Skim ",out.folder,"/",filename,".pdf"))
