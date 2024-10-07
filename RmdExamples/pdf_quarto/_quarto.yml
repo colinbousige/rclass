@@ -1,0 +1,153 @@
+title       : |
+  | M1 NSE -- Fundamental Basis of Science
+  | \Huge\textcolor{BLUE}{\textbf{Applied Statistics}}
+subtitle: A one-hour introduction
+author:
+  - name: |
+      | [Colin BOUSIGE](mailto:colin.bousige@cnrs.fr)
+      | [Laboratoire des Multimatériaux et Interfaces](http://lmi.cnrs.fr/), Lyon, France
+      | colin.bousige@cnrs.fr
+abstract: |
+    | This class aims to provide an introduction to statistics applied to experimental measurements in physics, chemistry or biology. By studying practical cases, we will see the importance of using statistical tools to make sense of experimental data.
+
+date : now
+
+format:
+  pdf:
+    documentclass: article
+    pdf-engine: pdflatex
+    toc: true
+    number-sections: true
+    toc-depth: 5
+    toc-title: "Contents"
+    keep-tex: false
+    fontfamily: cmbright
+    geometry:
+      - top=20mm
+      - left=20mm
+      - heightrounded
+    linkcolor: DarkBlue
+    urlcolor: DarkBlue
+    citecolor: DarkBlue
+    filecolor: DarkBlue
+    include-in-header:
+      - text: |
+          \usepackage{xcolor}
+          \definecolor{BLUE}{RGB}{0,0,155}
+          \usepackage{amssymb,amsmath}
+          \usepackage{authblk}
+
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          % Title page
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          \newcommand\blfootnote[1]{%
+            \begingroup
+            \renewcommand\thefootnote{}\footnote{#1}%
+            \addtocounter{footnote}{-1}%
+            \endgroup
+          }
+          
+          \makeatletter
+          \renewcommand{\maketitle}{
+              \thispagestyle{empty}
+              \begin{flushleft}
+                {\Large\bfseries\@title}
+                \par\vspace{10ex}
+                \@author
+                \blfootnote{Version date: \@date}
+              \end{flushleft}
+          }
+          \makeatother
+
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          % Header and Footer
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          \usepackage{fancyhdr}
+          \usepackage{lastpage}
+          \pagestyle{fancyplain}
+          \fancyhf{}
+          \renewcommand{\sectionmark}[1]{\markboth{\thesection. #1}{}}
+          \renewcommand{\subsectionmark}[1]{\markright{\thesubsection. #1}}
+          \fancyhead[L]{\leftmark\hfill\rightmark}
+          \renewcommand{\headrulewidth}{0.1pt}
+          \renewcommand{\footrulewidth}{0.1pt}
+          \cfoot{\thepage/\pageref*{LastPage}}
+          
+          \setlength{\headheight}{14pt}
+          \fancypagestyle{refstyle}{%
+              \pagestyle{fancyplain}
+              \fancyhf{}
+              % \fancyhead[L]{References}
+              \renewcommand{\headrulewidth}{0.1pt}
+              \renewcommand{\footrulewidth}{0.1pt}
+              \cfoot{\thepage/\pageref*{LastPage}}
+          }
+          \fancypagestyle{front}{%
+              \pagestyle{fancyplain}
+              \fancyhf{}
+              \fancyhead[L]{Contents}
+              \renewcommand{\headrulewidth}{0.1pt}
+              \renewcommand{\footrulewidth}{0.1pt}
+              \cfoot{\thepage/\pageref*{LastPage}}
+          }
+          
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          % TOC
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          \makeatletter\renewcommand*\l@section{\@dottedtocline{1}{1.5em}{2.3em}}\makeatother
+          \makeatletter\renewcommand*\l@subsection{\@dottedtocline{1}{2.5em}{2.3em}}
+          \makeatother
+
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          % Captions
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          \usepackage[font=small,labelfont=bf,labelsep=endash]{caption}
+          \renewcommand{\figurename}{Fig.}
+          \renewcommand{\tablename}{Tab.}
+
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          % Abstract
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          \usepackage{abstract}
+          \renewcommand{\abstractname}{}    % clear the title
+          \renewcommand{\absnamepos}{empty} % originally center
+          \renewenvironment{abstract}{
+            \begin{@bstr@ctlist}\vskip 2cm\begin{tcolorbox}[halign=justify,arc=5pt,colback=BLUE!5!white,colframe=white!0!white]\abstracttextfont\normalsize}%
+          {\end{tcolorbox}\end{@bstr@ctlist}\clearpage}
+          
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          % Sections style
+          %%%%%%%%%%%%%%%%%%%%%%%%
+          \let\paragraph\oldparagraph
+          \let\subparagraph\oldsubparagraph
+          \usepackage{titlesec}
+          \usepackage{titletoc}
+          \titleformat{\section}{\color{BLUE}\normalfont\large\bfseries}{\color{BLUE}}{0em}{\thesection.~}
+          \titleformat{\subsection}{\color{BLUE}\normalfont\bfseries}{\color{BLUE}}{0em}{\thesubsection.~}
+          \titleformat{\subsubsection}{\normalfont\bfseries}{}{0em}{\thesubsubsection.~}
+          \titleformat{\paragraph}{\normalfont\bfseries}{}{0em}{}
+
+          \titleformat{name=\section,numberless}{\color{BLUE}\normalfont\large\bfseries}{\color{BLUE}}{0em}{}
+          \titleformat{name=\subsection,numberless}{\color{BLUE}\normalfont\bfseries}{\color{BLUE}}{0em}{}
+          \titleformat{name=\subsubsection,numberless}{\normalfont\bfseries}{}{0em}{}
+          \titleformat{name=\paragraph,numberless}{\normalfont\bfseries}{}{0em}{}
+
+          \titlespacing*{\section}{0ex}{2.5ex}{1ex}
+          \titlespacing*{\subsection}{0ex}{2.5ex}{1ex}
+          \titlespacing*{\subsubsection}{0ex}{2.5ex}{1ex}
+          \titlespacing*{\paragraph}{0ex}{2.5ex}{1ex}
+
+bibliography: "/Users/colin/Dropbox/Biblio/biblio.bib"
+
+knitr:
+  opts_chunk:
+    comment: "#>"
+    width: 80
+
+execute:
+  cache     : false
+  out-width : '75%'
+  fig-asp   : .618034
+  fig-align : center
+  warning   : false
+  message   : false

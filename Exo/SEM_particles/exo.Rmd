@@ -1,0 +1,128 @@
+---
+title : "R Exercises - Particle analysis from SEM images"
+date  : "`r Sys.Date()`"
+output: 
+    bookdown::html_document2:
+        toc            : TRUE
+        toc_float      : TRUE
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: TRUE
+        code_download  : TRUE
+---
+
+<style type="text/css">
+blockquote {
+  background: #E9F9FF;
+  border-left: 5px solid #026086;
+  margin: 1.5em 10px;
+  padding: 0.5em 10px;
+  font-size: 1em;
+}
+</style>
+
+# Context
+
+The aim of this exercise is to determine the correlations between experimental parameters and the size distributions of nickel nanoparticles obtained by dewetting. The nanoparticles were obtained by heat treatment at different temperatures under dihydrogen of a silicon wafer on which a layer of 2, 4.5 or 8 nm of nickel had previously been deposited. Treatment was carried out for 5, 10, 15, 30 or 60 minutes. 
+
+These wafers were then observed by scanning electron microscopy, and different images of the surface were taken: these images were analyzed with [ImageJ](https://imagej.net/Welcome), as shown on Figure \@ref(fig:SEMimages). With this analysis, we obtained a set of files of type `[x]nmNi-T[y]-[z]min-[u].csv`, where:
+
+- `[x]` is the Ni thickness in the sample before treatment, 
+- `[y]` is the treatment temperature in ˚C,
+- `[z]` the treatment time in minutes, and
+- `[u]` the image number. 
+
+Area values are given in pixel^2^, with scales stored in a separate file [`Data/scales.csv`](Data/scales.csv). 
+
+```{r SEMimages, echo=FALSE, message=FALSE, fig.cap="Typical SEM image of Ni nanoparticles: from the raw image to particle analysis", fig.align="center", out.width="85%"}
+knitr::include_graphics("Data/picture.png")
+```
+
+> In this tutorial, we'll see how to import data from a large number of files, and aggregate them into a single tidy array. This table can then be exported in csv format, or used to generate graphs.
+
+# Data wrangling
+
+- Load the package `tidyverse`. Set the global `ggplot2` theme to black and white. Also, make it so that the `strip.background` (background of the facets titles) is blank, and that the `strip.text` is bold.
+
+```{r warning = FALSE, message=FALSE}
+
+```
+
+- Find all `[x]nmNi-T[y]-[z]min-[u].csv` files in the `Data` folder and store them in `flist`. You could use the function `glob2rx()`{.R} to help write a regular expression using the wildcard sign `*`{.R}.
+
+```{r warning = FALSE, message=FALSE}
+
+```
+
+- The pixel <-> length correspondence for each image has been stored in the file `Data/scales.csv`. Import this file into a `scales` tibble. 
+  - Next, add to `scales` a column `pix2_to_nm2` which will contain the pixel^2^ -> nm^2^ conversion value for each image.
+  - Then, modify the `file` column to contain the file name without extension. 
+  - Separate the `file` column into 4 columns `thickness`, `temperature`, `time` and `img`.
+  - Convert these new columns to numeric values (you need to remove the text in them first).
+
+```{r warning = FALSE, message=FALSE}
+
+```
+
+- Let's now import all our data files into a tibble called `data`, and modify this tibble to also store the information written in the files names. We will do this in a succession of pipe operations.
+  - First, import all csv files into a tibble called `data`. You can use the `read_csv()`{.R} function to do so, and look into the `id` parameter to store the file name in a column `file`. Also, we are only interested in the `Area` column.
+  - Nest the `Area` column into a column `data` using the `nest()`{.R} function. This will make the next operations faster.
+  - Modify the `file` column so that it contains the file name without extension and path.
+  - Separate the `file` column into 4 columns `thickness`, `temperature`, `time` and `img`.
+  - Convert these new columns to numeric values (you need to remove the text in them first).
+  - Finally, unnest the `data` column to get a single column `Area` containing the area values.
+
+```{r warning = FALSE, message=FALSE}
+
+```
+
+- Now we want to convert the areas in pixel^2^ to areas in nm^2^. 
+  - We will first join the `data` and `scales` tibbles into a tibble called `alldata`. 
+  - Then, we'll modify the `Area` column to convert it to nm^2^, and we'll create a `diameter` column containing the diameter of the particles in nm. 
+  - Then, we'll get rid of the `pix2_to_nm2`, `pixel` and `size` columns that are useless. 
+  - Finally, we'll filter the data to keep only particles with a diameter between 10 and 400 nm.
+
+```{r warning = FALSE, message=FALSE}
+
+```
+
+
+> In case you didn't manage to get there, [here](Data/alldata.csv) is the `data` tibble, you can read it with `alldata <- read_csv("Data/alldata.csv")`{.R}.
+
+
+# Plotting and analysis
+
+## Plotting
+
+- First we want to take a look at our data. Plot the histogram of all particle diameters, with a fill color depending on the time (you need to convert time to a factor), and with a grid showing temperature vs. substrate thickness. Put the legend on top of the graph, and add some transparency to your colors.
+- In fact, I usually prefer to plot it using `geom_density()`{.R} which is basically an histogram convoluted with a Gaussian distribution of bandwidth `bw`. This allows for smoother graphs. Make this plot and play with the `bw` parameter.
+- Your plot should look like this:
+
+```{r histogram, echo=FALSE, message=FALSE, fig.cap="The wanted plot", fig.align="center", out.width="100%"}
+knitr::include_graphics("Data/plot.png")
+```
+
+```{r warning = FALSE, message=FALSE}
+
+```
+
+## Analysis
+
+- Now, store in `particles_ave` the average particle diameter and its standard deviation per substrate thickness, time and temperature of reaction.
+
+```{r warning = FALSE, message=FALSE}
+
+```
+
+- Let's see what are the parameters influencing the particle diameters the most. For this, we'll perform a [multiple linear regression](http://www.sthda.com/english/articles/40-regression-analysis/168-multiple-linear-regression-in-r/) using `lm()`{.R}, fitting the `diam` variable as a function of a combination of `thickness`, `temperature`, and `time`. We can also set the weights for the `diam` values as the inverse of their standard deviation squared (by convention). Store the result in `fit`, and print the summary of the fit.
+
+```{r warning = FALSE, message=FALSE}
+
+```
+
+How would you interpret the result? What are the most important parameters?
+
+
+
+
+

@@ -1,0 +1,402 @@
+# Vectors
+
+**R is a vectorized language** with built-in arithmetic and relational operators, mathematical functions and types of number. It means that each mathematical function and operator works on a set of data rather than a single scalar value as traditional computer language do, and thus __formal looping can _usually_ be avoided__.
+
+## Different ways of defining a vector
+
+If you want to define a vector by specifying the values, use the function `c()`{.R}, like so:
+
+- Here, `x` is a vector of doubles:
+```{r, warnings=FALSE}
+x <- c(1, 5, 3, 12, 4.2)
+x
+```
+- But here, `x` is converted to a vector of strings because it contains a string:
+```{r, warnings=FALSE}
+x <- c(1, 5, 3, "hello")
+x
+```
+
+- To define a sequence of increasing numbers, either use the notation `start:end` for a sequence going from `start` to `end` by step of 1, or use the `seq()`{.R} function that is more versatile:
+```{r, warnings=FALSE}
+1:10
+seq(-10, 10, by = .5)
+seq(-10, 10, length = 6)
+seq(-10, 10, along = x)
+```
+- To repeat values, use the `rep()`{.R} function:
+```{r, warnings=FALSE}
+rep(0, 10)
+rep(c(0, 2), 5)
+rep(c(0, 2), each = 5)
+```
+- To create vectors of random numbers, use `rnorm()`{.R} or `runif()`{.R} for normally or uniformly distributed numbers, respectively:
+```{r, warnings=FALSE}
+# vector with 10 random values normally distributed around mean 
+# with given standard deviation `sd`
+rnorm(10, mean=3, sd=1)
+# vector with 10 random values uniformly distributed between min and max
+runif(10, min = 0, max = 1)
+```
+
+## Numerical and categorical data types
+
+Data can be of two different types: numerical, or categorical. Let's say you are measuring a the temperature in a room and recording its value over time: 
+
+```{r}
+T1 <- c(22.3, 23.5, 26.0, 30.2)
+```
+
+`T1` is a vector containing **numerical** data.
+
+Let's say that now you are recording the temperature level, which can be `low`, `high` or `medium`
+
+```{r}
+T2 <- c("low", "low", "medium", "high")
+```
+
+`T2` is a vector containing **categorical** data, _i.e._ the data in this example can fall into either of 3 categories. For now, `T2` is however a vector of strings, and we need to tell R that it contains categorical data by using the function `factor()`{.R}:
+
+```{r}
+T2 <- factor(T2)
+T2
+```
+
+We see here that we now have 3 levels, and a numerization of `T2` leads to obtaining the numbers 1, 2 and 3 according to the levels in `T2`:
+
+```{r}
+as.numeric(T2)
+```
+
+Numerical data can be converted to factors in the same way -- this can be useful sometimes, _e.g._ when plotting with `ggplot` as we will see later:
+
+```{r}
+factor(T1)
+```
+
+## Principal operations on vectors
+
+### Mathematical operations
+Because R is a vectorized language, you don't need to loop on all elements of a vector to perform element-wise operations on it. Let's say that `x <- 1:6`{.R}, then:
+```{r, include=FALSE}
+x <- 1:6
+```
+
+- Addition of a value to all elements:
+```{r}
+x + 2.5
+```
+- Multiplication / division of all elements:
+```{r}
+x*2
+```
+- Integer division:
+```{r}
+x %/% 3
+```
+- Math functions apply on all elements:
+```{r}
+sqrt(abs(cos(x)))
+```
+- Power:
+```{r}
+x^2.5
+```
+- Multiplication of vectors of the same size is performed element by element:
+```{r}
+y <- c(2.3, 5, 7, 10, 12, 20)
+x*y
+```
+- Multiplication of vectors of different sizes: the smaller vector is automatically repeated the number of times needed to get a vector of the size of the larger one. It will work also if the longer object length is not a multiple of shorter object length, but the shorter object will be truncated and you'll get an error:
+```{r}
+x*1:2
+x*1:4
+```
+- Modulo:
+```{r}
+x %% 2
+```
+- Outer product of vectors (the result is a matrix):
+```{r}
+x %o% y
+```
+
+
+### Accessing values
+Let's work on this vector `x`:
+```{r}
+x <- c(5, 3, 4, 9, 3)
+```
+
+#### Accessing values by index
+
+- To access values of a vector `x`, use the `x[i]` notation, where `i` is the index you want to access. `i` can be (and in fact, is always) a vector.
+
+:::{.callout-warning}
+## Attention
+In R, indexes numbering start at **1** !!!
+:::
+
+```{r, warnings=FALSE}
+# accessing by indexes
+x[3]
+# access index 1, 5 and 2
+x[c(1,5,2)] 
+```
+
+- To remove elements `j` from a vector `x`, use the notation `x[-j]`{.R}:
+```{r}
+# remove elements 1 and 3
+x[-c(1,3)]
+```
+
+:::{.callout-warning}
+## Attention
+Writing `x[-c(1,3)]`{.R} will **just print** the result of `x[-c(1,3)]`{.R}, but not actually modify `x`. 
+
+To really modify `x`, you'd need to write `x <- x[-c(1,3)]`{.R}.
+:::
+
+#### Filtering values with tests
+
+You can access values with booleans. Values getting a `TRUE`{.R} will be kept, while values with a `FALSE`{.R} will be discarded – or return a `NA` if a `TRUE` is given to a non existing value (*i.e.* to an index larger than the size of the vector):
+```{r}
+x
+x[c(TRUE,TRUE,TRUE,FALSE,TRUE,TRUE)]
+```
+Therefore, you can apply tests on your values and filter them very easily:
+```{r}
+x > 4 # is a vector of booleans
+x[x > 4] # is a filtered vector
+```
+
+#### Accessing values by name
+
+Finally, values in vectors can be **named**, and thus can be accessed by their name:
+```{r, warnings=FALSE}
+y <- c(age=32, name="John", pet="Cat")
+y
+y[c('age','pet')] # prints a named vector
+y[['name']] # prints an un-named vector
+```
+
+And you can access the names of the vector using `names()`{.R}:
+```{r, warnings=FALSE}
+names(y)
+```
+
+
+### Sorting, removing duplicates, sampling
+
+
+- Sorting by ascending number:
+```{r, warnings=FALSE}
+sort(x)
+```
+- It works with strings too, but `stringr::str_sort()`{.R} might be needed for strings mixing letters and numbers:
+```{r, warnings=FALSE}
+sort(c("c","a","d","ab")) 
+sort(c("c", "a10", "a2", "d", "ab"))
+stringr::str_sort(c("c", "a10", "a2", "d", "ab"), numeric = TRUE)
+```
+- Sorting by descending number:
+```{r, warnings=FALSE}
+sort(x, decreasing = TRUE) 
+```
+- Inverting the order of the vector:
+```{r}
+rev(x)
+```
+
+- Find the order of the indexes of the sorting:
+```{r, warnings=FALSE}
+order(x)
+x[order(x)] # is thus equivalent to `sort(x)`
+```
+- Find duplicates:
+```{r, warnings=FALSE}
+duplicated(x)
+```
+- Remove duplicates:
+```{r, warnings=FALSE}
+unique(x)
+```
+- Choose 3 random values:
+```{r, warnings=FALSE}
+sample(x, 3)
+```
+
+### Maximum and minimum
+This is quite straightforward:
+```{r, warnings=FALSE}
+# maximum of x and its index
+x; max(x); which.max(x) 
+# minimum of x and its index
+x; min(x); which.min(x)
+# range of a vector
+range(x)
+```
+
+### Characteristics of vectors
+
+- Size of a vector:
+```{r, warnings=FALSE}
+length(x)
+```
+- Statistics on vector:
+```{r, warnings=FALSE}
+summary(x)
+```
+- Sum of all terms:
+```{r, warnings=FALSE}
+sum(x)
+```
+- Average value:
+```{r, warnings=FALSE}
+mean(x)
+```
+- Median value:
+```{r, warnings=FALSE}
+median(x)
+```
+- Standard deviation:
+```{r, warnings=FALSE}
+sd(x)
+```
+- Count occurrence of values:
+```{r, warnings=FALSE}
+table(x)
+```
+- Cumulative sum:
+```{r}
+cumsum(x)
+```
+- Term-by-term difference
+```{r}
+diff(x)
+```
+
+### Concatenation of vectors
+This is done using the `c()` notation: you basically create a vector of vectors, the result being a new vector:
+```{r, warnings=FALSE}
+# concatenate vectors
+z <- c(-1:4, NA, -x); z
+```
+
+Another option is to use the `append()`{.R} function that allows for more options:
+```{r, warnings=FALSE}
+# append values
+append(x, 4)    # at the end
+append(x, 4:1, 3) # or after a given index
+```
+
+
+## Exercises {#exo-vectors}
+
+Download the exercises and solutions from the following repository, then create a Rstudio project from the unzipped folder:
+
+- [Beginner exercises](https://github.com/colinbousige/R1-beginner)
+
+---
+
+<details>
+    <summary>**Exercise 1**</summary>
+
+Let's create a named vector containing age of the students in the class, the names of each value being the first name of the students. Then:
+
+- Compute the average age and its standard deviation
+- Compute the median age
+- What is the maximum, minimum and range of the ages in the class?
+- What are all the student names in the class?
+- Print the sorted ages by increasing and decreasing order
+- Print the ages sorted by alphabetically ordered names (increasing and decreasing)
+- Show a histogram of the ages distribution using `hist()`{.R} and play with the parameter `breaks` to modify the histogram
+- Show a boxplot of the ages distribution using `boxplot()`{.R}
+
+
+</details>
+
+<details>
+    <summary>**Exercise 2**</summary>
+
+This exercise is adapted from [here](https://perso.esiee.fr/~courivad/R/05-vectors.html#application-population-in-french-cities-1962-2012).
+
+Open Rstudio and create a new R script, save it as `population.R` in your wanted directory, say `Rcourse/`.
+
+
+<a href="Data/population.csv" download target="_blank">Download</a> the `population.csv` file and save it in your working directory.
+
+A csv file contains raw data stored as plain text and separated by a comma (Comma Separated Values). Open it with Rstudio.
+
+We can of course directly load such file with R and store its data in an appropriate format (_i.e._ a `data.frame`), but this is for the next chapter. For now, just copy-paste the text in the Rstudio script area to:
+
+- Create a `cities` vector containing all the cities listed in `population.csv`
+- Create a `pop_1962` and `pop_2012` vectors containing the populations of each city at these years. Print the 2 vectors. 
+- Use `names()`{.R} to name values of `pop_1962` and `pop_2012`. Print the 2 vectors again. Are there any change?
+- What are the cities with more than 200000 people in 1962? For these, how many residents in 2012?
+- What is the population evolution of Montpellier and Nantes?
+- Create a `pop_diff` vector to store population change between 1962 and 2012
+- Print cities with a negative change
+- Print cities which broke the 300000 people barrier between 1962 and 2012
+- Compute the total change in population of the 10 largest cities (as of 1962) between 1962 and 2012.
+- Compute the population mean for year 1962
+- Compute the population mean of Paris over these two years
+- Sort the cities by decreasing order of population for 1962
+
+<details>
+<summary>Solution</summary>
+
+```{r, warnings=FALSE}
+# Create a `cities` vector containing all the cities listed in `population.csv`
+cities <- c("Angers", "Bordeaux", "Brest", "Dijon", "Grenoble", "Le Havre", 
+            "Le Mans", "Lille", "Lyon", "Marseille", "Montpellier", "Nantes", 
+            "Nice", "Paris", "Reims", "Rennes", "Saint-Etienne", "Strasbourg", 
+            "Toulon", "Toulouse")
+# Create a `pop_1962` and `pop_2012` vectors containing the populations 
+# of each city at these years. Print the 2 vectors. 
+pop_1962 <- c(115273,278403,136104,135694,156707,187845,132181,239955,
+              535746,778071,118864,240048,292958,2790091,134856,151948,
+              210311,228971,161797,323724)
+pop_2012 <- c(149017,241287,139676,152071,158346,173142,143599,228652,
+              496343,852516,268456,291604,343629,2240621,181893,209860,
+              171483,274394,164899,453317)
+pop_1962; pop_2012
+# Use names() to name values of `pop_1962` and `pop_2012`. 
+# Print the 2 vectors again. Are there any change?
+names(pop_2012) <- names(pop_1962) <- cities
+pop_1962; pop_2012
+# What are the cities with more than 200000 people in 1962? 
+# For these, how many residents in 2012?
+cities200k <- cities[pop_1962>200000]
+cities200k; pop_2012[cities200k]
+# What is the population evolution of Montpellier and Nantes?
+pop_2012['Montpellier'] - pop_1962['Montpellier']; pop_2012['Nantes'] - pop_1962['Nantes']
+# Create a `pop_diff` vector to store population change between 1962 and 2012
+pop_diff <- pop_2012 - pop_1962
+# Print cities with a negative change
+cities[pop_diff<0]
+# Print cities which broke the 300000 people barrier between 1962 and 2012
+cities[pop_2012>300000 & pop_1962<300000]
+# Compute the total change in population of the 10 largest cities
+# (as of 1962) between 1962 and 2012.
+ten_largest <- cities[order(pop_1962, decreasing = TRUE)[1:10]]
+sum(pop_2012[ten_largest] - pop_1962[ten_largest])
+# Compute the population mean for year 1962
+mean(pop_1962)
+# Compute the population mean of Paris
+mean(c(pop_1962['Paris'], pop_2012['Paris']))
+# Sort the cities by decreasing order of population for 1962
+(pop_1962_sorted <- sort(pop_1962, decreasing = TRUE))
+```
+
+</details>
+</details>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+

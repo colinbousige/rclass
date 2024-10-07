@@ -1,0 +1,122 @@
+---
+title : "R Exercises - TGA data"
+date  : "`r Sys.Date()`"
+output: 
+    html_document:
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: true
+        code_download  : FALSE
+---
+
+
+We're going to work on the <a href="Data/TGA.txt" download target="_blank">TGA.txt</a> file, which contains the TGA of an aqueous solution of single-walled carbon nanotubes individualized by the addition of polymers and surfactants. What we want to know is:
+
+- at what temperature does the material decompose?
+- what is the mass percentage of metal catalyst in the sample?
+- 
+Before importing the data, the first thing to do is look at its structure.
+
+- How many lines in the header need to be skipped?
+- Are there any lines of text at the end that shouldn't be read?
+- How are the data columns separated?
+- Are there column names?
+- Are there any comments?
+
+--- 
+
+**1.** Knowing all this, let's import the data into a `dataframe` called `tga`:
+
+- Load the `tidyverse` package
+- Download the TGA data file <a href="Data/TGA.txt" download target="_blank">TGA.txt</a>
+- Load it into a `tibble` using the `read_table()`{.R} function - refer to the help for the correct parameters to use..
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+--- 
+
+**2.** This data is made up of 5 columns:
+
+- `Index`: measurement index
+- `t`: elapsed time since start of measurement in seconds
+- `Tset`: imposed temperature in ˚C
+- `Tread`: Temperature read in ˚C
+- `Mass`: Sample mass in mg
+
+Before any further processing, we need to take a look at our data. Using `ggplot2`, plot the `Mass` column against the `Tread` column using a black line and formatting the axis texts to show the units. Is there a problem? Check out what `geom_path()` will do.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+--- 
+
+**3.** You can see from this representation that some data ranges are to throw away: the cooling section, and the vertical drop at the start - this is due to the fact that the sample was in a sample changer, and lost water while waiting for the measurement to start.
+
+So, modify `tga` to remove these two data ranges, and plot it again.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+--- 
+
+**4.** Finally, in TGA, we're interested in mass variation, not absolute mass.
+
+- What do you think is responsible for the (large) loss of mass before 150˚C?
+- Create a new `RemainingMass` column that will contain the percentage of remaining sample mass of individualized nanotubes.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+--- 
+
+**5.** Now plot the percentage of mass remaining as a function of temperature, zooming in on the part we're interested in (i.e. not solvent evaporation).
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+--- 
+
+**6.** As mentioned above, this is a sample of single-walled carbon nanotubes individualized by the addition of polymers and surfactants. What we want to know is:
+
+- At what temperature does the material decompose?
+- What is the mass percentage of metal catalyst in the sample?
+- With the above in mind, and looking at the graph above, can you think of another question to ask about this sample?
+
+In ATG, the decomposition temperature of a compound is said to be reached when the ATG curve reaches an inflection point. Determining the position of these inflection points is done by determining the position of the local extrema in the first derivative of the curve.
+
+Using the `diff()`{.R} function, implement a `derivative(x,y)` function that returns the first derivative $\partial y/\partial x$ given two vectors x and y. Make this function return a `dataframe` with column names `x` and `y`.
+
+Then, use this function to calculate `d_tga`, the derivative of `RemainingMass` with respect to `Tread` for `Tread>150`.
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+--- 
+
+**7.** We will now determine the position of the local minima and save them in an `inflpoints` list.
+
+To do this, use [this thread on stackoverflow](https://stackoverflow.com/questions/6836409/finding-local-maxima-and-minima). We want to keep only the inflection points below 400˚C, and as the derivative curve is noisy we'll use the `span=150` parameter to work on smoothed data (you can play with this parameter to see its effects).
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```
+
+--- 
+
+**8.** Now try to reproduce the graph below (without "hardcoding" any values, of course!):
+
+```{r plot, echo=FALSE, fig.cap="", fig.align="center", out.width="80%"}
+knitr::include_graphics("Data/plot.png")
+```
+
+
+```{r include=TRUE, warning = FALSE, message=FALSE, cache=FALSE}
+
+```

@@ -1,0 +1,139 @@
+# Working with units and experimental errors
+
+
+
+## Working with units
+
+It is easy to work with units in *R* thanks to the package `units` (see [vignette](https://r-quantities.github.io/units/articles/measurement_units_in_R.html#handling-data-with-units-in-r-the-units-package-1)).
+
+Working with the `units` package can prove a *very* good idea to avoid conversion errors in your data treatment...
+
+Here is the gist of it:
+
+```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
+# Load the 'units' library
+library(units)
+t <- seq(0.1,1,length=3)
+# attribute a unit, here 'seconds':
+t <- set_units(t, "s") 
+t
+```
+
+And it works with the pipe too:
+
+```{r}
+t <- seq(0.1,1,length=3) |> set_units("s")
+t
+```
+
+- When possible, automatic units conversion is performed. Also, it is possible to attribute units to columns of `tibble`s and `data.frame`s:
+```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
+d1    <- seq(1,2,length=3) |> set_units("m")
+(tib1 <- tibble(t=t, d=d1, speed=d1/t))
+d2    <- seq(0.1, .3, length=3) |> set_units("cm")
+(tib2 <- tibble(t=t, d=d2, speed=d2/t))
+bind_rows(tib1,tib2)
+```
+- You can moreover convert between units systems using `set_units(vector, "unit")`{.R} or `units(vector) <- "unit"`{.R}:
+```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
+T <- set_units(1, "fs")
+set_units(1/T, "THz")
+1/T |> set_units(THz)
+units(T) <- "ns"; T
+```
+- Sometimes, you may define the unit outside of the `set_units()`{.R} call and want to retrieve it, or use a unit from another variable in a new variable. For this, use the `mode="standard"` option:
+```{r, warning = FALSE, message=FALSE, cache=FALSE, error=TRUE}
+UNIT <- "m"
+set_units(1:10, UNIT)
+set_units(1:10, UNIT, mode="standard")
+set_units(1:10, units(T), mode="standard")
+```
+
+- You can give units to table columns:
+```{r}
+#| message: false
+library(tidyverse)
+starwars
+starwars |> 
+    mutate(height = set_units(height,"cm"),
+           mass   = set_units(mass,"kg"))
+```
+
+- You can plot using units and easily convert between units while plotting:
+```{r, error=TRUE, warning=FALSE, message=FALSE}
+p <- starwars |> 
+    mutate(height = set_units(height,"cm"),
+           mass   = set_units(mass,"kg")) |> 
+    filter(sex != "hermaphroditic") |>
+    ggplot(aes(x=height, y=mass, color=sex))+
+        geom_point(size=2)+
+        labs(x="Height", y="Mass")
+p
+p + ggforce::scale_x_unit(unit = "inches") +
+    ggforce::scale_y_unit(unit = "pounds")
+```
+
+
+## Working with experimental errors
+
+When working in experimental science, you have to account for measurement errors and error propagation all along your data treatment.
+This is made really easy thanks to the [`quantities` package](https://github.com/r-quantities/quantities) that gathers the `error` and `units` packages. Most importantly, this allows you **propagating** the errors in the proper way. So, you input your experimental error once, and you don't have to think about it anymore. Neat, isn't it?
+
+Here is the gist of it:
+
+```{r warning=FALSE, message=FALSE, error=TRUE}
+library(quantities)
+options(errors.notation="plus-minus", errors.digits=4)
+a <- set_errors(1, 0.1)
+b <- 2 |> set_errors(0.2)
+a+b
+a*b
+a^3
+errors(a)
+errors_min(a)
+errors_max(a)
+```
+
+It thus becomes easy to plot the error bars from your experimental data. I recommend using the `ggforce` library to make `ggplot2` work better with `quantities`:
+
+```{r warning=FALSE, message=FALSE, error=TRUE}
+library(ggforce)
+options(errors.notation="parenthesis", errors.digits=1)
+starwars |> 
+    mutate(height=set_quantities(height,"cm",height*.05),
+           mass=set_quantities(mass,"kg",mass*.05)
+           )
+starwars |> 
+    mutate(height=set_quantities(height,"cm",height*.05),
+           mass=set_quantities(mass,"kg",mass*.05)
+           ) |> 
+    filter(sex!="hermaphroditic") |> 
+    ggplot(aes(x=height, y=mass, color=sex))+
+        geom_point(size=2)+
+        labs(x="Height", y="Mass")+
+        geom_errorbar(aes(ymin=errors_min(mass),
+                          ymax=errors_max(mass)))+
+        geom_errorbarh(aes(xmin=errors_min(height),
+                           xmax=errors_max(height)))
+```
+
+
+
+## Using pysical constants
+
+Now that we know how to work with units, it becomes super easy to use physical constants in our calculations. The `constants` package comes with a lot of physical constants defined with their units and errors:
+
+```{r}
+library(constants)
+library(units)
+# Boltzmann constant
+syms_with_units$k
+syms_with_units$k |> set_units(meV/K)
+# Planck constant
+syms_with_units$h
+syms_with_units$hbar
+# Avogadro number: find the symbol
+lookup("Avogadro")
+syms_with_units$na
+```
+

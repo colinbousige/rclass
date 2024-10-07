@@ -1,0 +1,28 @@
+---
+title    : Writing a book with R
+subtitle : An introduction
+author:
+- name       : Colin Bousige
+  affiliation: "[Laboratoire des Multimatériaux et Interfaces](https://lmi.cnrs.fr/), Lyon, France"
+  email      : colin.bousige@univ-lyon1.fr
+date     : "`r format(Sys.time(), '%d/%m/%Y')`"
+output: 
+    bookdown::html_book:
+        split_by       : chapter
+        toc            : yes
+abstract: |
+    Render it by running: 
+    ```r
+    bookdown::render_book("index.Rmd", "bookdown::html_book")
+    ```
+bibliography: "biblio.bib"
+link-citations: true
+---
+
+# Welcome 
+
+## This is a section name
+
+Hello ! [@ashcroft_solid_1976;@fake_article]
+
+This is a nice template, don't you think ??

@@ -1,0 +1,53 @@
+---
+title: Exercise
+---
+
+```{python}
+#| tags: [parameters]
+#| include: false
+alpha = 0.1
+```
+
+```{python}
+#| include: false
+import numpy as np
+import matplotlib.pyplot as plt
+np.random.seed(0)
+```
+
+## Exercise 1
+
+Here is a distribution of width $\alpha=$ `{python} alpha` defined with `python`. Now do your stuff.
+
+```{python}
+distribution = np.random.normal(0, alpha, 10)
+print(distribution)
+```
+
+
+::: {.content-visible when-profile="solution"}
+
+### Solution
+
+Here is the solution with some maths : $\alpha=$ `{python} alpha`, and some code and graphs:
+
+```{python}
+plt.hist(distribution)
+plt.show()
+```
+
+:::
+
+---------------
+
+## Exercise 2
+
+Do some other stuff.
+
+::: {.content-visible when-profile="solution"}
+
+### Solution
+
+Here is the solution to the second exercise.
+
+:::

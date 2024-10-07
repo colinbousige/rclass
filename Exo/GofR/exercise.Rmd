@@ -1,0 +1,64 @@
+---
+title : "R Exercises - G(r)"
+# title : "R Exercises - Solution"
+date  : "2020-07-09"
+output: 
+    html_document:
+        toc            : true
+        toc_float      : true
+        toc_depth      : 4
+        highlight      : tango
+        number_sections: true
+        code_download  : true
+params: 
+    solution:
+        value: true
+---
+
+```{r setup, include=FALSE, warning = FALSE, cache=FALSE}
+library(ggplot2)
+library(tidyverse)
+library(plotly)
+theme_set(theme_bw())
+```
+
+```{r include=params$solution, warning = FALSE, message=FALSE, cache=FALSE}
+gofr <- function(d, dr=.01){
+    # Get a vector of all Euclidian distances
+    dd <- as.vector(dist(d))
+    # Make a histogram out of it
+    dd.hist <- hist(dd, 
+                    breaks=seq(0,max(dd)+dr,by=dr), 
+                    plot=FALSE)
+    # Get the r values
+    r    <- dd.hist$mids
+    # Compute the normalization by the bin surface
+    rlo  <- r - dr/2
+    rup  <- r + dr/2
+    nideal  <- pi*(rup^2 - rlo^2)
+    # Return the tibble containing r and G(r)
+    tibble::tibble(r    = r, 
+                   gofr = dd.hist$counts/nideal)
+}
+# Example of use
+ddr <- 1
+d <- tibble(x=rep(seq(0,10,ddr),10/ddr+1), 
+            y=rep(seq(0,10,ddr), each=10/ddr+1))
+ggplot(d, aes(x, y))+
+    geom_point()
+G <- gofr(d, dr=.05)
+library(plotly)
+P <- ggplot(G, aes(x=r, y=gofr))+
+    geom_line()
+ggplotly(P)
+```
+
+
+
+
+
+
+
+
+
+

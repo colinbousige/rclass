@@ -1,0 +1,287 @@
+# Writing documents with Quarto
+
+## What is markdown?
+
+Markdown is a simplified language that can be used to produce a variety of rich documents: a single .md file can be compiled and outputted to .docx, .odt, .html, .rtf, .pdf or .tex. This output format as well as various options (font size, template, table of contents, numbered sections...) are specified in a YAML header, *i.e.* text between two lines like that `---` (we'll see an example later).
+
+In markdown can be embedded $\LaTeX$ code for displaying math expressions, html tags for more complicated html stuff, and the rest of the formatting is given by a few easy commands:
+
+```markdown
+# Title
+## sub-title
+### sub-sub-title
+...
+###### sub_6-title
+**bold**
+*italic*
+[link](http://google.com/)
+![image caption](image.png)
+
+Table:
+|   |   |
+|---|---|
+|   |   |
+
+Unordered list:
+- bla
+- bla bla
+
+Ordered list:
+1. bla
+1. bla bla
+
+LaTeX code: $\int_{-\infty}^{\infty} e^{-x^2}=\sqrt{\pi}$
+
+HTML code: <a href="some_link">text</a>
+```
+
+You can also add in-line code by writing text between back-ticks:
+```markdown
+Text with `in-line code`
+```
+will render as: Text with `in-line code`
+
+For more commands, you can for example get a digested cheat-sheet [here](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet) and a tutorial [here](http://www.markdowntutorial.com/).
+
+## ... and Quarto?
+
+Quarto is basically the same thing as markdown (extension: `.qmd` instead of `.md`), with the difference that code chunks in which you specify the language between accolades *will be computed and the result will be displayed*.
+
+````r
+```r
+# Not computed
+1+1
+```
+````
+
+````r
+`r ''````{r}
+# Computed
+1+1
+```
+````
+```{r, echo=FALSE}
+1+1
+```
+
+And in-line code can be computed and rendered:
+````markdown
+In-line code `{{r}} 1+2`
+````
+will render as: In-line code `r 1+2`.
+
+This very webpage is fully written in Quarto (see the "View book source" at the bottom of the left sidebar).
+
+Quarto supports a number of languages:
+```{r}
+names(knitr::knit_engines$get())
+```
+
+And `python` and `R` code chunks can communicate thanks to the `reticulate` package.
+
+So... are you starting to see the power of this tool...?
+
+Basically, you can use the best language for each task and combine it in a single Rmd file that will display text and images that are computed at each compilation of the `qmd` file: you can fully automatize your data treatment and reporting. 
+
+Example:
+
+- Chunk 1: bash, call a program that creates some files
+- Chunk 2: python, call a program that do some big computation on these files
+- Chunk 3: R, do some data treatment, plot the data
+
+
+## Further readings and ressources
+
+
+There are numerous ressources out there to help you on your Rmarkdown journey:
+
+- [Quarto website](https://quarto.org/)
+- [Quarto cheatsheet](https://rstudio.github.io/cheatsheets/html/quarto.html)
+- [The Quarto gallery](https://quarto.org/docs/gallery/): to help you chose between formats and templates, with example codes
+
+I also provide a collection of Quarto and Rmarkdown examples on the [github repo of this class](https://github.com/colinbousige/Rclass/tree/master/RmdExamples):
+
+- HTML outputs:
+    - [Simple page](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/html_page)
+    - [Dashboard](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/html_dashboard)
+    - [Gitbook](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/html_gitbook)
+    - [BS4 book (like this course)](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/html_bs4book)
+    - [Book](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/html_book)
+    - [ioslide](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/html_ioslide)
+- PDF outputs:
+    - [One- and two-columns documents with template](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/pdf_with_template)
+    - [Beamer presentation](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/pdf_beamer_presentation)
+    - [Book](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/pdf_book)
+    - [Exercises with hidden solution](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/pdf_exercises_with_hidden_solution)
+    - [Data-driven CV](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/pdf_data_driven_CV)
+    - [With Quarto](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/pdf_quarto)
+- Microsoft Office outputs:
+    - [PowerPoint](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/powerpoint)
+    - [Word (with template)](https://github.com/colinbousige/Rclass/tree/master/RmdExamples/word_with_template)
+
+
+
+## Example {#example-Rmd}
+
+Download <a href="Data/biblio.bib" target="_blank" download>biblio.bib</a> and <a href="Data/nature.csl" target="_blank" download>nature.csl</a> and put them at the root of your project.
+
+Create an _example.Rmd_ file with the following YAML header (**the indentation is important**):
+
+```yaml
+---
+title  : Your Title
+author : John Doe
+date-modified : last-modified
+format:
+  html:
+        toc            : true
+        toc-location   : left
+        highlight-style: tango
+        number-sections: false
+        code-fold      : true
+        code-overflow  : wrap
+bibliography: "biblio.bib"
+csl         : "nature.csl"
+---
+```
+How to understand this header:
+
+- `---`: surrounds the YAML header. The body comes after that.
+- `title`, `author` and `date-modified`: easy. The date can automatically be set to the current one by setting it to:
+- `format`: this tells Quarto the output format you want. When compiling, in case there are multiple entries, the compiler will only look to the _**first**_ one. Click the links below to see more options.
+    + Output formats allowed:
+        * [`html`](https://quarto.org/docs/reference/formats/html.html) 
+        * [`docx`](https://quarto.org/docs/reference/formats/docx.html)
+        * [`pdf`](https://quarto.org/docs/reference/formats/pdf.html)
+        * [`beamer`](https://quarto.org/docs/reference/formats/presentations/beamer.html)
+        * [`jupyter`](https://quarto.org/docs/reference/formats/ipynb.html)
+        * ...
+    + Below and indented, you can supply a series of options for the output format. Here, the table of contents will be on the left, the code will be highlighted with the `tango` style, the sections will not be numbered, the code will be folded and the code will wrap if it is too long.
+- `bibliography`: path to your .bib file. To create a bibliography, add a ```# References``` header at the end of your document.
+- `csl`: path to the bibliography style for the output -- in this example, _nature.csl_. [Find your style](https://www.zotero.org/styles) or edit your own. 
+
+
+Now you can start adding some content, like:
+````markdown
+---
+title: "The title"
+author: John Doe
+date-modified: last-modified
+format: 
+  html:
+        toc: true
+        toc-location: left
+        highlight-style: tango
+        number-sections: false
+        code-fold: true
+        code-overflow: wrap
+execute:
+  out-width: '75%'
+  fig-asp: 0.618034
+  fig-align: center
+  warning: false
+  message: false
+---
+
+# First section
+## First subsection
+I am writing _italic_ and __bold__ stuff.
+
+- This is an item
+- Another one with 
+
+Citations are written like this `[@bevan_statistical_2013;@rcoreteam_language_2017]`
+
+# Second section
+## First subsection that I want to refer to {#sec-subsectionID}
+
+This is a text with a footnote[^1].
+
+Now I can refer to my subsection using `@sec-subsectionID` like so:
+section @sec-subsectionID. Or see [References](#references).
+
+This is an image with a caption:
+
+`r ''````{r} 
+#| label: fig-CHUNKname
+#| fig-cap: "This is a very nice caption"
+knitr::include_graphics("https://cdn.foliovision.com/images/2017/03/i-love-markdown.png")
+```
+
+And I can refer to this figure using `@fig-CHUNKname`. 
+Example : @fig-CHUNKname.
+
+Here is a code chunk in R in @fig-Rfigure:
+`r ''````{r}
+#| label: fig-Rfigure
+#| fig-cap: "Test figure in R"
+x <- seq(0,10,.1)
+plot(x, sin(x), main="R plot")
+```
+
+And one in python in @fig-Pythonfigure:
+`r ''````{python}
+#| label: fig-Pythonfigure
+#| fig-cap: "Test figure in python"
+# Load some libraries
+import numpy as np
+# Matplotlib non interactive plots
+import matplotlib.pyplot as plt
+N = 100
+x = np.linspace(0,10,N)
+plt.plot(x, np.sin(x))
+plt.title("Matplotlib Plot")
+plt.ylabel("Y values")
+plt.xlabel("X values")
+plt.show()
+```
+
+# References
+
+[^1]: This is a footnote.
+```` 
+
+Note that when you choose to output to an html format, you can't use PDF images: use .svg ([pdf2svg](http://www.cityinthesky.co.uk/opensource/pdf2svg/)) or other non vectorial images. 
+
+What's nice with html output, it's that you can include _interactive_ figures with `plotly` like we saw in the previous sections. Of course, this won't work with static documents like PDF or Word...
+
+
+
+## Code chunks options
+
+You can add options to a code chunk, like:
+
+- `echo: false`: hide the code, show the output
+- `include: false`: hide the code and the output
+- `warnings: false`: hide the warning messages
+- `error: true`: will compute the code chunk despite errors
+- `cache: true`: cache the result of the chunk for faster re-compilation
+- `fig-asp`: figure aspect ratio
+- `fig-caption`: figure caption
+- ...[and more](https://quarto.org/docs/computations/execution-options.html)
+
+## Compilation
+
+To knit your `qmd` file to the desired output, in Rstudio, click the "Render" button.
+
+The corresponding output file will be created in the same folder.
+
+
+## And what about JuPyteR notebooks?
+
+[JuPyteR notebooks](https://jupyter.org/) are basically a web-based interactive version or Rmarkdown/Quarto documents working with **Ju**lia, **Pyt**hon and **R**. 
+
+Quarto can [render JuPyteR notebooks](https://quarto.org/docs/tools/jupyter-lab.html), or [convert between the two formats](https://quarto.org/docs/tools/jupyter-lab.html#converting-notebooks).
+
+
+## Coming from Rmarkdown?
+
+Quarto is fully compatible with Rmarkdown -- it is an evolution of Rmarkdown.
+All your `Rmd` files should thus be directly compatible with quarto upon changing the extension name to `qmd`. 
+
+## Exercises {#exo-rmd}
+
+Download the exercises and solutions from the following repository, then create a Rstudio project from the unzipped folder:
+
+- [Quarto and Rmd exercises](https://github.com/colinbousige/R4-quarto)
+
