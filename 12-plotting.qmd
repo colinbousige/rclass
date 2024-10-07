@@ -616,10 +616,12 @@ plot_to_pdf <- function(P,
     # compile the .tex file to pdf
     tools::texi2pdf(paste0(filename, ".tex"))
     # move the pdf to the output folder
-    system(paste0("mv ",filename,".pdf ",out.folder,"/"))
+    file.copy(from = paste0(filename, ".pdf"), 
+              to = paste0(out.folder, "/"))
     # clean compilation files
-    system(paste0("find . -name \"",filename,"*\" -not -name \"",filename,".pdf\" -d
-elete"))
+    toremove <- list.files(pattern = filename)
+    toremove <- toremove[!grepl(".pdf", toremove)]
+    file.remove(toremove)
     # open the pdf file with Skim (on Mac)
     if (open) system(paste0("open -a Skim ",out.folder,"/",filename,".pdf"))
 }
