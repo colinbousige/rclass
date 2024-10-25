@@ -1,0 +1,213 @@
+---
+title    : Peapods
+author   : Your Name
+date     : today
+format: 
+  html:
+    toc                   : true
+    theme                 : cosmo
+    page-layout           : full
+    linkcolor             : "#3d54cb"
+    code-link             : true
+    code-tools            : true
+    code-copy             : true
+    code-block-border-left: true
+    code-block-bg         : true
+    self-contained        : true
+execute: 
+    warning: false
+    message: false
+    cache: false
+---
+
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align="center"}
+library(downloadthis)
+download_link(
+  link = "./Archive.zip",
+  output_name = "Data Files",
+  button_label = "Download Data Files",
+  button_type = "default",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+options(width = 80)
+```
+<br>
+
+----
+
+1. All plots should be performed using `ggplot2`.
+2. Load the libraries `tidyverse` and `broom` and set the global `ggplot2` theme to `theme_bw()`{.R}.
+
+```{r}
+
+```
+
+In the following, you'll either write your own code or  fill the missing `...` parts in the given code. **Write your code within code blocks only! Uncomment the code in the codes blocks and edit the code there.**
+
+---
+
+# A bit of context 
+
+::: {.callout-important}
+Don't worry, you don't need to know anything related to it to do the exercise!
+:::
+
+```{r}
+#| label: fig-peapods
+#| echo: FALSE
+#| fig-cap: "A TEM micrograph of carbon nanopeapods."
+#| fig-align: "center"
+#| out-width: "35%"
+knitr::include_graphics("Data/TEM.png")
+```
+
+In this exercise, we're going to determine the activation energy of the rotation of C~60~ fullerene molecules in carbon nanopeapods (figure above), i.e. C~60~\@SWNT.
+For this, we've performed Inelastic Neutron Scattering spectroscopy at the Institute Laue Langevin in Grenoble.
+The signal we'll be working on is a quasi-elastic signal arising from the rotational motion of the fullerenes, and you'll see that the signal is evolving with temperature on a certain range of temperatures, while it's constant below a critical temperature.
+
+This is due to the fact that the rotation of the molecules is an activated process: below a certain temperature the thermal fluctuations are not enough to overcome the energy barrier, and the molecules rotations are locked. Above the critical temperature the rotations are allowed, and the molecules show a diffusive rotation with a statistics following an Arrhenius law.
+
+::: {.callout-note}
+The width of the quasi-elastic signal is directly related to the amplitude of the rotations. In the following, we want to determine:  
+**(1)** the evolution of the signal's **width** with **temperature**, and then  
+**(2)** determine the **activation energy** of the process by fitting an Arrhenius law to this evolution.
+:::
+
+# Data wrangling
+
+1. Using `list.files()`{.R}, find all `xxK.csv` files in the folder `Data/`, where `xx` is the temperature. You'll store the result in a vector called `flist`. 
+
+```{r}
+# flist <- ...
+```
+
+2. These files all contain 2 columns, `w` (energy transfer, in meV) and `int` (intensity). Using `read_csv()`{.R}, load all these files into a tidy tibble called `df`, with the columns `temperature`, `w` and `int`. Using a combination of `as.numeric()`{.R}, `basename()`{.R} and `str_replace()`{.R}, make sure the column `temperature` contains the temperatures as numerical values. 
+
+::: {.callout-tip}
+Don't forget to use the help on these functions to understand what they do!
+:::
+
+```{r}
+# df <- ...(..., id = "temperature") |> 
+#     ...(temperature = ...)
+```
+
+::: {.callout-note}
+In case you didn't manage to get there, you can continue by running the following code in the next code block:
+```r
+df <- read_csv("Data/alldata.csv")
+```
+:::
+
+# Plotting and fitting the data
+
+3. Now we have loaded our data, let's take a look at it. Try to make a plot looking like this:
+
+```{r plot1, echo=FALSE, fig.cap="", fig.align="center", out.width="50%"}
+knitr::include_graphics("Data/plot1.png")
+```
+
+```{r}
+# df |> 
+#     ggplot(...) +
+#        geom_... +
+#        ...
+```
+
+4. Now we see that all signals are Gaussian peaks centered around 0 meV with a varying width. A Gaussian is defined using the function `dnorm(w, mean=w0, sd=FW)`. Modify the following code to fit all the peaks using the `nls()`{.R} function (just edit the `????`).
+
+```{r}
+# fit_function <- function(mydata, w0=0, FW=10) {
+#     fit <- nls(data = ????, 
+#                ???? ~ ????, # what column is fitted as a function of what?
+#                start = list(????)
+#                ) # provide the list of starting values for the parameters the fit
+#     return(fit)
+# }
+#  df_fit <- df |> 
+#     nest(data = -temperature) |> 
+#     mutate(fit = map(data, fit_function),
+#            tidied = map(fit, tidy),
+#            augmented = map(fit, augment))
+```
+
+5. Now let's check that our fit is good by adding a red line to the previous plot, the red line being the result of the fit. For this, we will use the `.fitted` column of the unnested `augmented` column. 
+
+```{r}
+# df_fit |> 
+#     unnest(augmented) |> 
+#     ggplot(...) +
+#         ...
+```
+
+6. Let's simplify our `df_fit` tibble so that it only contains 3 columns, `temperature`, `FW` and `dFW`, `FW` and `dFW` being the result of the fit and the corresponding standard error.
+
+```{r}
+# df_fit_sorted <- df_fit |> 
+#     unnest(tidied) |> 
+#     select(...) |> 
+#     rename(...)
+```
+
+
+# Fitting the Arrhenius law
+
+::: {.callout-note}
+In case you didn't manage to get there, you can continue by running:
+```r
+df_fit_sorted <- read_csv("Data/FW_fit_results.csv")
+```
+:::
+
+7. Now let's plot our results to see the evolution of the width with temperature. Add vertical errorbars corresponding to the standard error on the fit, it should look like this:
+
+```{r picture, echo=FALSE, fig.cap="", fig.align="center", out.width="50%"}
+knitr::include_graphics("Data/picture.png")
+```
+
+```{r}
+# df_fit_sorted |> 
+#     ggplot(...) +
+#        ...
+```
+
+8. You see that below a certain temperature, there is no evolution of the width, as discussed at the beginning. Create a subset of the `df_fit_sorted` tibble only containing data for which the width evolves with temperature.
+
+```{r}
+# df_fit_sorted_tofit <- df_fit_sorted |> ...
+```
+
+9. Now let's perform the fit of the data using an Arrhenius law like below, where `FW` is the width of the signal. You can either consider it a nonlinear model (and fit it with `nls()`{.R}) or a linear one (and fit it with `lm()`{.R}. In that case, you'll need to add a column containing the `1/T` values to perform your fit).
+
+$$
+FW = FW_0 \times e^{-E_a/k_BT}
+$$
+
+```{r}
+# fit <- ...
+```
+
+10. Plot the result of the fit to make sure it's good, like so:
+
+```{r plot2, echo=FALSE, fig.cap="", fig.align="center", out.width="50%"}
+knitr::include_graphics("Data/plot2.png")
+```
+
+```{r}
+# df_fit_sorted |> 
+#     ggplot(...) +
+#        geom_... +
+#        geom_line(data = df_fit_sorted_tofit,
+#                  aes(y = ...), color="red")+
+#        ...
+```
+
+11. What is the value of the activation energy, in Kelvins (with standard error)? Does it make sense to you when seeing the width evolution with temperature?
+
+```{r}
+# Ea  <- ...
+# dEa <- ...
+```
+

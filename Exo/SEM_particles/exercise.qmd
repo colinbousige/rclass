@@ -1,29 +1,25 @@
 ---
 title : "R Exercises - Particle analysis from SEM images"
-date  : "`r Sys.Date()`"
-output: 
-    bookdown::html_document2:
-        toc            : TRUE
-        toc_float      : TRUE
-        toc_depth      : 4
-        highlight      : tango
-        number_sections: TRUE
-        code_download  : FALSE
-params: 
-    solution:
-        value: false
+author   : Your Name
+date     : today
+format: 
+  html:
+    toc                   : true
+    theme                 : cosmo
+    page-layout           : full
+    linkcolor             : "#3d54cb"
+    code-link             : true
+    code-tools            : true
+    code-copy             : true
+    code-block-border-left: true
+    code-block-bg         : true
+    self-contained        : true
+execute: 
+    warning: false
+    message: false
+    cache: false
 ---
 
-
-<style type="text/css">
-blockquote {
-  background: #E9F9FF;
-  border-left: 5px solid #026086;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-  font-size: 1em;
-}
-</style>
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align="center"}
 library(downloadthis)
@@ -46,7 +42,7 @@ options(width = 80)
 
 The aim of this exercise is to determine the correlations between experimental parameters and the size distributions of nickel nanoparticles obtained by dewetting. The nanoparticles were obtained by heat treatment at different temperatures under dihydrogen of a silicon wafer on which a layer of 2, 4.5 or 8 nm of nickel had previously been deposited. Treatment was carried out for 5, 10, 15, 30 or 60 minutes. 
 
-These wafers were then observed by scanning electron microscopy, and different images of the surface were taken: these images were analyzed with [ImageJ](https://imagej.net/Welcome), as shown on Figure \@ref(fig:SEMimages). With this analysis, we obtained a set of files of type `[x]nmNi-T[y]-[z]min-[u].csv`, where:
+These wafers were then observed by scanning electron microscopy, and different images of the surface were taken: these images were analyzed with [ImageJ](https://imagej.net/Welcome), as shown on @fig-SEMimages. With this analysis, we obtained a set of files of type `[x]nmNi-T[y]-[z]min-[u].csv`, where:
 
 - `[x]` is the Ni thickness in the sample before treatment, 
 - `[y]` is the treatment temperature in ˚C,
@@ -55,18 +51,26 @@ These wafers were then observed by scanning electron microscopy, and different i
 
 Area values are given in pixel^2^, with scales stored in a separate file [`Data/scales.csv`](Data/scales.csv). 
 
-```{r SEMimages, echo=FALSE, message=FALSE, fig.cap="Typical SEM image of Ni nanoparticles: from the raw image to particle analysis", fig.align="center", out.width="85%"}
+```{r}
+#| label: fig-SEMimages
+#| fig-cap: "Typical SEM image of Ni nanoparticles: from the raw image to particle analysis"
+#| fig-align: "center"
+#| out-width: "85%"
+#| echo: FALSE
 myimages <- c("Data/picture.png")
 knitr::include_graphics(myimages)
 ```
 
-> In this tutorial, we'll see how to import data from a large number of files, and aggregate them into a single tidy array. This table can then be exported in csv format, or used to generate graphs.
+::: {.callout-note}
+In this tutorial, we'll see how to import data from a large number of files, and aggregate them into a single tidy array. This table can then be exported in csv format, or used to generate graphs.
+:::
 
 # Data wrangling
 
 - Load the package `tidyverse`. Set the global `ggplot2` theme to black and white. Also, make it so that the `strip.background` (background of the facets titles) is blank, and that the `strip.text` is bold.
 
-```{r include=params$solution, warning = FALSE, message=FALSE}
+```{r}
+#| include: false
 library(tidyverse)
 theme_set(theme_bw()+
           theme(strip.background = element_blank(),
@@ -76,7 +80,8 @@ theme_set(theme_bw()+
 
 - Find all `[x]nmNi-T[y]-[z]min-[u].csv` files in the `Data` folder and store them in `flist`. You could use the function `glob2rx()`{.R} to help write a regular expression using the wildcard sign `*`{.R}.
 
-```{r include=params$solution, warning = FALSE, message=FALSE}
+```{r}
+#| include: false
 flist <- list.files(path="Data", pattern=glob2rx("*nmNi*.csv"), full.names=TRUE)
 ```
 
@@ -86,14 +91,15 @@ flist <- list.files(path="Data", pattern=glob2rx("*nmNi*.csv"), full.names=TRUE)
   - Separate the `file` column into 4 columns `thickness`, `temperature`, `time` and `img`.
   - Convert these new columns to numeric values (you need to remove the text in them first).
 
-```{r include=params$solution, warning = FALSE, message=FALSE}
-scales <- read_csv("Data/scales.csv") %>% 
+```{r}
+#| include: false
+scales <- read_csv("Data/scales.csv") |> 
     mutate(pix2_to_nm2 = size^2/pixel^2,
-           file        = file %>% str_remove(".jpg")) %>% 
-    separate(file, c("thickness","temperature","time","img"), convert=TRUE, sep="-") %>%
-    mutate(thickness   = as.numeric(thickness %>% str_remove("nmNi")),
-           temperature = as.numeric(temperature %>% str_remove("T")),
-           time        = as.numeric(time %>% str_remove("min")))
+           file        = file |> str_remove(".jpg")) |> 
+    separate(file, c("thickness","temperature","time","img"), convert=TRUE, sep="-") |>
+    mutate(thickness   = as.numeric(thickness |> str_remove("nmNi")),
+           temperature = as.numeric(temperature |> str_remove("T")),
+           time        = as.numeric(time |> str_remove("min")))
 ```
 
 - Let's now import all our data files into a tibble called `data`, and modify this tibble to also store the information written in the files names. We will do this in a succession of pipe operations.
@@ -104,14 +110,15 @@ scales <- read_csv("Data/scales.csv") %>%
   - Convert these new columns to numeric values (you need to remove the text in them first).
   - Finally, unnest the `data` column to get a single column `Area` containing the area values.
 
-```{r include=params$solution, warning = FALSE, message=FALSE}
-data <- read_csv(flist, id='file', col_select=Area) %>% 
-    nest(data=Area) %>% 
-    mutate(file = basename(file) %>% str_remove(".csv")) %>% 
-    separate(file, c("thickness","temperature","time","img"), convert=TRUE, sep="-") %>%
-    mutate(thickness   = as.numeric(thickness %>% str_remove("nmNi")),
-           temperature = as.numeric(temperature %>% str_remove("T")),
-           time        = as.numeric(time %>% str_remove("min"))) %>% 
+```{r}
+#| include: false
+data <- read_csv(flist, id='file', col_select=Area) |> 
+    nest(data=Area) |> 
+    mutate(file = basename(file) |> str_remove(".csv")) |> 
+    separate(file, c("thickness","temperature","time","img"), convert=TRUE, sep="-") |>
+    mutate(thickness   = as.numeric(thickness |> str_remove("nmNi")),
+           temperature = as.numeric(temperature |> str_remove("T")),
+           time        = as.numeric(time |> str_remove("min"))) |> 
     unnest(data)
 ```
 
@@ -121,20 +128,22 @@ data <- read_csv(flist, id='file', col_select=Area) %>%
   - Then, we'll get rid of the `pix2_to_nm2`, `pixel` and `size` columns that are useless. 
   - Finally, we'll filter the data to keep only particles with a diameter between 10 and 400 nm.
 
-```{r include=params$solution, warning = FALSE, message=FALSE}
-alldata <- data %>% inner_join(scales) %>% 
+```{r}
+#| include: false
+alldata <- data |> inner_join(scales) |> 
     mutate(Area     = Area*pix2_to_nm2,
-           diameter = sqrt(Area/pi)*2) %>% 
-    select(-c(pix2_to_nm2, pixel, size)) %>% 
+           diameter = sqrt(Area/pi)*2) |> 
+    select(-c(pix2_to_nm2, pixel, size)) |> 
     filter(diameter>10, diameter<400)
 ```
 
-```{r include=FALSE, warning = FALSE, message=FALSE}
+```{r include=FALSE}
 write_csv(alldata, "Data/alldata.csv")
 ```
 
-> In case you didn't manage to get there, [here](Data/alldata.csv) is the `data` tibble, you can read it with `alldata <- read_csv("Data/alldata.csv")`{.R}.
-
+::: {.callout-note}
+In case you didn't manage to get there, [here](Data/alldata.csv) is the `data` tibble, you can read it with `alldata <- read_csv("Data/alldata.csv")`{.R}.
+:::
 
 # Plotting and analysis
 
@@ -144,12 +153,19 @@ write_csv(alldata, "Data/alldata.csv")
 - In fact, I usually prefer to plot it using `geom_density()`{.R} which is basically an histogram convoluted with a Gaussian distribution of bandwidth `bw`. This allows for smoother graphs. Make this plot and play with the `bw` parameter.
 - Your plot should look like this:
 
-```{r histogram, echo=FALSE, message=FALSE, fig.cap="The wanted plot", fig.align="center", out.width="100%"}
+```{r}
+#| label: fig-histogram
+#| out-width: "100%"
+#| echo: FALSE
+#| fig-cap: "The wanted plot"
+#| fig-align: "center"
 knitr::include_graphics("Data/plot.png")
 ```
 
-```{r include=params$solution, warning = FALSE, message=FALSE, out.width="100%"}
-alldata %>%
+```{r}
+#| include: false
+#| out-width: "100%"
+alldata |>
     ggplot(aes(x=diameter, fill=factor(time), color=factor(time)))+
         geom_density(alpha=.1, bw=5)+
         labs(x    = "Particle Diameter [nm]",
@@ -170,9 +186,10 @@ alldata %>%
 
 - Now, store in `particles_ave` the average particle diameter and its standard deviation per substrate thickness, time and temperature of reaction.
 
-```{r include=params$solution, warning = FALSE, message=FALSE}
-particles_ave <- alldata %>% 
-    group_by(thickness, time, temperature) %>% 
+```{r}
+#| include: false
+particles_ave <- alldata |> 
+    group_by(thickness, time, temperature) |> 
     summarise(diam   = mean(diameter),
               sddiam = sd(diameter))
 particles_ave
@@ -180,11 +197,12 @@ particles_ave
 
 - Let's see what are the parameters influencing the particle diameters the most. For this, we'll perform a [multiple linear regression](http://www.sthda.com/english/articles/40-regression-analysis/168-multiple-linear-regression-in-r/) using `lm()`{.R}, fitting the `diam` variable as a function of a combination of `thickness`, `temperature`, and `time`. We can also set the weights for the `diam` values as the inverse of their standard deviation squared (by convention). Store the result in `fit`, and print the summary of the fit.
 
-```{r include=params$solution, warning = FALSE, message=FALSE}
+```{r}
+#| include: false
 fit <- lm(diam ~ thickness + temperature + time,
           data = particles_ave, 
           weights = 1/sddiam^2)
-fit %>% summary()
+fit |> summary()
 ```
 
 How would you interpret the result? What are the most important parameters?
