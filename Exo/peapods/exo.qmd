@@ -127,7 +127,7 @@ knitr::include_graphics("Data/plot1.png")
 #     return(fit)
 # }
 #  df_fit <- df |> 
-#     nest(data = -temperature) |> 
+#     nest(data = -T) |> 
 #     mutate(fit = map(data, fit_function),
 #            tidied = map(fit, tidy),
 #            augmented = map(fit, augment))

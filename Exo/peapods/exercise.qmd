@@ -119,13 +119,16 @@ df |>
 
 ```{r}
 #| include: false
+fit_function <- function(mydata, w0=0, FW=2) {
+    fit <- nls(data = mydata, 
+               int ~ dnorm(w, sd = FW, mean = w0),
+               start = list(FW=FW, w0=w0)
+               )
+    return(fit)
+}
 df_fit <- df |> 
     nest(data = -T) |> 
-    mutate(fit = map(data, 
-                     ~nls(data = ., 
-                          int ~ dnorm(w, sd = sd, mean = 0),
-                          start = list(sd = 1))
-                     ),
+    mutate(fit = map(data, fit_function),
            tidied = map(fit, tidy),
            augmented = map(fit, augment))
 ```
@@ -150,6 +153,7 @@ df_fit |>
 #| include: false
 df_fit_sorted <- df_fit |> 
     unnest(tidied) |> 
+    filter(term == "FW") |>
     select(T, estimate, std.error) |> 
     rename(FW="estimate", 
            dFW="std.error")
@@ -220,8 +224,5 @@ df_fit_sorted |>
 #| include: false
 Ea <- round(tidy(fit) |> filter(term == "Ea") |> pull(estimate))
 dEa <- round(tidy(fit) |> filter(term == "Ea") |> pull(std.error))
-paste("Ea = ", Ea, "±", dEa)
-Ea <- -round(tidy(fitlin) |> filter(term == "tt") |> pull(estimate))
-dEa <- round(tidy(fitlin) |> filter(term == "tt") |> pull(std.error))
 glue::glue("Ea = {Ea} ± {dEa} K")
 ```
