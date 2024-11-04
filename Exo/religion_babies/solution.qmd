@@ -1,0 +1,303 @@
+---
+title : "R Exercises - Religion and babies"
+date     : today
+format: 
+  html:
+    toc                   : true
+    theme                 : cosmo
+    page-layout           : full
+    linkcolor             : "#3d54cb"
+    code-link             : true
+    code-tools            : true
+    code-copy             : true
+    code-block-border-left: true
+    code-block-bg         : true
+    self-contained        : true
+params:
+    solution: true
+execute: 
+    warning: false
+    message: false
+    cache: false
+    fig-align: "center"
+---
+
+```{r echo=FALSE}
+library(downloadthis)
+download_link(
+  link = "./Archive.zip",
+  output_name = "Data Files",
+  button_label = "Download Data Files",
+  button_type = "default",
+  has_icon = TRUE,
+  icon = "fa fa-save",
+  self_contained = FALSE
+)
+```
+<br>
+
+----
+
+In these exercises we will see the power of the libraries `ggplot2` and `plotly` to make sense of statistical data. The goal is to reproduce the moving chart that you can see in this video from Hans Rosling -- I invite you to watch his other videos, they are quite enlightening and inspiring:
+
+<div style="text-align: center;">
+<a href="https://www.ted.com/talks/hans_rosling_religions_and_babies?language=en" target="_blank">
+<i class="fab fa-youtube fa-5x"></i>
+</a>
+</div>
+
+<br>
+<br>
+
+For this, we will need to gather the data:
+
+- From [Gapminder](https://www.gapminder.org/data/), data per country and per year from 1800 to 2018:
+    - [The children per woman total fertility](Data/children_per_woman_total_fertility.csv)
+    - [The income per capita](Data/income_per_person_gdppercapita_ppp_inflation_adjusted.csv)
+    - [The total population](Data/population_total.csv)
+- From the [PEW research center](https://www.pewforum.org/2015/04/02/religious-projection-table/2010/percent/all/), data per country:
+    + [The religious composition](Data/religion.csv)
+
+------- 
+
+# Data handling
+
+The first thing to do is to load and regroup all these datasets into a single one.
+
+1. Load the `tidyverse` library and, using `read_csv()`{.R}, load the 4 datasets in 4 separate tibbles called `children`, `income`, `pop` and `religion`.
+
+```{r include=params$solution}
+library(tidyverse)
+library(readxl)
+children <- read_csv("Data/children_per_woman_total_fertility.csv")
+income   <- read_csv("Data/income_per_person_gdppercapita_ppp_inflation_adjusted.csv")
+pop      <- read_csv("Data/population_total.csv")
+religion <- read_csv("Data/religion.csv")
+```
+
+2. To reproduce the chart on the video, we need to determine the dominant religion in each country. In the `religion` dataset, add a column `Religion` that will give the name of the dominant religion for each country. For this, you need to make the table contain just the `Country` and all religions, make the table tidy, and then select the religion with the highest proportion for each country. We will filter the data to get only the year 2020.
+
+```{r include=params$solution}
+religion <- religion |>
+        filter(Year == 2020) |>
+        select(Country, Buddhists:Unaffiliated) |> 
+        pivot_longer(cols      = -Country, 
+                     names_to  = "Religion", 
+                     values_to = "Proportion") |>
+        filter(.by = Country,
+               Proportion == max(Proportion)) |>
+        select(-Proportion)
+```
+
+3. Using `pivot_longer()`{.R}, make all datasets tidy. 
+
+- `children` should now contain 3 columns: `Country`, `Year` and `Fertility`. 
+- `income` should now contain 3 columns: `Country`, `Year` and `Income`. 
+- `pop` should now contain 3 columns: `Country`, `Year` and `Population`. 
+
+We will only consider data from 1900 to 2018. Example of syntax using the pipe operator `|>`:
+
+```{r}
+DF <- read_table("name  2010  2011  2012  2014
+Kevin  10    11   12   123
+Jane   122   56   23   4
+"
+)
+DF
+DF |> 
+    select(name, '2010':'2012') |> 
+    pivot_longer(col             = -name,
+                 names_to        = "Year", 
+                 values_to       = "Score",
+                 names_transform = list(Year = as.numeric))
+```
+The line `names_transform = list(Year = as.numeric)`{.R} is here to convert the character year values to numerical values.
+
+```{r include=params$solution}
+children <- children |> 
+                select(Country, '1900':'2018') |> 
+                pivot_longer(col             = -Country, 
+                             names_to        = "Year", 
+                             values_to       = "Fertility",
+                             names_transform = list(Year = as.numeric))
+income   <- income |> 
+                select(Country, '1900':'2018') |> 
+                pivot_longer(col             = -Country, 
+                             names_to        = "Year", 
+                             values_to       = "Income",
+                             names_transform = list(Year = as.numeric))
+pop      <- pop |> 
+                select(Country, '1900':'2018') |> 
+                pivot_longer(col             = -Country, 
+                             names_to        = "Year", 
+                             values_to       = "Population",
+                             names_transform = list(Year = as.numeric))
+```
+
+4. Now we want to combine all these datasets into a single one called `dat`, containing the columns `Country`, `Year`, `Population`, `Religion`, `Fertility` and `Income`. Look into the `inner_join()`{.R} function of the `dplyr` library (which is part of the `tidyverse` library). 
+
+```{r include=params$solution}
+dat <- inner_join(children, income) |>
+        inner_join(pop) |>
+        inner_join(religion)
+# write_csv(dat, "Data/dat.csv")
+```
+
+You should end up with a dataset like this one:
+
+```{r echo=FALSE}
+dat
+```
+
+In case you struggled to get there, download the archive with the button at the top and get the `dat` tibble with `dat <- read_csv("Data/dat.csv")`{.R}.
+
+Now our dataset is ready, let's plot it.
+
+# Plotting
+
+1. Load the library `ggplot2` and set the global theme to `theme_bw()`{.R} using `theme_set()`{.R}
+
+```{r include=params$solution}
+library(ggplot2)
+theme_set(theme_bw())
+```
+
+2. Create a subset of `dat` concerning your origin country. For me it will be `dat_france`
+
+```{r include=params$solution}
+dat_france <- dat |> filter(Country=="France")
+```
+
+3. Plot the evolution of the income per capita and the number of children per woman as a function of the years, and make it look like that (notice the kinks during the two world wars):
+
+```{r echo=params$solution}
+ggplot(data=dat_france, aes(x=Year, y=Income))+
+    ggtitle("Household income in France")+
+    xlab("Year")+
+    ylab("Household income per capita per year [constant $]")+
+    annotate("rect", xmin=1914, xmax=1918, ymin=-Inf, ymax=Inf, alpha=.3)+
+    annotate("rect", xmin=1939, xmax=1945, ymin=-Inf, ymax=Inf, alpha=.3)+
+    geom_point(alpha=0.2, size=5)+
+    geom_smooth()
+ggplot(data=dat_france, aes(x=Year, y=Fertility))+
+    ggtitle("Fertility in France")+
+    xlab("Year")+
+    lims(y=c(0,5))+
+    ylab("Children per woman")+
+    annotate("rect", xmin=1914, xmax=1918, ymin=-Inf, ymax=Inf, alpha=.3)+
+    annotate("rect", xmin=1939, xmax=1945, ymin=-Inf, ymax=Inf, alpha=.3)+
+    geom_line(size=2, color="red")
+```
+
+4. Create a subset of `dat` containing the data for your country plus all the neighbor countries (if you come from an island, the nearest countries...). For me, `dat_france_region` will contain data from France, Spain, Italy, Switzerland, Germany, Luxembourg and Belgium.
+
+```{r include=params$solution}
+dat_france_region <- dat |>
+    filter(Country %in% c("France", "Spain", "Italy", "Switzerland", "Germany", "Luxembourg", "Belgium"))
+```
+
+5. Plot again income and fertility as a function of the years, but add a color corresponding to the country and a point size to its population:
+
+```{r echo=params$solution}
+ggplot(data=dat_france_region, aes(x=Year, y=Income, col=Country, size=Population))+
+    ggtitle("Household income in France and its region")+
+    xlab("Year")+
+    ylab("Household income per capita per year [constant $]")+
+    annotate("rect", xmin=1914, xmax=1918, ymin=-Inf, ymax=Inf, alpha=.3)+
+    annotate("rect", xmin=1939, xmax=1945, ymin=-Inf, ymax=Inf, alpha=.3)+
+    geom_point(alpha=0.5)
+ggplot(data=dat_france_region, aes(x=Year, y=Fertility, col=Country, size=Population))+
+    ggtitle("Fertility in France and its region")+
+    xlab("Year")+
+    lims(y=c(0,5))+
+    ylab("Children per woman")+
+    annotate("rect", xmin=1914, xmax=1918, ymin=-Inf, ymax=Inf, alpha=.3)+
+    annotate("rect", xmin=1939, xmax=1945, ymin=-Inf, ymax=Inf, alpha=.3)+
+    geom_point(alpha=.5)
+```
+
+6. Load the library `plotly` and make the previous graphs interactive. You can make an interactive graph by calling `ggplotly()`{.R}, like that:
+
+```{r include=TRUE}
+library(plotly)
+P <- ggplot(data = dat_france, aes(x=Population, y=Income))+
+        geom_point()
+ggplotly(P) # add dynamicTicks=TRUE allows redrawing ticks when zooming in
+```
+
+
+7. Finally, you can add a slider to the interactive graph allowing selecting a value for another variable (just like in the video) by adding the keyword `frame =` in the chart's aesthetics. So now, make the graph of the video ! (you can also add the aesthetics `id=Country` to show the country name in the popup when hovering on a point).
+
+Optionally, you can try working with the `gganimate` library to make an animated graph. [Here](https://www.datanovia.com/en/blog/gganimate-how-to-create-plots-with-beautiful-animation-in-r/) is a tutorial to get you started.
+
+
+```{r include=params$solution}
+library(plotly)
+    
+P <- dat |> 
+    filter(Year > 1959) |> 
+    ggplot(aes(x     = Income, 
+               y     = Fertility, 
+               frame = Year, 
+               col   = Religion, 
+               size  = Population,
+               id    = Country))+
+    geom_point(alpha=0.5)+
+    ggtitle("Fertility vs. Income in the World")+
+    xlab("Household income per capita per year [constant $]")+
+    lims(y=c(0,8))+
+    scale_size(range=c(1, 15))+
+    ylab("Children per woman")
+ggplotly(P, dynamicTicks = TRUE) |> 
+  layout(yaxis = list(autorange = FALSE), 
+         xaxis = list(autorange = FALSE, type = 'log', range=list(2, 5.5)))
+```
+
+```{r}
+#| out-width: 100%
+library(gganimate)
+library(ggthemes)
+theme_set(theme_bw()+
+          theme(text = element_text(size = 12, color = "black"),
+                panel.border = element_rect(color = "black", fill = NA, linewidth = 1),
+                panel.background = element_rect(fill = "white", color = NA),
+                plot.background = element_rect(fill="white", color=NA),
+                legend.background = element_rect(fill = "white", color = NA),
+                strip.background = element_rect(fill = "white", color = NA),
+                strip.text = element_text(face = "bold"),
+                strip.text.y = element_text(angle=0)))
+breakslog10 <- function(x){
+    low <- floor(log10(min(x)))
+    high <- ceiling(log10(max(x)))
+    return(10^(seq(low, high)))
+}
+minorbreakslog10 <- function(x){
+    low <- floor(log10(min(x)))
+    high <- ceiling(log10(max(x)))
+    return(rep(1:9, length(low:high))*(10^rep(low:high, each = 9)))
+}
+
+dat |> 
+    filter(Year > 1959) |> 
+    ggplot(aes(x     = Income, 
+               y     = Fertility, 
+               color = Religion, 
+               size  = Population)) + 
+        geom_point(alpha=0.8)+
+        scale_size(guide = "none", range = c(3, 16))+
+        scale_x_continuous(
+            transform = "log10", 
+            breaks = breakslog10,
+            minor_breaks = minorbreakslog10,
+            labels = scales::trans_format("log10", scales::math_format(10^.x)),
+            guide = guide_axis_logticks(long = 2, mid = 1, short = 0.5))+
+        coord_cartesian(xlim = c(100, 2e5), ylim = c(0, 10))+
+        scale_colour_colorblind()+
+        labs(x = 'Household income per capita per year [constant $]', 
+             y = 'Children per woman')+ 
+        guides(colour = guide_legend(override.aes = list(size=8)))+
+        # here comes the gganimate specific bits
+        transition_time(Year) +
+        labs(title = 'Year: {round(frame_time,0)}')+ 
+        ease_aes('linear')
+```

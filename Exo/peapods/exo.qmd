@@ -145,10 +145,11 @@ knitr::include_graphics("Data/plot1.png")
 6. Let's simplify our `df_fit` tibble so that it only contains 3 columns, `temperature`, `FW` and `dFW`, `FW` and `dFW` being the result of the fit and the corresponding standard error.
 
 ```{r}
-# df_fit_sorted <- df_fit |> 
-#     unnest(tidied) |> 
-#     select(...) |> 
-#     rename(...)
+df_fit_sorted <- df_fit |> 
+    unnest(tidied) |> 
+    filter(...) |> 
+    select(...) |> 
+    rename(...)
 ```
 
 
