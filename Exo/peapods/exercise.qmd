@@ -21,17 +21,7 @@ execute:
 ---
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align="center"}
-library(downloadthis)
-download_link(
-  link = "./Archive.zip",
-  output_name = "Data Files",
-  button_label = "Download Data Files",
-  button_type = "default",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
-options(width = 80)
+xfun::embed_file("./Archive.zip", text = "Download the data")
 ```
 <br>
 

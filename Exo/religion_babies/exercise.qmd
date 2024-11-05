@@ -23,16 +23,7 @@ execute:
 ---
 
 ```{r echo=FALSE}
-library(downloadthis)
-download_link(
-  link = "./Archive.zip",
-  output_name = "Data Files",
-  button_label = "Download Data Files",
-  button_type = "default",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
+xfun::embed_file("./Archive.zip", text = "Download the data")
 ```
 <br>
 
@@ -253,7 +244,7 @@ ggplotly(P, dynamicTicks = TRUE) |>
          xaxis = list(autorange = FALSE, type = 'log', range=list(2, 5.5)))
 ```
 
-```{r}
+```{r echo=params$solution}
 #| out-width: 100%
 library(gganimate)
 library(ggthemes)

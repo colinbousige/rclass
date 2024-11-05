@@ -342,21 +342,30 @@ Silly example:
 ### Sampling data
 ```{r, message=FALSE}
 dt |> slice(1:3)  # by index
-dt |> sample_n(3) # randomly
+dt |> slice_sample(n=3) # randomly
 ```
 
 ### Operations on groups of a variable
 `group_by(column)`{.R} groups by similar values of the wanted column(s) and performs the next operations on each element of the group successively.
+
+Alternatively, you can use the parameter `by=column`{.R} or `.by=column`{.R} in the functions you want to use on groups. The difference between `group_by(column)`{.R} and `.by=column`{.R} is that after `group_by(column)`{.R}, the tibble stays grouped – so an `ungroup()`{.R} is needed to remove the grouping.
 
 ```{r, message=FALSE}
 dt |> 
     group_by(signx)
 dt |> 
     group_by(signx) |> 
-    sample_n(3)
+    slice_sample(n=3)
 dt |> 
     group_by(signx, signy) |> 
-    sample_n(3)
+    slice_sample(n=3)
+dt |> 
+    slice_sample(by = c(signx, signy), 
+                 n  = 3)
+dt |> 
+    group_by(signx, signy) |> 
+    slice_sample(n=3) |> 
+    ungroup()
 ```
 
 ### Summary by groups of a variable
