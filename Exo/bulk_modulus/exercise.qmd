@@ -1,0 +1,206 @@
+---
+title : "R Exercises - Bulk Modulus"
+format: 
+  html:
+    toc                   : true
+    theme                 : cosmo
+    page-layout           : full
+    linkcolor             : "#3d54cb"
+    code-link             : true
+    code-tools            : true
+    code-copy             : true
+    code-block-border-left: true
+    code-block-bg         : true
+    self-contained        : true
+params:
+  solution: false
+execute: 
+    warning: false
+    message: false
+    cache: false
+---
+
+```{r echo=FALSE}
+xfun::embed_file("./Archive.zip", text = "Download data files")
+```
+
+---
+
+- **Note:** All plots should be performed using `ggplot2`.
+
+```{r include=params$solution, include=FALSE, warning = FALSE, cache=FALSE}
+library(tidyverse)
+library(broom)
+theme_set(theme_bw())
+```
+
+---
+
+# Part 1: Data wrangling 
+
+Here we will recursively treat some x-ray diffraction (XRD) data obtained during a high-pressure experiment at the ESRF (the synchrotron in Grenoble). In this experiment, we measured the XRD patterns as a function of the pressure for two samples of the same rock, nicknamed *PY02*. PY02 is a pyrobitumen, *i.e.* some coal-like amorphous and porous carbon structure. The goal was to measure the *bulk modulus* $\kappa$ of this rock, defined as:
+$$\frac{1}{\kappa}=-\frac{1}{V}\frac{\partial V}{\partial P}.$$
+The bulk modulus characterizes the volume reduction of a sample as a function of the applied pressure, it's unit being a pressure unit (usually in the GPa range).
+
+The bulk modulus is usually obtained during a high pressure experiment thanks to the Murnaghan equation of state:
+
+$$
+\frac{V}{V_0}=\left(1+P\frac{\kappa'}{\kappa}\right)^{-1/\kappa'}
+$$
+where $V$ is the volume of the unit cell, $V_0$ the volume at ambient pressure, and $\kappa'$ is the pressure derivative of $\kappa$. In first approximation, we will consider that $\kappa'$ is constant and that $\kappa'\simeq4$.
+
+1. Define the `Murnaghan(P, K, Kp)`{.R} function that, given the pressure $P$, the bulk modulus $K$ and its derivative $Kp$ (defaulting to $Kp=4$), returns the relative volume $\frac{V}{V_0}$.
+
+```{r include=params$solution}
+Murnaghan <- function(P, K, Kp=4){
+    (1+P*Kp/K)^(-1/Kp)
+}
+```
+
+2. Find in the `Data`{.R} folder all the files containing the experimental diffraction patterns. They are under the form `PY02_Pxx.csv`{.R} or `PY02bis_Pxx.csv`{.R}. Store this list of files in a vector called `flist`{.R}. Attention, there are some .csv files that are note wanted in this list.
+
+```{r include=params$solution}
+flist <- list.files(path="Data", pattern = "_P")
+```
+
+3. Read and store the two files containing the pressures of each run, `PY02_pressures.dat`{.R} and `PY02bis_pressures.dat`{.R}. Combine these two tables into a single tidy one called `Pressures`{.R}, containing three columns `run`{.R}, `P.kbar`{.R} and `sample`{.R} (`sample`{.R} being either `PY02` or `PY02bis`).
+
+```{r include=params$solution}
+PY02_P           <- read_table("Data/PY02_pressures.dat")
+PY02bis_P        <- read_table("Data/PY02bis_pressures.dat")
+PY02bis_P$sample <- "PY02bis"
+PY02_P$sample    <- "PY02"
+Pressures        <- bind_rows(PY02_P, PY02bis_P)
+```
+
+4. Define the `norm01(x)`{.R} function that given a vector, returns this vector normalized to [0,1]
+
+```{r include=params$solution}
+norm01 <- function(x) {
+    (x-min(x))/(max(x)-min(x))
+}
+```
+
+5. Now let's read all the data files in `flist` and store the result in a tidy `tibble` called `data` with three columns, `file`, `q` and `int` (the data files containing the diffracted intensity as a function of the scattering vector $q$). Either use the `tidyverse`-friendly version using `purrr::map()`{.R}, or look into the `read_csv()`{.R} function and notice that it can take a vector of file names as argument, and then check the `id` parameter. Add the `int_n` column containing the normalized intensity **for each file** (*i.e.* each file's data should be normalized to [0,1], do not normalize the whole `int` column directly, you need to use a grouping operation).
+
+```{r include=params$solution}
+data <- read_csv(file.path("Data", flist), id = "file", show_col_types = FALSE) |> 
+    mutate(file = basename(file)) |> 
+    group_by(file) |> 
+    mutate(int_n = norm01(int))
+write_csv(data, "./Data/data.csv")
+```
+
+::: {.callout-note}
+In case you struggled to get there, I provide the wanted `data` tibble as a csv file in the `Data` folder. Simply run:
+```r
+data <- read_csv("Data/data.csv")
+```
+:::
+
+6. Plot all the normalized diffractograms on top of each other (shifted vertically by 1), with lines of a different color for each file. Define nice axis labels, such as *Scattering Vector q [1/Å]* and *Intensity [arb. units]*.
+
+```{r include=params$solution}
+data |>
+    ggplot(aes(x=q, y=int_n+as.numeric(factor(file))-1, color=file))+
+        geom_line()+
+        labs(x = "Scattering Vector q [1/Å]", 
+             y = "Intensity [arb. units]")
+```
+
+7. We are interested in the position of the first peak around $q=1.8$ Å$^{-1}$. Starting from `data`, create the `pospeak` tibble that stores the position `Q` of the maximum of each diffractogram. You will do so by recursively (use the pipe `|>`):
+    - Make sure to filter data for scattering vectors below 2.5 Å$^{-1}$. 
+    - For each file, summarize the data by creating the columns
+        - `Q`, storing the position of the maximum in intensity
+        - `dQ`, storing the error on the value of `Q`. We will estimate it as 0.5% of the `Q` values.
+    - Using the function `separate(column_name, c("column","name"))`{.R}, add the columns `run` and `sample` that transforms the column `file` to the run number and sample name while getting rid of the extension. Make sure the column `run` contains a number (so, remove the string "P").
+    - Finally, order the tibble by ascending run for each sample
+
+```{r include=params$solution}
+pospeak <- data |> 
+    filter(q<2.5) |> 
+    group_by(file) |> 
+    summarise(Q  = q[which.max(int)],
+              dQ = Q*0.005) |> 
+    separate(file, c("sample","run",NA)) |> 
+    mutate(run=as.numeric(gsub("P","",run))) |> 
+    arrange(sample, run)
+```
+
+8. Now join this table together with the `Pressures` one in order to get the sample names and pressures in this table. Finally, add the new column `P` containing the pressure in GPa (1 GPa = 10 kbar).
+
+```{r include=params$solution}
+pospeak <- pospeak |> 
+    inner_join(Pressures) |> 
+    mutate(P=P.kbar/10)
+write_csv(pospeak, "./Data/pospeak.csv")
+```
+
+::: {.callout-note}
+In case you struggled to get there, I provide the wanted `pospeak` tibble as a csv file in the `Data` folder. Simply run:
+```r
+pospeak <- read_csv("Data/pospeak.csv")
+```
+:::
+
+# Part 2: Fitting
+
+
+9. We now need to estimate the volume variation and the error on its measurement. Normally, we would need to get the crystal lattice volume, but as mentioned earlier, the PY02 sample is an amorphous rock, and thus it has no crystalline order. In first approximation, we can consider that the volume reduction is linked to the inter-atomic distance reduction through:
+$$
+\frac{V}{V_0}=\left(\frac{r}{r_0}\right)^3,
+$$
+where $r$ is the most representative inter-atomic distance (*i.e.* the one whose Fourier transform will have the highest intensity), the scattering vector $q$ being linked to the distance $r$ by $q=2\pi/r$. In our case, $r \simeq 2\pi/1.8\simeq 3.5$ Å is the distance between two graphitic-like planes.
+Using this, add to the `pospeak` tibble the columns `VV0` and `dVV0` containing, respectively, the volume reduction and an estimation of its measurement error. 
+    - Make sure that the `V0` part refers to the value at ambient pressure (*i.e.* $P=0$) *of the corresponding sample*. 
+    - Make sure you propagate the errors in a proper way.
+
+```{r include=params$solution}
+pospeakVV0 <- pospeak |> 
+    group_by(sample) |> 
+    mutate(VV0=(Q[P==0]/Q)^3,
+          dVV0=3*VV0*sqrt((dQ[P==0]/Q[P==0])^2 + (dQ/Q)^2))
+write_csv(pospeakVV0, "./Data/pospeakVV0.csv")
+```
+
+::: {.callout-note}
+In case you struggled to get there, I provide the wanted `pospeakVV0` tibble as a csv file in the `Data` folder. Simply run:
+```r
+pospeakVV0 <- read_csv("Data/pospeakVV0.csv")
+```
+:::
+
+10. Using `nls()`{.R}, fit the experimental data of the volume relative variation with the Murnaghan equation of state. Make sure to use the proper weighing ($1/\sigma^2_{V/V_0}$). We fix the derivative value at $Kp=4$. The bulk modulus $K$ should be of the order of a few GPa, so work with pressures in GPa.
+
+```{r include=params$solution}
+fit <- nls(data = pospeakVV0,
+           VV0 ~ Murnaghan(P, K),
+           start = list(K=1),
+           weights = 1/dVV0^2)
+```
+
+11. Store the resulting values of $K$ and it's fitting standard error $dK$ in two variables. Round the values to the appropriate floating number. You may use the `broom::tidy()`{.R} function.
+
+```{r include=params$solution}
+K  <- round(tidy(fit) |> filter(term=="K") |> .$estimate, 1)
+dK <- round(tidy(fit) |> filter(term=="K") |> .$std.error, 1)
+summary(fit)
+```
+
+12. Finally, make the plot of the experimental points (a color per sample) and the fit. Make it look like so:
+
+```{r echo=params$solution}
+pospeakVV0 |>
+    ggplot(aes(x=P, y=VV0))+
+        geom_point(alpha=0.5, aes(color=sample))+
+        geom_errorbar(alpha=0.5, aes(color=sample, ymin=VV0-dVV0, ymax=VV0+dVV0))+
+        geom_line(aes(y=predict(fit)), color="royalblue", lty=2)+
+        labs(x="Pressure [GPa]",
+             y=expression("V/V"[0]))+
+        scale_color_manual(values = c("black","red"), name="Sample")+
+        ggtitle(paste("Murnaghan fit: K = ",K," ± ",dK," GPa"))+
+        theme(legend.position = c(.9,.85))
+```
+
+
+

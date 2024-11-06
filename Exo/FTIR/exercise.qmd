@@ -1,0 +1,197 @@
+---
+title : "R Exercises - Load and plot multiple files"
+format: 
+  html:
+    toc                   : true
+    theme                 : cosmo
+    page-layout           : full
+    linkcolor             : "#3d54cb"
+    code-link             : true
+    code-tools            : true
+    code-copy             : true
+    code-block-border-left: true
+    code-block-bg         : true
+    self-contained        : true
+params:
+  solution: false
+execute: 
+    warning: false
+    message: false
+    cache: false
+---
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+xfun::embed_file("./Archive.zip", text = "Download data files")
+```
+
+---
+
+In this typical exercise, we will learn how to read multiple files and plot them all together. This is the basic step of data analysis.
+
+# Reading the data files
+
+- Load the `tidyverse` and `readxl` libraries
+
+```{r echo=params$solution}
+library(tidyverse)
+library(readxl)
+```
+
+- Store into `flist` the list of all `.xls` files in the `Data/` folder. Take a look at the `list.files()`{.R} function for this, and especially at its parameters `path`, `pattern`, and `full.names`.
+
+```{r echo=params$solution}
+flist <- list.files(path="Data", pattern = ".xls", full.names = TRUE)
+```
+
+- Open one of the .xls files with Excel and study the structure of the file. At the top of the file, the first group of 2-column data is the blank measurement (columns A and B, lines 8 through 3408), while the second group under the blank is the actual raw measurement (columns A and B, lines 3413 through 6813). Working on the first file in the list, successively:
+    + Read and store the blank data in a tibble called `blank.df`
+    + Read and store the raw data in a tibble called `raw.df`
+    + Combine them into a tibble called  `alldata` containing the columns `w`, `blank`, `raw`, and `transmittance`, the later being the transmittance (in percent) with respect to the blank measurement (*i.e.* `transmittance = raw / blank * 100`).
+
+The final table should look like this:
+
+```{r echo=params$solution}
+blank.df <- read_excel(flist[1], 
+            range = "A8:B3408", 
+            col_names = c("w","blank"))
+raw.df   <- read_excel(flist[1], 
+            range = "A3413:B6813", 
+            col_names = c("w","raw"))
+# Base R version
+alldata <- tibble(blank.df, raw=raw.df$raw)
+alldata$transmittance <- alldata$raw/alldata$blank*100
+alldata
+# Tidyverse version:
+# alldata <- inner_join(blank.df, raw.df, by = "w") |> 
+#     mutate(transmittance=raw/blank*100)
+```
+
+- Wrap this procedure into a function `readFTIR()`{.R} that, given a file name, returns a tibble with the columns `w`, `blank`, `raw`, and `transmittance`. This means you just need to do the same thing as before but providing the file name as a variable, and finish the function by printing the `alldata` tibble -- if you don't print it as the last action of your function, it won't return the tibble. Test it on the first file in the list.
+
+```{r echo=params$solution}
+readFTIR <- function(filename) {
+    blank.df <- read_excel(filename, 
+                range = "A8:B3408", 
+                col_names = c("w","blank"))
+    raw.df   <- read_excel(filename, 
+                range = "A3413:B6813", 
+                col_names = c("w","raw"))
+    # Base R version
+    alldata <- tibble(blank.df, raw=raw.df$raw)
+    alldata$transmittance <- alldata$raw/alldata$blank*100
+    alldata
+    # Tidyverse version:
+    # inner_join(blank.df, raw.df, by = "w") |> 
+    #     mutate(transmittance=raw/blank*100)
+}
+```
+
+
+- Plot the first file in `flist`, and try to make your plot look like this:
+
+```{r echo=params$solution}
+readFTIR(flist[1]) |> 
+    ggplot(aes(x=w, y=raw))+
+        geom_line(size=1)+
+        geom_line(aes(y=blank), lty=2, col="gray")+
+        labs(x=expression(paste("Wavenumber [", cm^{-1},"]")),
+             y="Transmittance [%]")+
+        scale_x_continuous(breaks=seq(0,5000,500))+
+        theme_bw()+
+        theme(panel.grid=element_blank(),
+              text=element_text(size=16))
+```
+
+- Now we want to read all files in the list and store them in a tidy tibble. For this we will start easy and use a `for` loop. This is the step-by-step procedure:
+    + Define an empty tibble called `df`
+    + Define a `for` loop on all elements of `flist`
+    + Then, within this `for` loop, successively:
+        + Read the current file with the above-defined `readFTIR()` function and store it in `tempdf`
+        + Add the column `name` to `tempdf` containing the current file name. If needed, trim the path from the name string using `basename()`{.R}.
+        + Stack `tempdf` below `df` by binding them row-wise (look at `bind_rows()`{.R}).
+
+The final table should look like this:
+
+```{r echo=params$solution}
+df <- tibble()
+for(file in flist){
+    tempdf <- readFTIR(file)
+    tempdf$name <- basename(file)
+    df <- bind_rows(df, tempdf)
+}
+df
+```
+
+- More advanced: you can do this without using a `for` loop using the `tidyverse`. For this, look into the `map()`{.R} function as described [here](https://lmi.cnrs.fr/r/data-frames.html#apply-a-function-recursively-on-each-element-of-a-column).
+
+```{r echo=params$solution}
+df  <- tibble(name = flist) |> 
+    mutate(data=map(name, ~readFTIR(.)),
+           name=basename(name)) |> 
+    unnest(data)
+write.csv(df,"Data/alldata.csv", row.names=FALSE)
+```
+
+
+# Plotting
+
+In case you didn't manage to do the above procedure, just load the `alldata.csv` file in the `Data` folder by running `df <- read_csv("Data/alldata.csv")`{.R}.
+
+We will now plot all these files together using `ggplot2`.
+
+- First, you can try several things, like:
+    + Plot them all together in one frame with a color depending on the file name.
+    + Plot them all on a different frame (look at `facet_wrap()`{.R}) for each file.
+
+The final plots should look like this:
+
+```{r echo=params$solution}
+theme_set(theme_bw()+
+          theme(strip.background = element_blank(),
+                strip.text = element_text(face="bold")))
+ggplot(data=df, aes(x=w, y=transmittance, color=name))+
+    geom_line()+
+    labs(x=expression(paste("Wavenumber [", cm^{-1},"]")),
+         y="Transmittance [%]")
+ggplot(data=df, aes(x=w, y=transmittance))+
+    geom_line()+
+    labs(x=expression(paste("Wavenumber [", cm^{-1},"]")),
+         y="Transmittance [%]")+
+    facet_wrap(~name)
+```
+
+- You see in the file names that there are actually 5 samples with 2 temperatures for each sample. Based on the column `name` of the `df` tibble, create the columns `sample` and `temperature` that contain *numerical values* of the sample number and temperature. Think about using the function `gsub()`{.R} to replace (delete) text in a string, the `substr(string, start, end)`{.R} function to get a portion of a string. You can also take a look at the `separate()`{.R} function from the `tidyverse` (see [here](https://lmi.cnrs.fr/r/data-frames.html#separate-columns)).
+
+```{r echo=params$solution}
+# Base version
+df$sample      <- as.numeric(substr(df$name,8,8))
+df$temperature <- substr(df$name,10,20)
+df$temperature <- as.numeric(gsub("C.xls","",df$temperature))
+# tidyverse version
+df  <- tibble(name = flist) |> 
+    mutate(data=map(name, ~readFTIR(.)),
+           name=basename(name)) |> 
+    separate(name, c(NA, "sample","temperature",NA), convert = TRUE) |> 
+    mutate(temperature=as.numeric(gsub("C","",temperature))) |> 
+    unnest(data)
+```
+
+- Now it is time to make nicer plots:
+    - Make a grid plot showing the data evolution for each sample as a function of temperature
+    - Make a grid plot with one frame per sample, and the two temperatures in different colors.
+
+The final plots should look like this:
+
+```{r echo=params$solution}
+ggplot(data=df, aes(x=w, y=transmittance))+
+    geom_line()+
+    labs(x=expression(paste("Wavenumber [", cm^{-1},"]")),
+         y="Transmittance [%]")+
+    facet_grid(paste("Sample", sample) ~ paste(temperature, "˚C"))
+ggplot(data=df, aes(x=w, y=transmittance, color=factor(temperature)))+
+    geom_line()+
+    labs(x=expression(paste("Wavenumber [", cm^{-1},"]")),
+         y="Transmittance [%]",
+         color="Temperature [˚C]")+
+    facet_wrap(~paste("Sample",sample))
+```

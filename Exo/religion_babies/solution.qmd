@@ -22,19 +22,9 @@ execute:
     fig-align: "center"
 ---
 
-```{r echo=FALSE}
-library(downloadthis)
-download_link(
-  link = "./Archive.zip",
-  output_name = "Data Files",
-  button_label = "Download Data Files",
-  button_type = "default",
-  has_icon = TRUE,
-  icon = "fa fa-save",
-  self_contained = FALSE
-)
+```{r echo=FALSE, warning=FALSE, message=FALSE, fig.align="center"}
+xfun::embed_file("./Archive.zip", text = "Download data files")
 ```
-<br>
 
 ----
 

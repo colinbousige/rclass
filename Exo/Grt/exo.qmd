@@ -1,0 +1,113 @@
+---
+title : "R Exercises - G(r,t)"
+format: 
+  html:
+    toc                   : true
+    theme                 : cosmo
+    page-layout           : full
+    linkcolor             : "#3d54cb"
+    code-link             : true
+    code-tools            : true
+    code-copy             : true
+    code-block-border-left: true
+    code-block-bg         : true
+    self-contained        : true
+execute: 
+    warning: false
+    message: false
+    cache: false
+---
+
+
+# A bit of context
+
+In this exercise, we will see how to make a color plot of $4\pi r^2\times G(r,t)$ data obtained from Molecular Dynamics simulations.
+These auto-correlators $G(r,t)$ are obtained from MD trajectories of a fluid encapsulated in a porous medium by computing the probability that each molecule moves by a distance $r$ over a time $t$. The MD trajectories are performed with [LAMMPS](https://lammps.sandia.gov/) and the trajectories treated by a home-made C program producing these files.
+
+In these simulations, we varied the depth of the interaction well. It is given in the name of the file such as `Grt_xx.dat`, where xx = 0.01, 0.1, 0.2, 0.3, 0.5, 0.8, 1 corresponds to $\varepsilon/k_BT$. $\varepsilon/k_BT$ is the depth of the interaction well in units of temperature.
+
+The `Grt_xx.dat` files contain the $4\pi r^2\times G(r,t)$ data under the form of a matrix, with $r$ increasing with the rows and $t$ with the columns. $r$ goes from 0 to 20 Å and $t$ goes from 0 to 200 ps.
+
+# Reading and tidying the data
+
+We want to read all data files and store them into a tidy tibble for ease of plotting.
+
+- Load the `tidyverse` and `ggplot2` packages
+
+```{r}
+
+```
+
+- Find all files starting by "Grt" and store them in a vector `Grt_files`
+
+```{r}
+
+```
+
+- Initiate an empty tibble `Grt` that will store all data
+
+```{r}
+
+```
+
+- Using a `for` loop:
+    - read the files
+    - add columns names as the times values
+    - add the `r.A` column containing the r values
+    - and recursively (using the pipe `%>%`) 
+        - pivot the table to make it tidy, with the columns `r.A`, `t.ps` and `r2Grt`
+        - make sure that the times are read as numeric values
+        - add the `epskt` column containing the $\varepsilon/k_BT$ value
+    - store this in `Grt`
+
+```{r}
+
+```
+
+
+
+
+# Plotting data
+
+
+We will now plot this as a colored heatmap using `geom_raster` from `ggplot2`:
+
+- We will first plot `Grt` only for times below 100 ps and $\varepsilon/k_BT=0.5$, so recursively filter the data accordingly, then provide this to `ggplot`
+
+```{r}
+
+```
+
+
++ Use a nicer axis labels
+
+```{r}
+
+```
+
++ Do you see anything on the plot?
++ In fact, we need to saturate values above a certain limit in order to see the fine evolution of the $G(r,t)$ auto-correlator. Add a mutation of the tibble attributing the limit value to all points above this limit, and play with the limit value in order to have a nicer plot.
+
+```{r}
+
+```
+
+- Add a vertical dashed line in x=8.18Å marking the mean pore size for this structure.
+
+```{r}
+
+```
+
+- Use a nicer color scheme with more colors in order to better see the variations.
+
+```{r}
+
+```
+
+- Now we want to see the evolution of $G(r,t)$ as a function of $\varepsilon/k_BT$. Using the procedure above, plot $G(r,t)$ for all 
+$\varepsilon/k_BT$ on a grid.
+
+```{r}
+
+```
+

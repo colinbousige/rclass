@@ -382,9 +382,9 @@ ga('send', {
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Unit: milliseconds
-#&gt;       expr        min         lq       mean     median         uq       max
-#&gt;    forloop 231.819535 233.787863 234.952218 235.086969 235.756724 237.94334
-#&gt;  noforloop   1.401093   4.996383   6.975482   7.440516   7.797011  17.38974
+#&gt;       expr       min         lq       mean     median         uq       max
+#&gt;    forloop 235.05858 236.702348 238.516582 237.910475 239.013272 246.79876
+#&gt;  noforloop   1.44648   2.799357   7.608719   7.320488   7.744039  20.39045
 #&gt;  neval cld
 #&gt;     10  a 
 #&gt;     10   b</code></pre>
@@ -502,18 +502,18 @@ ga('send', {
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; # A tibble: 1,000 × 2
-#&gt;         x y    
-#&gt;     &lt;dbl&gt; &lt;chr&gt;
-#&gt;  1 -0.330 x&lt;=0 
-#&gt;  2  0.701 x&gt;0  
-#&gt;  3 -0.390 x&lt;=0 
-#&gt;  4  0.999 x&gt;0  
-#&gt;  5 -0.946 x&lt;=0 
-#&gt;  6  0.719 x&gt;0  
-#&gt;  7 -0.632 x&lt;=0 
-#&gt;  8 -0.710 x&lt;=0 
-#&gt;  9 -0.632 x&lt;=0 
-#&gt; 10  0.653 x&gt;0  
+#&gt;          x y    
+#&gt;      &lt;dbl&gt; &lt;chr&gt;
+#&gt;  1  0.542  x&gt;0  
+#&gt;  2 -0.0599 x&lt;=0 
+#&gt;  3 -0.294  x&lt;=0 
+#&gt;  4  0.358  x&gt;0  
+#&gt;  5  0.934  x&gt;0  
+#&gt;  6 -0.863  x&lt;=0 
+#&gt;  7  0.892  x&gt;0  
+#&gt;  8 -0.461  x&lt;=0 
+#&gt;  9  0.938  x&gt;0  
+#&gt; 10 -0.0635 x&lt;=0 
 #&gt; # ℹ 990 more rows</code></pre>
 </div>
 </div>
@@ -534,22 +534,22 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; $A
-#&gt; [1] 55.16879
+#&gt; [1] 49.28363
 #&gt; 
 #&gt; $B
-#&gt; [1] 14.01017
+#&gt; [1] -45.34625
 #&gt; 
 #&gt; $C
-#&gt; [1] 104.8234</code></pre>
+#&gt; [1] 99.93503</code></pre>
 </div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;         A         B         C 
-#&gt;  55.16879  14.01017 104.82335</code></pre>
+#&gt;  49.28363 -45.34625  99.93503</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt;         A         B         C 
-#&gt;  55.16879  14.01017 104.82335</code></pre>
+#&gt;  49.28363 -45.34625  99.93503</code></pre>
 </div>
 </div>
 </details></details><details><summary><strong>Exercise 3</strong>
