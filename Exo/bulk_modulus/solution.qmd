@@ -182,8 +182,8 @@ fit <- nls(data = pospeakVV0,
 11. Store the resulting values of $K$ and it's fitting standard error $dK$ in two variables. Round the values to the appropriate floating number. You may use the `broom::tidy()`{.R} function.
 
 ```{r include=params$solution}
-K  <- round(tidy(fit) |> filter(term=="K") |> .$estimate, 1)
-dK <- round(tidy(fit) |> filter(term=="K") |> .$std.error, 1)
+K  <- round(tidy(fit) |> filter(term=="K") |> _$estimate, 1)
+dK <- round(tidy(fit) |> filter(term=="K") |> _$std.error, 1)
 summary(fit)
 ```
 

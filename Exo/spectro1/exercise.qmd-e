@@ -1,0 +1,40 @@
+---
+title : "R Exercises - Spectroscopic data"
+format: 
+  html:
+    toc                   : true
+    theme                 : cosmo
+    page-layout           : full
+    linkcolor             : "#3d54cb"
+    code-link             : true
+    code-tools            : true
+    code-copy             : true
+    code-block-border-left: true
+    code-block-bg         : true
+    self-contained        : true
+execute: 
+    warning: false
+    message: false
+    cache: false
+---
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+xfun::embed_file("./Archive.zip", text = "Download data files")
+```
+
+---
+
+
+
+- Load the `readxl` and `tidyverse` libraries.
+- Load `FTIR_rocks.xlsx` into a `data.frame` (in fact, `tibble`).
+- Rename the columns with simpler names, such as `w`, `r1`, `r2` and `r3`
+- Find the wavenumber value of the maximum of each spectrum
+- Create a function `norm01()`{.R} that, given a vector, returns the vector normalized to [0,1]
+- Normalize all columns of FTIR intensity to [0,1]
+- Using base graphics or `ggplot2`, as you wish, try to reproduce the following graphs:
+
+```{r plots, echo=FALSE, fig.cap="", fig.align="center", out.width="80%"}
+knitr::include_graphics("Data/plot1.png")
+knitr::include_graphics("Data/plot2.png")
+```
