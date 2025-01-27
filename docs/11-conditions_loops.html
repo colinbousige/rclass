@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.38">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>10&nbsp; Conditional actions and loops – Reproducible data treatment with R</title>
 <style>
@@ -68,10 +68,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-b663525e4b92bb903b2199e2d401bf36.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-067b6432cd1db953bcb7f9f6c250b584.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -382,9 +382,9 @@ ga('send', {
 <span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; Unit: milliseconds
-#&gt;       expr       min        lq       mean     median         uq        max
-#&gt;    forloop 231.46361 231.82663 235.123852 233.184200 235.693133 250.000534
-#&gt;  noforloop   1.46165   2.23409   4.998228   6.297702   6.443765   6.658195
+#&gt;       expr        min         lq       mean     median         uq      max
+#&gt;    forloop 233.602748 236.442080 237.930712 237.776076 239.920315 241.8123
+#&gt;  noforloop   1.488997   5.497936   7.536677   6.752413   7.624114  21.0469
 #&gt;  neval cld
 #&gt;     10  a 
 #&gt;     10   b</code></pre>
@@ -504,16 +504,16 @@ ga('send', {
 <pre><code>#&gt; # A tibble: 1,000 × 2
 #&gt;          x y    
 #&gt;      &lt;dbl&gt; &lt;chr&gt;
-#&gt;  1 -0.445  x&lt;=0 
-#&gt;  2 -0.910  x&lt;=0 
-#&gt;  3  0.278  x&gt;0  
-#&gt;  4 -0.971  x&lt;=0 
-#&gt;  5 -0.324  x&lt;=0 
-#&gt;  6 -0.723  x&lt;=0 
-#&gt;  7  0.943  x&gt;0  
-#&gt;  8 -0.885  x&lt;=0 
-#&gt;  9  0.960  x&gt;0  
-#&gt; 10 -0.0992 x&lt;=0 
+#&gt;  1  0.0580 x&gt;0  
+#&gt;  2 -0.282  x&lt;=0 
+#&gt;  3  0.411  x&gt;0  
+#&gt;  4 -0.784  x&lt;=0 
+#&gt;  5  0.532  x&gt;0  
+#&gt;  6 -0.569  x&lt;=0 
+#&gt;  7 -0.612  x&lt;=0 
+#&gt;  8 -0.395  x&lt;=0 
+#&gt;  9  0.583  x&gt;0  
+#&gt; 10 -0.208  x&lt;=0 
 #&gt; # ℹ 990 more rows</code></pre>
 </div>
 </div>
@@ -534,22 +534,22 @@ Solution
 <span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; $A
-#&gt; [1] 52.67168
+#&gt; [1] 52.99975
 #&gt; 
 #&gt; $B
-#&gt; [1] -27.3458
+#&gt; [1] 22.74111
 #&gt; 
 #&gt; $C
-#&gt; [1] 98.8842</code></pre>
+#&gt; [1] 96.49105</code></pre>
 </div>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span>; <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">LL</span>, <span class="va">sum</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;         A         B         C 
-#&gt;  52.67168 -27.34580  98.88420</code></pre>
+<pre><code>#&gt;        A        B        C 
+#&gt; 52.99975 22.74111 96.49105</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>#&gt;         A         B         C 
-#&gt;  52.67168 -27.34580  98.88420</code></pre>
+<pre><code>#&gt;        A        B        C 
+#&gt; 52.99975 22.74111 96.49105</code></pre>
 </div>
 </div>
 </details></details><details><summary><strong>Exercise 3</strong>
@@ -742,8 +742,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -905,7 +903,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

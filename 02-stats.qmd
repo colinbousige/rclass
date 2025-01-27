@@ -50,7 +50,7 @@ Our first measurement of the body temperature yielded (38.0±0.1) °C. Now let's
 #| message: false
 #| echo: false
 temp <- tibble(T=c(38, 38.1, 38.0, 38.0, 38.3, 37.9, 38.1, 38.2, 39.8))
-temp %>% 
+temp |> 
     ggplot(aes(x = T)) +
        geom_histogram(alpha=.5, color="black")+
        geom_vline(xintercept = mean(temp$T), color="red")+
@@ -92,21 +92,21 @@ When looking at discrete values or when you want to characterize the distributio
 #| message: false
 #| echo: false
 temp <- tibble(T=c(38, 38.1, 38.0, 38.0, 38.3, 37.9, 38.1, 38.2, 39.8))
-temp %>% 
+temp |> 
     ggplot(aes(x = T)) +
        geom_histogram(alpha=.5, color="black", binwidth = 0.1)+
        geom_vline(size=2, xintercept = mean(temp$T), color="red")+
        geom_vline(size=2, xintercept = median(temp$T), color="royalblue")+
        theme(text = element_text(size = 35), title = element_text(size = 25))+
        labs(x="T [°C]")
-temp %>% 
+temp |> 
     ggplot(aes(x = T)) +
        geom_histogram(alpha=.5, color="black", binwidth = 0.2)+
        geom_vline(size=2, xintercept = mean(temp$T), color="red")+
        geom_vline(size=2, xintercept = median(temp$T), color="royalblue")+
        theme(text = element_text(size = 35), title = element_text(size = 25))+
        labs(x="T [°C]")
-temp %>% 
+temp |> 
     ggplot(aes(x = T)) +
        geom_histogram(alpha=.5, color="black", binwidth =1)+
        geom_vline(xintercept = mean(temp$T), color="red")+
@@ -135,18 +135,18 @@ dat <- tibble(x=seq(0,100,1),
               dy1=.1/y,
               dy2=.1*(y-1)
               )
-dat %>% 
+dat |> 
     ggplot(aes(x = x, y = y)) +
        geom_point(alpha=0.5)+
        theme(text=element_text(size=35), title = element_text(size=25))+
        labs(x="x", y="y")
-dat %>% 
+dat |> 
     ggplot(aes(x = x, y = y)) +
        geom_point(alpha=0.5)+
        geom_errorbar(aes(ymin=y-dy1,ymax=y+dy1))+
        theme(text=element_text(size=35), title = element_text(size=25))+
        labs(x="x [unit]", y="y [unit]")
-dat %>% 
+dat |> 
     ggplot(aes(x = x, y = y)) +
        geom_point(alpha=0.5)+
        geom_errorbar(aes(ymin=y-dy2,ymax=y+dy2))+
@@ -228,10 +228,10 @@ The above considerations all assume that the distribution of measured values is 
 #| message: false
 #| echo: false
 dat <- tibble(x=seq(0,130,.1), 
-              y=dnorm(x,mean=12,sd=2)+1.5*dnorm(x,mean=54,sd=10)+dnorm(x,mean=80,sd=12)) %>% 
+              y=dnorm(x,mean=12,sd=2)+1.5*dnorm(x,mean=54,sd=10)+dnorm(x,mean=80,sd=12)) |> 
         mutate(y = y/(sum(y)*.1))
 MM <- sum(dat$x*dat$y)*.1
-dat %>% 
+dat |> 
     ggplot(aes(x = x, y = y)) +
        geom_line()+
        geom_vline(xintercept = MM, color="red", size=1)+
@@ -327,27 +327,27 @@ P2 <- function(lambda, k) {
 dat <- tibble(k=rep(0:10,4), 
               lam=rep(c(1,2,5,8), each=11),
               poisson=P(lam,k))
-dat2 <- tibble(k=0:5) %>%  
-        mutate(poisson=map(k, ~P2(seq(0,15,.1), .))) %>% 
+dat2 <- tibble(k=0:5) |>  
+        mutate(poisson=map(k, ~P2(seq(0,15,.1), .))) |> 
         unnest(poisson)
-dat3 <- tibble(k = 100) %>%
-    mutate(poisson = map(k, ~ P2(seq(0, 200, .1), .))) %>%
+dat3 <- tibble(k = 100) |>
+    mutate(poisson = map(k, ~ P2(seq(0, 200, .1), .))) |>
     unnest(poisson)
-dat %>% 
+dat |> 
     ggplot(aes(x = k, y = poisson, color=factor(lam))) +
        geom_line(size=2)+
        labs(color=expression(lambda), 
             x=expression(italic("k")), 
             y=expression(italic("P")[lambda]*(italic("k"))))+
         theme(text = element_text(size = 35), title = element_text(size = 25))
-dat2 %>% 
+dat2 |> 
     ggplot(aes(x = lam, y = poisson, color=factor(k))) +
        geom_line(size=2)+
        labs(color = expression(italic("k")), 
             x = expression(lambda), 
             y = expression(italic("P")[lambda] * (italic("k"))))+
         theme(text = element_text(size = 35), title = element_text(size = 25))
-dat3 %>% 
+dat3 |> 
     ggplot(aes(x = lam, y = poisson, color=factor(k))) +
         geom_line(size=2)+
         scale_x_continuous(breaks=seq(0,500,100))+
@@ -436,7 +436,7 @@ seg1 <- tibble(x=c(sqrt(2*log(2)),sqrt(2*log(2))),
                y=c(0,1/2/sqrt(2*pi)))
 seg2 <- tibble(x=-c(sqrt(2*log(2)),sqrt(2*log(2))),
                y=c(0,1/2/sqrt(2*pi)))
-dat %>% 
+dat |> 
     ggplot(aes(x = x, y = y)) +
         geom_line()+
         labs(x="z", y="P(z)")+
@@ -526,7 +526,7 @@ In R, the t-distribution is implemented in the function `dt(x, df)`{.R} where `x
 #| fig-align: "center"
 dat <- tibble(x = seq(-5,5,.01))
 colors <- colorRampPalette(c("royalblue","seagreen","orange","red"))
-dat %>% 
+dat |> 
     ggplot(aes(x = x)) +
        geom_line(aes(y=dnorm(x), color="Gaussian"), linewidth=2)+
        geom_line(aes(y=dt(x, df = 1), color="1"), linewidth=1)+
@@ -560,11 +560,11 @@ If your distribution population is small however ($N<30$), you should use the t-
 dat <- tibble(x = seq(-5,5,.01), y = dnorm(x))
 xlow <- qnorm(0.025)
 xhi <- qnorm(0.975)
-dat %>% 
+dat |> 
     ggplot(aes(x = x, y = y)) +
         geom_line()+
-        geom_area(data=dat %>% filter(x<=xlow), alpha=0.5, fill="royalblue")+
-        geom_area(data=dat %>% filter(x>=xhi), alpha=0.5, fill="royalblue")+
+        geom_area(data=dat |> filter(x<=xlow), alpha=0.5, fill="royalblue")+
+        geom_area(data=dat |> filter(x>=xhi), alpha=0.5, fill="royalblue")+
         scale_x_continuous(breaks=seq(-5,5,1))+
         labs(y="Density", x="x")+
         annotate("text", x = xlow-.75, y = 0.06, label = "2.5%", size = 5, color="royalblue")+
@@ -585,13 +585,13 @@ Some special values are gathered in @tbl-tolerenceinterval.
 #| tbl-cap: "Quantiles of the t- and Gaussian distributions for various degrees of freedom ($\\nu$) and tolerence levels ($\\alpha$)."
 nu <- c(1,2,3,30, Inf)
 P <- c(.5, .8, .9, .95, .99, .999)
-expand_grid(`$\\nu$`=nu, P=P) %>% 
+expand_grid(`$\\nu$`=nu, P=P) |> 
     mutate(Q=qt(1-(1-P)/2, df=`$\\nu$`),
-           `$\\nu$`=as.character(`$\\nu$`)) %>% 
-    bind_rows(tibble(`$\\nu$`="Gaussian", P=P, Q=qnorm(1-(1-P)/2))) %>%
-    mutate(P=glue::glue(r"($\alpha$: {P*100}%)")) %>% 
-    pivot_wider(names_from=P, values_from=Q) %>% 
-    mutate(`$\\nu$`=str_replace(`$\\nu$`, "Inf", r"($\\infty$)")) %>%
+           `$\\nu$`=as.character(`$\\nu$`)) |> 
+    bind_rows(tibble(`$\\nu$`="Gaussian", P=P, Q=qnorm(1-(1-P)/2))) |>
+    mutate(P=glue::glue(r"($\alpha$: {P*100}%)")) |> 
+    pivot_wider(names_from=P, values_from=Q) |> 
+    mutate(`$\\nu$`=str_replace(`$\\nu$`, "Inf", r"($\\infty$)")) |>
     kable(format="markdown")
 ```
 
@@ -727,19 +727,19 @@ Let's work on two sets of temperature measurements performed on two different da
 ```{r}
 #| echo: false
 temps1 <- tibble(Day1 = rnorm(20, 38.2, .2),
-                 Day2 = rnorm(20, 37.7, .3)) %>% 
+                 Day2 = rnorm(20, 37.7, .3)) |> 
             pivot_longer(everything(), 
                          names_to = "Day", 
-                         values_to = "Temperature") %>% 
+                         values_to = "Temperature") |> 
             mutate(Patient="A")
 temps2 <- tibble(Day1 = rnorm(20, 38.2, 3),
-                 Day2 = rnorm(20, 37.7, 3)) %>% 
+                 Day2 = rnorm(20, 37.7, 3)) |> 
             pivot_longer(everything(), 
                          names_to = "Day", 
-                         values_to = "Temperature")%>% 
+                         values_to = "Temperature")|> 
             mutate(Patient="B")
 temperatures <- bind_rows(temps1, temps2)
-temperatures %>% 
+temperatures |> 
     ggplot(aes(x = Day, y = Temperature, color = Patient)) +
         geom_jitter(width = .04, size = 2, alpha = .3)+
         geom_boxplot(notch = TRUE, position = "identity", 
@@ -757,19 +757,19 @@ temperatures %>%
 ```{r}
 #| code-fold: false
 #| echo: false
-TA <- t.test(data = temperatures %>% filter(Patient == "A"),
+TA <- t.test(data = temperatures |> filter(Patient == "A"),
        Temperature ~ Day)
-TB <- t.test(data = temperatures %>% filter(Patient == "B"),
+TB <- t.test(data = temperatures |> filter(Patient == "B"),
        Temperature ~ Day)
 ```
 
 ```{r}
 #| echo: false
 #| tbl-cap: Data means and standard deviations
-temperatures %>% 
+temperatures |> 
     summarize(.by = c(Day, Patient),
               mean = mean(Temperature),
-              sd = sd(Temperature)) %>%
+              sd = sd(Temperature)) |>
     kable(format = "markdown")
 ```
 
@@ -780,29 +780,29 @@ We can perform a Student's t-test to assert whether the two sets of data are sig
 First, **to apply a t-test, we need to make sure that the data are normally distributed**, which we can do by performing a Shapiro-Wilk test on each set of data:
 ```{r}
 #| echo: false
-temperatures %>% 
-    nest(data = Temperature) %>% 
+temperatures |> 
+    nest(data = Temperature) |> 
     mutate(shapiro = map(data, ~as_tibble(
-        shapiro.test(.$Temperature)[c('statistic','p.value')]))) %>% 
-    unnest(shapiro) %>% 
-    select(-data) %>% 
+        shapiro.test(.$Temperature)[c('statistic','p.value')]))) |> 
+    unnest(shapiro) |> 
+    select(-data) |> 
     kable(format = "markdown")
 ```
 In all cases the p-value is above 0.05, which means that the null hypothesis that the data are normally distributed is not rejected, and **we can conclude that the data are normally distributed**. The application of the t-test is thus valid.
 
 Let's start now with patient A:
 ```{r}
-t.test(data = temperatures %>% filter(Patient == "A"),
+t.test(data = temperatures |> filter(Patient == "A"),
        Temperature ~ Day)
 ```
 As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of `r sprintf("%.3g",TA$p.value)`, which is largely below the threshold $\alpha$ = 0.05.
-To report it properly, we can say that "the temperature of patient A on day 1 (`r round(TA$estimate[1],2)`°C, 95% CI = [`r sort(round(Rmisc::CI(temperatures %>% filter(Patient == "A", Day=="Day1") %>% pull(Temperature))[c(1,3)],2))`]°C), was statistically significantly higher than on day 2 (`r round(TA$estimate[2],2)`°C, 95% CI = [`r sort(round(Rmisc::CI(temperatures %>% filter(Patient == "A", Day=="Day2") %>% pull(Temperature))[c(1,3)],2))`]°C), t(`r round(TA$parameter,2)`) = `r round(TA$statistic,2)`, p = `r sprintf("%.3g",TA$p.value)`."
+To report it properly, we can say that "the temperature of patient A on day 1 (`r round(TA$estimate[1],2)`°C, 95% CI = [`r sort(round(Rmisc::CI(temperatures |> filter(Patient == "A", Day=="Day1") |> pull(Temperature))[c(1,3)],2))`]°C), was statistically significantly higher than on day 2 (`r round(TA$estimate[2],2)`°C, 95% CI = [`r sort(round(Rmisc::CI(temperatures |> filter(Patient == "A", Day=="Day2") |> pull(Temperature))[c(1,3)],2))`]°C), t(`r round(TA$parameter,2)`) = `r round(TA$statistic,2)`, p = `r sprintf("%.3g",TA$p.value)`."
 Here , `r round(TA$parameter,2)` is the degrees of freedom associated with the t test-statistic.
 The 95% confidence interval for the difference between the means is `r round(TA$conf.int[1],2)`°C to `r round(TA$conf.int[2],2)`°C.
 
 For patient B however, even though the average temperature decreased between the two days, the spread in data is so large that the t-test does not allow concluding concerning any significant temperature difference between the two days:
 ```{r}
-t.test(data = temperatures %>% filter(Patient == "B"),
+t.test(data = temperatures |> filter(Patient == "B"),
        Temperature ~ Day)
 ```
 
@@ -811,7 +811,7 @@ t.test(data = temperatures %>% filter(Patient == "B"),
 Performing a t-test on a single distribution will test whether the distribution's mean is equal to 0:
 
 ```{r}
-t.test(temperatures %>% filter(Patient == "B", Day=="Day1") %>% pull(Temperature))
+t.test(temperatures |> filter(Patient == "B", Day=="Day1") |> pull(Temperature))
 ```
 
 ::: 

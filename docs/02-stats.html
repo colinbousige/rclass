@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.57">
+<meta name="generator" content="quarto-1.6.38">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>2&nbsp; A little reminder on Statistics – Reproducible data treatment with R</title>
 <style>
@@ -68,10 +68,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-b663525e4b92bb903b2199e2d401bf36.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
+<link href="site_libs/bootstrap/bootstrap-067b6432cd1db953bcb7f9f6c250b584.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light"><script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
@@ -1093,26 +1093,26 @@ Important
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">38.20502</td>
-<td style="text-align: right;">0.2400919</td>
+<td style="text-align: right;">38.23501</td>
+<td style="text-align: right;">0.1544572</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">37.61718</td>
-<td style="text-align: right;">0.3125879</td>
+<td style="text-align: right;">37.75094</td>
+<td style="text-align: right;">0.2763453</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">39.35965</td>
-<td style="text-align: right;">2.1943320</td>
+<td style="text-align: right;">38.41341</td>
+<td style="text-align: right;">2.8095017</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">37.20956</td>
-<td style="text-align: right;">2.9017370</td>
+<td style="text-align: right;">36.65801</td>
+<td style="text-align: right;">3.6986004</td>
 </tr>
 </tbody>
 </table>
@@ -1133,26 +1133,26 @@ Important
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.9562857</td>
-<td style="text-align: right;">0.4725683</td>
+<td style="text-align: right;">0.9659972</td>
+<td style="text-align: right;">0.6691253</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: right;">0.9560345</td>
-<td style="text-align: right;">0.4679732</td>
+<td style="text-align: right;">0.9664189</td>
+<td style="text-align: right;">0.6781911</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Day1</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.9817011</td>
-<td style="text-align: right;">0.9541214</td>
+<td style="text-align: right;">0.9738856</td>
+<td style="text-align: right;">0.8338402</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Day2</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: right;">0.9176398</td>
-<td style="text-align: right;">0.0892515</td>
+<td style="text-align: right;">0.9620964</td>
+<td style="text-align: right;">0.5865294</td>
 </tr>
 </tbody>
 </table>
@@ -1161,39 +1161,39 @@ Important
 <p>In all cases the p-value is above 0.05, which means that the null hypothesis that the data are normally distributed is not rejected, and <strong>we can conclude that the data are normally distributed</strong>. The application of the t-test is thus valid.</p>
 <p>Let’s start now with patient A:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">temperatures</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Patient</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">)</span>,</span>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">temperatures</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Patient</span> <span class="op">==</span> <span class="st">"A"</span><span class="op">)</span>,</span>
 <span>       <span class="va">Temperature</span> <span class="op">~</span> <span class="va">Day</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  Welch Two Sample t-test
 #&gt; 
 #&gt; data:  Temperature by Day
-#&gt; t = 6.6697, df = 35.63, p-value = 9.394e-08
+#&gt; t = 6.8381, df = 29.816, p-value = 1.422e-07
 #&gt; alternative hypothesis: true difference in means between group Day1 and group Day2 is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  0.4090247 0.7666455
+#&gt;  0.3394614 0.6286803
 #&gt; sample estimates:
 #&gt; mean in group Day1 mean in group Day2 
-#&gt;           38.20502           37.61718</code></pre>
+#&gt;           38.23501           37.75094</code></pre>
 </div>
 </div>
-<p>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of 9.39e-08, which is largely below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. To report it properly, we can say that “the temperature of patient A on day 1 (38.21°C, 95% CI = [38.09, 38.32]°C), was statistically significantly higher than on day 2 (37.62°C, 95% CI = [37.47, 37.76]°C), t(35.63) = 6.67, p = 9.39e-08.” Here , 35.63 is the degrees of freedom associated with the t test-statistic. The 95% confidence interval for the difference between the means is 0.41°C to 0.77°C.</p>
+<p>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of 1.42e-07, which is largely below the threshold <span class="math inline">\(\alpha\)</span> = 0.05. To report it properly, we can say that “the temperature of patient A on day 1 (38.24°C, 95% CI = [38.16, 38.31]°C), was statistically significantly higher than on day 2 (37.75°C, 95% CI = [37.62, 37.88]°C), t(29.82) = 6.84, p = 1.42e-07.” Here , 29.82 is the degrees of freedom associated with the t test-statistic. The 95% confidence interval for the difference between the means is 0.34°C to 0.63°C.</p>
 <p>For patient B however, even though the average temperature decreased between the two days, the spread in data is so large that the t-test does not allow concluding concerning any significant temperature difference between the two days:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">temperatures</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Patient</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span>,</span>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">temperatures</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Patient</span> <span class="op">==</span> <span class="st">"B"</span><span class="op">)</span>,</span>
 <span>       <span class="va">Temperature</span> <span class="op">~</span> <span class="va">Day</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  Welch Two Sample t-test
 #&gt; 
 #&gt; data:  Temperature by Day
-#&gt; t = 2.6431, df = 35.375, p-value = 0.01216
+#&gt; t = 1.6902, df = 35.45, p-value = 0.09977
 #&gt; alternative hypothesis: true difference in means between group Day1 and group Day2 is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  0.499250 3.800924
+#&gt;  -0.3520749  3.8628707
 #&gt; sample estimates:
 #&gt; mean in group Day1 mean in group Day2 
-#&gt;           39.35965           37.20956</code></pre>
+#&gt;           38.41341           36.65801</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -1208,19 +1208,19 @@ Note
 <div class="callout-body-container callout-body">
 <p>Performing a t-test on a single distribution will test whether the distribution’s mean is equal to 0:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">temperatures</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Patient</span> <span class="op">==</span> <span class="st">"B"</span>, <span class="va">Day</span><span class="op">==</span><span class="st">"Day1"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Temperature</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/t.test.html">t.test</a></span><span class="op">(</span><span class="va">temperatures</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">Patient</span> <span class="op">==</span> <span class="st">"B"</span>, <span class="va">Day</span><span class="op">==</span><span class="st">"Day1"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">pull</span><span class="op">(</span><span class="va">Temperature</span><span class="op">)</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>#&gt; 
 #&gt;  One Sample t-test
 #&gt; 
-#&gt; data:  temperatures %&gt;% filter(Patient == "B", Day == "Day1") %&gt;% pull(Temperature)
-#&gt; t = 80.217, df = 19, p-value &lt; 2.2e-16
+#&gt; data:  pull(filter(temperatures, Patient == "B", Day == "Day1"), Temperature)
+#&gt; t = 61.146, df = 19, p-value &lt; 2.2e-16
 #&gt; alternative hypothesis: true mean is not equal to 0
 #&gt; 95 percent confidence interval:
-#&gt;  38.33267 40.38662
+#&gt;  37.09852 39.72830
 #&gt; sample estimates:
 #&gt; mean of x 
-#&gt;  39.35965</code></pre>
+#&gt;  38.41341</code></pre>
 </div>
 </div>
 </div>
@@ -1420,8 +1420,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    // For code content inside modals, clipBoardJS needs to be initialized with a container option
-    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1583,7 +1581,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
-      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {
@@ -1871,7 +1868,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-52"><a href="#cb9-52" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
 <span id="cb9-53"><a href="#cb9-53" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
 <span id="cb9-54"><a href="#cb9-54" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">T=</span><span class="fu">c</span>(<span class="dv">38</span>, <span class="fl">38.1</span>, <span class="fl">38.0</span>, <span class="fl">38.0</span>, <span class="fl">38.3</span>, <span class="fl">37.9</span>, <span class="fl">38.1</span>, <span class="fl">38.2</span>, <span class="fl">39.8</span>))</span>
-<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&gt;%</span> </span>
+<span id="cb9-55"><a href="#cb9-55" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">|&gt;</span> </span>
 <span id="cb9-56"><a href="#cb9-56" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> T)) <span class="sc">+</span></span>
 <span id="cb9-57"><a href="#cb9-57" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_histogram</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">color=</span><span class="st">"black"</span>)<span class="sc">+</span></span>
 <span id="cb9-58"><a href="#cb9-58" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span></span>
@@ -1913,21 +1910,21 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-96"><a href="#cb9-96" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
 <span id="cb9-97"><a href="#cb9-97" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
 <span id="cb9-98"><a href="#cb9-98" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">T=</span><span class="fu">c</span>(<span class="dv">38</span>, <span class="fl">38.1</span>, <span class="fl">38.0</span>, <span class="fl">38.0</span>, <span class="fl">38.3</span>, <span class="fl">37.9</span>, <span class="fl">38.1</span>, <span class="fl">38.2</span>, <span class="fl">39.8</span>))</span>
-<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&gt;%</span> </span>
+<span id="cb9-99"><a href="#cb9-99" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">|&gt;</span> </span>
 <span id="cb9-100"><a href="#cb9-100" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> T)) <span class="sc">+</span></span>
 <span id="cb9-101"><a href="#cb9-101" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_histogram</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">color=</span><span class="st">"black"</span>, <span class="at">binwidth =</span> <span class="fl">0.1</span>)<span class="sc">+</span></span>
 <span id="cb9-102"><a href="#cb9-102" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">xintercept =</span> <span class="fu">mean</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span></span>
 <span id="cb9-103"><a href="#cb9-103" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">xintercept =</span> <span class="fu">median</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
 <span id="cb9-104"><a href="#cb9-104" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>))<span class="sc">+</span></span>
 <span id="cb9-105"><a href="#cb9-105" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"T [°C]"</span>)</span>
-<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&gt;%</span> </span>
+<span id="cb9-106"><a href="#cb9-106" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">|&gt;</span> </span>
 <span id="cb9-107"><a href="#cb9-107" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> T)) <span class="sc">+</span></span>
 <span id="cb9-108"><a href="#cb9-108" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_histogram</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">color=</span><span class="st">"black"</span>, <span class="at">binwidth =</span> <span class="fl">0.2</span>)<span class="sc">+</span></span>
 <span id="cb9-109"><a href="#cb9-109" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">xintercept =</span> <span class="fu">mean</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span></span>
 <span id="cb9-110"><a href="#cb9-110" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">size=</span><span class="dv">2</span>, <span class="at">xintercept =</span> <span class="fu">median</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
 <span id="cb9-111"><a href="#cb9-111" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>))<span class="sc">+</span></span>
 <span id="cb9-112"><a href="#cb9-112" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"T [°C]"</span>)</span>
-<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&gt;%</span> </span>
+<span id="cb9-113"><a href="#cb9-113" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">|&gt;</span> </span>
 <span id="cb9-114"><a href="#cb9-114" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> T)) <span class="sc">+</span></span>
 <span id="cb9-115"><a href="#cb9-115" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_histogram</span>(<span class="at">alpha=</span>.<span class="dv">5</span>, <span class="at">color=</span><span class="st">"black"</span>, <span class="at">binwidth =</span><span class="dv">1</span>)<span class="sc">+</span></span>
 <span id="cb9-116"><a href="#cb9-116" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">mean</span>(temp<span class="sc">$</span>T), <span class="at">color=</span><span class="st">"red"</span>)<span class="sc">+</span></span>
@@ -1956,18 +1953,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-141"><a href="#cb9-141" aria-hidden="true" tabindex="-1"></a>              <span class="at">dy1=</span>.<span class="dv">1</span><span class="sc">/</span>y,</span>
 <span id="cb9-142"><a href="#cb9-142" aria-hidden="true" tabindex="-1"></a>              <span class="at">dy2=</span>.<span class="dv">1</span><span class="sc">*</span>(y<span class="dv">-1</span>)</span>
 <span id="cb9-143"><a href="#cb9-143" aria-hidden="true" tabindex="-1"></a>              )</span>
-<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb9-144"><a href="#cb9-144" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> </span>
 <span id="cb9-145"><a href="#cb9-145" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb9-146"><a href="#cb9-146" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
 <span id="cb9-147"><a href="#cb9-147" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">25</span>))<span class="sc">+</span></span>
 <span id="cb9-148"><a href="#cb9-148" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"x"</span>, <span class="at">y=</span><span class="st">"y"</span>)</span>
-<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb9-149"><a href="#cb9-149" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> </span>
 <span id="cb9-150"><a href="#cb9-150" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb9-151"><a href="#cb9-151" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
 <span id="cb9-152"><a href="#cb9-152" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>y<span class="sc">-</span>dy1,<span class="at">ymax=</span>y<span class="sc">+</span>dy1))<span class="sc">+</span></span>
 <span id="cb9-153"><a href="#cb9-153" aria-hidden="true" tabindex="-1"></a>       <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">25</span>))<span class="sc">+</span></span>
 <span id="cb9-154"><a href="#cb9-154" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"x [unit]"</span>, <span class="at">y=</span><span class="st">"y [unit]"</span>)</span>
-<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb9-155"><a href="#cb9-155" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> </span>
 <span id="cb9-156"><a href="#cb9-156" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb9-157"><a href="#cb9-157" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_point</span>(<span class="at">alpha=</span><span class="fl">0.5</span>)<span class="sc">+</span></span>
 <span id="cb9-158"><a href="#cb9-158" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_errorbar</span>(<span class="fu">aes</span>(<span class="at">ymin=</span>y<span class="sc">-</span>dy2,<span class="at">ymax=</span>y<span class="sc">+</span>dy2))<span class="sc">+</span></span>
@@ -2049,10 +2046,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-236"><a href="#cb9-236" aria-hidden="true" tabindex="-1"></a><span class="co">#| message: false</span></span>
 <span id="cb9-237"><a href="#cb9-237" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
 <span id="cb9-238"><a href="#cb9-238" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">130</span>,.<span class="dv">1</span>), </span>
-<span id="cb9-239"><a href="#cb9-239" aria-hidden="true" tabindex="-1"></a>              <span class="at">y=</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">12</span>,<span class="at">sd=</span><span class="dv">2</span>)<span class="sc">+</span><span class="fl">1.5</span><span class="sc">*</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">54</span>,<span class="at">sd=</span><span class="dv">10</span>)<span class="sc">+</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">80</span>,<span class="at">sd=</span><span class="dv">12</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-239"><a href="#cb9-239" aria-hidden="true" tabindex="-1"></a>              <span class="at">y=</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">12</span>,<span class="at">sd=</span><span class="dv">2</span>)<span class="sc">+</span><span class="fl">1.5</span><span class="sc">*</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">54</span>,<span class="at">sd=</span><span class="dv">10</span>)<span class="sc">+</span><span class="fu">dnorm</span>(x,<span class="at">mean=</span><span class="dv">80</span>,<span class="at">sd=</span><span class="dv">12</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb9-240"><a href="#cb9-240" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">y =</span> y<span class="sc">/</span>(<span class="fu">sum</span>(y)<span class="sc">*</span>.<span class="dv">1</span>))</span>
 <span id="cb9-241"><a href="#cb9-241" aria-hidden="true" tabindex="-1"></a>MM <span class="ot">&lt;-</span> <span class="fu">sum</span>(dat<span class="sc">$</span>x<span class="sc">*</span>dat<span class="sc">$</span>y)<span class="sc">*</span>.<span class="dv">1</span></span>
-<span id="cb9-242"><a href="#cb9-242" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb9-242"><a href="#cb9-242" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> </span>
 <span id="cb9-243"><a href="#cb9-243" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb9-244"><a href="#cb9-244" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_line</span>()<span class="sc">+</span></span>
 <span id="cb9-245"><a href="#cb9-245" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> MM, <span class="at">color=</span><span class="st">"red"</span>, <span class="at">size=</span><span class="dv">1</span>)<span class="sc">+</span></span>
@@ -2148,27 +2145,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-337"><a href="#cb9-337" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">k=</span><span class="fu">rep</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">4</span>), </span>
 <span id="cb9-338"><a href="#cb9-338" aria-hidden="true" tabindex="-1"></a>              <span class="at">lam=</span><span class="fu">rep</span>(<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">5</span>,<span class="dv">8</span>), <span class="at">each=</span><span class="dv">11</span>),</span>
 <span id="cb9-339"><a href="#cb9-339" aria-hidden="true" tabindex="-1"></a>              <span class="at">poisson=</span><span class="fu">P</span>(lam,k))</span>
-<span id="cb9-340"><a href="#cb9-340" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">k=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">%&gt;%</span>  </span>
-<span id="cb9-341"><a href="#cb9-341" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">poisson=</span><span class="fu">map</span>(k, <span class="sc">~</span><span class="fu">P2</span>(<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">15</span>,.<span class="dv">1</span>), .))) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-340"><a href="#cb9-340" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">k=</span><span class="dv">0</span><span class="sc">:</span><span class="dv">5</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb9-341"><a href="#cb9-341" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mutate</span>(<span class="at">poisson=</span><span class="fu">map</span>(k, <span class="sc">~</span><span class="fu">P2</span>(<span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">15</span>,.<span class="dv">1</span>), .))) <span class="sc">|&gt;</span> </span>
 <span id="cb9-342"><a href="#cb9-342" aria-hidden="true" tabindex="-1"></a>        <span class="fu">unnest</span>(poisson)</span>
-<span id="cb9-343"><a href="#cb9-343" aria-hidden="true" tabindex="-1"></a>dat3 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">k =</span> <span class="dv">100</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-344"><a href="#cb9-344" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">poisson =</span> <span class="fu">map</span>(k, <span class="sc">~</span> <span class="fu">P2</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">200</span>, .<span class="dv">1</span>), .))) <span class="sc">%&gt;%</span></span>
+<span id="cb9-343"><a href="#cb9-343" aria-hidden="true" tabindex="-1"></a>dat3 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">k =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-344"><a href="#cb9-344" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">poisson =</span> <span class="fu">map</span>(k, <span class="sc">~</span> <span class="fu">P2</span>(<span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">200</span>, .<span class="dv">1</span>), .))) <span class="sc">|&gt;</span></span>
 <span id="cb9-345"><a href="#cb9-345" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(poisson)</span>
-<span id="cb9-346"><a href="#cb9-346" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb9-346"><a href="#cb9-346" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> </span>
 <span id="cb9-347"><a href="#cb9-347" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> k, <span class="at">y =</span> poisson, <span class="at">color=</span><span class="fu">factor</span>(lam))) <span class="sc">+</span></span>
 <span id="cb9-348"><a href="#cb9-348" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
 <span id="cb9-349"><a href="#cb9-349" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">color=</span><span class="fu">expression</span>(lambda), </span>
 <span id="cb9-350"><a href="#cb9-350" aria-hidden="true" tabindex="-1"></a>            <span class="at">x=</span><span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"k"</span>)), </span>
 <span id="cb9-351"><a href="#cb9-351" aria-hidden="true" tabindex="-1"></a>            <span class="at">y=</span><span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"P"</span>)[lambda]<span class="sc">*</span>(<span class="fu">italic</span>(<span class="st">"k"</span>))))<span class="sc">+</span></span>
 <span id="cb9-352"><a href="#cb9-352" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>))</span>
-<span id="cb9-353"><a href="#cb9-353" aria-hidden="true" tabindex="-1"></a>dat2 <span class="sc">%&gt;%</span> </span>
+<span id="cb9-353"><a href="#cb9-353" aria-hidden="true" tabindex="-1"></a>dat2 <span class="sc">|&gt;</span> </span>
 <span id="cb9-354"><a href="#cb9-354" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> lam, <span class="at">y =</span> poisson, <span class="at">color=</span><span class="fu">factor</span>(k))) <span class="sc">+</span></span>
 <span id="cb9-355"><a href="#cb9-355" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
 <span id="cb9-356"><a href="#cb9-356" aria-hidden="true" tabindex="-1"></a>       <span class="fu">labs</span>(<span class="at">color =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"k"</span>)), </span>
 <span id="cb9-357"><a href="#cb9-357" aria-hidden="true" tabindex="-1"></a>            <span class="at">x =</span> <span class="fu">expression</span>(lambda), </span>
 <span id="cb9-358"><a href="#cb9-358" aria-hidden="true" tabindex="-1"></a>            <span class="at">y =</span> <span class="fu">expression</span>(<span class="fu">italic</span>(<span class="st">"P"</span>)[lambda] <span class="sc">*</span> (<span class="fu">italic</span>(<span class="st">"k"</span>))))<span class="sc">+</span></span>
 <span id="cb9-359"><a href="#cb9-359" aria-hidden="true" tabindex="-1"></a>        <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">35</span>), <span class="at">title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">25</span>))</span>
-<span id="cb9-360"><a href="#cb9-360" aria-hidden="true" tabindex="-1"></a>dat3 <span class="sc">%&gt;%</span> </span>
+<span id="cb9-360"><a href="#cb9-360" aria-hidden="true" tabindex="-1"></a>dat3 <span class="sc">|&gt;</span> </span>
 <span id="cb9-361"><a href="#cb9-361" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> lam, <span class="at">y =</span> poisson, <span class="at">color=</span><span class="fu">factor</span>(k))) <span class="sc">+</span></span>
 <span id="cb9-362"><a href="#cb9-362" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_line</span>(<span class="at">size=</span><span class="dv">2</span>)<span class="sc">+</span></span>
 <span id="cb9-363"><a href="#cb9-363" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="dv">0</span>,<span class="dv">500</span>,<span class="dv">100</span>))<span class="sc">+</span></span>
@@ -2257,7 +2254,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-448"><a href="#cb9-448" aria-hidden="true" tabindex="-1"></a>               <span class="at">y=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi)))</span>
 <span id="cb9-449"><a href="#cb9-449" aria-hidden="true" tabindex="-1"></a>seg2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x=</span><span class="sc">-</span><span class="fu">c</span>(<span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(<span class="dv">2</span>)),<span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">log</span>(<span class="dv">2</span>))),</span>
 <span id="cb9-450"><a href="#cb9-450" aria-hidden="true" tabindex="-1"></a>               <span class="at">y=</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span><span class="sc">/</span><span class="dv">2</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">2</span><span class="sc">*</span>pi)))</span>
-<span id="cb9-451"><a href="#cb9-451" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb9-451"><a href="#cb9-451" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> </span>
 <span id="cb9-452"><a href="#cb9-452" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb9-453"><a href="#cb9-453" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_line</span>()<span class="sc">+</span></span>
 <span id="cb9-454"><a href="#cb9-454" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"z"</span>, <span class="at">y=</span><span class="st">"P(z)"</span>)<span class="sc">+</span></span>
@@ -2347,7 +2344,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-542"><a href="#cb9-542" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-align: "center"</span></span>
 <span id="cb9-543"><a href="#cb9-543" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,.<span class="dv">01</span>))</span>
 <span id="cb9-544"><a href="#cb9-544" aria-hidden="true" tabindex="-1"></a>colors <span class="ot">&lt;-</span> <span class="fu">colorRampPalette</span>(<span class="fu">c</span>(<span class="st">"royalblue"</span>,<span class="st">"seagreen"</span>,<span class="st">"orange"</span>,<span class="st">"red"</span>))</span>
-<span id="cb9-545"><a href="#cb9-545" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb9-545"><a href="#cb9-545" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> </span>
 <span id="cb9-546"><a href="#cb9-546" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
 <span id="cb9-547"><a href="#cb9-547" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span><span class="fu">dnorm</span>(x), <span class="at">color=</span><span class="st">"Gaussian"</span>), <span class="at">linewidth=</span><span class="dv">2</span>)<span class="sc">+</span></span>
 <span id="cb9-548"><a href="#cb9-548" aria-hidden="true" tabindex="-1"></a>       <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y=</span><span class="fu">dt</span>(x, <span class="at">df =</span> <span class="dv">1</span>), <span class="at">color=</span><span class="st">"1"</span>), <span class="at">linewidth=</span><span class="dv">1</span>)<span class="sc">+</span></span>
@@ -2381,11 +2378,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-578"><a href="#cb9-578" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,.<span class="dv">01</span>), <span class="at">y =</span> <span class="fu">dnorm</span>(x))</span>
 <span id="cb9-579"><a href="#cb9-579" aria-hidden="true" tabindex="-1"></a>xlow <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fl">0.025</span>)</span>
 <span id="cb9-580"><a href="#cb9-580" aria-hidden="true" tabindex="-1"></a>xhi <span class="ot">&lt;-</span> <span class="fu">qnorm</span>(<span class="fl">0.975</span>)</span>
-<span id="cb9-581"><a href="#cb9-581" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">%&gt;%</span> </span>
+<span id="cb9-581"><a href="#cb9-581" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span> </span>
 <span id="cb9-582"><a href="#cb9-582" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb9-583"><a href="#cb9-583" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb9-584"><a href="#cb9-584" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_area</span>(<span class="at">data=</span>dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(x<span class="sc">&lt;=</span>xlow), <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
-<span id="cb9-585"><a href="#cb9-585" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_area</span>(<span class="at">data=</span>dat <span class="sc">%&gt;%</span> <span class="fu">filter</span>(x<span class="sc">&gt;=</span>xhi), <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb9-584"><a href="#cb9-584" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_area</span>(<span class="at">data=</span>dat <span class="sc">|&gt;</span> <span class="fu">filter</span>(x<span class="sc">&lt;=</span>xlow), <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
+<span id="cb9-585"><a href="#cb9-585" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_area</span>(<span class="at">data=</span>dat <span class="sc">|&gt;</span> <span class="fu">filter</span>(x<span class="sc">&gt;=</span>xhi), <span class="at">alpha=</span><span class="fl">0.5</span>, <span class="at">fill=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
 <span id="cb9-586"><a href="#cb9-586" aria-hidden="true" tabindex="-1"></a>        <span class="fu">scale_x_continuous</span>(<span class="at">breaks=</span><span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>,<span class="dv">5</span>,<span class="dv">1</span>))<span class="sc">+</span></span>
 <span id="cb9-587"><a href="#cb9-587" aria-hidden="true" tabindex="-1"></a>        <span class="fu">labs</span>(<span class="at">y=</span><span class="st">"Density"</span>, <span class="at">x=</span><span class="st">"x"</span>)<span class="sc">+</span></span>
 <span id="cb9-588"><a href="#cb9-588" aria-hidden="true" tabindex="-1"></a>        <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> xlow<span class="fl">-.75</span>, <span class="at">y =</span> <span class="fl">0.06</span>, <span class="at">label =</span> <span class="st">"2.5%"</span>, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">color=</span><span class="st">"royalblue"</span>)<span class="sc">+</span></span>
@@ -2406,13 +2403,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-605"><a href="#cb9-605" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: "Quantiles of the t- and Gaussian distributions for various degrees of freedom ($\\nu$) and tolerence levels ($\\alpha$)."</span></span>
 <span id="cb9-606"><a href="#cb9-606" aria-hidden="true" tabindex="-1"></a>nu <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">30</span>, <span class="cn">Inf</span>)</span>
 <span id="cb9-607"><a href="#cb9-607" aria-hidden="true" tabindex="-1"></a>P <span class="ot">&lt;-</span> <span class="fu">c</span>(.<span class="dv">5</span>, .<span class="dv">8</span>, .<span class="dv">9</span>, .<span class="dv">95</span>, .<span class="dv">99</span>, .<span class="dv">999</span>)</span>
-<span id="cb9-608"><a href="#cb9-608" aria-hidden="true" tabindex="-1"></a><span class="fu">expand_grid</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span>nu, <span class="at">P=</span>P) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-608"><a href="#cb9-608" aria-hidden="true" tabindex="-1"></a><span class="fu">expand_grid</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span>nu, <span class="at">P=</span>P) <span class="sc">|&gt;</span> </span>
 <span id="cb9-609"><a href="#cb9-609" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Q=</span><span class="fu">qt</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="sc">-</span>P)<span class="sc">/</span><span class="dv">2</span>, <span class="at">df=</span><span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span>),</span>
-<span id="cb9-610"><a href="#cb9-610" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="fu">as.character</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-611"><a href="#cb9-611" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="st">"Gaussian"</span>, <span class="at">P=</span>P, <span class="at">Q=</span><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="sc">-</span>P)<span class="sc">/</span><span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb9-612"><a href="#cb9-612" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">P=</span>glue<span class="sc">::</span><span class="fu">glue</span>(r<span class="st">"($</span><span class="sc">\a</span><span class="st">lpha$: {P*100}%)"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-613"><a href="#cb9-613" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>P, <span class="at">values_from=</span>Q) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-614"><a href="#cb9-614" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="fu">str_replace</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span>, <span class="st">"Inf"</span>, r<span class="st">"($</span><span class="sc">\\</span><span class="st">infty$)"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-610"><a href="#cb9-610" aria-hidden="true" tabindex="-1"></a>           <span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="fu">as.character</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-611"><a href="#cb9-611" aria-hidden="true" tabindex="-1"></a>    <span class="fu">bind_rows</span>(<span class="fu">tibble</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="st">"Gaussian"</span>, <span class="at">P=</span>P, <span class="at">Q=</span><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>(<span class="dv">1</span><span class="sc">-</span>P)<span class="sc">/</span><span class="dv">2</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb9-612"><a href="#cb9-612" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">P=</span>glue<span class="sc">::</span><span class="fu">glue</span>(r<span class="st">"($</span><span class="sc">\a</span><span class="st">lpha$: {P*100}%)"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-613"><a href="#cb9-613" aria-hidden="true" tabindex="-1"></a>    <span class="fu">pivot_wider</span>(<span class="at">names_from=</span>P, <span class="at">values_from=</span>Q) <span class="sc">|&gt;</span> </span>
+<span id="cb9-614"><a href="#cb9-614" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span><span class="ot">=</span><span class="fu">str_replace</span>(<span class="st">`</span><span class="at">$</span><span class="sc">\\</span><span class="at">nu$</span><span class="st">`</span>, <span class="st">"Inf"</span>, r<span class="st">"($</span><span class="sc">\\</span><span class="st">infty$)"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb9-615"><a href="#cb9-615" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">format=</span><span class="st">"markdown"</span>)</span>
 <span id="cb9-616"><a href="#cb9-616" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-617"><a href="#cb9-617" aria-hidden="true" tabindex="-1"></a></span>
@@ -2548,19 +2545,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-753"><a href="#cb9-753" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-754"><a href="#cb9-754" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
 <span id="cb9-755"><a href="#cb9-755" aria-hidden="true" tabindex="-1"></a>temps1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Day1 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">38.2</span>, .<span class="dv">2</span>),</span>
-<span id="cb9-756"><a href="#cb9-756" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Day2 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">37.7</span>, .<span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-756"><a href="#cb9-756" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Day2 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">37.7</span>, .<span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb9-757"><a href="#cb9-757" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), </span>
 <span id="cb9-758"><a href="#cb9-758" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">"Day"</span>, </span>
-<span id="cb9-759"><a href="#cb9-759" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"Temperature"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-759"><a href="#cb9-759" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"Temperature"</span>) <span class="sc">|&gt;</span> </span>
 <span id="cb9-760"><a href="#cb9-760" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">Patient=</span><span class="st">"A"</span>)</span>
 <span id="cb9-761"><a href="#cb9-761" aria-hidden="true" tabindex="-1"></a>temps2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">Day1 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">38.2</span>, <span class="dv">3</span>),</span>
-<span id="cb9-762"><a href="#cb9-762" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Day2 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">37.7</span>, <span class="dv">3</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-762"><a href="#cb9-762" aria-hidden="true" tabindex="-1"></a>                 <span class="at">Day2 =</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="fl">37.7</span>, <span class="dv">3</span>)) <span class="sc">|&gt;</span> </span>
 <span id="cb9-763"><a href="#cb9-763" aria-hidden="true" tabindex="-1"></a>            <span class="fu">pivot_longer</span>(<span class="fu">everything</span>(), </span>
 <span id="cb9-764"><a href="#cb9-764" aria-hidden="true" tabindex="-1"></a>                         <span class="at">names_to =</span> <span class="st">"Day"</span>, </span>
-<span id="cb9-765"><a href="#cb9-765" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"Temperature"</span>)<span class="sc">%&gt;%</span> </span>
+<span id="cb9-765"><a href="#cb9-765" aria-hidden="true" tabindex="-1"></a>                         <span class="at">values_to =</span> <span class="st">"Temperature"</span>)<span class="sc">|&gt;</span> </span>
 <span id="cb9-766"><a href="#cb9-766" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">Patient=</span><span class="st">"B"</span>)</span>
 <span id="cb9-767"><a href="#cb9-767" aria-hidden="true" tabindex="-1"></a>temperatures <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(temps1, temps2)</span>
-<span id="cb9-768"><a href="#cb9-768" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">%&gt;%</span> </span>
+<span id="cb9-768"><a href="#cb9-768" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">|&gt;</span> </span>
 <span id="cb9-769"><a href="#cb9-769" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Day, <span class="at">y =</span> Temperature, <span class="at">color =</span> Patient)) <span class="sc">+</span></span>
 <span id="cb9-770"><a href="#cb9-770" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_jitter</span>(<span class="at">width =</span> .<span class="dv">04</span>, <span class="at">size =</span> <span class="dv">2</span>, <span class="at">alpha =</span> .<span class="dv">3</span>)<span class="sc">+</span></span>
 <span id="cb9-771"><a href="#cb9-771" aria-hidden="true" tabindex="-1"></a>        <span class="fu">geom_boxplot</span>(<span class="at">notch =</span> <span class="cn">TRUE</span>, <span class="at">position =</span> <span class="st">"identity"</span>, </span>
@@ -2578,19 +2575,19 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-785"><a href="#cb9-785" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-786"><a href="#cb9-786" aria-hidden="true" tabindex="-1"></a><span class="co">#| code-fold: false</span></span>
 <span id="cb9-787"><a href="#cb9-787" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb9-788"><a href="#cb9-788" aria-hidden="true" tabindex="-1"></a>TA <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"A"</span>),</span>
+<span id="cb9-788"><a href="#cb9-788" aria-hidden="true" tabindex="-1"></a>TA <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">|&gt;</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"A"</span>),</span>
 <span id="cb9-789"><a href="#cb9-789" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
-<span id="cb9-790"><a href="#cb9-790" aria-hidden="true" tabindex="-1"></a>TB <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>),</span>
+<span id="cb9-790"><a href="#cb9-790" aria-hidden="true" tabindex="-1"></a>TB <span class="ot">&lt;-</span> <span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">|&gt;</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>),</span>
 <span id="cb9-791"><a href="#cb9-791" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
 <span id="cb9-792"><a href="#cb9-792" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-793"><a href="#cb9-793" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-796"><a href="#cb9-796" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-797"><a href="#cb9-797" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
 <span id="cb9-798"><a href="#cb9-798" aria-hidden="true" tabindex="-1"></a><span class="co">#| tbl-cap: Data means and standard deviations</span></span>
-<span id="cb9-799"><a href="#cb9-799" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">%&gt;%</span> </span>
+<span id="cb9-799"><a href="#cb9-799" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">|&gt;</span> </span>
 <span id="cb9-800"><a href="#cb9-800" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">.by =</span> <span class="fu">c</span>(Day, Patient),</span>
 <span id="cb9-801"><a href="#cb9-801" aria-hidden="true" tabindex="-1"></a>              <span class="at">mean =</span> <span class="fu">mean</span>(Temperature),</span>
-<span id="cb9-802"><a href="#cb9-802" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd =</span> <span class="fu">sd</span>(Temperature)) <span class="sc">%&gt;%</span></span>
+<span id="cb9-802"><a href="#cb9-802" aria-hidden="true" tabindex="-1"></a>              <span class="at">sd =</span> <span class="fu">sd</span>(Temperature)) <span class="sc">|&gt;</span></span>
 <span id="cb9-803"><a href="#cb9-803" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"markdown"</span>)</span>
 <span id="cb9-804"><a href="#cb9-804" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-805"><a href="#cb9-805" aria-hidden="true" tabindex="-1"></a></span>
@@ -2601,29 +2598,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-810"><a href="#cb9-810" aria-hidden="true" tabindex="-1"></a>First, **to apply a t-test, we need to make sure that the data are normally distributed**, which we can do by performing a Shapiro-Wilk test on each set of data:</span>
 <span id="cb9-813"><a href="#cb9-813" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
 <span id="cb9-814"><a href="#cb9-814" aria-hidden="true" tabindex="-1"></a><span class="co">#| echo: false</span></span>
-<span id="cb9-815"><a href="#cb9-815" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">%&gt;%</span> </span>
-<span id="cb9-816"><a href="#cb9-816" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nest</span>(<span class="at">data =</span> Temperature) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-815"><a href="#cb9-815" aria-hidden="true" tabindex="-1"></a>temperatures <span class="sc">|&gt;</span> </span>
+<span id="cb9-816"><a href="#cb9-816" aria-hidden="true" tabindex="-1"></a>    <span class="fu">nest</span>(<span class="at">data =</span> Temperature) <span class="sc">|&gt;</span> </span>
 <span id="cb9-817"><a href="#cb9-817" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">shapiro =</span> <span class="fu">map</span>(data, <span class="sc">~</span><span class="fu">as_tibble</span>(</span>
-<span id="cb9-818"><a href="#cb9-818" aria-hidden="true" tabindex="-1"></a>        <span class="fu">shapiro.test</span>(.<span class="sc">$</span>Temperature)[<span class="fu">c</span>(<span class="st">'statistic'</span>,<span class="st">'p.value'</span>)]))) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-819"><a href="#cb9-819" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(shapiro) <span class="sc">%&gt;%</span> </span>
-<span id="cb9-820"><a href="#cb9-820" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>data) <span class="sc">%&gt;%</span> </span>
+<span id="cb9-818"><a href="#cb9-818" aria-hidden="true" tabindex="-1"></a>        <span class="fu">shapiro.test</span>(.<span class="sc">$</span>Temperature)[<span class="fu">c</span>(<span class="st">'statistic'</span>,<span class="st">'p.value'</span>)]))) <span class="sc">|&gt;</span> </span>
+<span id="cb9-819"><a href="#cb9-819" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest</span>(shapiro) <span class="sc">|&gt;</span> </span>
+<span id="cb9-820"><a href="#cb9-820" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(<span class="sc">-</span>data) <span class="sc">|&gt;</span> </span>
 <span id="cb9-821"><a href="#cb9-821" aria-hidden="true" tabindex="-1"></a>    <span class="fu">kable</span>(<span class="at">format =</span> <span class="st">"markdown"</span>)</span>
 <span id="cb9-822"><a href="#cb9-822" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-823"><a href="#cb9-823" aria-hidden="true" tabindex="-1"></a>In all cases the p-value is above 0.05, which means that the null hypothesis that the data are normally distributed is not rejected, and **we can conclude that the data are normally distributed**. The application of the t-test is thus valid.</span>
 <span id="cb9-824"><a href="#cb9-824" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-825"><a href="#cb9-825" aria-hidden="true" tabindex="-1"></a>Let's start now with patient A:</span>
 <span id="cb9-828"><a href="#cb9-828" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-829"><a href="#cb9-829" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"A"</span>),</span>
+<span id="cb9-829"><a href="#cb9-829" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">|&gt;</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"A"</span>),</span>
 <span id="cb9-830"><a href="#cb9-830" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
 <span id="cb9-831"><a href="#cb9-831" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-832"><a href="#cb9-832" aria-hidden="true" tabindex="-1"></a>As could be intuited by the graphical representation, the t-test on patient A shows that their temperature decreased significantly between day 1 and day 2, with a p-value of <span class="in">`r sprintf("%.3g",TA$p.value)`</span>, which is largely below the threshold $\alpha$ = 0.05.</span>
-<span id="cb9-833"><a href="#cb9-833" aria-hidden="true" tabindex="-1"></a>To report it properly, we can say that "the temperature of patient A on day 1 (<span class="in">`r round(TA$estimate[1],2)`</span>°C, 95% CI = <span class="co">[</span><span class="ot">`r sort(round(Rmisc::CI(temperatures %&gt;% filter(Patient == "A", Day=="Day1") %&gt;% pull(Temperature))[c(1,3)],2))`</span><span class="co">]</span>°C), was statistically significantly higher than on day 2 (<span class="in">`r round(TA$estimate[2],2)`</span>°C, 95% CI = <span class="co">[</span><span class="ot">`r sort(round(Rmisc::CI(temperatures %&gt;% filter(Patient == "A", Day=="Day2") %&gt;% pull(Temperature))[c(1,3)],2))`</span><span class="co">]</span>°C), t(<span class="in">`r round(TA$parameter,2)`</span>) = <span class="in">`r round(TA$statistic,2)`</span>, p = <span class="in">`r sprintf("%.3g",TA$p.value)`</span>."</span>
+<span id="cb9-833"><a href="#cb9-833" aria-hidden="true" tabindex="-1"></a>To report it properly, we can say that "the temperature of patient A on day 1 (<span class="in">`r round(TA$estimate[1],2)`</span>°C, 95% CI = <span class="co">[</span><span class="ot">`r sort(round(Rmisc::CI(temperatures |&gt; filter(Patient == "A", Day=="Day1") |&gt; pull(Temperature))[c(1,3)],2))`</span><span class="co">]</span>°C), was statistically significantly higher than on day 2 (<span class="in">`r round(TA$estimate[2],2)`</span>°C, 95% CI = <span class="co">[</span><span class="ot">`r sort(round(Rmisc::CI(temperatures |&gt; filter(Patient == "A", Day=="Day2") |&gt; pull(Temperature))[c(1,3)],2))`</span><span class="co">]</span>°C), t(<span class="in">`r round(TA$parameter,2)`</span>) = <span class="in">`r round(TA$statistic,2)`</span>, p = <span class="in">`r sprintf("%.3g",TA$p.value)`</span>."</span>
 <span id="cb9-834"><a href="#cb9-834" aria-hidden="true" tabindex="-1"></a>Here , <span class="in">`r round(TA$parameter,2)`</span> is the degrees of freedom associated with the t test-statistic.</span>
 <span id="cb9-835"><a href="#cb9-835" aria-hidden="true" tabindex="-1"></a>The 95% confidence interval for the difference between the means is <span class="in">`r round(TA$conf.int[1],2)`</span>°C to <span class="in">`r round(TA$conf.int[2],2)`</span>°C.</span>
 <span id="cb9-836"><a href="#cb9-836" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-837"><a href="#cb9-837" aria-hidden="true" tabindex="-1"></a>For patient B however, even though the average temperature decreased between the two days, the spread in data is so large that the t-test does not allow concluding concerning any significant temperature difference between the two days:</span>
 <span id="cb9-840"><a href="#cb9-840" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-841"><a href="#cb9-841" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>),</span>
+<span id="cb9-841"><a href="#cb9-841" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(<span class="at">data =</span> temperatures <span class="sc">|&gt;</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>),</span>
 <span id="cb9-842"><a href="#cb9-842" aria-hidden="true" tabindex="-1"></a>       Temperature <span class="sc">~</span> Day)</span>
 <span id="cb9-843"><a href="#cb9-843" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-844"><a href="#cb9-844" aria-hidden="true" tabindex="-1"></a></span>
@@ -2632,7 +2629,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb9-847"><a href="#cb9-847" aria-hidden="true" tabindex="-1"></a>Performing a t-test on a single distribution will test whether the distribution's mean is equal to 0:</span>
 <span id="cb9-848"><a href="#cb9-848" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-851"><a href="#cb9-851" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-852"><a href="#cb9-852" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(temperatures <span class="sc">%&gt;%</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>, Day<span class="sc">==</span><span class="st">"Day1"</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(Temperature))</span>
+<span id="cb9-852"><a href="#cb9-852" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(temperatures <span class="sc">|&gt;</span> <span class="fu">filter</span>(Patient <span class="sc">==</span> <span class="st">"B"</span>, Day<span class="sc">==</span><span class="st">"Day1"</span>) <span class="sc">|&gt;</span> <span class="fu">pull</span>(Temperature))</span>
 <span id="cb9-853"><a href="#cb9-853" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb9-854"><a href="#cb9-854" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-855"><a href="#cb9-855" aria-hidden="true" tabindex="-1"></a>::: </span>
